@@ -1,5 +1,5 @@
 package spring.mvc.baobob.guest_parking.persistence;
 
-public class Guest_parkingPersistence {
+public class Guest_parkingDAOImpl {
 
 }
