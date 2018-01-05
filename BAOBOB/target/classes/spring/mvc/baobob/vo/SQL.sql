@@ -1,1 +1,6 @@
---모든 테이블에 '_tbl' 붙이기
+-- 계정
+CREATE USER baobob IDENTIFIED BY baobob DEFAULT TABLESPACE USERS;
+GRANT CONNECT, RESOURCE TO baobob;
+ALTER USER baobob ACCOUNT UNLOCK;
+
+-- 모든 테이블에 '_tbl' 붙이기
