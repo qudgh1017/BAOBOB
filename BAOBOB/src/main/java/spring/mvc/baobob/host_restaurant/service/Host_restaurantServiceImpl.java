@@ -1,5 +1,8 @@
 package spring.mvc.baobob.host_restaurant.service;
 
-public class Host_restaurantServiceImpl {
+import org.springframework.stereotype.Service;
 
+@Service
+public class Host_restaurantServiceImpl {
+	
 }
