@@ -1,5 +1,4 @@
 package spring.mvc.baobob.host_parking.persistence;
 
-public class Host_parkingDAOImpl {
-	//asdflkasdjflkasjdflkjaslkdfjklasdfj 소스소스
+public class Host_parkingDAOImpl implements Host_parkingDAO {
 }
