@@ -26,7 +26,7 @@
 	<!-- MyBatis 설정 시작 -->
 	<!-- 커넥션 풀에 접근할수 있도록 해줌 -->
 	<beans:bean name="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
-		<beans:property name="jndiName" value="java:comp/env/jdbc/Oracle11g" /> <!-- context.xml의 커넥션풀 lookup하겠다. -->
+		<beans:property name="jndiName" value="java:comp/env/jdbc/Oracle11g_baobob" /> <!-- context.xml의 커넥션풀 lookup하겠다. -->
 		<beans:property name="resourceRef" value="true" /> 
 	</beans:bean>
 	
@@ -34,7 +34,7 @@
 		<!-- 커넥션 풀 -->
 		<beans:property name="dataSource" ref="dataSource"/>
 		<!-- 마이바티스 xml의 경로 --><!-- *.xml 모든 xml은 마이바티스 xml로 인식하겠다. -->
-		<beans:property name="mapperLocations" value="classpath:baobob/mapper/*.xml"/>
+		<beans:property name="mapperLocations" value="classpath:baobob/mapper/*/*.xml"/>
 	</beans:bean>
 	
 	<beans:bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
