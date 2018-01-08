@@ -41,9 +41,19 @@ public class HomeController {
 	public String mainDefault(Model model) {
 		return "mainDefault";
 	}
+
+	@RequestMapping("mainEx")
+	public String mainEx(Model model) {
+		return "guest/example";
+	}
 	
 	@RequestMapping("adminDefault")
 	public String adminDefault(Model model) {
 		return "adminDefault";
+	}
+
+	@RequestMapping("adminEx")
+	public String adminEx(Model model) {
+		return "host/example";
 	}
 }
