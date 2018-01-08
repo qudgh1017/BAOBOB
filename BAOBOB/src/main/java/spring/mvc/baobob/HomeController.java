@@ -4,6 +4,8 @@ import java.text.DateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -36,7 +38,6 @@ public class HomeController {
 		return "home";
 	}
 
-	
 	@RequestMapping("mainDefault")
 	public String mainDefault(Model model) {
 		return "mainDefault";
@@ -55,5 +56,10 @@ public class HomeController {
 	@RequestMapping("adminEx")
 	public String adminEx(Model model) {
 		return "host/example";
+	}
+	
+	@RequestMapping("index")
+	public String index(HttpServletRequest req, Model model) {
+		return "index";
 	}
 }

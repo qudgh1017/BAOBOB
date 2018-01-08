@@ -7,12 +7,12 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 </head>
-<body>
-	<%@ include file="common/head.jsp" %>
+<body class="fixed-nav sticky-footer bg-dark">
 
 	<!-- Navigation -->
-	<%@ include file="common/navigation.jsp" %>
+	<%@ include file="../common/navigation.jsp" %>
 	
+	<div class="content-wrapper">
 	<br>
 	<br>
 	<br>
@@ -55,7 +55,6 @@
 	<br>
 	<br>
 	<br>
-	<div id="contact">contact</div>
 	<br>
 	<br>
 	<br>
@@ -64,9 +63,9 @@
 	<br>
 	<br>
 	<br>
-	<br>
-		
+	</div>
+	
 	<!-- Footer -->
-	<%@ include file="common/footerCopyright.jsp" %>
+	<%@ include file="../common/footer.jsp" %>
 </body>
 </html>
