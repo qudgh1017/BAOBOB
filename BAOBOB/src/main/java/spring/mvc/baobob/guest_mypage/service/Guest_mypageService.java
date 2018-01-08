@@ -1,5 +1,5 @@
 package spring.mvc.baobob.guest_mypage.service;
 
-public class Guest_mypageService {
+public interface Guest_mypageService {
 
 }

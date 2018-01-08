@@ -8,10 +8,9 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<%@ include file="common/head.jsp" %>
 
 	<!-- Navigation -->
-	<%@ include file="common/navigation.jsp" %>
+	<%@ include file="/WEB-INF/views/guest/guest_movie/movie_navigation.jsp" %>
 	
 	<br>
 	<br>
@@ -67,6 +66,6 @@
 	<br>
 		
 	<!-- Footer -->
-	<%@ include file="common/footerCopyright.jsp" %>
+	<%@ include file="/WEB-INF/views/guest/guest_movie/movie_footerCopyright.jsp" %>
 </body>
 </html>

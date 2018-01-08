@@ -1,5 +1,5 @@
 package spring.mvc.baobob.host_total.service;
 
-public class Host_totalService {
+public interface Host_totalService {
 
 }
