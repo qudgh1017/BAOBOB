@@ -35,5 +35,15 @@ public class HomeController {
 		
 		return "home";
 	}
+
 	
+	@RequestMapping("mainDefault")
+	public String mainDefault(Model model) {
+		return "mainDefault";
+	}
+	
+	@RequestMapping("adminDefault")
+	public String adminDefault(Model model) {
+		return "adminDefault";
+	}
 }
