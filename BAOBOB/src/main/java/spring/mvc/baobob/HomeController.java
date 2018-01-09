@@ -54,7 +54,7 @@ public class HomeController {
 		return "host/example";
 	}
 	
-	@RequestMapping("index")
+	@RequestMapping("main/index")
 	public String index(HttpServletRequest req, Model model) {
 		return "index";
 	}

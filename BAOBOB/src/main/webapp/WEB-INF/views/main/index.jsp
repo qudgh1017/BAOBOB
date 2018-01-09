@@ -1,3 +1,4 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page session="false" %>
 
@@ -11,167 +12,242 @@
     <meta name="author" content="">
 
     <title>Baobob</title>
+    
+    <style type="text/css">
+     	.head_header{position:relative;}
+    	.head_screen{top: 0;left: 0;position: absolute;margin-left: 28.5rem;margin-top: 16rem;}
+    	
+    	section .notice_a{color:white;}
+    	
+    	.advertDiv{text-align:center;}
+    	
+    	@media (min-width: 992px){
+			.head_screen{
+			    max-width: 960px;
+			}
+		}
+		@media (min-width: 768px){
+			.head_screen{
+			    max-width: 720px;
+			}
+		}
+		@media (min-width: 576px){
+			.head_screen{
+			    max-width: 540px;
+			}
+		}
+    </style>
 </head>
 
 <body id="page-top">	
-	<%@ include file="guest/common/head.jsp" %>
+	<%@ include file="../guest/common/head.jsp" %>
 
 	<!-- Navigation -->
-	<nav class="navbar navbar-expand-lg bg-secondary fixed-top text-uppercase" id="mainNav">
-		<div class="container">
-			<a class="navbar-brand js-scroll-trigger" href="#page-top">Baobob</a>
-			<button class="navbar-toggler navbar-toggler-right text-uppercase bg-primary text-white rounded"
-				type="button" data-toggle="collapse" data-target="#navbarResponsive"
-				aria-controls="navbarResponsive" aria-expanded="false"
-				aria-label="Toggle navigation">
-				Menu <i class="fa fa-bars"></i>
-			</button>
-			<div class="collapse navbar-collapse" id="navbarResponsive">
-				<ul class="navbar-nav ml-auto">
-					<li class="nav-item mx-0 mx-lg-1">
-						<a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#portfolio">
-							Service
-						</a>
-					</li>
-					<li class="nav-item mx-0 mx-lg-1">
-						<a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#about">
-							About
-						</a>
-					</li>
-					<li class="nav-item mx-0 mx-lg-1">
-						<a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#contact">
-							Contact
-						</a>
-					</li>
-				</ul>
-			</div>
-		</div>
-	</nav>
+	<%@ include file="../guest/common/navigation.jsp" %>
+	
 	
 	<!-- Header -->
-	<header class="masthead bg-primary text-white text-center">
-	<div class="container">
-		<img class="img-fluid mb-5 d-block mx-auto"
-			src="${projectRes}mainBootstrap/img/profile.png" alt="">
-		<h1 class="text-uppercase mb-0">Baobob</h1>
-		<hr class="star-light">
-		<h2 class="font-weight-light mb-0">Multiplex Baobob</h2>
-	</div>
+	<header class="bg-primary text-white text-center head_header">
+		<div class="head_screen"><!-- container -->
+			<h1 class="text-uppercase mb-0">Baobob</h1>
+			<h2 class="font-weight-light mb-0">Multiplex Baobob</h2>
+		</div>
+		<img class="img-fluid mb-5 d-block  mx-auto" src="${projectRes}images/ymk/main/main_screen.jpg">
 	</header>
 	
 	   <!-- Portfolio Grid Section -->
-	<section class="portfolio" id="portfolio">
+	<section class="portfolio" id="Menu">
 	  <div class="container">
-	    <h2 class="text-center text-uppercase text-secondary mb-0">Service</h2>
+	    <h2 class="text-center text-uppercase text-secondary mb-0">Menu</h2>
 	    <hr class="star-dark mb-5">
 	    <div class="row">
-	      <div class="col-lg-4">
-	        <a class="portfolio-item d-block mx-auto" href="#portfolio-modal-1">
-	          <div class="portfolio-item-caption d-flex position-absolute h-100 w-100">
-	            <div class="portfolio-item-caption-content my-auto w-100 text-center text-white">
-	              <i class="fa fa-search-plus fa-3x"></i>
-	            </div>
-	          </div>
-	          <img class="img-fluid" src="${projectRes}mainBootstrap/img/portfolio/cabin.png" alt="">
-	      </a>
-	    </div>
-	    <div class="col-lg-4">
-	      <a class="portfolio-item d-block mx-auto" href="#portfolio-modal-2">
-	        <div class="portfolio-item-caption d-flex position-absolute h-100 w-100">
-	          <div class="portfolio-item-caption-content my-auto w-100 text-center text-white">
-	            <i class="fa fa-search-plus fa-3x"></i>
-	          </div>
-	        </div>
-	        <img class="img-fluid" src="${projectRes}mainBootstrap/img/portfolio/cake.png" alt="">
-	      </a>
-	    </div>
-	    <div class="col-lg-4">
-	      <a class="portfolio-item d-block mx-auto" href="#portfolio-modal-3">
-	        <div class="portfolio-item-caption d-flex position-absolute h-100 w-100">
-	          <div class="portfolio-item-caption-content my-auto w-100 text-center text-white">
-	            <i class="fa fa-search-plus fa-3x"></i>
-	          </div>
-	        </div>
-	        <img class="img-fluid" src="${projectRes}mainBootstrap/img/portfolio/circus.png" alt="">
-	      </a>
-	    </div>
+			<div class="col-lg-4">
+				<a class="portfolio-item d-block mx-auto" href="#">
+					<div class="portfolio-item-caption d-flex position-absolute h-100 w-100">
+						<div class="portfolio-item-caption-content my-auto w-100 text-center text-white">
+							<i class="fa fa-search-plus fa-3x"></i>
+						</div>
+					</div>
+					<img class="img-fluid" src="${projectRes}images/ymk/main/movieIcon.png" alt="">
+				</a>
+			</div>
+			<div class="col-lg-4">
+				<a class="portfolio-item d-block mx-auto" href="#">
+					<div class="portfolio-item-caption d-flex position-absolute h-100 w-100">
+						<div class="portfolio-item-caption-content my-auto w-100 text-center text-white">
+							<i class="fa fa-search-plus fa-3x"></i>
+						</div>
+					</div>
+					<img class="img-fluid" src="${projectRes}images/ymk/main/foodIcon.png" alt="">
+				</a>
+			</div>
+			<div class="col-lg-4">
+			<a class="portfolio-item d-block mx-auto" href="#">
+				<div class="portfolio-item-caption d-flex position-absolute h-100 w-100">
+					<div class="portfolio-item-caption-content my-auto w-100 text-center text-white">
+						<i class="fa fa-search-plus fa-3x"></i>
+					</div>
+				</div>
+				<img class="img-fluid" src="${projectRes}images/ymk/main/serviceIcon.png" alt="">
+			</a>
+			</div>
 	    </div>
 	  </div>
 	</section>
 	
 	<!-- About Section -->
-	<section class="bg-primary text-white mb-0" id="about">
+	<section class="bg-primary text-white mb-0" id="Notice">
 	  <div class="container">
-	    <h2 class="text-center text-uppercase text-white">About</h2>
+	    <h2 class="text-center text-uppercase text-white">Notice</h2>
 	    <hr class="star-light mb-5">
 	    <div class="row">
 	      <div class="col-lg-4 ml-auto">
-	        <p class="lead">Freelancer is a free bootstrap theme created by Start Bootstrap. The download includes the complete source files including HTML, CSS, and JavaScript as well as optional LESS stylesheets for easy customization.</p>
+	        <p class="lead">BAOBOB는 B형 3명, A형 1명, O형 2명을 뜻한다.</p>
 	      </div>
 	      <div class="col-lg-4 mr-auto">
-	        <p class="lead">Whether you're a student looking to showcase your work, a professional looking to attract clients, or a graphic artist looking to share your projects, this template is the perfect starting point!</p>
+	        <p class="lead"><a class="notice_a" href="#">개인정보 이용내역 안내</a></p>
 	      </div>
 	    </div>
-	    <div class="text-center mt-4">
+	    <!-- <div class="text-center mt-4">
 	      <a class="btn btn-xl btn-outline-light" href="#">
 	        <i class="fa fa-download mr-2"></i>
 	        Download Now!
 	      </a>
-	    </div>
+	    </div> -->
 	  </div>
 	</section>
 	
 	<!-- Contact Section -->
-	<section id="contact">
+	<section id="Advert">
 	  <div class="container">
-	    <h2 class="text-center text-uppercase text-secondary mb-0">Contact Me</h2>
+	    <h2 class="text-center text-uppercase text-secondary mb-0">Advert</h2>
 	    <hr class="star-dark mb-5">
 	    <div class="row">
-	      <div class="col-lg-8 mx-auto">
-	        <!-- To configure the contact form email address, go to mail/contact_me.php and update the email address in the PHP file on line 19. -->
-	      <!-- The form should work on most web servers, but if the form is not working you may need to configure your web server differently. -->
-	        <form name="sentMessage" id="contactForm" novalidate="novalidate">
-	          <div class="control-group">
-	            <div class="form-group floating-label-form-group controls mb-0 pb-2">
-	              <label>Name</label>
-	              <input class="form-control" id="name" type="text" placeholder="Name" required="required" data-validation-required-message="Please enter your name.">
-	              <p class="help-block text-danger"></p>
-	            </div>
-	          </div>
-	          <div class="control-group">
-	            <div class="form-group floating-label-form-group controls mb-0 pb-2">
-	              <label>Email Address</label>
-	              <input class="form-control" id="email" type="email" placeholder="Email Address" required="required" data-validation-required-message="Please enter your email address.">
-	              <p class="help-block text-danger"></p>
-	            </div>
-	          </div>
-	          <div class="control-group">
-	            <div class="form-group floating-label-form-group controls mb-0 pb-2">
-	              <label>Phone Number</label>
-	              <input class="form-control" id="phone" type="tel" placeholder="Phone Number" required="required" data-validation-required-message="Please enter your phone number.">
-	              <p class="help-block text-danger"></p>
-	            </div>
-	          </div>
-	          <div class="control-group">
-	            <div class="form-group floating-label-form-group controls mb-0 pb-2">
-	              <label>Message</label>
-	              <textarea class="form-control" id="message" rows="5" placeholder="Message" required="required" data-validation-required-message="Please enter a message."></textarea>
-	              <p class="help-block text-danger"></p>
-	            </div>
-	          </div>
-	          <br>
-	          <div id="success"></div>
-	          <div class="form-group">
-	            <button type="submit" class="btn btn-primary btn-xl" id="sendMessageButton">Send</button>
-	          </div>
-	        </form>
-	      </div>
+	    	<div class="col-md-6 col-lg-12 advertDiv">
+	    		<img class="img-fluid" src="${projectRes}images/ymk/main/advert01.jpg">
+	    	</div>
 	    </div>
 	  </div>
 	</section>
 	
+	<section class="portfolio" id="Event">
+		<div class="container">
+			<h2 class="text-center text-uppercase text-secondary mb-0">Event</h2>
+	    	<hr class="star-dark mb-5">
+	    	<div class="row">
+				<div class="col-md-6 col-lg-4">
+					<a class="portfolio-item d-block mx-auto" href="#">
+						<div class="portfolio-item-caption d-flex position-absolute h-100 w-100">
+							<div class="portfolio-item-caption-content my-auto w-100 text-center text-white">
+								<i class="fa fa-search-plus fa-3x"></i>
+							</div>
+						</div>
+						<img class="img-fluid" src="${projectRes}images/ymk/main/event01.png" alt="">
+					</a>
+				</div>
+				<div class="col-md-6 col-lg-4">
+					<a class="portfolio-item d-block mx-auto" href="#">
+						<div class="portfolio-item-caption d-flex position-absolute h-100 w-100">
+							<div class="portfolio-item-caption-content my-auto w-100 text-center text-white">
+								<i class="fa fa-search-plus fa-3x"></i>
+							</div>
+						</div>
+						<img class="img-fluid" src="${projectRes}images/ymk/main/event02.png" alt="">
+					</a>
+				</div>
+				<div class="col-md-6 col-lg-4">
+					<a class="portfolio-item d-block mx-auto" href="#">
+						<div class="portfolio-item-caption d-flex position-absolute h-100 w-100">
+							<div class="portfolio-item-caption-content my-auto w-100 text-center text-white">
+								<i class="fa fa-search-plus fa-3x"></i>
+							</div>
+						</div>
+						<img class="img-fluid" src="${projectRes}images/ymk/main/event03.png" alt="">
+					</a>
+				</div>
+		    </div>
+		</div>
+	</section>
+	
+	
+	<section class="portfolio" id="Alliance">
+		<div class="container">
+			<h2 class="text-center text-uppercase text-secondary mb-0">Alliance</h2>
+	    	<hr class="star-dark mb-5">
+	    	<div class="row">
+				<div class="col-md-6 col-lg-4">
+					<a class="portfolio-item d-block mx-auto" href="#">
+						<div class="portfolio-item-caption d-flex position-absolute h-100 w-100">
+							<div class="portfolio-item-caption-content my-auto w-100 text-center text-white">
+								<i class="fa fa-search-plus fa-3x"></i>
+							</div>
+						</div>
+						<img class="img-fluid" src="${projectRes}images/ymk/main/banner01.png" alt="">
+					</a>
+				</div>
+				<div class="col-md-6 col-lg-4">
+					<a class="portfolio-item d-block mx-auto" href="#">
+						<div class="portfolio-item-caption d-flex position-absolute h-100 w-100">
+							<div class="portfolio-item-caption-content my-auto w-100 text-center text-white">
+								<i class="fa fa-search-plus fa-3x"></i>
+							</div>
+						</div>
+						<img class="img-fluid" src="${projectRes}images/ymk/main/banner02.png" alt="">
+					</a>
+				</div>
+				<div class="col-md-6 col-lg-4">
+					<a class="portfolio-item d-block mx-auto" href="#">
+						<div class="portfolio-item-caption d-flex position-absolute h-100 w-100">
+							<div class="portfolio-item-caption-content my-auto w-100 text-center text-white">
+								<i class="fa fa-search-plus fa-3x"></i>
+							</div>
+						</div>
+						<img class="img-fluid" src="${projectRes}images/ymk/main/banner03.png" alt="">
+					</a>
+				</div>
+				<div class="col-md-6 col-lg-4">
+					<a class="portfolio-item d-block mx-auto" href="#">
+						<div class="portfolio-item-caption d-flex position-absolute h-100 w-100">
+							<div class="portfolio-item-caption-content my-auto w-100 text-center text-white">
+								<i class="fa fa-search-plus fa-3x"></i>
+							</div>
+						</div>
+						<img class="img-fluid" src="${projectRes}images/ymk/main/banner04.png" alt="">
+					</a>
+				</div>
+				<div class="col-md-6 col-lg-4">
+					<a class="portfolio-item d-block mx-auto" href="#">
+						<div class="portfolio-item-caption d-flex position-absolute h-100 w-100">
+							<div class="portfolio-item-caption-content my-auto w-100 text-center text-white">
+								<i class="fa fa-search-plus fa-3x"></i>
+							</div>
+						</div>
+						<img class="img-fluid" src="${projectRes}images/ymk/main/banner05.png" alt="">
+					</a>
+				</div>
+				<div class="col-md-6 col-lg-4">
+					<a class="portfolio-item d-block mx-auto" href="#">
+						<div class="portfolio-item-caption d-flex position-absolute h-100 w-100">
+							<div class="portfolio-item-caption-content my-auto w-100 text-center text-white">
+								<i class="fa fa-search-plus fa-3x"></i>
+							</div>
+						</div>
+						<img class="img-fluid" src="${projectRes}images/ymk/main/banner06.png" alt="">
+					</a>
+				</div>
+		    </div>
+		</div>
+	</section>
+	
+	
+	<section id="location">
+		<h2 class="text-center text-uppercase text-secondary mb-0">location</h2>
+   		<hr class="star-dark mb-5">
+   		<iframe width="100%" height="450" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?q=%ED%95%9C%EA%B5%AD%EC%86%8C%ED%94%84%ED%8A%B8%EC%9B%A8%EC%96%B4%EC%9D%B8%EC%9E%AC%EA%B0%9C%EB%B0%9C%EC%9B%90&key=AIzaSyDB_MnAbfzP3Tep6MpXBiY7KHTk2PkMoUo" allowfullscreen></iframe>
+	</section>
+	
 	<!-- Footer -->
-	<footer class="footer text-center">
+	<!-- <footer class="footer text-center">
 		<div class="container">
 			<div class="row">
 				<div class="col-md-4 mb-5 mb-lg-0">
@@ -216,14 +292,14 @@
 				</div>
 			</div>
 		</div>
-	</footer>
+	</footer> -->
 	
 	<!-- footerCopyright -->
-	<%@ include file="guest/common/footerCopyright.jsp" %>
+	<%@ include file="../guest/common/footerCopyright.jsp" %>
 
 	<!-- Portfolio Modals -->
 	
-	<!-- Portfolio Modal 1 -->
+	<%-- <!-- Portfolio Modal 1 -->
 	<div class="portfolio-modal mfp-hide" id="portfolio-modal-1">
 	  <div class="portfolio-modal-dialog bg-white">
 	    <a class="close-button d-none d-md-block portfolio-modal-dismiss" href="#">
@@ -353,7 +429,7 @@
 	      </div>
 	    </div>
 	  </div>
-	</div>
+	</div> --%>
 </body>
 
 </html>
