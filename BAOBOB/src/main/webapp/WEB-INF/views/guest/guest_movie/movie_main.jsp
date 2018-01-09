@@ -8,15 +8,16 @@
 <title>Insert title here</title>
 </head>
 <body>
-
-	<!-- Navigation -->
-	<%@ include file="/WEB-INF/views/guest/guest_movie/movie_navigation.jsp" %>
 	
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
+	<!-- CSS,JavaScript 참조 -->
+	<%@ include file="/WEB-INF/views/guest/common/head.jsp" %>
+	
+	<!-- Navigation -->
+	<%@ include file="/WEB-INF/views/guest/common/navigation.jsp" %>
+	
+	<!-- main_menu -->
+	<%@ include file="/WEB-INF/views/guest/guest_movie/movie_menu.jsp" %>
+	
 	<br>
 	<br>
 	<br>
@@ -66,6 +67,7 @@
 	<br>
 		
 	<!-- Footer -->
-	<%@ include file="/WEB-INF/views/guest/guest_movie/movie_footerCopyright.jsp" %>
+	<%-- <%@ include file="/WEB-INF/views/guest/common/footerCopyright.jsp" %> --%>
+	<%@ include file="/WEB-INF/views/guest/guest_movie/movie_footer.jsp" %> 
 </body>
 </html>

@@ -48,10 +48,6 @@ public class HomeController {
 		return "guest/example";
 	}
 	
-	@RequestMapping("adminDefault")
-	public String adminDefault(Model model) {
-		return "adminDefault";
-	}
 
 	@RequestMapping("adminEx")
 	public String adminEx(Model model) {
