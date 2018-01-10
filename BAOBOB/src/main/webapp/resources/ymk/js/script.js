@@ -70,13 +70,12 @@ function spaceTypeChange() {
 	item.forEach(function(space) {
 		array.push(space.value);
 	});
-	console.log(info);
 	
 	var param =   'col=' + x + '&'
 				+ 'row=' + y + '&'
 				+ 'info=' + array;
 	
-	sendRequest(space_callback, 'hostParkingSettingChange', 'GET', param);
+	sendRequest(space_callback, 'hostParkingSettingChange', 'POST', param);
 }
 
 function space_callback() {

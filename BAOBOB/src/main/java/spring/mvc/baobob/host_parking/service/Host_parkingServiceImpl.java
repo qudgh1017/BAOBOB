@@ -20,10 +20,13 @@ public class Host_parkingServiceImpl implements Host_parkingService {
 	public void hostParkingSettingChange(HttpServletRequest req, Model model) {
 		int col = Integer.parseInt(req.getParameter("col"));
 		int row = Integer.parseInt(req.getParameter("row"));
-		String info = req.getParameter("info");
+		String[] info = req.getParameterValues("info");
 		
 		ParkingSpace ps = new ParkingSpace();
-		int cnt = dao.hostParkingSettingChange(ps);
+		//int cnt = dao.hostParkingSettingChange(ps);
+		
+		System.out.println(info);
+		int cnt = 0;
 		
 		model.addAttribute("cnt", cnt);
 	}

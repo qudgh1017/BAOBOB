@@ -4,19 +4,19 @@ function getXMLHttpRequest() {
 	if(window.ActiveXObject) {
 		try {
 			return new ActiveXObject("Msxml2.XMLHTTP");
-		} catch(e) {
+		} catch (e) {
 			try {
 				return new ActiveXObject("Microsoft.XMLHTTP");
-			} catch(e) {
-				return null
+			} catch (e) {
+				return null;
 			}
-		}
+		}	
 	} else if(window.XMLHttpRequest) {
 		try {
 			return new XMLHttpRequest();
-		} catch(e) {
+		} catch (e) {
 			return null;
-		}
+		}		
 	} else {
 		return null;
 	}
@@ -24,20 +24,21 @@ function getXMLHttpRequest() {
 
 function sendRequest(callback, url, method, params) {
 	httpRequest = getXMLHttpRequest();
-	httpRequest.onreadystatechsnhr = callback;
 	
-	var httpMethod = method ? method : 'GET';
-	if(httpMethod != 'GET' && httpMethod != "POST") {
-		httpMethod = 'GET';
+	httpRequest.onreadystatechange = callback;
+	
+	var httpMethod = method ? method : "GET";
+	if(httpMethod != "GET" && httpMethod != "POST") {
+		httpMethod = "GET";
 	}
+
+	var httpParams = (params == null || params == "") ? null : params;
 	
-	var httpParams = (params == null || params == '') ? null : params; 
+	var httpUrl = (httpMethod == "GET") ? (url + "?" + httpParams) : url;
 	
-	var httpUrl = (httpMethod == "GET") ? (url + '?' + httpParams) : url;
+	httpRequest.open(httpMethod , httpUrl, true);
+	httpRequest.setRequestHeader("content-type", "application/x-www-form-urlencoded;charset=utf-8"); //loading
+	httpRequest.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 	
-	httpRequest.open(httpMethod, httpUrl, true);
-	httpRequest.setRequestHeader('content-type', 'application/x-www-form-urlencoded;charset=utf-8');
-	httpRequest.setRequestHeader('X-Requested-with', 'XMLHttpRequest');
-	
-	httpRequest.send(httpMethod == 'post' ? httpParams : null);
+	httpRequest.send(httpMethod == "POST" ? httpParams : null);
 }
