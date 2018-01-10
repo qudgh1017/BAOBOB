@@ -2,8 +2,9 @@
 <!DOCTYPE mapper
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-    
+
 <mapper namespace="spring.mvc.baobob.host_restaurant.persistence.Host_restaurantDAO">
-
-
+	<insert id="addMenu" parameterType="spring.mvc.baobob.vo.MenuVO">
+		INSERT INTO restaurant_menu_tbl (RESTAURANT_INDEX, RESTAURANT_MENU_INDEX, RESTAURANT_MENU_NAME, RESTAURANT_MENU_IMG, RESTAURANT_MENU_CONTENT, RESTAURANT_MENU_PRICE) VALUES(1, restaurant_menu_tbl_SEQ.nextval, #{name}, #{img}, #{content}, #{price})
+	</insert>
 </mapper>

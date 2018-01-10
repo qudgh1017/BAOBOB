@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>BAOBOX</title>
 <!-- slide -->
 <!-- slide 기능 사용위한 라이브러리 -->
 <%-- <link href="${projectRes}ybh/css/slick.css" rel="stylesheet" type="text/css">
@@ -70,7 +70,6 @@
 	<br>
 		
 	<!-- Footer -->
-	<%-- <%@ include file="/WEB-INF/views/guest/common/footerCopyright.jsp" %> --%>
 	<%@ include file="/WEB-INF/views/guest/guest_movie/movie_footer.jsp" %> 
 </body>
 </html>
