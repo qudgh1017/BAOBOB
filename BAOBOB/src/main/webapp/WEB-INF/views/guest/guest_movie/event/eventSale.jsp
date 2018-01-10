@@ -25,7 +25,7 @@
 	
 	<section>
 		<div class="container">
-			<img src="${projectRes}images/ybh/movie1.jpg">
+			제휴/할인
 		</div>
 	</section>
 	<br>

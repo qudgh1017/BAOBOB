@@ -25,7 +25,7 @@
 	
 	<section>
 		<div class="container">
-			<img src="${projectRes}images/ybh/movie1.jpg">
+			예매
 		</div>
 	</section>
 	<br>

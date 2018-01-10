@@ -25,7 +25,7 @@
 	
 	<section>
 		<div class="container">
-			<img src="${projectRes}images/ybh/movie1.jpg">
+			트레일러
 		</div>
 	</section>
 	<br>

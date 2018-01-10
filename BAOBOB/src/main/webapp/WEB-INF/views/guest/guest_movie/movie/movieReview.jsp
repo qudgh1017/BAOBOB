@@ -25,7 +25,7 @@
 	
 	<section>
 		<div class="container">
-			<img src="${projectRes}images/ybh/movie1.jpg">
+			리뷰~~ 평점~~
 		</div>
 	</section>
 	<br>

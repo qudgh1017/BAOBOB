@@ -25,7 +25,7 @@
 	
 	<section>
 		<div class="container">
-			<img src="${projectRes}images/ybh/movie1.jpg">
+			상영, 상영예정작
 		</div>
 	</section>
 	<br>
