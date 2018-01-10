@@ -5,10 +5,33 @@
     
 <mapper namespace="spring.mvc.baobob.host_movie.persistence.Host_movieDAO">
 	
+	<!-- 영화 갯수 구하기 getMovieCnt -->
+	<select id="getMovieCnt" resultType="int">
+		SELECT count(*) FROM movie_tbl
+	</select>
+	
+	<!-- 영화 전체 목록 조회(개봉일 순) getMovieList -->
+	<select id="getMovieList" resultType="spring.mvc.baobob.vo.MovieVO">
+		<![CDATA[
+		SELECT * 
+	       FROM (
+	       		 SELECT movie_index, movie_title, movie_content, movie_janre, movie_age, 
+	       		 		movie_rel_date, movie_director, movie_star, movie_country, 
+	       		 		movie_runTime, movie_poster, movie_trailer, movie_state, rownum rNum 
+		 		  FROM ( 
+		 		  		  SELECT * FROM movie_tbl
+		 		  		   ORDER BY movie_index DESC
+		 		  	    ) 
+		 		)  
+		  WHERE rNum >= #{start} AND rNum <= #{end} 
+		]]>
+	</select>
+	
 	<!-- hostMovieAddPro -->
 	<insert id="hostMovieAddPro" parameterType="spring.mvc.baobob.vo.MovieVO">
 		INSERT INTO movie_tbl (movie_index, movie_title, movie_content, movie_janre, movie_age, movie_rel_date, movie_director, movie_star, movie_country, movie_runTime, movie_poster, movie_trailer, movie_state) 
 		VALUES (movie_tbl_SEQ.NEXTVAL, #{movie_title}, #{movie_content}, #{movie_janre}, #{movie_age}, #{movie_rel_date}, #{movie_director}, #{movie_star}, #{movie_country}, #{movie_runTime}, #{movie_poster}, #{movie_trailer}, #{movie_state})
 	</insert>
 
+	
 </mapper>

@@ -1,5 +1,7 @@
 package spring.mvc.baobob.host_movie.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,8 +18,10 @@ public class Host_movieController {
 	
 	// 관리자 영화
 	@RequestMapping(value="hostMovie")
-	public String hostMovie() {
+	public String hostMovie(HttpServletRequest req, Model model) {
 		System.out.println("hostMovie");
+		
+		service.hostMovieList(req, model);
 		
 		return "host/host_movie/hostMovie";
 	}
