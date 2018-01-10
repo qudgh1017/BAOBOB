@@ -1,2 +1,4 @@
 eclipse.preferences.version=1
 encoding//src/main/webapp/WEB-INF/views/adminDefault.jsp=UTF-8
+encoding//src/main/webapp/WEB-INF/views/guest/guest_movie/movie_main.jsp=UTF-8
+encoding//src/main/webapp/WEB-INF/views/mainDefault.jsp=UTF-8
