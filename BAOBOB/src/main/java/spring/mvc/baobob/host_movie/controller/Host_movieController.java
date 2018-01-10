@@ -8,6 +8,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import spring.mvc.baobob.host_movie.service.Host_movieServiceImpl;
 
+
 @Controller
 public class Host_movieController {
 	@Autowired

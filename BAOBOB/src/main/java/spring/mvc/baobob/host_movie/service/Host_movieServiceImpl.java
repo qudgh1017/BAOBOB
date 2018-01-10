@@ -45,7 +45,7 @@ public class Host_movieServiceImpl implements Host_movieService{
 			
 			String movie_title = req.getParameter("movie_title");
 			String movie_content = req.getParameter("movie_content");
-			String movie_janre = "drama";
+			int movie_janre = Integer.parseInt(req.getParameter("movie_janre"));
 			int movie_age = Integer.parseInt(req.getParameter("movie_age"));
 			String movie_rel_date = req.getParameter("movie_rel_date");
 			String movie_director = req.getParameter("movie_director");
@@ -60,9 +60,9 @@ public class Host_movieServiceImpl implements Host_movieService{
 			
 			vo.setMovie_title(movie_title);
 			vo.setMovie_content(movie_content);
-			//vo.setMovie_janre(movie_janre);
+			vo.setMovie_janre(movie_janre);
 			vo.setMovie_age(movie_age);
-			// rel_date
+			vo.setMovie_rel_date(movie_rel_date);
 			vo.setMovie_age(movie_age);
 			vo.setMovie_director(movie_director);
 			vo.setMovie_star(movie_star);
