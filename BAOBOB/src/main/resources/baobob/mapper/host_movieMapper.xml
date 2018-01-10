@@ -5,11 +5,10 @@
     
 <mapper namespace="spring.mvc.baobob.host_movie.persistence.Host_movieDAO">
 	
-	<!-- hostMovieAddPro --> <!-- 하드코딩 부분 수정해야함 -->
+	<!-- hostMovieAddPro -->
 	<insert id="hostMovieAddPro" parameterType="spring.mvc.baobob.vo.MovieVO">
-		INSERT INTO movie (movie_index, movie_title, movie_content, movie_janre, movie_age, movie_rel_date, movie_director, movie_star, movie_country, movie_runTime, movie_poster, movie_trailer, movie_state) 
-		VALUES (1003, #{movie_title}, #{movie_content}, 'movie_janre 001', #{movie_age}, '18-01-01', #{movie_director}, #{movie_star}, #{movie_country}, #{movie_runTime}, #{movie_poster}, #{movie_trailer}, '상영중')
-	
+		INSERT INTO movie_tbl (movie_index, movie_title, movie_content, movie_janre, movie_age, movie_rel_date, movie_director, movie_star, movie_country, movie_runTime, movie_poster, movie_trailer, movie_state) 
+		VALUES (movie_tbl_SEQ.NEXTVAL, #{movie_title}, #{movie_content}, #{movie_janre}, #{movie_age}, #{movie_rel_date}, #{movie_director}, #{movie_star}, #{movie_country}, #{movie_runTime}, #{movie_poster}, #{movie_trailer}, #{movie_state})
 	</insert>
 
 </mapper>
