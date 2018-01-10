@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="spring.mvc.baobob.vo.MovieVO" %>
 <%@ include file="/resources/setting.jsp"%>
 <html>
 <head>
@@ -10,12 +9,12 @@
 <body class="fixed-nav sticky-footer bg-dark">
 
 	<!-- Navigation -->
-	<%@ include file="../common/navigation.jsp" %>
+	<%@ include file="movie_navigation.jsp" %>
 	
 	<div class="content-wrapper">
-	<br>
-	<br>
 	<div id="content">
+		<center><h3><b>영화 목록</b></h3></center>
+		<hr style="border:3px solid black;">
 		<input style="background-color:#8888ff; border:1px solid black; height:40px; margin-left:177px; margin-bottom:15px;" type="button" name="hostMovieAddForm" onclick="window.location='hostMovieAddForm'" value="영화 등록하기"/>
 		<table style="width:800px; border:1px solid black;" align="center">
 			<tr>
@@ -36,7 +35,7 @@
 							${vo.movie_index}
 						</td>
 						<td>
-							<a href="#">${vo.movie_title}</a>
+							<a href="hostMovieDetail?movie_index=${vo.movie_index}">${vo.movie_title}</a>
 						</td>
 						<td>
 							${vo.movie_director}
@@ -49,6 +48,9 @@
 						</td>
 						<td>
 							${vo.movie_state}
+						</td>
+						<td>
+							<input type="button" onclick="window.location='hostMovieDel?movie_index=${vo.movie_index}'" value="삭제"/>
 						</td>
 					</tr>
 				</c:forEach>
@@ -65,7 +67,7 @@
 		
 		<!-- 페이지 컨트롤 -->
 		<table style="width:800px" align="center">
-			<tr>
+			<tr align="center">
 				<th align="center">
 					<c:if test="${cnt > 0}">
 						<!-- 처음[◀◀] / 이전블록[◀] -->

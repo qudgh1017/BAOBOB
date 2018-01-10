@@ -43,4 +43,34 @@ public class Host_movieController {
 		
 		return "host/host_movie/hostMovieAddPro";
 	}
+	
+	// 영화 삭제 처리
+	@RequestMapping(value="hostMovieDel")
+	public String hostMovieDel(HttpServletRequest req, Model model) {
+		System.out.println("hostMovieDel");
+		
+		service.hostMovieDel(req, model);
+		
+		return "host/host_movie/hostMovieDel";
+	}
+	
+	// 영화 상세 페이지
+	@RequestMapping(value="hostMovieDetail")
+	public String hostMovieDetail(HttpServletRequest req, Model model) {
+		System.out.println("hostMovieDetail");
+		
+		service.hostMovieDetail(req, model);
+		
+		return "host/host_movie/hostMovieDetail";
+	}
+	
+	// 영화 수정 처리
+	@RequestMapping(value="hostMovieModPro")
+	public String hostMovieModPro(MultipartHttpServletRequest req, Model model) {
+		System.out.println("hostMovieModPro");
+		
+		service.hostMovieModPro(req, model);
+		
+		return "host/host_movie/hostMovieModPro";
+	}
 }

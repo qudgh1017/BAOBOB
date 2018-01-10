@@ -39,13 +39,44 @@ public class Host_movieDAOImpl implements Host_movieDAO {
 		return vos;
 	}
 	
-	// 영화 추가
+	// 영화 추가 처리
 	@Override
 	public int hostMovieAddPro(MovieVO vo) {
 		int cnt = 0;
 		
 		Host_movieDAO dao = sqlSession.getMapper(Host_movieDAO.class);
 		cnt = dao.hostMovieAddPro(vo);
+		
+		return cnt;
+	}
+
+	// 영화 삭제 처리
+	@Override
+	public int hostMovieDel(int movie_index) {
+		int cnt = 0;
+		
+		Host_movieDAO dao = sqlSession.getMapper(Host_movieDAO.class);
+		cnt = dao.hostMovieDel(movie_index);
+		
+		return cnt;
+	}
+
+	@Override
+	public MovieVO hostMovieDetail(int movie_index) {
+		MovieVO vo = null;
+		
+		Host_movieDAO dao = sqlSession.getMapper(Host_movieDAO.class);
+		vo = dao.hostMovieDetail(movie_index);
+		
+		return vo;
+	}
+
+	@Override
+	public int hostMovieModPro(MovieVO vo) {
+		int cnt = 0;
+		
+		Host_movieDAO dao = sqlSession.getMapper(Host_movieDAO.class);
+		cnt = dao.hostMovieModPro(vo);
 		
 		return cnt;
 	}

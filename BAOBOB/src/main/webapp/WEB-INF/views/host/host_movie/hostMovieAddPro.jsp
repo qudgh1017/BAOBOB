@@ -10,7 +10,7 @@
 <body class="fixed-nav sticky-footer bg-dark">
 
 	<!-- Navigation -->
-	<%@ include file="../common/navigation.jsp" %>
+	<%@ include file="movie_navigation.jsp" %>
 	
 	<div class="content-wrapper">
 	<br>
