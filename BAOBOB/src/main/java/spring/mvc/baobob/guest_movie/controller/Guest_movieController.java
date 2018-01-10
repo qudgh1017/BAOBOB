@@ -1,13 +1,20 @@
 package spring.mvc.baobob.guest_movie.controller;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import spring.mvc.baobob.guest_movie.service.Guest_movieService;
+import spring.mvc.baobob.guest_movie.service.Guest_movieServiceImpl;
 
 @Controller
 public class Guest_movieController {
 
 	private Logger log = Logger.getLogger(this.getClass());
+	
+	@Autowired
+	Guest_movieService gmservice = new Guest_movieServiceImpl();
 	
 	@RequestMapping("guest_movie")
 	public String guest_movie() {
