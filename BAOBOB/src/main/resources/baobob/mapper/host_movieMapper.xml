@@ -4,6 +4,11 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
     
 <mapper namespace="spring.mvc.baobob.host_movie.persistence.Host_movieDAO">
-
+	
+	<!-- hostMovieAddPro -->
+	<insert id="hostMovieAddPro" parameterType="spring.mvc.baobob.vo.MovieVO">
+		INSERT INTO movie_tbl (movie_index, movie_title, movie_content, movie_janre, movie_age, movie_rel_date, movie_director, movie_star, movie_country, movie_runTime, movie_poster, movie_trailer, movie_state) 
+		VALUES (movie_tbl_SEQ.NEXTVAL, #{movie_title}, #{movie_content}, #{movie_janre}, #{movie_age}, #{movie_rel_date}, #{movie_director}, #{movie_star}, #{movie_country}, #{movie_runTime}, #{movie_poster}, #{movie_trailer}, #{movie_state})
+	</insert>
 
 </mapper>

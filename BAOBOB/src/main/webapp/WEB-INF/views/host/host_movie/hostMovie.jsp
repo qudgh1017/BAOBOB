@@ -18,7 +18,7 @@
 	<br>
 	<br>
 	<br>
-	<br>dddddddddddddddddddddddddddddd아오
+	<br><button id="hostMovieAddForm" onclick="window.location='hostMovieAddForm'">영화 등록하기</button>
 	<br>
 	<br>
 	<br>
