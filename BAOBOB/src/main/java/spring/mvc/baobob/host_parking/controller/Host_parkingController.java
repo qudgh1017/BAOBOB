@@ -52,10 +52,4 @@ public class Host_parkingController {
 		System.out.println("hostParkingPay()");
 		return "host/host_parking/hostParkingPay";
 	}
-	
-	@RequestMapping("main/mainJoin")
-	public String mainJoin() {
-		System.out.println("mainJoin");
-		return "main/mainJoin";
-	}
 }
