@@ -9,9 +9,9 @@ public class Guest_movieController {
 
 	private Logger log = Logger.getLogger(this.getClass());
 	
-	@RequestMapping("movie_mainG")
-	public String movie_mainG() {
-		log.debug("====== Guest_movieController/movie_mainG ======");
+	@RequestMapping("guest_movie")
+	public String guest_movie() {
+		log.debug("====== Guest_movieController/guest_movie ======");
 		
 		return "/guest/guest_movie/movie_main";
 	}

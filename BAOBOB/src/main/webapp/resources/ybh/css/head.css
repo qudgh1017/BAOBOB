@@ -1,7 +1,7 @@
 @charset "UTF-8";
 header.mainmenu {
   padding-top: calc(2rem + 72px);
-  padding-bottom: 6rem; }
+   }
 header.mainmenu a {
 	font-weight:bold;
 	color:white;}
@@ -9,3 +9,6 @@ header.mainmenu a:hover {
 	text-decoration:none;
 	font-weight:bold;
 	color:#18BC9C;}    
+section {
+	padding-top:0;
+}
