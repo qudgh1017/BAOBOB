@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import spring.mvc.baobob.host_restaurant.service.Host_restaurantService;
 
@@ -36,7 +37,7 @@ public class Host_restaurantController {
 	
 	// 식당[1] 메뉴 추가 처리
 	@RequestMapping(value = "/hostMenuAddPro")
-	public String hostMenuAddPro(HttpServletRequest req, Model model) {
+	public String hostMenuAddPro(MultipartHttpServletRequest req, Model model) {
 		System.out.println("hostMenuAddPro()");
 		
 		service.menuAdd(req, model);
