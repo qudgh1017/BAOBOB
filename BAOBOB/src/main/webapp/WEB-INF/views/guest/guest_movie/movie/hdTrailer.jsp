@@ -25,7 +25,7 @@
 	
 	<section>
 		<div class="container">
-			트레일러
+			트레일러 <a href="https://www.youtube.com/watch?v="></a>
 		</div>
 	</section>
 	<br>
