@@ -4,11 +4,25 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
     
 <mapper namespace="spring.mvc.baobob.host_parking.persistence.Host_parkingDAO">
+	
+	<!-- 주차장 구역 정보 존재 여부 -->
+	<select id="getParkingSpace" resultType="spring.mvc.baobob.vo.ParkingSpace">
+		SELECT * FROM park_space_tbl
+	</select>
 
-	<insert id="hostParkingSettingChange" parameterType="spring.mvc.baobob.vo.ParkingSpace">
+	<!-- 주차장 구역 정보 등록 -->
+	<insert id="parkingSpaceChange" parameterType="spring.mvc.baobob.vo.ParkingSpace">
 		INSERT INTO park_space_tbl
 		VALUES
-			(#{p_space_col}, #{p_space_row}, #{p_space_info});
+			(#{p_space_col}, #{p_space_row}, #{p_space_info})
 	</insert>
 
+	<!-- 주차장 구역 정보 수정 -->
+	<update id="parkingSpaceUpdate" parameterType="spring.mvc.baobob.vo.ParkingSpace">
+		UPDATE park_space_tbl
+		SET
+			p_space_col=#{p_space_col}, 
+			p_space_row=#{p_space_row}, 
+			p_space_info=#{p_space_info}
+	</update>
 </mapper>

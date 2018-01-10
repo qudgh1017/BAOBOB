@@ -17,11 +17,10 @@
 	<script src="${projectRes}ymk/js/ajax.js"></script>
 	<script src="${projectRes}ymk/js/script.js"></script>
 </head>
-<body class="fixed-nav sticky-footer bg-dark">
+<body class="fixed-nav sticky-footer bg-dark" onload="spaceBody('${pSpace.p_space_info}', '${pSpace.p_space_col}', '${pSpace.p_space_row}');">
 
 	<!-- Navigation -->
 	<%@ include file="../common/navigation.jsp" %>
-	
 	
  	<div class="content-wrapper">
 		<ul class="p_clear">

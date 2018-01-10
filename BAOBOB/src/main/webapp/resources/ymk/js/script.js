@@ -32,7 +32,7 @@ function spaceDivChange() {
 			var spaceBtnId = 'btn' + location;
 			
 			space += '<button class="p_spaceBtn p_btn" ' 
-					+ 'value="' + typeNum + '" ' 
+					+ 'value="0" ' 
 					+ 'id="' + spaceBtnId + '" '
 					+ 'onclick="spaceBtnChange(&#39;' + location +'&#39;)">'
 						+ '<img class="p_img space_img" '
@@ -70,10 +70,12 @@ function spaceTypeChange() {
 	item.forEach(function(space) {
 		array.push(space.value);
 	});
+	var info = array.join(',');
+	console.log(info);
 	
 	var param =   'col=' + x + '&'
 				+ 'row=' + y + '&'
-				+ 'info=' + array;
+				+ 'info=' + info;
 	
 	sendRequest(space_callback, 'hostParkingSettingChange', 'POST', param);
 }
@@ -82,7 +84,11 @@ function space_callback() {
 	if(httpRequest.readyState == 4) {
 		if(httpRequest.status == 200) { 
 			var date = httpRequest.responseText;
-			
+		
+			if(date != 0) {
+				alert("정보가 등록되었습니다.");
+			}
+			console.log('완료');
 		} else {
 			console.log('에러 발생');
 		}
@@ -91,9 +97,77 @@ function space_callback() {
 	}
 }
 
-function parkingSetting() {
-	/*var xy = location.split('-');
-	var x = xy[0] * 3;
-	var y = xy[1];
-	var index = (x - 0) + (y - 0) + 1;*/
+function spaceBody(info, col, row) {
+	var arr = info.split(',');
+	
+	var space = '';
+	for(var y = 0; y < row; y += 1) {
+		for(var x = 0; x < col; x += 1) {
+			var index = x + (y * col);
+			console.log(index + '번째 : ' + arr[index] + '/{' + x + ',' + y + '}');
+
+			var location = x + '-' + y;
+			var spaceId = 'id' + location;
+			var spaceBtnId = 'btn' + location;
+			
+			spaceType(arr[index]);
+			
+			space += '<button class="p_spaceBtn p_btn" ' 
+				+ 'value="' + arr[index] + '" ' 
+				+ 'id="' + spaceBtnId + '" '
+				+ 'onclick="spaceBtnChange(&#39;' + location +'&#39;)">'
+					+ '<img class="p_img space_img" '
+					+ 'id="' + spaceId + '" '
+					+ 'src="/baobob/resources/images/ymk/host_parking/' + typeImg+ '">'
+				+ '</button>';
+		}
+		space += '<br>';
+	}
+	var spaceDiv = document.getElementById('spaceDiv');
+	spaceDiv.innerHTML = space;
+	
+	document.getElementById('widthX').value = col;
+	document.getElementById('heightY').value = row;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//Request 받기
+function Request() {
+	var requestParam = '';
+	
+	this.getParameter = function(param) {
+		var url = unescape(location.href);
+		
+		var paramArr = (url.substring(url.indexOf('?') + 1, url.length)).split('&');
+		
+		for(var i = 0; i < paramArr.length; i += 1) {
+			var tmp = paramArr[1].split('=');
+			if(tmp[0].toUpperCase() == param.toUpperCase()) {
+				requestParam = paramArr[i].split('=')[1];
+				break;
+			}
+		}
+		requestParam = paramArr[1];
+		return requestParam;
+	}
+}
+function requestEx() {
+	var request = new Request();
+	request.getParameter('pSpace');
 }

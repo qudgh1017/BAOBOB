@@ -1,7 +1,8 @@
 package spring.mvc.baobob.vo;
 
 public class ParkingSpace {
-
+//park_space_tbl
+	
 	private int p_space_col;
 	private int p_space_row;
 	private String p_space_info;
