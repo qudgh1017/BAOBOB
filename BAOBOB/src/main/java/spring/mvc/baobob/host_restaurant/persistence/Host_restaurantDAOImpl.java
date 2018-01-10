@@ -22,5 +22,4 @@ public class Host_restaurantDAOImpl implements Host_restaurantDAO {
 		
 		return dao.addMenu(dto);
 	}
-	
 }
