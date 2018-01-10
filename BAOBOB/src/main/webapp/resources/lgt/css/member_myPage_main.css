@@ -1,0 +1,63 @@
+@charset "UTF-8";
+body,h1,h2,h3,h4,h5,h6,p,blockquote,pre,dl,dd,ol,ul,fieldset,legend,figure,menu{margin:0;padding:0;border:0}
+table,th,td{border-spacing:0;border-collapse:collapse}
+ol,ul,li{list-style:none}
+h1,h2,h3,h4,h5,h6{font-size:1em;font-weight:normal}
+body,input,textarea,keygen,select,button{font:normal 12px/1.2 'Open Sans','Noto Sans',sans-serif}
+input,textarea,select,button{margin:0;padding:0;border-radius:0;color:#333;outline:0;vertical-align:middle}
+a:link,a:visited,a:hover,a:active{text-decoration:none;color:black;}
+a,button,input[type='submit'],input[type='button'],input[type='reset']{border:0;background:transparent;cursor:pointer}
+img{border:0;vertical-align:top}
+
+/* BASIC */
+.bigfont{font-size:3em;}
+
+/* head_screen */
+.head_header{position:relative;}
+.head_screen{top: 0;left: 0;position: absolute;margin-left: 28.5rem;margin-top: 16rem;}
+section .notice_a{color:white;
+.advertDiv{text-align:center;}
+@media (min-width: 992px){
+	.head_screen{
+	    max-width: 960px;
+	}
+}
+@media (min-width: 768px){
+	.head_screen{
+	    max-width: 720px;
+	}
+}
+@media (min-width: 576px){
+	.head_screen{
+	    max-width: 540px;
+	}
+}
+
+/* jumbotron */
+.jumbotron
+{
+	background-color:blue;
+	color:white;
+	max-height:500px;
+	height:430px;
+	padding: 0rem;
+ }
+.jumbotron .lead
+{
+	text-align:center;
+}
+.jumbotron .leader
+{
+	text-align:center;
+}
+.jumbotron p
+{
+	text-align:center;
+}
+
+
+
+
+
+
+
