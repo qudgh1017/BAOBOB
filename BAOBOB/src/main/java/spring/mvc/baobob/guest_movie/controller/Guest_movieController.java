@@ -30,6 +30,8 @@ public class Guest_movieController {
 	@RequestMapping("movieChart")
 	public String movieChart(HttpServletRequest req, Model model) {
 		log.debug("====== Guest_movieController/movieChart ======");
+		
+		gmservice.movieList(req, model);
 
 		return "/guest/guest_movie/movie/movieChart";
 	}

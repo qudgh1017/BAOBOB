@@ -24,42 +24,46 @@ function hdTrailerPlaying(movie_index){
 	
 	<section>
 		<div class="container">
-			트레일러 <a href="https://www.youtube.com/watch?v="></a>
-		</div>
-	</section>
-	<br>
-	<br>
-	<br>
-	
-	<section>
-	<div class="container">
-		<div class="row">
-		
-		<!-- <table class="movie"> -->
-			
-			<c:if test="${cnt>0}">
-				<!-- <tr> -->
-				<c:forEach var="movie" items="${movies}">
-					<div class="col-md-3">
-						<a onclick="hdTrailerPlaying(${movie.movie_index});"><img src="${projectRes}images/phc/${movie.movie_poster}"></a>
-						<%-- <a href="hdTrailerPlaying?movie_index=${movie.movie_index}"><img src="${projectRes}images/phc/${movie.movie_poster}"></a> --%>
-					</div>
-				</c:forEach>
-				<!-- </tr> -->
-			</c:if>
-			
-			<!-- 게시글이 없으면 -->
-			<c:if test="${cnt == 0}">
-				<div class="col-md-12" align="center">
-					등록된 영화가 없습니다.
+			<div class="row">
+				<div class="col-md-offset-1"></div>
+				<div class="col-md-10" align="left">
+					<br>
+					<h3 align=left;>트레일러</h3>
+					<hr style="border:2px solid black;">
 				</div>
-			</c:if>
+				<div class="col-md-offset-1"></div>
+		</div><br><br>
 		
+		<!-- 트레일러 포스터 선택 -->
 		<div class="container">
+			<div class="row">
+			
+			<!-- <table class="movie"> -->
+				
+				<c:if test="${cnt>0}">
+					<!-- <tr> -->
+					<c:forEach var="movie" items="${movies}">
+						<div class="col-md-3" style="margin:10px auto">
+							<a onclick="hdTrailerPlaying(${movie.movie_index});"><img src="${projectRes}images/phc/${movie.movie_poster}"></a>
+							<%-- <a href="hdTrailerPlaying?movie_index=${movie.movie_index}"><img src="${projectRes}images/phc/${movie.movie_poster}"></a> --%>
+						</div>
+					</c:forEach>
+					<!-- </tr> -->
+				</c:if>
+				
+				<!-- 게시글이 없으면 -->
+				<c:if test="${cnt == 0}">
+					<div class="col-md-12" align="center">
+						등록된 영화가 없습니다.
+					</div>
+				</c:if>
+			</div>
+		</div>		
+			
+		<div class="container" style="margin-top:50px">
 			<div class="row">
 				<div class="col-md-12" align="center">
 					<c:if test="${cnt > 0}">
-						
 						<!-- 처음[◀◀] / 이전블록[◀] 특수문자:ㅁ + 한자키 -->
 						<c:if test="${startPage > pageBlock}">
 							<a href="hdTrailer?">[◀◀]</a>
@@ -86,16 +90,6 @@ function hdTrailerPlaying(movie_index){
 			</div>
 		</div>
 	</section>
-	<br>
-	<div id="contact">contact</div>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
 	<br>
 		
 	<!-- Footer -->

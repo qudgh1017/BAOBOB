@@ -29,7 +29,7 @@
 				<div class="col-md-offset-1"></div>
 				<div class="col-md-10" align="left">
 					<br>
-					<h2 align=left;>영화 상세</h2>
+					<h3 align=left;>영화 상세</h3>
 					<hr style="border:2px solid black;">
 				</div>
 				<div class="col-md-offset-1"></div>
@@ -53,8 +53,8 @@
 						예매율:
 					</span><br><hr>
 					<span style="font-size:12px; font-weight:bold;">
-						감독:${movie.movie_director} / 배우:${movie.movie_star}<br><br>
-						장르:
+						감독: ${movie.movie_director} / 배우:${movie.movie_star}<br><br>
+						장르: 
 						<c:choose>
 							<c:when test="${movie.movie_janre==1}">가족</c:when>
 							<c:when test="${movie.movie_janre==2}">공포/호러</c:when>
@@ -64,7 +64,13 @@
 							<c:when test="${movie.movie_janre==6}">코미디</c:when>
 							<c:when test="${movie.movie_janre==7}">애니메이션</c:when>
 						</c:choose>
-						 /기본:${movie.movie_age}세 이상,<%-- ${movie.movie_runtime} --%>분,<%-- ${movie.moive_country} --%>
+						 /기본:
+						 <c:if test="${movie.movie_age==0}">전체관람가,</c:if>
+						 <c:if test="${movie.movie_age!=0}">${movie.movie_age}세 이상,</c:if>
+						 
+						 <%-- ${movie.movie_runtime} --%>분,<%-- ${movie.moive_country} --%>
+						 <br><br>
+						 개봉: 20${movie.movie_rel_date}
 					</span>
 				</div>
 				<div class="col-md-offset-1"></div>
