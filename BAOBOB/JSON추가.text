@@ -1,0 +1,32 @@
+1. pom.xml 추가
+	<!-- JSON -->
+	<dependency>
+		<groupId>org.codehaus.jackson</groupId>
+		<artifactId>jackson-mapper-asl</artifactId>
+		<version>1.9.13</version>
+	</dependency>
+	
+2. servlet-context.xml에 추가
+	<!-- jackson을 위한 bean 추가 -->
+	<beans:bean id="jacksonMessageConverter" class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter" />
+
+3. pom.xml 추가
+
+<!-- JSONArray JSONObject 사용위함 -->
+	  <dependency>
+		<groupId>com.googlecode.json-simple</groupId>
+		<artifactId>json-simple</artifactId>
+		<version>1.1</version>
+	  </dependency>
+		
+
+/* $.ajax({  인자들  });
+1.url - 불러들일 문서 주소
+2.data - 파라미터로 보낼 값들, json object
+3.dataType - 콜백시 받아올 데이터의 형식
+4.type - 사용한 메서드(POST/GET)
+5.contentType - 요청에 명시되는 컨텐츠 삽입
+(기본값:application/x-www-form-urlencoded)
+6.success - 콜백함수, 응답 성공시
+7.error - 응답 실패시 핸들링 함수(XHR인스턴스,상태값,예외객체)
+*/	
