@@ -13,4 +13,5 @@
 <!-- 아이콘 -->
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
-
+<!-- 외부 javascript -->
+<script src="${projectRes}lgt/js/script.js"></script>
