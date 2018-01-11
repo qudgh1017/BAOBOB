@@ -34,19 +34,19 @@
 		<div class="collapse navbar-collapse" id="navbarResponsive">
 			<ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
 				<li class="nav-item" data-toggle="tooltip" data-placement="right" title="setting">
-					<a class="nav-link" onclick="ajax('hostParkingSetting');"> 
+					<a class="nav-link" href="hostParkingSetting"> 
 						<i class="fa fa-fw fa-wrench"></i> 
 						<span class="nav-link-text">주차장 관리</span>
 					</a>
 				</li>
 				<li class="nav-item" data-toggle="tooltip" data-placement="right" title="state">
-					<a class="nav-link" onclick="ajax('hostParkingState');"> 
+					<a class="nav-link" href="hostParkingState"> 
 						<i class="fa fa-fw fa-dashboard"></i>
 						<span class="nav-link-text">실시간 주차 현황</span>
 					</a>
 				</li>
 				<li class="nav-item" data-toggle="tooltip" data-placement="right" title="grape">
-					<a class="nav-link" onclick="ajax('hostParkingChart');"> 
+					<a class="nav-link" href="hostParkingChart"> 
 						<i class="fa fa-fw fa-area-chart"></i> 
 						<span class="nav-link-text">주차 현황</span>
 					</a>
@@ -57,7 +57,7 @@
 						<span class="nav-link-text">납부 관리</span>
 					</a>
 					<ul class="sidenav-second-level collapse" id="collapseComponents">
-						<li><a onclick="ajax('hostParkingPay');">납부 내역</a></li>
+						<li><a href="hostParkingPay">납부 내역</a></li>
 						<li><a onclick="ajax('hostParkingPay');">납부 결산</a></li>
 					</ul>
 				</li>

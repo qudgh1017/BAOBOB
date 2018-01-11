@@ -39,4 +39,8 @@ public class ParkingFee {
 		this.p_fee_base_time = p_fee_base_time;
 	}
 
+	@Override
+	public String toString() {
+		return "ep" + p_fee_exc_price + "/et" + p_fee_exc_time + "/bp" + p_fee_base_price+ "/bt=" + p_fee_base_time;
+	}
 }

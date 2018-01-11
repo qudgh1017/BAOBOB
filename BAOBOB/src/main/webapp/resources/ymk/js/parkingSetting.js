@@ -1,30 +1,3 @@
-/**
- * Host Parking Setting - 주차장 관리
- */
-var pageNum = 0;
-function ajax(url) {
-	sendRequest(view_callback, url, 'GET', '');
-}
-function view_callback() {
-	if(httpRequest.readyState == 4) {
-		if(httpRequest.status == 200) {
-			var view = httpRequest.responseText;
-			console.log(view);
-			console.log('완료');
-			pageNum = 1;
-			
-				var result = document.getElementById('content-wrapper');
-				result.innerHTML = view;
-				console.log('*********');
-			
-		} else {
-			console.log('오류 발생');
-		}
-	} else {
-		console.log('에러 상태 : ' + httpRequest.reayState);
-	}
-}
-
 var typeNum = '0';	//선택한 버튼 번호
 var typeImg = '';	//선택한 버튼 이미지
 
@@ -93,37 +66,37 @@ function spaceBtnChange(location) {
 
 //주차장 구역 정보 설정 AJAX
 function spaceTypeChange() {
-	return sendCheck();
-	
-	var item = document.querySelectorAll('.p_spaceBtn'); //배열판의 버튼들
-	
-	//col, row 정보
-	var x = document.getElementById('widthX').value; //col
-	var y = document.getElementById('heightY').value; //row
-	
-	//배열판 버튼들의 아이콘index 배열
-	var array = new Array();
-	item.forEach(function(space) {
-		array.push(space.value);
-	});
-	var info = array.join(',');
-	console.log(info);
-	
-	//요금 정보
-	var baseTime = document.getElementById('baseTime').value;
-	var baseFee = document.getElementById('baseFee').value;
-	var excTime = document.getElementById('excTime').value;
-	var excFee = document.getElementById('excFee').value;
-	
-	var param =   'col=' + x + '&'
-				+ 'row=' + y + '&'
-				+ 'info=' + info + '&' 
-				+ 'baseTime=' + baseTime + '&'
-				+ 'baseFee=' + baseFee + '&'
-				+ 'excTime=' + excTime + '&' 
-				+ 'excFee=' + excFee;
-	
-	sendRequest(space_callback, 'hostParkingSettingChange', 'POST', param);
+	if(sendCheck()) {
+		var item = document.querySelectorAll('.p_spaceBtn'); //배열판의 버튼들
+		
+		//col, row 정보
+		var x = document.getElementById('widthX').value; //col
+		var y = document.getElementById('heightY').value; //row
+		
+		//배열판 버튼들의 아이콘index 배열
+		var array = new Array();
+		item.forEach(function(space) {
+			array.push(space.value);
+		});
+		var info = array.join(',');
+		console.log(info);
+		
+		//요금 정보
+		var baseTime = document.getElementById('baseTime').value;
+		var baseFee = document.getElementById('baseFee').value;
+		var excTime = document.getElementById('excTime').value;
+		var excFee = document.getElementById('excFee').value;
+		
+		var param =   'col=' + x + '&'
+					+ 'row=' + y + '&'
+					+ 'info=' + info + '&' 
+					+ 'baseTime=' + baseTime + '&'
+					+ 'baseFee=' + baseFee + '&'
+					+ 'excTime=' + excTime + '&' 
+					+ 'excFee=' + excFee;
+		
+		sendRequest(space_callback, 'hostParkingSettingChange', 'POST', param);
+	}
 }
 
 function space_callback() {
@@ -209,86 +182,5 @@ function sendCheck() {
 		document.getElementById('excFee').focus();
 		return false;
 	}
-}
-
-
-
-/**
- * 
- * 
- */
-stateTypeImg = '';
-function parkingStatus(col, row, states) {
-	var state = states.split(',');
-	
-	var space = '';
-	for(var y = 0; y < row; y += 1) {
-		space += '<div class="p_div">';
-		for(x = 0; x < col; x += 1) {
-			var location = col + '-' + row;
-			var imgId = 'img' + location;
-			var btnId = 'btn' + location;
-			
-			var idx = x + y * col;
-			spaceStateType(state[idx]);
-			
-			space += '<button class="p_spaceBtn p_btn" '
-					+ 'id="' + btnId +'" '
-					+ 'value="' + state[idx] + '">'
-						+ '<img class="p_img space_img" '
-						+ 'id="' + imgId + '" '
-						+ 'src="/baobob/resources/images/ymk/host_parking/' + stateTypeImg + '">' 
-					+ '</button>';
-			
-			console.log(state[idx]);
-		}
-		space += '</div>';
-	}
-	
-	var spaceDiv = document.getElementById('spaceDiv');
-	spaceDiv.innerHTML = space;
-}
-
-function spaceStateType(type) {
-	switch(type) {
-	case '0': stateTypeImg = 'icon_true.png'; break;
-	case '1': stateTypeImg = 'icon_false.png'; break;
-	}
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-//Request 받기
-function Request() {
-	var requestParam = '';
-	
-	this.getParameter = function(param) {
-		var url = unescape(location.href);
-		
-		var paramArr = (url.substring(url.indexOf('?') + 1, url.length)).split('&');
-		
-		for(var i = 0; i < paramArr.length; i += 1) {
-			var tmp = paramArr[1].split('=');
-			if(tmp[0].toUpperCase() == param.toUpperCase()) {
-				requestParam = paramArr[i].split('=')[1];
-				break;
-			}
-		}
-		requestParam = paramArr[1];
-		return requestParam;
-	}
-}
-function requestEx() {
-	var request = new Request();
-	request.getParameter('pSpace');
+	return true;
 }
