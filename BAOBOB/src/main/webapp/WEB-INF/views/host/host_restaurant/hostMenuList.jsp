@@ -13,7 +13,7 @@
 <body class="fixed-nav sticky-footer bg-dark">
 
 	<!-- Navigation -->
-	<%-- <%@ include file="_navigation.jsp" %> --%>
+	<%@ include file="_navigation.jsp" %>
 	
 	<div class="content-wrapper" style="text-align: center;" >
 		<div class="content-main">
@@ -77,7 +77,8 @@
 			</table>
 		</div>
 	</div>
+	
 	<!-- Footer -->
-	<%-- <%@ include file="_footer.jsp" %> --%>
+	<%@ include file="_footer.jsp" %>
 </body>
 </html>

@@ -64,7 +64,7 @@
 					<span class="nav-link-text">메뉴 관리</span>
 				</a>
 				<ul class="sidenav-second-level collapse" id="collapseExamplePages">
-					<li><a id="hostMenuList" href="hostMenuList">메뉴 목록</a></li>
+					<li><a href="hostMenuList">메뉴 목록</a></li>
 					<li><a href="hostMenuAddForm">메뉴 추가</a></li>
 					<li><a href="#">메뉴 수정</a></li>
 					<li><a href="#">메뉴 삭제</a></li>

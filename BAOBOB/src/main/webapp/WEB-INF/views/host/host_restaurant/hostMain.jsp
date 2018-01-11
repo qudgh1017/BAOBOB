@@ -13,10 +13,11 @@
 	$(document).ready(function() {
 		$('#hostMenuList').click(function() {
 			$.ajax({
-				url : '/baobob/WEB-INF/views/host/host_restaurant/hostMenuList.jsp',
-				type : 'POST',
+				url : '/baobob/resources/chg/ajax/hostMenuList.jsp',
+				type : 'GET',
 
 				success : function(msg) {
+					alert(msg);
 					$('#result').html(msg);
 				},
 				error : function() {
@@ -35,9 +36,11 @@
 	<!-- Navigation -->
 	<%@ include file="_navigation.jsp"%>
 
-	<div id="result"></div>
+	<div id="result">
+	</div>
 
 	<!-- Footer -->
 	<%@ include file="_footer.jsp"%>
+
 </body>
 </html>

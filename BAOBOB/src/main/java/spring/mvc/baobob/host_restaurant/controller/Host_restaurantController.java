@@ -17,7 +17,7 @@ public class Host_restaurantController {
 	
 	@Autowired
 	Host_restaurantService service;
-	
+/*
 	// 식당[1]
 	@RequestMapping(value = "/hostMain")
 	public String hostMain() {
@@ -25,7 +25,7 @@ public class Host_restaurantController {
 		
 		return "host/host_restaurant/hostMain";
 	}
-	
+*/
 	// 식당[1] 메뉴 리스트
 	@RequestMapping(value = "/hostMenuList")
 	public String hostMenuList(HttpServletRequest req, Model model) {
