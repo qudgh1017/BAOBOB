@@ -45,7 +45,6 @@
 	<!-- Navigation -->
 	<%@ include file="../guest/common/navigation.jsp" %>
 	
-	
 	<!-- Header -->
 	<header class="bg-primary text-white text-center head_header">
 		<div class="head_screen"><!-- container -->
