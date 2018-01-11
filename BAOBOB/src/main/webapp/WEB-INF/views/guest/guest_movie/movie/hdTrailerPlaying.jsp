@@ -29,7 +29,8 @@
 				<div class="col-md-12" align="center">
 				
 					<div class="embed-responsive embed-responsive-16by9"> <!-- 해상도  -->
-						<iframe class="embed-responsive-item" src="https://www.youtube.com/embed/watch?v=${movie.movie_trailer}">
+<%-- 						<iframe class="embed-responsive-item" src="https://www.youtube.com/embed/watch?v=${movie.movie_trailer}"> --%>
+						<iframe class="embed-responsive-item" src="https://www.youtube.com/embed/${movie.movie_trailer}"></iframe>
 						</iframe>
 					</div>
 					
