@@ -11,4 +11,10 @@ public interface Host_restaurantService {
 	
 	// 식당[1] 메뉴 추가
 	public void menuAdd(MultipartHttpServletRequest req, Model model);
+
+	// 식당[1] 수정할 메뉴 정보 보기 / 수정할 정보 입력
+	public void menuView(HttpServletRequest req, Model model);
+	
+	// 식당[1] 메뉴 수정 처리
+	public void menuMod(MultipartHttpServletRequest req, Model model);
 }

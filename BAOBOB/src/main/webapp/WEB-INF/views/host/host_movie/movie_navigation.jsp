@@ -37,7 +37,7 @@
 				</ul>
 			</li>
 			<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Charts">
-				<a class="nav-link" href="#"> 
+				<a class="nav-link" href="hostTheater"> 
 					<i class="fa fa-fw fa-area-chart"></i> 
 					<span class="nav-link-text">상영관 관리</span>
 				</a>

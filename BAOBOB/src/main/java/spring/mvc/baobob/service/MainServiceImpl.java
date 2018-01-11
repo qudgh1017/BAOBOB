@@ -1,5 +1,9 @@
 package spring.mvc.baobob.service;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Random;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,12 +14,12 @@ import spring.mvc.baobob.persistence.MainDAO;
 import spring.mvc.baobob.vo.Member;
 
 @Service
-public class MainServiceImpl implements MainService{
+public class MainServiceImpl implements MainService {
 
 	@Autowired
 	MainDAO dao;
 
-	//아이디 중복 확인
+	// 아이디 중복 확인
 	@Override
 	public void confirmId(HttpServletRequest req, Model model) {
 		String id = req.getParameter("id");
@@ -23,18 +27,18 @@ public class MainServiceImpl implements MainService{
 		model.addAttribute("cnt", cnt);
 	}
 
-	//가입 처리
+	// 가입 처리
 	@Override
 	public void joinPro(HttpServletRequest req, Model model) {
 		String member_id = req.getParameter("id");
 		String member_pwd = req.getParameter("pwd");
 		String member_name = req.getParameter("name");
 		String member_tel = req.getParameter("tel");
-		String member_email = req.getParameter("email");		
+		String member_email = req.getParameter("email");
 		String member_birth = req.getParameter("birth");
 		String member_sex = req.getParameter("sex");
 		String member_address = req.getParameter("address");
-		
+
 		Member m = new Member();
 		m.setMember_id(member_id);
 		m.setMember_pwd(member_pwd);
@@ -45,11 +49,94 @@ public class MainServiceImpl implements MainService{
 		m.setMember_sex(member_sex);
 		m.setMember_address(member_address);
 		m.setMember_point(0);
-		m.setMember_step(9);
+		m.setMember_step(13);
 		m.setMember_cumPoint(0);
-		
-		int cnt = dao.memberInsert(m);
+
+		String key = emailSend(req);
+		int cnt = 0;
+		if(key != null) {
+			cnt = dao.memberInsert(m);
+			if(cnt != 0) {
+				Map<String, String> map = new HashMap<String, String>();
+				map.put("member_id", member_id);
+				map.put("member_key", key);
+				cnt = dao.memberKeyInsert(map);
+			}
+		} else {
+			cnt = 9;
+		}
 		model.addAttribute("cnt", cnt);
 	}
 
+	// 인증 메일 전송
+	@Override
+	public String emailSend(HttpServletRequest req) {
+
+		StringBuffer tmp = new StringBuffer();
+		Random rnd = new Random();
+
+		for (int i = 0; i < 6; i += 1) {
+			int rIdx = rnd.nextInt(2);
+			switch (rIdx) {
+			case 0:
+				tmp.append((char) ((int) (rnd.nextInt(26)) + 65));
+				break;
+			case 1:
+				tmp.append(rnd.nextInt(10));
+				break;
+			}
+		}
+		String key = tmp.toString();
+		
+		int cnt = dao.sendEmail(req.getParameter("email"), req.getParameter("id"), key);
+		if(cnt != 0) {
+			return key;
+		}
+		return null;
+	}
+
+	//이메일 인증
+	@Override
+	public void confirmEmail(HttpServletRequest req, Model model) {
+		String key = req.getParameter("key");
+		String id = req.getParameter("id");
+		
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("member_id",  id);
+		map.put("member_key", key);
+		int keyChk = dao.memberKeySelect(map);
+		
+		int cnt = 0;
+		if(keyChk != 0) {
+			map.put("member_id",  id);
+			map.put("member_step", "9");
+			cnt = dao.memberStepUpdate(map);
+			dao.memberKeyDelete(id);
+		}
+		model.addAttribute("cnt", cnt);
+	}
+
+	//로그인 처리
+	@Override
+	public void signInPro(HttpServletRequest req, Model model) {
+		String member_id = req.getParameter("id");
+		String member_pwd = req.getParameter("pwd");
+		
+		Map<String, String> map = new HashMap<>();
+		map.put("member_id", member_id);
+		map.put("member_pwd", member_pwd);
+		String step = dao.confirmIdPwd(map);
+		
+		int cnt = 0;
+		if(step != null) {
+			req.getSession().setAttribute("memStep", step);
+			if(!step.equals("13")) {
+				req.getSession().setAttribute("memId", member_id);
+			}
+			cnt = 1;
+		}
+		
+		model.addAttribute("cnt", cnt);
+	}
+	
 }

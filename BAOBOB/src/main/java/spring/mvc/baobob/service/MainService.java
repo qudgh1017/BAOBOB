@@ -13,4 +13,13 @@ public interface MainService {
 	
 	//가입 처리
 	public void joinPro(HttpServletRequest req, Model model);
+	
+	//인증 이메일 전송
+	public String emailSend(HttpServletRequest req);
+	
+	//이메일 인증
+	public void confirmEmail(HttpServletRequest req, Model model);
+	
+	//로그인 처리
+	public void signInPro(HttpServletRequest req, Model model);
 }

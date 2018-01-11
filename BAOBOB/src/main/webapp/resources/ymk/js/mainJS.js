@@ -11,11 +11,11 @@ var tel_msg = '연락처를 입력하세요';
 
 function errorAlert(msg) {
 	alert(msg);
-	window.back();
+	window.history.back();
 }
 
 function confirmId() {
-	var param = 'id=' + document.joinForm.tel.value;
+	var param = 'id=' + document.joinForm.id.value;
 	sendRequest(confirmId_callback, 'mainConfirmId', 'GET', param);
 }
 
@@ -73,6 +73,7 @@ function addressSearch() {
 }
 
 function joinCheck() {
+	var emailReg = /^(1|2)(9|0|1){1}[0-9]{2}(0|1){1}[1-9]{1}[0-3]{1}[0-9]{1}$/;
 
 	if (!document.joinForm.name.value) {
 		alert(name_msg);
@@ -108,9 +109,14 @@ function joinCheck() {
 		alert(sex_msg);
 		document.joinForm.sex.focus();
 		return false;
-		
+
 	} else if (!document.joinForm.birth.value) {
 		alert(birth_msg);
+		document.joinForm.birth.focus();
+		return false;
+
+	} else if(!emailReg.test(document.joinForm.birth.value)) {
+		alert('어느 시대 사람이신가요?');
 		document.joinForm.birth.focus();
 		return false;
 		
@@ -144,5 +150,18 @@ function sexBtnChange(sex) {
 		sexBtn[1].style.color = 'white';
 		
 		document.joinForm.sex.value='여';
+	}
+}
+
+
+function signInChk() {
+	if(!document.mainSignInForm.id.value){
+		alert(id_msg);
+		document.mainSignInForm.id.focus();
+		return false;
+	} else if(!document.mainSignInForm.pwd.value) {
+		alert(pwd_msg);
+		document.mainSignInForm.pwd.focus();
+		return false;
 	}
 }

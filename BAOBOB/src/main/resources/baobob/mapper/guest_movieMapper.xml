@@ -3,6 +3,35 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="spring.mvc.baobob.guest_movie.persistence.Guest_movieDAO">
+	
+	<!-- 영화 총갯수 -->
+	<select id="getMovieCnt" resultType="int">
+		SELECT COUNT(*)
+		FROM movie_tbl
+	</select>
 
+	<!-- 영화 전체 리스트 -->
+	<select id="getAllMovies" resultType="spring.mvc.baobob.vo.MovieVO">
+		<![CDATA[
+			SELECT * 
+			FROM (SELECT movie_index, movie_title, movie_content, movie_janre,
+						 movie_age, movie_rel_date, movie_director, movie_star, 
+						 movie_country, movie_runtime, movie_poster, movie_trailer,
+						 movie_state, rownum rNum 
+					FROM ( 
+							SELECT * FROM movie_tbl 
+							ORDER BY movie_rel_date DESC, movie_index ASC 
+						 ) 
+				 ) 
+			 WHERE  rNum >= #{start} AND rNum <= #{end}
+		 ]]>
+	</select>
+	
+	<!-- 영화 상세정보 -->
+	<select id="getMovie" resultType="spring.mvc.baobob.vo.MovieVO">
+		SELECT * 
+		FROM movie_tbl
+		WHERE movie_index = #{movie_index}
+	</select>
 
 </mapper>

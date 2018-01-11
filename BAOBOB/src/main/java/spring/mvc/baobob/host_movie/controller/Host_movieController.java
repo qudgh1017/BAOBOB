@@ -73,4 +73,20 @@ public class Host_movieController {
 		
 		return "host/host_movie/hostMovieModPro";
 	}
+	
+	// 관리자 상영관
+	@RequestMapping(value="hostTheater")
+	public String hostTheater(HttpServletRequest req, Model model) {
+		System.out.println("hostTheater");
+		
+		return "host/host_movie/hostTheater";
+	}
+	
+	// 상영관 등록하기
+	@RequestMapping(value="hostTheaterAddForm")
+	public String hostTheaterAddForm() {
+		System.out.println("hostTheaterAddForm");
+		
+		return "host/host_movie/hostTheaterAddForm";
+	}
 }
