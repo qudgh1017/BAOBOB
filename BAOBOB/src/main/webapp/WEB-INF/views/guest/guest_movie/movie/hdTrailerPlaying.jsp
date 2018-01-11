@@ -6,6 +6,12 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>${movie.movie_title}</title>
+<script type="text/javascript">
+	function movieDetail(movie_index){
+		window.close();
+		opener.location.href="movieDetail?movie_index="+movie_index; //오픈해준 페이지 reload
+	}
+</script>
 </head>
 <body style="background-color:black; height:700">
 	
@@ -27,7 +33,9 @@
 					</div>
 				</div>
 				<div class="col-md-2" align="center"><br><br><br>
-					<img src="${projectRes}/images/phc/${movie.movie_poster}" width="120px" height="150px"><br>
+					<a onclick="movieDetail(${movie.movie_index})">
+						<img src="${projectRes}/images/phc/${movie.movie_poster}" width="120px" height="150px"><br>
+					</a>
 					<span style="color:white; font-size:15px; font-weight:bold">${movie.movie_title} ${movie.movie_age}</span><br>					
 					<span style="color:white; font-size:11px">
 						<c:choose>

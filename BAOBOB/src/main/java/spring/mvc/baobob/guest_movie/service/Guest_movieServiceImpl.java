@@ -25,11 +25,6 @@ public class Guest_movieServiceImpl implements Guest_movieService{
 		
 	}
 
-	//상영중인 영화리스트
-	@Override
-	public void playingMovieList(HttpServletRequest req, Model model) {
-		
-	}
 
 	//HD-트레일러
 	@Override
@@ -109,8 +104,9 @@ public class Guest_movieServiceImpl implements Guest_movieService{
 		}
 	}
 
+	//movie정보 이용
 	@Override
-	public void hd_TrailerPlaying(HttpServletRequest req, Model model) {
+	public void movieInfo(HttpServletRequest req, Model model) {
 		int movie_index = Integer.parseInt(req.getParameter("movie_index"));
 		
 		MovieVO movie = gmdao.getMovie(movie_index);

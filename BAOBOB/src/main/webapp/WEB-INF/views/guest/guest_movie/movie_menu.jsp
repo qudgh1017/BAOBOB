@@ -68,7 +68,6 @@
 		 			<div class="container">
 						<div class="row">
 					        <div class="span12">
-					        	
 					            <form id="custom-search-form" class="form-search form-horizontal pull-right">
 					                <div class="input-append span12">
 					                    <input type="text" class="search-query" placeholder="검색" style="width:100px">

@@ -57,10 +57,22 @@ public class Guest_movieController {
 	public String hdTrailerPlaying(HttpServletRequest req, Model model) {
 		log.debug("====== Guest_movieController/hdTrailerPlaying ======");
 
-		gmservice.hd_TrailerPlaying(req, model);
+		gmservice.movieInfo(req, model);
 		
 		return "/guest/guest_movie/movie/hdTrailerPlaying";
 	}
+	
+	//상세영화
+	//영화-HD트레일러 실행하는 상세 페이지
+		@RequestMapping("movieDetail")
+		public String movieDetail(HttpServletRequest req, Model model) {
+			log.debug("====== Guest_movieController/movieDetail ======");
+
+			gmservice.movieInfo(req, model);
+			
+			return "/guest/guest_movie/movie/movieDetail";
+		}
+	
 	
 	//영화-평점
 	@RequestMapping("movieReview")

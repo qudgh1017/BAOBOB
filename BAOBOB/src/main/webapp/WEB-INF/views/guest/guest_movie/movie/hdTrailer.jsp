@@ -30,21 +30,6 @@ function hdTrailerPlaying(movie_index){
 	<br>
 	<br>
 	<br>
-	<!-- <section class="bg-primary text-white mb-0" id="Notice">
-	  <div class="container">
-	    <h2 class="text-center text-uppercase text-white">Notice</h2>
-	    <hr class="star-light mb-5">
-	    <div class="row">
-	      <div class="col-lg-4 ml-auto">
-	        <p class="lead">BAOBOB는 B형 3명, A형 1명, O형 2명을 뜻한다.</p>
-	      </div>
-	      <div class="col-lg-4 mr-auto">
-	        <p class="lead"><a class="notice_a" href="#">개인정보 이용내역 안내</a></p>
-	      </div>
-	    </div>
-	   
-	  </div>
-	</section> -->
 	
 	<section>
 	<div class="container">
