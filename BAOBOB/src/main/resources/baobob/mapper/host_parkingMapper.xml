@@ -13,6 +13,7 @@
 	<!-- 주차장 구역 정보 등록 -->
 	<insert id="parkingSpaceChange" parameterType="spring.mvc.baobob.vo.ParkingSpace">
 		INSERT INTO park_space_tbl
+			(p_space_col, p_space_row, p_space_info)
 		VALUES
 			(#{p_space_col}, #{p_space_row}, #{p_space_info})
 	</insert>
@@ -28,12 +29,63 @@
 	
 	<!-- 주차장 해당 구역 정보 -->
 	<select id="getParking" resultType="spring.mvc.baobob.vo.Parking">
-		SELECT * FROM park_tbl
+		SELECT * 
+		FROM park_tbl
+		WHERE park_index = #{park_index}
 	</select>
 	
 	<!-- 주차장 각 구역 정보 등록 -->
 	<insert id="parkingChange" parameterType="spring.mvc.baobob.vo.Parking">
 		INSERT INTO park_tbl
-		VALUES (#{park_index}, #{park_state}, #{park_theme}, SYSTIMESTAMP)
+			(park_index, park_state, park_theme, park_last_date)
+		VALUES
+			(#{park_index}, #{park_state}, #{park_theme}, SYSTIMESTAMP)
 	</insert>
+	
+	<!-- 주차장 각 구역 정보 수정 -->
+	<update id="parkingUpdate" parameterType="spring.mvc.baobob.vo.Parking">
+		UPDATE park_tbl
+		SET
+			park_state = #{park_state},
+			park_theme = #{park_theme},
+			park_last_date = #{park_last_date}
+		WHERE park_index = #{park_index}
+	</update>
+	
+	<!-- 주차장 구역 상태 정보 -->
+	<select id="getParkingStates" resultType="String">
+		<![CDATA[
+		SELECT park_state
+		FROM park_tbl
+		WHERE park_index < #{last_idx}
+		]]>
+	</select>
+	
+	<select id="getParkingFee" resultType="spring.mvc.baobob.vo.ParkingFee">
+		SELECT *
+		FROM park_fee_tbl
+	</select>
+	
+	<select id="getParkingFeeCount" resultType="int">
+		SELECT COUNT(*)
+		FROM park_fee_tbl
+	</select>
+	
+	<!-- 주차 기본 요금 등록 -->
+	<insert id="parkingFeeChange" parameterType="spring.mvc.baobob.vo.ParkingFee">
+		INSERT INTO park_fee_tbl
+			(p_fee_exc_price, p_fee_exc_time, p_fee_base_price, p_fee_base_time)
+		VALUES 
+			(#{p_fee_exc_price}, #{p_fee_exc_time}, #{p_fee_base_price}, #{p_fee_base_time})
+	</insert>
+	
+	<!-- 주차 기본 요금 수정 -->
+	<update id="parkingFeeUpdate" parameterType="spring.mvc.baobob.vo.ParkingFee">
+		UPDATE park_fee_tbl
+		SET
+			p_fee_exc_price = #{p_fee_exc_price}, 
+			p_fee_exc_time = #{p_fee_exc_time}, 
+			p_fee_base_price = #{p_fee_base_price}, 
+			p_fee_base_time = #{p_fee_base_time}
+	</update>
 </mapper>
