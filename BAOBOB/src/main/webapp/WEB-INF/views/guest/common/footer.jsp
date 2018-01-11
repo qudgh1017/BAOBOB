@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <body>
-	<footer class="footer text-center">
+	<footer class="footer text-center" style="background-color:487752">
 		<div class="container">
 			<div class="row">
 				<div class="col-md-4 mb-5 mb-lg-0">

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="spring.mvc.baobob.persistence.MainDAO">
+
+	<!-- 아이디 중복 확인 -->
+	<select id="confirmId" resultType="int">
+		SELECT COUNT(*) FROM member_tbl
+	</select>
+	
+	<!-- 가입처리 -->
+	<insert id="memberInsert" parameterType="spring.mvc.baobob.vo.Member">
+		INSERT INTO member_tbl
+		VALUES
+			(#{member_id}, #{member_pwd}, #{member_name}, #{member_tel}, #{member_email}, #{member_birth}, #{member_sex}, #{member_address}, #{member_point}, #{member_step}, #{member_cumPoint}, SYSTIMESTAMP)
+	</insert>
+</mapper>

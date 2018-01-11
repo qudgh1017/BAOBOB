@@ -8,10 +8,13 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import spring.mvc.baobob.service.MainService;
 
 /**
  * Handles requests for the application home page.
@@ -54,8 +57,50 @@ public class HomeController {
 		return "host/example";
 	}
 	
-	@RequestMapping("main/index")
+	//==============================================================================
+	
+	@Autowired
+	MainService service;
+	
+	@RequestMapping("mainIndex")
 	public String index(HttpServletRequest req, Model model) {
+		System.out.println("index()");
 		return "main/index";
+	}
+	
+	//회원가입
+	@RequestMapping("mainJoin")
+	public String mainJoin() {
+		System.out.println("mainJoin()");
+		return "main/mainJoin";
+	}
+	
+	//아이디 중복 검사
+	@RequestMapping("mainConfirmId")
+	public String confirmId(HttpServletRequest req, Model model) {
+		System.out.println("confirmId()");
+		
+		service.confirmId(req, model);
+		
+		return "main/cntPage";
+	}
+	
+	//가입처리
+	@RequestMapping("mainJoinPro")
+	public String joinPro(HttpServletRequest req, Model model) {
+		System.out.println("joinPro()");
+		
+		service.joinPro(req, model);
+		
+		return "main/mainJoinPro";
+	}
+	
+	//로그인 mainSignIn
+	@RequestMapping("mainSignIn")
+	public String mainSignIn(HttpServletRequest req, Model model) {
+		System.out.println("joinPro()");
+		
+		
+		return "main/mainSignIn";
 	}
 }
