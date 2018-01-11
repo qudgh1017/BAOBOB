@@ -14,7 +14,7 @@
 	<c:if test="${cnt != 0}">
 		<script type="text/javascript">
 			alert("메뉴 정보가 수정 되었습니다.");
-			window.location="hostMenuModForm";
+			window.location="hostMenuList";
 		</script>
 	</c:if>
 </body>

@@ -70,4 +70,14 @@ public class Host_restaurantDAOImpl implements Host_restaurantDAO {
 		
 		return dao.viewMenu(index);
 	}
+	
+	@Override
+	public int delMenu(MenuVO dto) {
+		// TODO Auto-generated method stub
+		log.debug("dao.delMenu()");
+		
+		Host_restaurantDAO dao = sqlSession.getMapper(Host_restaurantDAO.class);
+		
+		return dao.delMenu(dto);
+	}
 }

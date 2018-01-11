@@ -17,4 +17,7 @@ public interface Host_restaurantService {
 	
 	// 식당[1] 메뉴 수정 처리
 	public void menuMod(MultipartHttpServletRequest req, Model model);
+
+	// 식당[1] 메뉴 삭제 처리
+	public void menuDel(HttpServletRequest req, Model model);
 }

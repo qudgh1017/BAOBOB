@@ -54,8 +54,6 @@
 				<ul class="sidenav-second-level collapse" id="collapseComponents">
 					<li><a href="#">예약 목록</a></li>
 					<li><a href="#">예약 추가</a></li>
-					<li><a href="#">예약 수정</a></li>
-					<li><a href="#">예약 삭제</a></li>
 				</ul>
 			</li>
 			<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Example Pages">
@@ -66,8 +64,6 @@
 				<ul class="sidenav-second-level collapse" id="collapseExamplePages">
 					<li><a href="hostMenuList">메뉴 목록</a></li>
 					<li><a href="hostMenuAddForm">메뉴 추가</a></li>
-					<li><a href="#">메뉴 수정</a></li>
-					<li><a href="#">메뉴 삭제</a></li>
 				</ul></li>
 			<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Menu Levels">
 				<a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseMulti" data-parent="#exampleAccordion"> 
@@ -77,8 +73,6 @@
 				<ul class="sidenav-second-level collapse" id="collapseMulti">
 					<li><a href="#">직원 목록</a></li>
 					<li><a href="#">직원 추가</a></li>
-					<li><a href="#">직원 수정</a></li>
-					<li><a href="#">직원 삭제</a></li>
 				</ul></li>
 			<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Link">
 				<a class="nav-link" href="#"> 

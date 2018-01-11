@@ -20,4 +20,7 @@ public interface Host_restaurantDAO {
 	
 	// 식당[1] 메뉴 수정 처리
 	public int modMenu(MenuVO dto);
+
+	// 식당[1] 메뉴 삭제 처리
+	public int delMenu(MenuVO dto);
 }

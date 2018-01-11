@@ -14,7 +14,7 @@
 	<c:if test="${cnt != 0}">
 		<script type="text/javascript">
 			alert("새로운 메뉴가 추가되었습니다.");
-			window.location="hostMenuAddForm";
+			window.location="hostMenuList";
 		</script>
 	</c:if>
 </body>

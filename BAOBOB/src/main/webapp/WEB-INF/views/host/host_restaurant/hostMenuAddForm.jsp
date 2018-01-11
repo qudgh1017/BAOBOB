@@ -38,38 +38,45 @@
 	<!-- Navigation -->
 	<%@ include file="_navigation.jsp"%>
 	
-	<form action="hostMenuAddPro" method="POST" name="addform" enctype="multipart/form-data" onsubmit="return addCheck()">
-		<div class="content-wrapper" style="text-align: center;" >
-			<div class="content-main">
-				<b style="color: skyblue;">메뉴 등록</b>
-				<hr style="border: 3px solid skyblue; margin-bottom: 0px;">
-				<table border=1 style="border: lightgray; width: 800px;">
-					<tr>
-						<td>&bull; 메뉴명</td>
-						<td><input type="text" name="name" placeholder="메뉴명"> <span style="color: skyblue;">예) 불갈비스테이크</span></td>
-					</tr>
-					<tr>
-						<td>&bull; 가격</td>
-						<td><input type="text" name="price" placeholder="가격(원)"></td>
-					</tr>
-					<tr>
-						<td>&bull; 메뉴 소개</td>
-						<td><textarea name="content" rows="5" cols="50" placeholder="메뉴 소개"></textarea></td>
-					</tr>
-					<tr>
-						<td rowspan="2">&bull; 메뉴 이미지</td>
-						<td><input type="file" id="img" name="img" accept="image/*"></td>
-					</tr>
-					<tr>
-						<td><img src="" id="imgView" name="imgView" style="width: 400px;"></td>
-					</tr>
-					<tr>
-						<td colspan="2" style="text-align: center;">
-							<input size="10" type="submit" value="메뉴 추가" style="background-color: black; color: white; border: 1px solid;">
-							<input size="10" type="reset" value="취소" style="background-color: lightgray; color: black; border: 1px solid;">
-						</td>
-					</tr>
-				</table>
+	<form action="hostMenuAddPro" method="POST" name="add_mod_form" enctype="multipart/form-data" onsubmit="return add_mod_Check()">
+		<div class="content-wrapper">
+			<div class="container-fluid" style="width: 1000px;">
+				<div class="card mb-3">
+					<div class="card-header">
+						<i class="fa fa-table"></i> 메뉴 추가
+					</div>
+					<div class="card-body">
+						<div class="table-responsive">
+							<table border=1 style="border: lightgray; width: 800px;">
+								<tr>
+									<th>&bull; 메뉴명</th>
+									<td><input type="text" name="name" placeholder="메뉴명"></td>
+								</tr>
+								<tr>
+									<th>&bull; 가격</th>
+									<td><input type="text" name="price" placeholder="가격(원)"></td>
+								</tr>
+								<tr>
+									<th>&bull; 메뉴 소개</th>
+									<td><textarea name="content" rows="5" cols="50" placeholder="메뉴 소개"></textarea></td>
+								</tr>
+								<tr>
+									<th rowspan="2">&bull; 메뉴 이미지</th>
+									<td><input type="file" id="img" name="img" accept="image/*"></td>
+								</tr>
+								<tr>
+									<td><img src="" id="imgView" name="imgView" style="width: 400px;"></td>
+								</tr>
+								<tr>
+									<td colspan="2" style="text-align: center;">
+										<input size="10" type="submit" value="메뉴 추가">
+										<input size="10" type="reset" value="취소">
+									</td>
+								</tr>
+							</table>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</form>

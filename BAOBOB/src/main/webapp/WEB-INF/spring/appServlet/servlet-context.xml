@@ -81,9 +81,8 @@
 			</beans:props>
 		</beans:property>
 	</beans:bean>
-	
-	<!-- jackson을 위한 bean 추가 -->
+<!-- 
+	jackson을 위한 bean 추가
 	<beans:bean id="jacksonMessageConverter" class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter" />
-	
-
+ -->
 </beans:beans>
