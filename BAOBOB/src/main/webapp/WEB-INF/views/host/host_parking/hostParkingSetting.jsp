@@ -24,6 +24,12 @@
 	
  	<div class="content-wrapper">
 		<ul class="p_clear">
+			<li>
+				기본 시간 <input type="number" min="0" max="1440"> 
+				기본 요금 <input type="number" min="0" max="10000">
+				초과 시간 <input type="number" min="0" max="1440">
+				초과 요금 <input type="number" min="0" max="10000">
+			</li>
 			<li class="p_li" id="spaceDiv">
 			</li>
 			<li class="p_li">

@@ -1,6 +1,30 @@
 /**
- * 
+ * Host Parking Setting - 주차장 관리
  */
+var pageNum = 0;
+function ajax(url) {
+	sendRequest(view_callback, url, 'GET', '');
+}
+function view_callback() {
+	if(httpRequest.readyState == 4) {
+		if(httpRequest.status == 200) {
+			var view = httpRequest.responseText;
+			console.log(view);
+			console.log('완료');
+			pageNum = 1;
+			
+				var result = document.getElementById('content-wrapper');
+				result.innerHTML = view;
+				console.log('*********');
+			
+		} else {
+			console.log('오류 발생');
+		}
+	} else {
+		console.log('에러 상태 : ' + httpRequest.reayState);
+	}
+}
+
 var typeNum = '0';	//선택한 버튼 번호
 var typeImg = '';	//선택한 버튼 이미지
 
@@ -30,16 +54,16 @@ function spaceDivChange() {
 	for(var y = 0; y < heightY; y += 1) {
 		for(var x = 0; x < widthX; x += 1) {
 			var location = x + '-' + y;
-			var spaceId = 'id' + location;
-			var spaceBtnId = 'btn' + location;	//버튼 구별하기 위한 id
+			var imgId = 'img' + location;
+			var btnId = 'btn' + location;	//버튼 구별하기 위한 id
 			
 			//배열판의 각 버튼
 			space += '<button class="p_spaceBtn p_btn" ' 
 					+ 'value="0" ' 
-					+ 'id="' + spaceBtnId + '" '
+					+ 'id="' + btnId + '" '
 					+ 'onclick="spaceBtnChange(&#39;' + location +'&#39;)">'
 						+ '<img class="p_img space_img" '
-						+ 'id="' + spaceId + '" '
+						+ 'id="' + imgId + '" '
 						+ 'src="/baobob/resources/images/ymk/host_parking/icon_tmp.png">'
 					+ '</button>';
 		}
@@ -52,13 +76,13 @@ function spaceDivChange() {
 function spaceBtnChange(location) {
 	if(typeImg != '') { //아이콘 선택했을 경우, 선택한 버튼의 설정 변경
 		//선택한 버튼의 이미지 src 변경
-		var spaceId = 'id' + location; //선택한 버튼의 id
-		var spaceImg = document.getElementById(spaceId); //선택한 버튼의 img
+		var imgId = 'img' + location; //선택한 버튼의 id
+		var spaceImg = document.getElementById(imgId); //선택한 버튼의 img
 		spaceImg.src = '/baobob/resources/images/ymk/host_parking/' + typeImg;
 
 		//선택한 버튼의 value 변경(DB에 아이콘index 넣기 위한 값)
-		var spaceBtnId = 'btn' + location;
-		var spaceBtn = document.getElementById(spaceBtnId);
+		var btnId = 'btn' + location;
+		var spaceBtn = document.getElementById(btnId);
 		spaceBtn.value = typeNum;
 	} else {
 		alert('아이콘을 선택해주세요.');
@@ -115,17 +139,17 @@ function spaceBody(info, col, row) {
 			console.log(index + '번째 : ' + arr[index] + '/{' + x + ',' + y + '}');
 
 			var location = x + '-' + y;
-			var spaceId = 'id' + location;
-			var spaceBtnId = 'btn' + location;
+			var imgId = 'img' + location;
+			var btnId = 'btn' + location;
 			
 			spaceType(arr[index]);
 			
 			space += '<button class="p_spaceBtn p_btn" ' 
 				+ 'value="' + arr[index] + '" ' 
-				+ 'id="' + spaceBtnId + '" '
+				+ 'id="' + btnId + '" '
 				+ 'onclick="spaceBtnChange(&#39;' + location +'&#39;)">'
 					+ '<img class="p_img space_img" '
-					+ 'id="' + spaceId + '" '
+					+ 'id="' + imgId + '" '
 					+ 'src="/baobob/resources/images/ymk/host_parking/' + typeImg+ '">'
 				+ '</button>';
 		}
@@ -140,6 +164,34 @@ function spaceBody(info, col, row) {
 
 
 
+
+/**
+ * 
+ * 
+ */
+stateTypeImg = '';
+function parkingState(col, row) {
+	var space = '';
+	
+	for(var y = 0; y < row; y += 1) {
+		for(x = 0; x < col; x += 1) {
+			var location = col + '-' + row;
+			var imgId = 'img' + location;
+			var btnId = 'btn' + location;
+			
+			spaceStateType();
+			
+			space += '<button class="p_spaceBtn p_btn" '
+					+ 'id="' + btnId +'" '
+					+ 'onclick="spaceBtnChange(&#39;' + location +'&#39;)">'
+						+ '<img class="p_img space_img" '
+						+ 'id="' + imgId + '" '
+						+ 'src="/baobob/resources/images/ymk/host_parking/' + stateTypeImg + '">' 
+					+ '</button>';
+		}
+		space += '<br>';
+	}
+}
 
 
 

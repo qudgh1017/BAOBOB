@@ -37,13 +37,6 @@
 								마이페이지
 							</a>
 						</li>
-						<c:if test="${sessionScope.memStep == 8}">
-							<li class="nav-item mx-0 mx-lg-1">
-								<a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="guest/guest_mypage/gueTicket">
-									마이페이지
-								</a>
-							</li>
-						</c:if>
 						<li class="nav-item mx-0 mx-lg-1">
 							<a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="mainSignOut">
 								로그아웃

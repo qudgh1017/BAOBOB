@@ -25,4 +25,15 @@
 			p_space_row=#{p_space_row}, 
 			p_space_info=#{p_space_info}
 	</update>
+	
+	<!-- 주차장 해당 구역 정보 -->
+	<select id="getParking" resultType="spring.mvc.baobob.vo.Parking">
+		SELECT * FROM park_tbl
+	</select>
+	
+	<!-- 주차장 각 구역 정보 등록 -->
+	<insert id="parkingChange" parameterType="spring.mvc.baobob.vo.Parking">
+		INSERT INTO park_tbl
+		VALUES (#{park_index}, #{park_state}, #{park_theme}, SYSTIMESTAMP)
+	</insert>
 </mapper>

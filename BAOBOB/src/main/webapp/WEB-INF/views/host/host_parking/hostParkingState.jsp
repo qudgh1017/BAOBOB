@@ -7,62 +7,15 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 </head>
-<body class="fixed-nav sticky-footer bg-dark">
+<body class="fixed-nav sticky-footer bg-dark" onload="parkingState(${pSpace.p_space_col}, ${pSpace.p_space_row});">
 
 	<!-- Navigation -->
 	<%@ include file="../common/navigation.jsp" %>
 	
 	<div class="content-wrapper">
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
+	
+	
+	
 	</div>
 	
 	<!-- Footer -->
