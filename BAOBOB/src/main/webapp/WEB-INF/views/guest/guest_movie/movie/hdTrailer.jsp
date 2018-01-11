@@ -6,13 +6,12 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>BAOBOX</title>
-<!-- slide -->
-<!-- slide 기능 사용위한 라이브러리 -->
-<%-- <link href="${projectRes}ybh/css/slick.css" rel="stylesheet" type="text/css">
-<script type="text/javascript" src="http://code.jquery.com/jquery-3.2.1.min.js"></script>
-<script type="text/javascript" src="${projectRes}ybh/js/slick.min.js"></script>
-<script type="text/javascript" src="${projectRes}ybh/js/slide.js"></script>	
- --%>	
+
+<script type="text/javascript">
+function hdTrailerPlaying(movie_index){
+	window.open("hdTrailerPlaying?movie_index="+movie_index, "host_logout", "top=50 left=150 width=1200 height=700"); 
+}
+</script>
 </head>
 <body>
 	
@@ -57,7 +56,8 @@
 				<!-- <tr> -->
 				<c:forEach var="movie" items="${movies}">
 					<div class="col-md-3">
-						<a href="hdTrailerPlaying?movie_index=${movie.movie_index}"><img src="${projectRes}images/phc/${movie.movie_poster}"></a>
+						<a onclick="hdTrailerPlaying(${movie.movie_index});"><img src="${projectRes}images/phc/${movie.movie_poster}"></a>
+						<%-- <a href="hdTrailerPlaying?movie_index=${movie.movie_index}"><img src="${projectRes}images/phc/${movie.movie_poster}"></a> --%>
 					</div>
 				</c:forEach>
 				<!-- </tr> -->
