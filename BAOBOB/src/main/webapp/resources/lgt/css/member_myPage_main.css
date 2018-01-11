@@ -1,22 +1,17 @@
 @charset "UTF-8";
-body,h1,h2,h3,h4,h5,h6,p,blockquote,pre,dl,dd,ol,ul,fieldset,legend,figure,menu{margin:0;padding:0;border:0}
-table,th,td{border-spacing:0;border-collapse:collapse}
-ol,ul,li{list-style:none}
-h1,h2,h3,h4,h5,h6{font-size:1em;font-weight:normal}
-body,input,textarea,keygen,select,button{font:normal 12px/1.2 'Open Sans','Noto Sans',sans-serif}
-input,textarea,select,button{margin:0;padding:0;border-radius:0;color:#333;outline:0;vertical-align:middle}
-a:link,a:visited,a:hover,a:active{text-decoration:none;color:black;}
-a,button,input[type='submit'],input[type='button'],input[type='reset']{border:0;background:transparent;cursor:pointer}
-img{border:0;vertical-align:top}
 
 /* BASIC */
-.bigfont{font-size:3em;}
+.bigfont{font-size:3em; font-weight:bold; font-family: Montserrat}
+.middlefont{font-size:2em; font-weight:bold; color:white; font-family: Montserrat}
+.samllfont{font-size:25px; font-weight:bold; color:white; font-family: Montserrat}
 
-/* head_screen */
 .head_header{position:relative;}
 .head_screen{top: 0;left: 0;position: absolute;margin-left: 28.5rem;margin-top: 16rem;}
-section .notice_a{color:white;
+    	
+section .notice_a{color:white;}
+    	
 .advertDiv{text-align:center;}
+    	
 @media (min-width: 992px){
 	.head_screen{
 	    max-width: 960px;
@@ -32,32 +27,51 @@ section .notice_a{color:white;
 	    max-width: 540px;
 	}
 }
-
-/* jumbotron */
-.jumbotron
-{
-	background-color:blue;
+		
+/* 마이페이지 */
+.mybaobob {
 	color:white;
-	max-height:500px;
-	height:430px;
-	padding: 0rem;
- }
-.jumbotron .lead
-{
-	text-align:center;
-}
-.jumbotron .leader
-{
-	text-align:center;
-}
-.jumbotron p
-{
-	text-align:center;
+	background-color: 487752;
+	padding: 2rem 5rem;
+	border-radius: 0.3rem;}
+.mybaobob table.board {background-color:487752; margin: auto; width: auto; border-collapse: collapse;}
+.mybaobob table.board img {width:400px; background-color:487752;}
+.mybaobob caption {font-weight: bold;font-size: 40px;color:white;margin-bottom:50px;}
+.mybaobob table.board th {height: 50px; width: 300px;padding: 20px;font-weight: bold;color: white;vertical-align: top; text-align:center;}
+.mybaobob table.board td {padding: 17px;vertical-align: top; text-align: center; color:white;}
+
+
+.vertical-menu {
+    width: 250px;
+    font-family: Montserrat;
 }
 
+.vertical-menu a {
+    color: 487752;
+    display: block;
+    padding: 12px;
+    text-decoration: none;
+	font-size: 20px;
+	font-weight: bold;
+	background-color: white;
+}
+
+.vertical-menu a:hover {
+	color: A5C952;
+    text-decoration: none;
+}
+
+.vertical-menu a.active {
+	font-size: 30px;
+	font-weight: bold;
+    background-color: white;;
+    color: 487752;
+}
 
 
-
+.baobobImg{
+	width:1000px;
+}
 
 
 

@@ -1,5 +1,7 @@
 package spring.mvc.baobob.host_movie.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,8 +18,10 @@ public class Host_movieController {
 	
 	// 관리자 영화
 	@RequestMapping(value="hostMovie")
-	public String hostMovie() {
+	public String hostMovie(HttpServletRequest req, Model model) {
 		System.out.println("hostMovie");
+		
+		service.hostMovieList(req, model);
 		
 		return "host/host_movie/hostMovie";
 	}
@@ -38,5 +42,51 @@ public class Host_movieController {
 		service.hostMovieAddPro(req, model);
 		
 		return "host/host_movie/hostMovieAddPro";
+	}
+	
+	// 영화 삭제 처리
+	@RequestMapping(value="hostMovieDel")
+	public String hostMovieDel(HttpServletRequest req, Model model) {
+		System.out.println("hostMovieDel");
+		
+		service.hostMovieDel(req, model);
+		
+		return "host/host_movie/hostMovieDel";
+	}
+	
+	// 영화 상세 페이지
+	@RequestMapping(value="hostMovieDetail")
+	public String hostMovieDetail(HttpServletRequest req, Model model) {
+		System.out.println("hostMovieDetail");
+		
+		service.hostMovieDetail(req, model);
+		
+		return "host/host_movie/hostMovieDetail";
+	}
+	
+	// 영화 수정 처리
+	@RequestMapping(value="hostMovieModPro")
+	public String hostMovieModPro(MultipartHttpServletRequest req, Model model) {
+		System.out.println("hostMovieModPro");
+		
+		service.hostMovieModPro(req, model);
+		
+		return "host/host_movie/hostMovieModPro";
+	}
+	
+	// 관리자 상영관
+	@RequestMapping(value="hostTheater")
+	public String hostTheater(HttpServletRequest req, Model model) {
+		System.out.println("hostTheater");
+		
+		return "host/host_movie/hostTheater";
+	}
+	
+	// 상영관 등록하기
+	@RequestMapping(value="hostTheaterAddForm")
+	public String hostTheaterAddForm() {
+		System.out.println("hostTheaterAddForm");
+		
+		return "host/host_movie/hostTheaterAddForm";
 	}
 }

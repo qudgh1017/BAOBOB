@@ -21,10 +21,10 @@
 					    <span class="caret"></span>
 					  </button>
 					  <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1" style="background-image: url('${projectRes}images/ybh/movie_menu.jpg'); background-size: 140px 120px;">
-					    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">상영영화</a></li>
-					    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">상영예정작</a></li>
-					    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">추천영화</a></li>
-					    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">무비파인더</a></li>
+					    <li role="presentation"><a role="menuitem" tabindex="-1" href="movieChart">무비차트</a></li>
+					    <li role="presentation"><a role="menuitem" tabindex="-1" href="hdTrailer">HD 트레일러</a></li>
+					    <li role="presentation"><a role="menuitem" tabindex="-1" href="movieFinder">무비파인더</a></li>
+					    <li role="presentation"><a role="menuitem" tabindex="-1" href="movieReview">평점</a></li>
 					  </ul>
 					</div>
 				</div>
@@ -35,8 +35,8 @@
 					    <span class="caret"></span>
 					  </button>
 					  <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1" style="background-image: url('${projectRes}images/ybh/movie_menu.jpg'); background-size: 140px 120px;">
-					    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">예매가이드</a></li>
-					    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">빠른예매</a></li>
+					    <li role="presentation"><a role="menuitem" tabindex="-1" href="movieTicket">빠른예매</a></li>
+					    <li role="presentation"><a role="menuitem" tabindex="-1" href="movieSchedule">상영시간표</a></li>
 					  </ul>
 					</div>
 		  		</div>
@@ -47,7 +47,7 @@
 					    <span class="caret"></span>
 					  </button>
 					  <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1" style="background-image: url('${projectRes}images/ybh/movie_menu.jpg'); background-size: 140px 120px;">
-					    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">극장소개</a></li>
+					    <li role="presentation"><a role="menuitem" tabindex="-1" href="theaters">특별관</a></li>
 					  </ul>
 					</div>
 		 		</div>
@@ -58,9 +58,9 @@
 					    <span class="caret"></span>
 					  </button>
 					  <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1" style="background-image: url('${projectRes}images/ybh/movie_menu.jpg'); background-size: 140px 120px;">
-					    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">멤버쉽</a></li>
-					    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">제휴/할인</a></li>
-					    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">무대인사</a></li>
+					    <li role="presentation"><a role="menuitem" tabindex="-1" href="eventMembership">멤버쉽</a></li>
+					    <li role="presentation"><a role="menuitem" tabindex="-1" href="eventSale">제휴/할인</a></li>
+					    <li role="presentation"><a role="menuitem" tabindex="-1" href="eventPreview">무대인사</a></li>
 					  </ul>
 					</div>
 		 		</div>

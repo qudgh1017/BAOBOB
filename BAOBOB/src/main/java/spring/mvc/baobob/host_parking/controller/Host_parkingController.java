@@ -19,6 +19,9 @@ public class Host_parkingController {
 	@RequestMapping("hostParkingSetting")
 	public String hostParkingSetting(HttpServletRequest req, Model model) {
 		System.out.println("hostParkingSetting()");
+		
+		service.getParkingSpace(req, model);
+		
 		return "host/host_parking/hostParkingSetting";
 	}
 	
@@ -27,7 +30,7 @@ public class Host_parkingController {
 	public String hostParkingSettingChange(HttpServletRequest req, Model model) {
 		System.out.println("hostParkingSettingChange");
 		
-		service.hostParkingSettingChange(req, model);
+		service.parkingSpaceChange(req, model);
 		
 		return "host/host_parking/hostParkingSettingChange";
 	}

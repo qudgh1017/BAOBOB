@@ -10,18 +10,14 @@
 <body class="fixed-nav sticky-footer bg-dark">
 
 	<!-- Navigation -->
-	<%@ include file="../common/navigation.jsp" %>
+	<%@ include file="movie_navigation.jsp" %>
 	
 	<div class="content-wrapper">
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
+
 	<form action="hostMovieAddPro" method="post" enctype="multipart/form-data">
-	영화 등록
-		<table>
+		<center><h3><b>영화 등록</b></h3></center>
+		<hr style="border:3px solid black;">
+		<table align="center" style="border:1px solid black;">
 			<tr>
 				<td>title</td>
 				<td><input type="text" name="movie_title" placeholder="영화 제목"/></td>
