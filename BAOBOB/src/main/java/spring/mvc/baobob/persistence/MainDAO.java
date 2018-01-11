@@ -26,4 +26,7 @@ public interface MainDAO {
 	
 	//회원 등급 수정
 	public int memberStepUpdate(Map<String, String> map);
+	
+	//아이디, 비밀번호 존재 여부 => 존재하면 step
+	public String confirmIdPwd(Map<String, String> map);
 }

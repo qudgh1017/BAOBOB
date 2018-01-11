@@ -116,4 +116,27 @@ public class MainServiceImpl implements MainService {
 		model.addAttribute("cnt", cnt);
 	}
 
+	//로그인 처리
+	@Override
+	public void signInPro(HttpServletRequest req, Model model) {
+		String member_id = req.getParameter("id");
+		String member_pwd = req.getParameter("pwd");
+		
+		Map<String, String> map = new HashMap<>();
+		map.put("member_id", member_id);
+		map.put("member_pwd", member_pwd);
+		String step = dao.confirmIdPwd(map);
+		
+		int cnt = 0;
+		if(step != null) {
+			req.getSession().setAttribute("memStep", step);
+			if(!step.equals("13")) {
+				req.getSession().setAttribute("memId", member_id);
+			}
+			cnt = 1;
+		}
+		
+		model.addAttribute("cnt", cnt);
+	}
+	
 }

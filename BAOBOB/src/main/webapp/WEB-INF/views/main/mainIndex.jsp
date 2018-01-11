@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page session="false" %>
 
 <%@ include file="/resources/setting.jsp"%>
 <html>
@@ -15,7 +14,7 @@
     
     <style type="text/css">
      	.head_header{position:relative;}
-    	.head_screen{top: 0;left: 0;position: absolute;margin-left: 28.5rem;margin-top: 16rem;}
+    	.head_screen{top:54%;left:39%;position:absolute;}
     	
     	section .notice_a{color:white;}
     	
