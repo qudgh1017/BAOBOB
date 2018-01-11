@@ -101,4 +101,14 @@ public class MainDAOImpl implements MainDAO {
 		return cnt;
 	}
 
+	//아이디, 비밀번호 존재 여부 => 존재하면 step
+	@Override
+	public String confirmIdPwd(Map<String, String> map) {
+		System.out.println("confirmIdPwd 시작");
+		MainDAO mapper = sqlSession.getMapper(MainDAO.class);
+		String step = mapper.confirmIdPwd(map);
+		System.out.println("confirmIdPwd 종료");
+		return step;
+	}
+
 }

@@ -81,8 +81,13 @@
 			</beans:props>
 		</beans:property>
 	</beans:bean>
+<<<<<<< HEAD
 <!-- 
 	jackson을 위한 bean 추가
 	<beans:bean id="jacksonMessageConverter" class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter" />
  -->
+=======
+	
+	<!-- JSON지움 -->
+>>>>>>> branch 'master' of https://github.com/gjrjrem/BAOBOB.git
 </beans:beans>

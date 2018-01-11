@@ -63,9 +63,14 @@ public class HomeController {
 	MainService service;
 	
 	@RequestMapping("mainIndex")
-	public String index(HttpServletRequest req, Model model) {
-		System.out.println("index()");
-		return "main/index";
+	public String mainIndex(HttpServletRequest req, Model model) {
+		System.out.println("mainIndex()");
+		
+		String id = (String) req.getSession().getAttribute("memId");
+		System.out.println(id);
+		req.getSession().setAttribute("memId", id);
+		
+		return "main/mainIndex";
 	}
 	
 	//회원가입
@@ -98,7 +103,7 @@ public class HomeController {
 	//인증 메일 확인
 	@RequestMapping("mainConfirmEmail")
 	public String mainConfirmEmail(HttpServletRequest req, Model model) {
-		System.out.println("mainConfirmEmail");
+		System.out.println("mainConfirmEmail()");
 		
 		service.confirmEmail(req, model);
 		
@@ -108,9 +113,27 @@ public class HomeController {
 	//로그인 mainSignIn
 	@RequestMapping("mainSignIn")
 	public String mainSignIn(HttpServletRequest req, Model model) {
-		System.out.println("joinPro()");
-		
-		
+		System.out.println("mainSignIno()");
 		return "main/mainSignIn";
+	}
+	
+	//로그인 처리
+	@RequestMapping("mainSignInPro")
+	public String mainSignInPro(HttpServletRequest req, Model model) {
+		System.out.println("mainSignInPro()");
+		
+		service.signInPro(req, model);
+
+		return "main/mainSignInPro";
+	}
+	
+	//로그아웃
+	@RequestMapping("mainSignOut")
+	public String mainSignOut(HttpServletRequest req, Model model) {
+		System.out.println("mainSignOut()");
+		
+		req.getSession().invalidate();
+
+		return "main/mainIndex";
 	}
 }

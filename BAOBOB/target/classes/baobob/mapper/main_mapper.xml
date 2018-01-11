@@ -46,4 +46,11 @@
 		WHERE member_id = #{member_id}
 	</update>
 	
+	<!-- 로그인 존재 여부 -->
+	<select id="confirmIdPwd" resultType="String">
+		SELECT member_step
+		FROM member_tbl
+		WHERE member_id = #{member_id} AND member_pwd = #{member_pwd}
+	</select>
+	
 </mapper>

@@ -19,4 +19,7 @@ public interface MainService {
 	
 	//이메일 인증
 	public void confirmEmail(HttpServletRequest req, Model model);
+	
+	//로그인 처리
+	public void signInPro(HttpServletRequest req, Model model);
 }
