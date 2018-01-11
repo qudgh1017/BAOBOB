@@ -15,7 +15,7 @@ function errorAlert(msg) {
 }
 
 function confirmId() {
-	var param = 'id=' + document.joinForm.tel.value;
+	var param = 'id=' + document.joinForm.id.value;
 	sendRequest(confirmId_callback, 'mainConfirmId', 'GET', param);
 }
 
@@ -73,6 +73,11 @@ function addressSearch() {
 }
 
 function joinCheck() {
+	//2100
+	//2018		09 31
+	//1960		12
+	//1900		01 01
+	var emailReg = /^(1|2)(9|0|1){1}[0-9]{2}(0|1){1}[1-9]{1}[0-3]{1}[0-9]{1}$/;
 
 	if (!document.joinForm.name.value) {
 		alert(name_msg);
@@ -108,9 +113,14 @@ function joinCheck() {
 		alert(sex_msg);
 		document.joinForm.sex.focus();
 		return false;
-		
+
 	} else if (!document.joinForm.birth.value) {
 		alert(birth_msg);
+		document.joinForm.birth.focus();
+		return false;
+
+	} else if(!emailReg.test(document.joinForm.birth.value)) {
+		alert('어느 시대 사람이신가요?');
 		document.joinForm.birth.focus();
 		return false;
 		

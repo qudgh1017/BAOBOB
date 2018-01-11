@@ -95,6 +95,16 @@ public class HomeController {
 		return "main/mainJoinPro";
 	}
 	
+	//인증 메일 확인
+	@RequestMapping("mainConfirmEmail")
+	public String mainConfirmEmail(HttpServletRequest req, Model model) {
+		System.out.println("mainConfirmEmail");
+		
+		service.confirmEmail(req, model);
+		
+		return "main/mainConfirmEmail";
+	}
+	
 	//로그인 mainSignIn
 	@RequestMapping("mainSignIn")
 	public String mainSignIn(HttpServletRequest req, Model model) {
