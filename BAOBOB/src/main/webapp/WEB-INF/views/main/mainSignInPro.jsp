@@ -13,30 +13,27 @@
 			</script>
 		</c:when>
 		<c:when test="${sessionScope.memStep == 1}">
-			<!-- 종합관리자 url --> 
+			<!--종합 관리자 -->
+			<script type="text/javascript">
+				errorAlert('종합관리자');
+			</script>
 		</c:when>
-		<c:when test="${sessionScope.memStep == 2}">
-			<!-- 영화관리자 url -->
+		<c:when test="${sessionScope.memStep == 2 || sessionScope.memStep == 3}">
+			<!-- 영화 관리자 | 영화 직원  -->
+			<c:redirect url="hostMovie"/>
 		</c:when>
-		<c:when test="${sessionScope.memStep == 3}">
-			<!-- 영화직원 -->
-		</c:when>
-		<c:when test="${sessionScope.memStep == 4}">
-			<!-- 식당 총관리 -->
-		</c:when>
-		<c:when test="${sessionScope.memStep == 5}">
-			<!-- 식당관리자 -->
-		</c:when>
-		<c:when test="${sessionScope.memStep == 6}">
-			<!-- 식당직원 -->
+		<c:when test="${sessionScope.memStep == 4 || sessionScope.memStep == 5 || sessionScope.memStep == 6}">
+			<!-- 식당 총관리 | 식당 관리자 | 식당 직원 -->
+			<script type="text/javascript">
+				errorAlert('식당 총관리 | 식당 관리자 | 식당 직원');
+			</script>
 		</c:when>
 		<c:when test="${sessionScope.memStep == 7}">
 			<!-- 주차장 관리자 -->
+			<c:redirect url="hostParkingMain"/>
 		</c:when>
 		<c:otherwise>
-			<script type="text/javascript">
-				window.location='mainIndex';
-			</script>
+			<c:redirect url="mainIndex"/>
 		</c:otherwise>
 	</c:choose>
 </c:if>

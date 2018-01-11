@@ -33,7 +33,7 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 		// TODO Auto-generated method stub
 		log.debug("service.menuList()");
 
-		int pageSize = 4; // 한 페이지당 출력할 글의 수
+		int pageSize = 10; // 한 페이지당 출력할 글의 수
 		int pageBlock = 3; // 한 블록당 출력할 페이지의 수
 
 		int cnt = 0; // 글 개수
@@ -138,7 +138,6 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 			fos.close();
 
 			String fileName = file.getOriginalFilename();
-
 			MenuVO dto = new MenuVO();
 			
 			dto.setRestaurant_menu_img(fileName);
@@ -162,7 +161,7 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 
 		MenuVO dto = new MenuVO();
 		
-		dto = dao.viewMenu(1);
+		dto = dao.viewMenu(Integer.parseInt(req.getParameter("index")));
 
 		model.addAttribute("dto", dto);
 	}
@@ -172,7 +171,54 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 	public void menuMod(MultipartHttpServletRequest req, Model model) {
 		// TODO Auto-generated method stub
 		log.debug("service.menuMod()");
+
+		MultipartFile file = req.getFile("img");
+		String saveDir = req.getRealPath("/resources/images/chg/"); // 저장
+		String realDir = "C:\\Dev\\workspace_baobob\\BAOBOB\\BAOBOB\\src\\main\\webapp\\resources\\images\\chg"; // 저장
+
+		try {
+			file.transferTo(new File(saveDir + file.getOriginalFilename()));
+
+			FileInputStream fis = new FileInputStream(saveDir + file.getOriginalFilename());
+			FileOutputStream fos = new FileOutputStream(realDir + file.getOriginalFilename());
+
+			int data = 0;
+
+			while ((data = fis.read()) != -1) {
+				fos.write(data);
+			}
+			fis.close();
+			fos.close();
+
+			String fileName = file.getOriginalFilename();
+			MenuVO dto = new MenuVO();
+			
+			dto.setRestaurant_menu_index(Integer.parseInt(req.getParameter("index")));
+			dto.setRestaurant_menu_img(fileName);
+			dto.setRestaurant_menu_name(req.getParameter("name"));
+			dto.setRestaurant_menu_content(req.getParameter("content"));
+			dto.setRestaurant_menu_price(Integer.parseInt(req.getParameter("price")));
+			int cnt = dao.modMenu(dto);
+
+			model.addAttribute("cnt", cnt);
+			model.addAttribute("index", req.getParameter("index"));
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	// 식당[1] 메뉴 삭제 처리
+	@Override
+	public void menuDel(HttpServletRequest req, Model model) {
+		// TODO Auto-generated method stub
+		log.debug("service.menuDel()");
+
+		MenuVO dto = new MenuVO();
 		
-		
+		dto.setRestaurant_menu_index(Integer.parseInt(req.getParameter("index")));
+
+		int deleteCnt = dao.delMenu(dto);
+		model.addAttribute("cnt", deleteCnt);
 	}
 }

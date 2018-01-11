@@ -15,6 +15,13 @@ public class Host_parkingController {
 	@Autowired
 	Host_parkingService service;
 	
+	//주차장 관리 메인
+	@RequestMapping("hostParkingMain")
+	public String hostParkingMain() {
+		System.out.println("hostParkingMain()");
+		return "host/host_parking/hostParkingMain";
+	}
+	
 	//주차장 구역 정보 페이지
 	@RequestMapping("hostParkingSetting")
 	public String hostParkingSetting(HttpServletRequest req, Model model) {
@@ -38,6 +45,9 @@ public class Host_parkingController {
 	@RequestMapping("hostParkingState")
 	public String hostParkingState(HttpServletRequest req, Model model) {
 		System.out.println("hostParkingState()");
+		
+		service.getParkingSpaceState(req, model);
+		
 		return "host/host_parking/hostParkingState";
 	}
 
