@@ -7,7 +7,9 @@
 
 	<!-- 아이디 중복 확인 -->
 	<select id="confirmId" resultType="int">
-		SELECT COUNT(*) FROM member_tbl
+		SELECT COUNT(*) 
+		FROM member_tbl 
+		WHERE member_id = #{id}
 	</select>
 	
 	<!-- 가입처리 -->
@@ -16,4 +18,32 @@
 		VALUES
 			(#{member_id}, #{member_pwd}, #{member_name}, #{member_tel}, #{member_email}, #{member_birth}, #{member_sex}, #{member_address}, #{member_point}, #{member_step}, #{member_cumPoint}, SYSTIMESTAMP)
 	</insert>
+	
+	<!-- 인증키 저장 -->
+	<insert id="memberKeyInsert" parameterType="java.util.Map">
+		INSERT INTO member_key_tbl
+		VALUES (#{member_id}, #{member_key})
+	</insert>
+	
+	<!-- 인증키 존재 여부 -->
+	<select id="memberKeySelect" resultType="int">
+		SELECT COUNT(*)
+		FROM member_key_tbl
+		WHERE member_id = #{member_id} AND member_key = #{member_key}
+	</select>
+	
+	<!-- 인증키 삭제 -->
+	<insert id="memberKeyDelete" parameterType="String">
+		DELETE FROM member_key_tbl
+		WHERE member_id = #{member_id}
+	</insert>
+	
+	<!-- 회원 등급 수정 -->
+	<update id="memberStepUpdate" parameterType="java.util.Map">
+		UPDATE member_tbl
+		SET
+			member_step = #{member_step}
+		WHERE member_id = #{member_id}
+	</update>
+	
 </mapper>

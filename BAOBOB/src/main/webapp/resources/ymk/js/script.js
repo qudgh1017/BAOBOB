@@ -1,11 +1,12 @@
 /**
  * 
  */
-var typeNum = '0';
-var typeImg = '';
+var typeNum = '0';	//선택한 버튼 번호
+var typeImg = '';	//선택한 버튼 이미지
 
+//type에 따라 버튼 이미지 설정
 function spaceType(type) {
-	typeNum = type;
+	typeNum = type;	//선택한 버튼 번호 저장
 	switch(typeNum) {
 	case '9': typeImg = 'icon_enter.png'; break;
 	case '8': typeImg = 'icon_exit.png'; break;
@@ -18,19 +19,21 @@ function spaceType(type) {
 }
 
 
+//가로, 세로 변할 경우 배열판 설정
 function spaceDivChange() {
 	var widthX = document.getElementById('widthX').value;
 	var heightY = document.getElementById('heightY').value;
 	
-	var spaceDiv = document.getElementById('spaceDiv');
+	var spaceDiv = document.getElementById('spaceDiv'); //출력 위치
 	
 	var space = '';
 	for(var y = 0; y < heightY; y += 1) {
 		for(var x = 0; x < widthX; x += 1) {
 			var location = x + '-' + y;
 			var spaceId = 'id' + location;
-			var spaceBtnId = 'btn' + location;
+			var spaceBtnId = 'btn' + location;	//버튼 구별하기 위한 id
 			
+			//배열판의 각 버튼
 			space += '<button class="p_spaceBtn p_btn" ' 
 					+ 'value="0" ' 
 					+ 'id="' + spaceBtnId + '" '
@@ -45,12 +48,15 @@ function spaceDivChange() {
 	spaceDiv.innerHTML = space;
 }
 
+//배열판의 선택한 버튼 설정
 function spaceBtnChange(location) {
-	if(typeImg != '') {
-		var spaceId = 'id' + location;
-		var spaceImg = document.getElementById(spaceId);
+	if(typeImg != '') { //아이콘 선택했을 경우, 선택한 버튼의 설정 변경
+		//선택한 버튼의 이미지 src 변경
+		var spaceId = 'id' + location; //선택한 버튼의 id
+		var spaceImg = document.getElementById(spaceId); //선택한 버튼의 img
 		spaceImg.src = '/baobob/resources/images/ymk/host_parking/' + typeImg;
-		
+
+		//선택한 버튼의 value 변경(DB에 아이콘index 넣기 위한 값)
 		var spaceBtnId = 'btn' + location;
 		var spaceBtn = document.getElementById(spaceBtnId);
 		spaceBtn.value = typeNum;
@@ -61,11 +67,12 @@ function spaceBtnChange(location) {
 
 //주차장 구역 정보 설정 AJAX
 function spaceTypeChange() {
-	var item = document.querySelectorAll('.p_spaceBtn');
+	var item = document.querySelectorAll('.p_spaceBtn'); //배열판의 버튼들
 	
-	var x = document.getElementById('widthX').value;
-	var y = document.getElementById('heightY').value;
+	var x = document.getElementById('widthX').value; //col
+	var y = document.getElementById('heightY').value; //row
 	
+	//배열판 버튼들의 아이콘index 배열
 	var array = new Array();
 	item.forEach(function(space) {
 		array.push(space.value);
@@ -97,6 +104,7 @@ function space_callback() {
 	}
 }
 
+//설정한 배열판이 있을 경우
 function spaceBody(info, col, row) {
 	var arr = info.split(',');
 	

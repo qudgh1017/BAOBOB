@@ -1,2 +1,10 @@
 @charset "UTF-8";
 
+.content-main {
+	text-align: left;
+	display: inline-block;
+}
+
+th, td {
+	padding: 10px;
+}
