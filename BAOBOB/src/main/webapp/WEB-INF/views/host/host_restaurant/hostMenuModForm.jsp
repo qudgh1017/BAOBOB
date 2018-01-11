@@ -54,7 +54,7 @@
 					</tr>
 					<tr>
 						<td>&bull; 메뉴 소개</td>
-						<td><textarea name="content" rows="5" cols="50" placeholder="메뉴 소개"></textarea></td>
+						<td><textarea rows="5" cols="50" placeholder="메뉴 소개"></textarea></td>
 					</tr>
 					<tr>
 						<td rowspan="2">&bull; 메뉴 이미지</td>
@@ -73,7 +73,6 @@
 			</div>
 		</div>
 	</form>
-	
 	<!-- Footer -->
 	<%@ include file="_footer.jsp"%>
 </body>
