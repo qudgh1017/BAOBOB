@@ -79,6 +79,8 @@ public class Host_movieController {
 	public String hostTheater(HttpServletRequest req, Model model) {
 		System.out.println("hostTheater");
 		
+		service.hostTheaterList(req, model);
+		
 		return "host/host_movie/hostTheater";
 	}
 	
@@ -88,5 +90,25 @@ public class Host_movieController {
 		System.out.println("hostTheaterAddForm");
 		
 		return "host/host_movie/hostTheaterAddForm";
+	}
+	
+	// 상영관 좌석 업데이트
+	@RequestMapping(value="hostTheaterAddPro")
+	public String hostTheaterSettingChange(HttpServletRequest req, Model model) {
+		System.out.println("hostTheaterSettingChange");
+		
+		service.hostTheaterAddPro(req, model);
+		
+		return "host/host_movie/hostTheaterAddPro";
+	}
+	
+	// 상영관 상세
+	@RequestMapping(value="hostTheaterDetail")
+	public String hostTheaterDetail(HttpServletRequest req, Model model) {
+		System.out.println("hostTheaterDetail");
+		
+		service.hostTheaterDetail(req, model);
+		
+		return "host/host_movie/hostTheaterDetail";
 	}
 }
