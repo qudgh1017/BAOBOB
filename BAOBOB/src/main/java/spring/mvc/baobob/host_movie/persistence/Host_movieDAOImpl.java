@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import spring.mvc.baobob.vo.MovieVO;
+import spring.mvc.baobob.vo.TheaterVO;
+import spring.mvc.baobob.vo.Theater_seatVO;
 
 @Repository
 public class Host_movieDAOImpl implements Host_movieDAO {
@@ -80,6 +82,118 @@ public class Host_movieDAOImpl implements Host_movieDAO {
 		
 		return cnt;
 	}
+
+	// 상영관 존재 여부
+	@Override
+	public int theater_index_check(int theater_index) {
+		int cnt = 0;
+		
+		Host_movieDAO dao = sqlSession.getMapper(Host_movieDAO.class);
+		cnt = dao.theater_index_check(theater_index);
+		
+		return cnt;
+	}
+
+	// 상영관 추가
+	@Override
+	public int insert_theater(Map<String, Object> map) {
+		int cnt = 0;
+		
+		Host_movieDAO dao = sqlSession.getMapper(Host_movieDAO.class);
+		cnt = dao.insert_theater(map);
+		
+		return cnt;
+	}
+
+	// 상영관 좌석별 state
+	@Override
+	public int insert_theater_seat(Map<String, Object> map) {
+		int cnt = 0;
+		
+		Host_movieDAO dao = sqlSession.getMapper(Host_movieDAO.class);
+		cnt = dao.insert_theater_seat(map);
+		
+		return cnt;
+	}
+
+	// 상영관 존재 여부
+	@Override
+	public int getTheaterCnt() {
+		int cnt = 0;
+		
+		Host_movieDAO dao = sqlSession.getMapper(Host_movieDAO.class);
+		cnt = dao.getTheaterCnt();
+		
+		return cnt;
+	}
+
+	// 상영관 리스트
+	@Override
+	public ArrayList<TheaterVO> getTheaterList(Map<String, Integer> map) {
+		ArrayList<TheaterVO> vos = null;
+		
+		Host_movieDAO dao = sqlSession.getMapper(Host_movieDAO.class);
+		vos = dao.getTheaterList(map);
+		
+		return vos;
+	}
+
+	// 상영관 상세
+	@Override
+	public TheaterVO hostTheaterDetail(int theater_index) {
+		TheaterVO vo = null;
+		
+		Host_movieDAO dao = sqlSession.getMapper(Host_movieDAO.class);
+		vo = dao.hostTheaterDetail(theater_index);
+		
+		return vo;
+	}
+
+	// 상영관 상세 좌석 정보
+	@Override
+	public ArrayList<Theater_seatVO> hostTheaterSeatDetail(int theater_index) {
+		ArrayList<Theater_seatVO> vos = null;
+		
+		Host_movieDAO dao = sqlSession.getMapper(Host_movieDAO.class);
+		vos = dao.hostTheaterSeatDetail(theater_index);
+		
+		return vos;
+	}
+	
+	// 상영관 좌석 수정 처리
+	@Override
+	public int modify_theater_seat(Map<String, Object> map) {
+		int cnt = 0;
+		
+		Host_movieDAO dao = sqlSession.getMapper(Host_movieDAO.class);
+		cnt = dao.modify_theater_seat(map);
+		
+		return cnt;
+	}
+
+	// 상영관 삭제 처리
+	@Override
+	public int hostTheaterDel(int theater_index) {
+		int cnt = 0;
+		
+		Host_movieDAO dao = sqlSession.getMapper(Host_movieDAO.class);
+		cnt = dao.hostTheaterDel(theater_index);
+		
+		return cnt;
+	}
+
+	// 상영관 좌석 삭제 처리
+	@Override
+	public int hostTheaterSeatDel(int theater_index) {
+		int cnt = 0;
+		
+		Host_movieDAO dao = sqlSession.getMapper(Host_movieDAO.class);
+		cnt = dao.hostTheaterSeatDel(theater_index);
+		
+		return cnt;
+	}
+
+
 
 	
 

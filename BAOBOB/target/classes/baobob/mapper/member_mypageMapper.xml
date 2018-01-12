@@ -17,20 +17,77 @@
 		FROM ( SELECT board_index,member_id, board_pwd, board_type, board_subject, 
 						board_content, board_img, board_readCnt, board_ref, board_ref_step, 
                 		board_ref_level, board_reg_date, board_ip, rownum rNum
-      		   ROM ( SELECT * FROM board_tbl  
+      		   FROM ( SELECT * FROM board_tbl  
               		ORDER BY board_ref DESC, board_ref_step ASC )
             ) 
 		WHERE rNum >= #{start} AND rNum <= #{end}
 		]]>
 	</select>
 	
+	<!-- 1:1문의 상세페이지 가져오기 -->
+	<select id="getArticle" resultType="spring.mvc.baobob.vo.BoardVO">
+		SELECT * FROM board_tbl WHERE board_index = #{num}
+	</select>
 	
+	<!-- 조회수 증가 -->
+	<update id="addReadCnt" parameterType="int">
+		UPDATE board_tbl SET board_readCnt = board_readCnt + 1 WHERE board_index = #{num}
+	</update>
 	
+	<!-- 비밀번호 확인 -->
+	<select id="pwdCheck" parameterType="java.util.Map" resultType="int">
+		SELECT COUNT(*) FROM board_tbl WHERE board_index = #{num} AND board_pwd = #{strPwd}
+	</select>
 	
+	<!-- 1:1문의 글 수정처리 -->
+	<update id="updateQuestion" parameterType="spring.mvc.baobob.vo.BoardVO">
+		UPDATE board_tbl SET board_subject=#{board_subject}, board_content=#{board_content}, board_pwd=#{board_pwd} WHERE board_index=#{board_index}
+	</update>
 	
+	<!-- 1:1문의 작성 Start -->
 	
+		<!-- 제목글인 경우 -->
+		<select id="getMaxNum" resultType="int">
+			SELECT MAX(board_index)+1 FROM board_tbl
+		</select>
 	
+		<!-- 답변글인 경우 -->
+		<update id="updateReply" parameterType="spring.mvc.baobob.vo.BoardVO">
+			<![CDATA[	
+				UPDATE board_tbl
+				SET board_ref_step = board_ref_step + 1 
+				WHERE board_ref=#{board_ref} AND board_ref_step > #{board_ref_step}
+			]]>
+		</update>
 	
+		<!-- 글 작성 -->
+		<insert id="insertQuestion" parameterType="spring.mvc.baobob.vo.BoardVO">
+			INSERT INTO board_tbl (board_index,member_id, board_pwd, board_type, board_subject, board_content, board_img, board_readCnt, board_ref, board_ref_step, board_ref_level, board_reg_date, board_ip) 
+			VALUES(board_tbl_SEQ.NEXTVAL,#{member_id},#{board_pwd},02,#{board_subject},#{board_content},'board_img 01',0,#{board_ref},#{board_ref_step},#{board_ref_level},#{board_reg_date},#{board_ip})
+		</insert>
 	
+	<!-- 1:1문의 작성 End -->
 	
+	<!-- 글삭제 Start -->
+	
+		<!-- 답글이 존재하는지 여부 -->
+		<select id="checkReply" parameterType="spring.mvc.baobob.vo.BoardVO" resultType="int">
+			<![CDATA[
+				SELECT COUNT(*) FROM board_tbl WHERE board_ref=#{board_ref} AND board_ref_step=#{board_ref_step} + 1 AND board_ref_level > #{board_ref_level}
+			]]>
+		</select>
+		
+		<!-- 답글이 없는 경우 -->
+		<update id="updateRef_step" parameterType="spring.mvc.baobob.vo.BoardVO">
+			<![CDATA[
+				UPDATE board_tbl SET board_ref_step=board_ref_step - 1 WHERE board_ref=#{board_ref} AND board_ref_step > #{board_ref_step}
+			]]>
+		</update>
+		
+		<!-- 글삭제 처리 -->
+		<delete id="deleteQuestion" parameterType="int">
+			DELETE FROM board_tbl WHERE board_index = #{num}
+		</delete>
+		
+	<!-- 글삭제 End -->
 </mapper>

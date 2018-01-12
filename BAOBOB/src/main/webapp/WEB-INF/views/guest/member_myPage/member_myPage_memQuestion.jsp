@@ -31,7 +31,7 @@
 	    <thead>
 	    	<tr>
 	    		<td colspan=3>
-	    		<span class="text-uppercase bigfont" style="text-align:left">Gunny</span>&emsp;
+	    		<span class="text-uppercase bigfont" style="text-align:left">${memId} 님</span>&emsp;
 				<a href="#!" title="modify" id="modify"><i class="material-icons">edit</i></a>
 				<hr style="border: dotted 3px white;">
 				<h4 class="text-capitalize" style="text-align:left">고객님은 SVIP입니다.</h4>
@@ -76,8 +76,8 @@
 		</div>
 		</td>
 
-		<td style="padding:0px;margin:0px;width:100%;height:100%;">
 		<!-- 알맹이 -->
+		<td style="padding:0px;margin:0px;width:100%;height:100%;">
 		<table class="mainBody">
 			<caption>1 : 1 문의</caption>
 		    <thead>
@@ -93,36 +93,35 @@
 		    
 		    <!-- 게시글이 있으면 -->
 			<c:if test="${cnt > 0 }">
-				
 				<c:forEach var="dto" items="${dtos}">
 					<!-- 게시글 -->
-					<c:if test="${dto.board_type eq '02'}">
+					<c:if test="${dto.board_type eq 02}">
 				    <tbody>
 				    <tr>
-				    	<th>
+				    	<th style="text-align:center;">
 				    		${number}<br>
 				    		<c:set var="number" value="${number-1}"/>
 							<%-- (${dto.num } / ${dto.ref} / ${dto.ref_step} / ${dto.ref_level}) --%>
 				    	</th>
-				        <td style="text-align:left;">
+				        <th style="text-align:center;">
 						 	<!-- 추가 -->
 							<c:if test="${dto.board_ref_level > 1}"> <!-- 들여쓰기 > 1 -->
 								<c:set var="wid" value="${(dto.board_ref_level-1)*10}" />
 								<img src="${projectRes}images/lgt/boardImages/level.gif" border="0" width="${wid}" height="15">						
 							</c:if>
 							<!-- 들여쓰기 > 0 : 답변글 -->
-							<c:if test="${dto.ref_level > 0 }">
+							<c:if test="${dto.board_ref_level > 0 }">
 								<img src="${projectRes}images/lgt/boardImages/re.gif" border="0" width="20" height="15">
 							</c:if>
 							<!-- /추가 -->				        
-				        	<a href="contentForm?num=${dto.board_index}&pageNum=${pageNum}&number=${number+1}">
+				        	<a href="memQuestionContentForm?num=${dto.board_index}&pageNum=${pageNum}&number=${number+1}">
 				        		${dto.board_subject}
 				        	</a>
 				        	<!-- hot이미지 -->
 							<c:if test="${dto.board_readCnt > 10 }">
 								<img src="${projectRes}images/lgt/boardImages/hot.gif" border="0" width="20" height="15">
 							</c:if>
-				        </td>
+				        </th>
 				        <td>${dto.member_id}</td>
 				        <td>
 				        	<fmt:formatDate type="both" pattern="yyyy-MM-dd HH:mm" value="${dto.board_reg_date}" />
@@ -135,8 +134,8 @@
 			    </c:forEach>
 			    <tr>
 			    	<td colspan="6" style="border-bottom: none; text-align:right;">
-			    		<input type="button" class="button" value="Write Content..." style="width:auto;"
-								onclick="window.location='writeForm'">
+			    		<input type="button" class="button" value="문의하기" style="width:auto;"
+								onclick="window.location='memQWriteForm'">
 			    	</td>
 			    </tr>
 		    </c:if>
@@ -149,16 +148,40 @@
 					</td>
 				</tr>
 			</c:if>
-		</table><br>	
+		</table>
+		<br>
 		
+		<!-- 페이징 컨트롤 -->
+		<div class="pagination">
+			<c:if test="${cnt > 0 }">
+				<c:if test="${startPage > pageBlock }">
+					<a href="memQuestion">&laquo;</a>.
+					<a href="memQuestion?pageNum=${startPage - pageBlock}">&lsaquo;</a>
+				</c:if>
+				
+				<c:forEach var="i" begin="${startPage}" end="${endPage}">
+				
+					<c:if test="${i == currentPage}">
+						<a href="#!" class="active"><b>[${i}]</b></a>
+					</c:if>
+					
+					<c:if test="${i != currentPage}">
+						<a href="memQuestion?pageNum=${i}">[${i}]</a>
+					</c:if>
+					
+				</c:forEach>
+				
+				<c:if test="${pageCount > endPage }">
+					<a href="memQuestion?pageNum=${startPage + pageBlock}">&rsaquo;</a>
+					<a href="memQuestion?pageNum=${pageCount}">&raquo;</a>
+				</c:if>
+			</c:if>			  
+		</div>	
+
 		</td>
 		<!-- 알맹이 끝 -->
 	</tr>
 </table>
-
-
-
-
 
 
 </section>

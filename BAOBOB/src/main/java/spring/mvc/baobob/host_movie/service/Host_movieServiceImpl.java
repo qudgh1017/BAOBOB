@@ -19,6 +19,8 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import spring.mvc.baobob.host_movie.persistence.Host_movieDAO;
 import spring.mvc.baobob.host_movie.persistence.Host_movieDAOImpl;
 import spring.mvc.baobob.vo.MovieVO;
+import spring.mvc.baobob.vo.TheaterVO;
+import spring.mvc.baobob.vo.Theater_seatVO;
 
 @Service
 public class Host_movieServiceImpl implements Host_movieService{
@@ -262,6 +264,213 @@ public class Host_movieServiceImpl implements Host_movieService{
 			e.printStackTrace();
 		}
 		
+		
+	}
+
+	// 상영관 추가 처리
+	@Override
+	public void hostTheaterAddPro(HttpServletRequest req, Model model) {
+		int theater_index = Integer.parseInt(req.getParameter("theater_index"));
+		int theater_col = Integer.parseInt(req.getParameter("col"));
+		int theater_row = Integer.parseInt(req.getParameter("row"));
+		String status = req.getParameter("state");
+		String[] state = status.split(",");
+		
+		
+		
+		
+		int indexChkCnt = dao.theater_index_check(theater_index);
+		if(indexChkCnt == 0) {
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("theater_index", theater_index);
+			map.put("theater_col", theater_col);
+			map.put("theater_row", theater_row);
+			int insertCnt = dao.insert_theater(map);
+			if(insertCnt == 1) {
+				map.put("state", 0);
+				map.put("col", 0);
+				map.put("row", 0);
+				map.put("price", 0);
+				for(int row = 1; row<=theater_row; row++) {
+					for(int col = 1; col<=theater_col; col++) {
+						map.replace("state", Integer.parseInt(state[(row-1)*theater_col-1+col]));
+						map.replace("col", col);
+						map.replace("row", row);
+						if(Integer.parseInt(state[(row-1)*theater_col-1+col])==3)  //(row-1)*theater_col-1+col
+							map.replace("price", 9000);
+						else if(Integer.parseInt(state[(row-1)*theater_col-1+col])==4)
+							map.replace("price", 11000);
+						else map.replace("price", 0);
+							
+						dao.insert_theater_seat(map);
+					}
+				}
+				model.addAttribute("cnt", 1);
+			}
+		}
+		
+	}
+	
+	// 상영관 리스트
+	@Override
+	public void hostTheaterList(HttpServletRequest req, Model model) {
+		int pageSize = 10;		//한 페이지당 출력할 게시글 갯수
+		int pageBlock = 3;		//한 블럭당 페이지 갯수
+		
+		int cnt = 0;			// 게시글 갯수
+		int start = 0;			// 현재 페이지 게시글 시작 번호
+		int end = 0;			// 현재 페이지 게시글 마지막 번호
+		int number = 0;			// 출력할 게시글 번호
+		String pageNum = null;	// 페이지 번호
+		int currentPage = 0;	// 현재 페이지
+		
+		int pageCount = 0;		// 페이지 갯수
+		int startPage = 0;		// 시작페이지
+		int endPage = 0;		// 마지막 페이지
+		
+		// 글갯수 구하기
+		cnt = dao.getTheaterCnt();
+		
+		pageNum = req.getParameter("pageNum");
+		
+		if(pageNum == null) {
+			pageNum = "1"; //첫페이지를 1페이지로 설정
+		}
+		
+		currentPage = Integer.parseInt(pageNum);// 현재페이지
+		System.out.println("currentPage : "+ currentPage);
+		
+		// pageCnt = 12 / 5 + 1; //나머지 2건이 1페이지로 할당되므로 3페이지
+		pageCount = (cnt / pageSize) + (cnt % pageSize > 0 ? 1 : 0);// 페이지 갯수
+		System.out.println("pageCount : "+ pageCount);
+		
+		// 1 = (1-1) * 5 + 1
+		// 6 = (2-1) * 5 + 1
+		start = (currentPage - 1) * pageSize + 1;// 현재 페이지 게시글 시작 번호
+	
+		// 5 = (1 + 5 - 1)
+		end = start + pageSize -1;//현재 페이지 게시글 마지막 번호
+		
+		System.out.println("start : " + start);
+		System.out.println("end : " + end);
+		
+		if(end > cnt) end = cnt;
+		
+		//  = 25 - (5-1) * 5;
+		number = cnt - (currentPage - 1) * pageSize;// 출력할 게시글 번호
+		
+		System.out.println("number : " + number);
+		System.out.println("cnt : " + cnt);
+		System.out.println("currentPage : " + currentPage);
+		System.out.println("pageSize : " + pageSize);
+		
+		if(cnt > 0) {
+			// 게시글 목록 조회
+			Map<String, Integer> map = new HashMap<String, Integer>();
+			map.put("start", start);
+			map.put("end", end);
+			ArrayList<TheaterVO> vos = dao.getTheaterList(map);
+			model.addAttribute("vos", vos); //큰바구니 : 게시글목록 cf)작은바구니 : 게시글1건
+		}
+		
+		startPage = (currentPage / pageBlock) * pageBlock + 1; // 4 = (5/3)*3+1;
+		if(currentPage % pageBlock == 0) startPage -= pageBlock; // (5%3) == 0
+		System.out.println("startPage : " + startPage);
+		
+		endPage = startPage + pageBlock - 1; // 6 = 4 + 3 - 1;
+		if(endPage > pageCount) endPage = pageCount;
+		System.out.println("endPage : " + endPage);
+		
+		model.addAttribute("cnt", cnt);// 글갯수
+		model.addAttribute("number", number);// 글번호
+		model.addAttribute("pageNum", pageNum);// 페이지번호
+		
+		if(cnt > 0) {
+			model.addAttribute("startPage", startPage); // 시작페이지
+			model.addAttribute("endPage", endPage);// 마지막 페이지
+			model.addAttribute("pageBlock", pageBlock);// 출력할 페이지 갯수
+			model.addAttribute("pageCount", pageCount);// 페이지 갯수
+			model.addAttribute("currentPage", currentPage);// 현재 페이지
+			
+		}
+		
+		System.out.println("hostMovieList 정상 종료");
+		
+		
+	}
+	
+	// 상영관 상세
+	@Override
+	public void hostTheaterDetail(HttpServletRequest req, Model model) {
+		TheaterVO vo = null;
+		ArrayList<Theater_seatVO> seat_vos = null;
+		
+		int theater_index = Integer.parseInt(req.getParameter("theater_index"));
+		ArrayList<Integer> state = new ArrayList<Integer>();
+		
+		vo = dao.hostTheaterDetail(theater_index);
+		seat_vos = dao.hostTheaterSeatDetail(theater_index);
+		for(Theater_seatVO seat_vo : seat_vos) {
+			state.add(seat_vo.getSeat_state());
+		}
+		
+		System.out.println("=========================");
+		System.out.println("state : " + state);
+		System.out.println("=========================");
+		
+		model.addAttribute("vo", vo);
+		model.addAttribute("seat_vos", seat_vos);
+		model.addAttribute("state", state);
+	}
+	
+	// 상영관 수정 처리
+	@Override
+	public void hostTheaterModPro(HttpServletRequest req, Model model) {
+		int theater_index = Integer.parseInt(req.getParameter("theater_index"));
+		int theater_col = Integer.parseInt(req.getParameter("col"));
+		int theater_row = Integer.parseInt(req.getParameter("row"));
+		String status = req.getParameter("state");
+		String[] state = status.split(",");
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("theater_index", theater_index);
+		map.put("theater_col", theater_col);
+		map.put("theater_row", theater_row);
+		map.put("state", 0);
+		map.put("col", 0);
+		map.put("row", 0);
+		map.put("price", 0);
+		for(int row = 1; row<=theater_row; row++) {
+			for(int col = 1; col<=theater_col; col++) {
+				map.replace("state", Integer.parseInt(state[(row-1)*theater_col-1+col]));
+				map.replace("col", col);
+				map.replace("row", row);
+				if(Integer.parseInt(state[(row-1)*theater_col-1+col])==3)  //(row-1)*theater_col-1+col
+					map.replace("price", 9000);
+				else if(Integer.parseInt(state[(row-1)*theater_col-1+col])==4)
+					map.replace("price", 11000);
+				else map.replace("price", 0);
+					
+				int cnt = dao.modify_theater_seat(map);
+				if(cnt >= 1)
+					model.addAttribute("cnt", 1);
+			}
+		}
+			
+	}
+
+	// 상영관 삭제 처리
+	@Override
+	public void hostTheaterDel(HttpServletRequest req, Model model) {
+		int theater_index = Integer.parseInt(req.getParameter("theater_index"));
+		
+		int deleteCnt = dao.hostTheaterSeatDel(theater_index); 
+		System.out.println("deleteCnt:" + deleteCnt);
+		
+		if(deleteCnt >= 1) {
+			int cnt = dao.hostTheaterDel(theater_index);
+			model.addAttribute("cnt", cnt);
+		}
 		
 	}
 

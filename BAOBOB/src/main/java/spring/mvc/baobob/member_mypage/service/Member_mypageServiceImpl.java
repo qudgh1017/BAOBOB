@@ -1,5 +1,6 @@
 package spring.mvc.baobob.member_mypage.service;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -98,4 +99,142 @@ public class Member_mypageServiceImpl implements Member_mypageService{
 		}
 		
 	}
+	
+/*----------------------------------------------------------------------------*/
+	
+	//1:1문의 상세
+	public void memQuestionContentForm(HttpServletRequest req, Model model) {
+		int num = Integer.parseInt(req.getParameter("num"));
+		int pageNum = Integer.parseInt(req.getParameter("pageNum"));
+		int number = Integer.parseInt(req.getParameter("number"));
+		
+		//상세페이지 가져오기...1건
+		BoardVO dto = dao.getArticle(num);
+		
+		//조회수 증가
+		dao.addReadCnt(num);
+		
+		//jsp로 값을 넘긴다. (dto, pageNum, number)
+		model.addAttribute("dto", dto);
+		model.addAttribute("pageNum", pageNum);
+		model.addAttribute("number", number);
+	}
+	
+/*----------------------------------------------------------------------------*/
+	
+	//1:1문의 수정 상세 페이지
+	public void memQModifyView(HttpServletRequest req, Model model) {
+		int num = Integer.parseInt(req.getParameter("num"));
+		int pageNum = Integer.parseInt(req.getParameter("pageNum"));
+		String strPwd = req.getParameter("pwd");
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("num", num);
+		map.put("strPwd", strPwd);
+		
+		int selectCnt = dao.pwdCheck(map);
+		
+		if(selectCnt == 1) {
+			BoardVO dto = dao.getArticle(num);
+			model.addAttribute("dto", dto);
+		}
+		
+		//jsp에 값들을 넘긴다.
+		model.addAttribute("selectCnt", selectCnt); //selectCnt가 0이면 패스워드가 틀렸다고 뿌려주기위해
+		model.addAttribute("num", num);
+		model.addAttribute("pageNum", pageNum);
+	}
+	
+/*----------------------------------------------------------------------------*/
+	
+	//1:1문의 수정 처리
+	public void memQModifyPro(HttpServletRequest req, Model model) {
+		int num = Integer.parseInt(req.getParameter("num"));
+		int pageNum = Integer.parseInt(req.getParameter("pageNum"));
+		
+		BoardVO dto = new BoardVO();
+		
+		dto.setBoard_index(num);
+		dto.setBoard_subject(req.getParameter("subject"));
+		dto.setBoard_content(req.getParameter("content"));
+		dto.setBoard_pwd(req.getParameter("pwd"));
+		
+		int cnt = dao.updateQuestion(dto);
+		
+		model.addAttribute("cnt", cnt);
+		model.addAttribute("num", num);
+		model.addAttribute("pageNum", pageNum);
+	}
+	
+/*----------------------------------------------------------------------------*/
+	
+	//1:1문의 작성 처리페이지
+	public void memQWritePro(HttpServletRequest req, Model model) {
+		BoardVO dto = new BoardVO();
+		
+		//2.화면으로부터 입력받은 내용을 작은바구니(DTO)에 담는다.
+		dto.setMember_id((String)req.getSession().getAttribute("memId"));
+		dto.setBoard_pwd(req.getParameter("pwd"));
+		dto.setBoard_subject(req.getParameter("subject"));
+		dto.setBoard_content(req.getParameter("content"));
+		
+		//3.hidden으로부터 넘겨받은 값을 작은 바구니(DTO)에 담는다.
+		dto.setBoard_index(Integer.parseInt(req.getParameter("num")));
+		dto.setBoard_ref(Integer.parseInt(req.getParameter("ref")));
+		dto.setBoard_ref_step(Integer.parseInt(req.getParameter("ref_step")));
+		dto.setBoard_ref_level(Integer.parseInt(req.getParameter("ref_level")));
+		dto.setBoard_reg_date(new Timestamp(System.currentTimeMillis()));
+		dto.setBoard_ip(req.getRemoteAddr()); 
+		
+		//5.insertBoard()
+		int cnt = dao.insertQuestion(dto);
+		
+		//6.jsp에 넘길 값을 셋팅한다.(setAttribute)
+		model.addAttribute("cnt", cnt);
+	}
+	
+/*----------------------------------------------------------------------------*/
+	
+	//1:1문의 삭제 처리페이지
+	public void memQDelPro(HttpServletRequest req, Model model) {
+		int num = Integer.parseInt(req.getParameter("num"));
+		int pageNum = Integer.parseInt(req.getParameter("pageNum"));
+		String strPwd = req.getParameter("pwd");
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("num", num);
+		map.put("strPwd", strPwd);
+		
+		//num과 일치할 경우 비밀번호 일치하는지 확인
+		int selectCnt = dao.pwdCheck(map);
+		
+		if(selectCnt == 1) {
+			int deleteCnt = dao.deleteQuestion(num);
+			model.addAttribute("deleteCnt", deleteCnt);
+		}
+		
+		model.addAttribute("selectCnt", selectCnt);
+		model.addAttribute("pageNum", pageNum);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

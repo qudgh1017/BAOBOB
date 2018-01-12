@@ -21,4 +21,21 @@ public interface Host_movieService {
 	
 	// 영화 수정
 	public void hostMovieModPro(MultipartHttpServletRequest req, Model model);
+	
+	// 상영관 리스트
+	public void hostTheaterList(HttpServletRequest req, Model model);
+	
+	// 상영관 좌석 업데이트
+	public void hostTheaterAddPro(HttpServletRequest req, Model model);
+	
+	// 상영관 상세
+	public void hostTheaterDetail(HttpServletRequest req, Model model);
+	
+	// 상영관 수정 처리
+	public void hostTheaterModPro(HttpServletRequest req, Model model);
+	
+	// 상영관 삭제 처리
+	public void hostTheaterDel(HttpServletRequest req, Model model);
+	
+	
 }
