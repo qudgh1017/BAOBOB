@@ -25,8 +25,10 @@
 	
 	<section>
 		<div class="container">
-			<div class="col-md-12" align="center">
-				<img src="${projectRes}images/ybh/movie1.jpg">
+			<div class="row">
+				<div class="col-md-12" align="center">
+					<img src="${projectRes}images/ybh/movie1.jpg">
+				</div>
 			</div>
 			<div id="ajax">
 				<!-- 값들 출력될곳 -->

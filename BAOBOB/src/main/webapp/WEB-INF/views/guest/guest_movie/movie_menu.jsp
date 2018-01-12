@@ -21,7 +21,7 @@
 					    <span class="caret"></span>
 					  </button>
 					  <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1" style="background-image: url('${projectRes}images/ybh/movie_menu.jpg'); background-size: 140px 120px;">
-					    <li role="presentation"><a role="menuitem" tabindex="-1" href="movieChart">무비차트</a></li>
+					    <li role="presentation"><a role="menuitem" tabindex="-1" href="movieChart?movie_state=1">무비차트</a></li>
 					    <li role="presentation"><a role="menuitem" tabindex="-1" href="hdTrailer">HD 트레일러</a></li>
 					    <li role="presentation"><a role="menuitem" tabindex="-1" href="movieFinder">무비파인더</a></li>
 					    <li role="presentation"><a role="menuitem" tabindex="-1" href="movieReview">평점</a></li>
@@ -47,7 +47,7 @@
 					    <span class="caret"></span>
 					  </button>
 					  <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1" style="background-image: url('${projectRes}images/ybh/movie_menu.jpg'); background-size: 140px 120px;">
-					    <li role="presentation"><a role="menuitem" tabindex="-1" href="theaters">특별관</a></li>
+					    <li role="presentation"><a role="menuitem" tabindex="-1" href="theaters">BAOBOX 극장</a></li>
 					  </ul>
 					</div>
 		 		</div>
@@ -68,7 +68,6 @@
 		 			<div class="container">
 						<div class="row">
 					        <div class="span12">
-					        	
 					            <form id="custom-search-form" class="form-search form-horizontal pull-right">
 					                <div class="input-append span12">
 					                    <input type="text" class="search-query" placeholder="검색" style="width:100px">

@@ -17,15 +17,7 @@ public class Host_restaurantController {
 	
 	@Autowired
 	Host_restaurantService service;
-	
-	// 식당[1]
-	@RequestMapping(value = "/hostMain")
-	public String hostMain() {
-		log.debug("hostMain()");
-		
-		return "host/host_restaurant/hostMain";
-	}
-	
+
 	// 식당[1] 메뉴 리스트
 	@RequestMapping(value = "/hostMenuList")
 	public String hostMenuList(HttpServletRequest req, Model model) {
@@ -72,5 +64,15 @@ public class Host_restaurantController {
 		service.menuMod(req, model);
 		
 		return "host/host_restaurant/hostMenuModPro";
+	}
+	
+	// 식당[1] 메뉴 삭제 처리
+	@RequestMapping(value = "/hostMenuDel")
+	public String hostMenuDel(HttpServletRequest req, Model model) {
+		log.debug("hostMenuDel()");
+		
+		service.menuDel(req, model);
+		
+		return hostMenuList(req, model);
 	}
 }

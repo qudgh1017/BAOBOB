@@ -6,13 +6,13 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>BAOBOX</title>
-<!-- slide -->
-<!-- slide 기능 사용위한 라이브러리 -->
-<%-- <link href="${projectRes}ybh/css/slick.css" rel="stylesheet" type="text/css">
-<script type="text/javascript" src="http://code.jquery.com/jquery-3.2.1.min.js"></script>
-<script type="text/javascript" src="${projectRes}ybh/js/slick.min.js"></script>
-<script type="text/javascript" src="${projectRes}ybh/js/slide.js"></script>	
- --%>	
+<style>
+.state:hover{
+	text-decoration:none;
+	font-weight:bold;
+	color:red;
+}
+</style>
 </head>
 <body>
 	
@@ -25,43 +25,104 @@
 	
 	<section>
 		<div class="container">
-			상영, 상영예정작
+			<div class="row">
+				<div class="col-md-offset-1"></div>
+				<div class="col-md-10">
+					<br>
+					<h3 align=left; style="display:inline-block; margin-right:550px">
+						무비차트
+					</h3>
+					<a class="state" href="movieChart?movie_state=1">
+						<c:if test="${movie_state==1}"><span style="font-weight:bold; color:red;">무비차트</span></c:if>
+						<c:if test="${movie_state!=1}">무비차트</c:if>
+						
+					</a>&nbsp;&nbsp;
+					<a class="state" href="movieChart?movie_state=0">
+						<c:if test="${movie_state==0}"><span style="font-weight:bold; color:red;">상영예정작</span></c:if>
+						<c:if test="${movie_state!=0}">상영예정작</c:if>
+					</a>
+					<hr style="border:2px solid black;">
+					<br><br>
+					
+				</div>
+				<div class="col-md-offset-1"></div>
+			</div>
+		</div>
+		
+		<!-- 포스터 선택 -->
+		<div class="container">
+			<div class="row">
+				<c:if test="${cnt>0}">
+					<!-- <tr> -->
+					<c:forEach var="movie" items="${movies}">
+						<div class="col-md-3" style="margin-right:10px auto">
+							<c:set var="number" value="${number+1}"/>
+								<c:if test="${number<4}">
+									<div align="center" style="background-color:red; width:195px; border:5px solid black; margin-bottom:5px;">
+										<span style="color:white; font-weight:bold;">No.${number}</span>
+									</div>
+								</c:if>
+								<c:if test="${number>3}">
+									<div align="center" style="background-color:gray; width:195px; border:5px solid black; margin-bottom:5px;">
+										<span style="color:white; font-weight:bold;">No.${number}</span>
+									</div>
+								</c:if>
+								<a href="movieDetail?movie_index=${movie.movie_index}"><img style="border:5px solid black;"src="${projectRes}images/phc/${movie.movie_poster}"></a>
+								
+								<div align="left" style="width:195px;">
+										<span style="font-weight:bold;">
+											${movie.movie_title}
+										</span><br>
+										<span style="font-weight:bold; color:gray; font-size:12px">
+											20${movie.movie_rel_date} 개봉
+										</span><br>
+											
+								</div><br><br>
+						</div>
+					</c:forEach>
+					<!-- </tr> -->
+				</c:if>
+				
+				<!-- 게시글이 없으면 -->
+				<c:if test="${cnt == 0}">
+					<div class="col-md-12" align="center">
+						등록된 영화가 없습니다.
+					</div>
+				</c:if>
+			</div>
+		</div>		
+			
+		<div class="container" style="margin-top:50px">
+			<div class="row">
+				<div class="col-md-12" align="center">
+					<c:if test="${cnt > 0}">
+						<!-- 처음[◀◀] / 이전블록[◀] 특수문자:ㅁ + 한자키 -->
+						<c:if test="${startPage > pageBlock}">
+							<a href="hdTrailer?">[◀◀]</a>
+							<a href="hdTrailer?pageNum=${startPage - pageBlock}">[◀]</a>
+						</c:if>
+						
+						<c:forEach var="i" begin="${startPage}" end="${endPage}">
+							<c:if test="${i == currentPage}">
+								<span><b>[${i}]</b></span>
+							</c:if>
+							<c:if test="${i != currentPage}">
+								<a href="hdTrailer?pageNum=${i}">[${i}]</a>
+							</c:if>
+						</c:forEach>
+						
+						<!-- 다음블록 [▶] / 끝[▶▶] -->
+						<c:if test="${pageCount > endPage}">
+							<a href="hdTrailer?pageNum=${startPage + pageBlock}">[▶]</a>
+							<a href="hdTrailer?pageNum=${pageCount}">[▶▶]</a> <!-- 마지막페이지로 -->
+						</c:if>
+					
+					</c:if>
+				</div>
+			</div>
 		</div>
 	</section>
-	<br>
-	<br>
-	<br>
 	
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<div id="contact">contact</div>
-	<br>
-	<br>
-	<br>
 	<br>
 	<br>
 	<br>

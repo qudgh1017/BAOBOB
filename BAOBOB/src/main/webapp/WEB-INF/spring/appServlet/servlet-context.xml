@@ -81,6 +81,4 @@
 			</beans:props>
 		</beans:property>
 	</beans:bean>
-	
-	<!-- JSON지움 -->
 </beans:beans>

@@ -26,6 +26,11 @@
 	
 	<!-- 식당[1] 메뉴 수정 처리 -->
 	<update id="modMenu" parameterType="spring.mvc.baobob.vo.MenuVO">
-		
+		UPDATE restaurant_menu_tbl SET restaurant_menu_name = #{restaurant_menu_name}, restaurant_menu_img = #{restaurant_menu_img}, restaurant_menu_content = #{restaurant_menu_content}, restaurant_menu_price = #{restaurant_menu_price} WHERE restaurant_menu_index = #{restaurant_menu_index}
 	</update>
+	
+	<!-- 식당[1] 메뉴 수정 처리 -->
+	<delete id="delMenu" parameterType="spring.mvc.baobob.vo.MenuVO">
+		DELETE FROM restaurant_menu_tbl WHERE restaurant_menu_index = #{restaurant_menu_index}
+	</delete>
 </mapper>

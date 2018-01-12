@@ -9,6 +9,13 @@
 		SELECT COUNT(*)
 		FROM movie_tbl
 	</select>
+	
+	<!-- movie_state에 따른 영화갯수 -->
+	<select id="getMovieStateCnt" resultType="int">
+		SELECT COUNT(*)
+		FROM movie_tbl
+		WHERE movie_state = #{movie_state}
+	</select>
 
 	<!-- 영화 전체 리스트 -->
 	<select id="getAllMovies" resultType="spring.mvc.baobob.vo.MovieVO">
@@ -20,6 +27,24 @@
 						 movie_state, rownum rNum 
 					FROM ( 
 							SELECT * FROM movie_tbl 
+							ORDER BY movie_rel_date DESC, movie_index ASC 
+						 ) 
+				 ) 
+			 WHERE  rNum >= #{start} AND rNum <= #{end}
+		 ]]>
+	</select>
+	
+	<!-- movie_state에 따른 영화리스트 -->
+	<select id="getMovieStateMovies" resultType="spring.mvc.baobob.vo.MovieVO">
+		<![CDATA[
+			SELECT * 
+			FROM (SELECT movie_index, movie_title, movie_content, movie_janre,
+						 movie_age, movie_rel_date, movie_director, movie_star, 
+						 movie_country, movie_runtime, movie_poster, movie_trailer,
+						 movie_state, rownum rNum 
+					FROM ( 
+							SELECT * FROM movie_tbl 
+							WHERE movie_state = #{movie_state}
 							ORDER BY movie_rel_date DESC, movie_index ASC 
 						 ) 
 				 ) 
