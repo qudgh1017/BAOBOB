@@ -267,6 +267,7 @@ public class Host_movieServiceImpl implements Host_movieService{
 		
 	}
 
+	// 상영관 추가 처리
 	@Override
 	public void hostTheaterAddPro(HttpServletRequest req, Model model) {
 		int theater_index = Integer.parseInt(req.getParameter("theater_index"));
@@ -274,6 +275,8 @@ public class Host_movieServiceImpl implements Host_movieService{
 		int theater_row = Integer.parseInt(req.getParameter("row"));
 		String status = req.getParameter("state");
 		String[] state = status.split(",");
+		
+		
 		
 		
 		int indexChkCnt = dao.theater_index_check(theater_index);
@@ -290,12 +293,12 @@ public class Host_movieServiceImpl implements Host_movieService{
 				map.put("price", 0);
 				for(int row = 1; row<=theater_row; row++) {
 					for(int col = 1; col<=theater_col; col++) {
-						map.replace("state", Integer.parseInt(state[row*col-1]));
+						map.replace("state", Integer.parseInt(state[(row-1)*theater_col-1+col]));
 						map.replace("col", col);
 						map.replace("row", row);
-						if(Integer.parseInt(state[row*col-1])==3)
+						if(Integer.parseInt(state[(row-1)*theater_col-1+col])==3)  //(row-1)*theater_col-1+col
 							map.replace("price", 9000);
-						else if(Integer.parseInt(state[row*col-1])==4)
+						else if(Integer.parseInt(state[(row-1)*theater_col-1+col])==4)
 							map.replace("price", 11000);
 						else map.replace("price", 0);
 							
@@ -305,6 +308,7 @@ public class Host_movieServiceImpl implements Host_movieService{
 				model.addAttribute("cnt", 1);
 			}
 		}
+		
 	}
 	
 	// 상영관 리스트
@@ -418,6 +422,59 @@ public class Host_movieServiceImpl implements Host_movieService{
 		model.addAttribute("seat_vos", seat_vos);
 		model.addAttribute("state", state);
 	}
+	
+	// 상영관 수정 처리
+	@Override
+	public void hostTheaterModPro(HttpServletRequest req, Model model) {
+		int theater_index = Integer.parseInt(req.getParameter("theater_index"));
+		int theater_col = Integer.parseInt(req.getParameter("col"));
+		int theater_row = Integer.parseInt(req.getParameter("row"));
+		String status = req.getParameter("state");
+		String[] state = status.split(",");
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("theater_index", theater_index);
+		map.put("theater_col", theater_col);
+		map.put("theater_row", theater_row);
+		map.put("state", 0);
+		map.put("col", 0);
+		map.put("row", 0);
+		map.put("price", 0);
+		for(int row = 1; row<=theater_row; row++) {
+			for(int col = 1; col<=theater_col; col++) {
+				map.replace("state", Integer.parseInt(state[(row-1)*theater_col-1+col]));
+				map.replace("col", col);
+				map.replace("row", row);
+				if(Integer.parseInt(state[(row-1)*theater_col-1+col])==3)  //(row-1)*theater_col-1+col
+					map.replace("price", 9000);
+				else if(Integer.parseInt(state[(row-1)*theater_col-1+col])==4)
+					map.replace("price", 11000);
+				else map.replace("price", 0);
+					
+				int cnt = dao.modify_theater_seat(map);
+				if(cnt >= 1)
+					model.addAttribute("cnt", 1);
+			}
+		}
+			
+	}
+
+	// 상영관 삭제 처리
+	@Override
+	public void hostTheaterDel(HttpServletRequest req, Model model) {
+		int theater_index = Integer.parseInt(req.getParameter("theater_index"));
+		
+		int deleteCnt = dao.hostTheaterSeatDel(theater_index); 
+		System.out.println("deleteCnt:" + deleteCnt);
+		
+		if(deleteCnt >= 1) {
+			int cnt = dao.hostTheaterDel(theater_index);
+			model.addAttribute("cnt", cnt);
+		}
+		
+	}
+
+	
 	
 }
 

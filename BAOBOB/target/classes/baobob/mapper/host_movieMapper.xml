@@ -97,4 +97,19 @@
 	<select id="hostTheaterSeatDetail" resultType="spring.mvc.baobob.vo.Theater_seatVO">
 		SELECT * FROM theater_seat_tbl WHERE theater_index=#{theater_index}
 	</select>
+	
+	<!-- 상영관 좌석 수정 처리 modify_theater_seat -->
+	<update id="modify_theater_seat" parameterType="java.util.Map">
+		UPDATE theater_seat_tbl SET seat_state=#{state}, seat_price=#{price} WHERE theater_index=#{theater_index} AND seat_row=#{row} AND seat_col=#{col}
+	</update>
+	
+	<!-- 상영관 삭제 처리 -->
+	<delete id="hostTheaterDel" parameterType="int">
+		DELETE theater_tbl WHERE theater_index=#{theater_index}
+	</delete>
+	
+	<!-- 상영관 좌석 삭제 처리 -->
+	<delete id="hostTheaterSeatDel" parameterType="int">
+		DELETE theater_seat_tbl WHERE theater_index=#{theater_index}
+	</delete>
 </mapper>

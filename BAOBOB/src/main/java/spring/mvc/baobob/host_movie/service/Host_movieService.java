@@ -31,5 +31,11 @@ public interface Host_movieService {
 	// 惑康包 惑技
 	public void hostTheaterDetail(HttpServletRequest req, Model model);
 	
+	// 惑康包 荐沥 贸府
+	public void hostTheaterModPro(HttpServletRequest req, Model model);
+	
+	// 惑康包 昏力 贸府
+	public void hostTheaterDel(HttpServletRequest req, Model model);
+	
 	
 }

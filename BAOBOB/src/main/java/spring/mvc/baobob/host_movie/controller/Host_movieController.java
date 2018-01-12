@@ -111,4 +111,24 @@ public class Host_movieController {
 		
 		return "host/host_movie/hostTheaterDetail";
 	}
+	
+	// 상영관 수정 처리
+	@RequestMapping(value="hostTheaterModPro")
+	public String hostTheaterModPro(HttpServletRequest req, Model model) {
+		System.out.println("hostTheaterModPro");
+		
+		service.hostTheaterModPro(req, model);
+		
+		return "host/host_movie/hostTheaterModPro";
+	}
+	
+	// 상영관 삭제
+	@RequestMapping(value="hostTheaterDel")
+	public String hostTheaterDel(HttpServletRequest req, Model model) {
+		System.out.println("hostTheaterDel");
+		
+		service.hostTheaterDel(req, model);
+		
+		return "host/host_movie/hostTheaterDel";
+	}
 }

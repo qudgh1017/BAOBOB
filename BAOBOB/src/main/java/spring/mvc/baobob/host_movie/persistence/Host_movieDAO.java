@@ -47,4 +47,15 @@ public interface Host_movieDAO {
 	
 	// 상영관 상세 좌석 정보
 	public ArrayList<Theater_seatVO> hostTheaterSeatDetail(int theater_index);
+	
+	// 상영관 좌석 수정 처리
+	public int modify_theater_seat(Map<String, Object> map);
+	
+	// 상영관 삭제 처리
+	public int hostTheaterDel(int theater_index);
+	
+	// 상영관 좌석 삭제 처리
+	public int hostTheaterSeatDel(int theater_index);
+	
+	
 }
