@@ -29,15 +29,13 @@ function spaceDivChange() {
 		for(var x = 0; x < widthX; x += 1) {
 			var location = x + '-' + y;
 			var imgId = 'img' + location;
-			var btnId = 'btn' + location;	//버튼 구별하기 위한 id
 			
 			//배열판의 각 버튼
 			space += '<button class="p_spaceBtn p_btn" ' 
-					+ 'value="0" ' 
-					+ 'id="' + btnId + '" '
 					+ 'onclick="spaceBtnChange(&#39;' + location +'&#39;)">'
 						+ '<img class="p_img space_img" '
 						+ 'id="' + imgId + '" '
+						+ 'data-type="0" ' 
 						+ 'src="/baobob/resources/images/ymk/host_parking/icon_tmp.png">'
 					+ '</button>';
 			
@@ -52,22 +50,105 @@ function spaceBtnChange(location) {
 	if(typeImg != '') { //아이콘 선택했을 경우, 선택한 버튼의 설정 변경
 		//선택한 버튼의 이미지 src 변경
 		var imgId = 'img' + location; //선택한 버튼의 id
-		var spaceImg = document.getElementById(imgId); //선택한 버튼의 img
-		spaceImg.src = '/baobob/resources/images/ymk/host_parking/' + typeImg;
-
-		//선택한 버튼의 value 변경(DB에 아이콘index 넣기 위한 값)
-		var btnId = 'btn' + location;
-		var spaceBtn = document.getElementById(btnId);
-		spaceBtn.value = typeNum;
+		var space = document.getElementById(imgId); //선택한 버튼의 img
+		space.src = '/baobob/resources/images/ymk/host_parking/' + typeImg;
+		space.setAttribute('data-type', typeNum);
 	} else {
 		alert('아이콘을 선택해주세요.');
 	}
 }
 
+//설정한 배열판이 있을 경우
+function spaceBody(info, col, row) {
+	var arr = info.split(',');
+
+	var space = '';
+	for(var y = 0; y < row; y += 1) {
+		space += '<div class="p_div">';
+		for(var x = 0; x < col; x += 1) {
+			var index = x + (y * col);
+			console.log(index + '번째 : ' + arr[index] + '/{' + x + ',' + y + '}');
+
+			var location = x + '-' + y;
+			var imgId = 'img' + location;
+			var btnId = 'btn' + location;
+			
+			spaceType(arr[index]);
+			
+			space += '<button class="p_spaceBtn p_btn" ' 
+				+ 'onclick="spaceBtnChange(&#39;' + location +'&#39;)">'
+					+ '<img class="p_img space_img" '
+					+ 'id="' + imgId + '" '
+					+ 'data-type="' + arr[index] + '" ' 
+					+ 'src="/baobob/resources/images/ymk/host_parking/' + typeImg+ '">'
+				+ '</button>';
+		}
+		space += '</div>';
+	}
+	var spaceDiv = document.getElementById('spaceDiv');
+	spaceDiv.innerHTML = space;
+}
+
+//드래그 설정
+var moveFlg = false;
+document.getElementById('spaceDiv').addEventListener('mousedown', function(e) {
+	e.preventDefault();
+	moveFlg = true;
+});
+document.getElementById('spaceDiv').addEventListener('mousemove', function(e) {
+	e.preventDefault();
+	
+	if(e.target.id != '' && moveFlg) {
+		var space = document.getElementById(e.target.id);
+		space.src = '/baobob/resources/images/ymk/host_parking/' + typeImg;
+		space.setAttribute('data-type', typeNum);
+	}
+});
+document.getElementById('spaceDiv').addEventListener('mouseup', function(e) {
+	e.preventDefault();
+	moveFlg = false;
+});
+
+//send전 입력창 입력 확인
+function sendCheck() {
+	//col, row 정보
+	if(!document.getElementById('widthX').value) {
+		alert('가로를 입력하세요');
+		document.getElementById('widthX').focus();
+		return false;
+		
+	} else if(!document.getElementById('heightY').value) {
+		alert('세로를 입력하세요');
+		document.getElementById('heightY').focus();
+		return false;
+	//요금 정보
+	} else if(!document.getElementById('baseTime').value) {
+		alert('기본 시간을 입력하세요');
+		document.getElementById('baseTime').focus();
+		return false;
+		
+	} else if(!document.getElementById('baseFee').value) {
+		alert('기본 요금을 입력하세요');
+		document.getElementById('baseFee').focus();
+		return false;
+		
+	} else if(!document.getElementById('excTime').value) {
+		alert('초과 시간을 입력하세요');
+		document.getElementById('excTime').focus();
+		return false;
+		
+	} else if(!document.getElementById('excFee').value) {
+		alert('초과 요금을 입력하세요');
+		document.getElementById('excFee').focus();
+		return false;
+	}
+	return true;
+}
+
 //주차장 구역 정보 설정 AJAX
 function spaceTypeChange() {
 	if(sendCheck()) {
-		var item = document.querySelectorAll('.p_spaceBtn'); //배열판의 버튼들
+		var item = document.querySelectorAll('.p_img'); //배열판의 버튼들
 		
 		//col, row 정보
 		var x = document.getElementById('widthX').value; //col
@@ -76,7 +157,7 @@ function spaceTypeChange() {
 		//배열판 버튼들의 아이콘index 배열
 		var array = new Array();
 		item.forEach(function(space) {
-			array.push(space.value);
+			array.push(space.getAttribute('data-type'));
 		});
 		var info = array.join(',');
 		console.log(info);
@@ -117,70 +198,3 @@ function space_callback() {
 	}
 }
 
-//설정한 배열판이 있을 경우
-function spaceBody(info, col, row) {
-	var arr = info.split(',');
-
-	var space = '';
-	for(var y = 0; y < row; y += 1) {
-		space += '<div class="p_div">';
-		for(var x = 0; x < col; x += 1) {
-			var index = x + (y * col);
-			console.log(index + '번째 : ' + arr[index] + '/{' + x + ',' + y + '}');
-
-			var location = x + '-' + y;
-			var imgId = 'img' + location;
-			var btnId = 'btn' + location;
-			
-			spaceType(arr[index]);
-			
-			space += '<button class="p_spaceBtn p_btn" ' 
-				+ 'value="' + arr[index] + '" ' 
-				+ 'id="' + btnId + '" '
-				+ 'onclick="spaceBtnChange(&#39;' + location +'&#39;)">'
-					+ '<img class="p_img space_img" '
-					+ 'id="' + imgId + '" '
-					+ 'src="/baobob/resources/images/ymk/host_parking/' + typeImg+ '">'
-				+ '</button>';
-		}
-		space += '</div>';
-	}
-	var spaceDiv = document.getElementById('spaceDiv');
-	spaceDiv.innerHTML = space;
-}
-
-//send전 입력창 입력 확인
-function sendCheck() {
-	//col, row 정보
-	if(!document.getElementById('widthX').value) {
-		alert('가로를 입력하세요');
-		document.getElementById('widthX').focus();
-		return false;
-		
-	} else if(!document.getElementById('heightY').value) {
-		alert('세로를 입력하세요');
-		document.getElementById('heightY').focus();
-		return false;
-	//요금 정보
-	} else if(!document.getElementById('baseTime').value) {
-		alert('기본 시간을 입력하세요');
-		document.getElementById('baseTime').focus();
-		return false;
-		
-	} else if(!document.getElementById('baseFee').value) {
-		alert('기본 요금을 입력하세요');
-		document.getElementById('baseFee').focus();
-		return false;
-		
-	} else if(!document.getElementById('excTime').value) {
-		alert('초과 시간을 입력하세요');
-		document.getElementById('excTime').focus();
-		return false;
-		
-	} else if(!document.getElementById('excFee').value) {
-		alert('초과 요금을 입력하세요');
-		document.getElementById('excFee').focus();
-		return false;
-	}
-	return true;
-}

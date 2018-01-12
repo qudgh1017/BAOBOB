@@ -1,6 +1,8 @@
 package spring.mvc.baobob.host_parking.persistence;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import spring.mvc.baobob.vo.Parking;
 import spring.mvc.baobob.vo.ParkingFee;
+import spring.mvc.baobob.vo.ParkingHistory;
 import spring.mvc.baobob.vo.ParkingSpace;
 
 @Repository
@@ -127,5 +130,50 @@ public class Host_parkingDAOImpl implements Host_parkingDAO {
 		int cnt = mapper.parkingFeeUpdate(pf);
 		return cnt;
 	}
+
+	//주차 내역 총개수
+	@Override
+	public int getParkingHistoryCnt() {
+		Host_parkingDAO mapper = sqlSession.getMapper(Host_parkingDAO.class);
+		int cnt = mapper.getParkingHistoryCnt();;
+		return cnt;
+	}
+
+	//주차 내역
+	@Override
+	public ArrayList<ParkingHistory> getParkingHistory(Map<String, Integer> map) {
+		Host_parkingDAO mapper = sqlSession.getMapper(Host_parkingDAO.class);
+		ArrayList<ParkingHistory> list = mapper.getParkingHistory(map);
+		return list;
+	}
+
+	//납부 내역 총개수
+	public int getParkingPayCnt() {
+		Host_parkingDAO mapper = sqlSession.getMapper(Host_parkingDAO.class);
+		return mapper.getParkingPayCnt();
+	}
 	
+	//납부 내역
+	@Override
+	public ArrayList<ParkingHistory> getParkingPayList(Map<String, Integer> map) {
+		Host_parkingDAO mapper = sqlSession.getMapper(Host_parkingDAO.class);
+		ArrayList<ParkingHistory> list = mapper.getParkingPayList(map);
+		return list;
+	}
+
+	//해당 주차 구역 정보
+	@Override
+	public Parking getSpaceState(int park_index) {
+		Host_parkingDAO mapper = sqlSession.getMapper(Host_parkingDAO.class);
+		Parking space = mapper.getSpaceState(park_index);
+		return space;
+	}
+
+
+	//해당 주차 구역의 마지막 사용자
+	public ArrayList<String> getParkLastDateMember(Timestamp park_last_date) {
+		Host_parkingDAO mapper = sqlSession.getMapper(Host_parkingDAO.class);
+		ArrayList<String> lasts = mapper.getParkLastDateMember(park_last_date);
+		return lasts;
+	}
 }
