@@ -52,6 +52,7 @@ section .notice_a{color:white;}
 	font-weight: bold;
     background-color: white;;
     color: 487752;
+    cursor: default;
 }
 .baobobImg{
 	width:1000px;
@@ -64,22 +65,24 @@ section .notice_a{color:white;}
 .mybaobob {
 	color:white;
 	background-color: 487752;
-	padding: 2rem 5rem;
+	padding-left: 10rem;
+	padding-right: 10rem;
+	padding-top:8rem;
 	border-radius: 0.3rem;}
 .mybaobob table.board {background-color:487752; margin: auto; width: auto; border-collapse: collapse;}
-.mybaobob table.board img {width:400px; background-color:487752;}
+.mybaobob table.board img {padding:0rem 0rem;width:200px; background-color:487752;}
 .mybaobob table.board th {height: 50px; width: 300px;padding: 20px;font-weight: bold;color: white;vertical-align: top; text-align:center;}
 .mybaobob table.board td {width: 500px; padding: 17px;vertical-align: top; text-align: center; color:white;}
 
-table.mainBody {padding:0px;margin:0px;width:100%;height:100%; color:487752;}
+table #mainBody {padding:0px;margin:0px;width:100%;height:100%; color:487752;}
 caption {caption-side: top!important; text-align:center!important; font-weight: bold!important;font-size: 40px!important;color:487752!important;margin-bottom:50px!important; }
-table.mainBody thead th {padding: 10px;font-weight: bold;vertical-align: top;border-bottom: 3px solid black;text-align: center;}
-table.mainBody tbody th {width: 50px;padding: 10px;font-weight: bold; vertical-align: top;border-bottom: 1px solid black;}
-table.mainBody td {padding: 10px;vertical-align: top;border-bottom: 1px solid black;text-align: center;}
-table.mainBody a {color:487752!important; text-decoration:none;}
+table #mainBody thead th {padding: 10px;font-weight: bold;vertical-align: top;border-bottom: 3px solid black;text-align: center;}
+table #mainBody tbody th {width: 50px;padding: 10px;font-weight: bold; vertical-align: top;border-bottom: 1px solid black;}
+table #mainBody td {padding: 10px;vertical-align: top;border-bottom: 1px solid black;text-align: center;}
+table #mainBody a {color:487752!important; text-decoration:none;}
 
 /* 페이징 컨트롤 */
-.pagination {position:absolute; margin-left:700px;display: inline-block;}
+.pagination {margin-left:500px;display: inline-block;}
 .pagination a {color: 487752!important;float: left;margin: 8px; padding: 8px 16px;text-decoration: none!important;}
 .pagination a.active {background-color: #18bc9c;;color: white;}
 .pagination a:hover:not(.active) {background-color: #18bc9c;;}

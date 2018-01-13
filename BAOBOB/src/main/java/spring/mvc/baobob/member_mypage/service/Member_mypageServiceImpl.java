@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 
 import spring.mvc.baobob.member_mypage.persistence.Member_mypageDAO;
 import spring.mvc.baobob.vo.BoardVO;
+import spring.mvc.baobob.vo.Member;
 
 @Service
 public class Member_mypageServiceImpl implements Member_mypageService{
@@ -217,10 +218,68 @@ public class Member_mypageServiceImpl implements Member_mypageService{
 		model.addAttribute("pageNum", pageNum);
 	}
 	
+/*----------------------------------------------------------------------------*/
 	
+	//정보수정 입력페이지
+	public void memPModifyView(HttpServletRequest req, Model model) {
+		//1단계. 화면으로부터 아이디, 패스워드 값을 받아온다.
+		String strId=(String) req.getSession().getAttribute("memId"); 
+		String strPwd=req.getParameter("pwd");
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("strId", strId);
+		map.put("strPwd", strPwd);
+		
+		int selectCnt=dao.memPCheck(map);
+		
+		//아이디와 패스워드가 일치하면, 수정하기위해서 입력한 정보를 읽어온다.
+		if(selectCnt == 1) {
+			System.out.println("selectCnt == 1");
+			Member vo = dao.getMemberInfo(strId);
+			model.addAttribute("vo", vo);
+		}
+		
+		//3단계. request나 session에 처리 결과를 저장하고 jsp(view)에서 받는다.
+		model.addAttribute("selectCnt", selectCnt);
+		
+	}
 	
+/*----------------------------------------------------------------------------*/
 	
-	
+	//정보수정 처리페이지
+	public void memPPro(HttpServletRequest req, Model model) {
+		Member vo = new Member();
+		
+		String id = (String)req.getSession().getAttribute("memId");
+		vo.setMember_id(id);
+		vo.setMember_pwd(req.getParameter("pwd"));
+		vo.setMember_name(req.getParameter("name"));
+		vo.setMember_address(req.getParameter("address"));
+		
+		//hp
+		String hp = "";
+		String hp1=req.getParameter("hp1");
+		String hp2=req.getParameter("hp2");
+		String hp3=req.getParameter("hp3");
+		
+		//필수입력 항목이 아니므로 null 체크없이 무조건 insert하면 null pointer Exception 발생
+		if(!hp1.equals("") && !hp2.equals("") && !hp3.equals("")) {
+			 hp = hp1 + "-" + hp2 + "-" + hp3;
+		}
+		//핸드폰 번호가 없어졌다면 if문을 타지않은	hp = "";이 들어간다.
+		vo.setMember_tel(hp);
+		
+		//email
+		String email="";
+		String email1=req.getParameter("email1");
+		String email2=req.getParameter("email2");
+		email = email1 + "@" + email2;
+		vo.setMember_email(email);
+		
+		int cnt = dao.updateMember(vo);
+		
+		model.addAttribute("cnt", cnt);
+	}
 	
 	
 	

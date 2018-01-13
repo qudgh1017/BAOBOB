@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import spring.mvc.baobob.vo.BoardVO;
+import spring.mvc.baobob.vo.Member;
 
 @Repository
 public class Member_mypageDAOImpl implements Member_mypageDAO{
@@ -206,5 +207,102 @@ public class Member_mypageDAOImpl implements Member_mypageDAO{
 	}
 	
 /*----------------------------------------------------------------------------*/
+	
+	//중복확인 체크
+	@Override
+	public int idCheck(String strId) {
+		int cnt = 0;
+				
+		Member_mypageDAO dao = sqlSession.getMapper(Member_mypageDAO.class);
+		cnt = dao.idCheck(strId);
+		
+		
+		return cnt;
+	}
+	
+/*----------------------------------------------------------------------------*/
+		
+	//로그인 체크
+	public int memPCheck(Map<String, Object> map) {
+		int cnt = 0;
+		
+		Member_mypageDAO dao = sqlSession.getMapper(Member_mypageDAO.class);
+		int idChkCnt = dao.idCheck((String)map.get("strId"));
+		
+		if(idChkCnt == 1) {
+			int pwdChkCnt = dao.memPCheck(map);
+			
+			if(pwdChkCnt == 1) {
+				//패스워드가 일치하면 cnt=1
+				cnt = 1;
+			}else {
+				//패스워드가 일치하지 않으면 cnt=-1
+				cnt = -1;
+			}
+		}
+			
+		
+		return cnt;
+	}
+	
+/*----------------------------------------------------------------------------*/
+	
+	//회원정보 가져오기
+	public Member getMemberInfo(String strId) {
+		Member vo = new Member();
+		
+		Member_mypageDAO dao = sqlSession.getMapper(Member_mypageDAO.class);
+		vo = dao.getMemberInfo(strId);
+		
+		return vo;
+		
+	}
+	
+/*----------------------------------------------------------------------------*/
+	
+	//회원정보 수정 처리
+	public int updateMember(Member vo) {
+		int cnt = 0;
+		
+		Member_mypageDAO dao = sqlSession.getMapper(Member_mypageDAO.class);
+		cnt = dao.updateMember(vo);
+		
+		return cnt;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 }

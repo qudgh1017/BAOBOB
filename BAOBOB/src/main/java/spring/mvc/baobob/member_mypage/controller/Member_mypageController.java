@@ -20,19 +20,48 @@ public class Member_mypageController {
 	
 	//회원 마이페이지
 	@RequestMapping("memMyPageMain")
-	public String memberMypage(Model model) {
+	public String memberMypage(HttpServletRequest req, Model model) {
 		log.debug("====== Member_mypageController/memMypage() ======");
+		
+		//임시 세션
+		req.getSession().setAttribute("memId", "member_id 01");
 		
 		return "guest/member_myPage/member_myPage_main";
 	}
+
+/*----------------------------- 정보수정 ----------------------------------------*/
 	
+	//정보수정 폼페이지
+	@RequestMapping("memPForm")
+	public String memPView(HttpServletRequest req, Model model) {
+		
+		return "guest/member_myPage/member_myPage_memPForm";
+	}
+	
+	//정보수정 입력페이지	
+	@RequestMapping("memPModifyView")
+	public String memPModifyView(HttpServletRequest req, Model model) {
+		
+		service.memPModifyView(req, model);
+		
+		return "guest/member_myPage/member_myPage_memPView";
+	}
+	
+	//정보수정 처리페이지
+	@RequestMapping("memPPro")
+	public String memPPro(HttpServletRequest req, Model model) {
+		
+		service.memPPro(req, model);
+		
+		return "guest/member_myPage/member_myPage_memPPro";
+	}
+	
+	
+/*----------------------------- 1:1문의 ----------------------------------------*/
 	//1:1문의 리스트
 	@RequestMapping("memQuestion")
 	public String memQuestion(HttpServletRequest req, Model model) {
 		log.debug("====== Member_mypageController/memQuestion() ======");
-		
-		//임시 세션
-		req.getSession().setAttribute("memId", "member_id 01");
 		
 		service.memQuestionList(req, model);
 		
