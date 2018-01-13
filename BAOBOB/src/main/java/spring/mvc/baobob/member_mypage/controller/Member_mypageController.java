@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import spring.mvc.baobob.member_mypage.service.Member_mypageService;
 
@@ -24,7 +26,9 @@ public class Member_mypageController {
 		log.debug("====== Member_mypageController/memMypage() ======");
 		
 		//임시 세션
-		req.getSession().setAttribute("memId", "member_id 01");
+		//req.getSession().setAttribute("memId", "guest");
+		//model.addAttribute("member_img", "default_img.png");
+		service.memberCard(req, model);
 		
 		return "guest/member_myPage/member_myPage_main";
 	}
@@ -34,23 +38,25 @@ public class Member_mypageController {
 	//정보수정 폼페이지
 	@RequestMapping("memPForm")
 	public String memPView(HttpServletRequest req, Model model) {
-		
+		service.memberCard(req, model);
 		return "guest/member_myPage/member_myPage_memPForm";
 	}
 	
 	//정보수정 입력페이지	
 	@RequestMapping("memPModifyView")
 	public String memPModifyView(HttpServletRequest req, Model model) {
-		
+		log.debug("====== Member_mypageController/memPModifyView() ======");
+		service.memberCard(req, model);
 		service.memPModifyView(req, model);
 		
 		return "guest/member_myPage/member_myPage_memPView";
 	}
 	
 	//정보수정 처리페이지
-	@RequestMapping("memPPro")
-	public String memPPro(HttpServletRequest req, Model model) {
-		
+	@RequestMapping(value="memPPro", method=RequestMethod.POST)
+	public String memPPro(MultipartHttpServletRequest req, Model model) {
+		log.debug("====== Member_mypageController/memPPro() ======");
+		service.memberCard(req, model);
 		service.memPPro(req, model);
 		
 		return "guest/member_myPage/member_myPage_memPPro";
@@ -62,7 +68,7 @@ public class Member_mypageController {
 	@RequestMapping("memQuestion")
 	public String memQuestion(HttpServletRequest req, Model model) {
 		log.debug("====== Member_mypageController/memQuestion() ======");
-		
+		service.memberCard(req, model);
 		service.memQuestionList(req, model);
 		
 		return "guest/member_myPage/member_myPage_memQuestion";
@@ -71,7 +77,7 @@ public class Member_mypageController {
 	//1:1문의 상세
 	@RequestMapping("memQuestionContentForm")
 	public String memQuestionContentForm(HttpServletRequest req, Model model) {
-		
+		service.memberCard(req, model);
 		service.memQuestionContentForm(req, model);
 		
 		return "guest/member_myPage/member_myPage_memQContentForm";
@@ -80,6 +86,8 @@ public class Member_mypageController {
 	//1:1문의 수정 폼 페이지
 	@RequestMapping("memQModifyForm")
 	public String memQModifyForm(HttpServletRequest req, Model model) {
+		
+		service.memberCard(req, model);
 		
 		//contentForm에서 글수정버튼을 눌렀을때 넘긴 값들을 받는다.
 		int num = Integer.parseInt(req.getParameter("num"));
@@ -95,7 +103,7 @@ public class Member_mypageController {
 	//1:1문의 수정 상세 페이지
 	@RequestMapping("memQModifyView")
 	public String boardModifyView(HttpServletRequest req, Model model) {
-		
+		service.memberCard(req, model);
 		service.memQModifyView(req, model);
 		
 		return "guest/member_myPage/member_myPage_memQModifyView";
@@ -104,7 +112,7 @@ public class Member_mypageController {
 	//1:1문의 수정 처리
 	@RequestMapping("memQModifyPro")
 	public String memQModifyPro(HttpServletRequest req, Model model) {
-		
+		service.memberCard(req, model);
 		service.memQModifyPro(req, model);
 		
 		return "guest/member_myPage/member_myPage_memQModifyPro";
@@ -113,6 +121,8 @@ public class Member_mypageController {
 	//문의하기 작성폼 페이지
 	@RequestMapping("memQWriteForm")
 	public String memQWriteForm(HttpServletRequest req, Model model) {
+		
+		service.memberCard(req, model);
 		
 		//제목글쓰기(답변글이 아닌경우)
 		int num = 0;
@@ -141,7 +151,7 @@ public class Member_mypageController {
 	//문의하기 처리페이지	
 	@RequestMapping("memQWritePro")
 	public String memQWritePro(HttpServletRequest req, Model model) {
-		
+		service.memberCard(req, model);
 		service.memQWritePro(req, model);
 		
 		return "guest/member_myPage/member_myPage_memQWritePro";
@@ -150,6 +160,8 @@ public class Member_mypageController {
 	//문의하기 삭제폼 페이지	
 	@RequestMapping("memQDelForm")
 	public String memQDelForm(HttpServletRequest req, Model model) {
+		
+		service.memberCard(req, model);
 		
 		//contentForm.jsp에서 삭제button을 눌렀을떄 get방식으로 넘긴 값을 가져온다.
 		int num = Integer.parseInt(req.getParameter("num"));
@@ -164,7 +176,7 @@ public class Member_mypageController {
 	//문의하기 삭제 처리페이지
 	@RequestMapping("memQDelPro")
 	public String memQDelPro(HttpServletRequest req, Model model) {
-		
+		service.memberCard(req, model);
 		service.memQDelPro(req, model);
 		
 		int num = Integer.parseInt(req.getParameter("num"));
