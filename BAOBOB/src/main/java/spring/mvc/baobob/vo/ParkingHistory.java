@@ -4,14 +4,27 @@ import java.sql.Timestamp;
 
 public class ParkingHistory {
 	// park_history_tbl
-	private int p_history_index;
-	private int history_index;
-	private Timestamp p_history_in;
-	private Timestamp p_history_out;
-	private int p_history_price;
-	private String p_history_space;
-	private Timestamp p_history_date;
+	//p_history_index, history_index, p_history_in, p_history_out, p_history_price, p_history_space, p_history_date
+	private int p_history_index;//테이블 인덱스
+	private int history_index;	//내역 인덱스
+	private Timestamp p_history_in; //입차시간
+	private Timestamp p_history_out; //출차 시간
+	private int p_history_price; //가격
+	private String p_history_space; //일반
+	private Timestamp p_history_date; //등록일
+	private HistoryVO history;
 
+	/*
+	 * function spaceType(type) {
+	switch(type) {
+	case '4': 일반; break;
+	case '3': 장애인; break;
+	case '2': 임산부; break;
+	case '1': 전기차; break;
+	case '0': 빈공간; break;
+	}
+}
+	 * */
 	public int getP_history_index() {
 		return p_history_index;
 	}
@@ -68,4 +81,12 @@ public class ParkingHistory {
 		this.p_history_date = p_history_date;
 	}
 
+	public HistoryVO getHistory() {
+		return history;
+	}
+
+	public void setHistory(HistoryVO history) {
+		this.history = history;
+	}
+	
 }

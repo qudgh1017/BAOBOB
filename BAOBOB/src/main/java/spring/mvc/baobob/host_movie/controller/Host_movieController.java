@@ -111,4 +111,54 @@ public class Host_movieController {
 		
 		return "host/host_movie/hostTheaterDetail";
 	}
+	
+	// 상영관 수정 처리
+	@RequestMapping(value="hostTheaterModPro")
+	public String hostTheaterModPro(HttpServletRequest req, Model model) {
+		System.out.println("hostTheaterModPro");
+		
+		service.hostTheaterModPro(req, model);
+		
+		return "host/host_movie/hostTheaterModPro";
+	}
+	
+	// 상영관 삭제
+	@RequestMapping(value="hostTheaterDel")
+	public String hostTheaterDel(HttpServletRequest req, Model model) {
+		System.out.println("hostTheaterDel");
+		
+		service.hostTheaterDel(req, model);
+		
+		return "host/host_movie/hostTheaterDel";
+	} 
+	
+	// 스케줄
+	@RequestMapping(value="hostSchedule")
+	public String hostSchedule(HttpServletRequest req, Model model) {
+		System.out.println("hostSchedule");
+		
+		
+		
+		return "host/host_movie/hostSchedule";
+	}
+	
+	// 스케줄 추가 폼
+	@RequestMapping(value="hostScheduleAddForm")
+	public String hostScheduleAddForm(HttpServletRequest req, Model model) {
+		System.out.println("hostScheduleAddForm");
+		
+		service.hostScheduleAddForm(req, model);
+		
+		return "host/host_movie/hostScheduleAddForm";
+	}
+	
+	// 스케줄 추가 처리
+	@RequestMapping(value="hostScheduleAddPro")
+	public String hostScheduleAddPro(HttpServletRequest req, Model model) {
+		System.out.println("hostScheduleAddPro");
+		
+		service.hostScheduleAddPro(req, model);
+		
+		return "host/host_movie/hostScheduleAddPro";
+	}
 }

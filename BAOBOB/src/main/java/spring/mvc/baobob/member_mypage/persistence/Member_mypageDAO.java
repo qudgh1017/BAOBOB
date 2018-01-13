@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Map;
 
 import spring.mvc.baobob.vo.BoardVO;
+import spring.mvc.baobob.vo.Member;
 
 public interface Member_mypageDAO {
 	
@@ -43,11 +44,17 @@ public interface Member_mypageDAO {
 	//1:1문의 삭제
 	public int deleteQuestion(int num);
 	
+	//중복확인 체크
+	public int idCheck(String strId);
+		
+	//체크
+	public int memPCheck(Map<String, Object> map);
 	
+	//회원정보 가져오기
+	public Member getMemberInfo(String strId);
 	
-	
-	
-	
+	//회원정보 수정 처리
+	public int updateMember(Member vo);
 	
 
 }

@@ -18,7 +18,7 @@
 		alert("부적절한 접근입니다.");
 		window.history.back();
 	</c:if>
-	<form action="hostTheaterModPro" method="post" >
+	<form name="hostTheaterDetailForm" action="hostTheaterModPro" method="post" >
 	<center><h3><b>${vo.theater_index}관</b></h3></center>
 	<hr style="border:3px solid black;">
 	<br>
@@ -44,7 +44,7 @@
 						<button type="button" onclick="spaceType('5')"><img src="${projectRes}images/phc/icon/theater_couple.png"></button>
 					</div>
 					
-					<input type="button" value="상영관 등록하기" onclick="#"/>
+					<input type="button" value="상영관 수정하기" onclick="hostTheaterMod(${vo.theater_index}, ${vo.theater_col}, ${vo.theater_row});"/>
 				</td>
 			</tr>
 		</table>

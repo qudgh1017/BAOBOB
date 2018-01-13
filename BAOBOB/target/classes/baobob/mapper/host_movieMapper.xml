@@ -97,4 +97,36 @@
 	<select id="hostTheaterSeatDetail" resultType="spring.mvc.baobob.vo.Theater_seatVO">
 		SELECT * FROM theater_seat_tbl WHERE theater_index=#{theater_index}
 	</select>
+	
+	<!-- 상영관 좌석 수정 처리 modify_theater_seat -->
+	<update id="modify_theater_seat" parameterType="java.util.Map">
+		UPDATE theater_seat_tbl SET seat_state=#{state}, seat_price=#{price} WHERE theater_index=#{theater_index} AND seat_row=#{row} AND seat_col=#{col}
+	</update>
+	
+	<!-- 상영관 삭제 처리 -->
+	<delete id="hostTheaterDel" parameterType="int">
+		DELETE theater_tbl WHERE theater_index=#{theater_index}
+	</delete>
+	
+	<!-- 상영관 좌석 삭제 처리 -->
+	<delete id="hostTheaterSeatDel" parameterType="int">
+		DELETE theater_seat_tbl WHERE theater_index=#{theater_index}
+	</delete>
+	
+	<!-- 상영중인 영화 정보 -->
+	<select id="getMovieING" resultType="spring.mvc.baobob.vo.MovieVO">
+		SELECT * FROM movie_tbl WHERE movie_state = 1
+	</select>
+	
+	<!-- 모든 상영관 정보 -->
+	<select id="getTheaterAllList" resultType="spring.mvc.baobob.vo.TheaterVO">
+		SELECT * FROM theater_tbl
+	</select>
+	
+	<!-- 스케줄 추가 처리 -->
+	<insert id="hostScheduleAddPro" parameterType="java.util.Map">
+		INSERT INTO theater_schedule_tbl 
+        values(theater_schedule_tbl_SEQ.NEXTVAL, #{movie_index}, #{theater_index}, #{schedule_start}, #{schedule_start}, 
+              to_char(to_date(#{schedule_start}, 'YY-MM-DD-HH24-MI')+(SELECT movie_runTime FROM movie_tbl WHERE movie_index=#{movie_index})/24/60, 'YY-MM-DD-HH24-MI'), #{schedule_MDNstate})
+	</insert>
 </mapper>

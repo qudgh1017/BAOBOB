@@ -1,9 +1,12 @@
 package spring.mvc.baobob.host_parking.persistence;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Map;
 
 import spring.mvc.baobob.vo.Parking;
 import spring.mvc.baobob.vo.ParkingFee;
+import spring.mvc.baobob.vo.ParkingHistory;
 import spring.mvc.baobob.vo.ParkingSpace;
 
 public interface Host_parkingDAO {
@@ -40,4 +43,22 @@ public interface Host_parkingDAO {
 	
 	//주차 기본 요금 수정
 	public int parkingFeeUpdate(ParkingFee pf);
+	
+	//주차 내역 총개수
+	public int getParkingHistoryCnt();
+	
+	//주차 내역
+	public ArrayList<ParkingHistory> getParkingHistory(Map<String, Integer> map);
+
+	//납부 내역 총개수
+	public int getParkingPayCnt();
+	
+	//납부 내역
+	public ArrayList<ParkingHistory> getParkingPayList(Map<String, Integer> map);
+	
+	//해당 주차 구역 정보
+	public Parking getSpaceState(int park_index);
+	
+	//해당 주차 구역의 마지막 사용자
+	public ArrayList<String> getParkLastDateMember(Timestamp park_last_date);
 }

@@ -4,7 +4,10 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
     
 <mapper namespace="spring.mvc.baobob.member_mypage.persistence.Member_mypageDAO">
-	
+
+<!-- ************************************************************************************** -->	
+<!-- ************************************* 문의글 START ************************************* -->	
+
 	<!-- 1:1문의 글갯수 구하기 -->
 	<select id="getArticleCnt" resultType="int">
 		SELECT COUNT(*) FROM board_tbl
@@ -90,4 +93,87 @@
 		</delete>
 		
 	<!-- 글삭제 End -->
+	
+<!-- ************************************** 문의글 END ************************************** -->	
+<!-- ************************************************************************************** -->	
+
+
+<!-- *************************************************************************************** -->	
+<!-- ************************************* 정보수정 START ************************************* -->	
+
+	<!-- 중복확인 체크 -->
+	<select id="idCheck" parameterType="String" resultType="int">
+		SELECT COUNT(*) FROM member_tbl WHERE member_id=#{strId}	
+	</select>
+
+	<!-- 로그인 -->
+	<select id="memPCheck" resultType="int">
+		SELECT COUNT(*) FROM member_tbl WHERE member_id=#{strId} AND member_pwd=#{strPwd}
+	</select>
+
+	<!-- 회원정보 가져오기 -->
+	<select id="getMemberInfo" parameterType="String" resultType="spring.mvc.baobob.vo.Member">
+		SELECT * FROM member_tbl WHERE member_id=#{strId}
+	</select>
+
+	<!-- 회원정보 수정 처리 -->
+	<update id="updateMember" parameterType="spring.mvc.baobob.vo.Member">
+		UPDATE member_tbl 
+		SET member_pwd=#{member_pwd},
+			member_name=#{member_name},
+			member_address=#{member_address},
+			member_tel=#{member_tel},
+			member_email=#{member_email} 
+		WHERE member_id=#{member_id}
+	</update>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- ************************************** 정보수정 END ************************************** -->	
+<!-- *************************************************************************************** -->	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 </mapper>

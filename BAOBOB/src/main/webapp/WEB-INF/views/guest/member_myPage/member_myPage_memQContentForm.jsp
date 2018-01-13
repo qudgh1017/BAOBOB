@@ -14,25 +14,14 @@
 <!-- Navigation -->
 <%@ include file="../common/navigation.jsp" %>
 
-<!-- Header -->
-<header class="bg-primary text-white text-center head_header" style="background-color: #2c3e50!important;">
-	<div class="head_screen"><!-- container -->
-		<h1>My Page</h1>
-		<h2>Multiplex Baobob</h2>
-	</div>
-	<img class="img-fluid mb-5 d-block mx-auto" 
-		style="margin-bottom:0rem!important;"
-		src="${projectRes}images/lgt/test(2).jpg">
-</header>
-
 <!-- 개인정보 카드 -->
 <div class="mybaobob">
 	<table class="board">
 	    <thead>
 	    	<tr>
 	    		<td colspan=3>
-	    		<span class="text-uppercase bigfont" style="text-align:left">Gunny</span>&emsp;
-				<a href="#!" title="modify" id="modify"><i class="material-icons">edit</i></a>
+	    		<span class="text-uppercase bigfont" style="text-align:left">${memId}님</span>&emsp;
+				<a href="memPForm"  title="회원정보 수정"><i class="material-icons">edit</i></a>
 				<hr style="border: dotted 3px white;">
 				<h4 class="text-capitalize" style="text-align:left">고객님은 SVIP입니다.</h4>
 	    		</td>
@@ -41,12 +30,12 @@
 	    		<td rowspan=2>
 					<img class="mybaobob" src="${projectRes}images/lgt/default_img.png">
 	    		</td>
-		    	<th class="middlefont">B POINT</th>
-		    	<th class="middlefont">B CLASS</th>
+		    	<th class="middlefont">POINT</th>
+		    	<th class="middlefont">TOTAL POINT</th>
 		    </tr>
 			<tr>
 		        <td class="samllfont">14000점</td>
-		        <td class="samllfont">SVIP</td>
+		        <td class="samllfont">26000점</td>
 		    </tr>
 	    </thead>
 	</table>
@@ -58,9 +47,8 @@
 		<td>
 		<!-- SIDE MENU -->
 		<div class="vertical-menu">
-			<a href="memMyPageMain" class="active">My BAOBOB</a>
+			<a href="memMyPageMain" class="active" style="cursor:pointer">My BAOBOB</a>
 			<a href="#" class="active">SERVICE</a>
-			<a href="#">정보 수정</a>
 			<a href="#">회원 등급</a>
 			<a href="#">포인트/쿠폰</a>
 			<a href="#">방문 내역</a>
@@ -77,8 +65,8 @@
 		</td>
 
 		<!-- 알맹이 -->
-		<td style="padding:0px;margin:0px;width:100%;height:100%;">
-			<table class="mainBody">
+		<td style="padding:0rem 10rem; margin:0px;width:100%;height:100%;">
+			<table id="mainBody">
 				<caption>1 : 1 문의</caption>
 				<thead>
 					<tr>

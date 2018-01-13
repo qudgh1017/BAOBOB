@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"%> 
 <%@ page import="spring.mvc.baobob.vo.BoardVO" %>
-<%@ page import="java.util.ArrayList" %>       
+<%@ page import="java.util.ArrayList" %>      
     
 <%@ include file="/resources/lgt/setting.jsp"%>
 
@@ -10,23 +10,17 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>1 : 1 문의</title>
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript">
+
+</script>
+
 </head>
 <body>
 <%@ include file="../common/head.jsp" %>
 
 <!-- Navigation -->
 <%@ include file="../common/navigation.jsp" %>
-
-<!-- Header -->
-<%-- <header class="bg-primary text-white text-center head_header" style="background-color: #2c3e50!important;">
-	<div class="head_screen"><!-- container -->
-		<h1>My Page</h1>
-		<h2>Multiplex Baobob</h2>
-	</div>
-	<img class="img-fluid mb-5 d-block mx-auto" 
-		style="margin-bottom:0rem!important;"
-		src="${projectRes}images/lgt/test(2).jpg">
-</header> --%>
 
 <!-- 개인정보 카드 -->
 <div class="mybaobob">
@@ -37,7 +31,7 @@
 	    		<span class="text-uppercase bigfont" style="text-align:left">${memId}님</span>&emsp;
 				<a href="memPForm"  title="회원정보 수정"><i class="material-icons">edit</i></a>
 				<hr style="border: dotted 3px white;">
-				<h4 class="text-capitalize" style="text-align:left">고객님은 ${member_step}입니다.</h4>
+				<h4 class="text-capitalize" style="text-align:left">고객님은 SVIP입니다.</h4>
 	    		</td>
 	    	</tr>
 	    	<tr>
@@ -48,8 +42,8 @@
 		    	<th class="middlefont">TOTAL POINT</th>
 		    </tr>
 			<tr>
-		        <td class="samllfont">${member_point}점</td>
-		        <td class="samllfont">${member_cumPoint}점</td>
+		        <td class="samllfont">14000점</td>
+		        <td class="samllfont">26000점</td>
 		    </tr>
 	    </thead>
 	</table>
@@ -77,24 +71,43 @@
 				<a href="#!">분실물 문의</a>
 			</div>
 		</td>
-		<!-- 알맹이td -->
+		
+	<!-- 알맹이td -->
 		<td style="padding:0px;margin:0px;width:100%;height:100%;">
-		<table id="mainBody">
+			<form action=memPModifyView method="post" name="pwdform" onsubmit="return pwdCheck();">
+				<table id="mainBody" style="margin:auto; width:200px;">
+					<caption>Check Password</caption>
+					<thead>
+						<tr>
+							<th colspan="2">Check your password</th>
+						</tr>	
+					</thead>
 			
-		</table>
+					<tbody>
+						<tr>
+							<th>Password</th>
+							<th><input type="password" name="pwd" maxlength="30" value="member_pwd 01"></th>
+						</tr>
+						
+						<tr>
+							<th colspan="2" style="border-bottom:none; text-align:center">
+								<input type="submit" class="button" value=" Modify">
+								<input type="reset" class="button" value="Cancle"
+									onclick="window.location='memMyPageMain'">
+							</th>	
+						</tr>
+					</tbody>
+				</table>		
+			</form>
 		</td>
-		<!-- 알맹이td 끝 -->
 	</tr>
 </table>
-
-
 </section>
-
 
 <!-- Footer -->
 <%@ include file="../common/footer.jsp" %>
 	
 <!-- FooterCopyright -->
-<%@ include file="../common/footerCopyright.jsp" %>
+<%@ include file="../common/footerCopyright.jsp" %>	
 </body>
 </html>
