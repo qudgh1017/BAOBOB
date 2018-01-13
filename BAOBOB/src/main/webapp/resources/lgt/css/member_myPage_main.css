@@ -29,29 +29,11 @@ section .notice_a{color:white;}
 	}
 }
 		
-/* 마이페이지 */
-.mybaobob {
-	color:white;
-	background-color: 487752;
-	padding: 2rem 5rem;
-	border-radius: 0.3rem;}
-.mybaobob table.board {background-color:487752; margin: auto; width: auto; border-collapse: collapse;}
-.mybaobob table.board img {width:400px; background-color:487752;}
-.mybaobob table.board th {height: 50px; width: 300px;padding: 20px;font-weight: bold;color: white;vertical-align: top; text-align:center;}
-.mybaobob table.board td {width: 500px; padding: 17px;vertical-align: top; text-align: center; color:white;}
-
-table.mainBody {padding:0px;margin:0px;width:100%;height:100%; color:487752;}
-caption {caption-side: top!important; text-align:center!important; font-weight: bold!important;font-size: 40px!important;color:487752!important;margin-bottom:50px!important; }
-table.mainBody thead th {padding: 10px;font-weight: bold;vertical-align: top;border-bottom: 3px solid 487752;text-align: center;}
-table.mainBody tbody th {width: 50px;padding: 10px;font-weight: bold; vertical-align: top;border-bottom: 1px solid black;}
-table.mainBody td {padding: 10px;vertical-align: top;border-bottom: 1px solid black;text-align: center;}
-
-
+/* 마이페이지 사이드 메뉴 */
 .vertical-menu {
     width: 250px;
     font-family: Montserrat;
 }
-
 .vertical-menu a {
     color: 487752;
     display: block;
@@ -61,26 +43,68 @@ table.mainBody td {padding: 10px;vertical-align: top;border-bottom: 1px solid bl
 	font-weight: bold;
 	background-color: white;
 }
-
 .vertical-menu a:hover {
 	color: A5C952;
     text-decoration: none;
 }
-
 .vertical-menu a.active {
 	font-size: 30px;
 	font-weight: bold;
     background-color: white;;
     color: 487752;
+    cursor: default;
 }
-
-
 .baobobImg{
 	width:1000px;
 }
-
 .mypageBody{
 	width
 }
+
+/* 알맹이 */
+.mybaobob {
+	color:white;
+	background-color: 487752;
+	padding-left: 10rem;
+	padding-right: 10rem;
+	padding-top:8rem;
+	border-radius: 0.3rem;}
+.mybaobob table.board {background-color:487752; margin: auto; width: auto; border-collapse: collapse;}
+.mybaobob table.board img {padding:0rem 0rem;width:200px; background-color:487752;}
+.mybaobob table.board th {height: 50px; width: 300px;padding: 20px;font-weight: bold;color: white;vertical-align: top; text-align:center;}
+.mybaobob table.board td {width: 500px; padding: 17px;vertical-align: top; text-align: center; color:white;}
+
+table #mainBody {padding:0px;margin:0px;width:100%;height:100%; color:487752;}
+caption {caption-side: top!important; text-align:center!important; font-weight: bold!important;font-size: 40px!important;color:487752!important;margin-bottom:50px!important; }
+table #mainBody thead th {padding: 10px;font-weight: bold;vertical-align: top;border-bottom: 3px solid black;text-align: center;}
+table #mainBody tbody th {width: 50px;padding: 10px;font-weight: bold; vertical-align: top;border-bottom: 1px solid black;}
+table #mainBody td {padding: 10px;vertical-align: top;border-bottom: 1px solid black;text-align: center;}
+table #mainBody a {color:487752!important; text-decoration:none;}
+
+/* 페이징 컨트롤 */
+.pagination {margin-left:500px;display: inline-block;}
+.pagination a {color: 487752!important;float: left;margin: 8px; padding: 8px 16px;text-decoration: none!important;}
+.pagination a.active {background-color: #18bc9c;;color: white;}
+.pagination a:hover:not(.active) {background-color: #18bc9c;;}
+
+.button, .button.disabled:hover {width:70px;margin-top: 20px;text-decoration: none;border:1px solid 487752; border-radius: 3px;font-family:arial, helvetica, sans-serif; padding: 5px 5px 5px 5px; color: #FFFFFF; background-color: 487752;}
+.button:hover{cursor: pointer;border:1px solid #1c5675;background-color: 487752;}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

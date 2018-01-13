@@ -1,5 +1,6 @@
 package spring.mvc.baobob.member_mypage.service;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -12,6 +13,7 @@ import org.springframework.ui.Model;
 
 import spring.mvc.baobob.member_mypage.persistence.Member_mypageDAO;
 import spring.mvc.baobob.vo.BoardVO;
+import spring.mvc.baobob.vo.Member;
 
 @Service
 public class Member_mypageServiceImpl implements Member_mypageService{
@@ -98,4 +100,200 @@ public class Member_mypageServiceImpl implements Member_mypageService{
 		}
 		
 	}
+	
+/*----------------------------------------------------------------------------*/
+	
+	//1:1문의 상세
+	public void memQuestionContentForm(HttpServletRequest req, Model model) {
+		int num = Integer.parseInt(req.getParameter("num"));
+		int pageNum = Integer.parseInt(req.getParameter("pageNum"));
+		int number = Integer.parseInt(req.getParameter("number"));
+		
+		//상세페이지 가져오기...1건
+		BoardVO dto = dao.getArticle(num);
+		
+		//조회수 증가
+		dao.addReadCnt(num);
+		
+		//jsp로 값을 넘긴다. (dto, pageNum, number)
+		model.addAttribute("dto", dto);
+		model.addAttribute("pageNum", pageNum);
+		model.addAttribute("number", number);
+	}
+	
+/*----------------------------------------------------------------------------*/
+	
+	//1:1문의 수정 상세 페이지
+	public void memQModifyView(HttpServletRequest req, Model model) {
+		int num = Integer.parseInt(req.getParameter("num"));
+		int pageNum = Integer.parseInt(req.getParameter("pageNum"));
+		String strPwd = req.getParameter("pwd");
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("num", num);
+		map.put("strPwd", strPwd);
+		
+		int selectCnt = dao.pwdCheck(map);
+		
+		if(selectCnt == 1) {
+			BoardVO dto = dao.getArticle(num);
+			model.addAttribute("dto", dto);
+		}
+		
+		//jsp에 값들을 넘긴다.
+		model.addAttribute("selectCnt", selectCnt); //selectCnt가 0이면 패스워드가 틀렸다고 뿌려주기위해
+		model.addAttribute("num", num);
+		model.addAttribute("pageNum", pageNum);
+	}
+	
+/*----------------------------------------------------------------------------*/
+	
+	//1:1문의 수정 처리
+	public void memQModifyPro(HttpServletRequest req, Model model) {
+		int num = Integer.parseInt(req.getParameter("num"));
+		int pageNum = Integer.parseInt(req.getParameter("pageNum"));
+		
+		BoardVO dto = new BoardVO();
+		
+		dto.setBoard_index(num);
+		dto.setBoard_subject(req.getParameter("subject"));
+		dto.setBoard_content(req.getParameter("content"));
+		dto.setBoard_pwd(req.getParameter("pwd"));
+		
+		int cnt = dao.updateQuestion(dto);
+		
+		model.addAttribute("cnt", cnt);
+		model.addAttribute("num", num);
+		model.addAttribute("pageNum", pageNum);
+	}
+	
+/*----------------------------------------------------------------------------*/
+	
+	//1:1문의 작성 처리페이지
+	public void memQWritePro(HttpServletRequest req, Model model) {
+		BoardVO dto = new BoardVO();
+		
+		//2.화면으로부터 입력받은 내용을 작은바구니(DTO)에 담는다.
+		dto.setMember_id((String)req.getSession().getAttribute("memId"));
+		dto.setBoard_pwd(req.getParameter("pwd"));
+		dto.setBoard_subject(req.getParameter("subject"));
+		dto.setBoard_content(req.getParameter("content"));
+		
+		//3.hidden으로부터 넘겨받은 값을 작은 바구니(DTO)에 담는다.
+		dto.setBoard_index(Integer.parseInt(req.getParameter("num")));
+		dto.setBoard_ref(Integer.parseInt(req.getParameter("ref")));
+		dto.setBoard_ref_step(Integer.parseInt(req.getParameter("ref_step")));
+		dto.setBoard_ref_level(Integer.parseInt(req.getParameter("ref_level")));
+		dto.setBoard_reg_date(new Timestamp(System.currentTimeMillis()));
+		dto.setBoard_ip(req.getRemoteAddr()); 
+		
+		//5.insertBoard()
+		int cnt = dao.insertQuestion(dto);
+		
+		//6.jsp에 넘길 값을 셋팅한다.(setAttribute)
+		model.addAttribute("cnt", cnt);
+	}
+	
+/*----------------------------------------------------------------------------*/
+	
+	//1:1문의 삭제 처리페이지
+	public void memQDelPro(HttpServletRequest req, Model model) {
+		int num = Integer.parseInt(req.getParameter("num"));
+		int pageNum = Integer.parseInt(req.getParameter("pageNum"));
+		String strPwd = req.getParameter("pwd");
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("num", num);
+		map.put("strPwd", strPwd);
+		
+		//num과 일치할 경우 비밀번호 일치하는지 확인
+		int selectCnt = dao.pwdCheck(map);
+		
+		if(selectCnt == 1) {
+			int deleteCnt = dao.deleteQuestion(num);
+			model.addAttribute("deleteCnt", deleteCnt);
+		}
+		
+		model.addAttribute("selectCnt", selectCnt);
+		model.addAttribute("pageNum", pageNum);
+	}
+	
+/*----------------------------------------------------------------------------*/
+	
+	//정보수정 입력페이지
+	public void memPModifyView(HttpServletRequest req, Model model) {
+		//1단계. 화면으로부터 아이디, 패스워드 값을 받아온다.
+		String strId=(String) req.getSession().getAttribute("memId"); 
+		String strPwd=req.getParameter("pwd");
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("strId", strId);
+		map.put("strPwd", strPwd);
+		
+		int selectCnt=dao.memPCheck(map);
+		
+		//아이디와 패스워드가 일치하면, 수정하기위해서 입력한 정보를 읽어온다.
+		if(selectCnt == 1) {
+			System.out.println("selectCnt == 1");
+			Member vo = dao.getMemberInfo(strId);
+			model.addAttribute("vo", vo);
+		}
+		
+		//3단계. request나 session에 처리 결과를 저장하고 jsp(view)에서 받는다.
+		model.addAttribute("selectCnt", selectCnt);
+		
+	}
+	
+/*----------------------------------------------------------------------------*/
+	
+	//정보수정 처리페이지
+	public void memPPro(HttpServletRequest req, Model model) {
+		Member vo = new Member();
+		
+		String id = (String)req.getSession().getAttribute("memId");
+		vo.setMember_id(id);
+		vo.setMember_pwd(req.getParameter("pwd"));
+		vo.setMember_name(req.getParameter("name"));
+		vo.setMember_address(req.getParameter("address"));
+		
+		//hp
+		String hp = "";
+		String hp1=req.getParameter("hp1");
+		String hp2=req.getParameter("hp2");
+		String hp3=req.getParameter("hp3");
+		
+		//필수입력 항목이 아니므로 null 체크없이 무조건 insert하면 null pointer Exception 발생
+		if(!hp1.equals("") && !hp2.equals("") && !hp3.equals("")) {
+			 hp = hp1 + "-" + hp2 + "-" + hp3;
+		}
+		//핸드폰 번호가 없어졌다면 if문을 타지않은	hp = "";이 들어간다.
+		vo.setMember_tel(hp);
+		
+		//email
+		String email="";
+		String email1=req.getParameter("email1");
+		String email2=req.getParameter("email2");
+		email = email1 + "@" + email2;
+		vo.setMember_email(email);
+		
+		int cnt = dao.updateMember(vo);
+		
+		model.addAttribute("cnt", cnt);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

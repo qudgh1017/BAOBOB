@@ -88,4 +88,95 @@
 			p_fee_base_price = #{p_fee_base_price}, 
 			p_fee_base_time = #{p_fee_base_time}
 	</update>
+	
+	<!-- 주차 내역 총 개수 -->
+	<select id="getParkingHistoryCnt" resultType="int">
+		SELECT COUNT(*) FROM park_history_tbl
+	</select>
+	
+	<resultMap id="pHistoryMap" type="spring.mvc.baobob.vo.ParkingHistory" >
+		<id property="p_history_index" column="p_history_index"/>
+		<result property="history_index" column="history_index"/>
+		<result property="p_history_in" column="p_history_in"/>
+		<result property="p_history_out" column="p_history_out"/>
+		<result property="p_history_price" column="p_history_price"/>
+		<result property="p_history_space" column="p_history_space"/>
+		<result property="p_history_date" column="p_history_date"/>
+		<collection property="history" resultMap="historyMap" />
+	</resultMap>
+	
+	<resultMap id="historyMap" type="spring.mvc.baobob.vo.HistoryVO" >
+		<result property="history_index" column="history_index"/>
+		<result property="history_date" column="history_date"/>
+		<result property="member_id" column="member_id"/>
+	</resultMap>
+	
+	<!-- 주차 내역 -->
+	<select id="getParkingHistory" resultMap="pHistoryMap">
+		<![CDATA[
+		SELECT * 
+		FROM (SELECT p_history_index, history_index, p_history_in, p_history_out, p_history_price, p_history_space, p_history_date, member_id, rownum as num
+			  FROM (SELECT p_history_index, ph.history_index, p_history_in, p_history_out, p_history_price, p_history_space, p_history_date, ht.member_id
+				    FROM park_history_tbl ph, history_tbl ht
+				    WHERE ph.history_index = ht.history_index
+				    ORDER BY p_history_index DESC))
+		WHERE num >= #{start} AND NUM <= #{end}
+		]]>
+	</select>
+	
+	<!-- 납부 내역 총 개수 -->
+	<select id="getParkingPayCnt" resultType="int">
+		SELECT COUNT(*)
+		FROM park_history_tbl
+		WHERE p_history_out IS NOT NULL
+	</select>
+	
+	<!-- 납부 내역 : 출차하지 않은 구역 제외 -->
+	<select id="getParkingPayList" resultMap="pHistoryMap">
+		<![CDATA[
+		SELECT * 
+		FROM (SELECT p_history_index, history_index, p_history_in, p_history_out, p_history_price, p_history_space, p_history_date, member_id, rownum as num
+			  FROM (SELECT p_history_index, ph.history_index, p_history_in, p_history_out, p_history_price, p_history_space, p_history_date, ht.member_id
+				    FROM park_history_tbl ph, history_tbl ht
+				    WHERE ph.history_index = ht.history_index
+				    	AND ph.p_history_out IS NOT NULL
+				    ORDER BY p_history_index DESC))
+		WHERE num >= #{start} AND NUM <= #{end}
+		]]>
+	</select>
+	
+	<!-- 해당 주차 구역 정보 -->
+	<select id="getSpaceState" resultType="spring.mvc.baobob.vo.Parking">
+		SELECT *
+		FROM park_tbl
+		WHERE park_index = #{park_index}
+	</select>
+	
+	<!-- 해당 주차 구역의 마지막 사용자 
+		1. 시간차를 구하기
+		2. 각 단위로 나누어 더하기 (숫자로 변환)
+		3. 절대값 변환 (음수 제거) + 최소값 구하기
+		4. 100(1분) 이하의 차이만 있는 member_id
+	-->
+	<select id="getParkLastDateMember" resultType="String">
+		<![CDATA[
+		SELECT mem
+        FROM(
+	        SELECT mem, MIN(ABS(test)) as test
+			FROM( SELECT mem, trunc(
+			         extract(day from intvl) * 24 * 60 * 60 
+			       + extract(hour from intvl) * 60 * 60 
+			       + extract(minute from intvl) * 60
+			       + extract(second from intvl)
+			       ) as test
+				  FROM (SELECT member_id mem,p_history_in - TO_TIMESTAMP(#{park_last_date}, 'YY/mm/dd hh24:mi:ss.FF9') intvl 
+				  		FROM park_history_tbl pht, history_tbl ht
+						WHERE pht.history_index = ht.history_index
+			))
+			GROUP BY mem
+			ORDER BY test
+        )
+        WHERE test < 100
+		]]>
+	</select>
 </mapper>

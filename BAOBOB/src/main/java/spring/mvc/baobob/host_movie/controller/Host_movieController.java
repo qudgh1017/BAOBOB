@@ -79,6 +79,8 @@ public class Host_movieController {
 	public String hostTheater(HttpServletRequest req, Model model) {
 		System.out.println("hostTheater");
 		
+		service.hostTheaterList(req, model);
+		
 		return "host/host_movie/hostTheater";
 	}
 	
@@ -88,5 +90,75 @@ public class Host_movieController {
 		System.out.println("hostTheaterAddForm");
 		
 		return "host/host_movie/hostTheaterAddForm";
+	}
+	
+	// 상영관 좌석 업데이트
+	@RequestMapping(value="hostTheaterAddPro")
+	public String hostTheaterSettingChange(HttpServletRequest req, Model model) {
+		System.out.println("hostTheaterSettingChange");
+		
+		service.hostTheaterAddPro(req, model);
+		
+		return "host/host_movie/hostTheaterAddPro";
+	}
+	
+	// 상영관 상세
+	@RequestMapping(value="hostTheaterDetail")
+	public String hostTheaterDetail(HttpServletRequest req, Model model) {
+		System.out.println("hostTheaterDetail");
+		
+		service.hostTheaterDetail(req, model);
+		
+		return "host/host_movie/hostTheaterDetail";
+	}
+	
+	// 상영관 수정 처리
+	@RequestMapping(value="hostTheaterModPro")
+	public String hostTheaterModPro(HttpServletRequest req, Model model) {
+		System.out.println("hostTheaterModPro");
+		
+		service.hostTheaterModPro(req, model);
+		
+		return "host/host_movie/hostTheaterModPro";
+	}
+	
+	// 상영관 삭제
+	@RequestMapping(value="hostTheaterDel")
+	public String hostTheaterDel(HttpServletRequest req, Model model) {
+		System.out.println("hostTheaterDel");
+		
+		service.hostTheaterDel(req, model);
+		
+		return "host/host_movie/hostTheaterDel";
+	} 
+	
+	// 스케줄
+	@RequestMapping(value="hostSchedule")
+	public String hostSchedule(HttpServletRequest req, Model model) {
+		System.out.println("hostSchedule");
+		
+		
+		
+		return "host/host_movie/hostSchedule";
+	}
+	
+	// 스케줄 추가 폼
+	@RequestMapping(value="hostScheduleAddForm")
+	public String hostScheduleAddForm(HttpServletRequest req, Model model) {
+		System.out.println("hostScheduleAddForm");
+		
+		service.hostScheduleAddForm(req, model);
+		
+		return "host/host_movie/hostScheduleAddForm";
+	}
+	
+	// 스케줄 추가 처리
+	@RequestMapping(value="hostScheduleAddPro")
+	public String hostScheduleAddPro(HttpServletRequest req, Model model) {
+		System.out.println("hostScheduleAddPro");
+		
+		service.hostScheduleAddPro(req, model);
+		
+		return "host/host_movie/hostScheduleAddPro";
 	}
 }

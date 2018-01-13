@@ -16,41 +16,30 @@
 		<center><h3><b>상영관</b></h3></center>
 		<hr style="border:3px solid black;">
 		<input style="background-color:#8888ff; border:1px solid black; height:40px; margin-left:177px; margin-bottom:15px;" type="button" name="hostTheaterAddForm" onclick="window.location='hostTheaterAddForm'" value="상영관 등록하기"/>
-		<table style="width:800px; border:1px solid black;" align="center">
+		<table class="table table-bordered" id="dataTable" style="width:100%; border:1px solid black;" align="center">
+			<thead>
 			<tr>
-				<th style="width:15%;"> 상영관번호</th>
-				<th style="width:25%;"> 상영관 제목 </th>
-				<th style="width:10%;"> 감독 </th>
-				<th style="width:15%;"> 장르 </th>
-				<th style="width:15%;"> 개봉일 </th>
-				<th style="width:10%;"> 상영여부 </th>
-				<th style="width:10%;"> 삭제 </th>
+				<th style="width:25%;"> 상영관</th>
+				<th style="width:25%;"> 행 </th>
+				<th style="width:25%;"> 열 </th>
+				<th style="width:25%;"> 삭제 </th>
 			</tr>
-			
+			</thead>
 			<!-- 게시글이 있으면 -->
 			<c:if test="${cnt>0}">
 				<c:forEach var="vo" items="${vos}">
 					<tr>
 						<td>
-							${vo.movie_index}
+							<a href="hostTheaterDetail?theater_index=${vo.theater_index}">${vo.theater_index}관</a>
 						</td>
 						<td>
-							<a href="hostMovieDetail?movie_index=${vo.movie_index}">${vo.movie_title}</a>
+							${vo.theater_row}
 						</td>
 						<td>
-							${vo.movie_director}
+							${vo.theater_col}
 						</td>
 						<td>
-							${vo.movie_janre}
-						</td>
-						<td>
-							${vo.movie_rel_date}
-						</td>
-						<td>
-							${vo.movie_state}
-						</td>
-						<td>
-							<input type="button" onclick="window.location='hostMovieDel?movie_index=${vo.movie_index}'" value="삭제"/>
+							<input type="button" onclick="window.location='hostTheaterDel?theater_index=${vo.theater_index}'" value="삭제"/>
 						</td>
 					</tr>
 				</c:forEach>
@@ -72,8 +61,8 @@
 					<c:if test="${cnt > 0}">
 						<!-- 처음[◀◀] / 이전블록[◀] -->
 						<c:if test="${startPage > pageBlock}">
-							<a href="hostMovie">[◀◀]</a>
-							<a href="hostMovie?pageNum=${startPage - pageBlock}">[◀]</a>
+							<a href="hostTheater">[◀◀]</a>
+							<a href="hostTheater?pageNum=${startPage - pageBlock}">[◀]</a>
 						</c:if>
 						
 						<c:forEach var="i" begin="${startPage}" end="${endPage}">
@@ -81,14 +70,14 @@
 								<span><b>[${i}]</b></span>
 							</c:if>
 							<c:if test="${i != currentPage}">
-								<a href="hostMovie?pageNum=${i}">[${i}]</a>
+								<a href="hostTheater?pageNum=${i}">[${i}]</a>
 							</c:if>
 						</c:forEach>
 						
 						<!-- 다음블록[▶] / 끝[▶▶] -->
 						<c:if test="${pageCount > endPage}">
-							<a href="hostMovie?pageNum=${startPage + pageBlock}">[▶]</a>
-							<a href="hostMovie?pageNum=${pageCount}">[▶▶]</a>
+							<a href="hostTheater?pageNum=${startPage + pageBlock}">[▶]</a>
+							<a href="hostTheater?pageNum=${pageCount}">[▶▶]</a>
 						</c:if>
 						
 					</c:if>

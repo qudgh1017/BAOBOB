@@ -1,29 +1,21 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"%> 
+<%@ page import="spring.mvc.baobob.vo.BoardVO" %>
+<%@ page import="java.util.ArrayList" %>      
     
 <%@ include file="/resources/lgt/setting.jsp"%>
 
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>1 : 1 문의</title>
 </head>
 <body>
+
 <%@ include file="../common/head.jsp" %>
 
 <!-- Navigation -->
 <%@ include file="../common/navigation.jsp" %>
-
-<!-- Header -->
-<header class="bg-primary text-white text-center head_header" style="background-color: #2c3e50!important;">
-	<div class="head_screen"><!-- container -->
-		<h1>My Page</h1>
-		<h2>Multiplex Baobob</h2>
-	</div>
-	<img class="img-fluid mb-5 d-block mx-auto" 
-		style="margin-bottom:0rem!important;"
-		src="${projectRes}images/lgt/test(2).jpg">
-</header>
 
 <!-- 개인정보 카드 -->
 <div class="mybaobob">
@@ -31,8 +23,8 @@
 	    <thead>
 	    	<tr>
 	    		<td colspan=3>
-	    		<span class="text-uppercase bigfont" style="text-align:left">Gunny</span>&emsp;
-				<a href="#!" title="modify" id="modify"><i class="material-icons">edit</i></a>
+	    		<span class="text-uppercase bigfont" style="text-align:left">${memId}님</span>&emsp;
+				<a href="memPForm"  title="회원정보 수정"><i class="material-icons">edit</i></a>
 				<hr style="border: dotted 3px white;">
 				<h4 class="text-capitalize" style="text-align:left">고객님은 SVIP입니다.</h4>
 	    		</td>
@@ -41,44 +33,43 @@
 	    		<td rowspan=2>
 					<img class="mybaobob" src="${projectRes}images/lgt/default_img.png">
 	    		</td>
-		    	<th class="middlefont">B POINT</th>
-		    	<th class="middlefont">B CLASS</th>
+		    	<th class="middlefont">POINT</th>
+		    	<th class="middlefont">TOTAL POINT</th>
 		    </tr>
 			<tr>
 		        <td class="samllfont">14000점</td>
-		        <td class="samllfont">SVIP</td>
+		        <td class="samllfont">26000점</td>
 		    </tr>
 	    </thead>
 	</table>
 </div>
 
 <section class="mypageSection">
-<table class=board>
+<table class="board">
 	<tr>
 		<td>
-		<!-- SIDE MENU -->
-		<div class="vertical-menu">
-			<a href="memMyPageMain" class="active">My BAOBOB</a>
-			<a href="#" class="active">SERVICE</a>
-			<a href="#">정보 수정</a>
-			<a href="#">회원 등급</a>
-			<a href="#">포인트/쿠폰</a>
-			<a href="#">방문 내역</a>
-			<a href="#" class="active">MOVIE</a>
-			<a href="#">무비 로그</a>
-			<a href="#">예매 내역</a>
-			<a href="#" class="active">RESTAURANT</a>
-			<a href="#">레스토랑 로그</a>
-			<a href="#">레스토랑 예약</a>
-			<a href="#" class="active">문의 내역</a>
-			<a href="memQuestion">1 : 1 문의</a>
-			<a href="#">분실물 문의</a>
-		</div>
+			<!-- SIDE MENU -->
+			<div class="vertical-menu">
+				<a href="memMyPageMain" class="active" style="cursor:pointer">My BAOBOB</a>
+				<a href="#!" class="active">SERVICE</a>
+				<a href="#!">회원 등급</a>
+				<a href="#!">포인트/쿠폰</a>
+				<a href="#!">방문 내역</a>
+				<a href="#!" class="active">MOVIE</a>
+				<a href="#!">무비 로그</a>
+				<a href="#!">예매 내역</a>
+				<a href="#!" class="active">RESTAURANT</a>
+				<a href="#!">레스토랑 로그</a>
+				<a href="#!">레스토랑 예약</a>
+				<a href="#!" class="active">문의 내역</a>
+				<a href="memQuestion">1 : 1 문의</a>
+				<a href="#!">분실물 문의</a>
+			</div>
 		</td>
-
-		<td style="padding:0px;margin:0px;width:100%;height:100%;">
-		<!-- 알맹이 -->
-		<table class="mainBody">
+		
+		<td style="padding:0rem 10rem; margin:0px;width:100%;height:100%;">
+		<!-- 알맹이td -->
+		<table id="mainBody">
 			<caption>1 : 1 문의</caption>
 		    <thead>
 			    <tr>
@@ -93,36 +84,35 @@
 		    
 		    <!-- 게시글이 있으면 -->
 			<c:if test="${cnt > 0 }">
-				
 				<c:forEach var="dto" items="${dtos}">
 					<!-- 게시글 -->
-					<c:if test="${dto.board_type eq '02'}">
+					<c:if test="${dto.board_type eq 02}">
 				    <tbody>
 				    <tr>
-				    	<th>
+				    	<th style="text-align:center;">
 				    		${number}<br>
 				    		<c:set var="number" value="${number-1}"/>
 							<%-- (${dto.num } / ${dto.ref} / ${dto.ref_step} / ${dto.ref_level}) --%>
 				    	</th>
-				        <td style="text-align:left;">
+				        <th style="text-align:center;">
 						 	<!-- 추가 -->
 							<c:if test="${dto.board_ref_level > 1}"> <!-- 들여쓰기 > 1 -->
 								<c:set var="wid" value="${(dto.board_ref_level-1)*10}" />
 								<img src="${projectRes}images/lgt/boardImages/level.gif" border="0" width="${wid}" height="15">						
 							</c:if>
 							<!-- 들여쓰기 > 0 : 답변글 -->
-							<c:if test="${dto.ref_level > 0 }">
+							<c:if test="${dto.board_ref_level > 0 }">
 								<img src="${projectRes}images/lgt/boardImages/re.gif" border="0" width="20" height="15">
 							</c:if>
 							<!-- /추가 -->				        
-				        	<a href="contentForm?num=${dto.board_index}&pageNum=${pageNum}&number=${number+1}">
+				        	<a href="memQuestionContentForm?num=${dto.board_index}&pageNum=${pageNum}&number=${number+1}">
 				        		${dto.board_subject}
 				        	</a>
 				        	<!-- hot이미지 -->
 							<c:if test="${dto.board_readCnt > 10 }">
 								<img src="${projectRes}images/lgt/boardImages/hot.gif" border="0" width="20" height="15">
 							</c:if>
-				        </td>
+				        </th>
 				        <td>${dto.member_id}</td>
 				        <td>
 				        	<fmt:formatDate type="both" pattern="yyyy-MM-dd HH:mm" value="${dto.board_reg_date}" />
@@ -135,8 +125,8 @@
 			    </c:forEach>
 			    <tr>
 			    	<td colspan="6" style="border-bottom: none; text-align:right;">
-			    		<input type="button" class="button" value="Write Content..." style="width:auto;"
-								onclick="window.location='writeForm'">
+			    		<input type="button" class="button" value="문의하기" style="width:auto;"
+								onclick="window.location='memQWriteForm'">
 			    	</td>
 			    </tr>
 		    </c:if>
@@ -149,24 +139,43 @@
 					</td>
 				</tr>
 			</c:if>
-		</table><br>	
-		
+		</table>
+			
+		<!-- 페이징 컨트롤 -->
+		<div class="pagination">
+			<c:if test="${cnt > 0 }">
+				<c:if test="${startPage > pageBlock }">
+					<a href="memQuestion">&laquo;</a>.
+					<a href="memQuestion?pageNum=${startPage - pageBlock}">&lsaquo;</a>
+				</c:if>
+				
+				<c:forEach var="i" begin="${startPage}" end="${endPage}">
+				
+					<c:if test="${i == currentPage}">
+						<a href="#!" class="active"><b>[${i}]</b></a>
+					</c:if>
+					
+					<c:if test="${i != currentPage}">
+						<a href="memQuestion?pageNum=${i}">[${i}]</a>
+					</c:if>
+					
+				</c:forEach>
+				
+				<c:if test="${pageCount > endPage }">
+					<a href="memQuestion?pageNum=${startPage + pageBlock}">&rsaquo;</a>
+					<a href="memQuestion?pageNum=${pageCount}">&raquo;</a>
+				</c:if>
+			</c:if>			  
+		</div>
 		</td>
-		<!-- 알맹이 끝 -->
 	</tr>
 </table>
-
-
-
-
-
-
 </section>
 	
 <!-- Footer -->
 <%@ include file="../common/footer.jsp" %>
 	
 <!-- FooterCopyright -->
-<%@ include file="../common/footerCopyright.jsp" %>
+<%@ include file="../common/footerCopyright.jsp" %>	
 </body>
 </html>

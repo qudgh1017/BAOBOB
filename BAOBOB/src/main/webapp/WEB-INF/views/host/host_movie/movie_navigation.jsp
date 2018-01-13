@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
     
 <head>
+
 	<!-- Bootstrap core CSS-->
 	<link href="${projectRes}adminBootstrap/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 	
@@ -13,11 +14,12 @@
 	
 	<!-- Custom styles for this template-->
 	<link href="${projectRes}adminBootstrap/css/sb-admin.css" rel="stylesheet">
+	
 </head>
 
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
-	<a class="navbar-brand" href="#">영화 관리자</a>
+	<a class="navbar-brand" href="#">BAOBOX 관리자</a>
 	<button class="navbar-toggler navbar-toggler-right" type="button"
 		data-toggle="collapse" data-target="#navbarResponsive"
 		aria-controls="navbarResponsive" aria-expanded="false"
@@ -43,7 +45,7 @@
 				</a>
 			</li>
 			<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
-				<a class="nav-link" href="#"> 
+				<a class="nav-link" href="hostSchedule"> 
 					<i class="fa fa-fw fa-table"></i> 
 					<span class="nav-link-text">스케줄 관리</span>
 				</a>

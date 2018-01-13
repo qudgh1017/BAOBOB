@@ -26,7 +26,7 @@
 	<br>
 	<br>
 
-		<table align="center" style="border:1px solid black;">
+		<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0" align="center" style="border:1px solid black;">
 			<tr>
 				<td>title</td>
 				<td><input type="text" name="movie_title" placeholder="영화 제목" value="${vo.movie_title}"/></td>
