@@ -4,19 +4,29 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="spring.mvc.baobob.host_restaurant.persistence.Host_restaurantDAO">
-	<!-- 식당[1] 메뉴 리스트(개수) -->
+	<!-- 식당 총 관리자 - 식당 추가 처리 -->
+	<insert id="addRestaurant" parameterType="Map">
+		INSERT INTO restaurant_tbl(restaurant_index, restaurant_tel, restaurant_name) VALUES(restaurant_tbl_SEQ.nextval, #{tel}, #{name})
+	</insert>
+	
+	<!-- 식당 총 관리자 - 식당 추가 처리 -->
+	<insert id="addTable" parameterType="Map">
+		INSERT INTO restaurant_table_tbl(restaurant_index, restaurant_table_index, table_row, table_col, table_state) VALUES((SELECT MAX(restaurant_index) FROM restaurant_tbl), restaurant_table_tbl_SEQ.nextval, #{row}, #{col}, #{state})
+	</insert>
+	
+	<!-- 식당[1] 메뉴 개수 조회 -->
 	<select id="getMenuCnt" resultType="int">
 		SELECT count(*) FROM restaurant_menu_tbl
 	</select>
 	
-	<!-- 식당[1] 메뉴 리스트(내용) -->
+	<!-- 식당[1] 각 메뉴 정보 조회 -->
 	<select id="getMenuList" resultType="spring.mvc.baobob.vo.MenuVO">
-		SELECT * FROM (SELECT restaurant_index, restaurant_menu_index, restaurant_menu_name, restaurant_menu_img, restaurant_menu_content, restaurant_menu_price, rownum rNum FROM (SELECT * FROM restaurant_menu_tbl ORDER BY restaurant_menu_index DESC)) WHERE rNum &gt;= #{start} AND rNum &lt;= #{end}
+		SELECT * FROM restaurant_menu_tbl ORDER BY restaurant_menu_index DESC
 	</select>
 	
 	<!-- 식당[1] 메뉴 추가 처리 -->
 	<insert id="addMenu" parameterType="spring.mvc.baobob.vo.MenuVO">
-		INSERT INTO restaurant_menu_tbl (restaurant_index, restaurant_menu_index, restaurant_menu_name, restaurant_menu_img, restaurant_menu_content, restaurant_menu_price) VALUES(1, restaurant_menu_tbl_SEQ.nextval, #{restaurant_menu_name}, #{restaurant_menu_img}, #{restaurant_menu_content}, #{restaurant_menu_price})
+		INSERT INTO restaurant_menu_tbl(restaurant_index, restaurant_menu_index, restaurant_menu_name, restaurant_menu_img, restaurant_menu_content, restaurant_menu_price) VALUES(1, restaurant_menu_tbl_SEQ.nextval, #{restaurant_menu_name}, #{restaurant_menu_img}, #{restaurant_menu_content}, #{restaurant_menu_price})
 	</insert>
 	
 	<!-- 식당[1] 수정할 메뉴 정보 보기 -->
@@ -32,5 +42,55 @@
 	<!-- 식당[1] 메뉴 수정 처리 -->
 	<delete id="delMenu" parameterType="spring.mvc.baobob.vo.MenuVO">
 		DELETE FROM restaurant_menu_tbl WHERE restaurant_menu_index = #{restaurant_menu_index}
+	</delete>
+	
+	<!-- 식당[1] 직원 수 조회 -->
+	<select id="getEmployeeCnt" resultType="int">
+		SELECT count(empl.member_id) FROM employee_tbl empl, member_tbl mem WHERE mem.member_id = empl.member_id AND mem.member_step IN (61, 62, 63)
+	</select>
+	
+	<!-- 식당[1] 각 메뉴 정보 조회 -->
+	<select id="getEmployeeList" resultType="spring.mvc.baobob.vo.EmployeeVO">
+		SELECT empl.* FROM employee_tbl empl, member_tbl mem WHERE mem.member_id = empl.member_id AND mem.member_step IN (61, 62, 63)
+	</select>
+	
+	<!-- 전체 회원 수 조회(식당[1] 직원 제외) -->
+	<select id="getMemberCnt" resultType="int">
+		SELECT count(*) FROM member_tbl WHERE NOT member_step IN (51, 61)
+	</select>
+	
+	<!-- 각 회원 정보 조회(식당[1] 직원 제외) -->
+	<select id="getMemberList" resultType="spring.mvc.baobob.vo.Member">
+		SELECT * FROM member_tbl WHERE NOT member_step IN (51, 61) ORDER BY member_reg_date DESC
+	</select>
+	
+	<!-- 각 회원 정보 조회(식당[1] 직원 제외) -->
+	<select id="viewMember" resultType="spring.mvc.baobob.vo.Member">
+		SELECT * FROM member_tbl WHERE member_id = #{id}
+	</select>
+	
+	<!-- 식당[1] 직원 등록/삭제 처리(member_step 변경) -->
+	<update id="updateStep" parameterType="Map">
+		UPDATE member_tbl SET member_step = #{member_step} WHERE member_id = #{member_id}
+	</update>
+	
+	<!-- 식당[1] 직원 등록 처리 -->
+	<insert id="addEmployee" parameterType="Map">
+		INSERT INTO employee_tbl(employee_index, member_id, employee_jumin2, employee_date)  VALUES(employee_tbl_SEQ.nextval, #{member_id}, #{jumin2}, sysdate)
+	</insert>
+	
+	<!-- 식당[1] 직원 정보 조회 -->
+	<select id="viewEmployee" resultType="spring.mvc.baobob.vo.EmployeeVO">
+		SELECT * FROM employee_tbl WHERE member_id = #{id}
+	</select>
+	
+	<!-- 식당[1] 직원 정보 삭제 처리(member_step 계산) -->
+	<select id="getCumPoint" resultType="int">
+		SELECT member_cumpoint FROM member_tbl WHERE member_id = #{member_id}
+	</select>
+	
+	<!-- 식당[1] 직원 정보 삭제 -->
+	<delete id="delEmployee" parameterType="Map">
+		DELETE FROM employee_tbl WHERE member_id = #{member_id}
 	</delete>
 </mapper>

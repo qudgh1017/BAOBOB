@@ -6,6 +6,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 public interface Host_restaurantService {
+	// 식당 총 관리자 - 식당 추가 처리
+	public void restaurantAdd(HttpServletRequest req, Model model);
+	
 	// 식당[1] 메뉴 리스트
 	public void menuList(HttpServletRequest req, Model model);
 	
@@ -20,4 +23,25 @@ public interface Host_restaurantService {
 
 	// 식당[1] 메뉴 삭제 처리
 	public void menuDel(HttpServletRequest req, Model model);
+
+	// 식당[1] 직원 리스트
+	public void employeeList(HttpServletRequest req, Model model);
+
+	// 전체 회원 리스트 (식당[1] 직원 추가)
+	public void memberList(HttpServletRequest req, Model model);
+
+	// 식당[1] 직원으로 등록할 회원 정보 보기
+	public void memberView(HttpServletRequest req, Model model);
+	
+	// 식당[1] 직원 추가 처리
+	public void employeeAdd(HttpServletRequest req, Model model);
+
+	// 식당[1] 직원 정보 보기
+	public void employeeView(HttpServletRequest req, Model model);
+
+	// 식당[1] 직원 삭제 처리
+	public void employeeDel(HttpServletRequest req, Model model);
+	
+	// 식당[1] 직원 수정 처리
+	
 }

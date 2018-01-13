@@ -26,57 +26,71 @@
 	</button>
 	<div class="collapse navbar-collapse" id="navbarResponsive">
 		<ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
-			<!-- 
+		<!-- 
 			<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
 				<a class="nav-link" href="#"> 
-					<i class="fa fa-fw fa-dashboard"></i> 
-					<span class="nav-link-text">예약 관리</span>
+					<i class="fa fa-fw fa-wrench"></i>
+					<span class="nav-link-text">총 관리자 메뉴</span>
 				</a>
 			</li>
 			<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Charts">
 				<a class="nav-link" href="#"> 
-					<i class="fa fa-fw fa-area-chart"></i> 
+					<i class="fa fa-fw fa-link"></i> 
 					<span class="nav-link-text">메뉴 관리</span>
 				</a>
 			</li>
 			<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
 				<a class="nav-link" href="#"> 
-					<i class="fa fa-fw fa-table"></i> 
+					<i class="fa fa-fw fa-file"></i> 
 					<span class="nav-link-text">결산</span>
 				</a>
 			</li>
-			-->
-			<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
+		 -->
+			 
+			<li class="nav-item" data-toggle="tooltip" data-placement="right">
 				<a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents" data-parent="#exampleAccordion"> 
 					<i class="fa fa-fw fa-wrench"></i>
-					<span class="nav-link-text">예약관리</span>
+					<span class="nav-link-text">총 관리자 메뉴</span>
 				</a>
 				<ul class="sidenav-second-level collapse" id="collapseComponents">
-					<li><a href="#">예약 목록</a></li>
-					<li><a href="#">예약 추가</a></li>
+					<li><a href="hostRestaurantList">매장 목록</a></li>
+					<li><a href="hostRestaurantAddForm">매장 추가</a></li>
+					<li><a href="hostAllRestaurantAccount">결산</a></li>
 				</ul>
 			</li>
-			<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Example Pages">
+			<li class="nav-item" data-toggle="tooltip" data-placement="right">
+				<a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents2" data-parent="#exampleAccordion"> 
+					<i class="fa fa-fw fa-table"></i>
+					<span class="nav-link-text">예약관리</span>
+				</a>
+				<ul class="sidenav-second-level collapse" id="collapseComponents2">
+					<li><a href="hostReservList">예약 목록</a></li>
+					<li><a href="hostReservAddForm">예약 추가</a></li>
+				</ul>
+			</li>
+			<li class="nav-item" data-toggle="tooltip" data-placement="right">
 				<a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseExamplePages" data-parent="#exampleAccordion"> 
-					<i class="fa fa-fw fa-file"></i> 
+					<i class="fa fa-fw fa-dashboard"></i> 
 					<span class="nav-link-text">메뉴 관리</span>
 				</a>
 				<ul class="sidenav-second-level collapse" id="collapseExamplePages">
 					<li><a href="hostMenuList">메뉴 목록</a></li>
 					<li><a href="hostMenuAddForm">메뉴 추가</a></li>
-				</ul></li>
-			<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Menu Levels">
+				</ul>
+			</li>
+			<li class="nav-item" data-toggle="tooltip" data-placement="right">
 				<a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseMulti" data-parent="#exampleAccordion"> 
 					<i class="fa fa-fw fa-sitemap"></i> 
 					<span class="nav-link-text">직원 관리</span>
 				</a>
 				<ul class="sidenav-second-level collapse" id="collapseMulti">
-					<li><a href="#">직원 목록</a></li>
-					<li><a href="#">직원 추가</a></li>
-				</ul></li>
-			<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Link">
-				<a class="nav-link" href="#"> 
-					<i class="fa fa-fw fa-link"></i> 
+					<li><a href="hostEmployeeList">직원 목록</a></li>
+					<li><a href="hostMemberList">직원 추가</a></li>
+				</ul>
+			</li>
+			<li class="nav-item" data-toggle="tooltip" data-placement="right">
+				<a class="nav-link" href="hostRestaurantAccount">
+					<i class="fa fa-fw fa-area-chart"></i> 
 					<span class="nav-link-text">결산</span>
 				</a>
 			</li>

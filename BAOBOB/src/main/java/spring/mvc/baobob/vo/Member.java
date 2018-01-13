@@ -4,7 +4,6 @@ import java.sql.Timestamp;
 
 public class Member {
 	// member_tbl
-
 	private String member_id;
 	private String member_pwd;
 	private String member_name;

@@ -18,6 +18,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import spring.mvc.baobob.host_restaurant.persistence.Host_restaurantDAO;
+import spring.mvc.baobob.vo.EmployeeVO;
+import spring.mvc.baobob.vo.Member;
 import spring.mvc.baobob.vo.MenuVO;
 
 @Service
@@ -26,91 +28,47 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 
 	@Autowired
 	Host_restaurantDAO dao;
-	
+
+	// 식당 총 관리자 - 식당 추가 처리
+	@Override
+	public void restaurantAdd(HttpServletRequest req, Model model) {
+		// TODO Auto-generated method stub
+		log.debug("service.restaurantAdd()");
+		
+		int cnt = 0;
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("tel", req.getParameter("tel"));
+		map.put("name", req.getParameter("name"));
+		map.put("state", req.getParameter("info"));
+		map.put("col", req.getParameter("col"));
+		map.put("row", req.getParameter("row"));
+		
+		cnt = dao.addRestaurant(map);
+		
+		if(cnt != 0) {
+			cnt = dao.addTable(map);
+		}
+		
+		model.addAttribute("cnt", cnt);
+	}
+
 	// 식당[1] 메뉴 리스트
 	@Override
 	public void menuList(HttpServletRequest req, Model model) {
 		// TODO Auto-generated method stub
 		log.debug("service.menuList()");
 
-		int pageSize = 10; // 한 페이지당 출력할 글의 수
-		int pageBlock = 3; // 한 블록당 출력할 페이지의 수
+		int cnt = 0;
 
-		int cnt = 0; // 글 개수
-		int start = 0; // 현재 페이지 글 시작번호
-		int end = 0; // 현재 페이지 글 마지막번호
-		int number = 0; // 출력할 글 번호
-		String pageNum = null; // 페이지 번호
-		int currentPage = 0; // 현재 페이지
-
-		int pageCount = 0; // 페이지 개수
-		int startPage = 0; // 시작 페이지
-		int endPage = 0; // 마지막 페이지
-
+		// 메뉴 개수 조회
 		cnt = dao.getMenuCnt();
 
-		// 글 개수
-		pageNum = req.getParameter("pageNum");
+		// 각 메뉴 정보 조회
+		ArrayList<MenuVO> dtos = dao.getMenuList();
 
-		if (pageNum == null) {
-			pageNum = "1"; // 첫 페이지를 1페이지로 설정
-		}
-
-		currentPage = (Integer.parseInt(pageNum)); // 현재 페이지
-
-		// pageCnt = 12 / 5 + 1
-		pageCount = (cnt / pageSize) + (cnt % pageSize > 0 ? 1 : 0); // 페이지 개수 + 나머지
-
-		// 1 = (1-1) * 5 + 1
-		// 6 = (2-1) * 5 + 1
-		// 11 = (3-1) * 5 + 1
-		// 21 = (5-1) * 5 + 1
-		start = (currentPage - 1) * pageSize + 1; // 현재 페이지 시작번호
-
-		// 5 = 1 + 5 - 1
-		end = start + pageSize - 1;// 현재 페이지 끝번호
-		// end = currentPage * pageSize;
-
-		if (end > cnt) {
-			end = cnt;
-		}
-
-		// = 21 - (5 - 1) * 5;
-		number = cnt - (currentPage - 1) * pageSize; // 출력할 글번호
-
-		if (cnt > 0) {
-			Map<String, Object> map = new HashMap<String, Object>();
-			map.put("start", start);
-			map.put("end", end);
-
-			// 게시글 목록 조회
-			ArrayList<MenuVO> dtos = dao.getMenuList(map);
-			model.addAttribute("dtos", dtos);
-		}
-
-		startPage = (currentPage / pageBlock) * pageBlock + 1; // (5 / 3) * 3 + 1 = 4
-
-		if ((currentPage % pageBlock == 0)) {
-			startPage -= pageBlock;
-		}
-
-		endPage = startPage + pageBlock - 1; // 6 = 4 + 3 - 1
-
-		if (endPage > pageCount) {
-			endPage = pageCount;
-		}
-
-		model.addAttribute("cnt", cnt); // 글개수
-		model.addAttribute("number", number); // 글번호
-		model.addAttribute("pageNum", pageNum); // 페이지번호
-
-		if (cnt > 0) {
-			model.addAttribute("startPage", startPage); // 시작 페이지
-			model.addAttribute("endPage", endPage); // 마지막 페이지
-			model.addAttribute("pageBlock", pageBlock); // 출력할 페이지개수
-			model.addAttribute("pageCount", pageCount); // 페이지개수
-			model.addAttribute("currentPage", currentPage); // 현재 페이지
-		}
+		model.addAttribute("cnt_menu", cnt); // 메뉴 개수
+		model.addAttribute("dtos_menu", dtos); // 모든 메뉴 정보
 	}
 
 	// 식당[1] 메뉴 추가
@@ -139,7 +97,7 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 
 			String fileName = file.getOriginalFilename();
 			MenuVO dto = new MenuVO();
-			
+
 			dto.setRestaurant_menu_img(fileName);
 			dto.setRestaurant_menu_name(req.getParameter("name"));
 			dto.setRestaurant_menu_content(req.getParameter("content"));
@@ -160,7 +118,7 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 		log.debug("service.menuView()");
 
 		MenuVO dto = new MenuVO();
-		
+
 		dto = dao.viewMenu(Integer.parseInt(req.getParameter("index")));
 
 		model.addAttribute("dto", dto);
@@ -192,7 +150,7 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 
 			String fileName = file.getOriginalFilename();
 			MenuVO dto = new MenuVO();
-			
+
 			dto.setRestaurant_menu_index(Integer.parseInt(req.getParameter("index")));
 			dto.setRestaurant_menu_img(fileName);
 			dto.setRestaurant_menu_name(req.getParameter("name"));
@@ -215,10 +173,124 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 		log.debug("service.menuDel()");
 
 		MenuVO dto = new MenuVO();
-		
+
 		dto.setRestaurant_menu_index(Integer.parseInt(req.getParameter("index")));
 
-		int deleteCnt = dao.delMenu(dto);
-		model.addAttribute("cnt", deleteCnt);
+		int cnt = dao.delMenu(dto);
+		model.addAttribute("cnt", cnt);
+	}
+
+	// 식당[1] 직원 리스트
+	@Override
+	public void employeeList(HttpServletRequest req, Model model) {
+		// TODO Auto-generated method stub
+		log.debug("service.employeeList()");
+
+		int cnt = 0;
+
+		// 직원 수 조회
+		cnt = dao.getEmployeeCnt();
+
+		// 각 직원 정보 조회
+		ArrayList<EmployeeVO> dtos = dao.getEmployeeList();
+
+		model.addAttribute("cnt_empl", cnt); // 직원 수
+		model.addAttribute("dtos_empl", dtos); // 모든 직원 정보
+	}
+
+	// 전체 회원 목록(식당[1] 직원 등록)
+	@Override
+	public void memberList(HttpServletRequest req, Model model) {
+		// TODO Auto-generated method stub
+		log.debug("service.memberList()");
+
+		int cnt = 0;
+
+		// 전체 회원 수 조회(식당[1] 직원 제외)
+		cnt = dao.getMemberCnt();
+
+		// 각 회원 정보 조회(식당[1] 직원 제외)
+		ArrayList<Member> dtos = dao.getMemberList();
+
+		model.addAttribute("cnt_mem", cnt); // 전체 회원 수 조회(식당[1] 직원 제외)
+		model.addAttribute("dtos_mem", dtos); // 각 회원 정보 조회(식당[1] 직원 제외)
+	}
+
+	// 식당[1] 직원으로 등록할 회원 정보 조회
+	@Override
+	public void memberView(HttpServletRequest req, Model model) {
+		// TODO Auto-generated method stub
+		log.debug("service.memberView()");
+
+		Member dto = new Member();
+
+		dto = dao.viewMember(req.getParameter("id"));
+
+		model.addAttribute("dto", dto);
+	}
+
+	// 식당[1] 직원 등록 처리
+	@Override
+	public void employeeAdd(HttpServletRequest req, Model model) {
+		// TODO Auto-generated method stub
+		log.debug("service.employeeAdd()");
+
+		int cnt = 0;
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("member_id", req.getParameter("id"));
+		map.put("jumin2", req.getParameter("jumin2"));
+		map.put("member_step", 61);
+
+		cnt = dao.updateStep(map);
+
+		if (cnt != 0) {
+			cnt = dao.addEmployee(map);
+		}
+
+		model.addAttribute("cnt", cnt);
+	}
+
+	// 식당[1] 직원 정보 조회
+	@Override
+	public void employeeView(HttpServletRequest req, Model model) {
+		// TODO Auto-generated method stub
+		log.debug("service.employeeView()");
+
+		EmployeeVO dto = new EmployeeVO();
+
+		dto = dao.viewEmployee(req.getParameter("id"));
+
+		model.addAttribute("dto_empl", dto);
+	}
+
+	// 식당[1] 직원 삭제 처리
+	@Override
+	public void employeeDel(HttpServletRequest req, Model model) {
+		// TODO Auto-generated method stub
+		log.debug("service.employeeDel()");
+
+		int cnt = 0;
+		int step = dao.getCumPoint(req.getParameter("id"));
+
+		if (0 <= step && step <= 15000) {
+			step = 9;
+		} else if (15001 <= step && step <= 30000) {
+			step = 10;
+		} else if (30001 <= step && step <= 45000) {
+			step = 11;
+		} else if (45001 <= step) {
+			step = 12;
+		}
+
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("member_id", req.getParameter("id"));
+		map.put("member_step", step);
+
+		cnt = dao.delEmployee(map);
+
+		if (cnt != 0) {
+			cnt = dao.updateStep(map);
+		}
+		model.addAttribute("cnt", cnt);
 	}
 }
