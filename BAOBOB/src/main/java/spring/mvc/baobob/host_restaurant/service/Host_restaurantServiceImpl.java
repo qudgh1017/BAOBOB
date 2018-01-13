@@ -21,6 +21,8 @@ import spring.mvc.baobob.host_restaurant.persistence.Host_restaurantDAO;
 import spring.mvc.baobob.vo.EmployeeVO;
 import spring.mvc.baobob.vo.Member;
 import spring.mvc.baobob.vo.MenuVO;
+import spring.mvc.baobob.vo.RestaurantVO;
+import spring.mvc.baobob.vo.TableVO;
 
 @Service
 public class Host_restaurantServiceImpl implements Host_restaurantService {
@@ -29,29 +31,179 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 	@Autowired
 	Host_restaurantDAO dao;
 
-	// 식당 총 관리자 - 식당 추가 처리
+	// 식당 총 관리자 - 매장 리스트
+	@Override
+	public void restaurantList(HttpServletRequest req, Model model) {
+		// TODO Auto-generated method stub
+		log.debug("service.restaurantList()");
+
+		int cnt = 0;
+
+		// 매장 개수 조회
+		cnt = dao.getRestaurantCnt();
+
+		// 각 매장 정보 조회
+		ArrayList<RestaurantVO> dtos = dao.getRestaurantList();
+
+		model.addAttribute("cnt_restaurant", cnt); // 매장 수
+		model.addAttribute("dtos_restaurant", dtos); // 모든 매장 정보
+	}
+
+	// 식당 총 관리자 - 매장 추가 처리
 	@Override
 	public void restaurantAdd(HttpServletRequest req, Model model) {
 		// TODO Auto-generated method stub
 		log.debug("service.restaurantAdd()");
-		
+
 		int cnt = 0;
-		
+		int index = 0;
+		int row = Integer.parseInt(req.getParameter("row"));
+		int col = Integer.parseInt(req.getParameter("col"));
+		String info = req.getParameter("info");
+
+		RestaurantVO dto = new RestaurantVO();
+		dto.setRestaurant_tel(req.getParameter("tel"));
+		dto.setRestaurant_name(req.getParameter("name"));
+
+		cnt = dao.addRestaurant(dto);
+
+		if (cnt != 0) {
+			String[] state = info.split(",");
+
+			for (int i = 0; i < row; i++) {
+				for (int j = 0; j < col; j++) {
+					TableVO dto2 = new TableVO();
+
+					dto2.setIndex(index);
+					dto2.setState(state[index]);
+					dto2.setTable_row(i);
+					dto2.setTable_col(j);
+
+					cnt = dao.addTable(dto2);
+
+					if (cnt != 0) {
+						index++;
+					}
+				}
+			}
+		}
+
+		model.addAttribute("cnt", cnt);
+	}
+
+	// 식당 총 관리자 - 수정할 매장 정보 조회 / 수정할 정보 입력
+	@Override
+	public void restaurantView(HttpServletRequest req, Model model) {
+		// TODO Auto-generated method stub
+		log.debug("service.restaurantView()");
+
+		RestaurantVO dto = new RestaurantVO();
+		dto = dao.viewRestaurant(req.getParameter("index"));
+
+		TableVO dto2 = new TableVO();
+		dto2 = dao.getColRow(req.getParameter("index"));
+
+		int col = dto2.getTable_col() + 1;
+		int row = dto2.getTable_row() + 1;
+
+		String info = "";
+		int index = 0;
+
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("tel", req.getParameter("tel"));
-		map.put("name", req.getParameter("name"));
-		map.put("state", req.getParameter("info"));
-		map.put("col", req.getParameter("col"));
-		map.put("row", req.getParameter("row"));
+		map.put("restaurant_index", req.getParameter("index"));
+		map.put("restaurant_table_index", index);
+
+		for (int i = 0; i < row; i++) {
+			for (int j = 0; j < col; j++) {
+				map.replace("restaurant_table_index", index);
+
+				info += dao.getState(map);
+
+				if (!(i + 1 == row && j + 1 == col)) {
+					info += ',';
+					index++;
+				}
+			}
+		}
+
+		model.addAttribute("dto", dto);
+		model.addAttribute("info", info);
+		model.addAttribute("col", col);
+		model.addAttribute("row", row);
+	}
+
+	// 식당 총 관리자 - 매장 수정 처리
+	@Override
+	public void restaurantMod(HttpServletRequest req, Model model) {
+		// TODO Auto-generated method stub
+		log.debug("service.restaurantMod()");
+
+		int cnt = 0;
+		int index = 0;
+		int row = Integer.parseInt(req.getParameter("row"));
+		int col = Integer.parseInt(req.getParameter("col"));
+		String info = req.getParameter("info");
+
+		RestaurantVO dto = new RestaurantVO();
+		dto.setRestaurant_index(req.getParameter("index"));
+		dto.setRestaurant_tel(req.getParameter("tel"));
+		dto.setRestaurant_name(req.getParameter("name"));
+
+		cnt = dao.modRestaurant(dto);
+
+		if (cnt != 0) {
+			cnt = dao.resetTable(dto);
+		}
+
+		TableVO dto2 = new TableVO();
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("dto", dto);
+		map.put("dto2", dto2);
+
+		if (cnt != 0) {
+			String[] state = info.split(",");
+
+			for (int i = 0; i < row; i++) {
+				for (int j = 0; j < col; j++) {
+					dto2.setIndex(index);
+					dto2.setState(state[index]);
+					dto2.setTable_row(i);
+					dto2.setTable_col(j);
+
+					map.replace("dto2", dto2);
+
+					cnt = dao.modTable(map);
+
+					if (cnt != 0) {
+						index++;
+					}
+				}
+			}
+		}
+
+		model.addAttribute("cnt", cnt);
+	}
+
+	// 식당 총 관리자 - 매장 삭제 처리
+	@Override
+	public void restaurantDel(HttpServletRequest req, Model model) {
+		// TODO Auto-generated method stub
+		log.debug("service.restaurantDel()");
+
+		RestaurantVO dto = new RestaurantVO();
+
+		dto.setRestaurant_index(req.getParameter("index"));
+
+		int cnt = dao.resetTable(dto);
 		
-		cnt = dao.addRestaurant(map);
-		
-		if(cnt != 0) {
-			cnt = dao.addTable(map);
+		if (cnt != 0) {
+			cnt = dao.delRestaurant(dto);
 		}
 		
 		model.addAttribute("cnt", cnt);
 	}
+
+	/////////////////////////////////////////////////////////////////////////////////////////
 
 	// 식당[1] 메뉴 리스트
 	@Override
@@ -79,7 +231,7 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 
 		MultipartFile file = req.getFile("img");
 		String saveDir = req.getRealPath("/resources/images/chg/"); // 저장
-		String realDir = "C:\\Dev\\workspace_baobob\\BAOBOB\\BAOBOB\\src\\main\\webapp\\resources\\images\\chg"; // 저장
+		String realDir = "C:\\Dev\\workspace_baobob\\BAOBOB\\BAOBOB\\src\\main\\webapp\\resources\\images\\chg\\"; // 저장
 
 		try {
 			file.transferTo(new File(saveDir + file.getOriginalFilename()));
@@ -132,7 +284,7 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 
 		MultipartFile file = req.getFile("img");
 		String saveDir = req.getRealPath("/resources/images/chg/"); // 저장
-		String realDir = "C:\\Dev\\workspace_baobob\\BAOBOB\\BAOBOB\\src\\main\\webapp\\resources\\images\\chg"; // 저장
+		String realDir = "C:\\Dev\\workspace_baobob\\BAOBOB\\BAOBOB\\src\\main\\webapp\\resources\\images\\chg\\"; // 저장
 
 		try {
 			file.transferTo(new File(saveDir + file.getOriginalFilename()));

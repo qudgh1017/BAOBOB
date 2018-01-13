@@ -18,7 +18,17 @@ public class Host_restaurantController {
 	@Autowired
 	Host_restaurantService service;
 
-	// 식당 총 관리자 - 식당 추가
+	// 식당 총 관리자 - 매장 목록
+	@RequestMapping(value = "/hostRestaurantList")
+	public String hostRestaurantList(HttpServletRequest req, Model model) {
+		log.debug("hostRestaurantList()");
+		
+		service.restaurantList(req, model);
+		
+		return "host/host_restaurant/hostRestaurantList";
+	}
+	
+	// 식당 총 관리자 - 매장 추가
 	@RequestMapping(value = "/hostRestaurantAddForm")
 	public String hostRestaurantAddForm() {
 		log.debug("hostRestaurantAddForm()");
@@ -36,6 +46,36 @@ public class Host_restaurantController {
 		return "host/host_restaurant/hostRestaurantAddPro";
 	}
 
+	// 식당 총 관리자 - 수정할 매장 정보 조회 / 수정할 정보 입력
+	@RequestMapping(value = "/hostRestaurantModForm")
+	public String hostRestaurantModForm(HttpServletRequest req, Model model) {
+		log.debug("hostRestaurantModForm()");
+
+		service.restaurantView(req, model);
+
+		return "host/host_restaurant/hostRestaurantModForm";
+	}
+
+	// 식당 총 관리자 - 매장 정보 수정 처리
+	@RequestMapping(value = "/hostRestaurantModPro")
+	public String hostRestaurantModPro(HttpServletRequest req, Model model) {
+		log.debug("hostRestaurantModPro()");
+
+		service.restaurantMod(req, model);
+
+		return "host/host_restaurant/hostRestaurantModPro";
+	}
+
+	// 식당 총 관리자 - 매장 정보 삭제 처리
+	@RequestMapping(value = "/hostRestaurantDel")
+	public String hostRestaurantDel(HttpServletRequest req, Model model) {
+		log.debug("hostRestaurantDel()");
+
+		service.restaurantDel(req, model);
+
+		return "host/host_restaurant/hostRestaurantDel";
+	}
+	
 	/////////////////////////////////////////////////////////////////////////////////////////
 
 	// 식당[1] 메뉴 리스트
@@ -66,7 +106,7 @@ public class Host_restaurantController {
 		return "host/host_restaurant/hostMenuAddPro";
 	}
 
-	// 식당[1] 수정할 메뉴 정보 보기 / 수정할 정보 입력
+	// 식당[1] 수정할 메뉴 정보 조회 / 수정할 정보 입력
 	@RequestMapping(value = "/hostMenuModForm")
 	public String hostMenuModForm(HttpServletRequest req, Model model) {
 		log.debug("hostMenuModForm()");

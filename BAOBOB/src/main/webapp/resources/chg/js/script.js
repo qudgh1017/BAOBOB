@@ -4,13 +4,14 @@
 
 var delChk = "번 메뉴를 삭제하시겠습니까?";
 var delChk2 = "님의 직원 정보를 삭제하시겠습니까?";
+var delChk3 = "의 정보를 삭제하시겠습니까?\n삭제한 정보는 다시 되돌릴 수 없습니다.";
 var addChk = " 님을 직원으로 등록하시겠습니까?";
 var numChk = "이 입력란은 숫자만 입력 가능합니다.";
 
 // 메뉴 & 직원 삭제 확인
 function delCheck(index, chk) {
 	if (chk == 'menu') {
-		var del = confirm(index + delChk);
+		var del = confirm(index + delChk);	// confirm - 대화상자(alert와는 다르게 참 거짓을 리턴함)
 		if (del) {
 			window.location = 'hostMenuDel?index=' + index;
 		}
@@ -18,6 +19,11 @@ function delCheck(index, chk) {
 		var del = confirm(index + delChk2);
 		if (del) {
 			window.location = 'hostEmployeeDel?id=' + index;
+		}
+	} else {
+		var del = confirm(chk + delChk3);
+		if (del) {
+			window.location = 'hostRestaurantDel?index=' + index;
 		}
 	}
 }
@@ -91,7 +97,7 @@ function spaceDivChange() {
 			var imgId = 'img' + location;
 			var btnId = 'btn' + location; // 버튼 구별하기 위한 id
 
-			//배열판의 각 버튼
+			// 배열판의 각 버튼
 			space += '<button class="p_spaceBtn p_btn" ' + 
 					'value="0" ' + 'id="' + btnId + '" ' + 
 					'onclick="spaceBtnChange(&#39;' + location +'&#39;)">' + 
@@ -121,29 +127,44 @@ function spaceBtnChange(location) {
 	}
 }
 
-// 주차장 구역 정보 설정 AJAX
+// 매장 추가(정보 설정 AJAX)
 function spaceTypeChange() {
 	var item = document.querySelectorAll('.p_spaceBtn'); // 배열판의 버튼들
 
-	// col, row 정보
+	// 매장 정보
 	var x = document.getElementById('widthX').value; // col
 	var y = document.getElementById('heightY').value; // row
 	var name = document.getElementById('name').value; // name
 	var tel = document.getElementById('tel').value; // tel
 
-	// 배열판 버튼들의 아이콘index 배열
+	// 배열판 버튼들의 아이콘 index 배열
 	var array = new Array();
 	item.forEach(function(space) {
 		array.push(space.value);
 	});
 	var info = array.join(',');
-	alert('info : ' + info);
-	alert('x : ' + x);
-	alert('y : ' + y);
-	alert('name : ' + name);
-	alert('tel : ' + tel);
 
 	window.location = 'hostRestaurantAddPro?info=' + info + '&col=' + x + '&row=' + y + '&name=' + name + '&tel=' + tel;
+}
+
+// 매장 수정(정보 설정 AJAX)
+function spaceTypeChange2(index) {
+	var item = document.querySelectorAll('.p_spaceBtn'); // 배열판의 버튼들
+
+	// 매장 정보
+	var x = document.getElementById('widthX').value; // col
+	var y = document.getElementById('heightY').value; // row
+	var name = document.getElementById('name').value; // name
+	var tel = document.getElementById('tel').value; // tel
+
+	// 배열판 버튼들의 아이콘 index 배열
+	var array = new Array();
+	item.forEach(function(space) {
+		array.push(space.value);
+	});
+	var info = array.join(',');
+
+	window.location = 'hostRestaurantModPro?info=' + info + '&col=' + x + '&row=' + y + '&name=' + name + '&tel=' + tel + '&index=' + index;
 }
 
 // 설정한 배열판이 있을 경우
@@ -167,7 +188,7 @@ function spaceBody(info, col, row) {
 					arr[index] + '" ' + 'id="' + btnId + '" ' + 
 					'onclick="spaceBtnChange(&#39;' + location + '&#39;)">' + 
 					'<img class="p_img space_img" ' + 'id="' + imgId + '" ' + 
-					'/baobob/resources/images/chg/' + typeImg + '">' + '</button>';
+					'src="/baobob/resources/images/chg/' + typeImg + '">' + '</button>';
 		}
 		space += '</div>';
 	}

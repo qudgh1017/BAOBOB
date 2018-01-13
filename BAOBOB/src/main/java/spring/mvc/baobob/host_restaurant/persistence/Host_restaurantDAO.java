@@ -6,13 +6,45 @@ import java.util.Map;
 import spring.mvc.baobob.vo.EmployeeVO;
 import spring.mvc.baobob.vo.Member;
 import spring.mvc.baobob.vo.MenuVO;
+import spring.mvc.baobob.vo.RestaurantVO;
+import spring.mvc.baobob.vo.TableVO;
 
 public interface Host_restaurantDAO {
-	// 식당 총 관리자 - 식당 추가 처리
-	public int addRestaurant(Map<String, Object> map);
 
-	// 식당 총 관리자 - 식당 내 테이블 추가 처리
-	public int addTable(Map<String, Object> map);
+	// 식당 총 관리자 - 매장 수
+	public int getRestaurantCnt();
+	
+	// 식당 총 관리자 - 각 매장 정보
+	public ArrayList<RestaurantVO> getRestaurantList();
+	
+	// 식당 총 관리자 - 매장 추가 처리
+	public int addRestaurant(RestaurantVO dto);
+
+	// 식당 총 관리자 - 매장 내 테이블 추가 처리
+	public int addTable(TableVO dto);
+
+	// 식당 총 관리자 - 수정할 매장 정보 조회 / 수정할 정보 입력
+	public RestaurantVO viewRestaurant(String index);
+	
+	// 식당 총 관리자 - 매장 내 테이블 정보 조회를 위한 좌석 수 조회
+	public TableVO getColRow(String index);
+
+	// 식당 총 관리자 - 매장 내 테이블 정보 조회를 위한 테이블 상태 조회
+	public String getState(Map<String, Object> map);
+	
+	// 식당 총 관리자 - 매장 수정 처리
+	public int modRestaurant(RestaurantVO dto);
+
+	// 식당 총 관리자 - 매장 내 테이블 수정 처리 전 테이블 초기화
+	public int resetTable(RestaurantVO dto);
+	
+	// 식당 총 관리자 - 매장 내 테이블 수정 처리
+	public int modTable(Map<String, Object> map);
+
+	// 식당 총 관리자 - 매장 삭제 처리
+	public int delRestaurant(RestaurantVO dto);
+	
+	/////////////////////////////////////////////////////////////////////////////////////////
 	
 	// 식당[1] 메뉴 개수
 	public int getMenuCnt(); 

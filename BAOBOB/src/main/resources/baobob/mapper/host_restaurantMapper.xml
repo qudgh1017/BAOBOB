@@ -4,15 +4,62 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="spring.mvc.baobob.host_restaurant.persistence.Host_restaurantDAO">
-	<!-- 식당 총 관리자 - 식당 추가 처리 -->
-	<insert id="addRestaurant" parameterType="Map">
-		INSERT INTO restaurant_tbl(restaurant_index, restaurant_tel, restaurant_name) VALUES(restaurant_tbl_SEQ.nextval, #{tel}, #{name})
+	<!-- 식당 총 관리자 - 매장 수 조회 -->
+	<select id="getRestaurantCnt" resultType="int">
+		SELECT count(*) FROM restaurant_tbl
+	</select>
+	
+	<!-- 식당 총 관리자 - 각 매장 정보 조회 -->
+	<select id="getRestaurantList" resultType="spring.mvc.baobob.vo.RestaurantVO">
+		SELECT * FROM restaurant_tbl ORDER BY restaurant_index DESC
+	</select>
+	
+	<!-- 식당 총 관리자 - 매장 추가 처리 -->
+	<insert id="addRestaurant" parameterType="spring.mvc.baobob.vo.RestaurantVO">
+		INSERT INTO restaurant_tbl(restaurant_index, restaurant_tel, restaurant_name) VALUES(restaurant_tbl_SEQ.nextval, #{restaurant_tel}, #{restaurant_name})
 	</insert>
 	
-	<!-- 식당 총 관리자 - 식당 추가 처리 -->
-	<insert id="addTable" parameterType="Map">
-		INSERT INTO restaurant_table_tbl(restaurant_index, restaurant_table_index, table_row, table_col, table_state) VALUES((SELECT MAX(restaurant_index) FROM restaurant_tbl), restaurant_table_tbl_SEQ.nextval, #{row}, #{col}, #{state})
+	<!-- 식당 총 관리자 - 식당 내 테이블 추가 처리 -->
+	<insert id="addTable" parameterType="spring.mvc.baobob.vo.TableVO">
+		INSERT INTO restaurant_table_tbl(restaurant_index, restaurant_table_index, table_row, table_col, table_state) VALUES((SELECT MAX(restaurant_index) FROM restaurant_tbl), #{index}, #{table_row}, #{table_col}, #{state})
 	</insert>
+	
+	<!-- 식당 총 관리자 - 매장 정보 조회 -->
+	<select id="viewRestaurant" resultType="spring.mvc.baobob.vo.RestaurantVO">
+		SELECT * FROM restaurant_tbl WHERE restaurant_index = #{index}
+	</select>
+	
+	<!-- 식당 총 관리자 - 매장 내 테이블 정보 조회를 위한 좌석 수 조회 -->
+	<select id="getColRow" resultType="spring.mvc.baobob.vo.TableVO">
+		SELECT MAX(table_row) table_row, MAX(table_col) table_col FROM restaurant_table_tbl WHERE restaurant_index = #{index}
+	</select>
+	
+	<!-- 식당 총 관리자 - 매장 내 테이블 정보 조회 -->
+	<select id="getState" resultType="String">
+		SELECT table_state FROM restaurant_table_tbl WHERE restaurant_index = #{restaurant_index} AND restaurant_table_index = #{restaurant_table_index}
+	</select>
+	
+	<!-- 식당 총 관리자 - 매장 수정 처리 -->
+	<update id="modRestaurant" parameterType="spring.mvc.baobob.vo.RestaurantVO">
+		UPDATE restaurant_tbl SET restaurant_tel = #{restaurant_tel}, restaurant_name = #{restaurant_name} WHERE restaurant_index = #{restaurant_index}
+	</update>
+	
+	<!-- 식당 총 관리자 - 매장 내 테이블 수정 처리 전 테이블 초기화 -->
+	<delete id="resetTable" parameterType="spring.mvc.baobob.vo.RestaurantVO">
+		DELETE FROM restaurant_table_tbl WHERE restaurant_index = #{restaurant_index}
+	</delete>
+	
+	<!-- 식당 총 관리자 - 식당 내 테이블 추가 처리 -->
+	<insert id="modTable" parameterType="Map">
+		INSERT INTO restaurant_table_tbl(restaurant_index, restaurant_table_index, table_row, table_col, table_state) VALUES(#{dto.restaurant_index}, #{dto2.index}, #{dto2.table_row}, #{dto2.table_col}, #{dto2.state})
+	</insert>
+	
+	<!-- 식당 총 관리자 - 매장 삭제 처리 -->
+	<delete id="delRestaurant" parameterType="spring.mvc.baobob.vo.RestaurantVO">
+		DELETE FROM restaurant_tbl WHERE restaurant_index = #{restaurant_index}
+	</delete>
+	
+	<!-- ///////////////////////////////////////////////////////////////////////////////////////// -->
 	
 	<!-- 식당[1] 메뉴 개수 조회 -->
 	<select id="getMenuCnt" resultType="int">
