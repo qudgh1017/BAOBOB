@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -471,6 +472,52 @@ public class Host_movieServiceImpl implements Host_movieService{
 			int cnt = dao.hostTheaterDel(theater_index);
 			model.addAttribute("cnt", cnt);
 		}
+		
+	}
+
+	// 상영관 추가 폼 영화 정보와 상영관 정보 가져오기
+	@Override
+	public void hostScheduleAddForm(HttpServletRequest req, Model model) {
+		// 상영중인 영화 정보
+		ArrayList<MovieVO> movieVOS = dao.getMovieING();
+		
+		// 모든 상영관 정보
+		ArrayList<TheaterVO> theaterVOS = dao.getTheaterAllList();
+		
+		model.addAttribute("movieVOS", movieVOS);
+		model.addAttribute("theaterVOS", theaterVOS);
+	}
+
+	// 스케줄 추가 처리
+	@Override
+	public void hostScheduleAddPro(HttpServletRequest req, Model model) {
+		String schedule_startDate = req.getParameter("schedule_startDate");
+		String schedule_startTime = req.getParameter("schedule_startTime");
+		int movie_index = Integer.parseInt(req.getParameter("movie_index"));
+		int theater_index = Integer.parseInt(req.getParameter("theater_index"));
+		int schedule_MDNstate = 1;
+		
+		int time = Integer.parseInt(schedule_startTime.split(":")[0]);
+		if(22<=time && time<=23 || 00<=time && time<=03) { //22<=time && time<=23 || 00<=time && time<=03
+			schedule_MDNstate = 2;
+		} else if(04<=time && time<=10) { // 04<=time && time<=10
+			schedule_MDNstate = 0;
+		}
+//		to_char(to_date(#{schedule_start}, 'YY-MM-DD-HH24:MI')+(SELECT movie_runTime FROM movie_tbl WHERE movie_index=#{movie_index})/24/60
+		String schedule_start = schedule_startDate +"-"+ schedule_startTime;
+		System.out.println("schedule_start = " +schedule_start);
+		System.out.println("movie_index = " +movie_index);
+		System.out.println("theater_index = " +theater_index);
+		System.out.println("schedule_MDNstate = " +schedule_MDNstate);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("schedule_start", schedule_start);
+		map.put("movie_index", movie_index);
+		map.put("theater_index", theater_index);
+		map.put("schedule_MDNstate", schedule_MDNstate);
+		int cnt = dao.hostScheduleAddPro(map);
+		
+		model.addAttribute("cnt", cnt);
 		
 	}
 

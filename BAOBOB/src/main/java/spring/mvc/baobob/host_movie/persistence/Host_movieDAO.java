@@ -57,5 +57,13 @@ public interface Host_movieDAO {
 	// 상영관 좌석 삭제 처리
 	public int hostTheaterSeatDel(int theater_index);
 	
+	// 상영중인 영화 정보
+	public ArrayList<MovieVO> getMovieING();
+	
+	// 모든 상영관 정보
+	public ArrayList<TheaterVO> getTheaterAllList();
+	
+	// 스케줄 추가 처리
+	public int hostScheduleAddPro(Map<String, Object> map);
 	
 }

@@ -22,7 +22,7 @@ function spaceType(type) {
 
 // 상영관상세 선택시 좌석정보 가져오기
 function getSeatInfo(col, row, state){
-	var seat = "<input type='button' style='background-color:lightgray; width:"+col*20+"px;' value='SCREAN'> <br><br>";
+	var seat = "<input type='button' style='background-color:lightgray; width:"+col*20+"px;' value='SCREEN'> <br><br>";
 	for(var i = 0; i<row; i++){
 		for(var j = 1; j<=col; j++){
 			
@@ -63,7 +63,7 @@ function seatSet(){
 	var row = document.hostTheaterAddForm.theater_row.value;
 	var col = document.hostTheaterAddForm.theater_col.value;
 //		alert("행 : " + row + "칸 , 열 : " + col + "칸" );
-	var seat = "<input type='button' style='background-color:lightgray; width:"+col*20+"px;' value='SCREAN'> <br><br>";
+	var seat = "<input type='button' style='background-color:lightgray; width:"+col*20+"px;' value='SCREEN'> <br><br>";
 	
 	for(var i = 0; i<row; i++){
 		for(var j = 1; j<=col; j++){

@@ -193,6 +193,39 @@ public class Host_movieDAOImpl implements Host_movieDAO {
 		return cnt;
 	}
 
+	// 상영중인 영화 정보
+	@Override
+	public ArrayList<MovieVO> getMovieING() {
+		ArrayList<MovieVO> vos = null;
+		
+		Host_movieDAO dao = sqlSession.getMapper(Host_movieDAO.class);
+		vos = dao.getMovieING();
+		
+		return vos;
+	}
+
+	// 모든 상영관 정보
+	@Override
+	public ArrayList<TheaterVO> getTheaterAllList() {
+		ArrayList<TheaterVO> vos = null;
+		
+		Host_movieDAO dao = sqlSession.getMapper(Host_movieDAO.class);
+		vos = dao.getTheaterAllList();
+		
+		return vos;
+	}
+
+	// 스케줄 추가 처리
+	@Override
+	public int hostScheduleAddPro(Map<String, Object> map) {
+		int cnt = 0;
+		
+		Host_movieDAO dao = sqlSession.getMapper(Host_movieDAO.class);
+		cnt = dao.hostScheduleAddPro(map);
+		
+		return cnt;
+	}
+
 
 
 	
