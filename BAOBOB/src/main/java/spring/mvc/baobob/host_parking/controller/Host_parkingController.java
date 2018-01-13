@@ -42,6 +42,7 @@ public class Host_parkingController {
 		return "host/host_parking/hostParkingSettingChange";
 	}
 
+	//실시간 주차 현황
 	@RequestMapping("hostParkingState")
 	public String hostParkingState(HttpServletRequest req, Model model) {
 		System.out.println("hostParkingState()");
@@ -50,16 +51,33 @@ public class Host_parkingController {
 		
 		return "host/host_parking/hostParkingState";
 	}
+	
+	@RequestMapping("hostParkingSpaceState")
+	public String hostParkingSpaceState(HttpServletRequest req, Model model) {
+		System.out.println("hostParkingSpaceState()");
+		
+		service.getSpaceState(req, model);
+		
+		return "host/host_parking/hostParkingSpaceState";
+	}
 
+	//주차 현황
 	@RequestMapping("hostParkingChart")
 	public String hostParkingChart(HttpServletRequest req, Model model) {
 		System.out.println("hostParkingChart()");
+		
+		service.getParkingHistory(req, model);
+		
 		return "host/host_parking/hostParkingChart";
 	}
 
+	//주차 납부 내역
 	@RequestMapping("hostParkingPay")
 	public String hostParkingPay(HttpServletRequest req, Model model) {
 		System.out.println("hostParkingPay()");
+		
+		service.getParkingPayList(req, model);
+		
 		return "host/host_parking/hostParkingPay";
 	}
 }

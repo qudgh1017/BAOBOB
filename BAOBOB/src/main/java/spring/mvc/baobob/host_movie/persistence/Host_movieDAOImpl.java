@@ -159,6 +159,74 @@ public class Host_movieDAOImpl implements Host_movieDAO {
 		
 		return vos;
 	}
+	
+	// 상영관 좌석 수정 처리
+	@Override
+	public int modify_theater_seat(Map<String, Object> map) {
+		int cnt = 0;
+		
+		Host_movieDAO dao = sqlSession.getMapper(Host_movieDAO.class);
+		cnt = dao.modify_theater_seat(map);
+		
+		return cnt;
+	}
+
+	// 상영관 삭제 처리
+	@Override
+	public int hostTheaterDel(int theater_index) {
+		int cnt = 0;
+		
+		Host_movieDAO dao = sqlSession.getMapper(Host_movieDAO.class);
+		cnt = dao.hostTheaterDel(theater_index);
+		
+		return cnt;
+	}
+
+	// 상영관 좌석 삭제 처리
+	@Override
+	public int hostTheaterSeatDel(int theater_index) {
+		int cnt = 0;
+		
+		Host_movieDAO dao = sqlSession.getMapper(Host_movieDAO.class);
+		cnt = dao.hostTheaterSeatDel(theater_index);
+		
+		return cnt;
+	}
+
+	// 상영중인 영화 정보
+	@Override
+	public ArrayList<MovieVO> getMovieING() {
+		ArrayList<MovieVO> vos = null;
+		
+		Host_movieDAO dao = sqlSession.getMapper(Host_movieDAO.class);
+		vos = dao.getMovieING();
+		
+		return vos;
+	}
+
+	// 모든 상영관 정보
+	@Override
+	public ArrayList<TheaterVO> getTheaterAllList() {
+		ArrayList<TheaterVO> vos = null;
+		
+		Host_movieDAO dao = sqlSession.getMapper(Host_movieDAO.class);
+		vos = dao.getTheaterAllList();
+		
+		return vos;
+	}
+
+	// 스케줄 추가 처리
+	@Override
+	public int hostScheduleAddPro(Map<String, Object> map) {
+		int cnt = 0;
+		
+		Host_movieDAO dao = sqlSession.getMapper(Host_movieDAO.class);
+		cnt = dao.hostScheduleAddPro(map);
+		
+		return cnt;
+	}
+
+
 
 	
 
