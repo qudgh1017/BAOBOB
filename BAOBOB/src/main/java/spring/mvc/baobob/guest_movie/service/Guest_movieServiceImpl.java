@@ -208,5 +208,12 @@ public class Guest_movieServiceImpl implements Guest_movieService{
 		
 		
 	}
+
+	//검색결과 리스트
+	@Override
+	public String searchResult(HttpServletRequest req, Model model) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 }

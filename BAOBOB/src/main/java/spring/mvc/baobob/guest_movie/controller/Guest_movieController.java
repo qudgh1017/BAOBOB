@@ -40,8 +40,33 @@ public class Guest_movieController {
 	@RequestMapping("movieFinder")
 	public String movieFinder(HttpServletRequest req, Model model) {
 		log.debug("====== Guest_movieController/movieFinder ======");
-
+		
 		return "/guest/guest_movie/movie/movieFinder";
+	}
+	
+	//영화-무비파인더
+	@RequestMapping("searchResult")
+	public String searchResult(HttpServletRequest req, Model model) {
+		log.debug("====== Guest_movieController/searchResult ======");
+		
+		String movie_title = req.getParameter("movie_title");
+		String sel = req.getParameter("sel");
+		String[] str_movie_janre = req.getParameterValues("movie_janre");
+		int[] movie_janre = new int[str_movie_janre.length];
+
+		for(int i =0; i<movie_janre.length; i++){
+			movie_janre[i]=Integer.parseInt(str_movie_janre[i]);
+		};
+		String[] movie_country = req.getParameterValues("movie_country");
+		String[] movie_age = req.getParameterValues("movie_age");
+		
+		model.addAttribute("movie_title", movie_title);
+		model.addAttribute("sel", sel);
+		model.addAttribute("movie_janre", movie_janre);
+		model.addAttribute("movie_country", movie_country);
+		model.addAttribute("movie_age", movie_age);
+		
+		return "/guest/guest_movie/movie/searchResult";
 	}
 	
 	//영화-HD-트레일러

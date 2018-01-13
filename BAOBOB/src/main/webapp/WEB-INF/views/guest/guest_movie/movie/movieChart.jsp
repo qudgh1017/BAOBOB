@@ -98,8 +98,8 @@
 					<c:if test="${cnt > 0}">
 						<!-- 처음[◀◀] / 이전블록[◀] 특수문자:ㅁ + 한자키 -->
 						<c:if test="${startPage > pageBlock}">
-							<a href="hdTrailer?">[◀◀]</a>
-							<a href="hdTrailer?pageNum=${startPage - pageBlock}">[◀]</a>
+							<a href="movieChart?movie_state=${movie_state}">[◀◀]</a>
+							<a href="movieChart?movie_state=${movie_state}&pageNum=${startPage - pageBlock}">[◀]</a>
 						</c:if>
 						
 						<c:forEach var="i" begin="${startPage}" end="${endPage}">
@@ -107,14 +107,14 @@
 								<span><b>[${i}]</b></span>
 							</c:if>
 							<c:if test="${i != currentPage}">
-								<a href="hdTrailer?pageNum=${i}">[${i}]</a>
+								<a href="movieChart?movie_state=${movie_state}&pageNum=${i}">[${i}]</a>
 							</c:if>
 						</c:forEach>
 						
 						<!-- 다음블록 [▶] / 끝[▶▶] -->
 						<c:if test="${pageCount > endPage}">
-							<a href="hdTrailer?pageNum=${startPage + pageBlock}">[▶]</a>
-							<a href="hdTrailer?pageNum=${pageCount}">[▶▶]</a> <!-- 마지막페이지로 -->
+							<a href="movieChart?movie_state=${movie_state}&pageNum=${startPage + pageBlock}">[▶]</a>
+							<a href="movieChart?movie_state=${movie_state}&pageNum=${pageCount}">[▶▶]</a> <!-- 마지막페이지로 -->
 						</c:if>
 					
 					</c:if>

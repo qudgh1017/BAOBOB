@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%-- <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %> --%>
     
 <%@ include file="/resources/setting.jsp"%>
 <html>
@@ -53,7 +54,7 @@
 						예매율:
 					</span><br><hr>
 					<span style="font-size:12px; font-weight:bold;">
-						감독: ${movie.movie_director} / 배우:${movie.movie_star}<br><br>
+						감독: ${movie.movie_director}&nbsp;/&nbsp;배우:${movie.movie_star}<br><br>
 						장르: 
 						<c:choose>
 							<c:when test="${movie.movie_janre==1}">가족</c:when>
@@ -64,13 +65,14 @@
 							<c:when test="${movie.movie_janre==6}">코미디</c:when>
 							<c:when test="${movie.movie_janre==7}">애니메이션</c:when>
 						</c:choose>
-						 /기본:
+						 &nbsp;/&nbsp;기본:
 						 <c:if test="${movie.movie_age==0}">전체관람가,</c:if>
 						 <c:if test="${movie.movie_age!=0}">${movie.movie_age}세 이상,</c:if>
 						 
-						 <%-- ${movie.movie_runtime} --%>분,<%-- ${movie.moive_country} --%>
+						 ${movie.movie_runTime}분, ${movie.movie_country}
 						 <br><br>
 						 개봉: 20${movie.movie_rel_date}
+						 <%-- <fmt:formatDate type="both" pattern="yyyy-MM-dd" value="${movie.movie_rel_date}" /> --%>
 					</span>
 				</div>
 				<div class="col-md-offset-1"></div>
