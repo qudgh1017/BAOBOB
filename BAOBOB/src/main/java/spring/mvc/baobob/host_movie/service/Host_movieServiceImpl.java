@@ -4,9 +4,12 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,6 +24,7 @@ import spring.mvc.baobob.host_movie.persistence.Host_movieDAO;
 import spring.mvc.baobob.host_movie.persistence.Host_movieDAOImpl;
 import spring.mvc.baobob.vo.MovieVO;
 import spring.mvc.baobob.vo.TheaterVO;
+import spring.mvc.baobob.vo.Theater_scheduleVO;
 import spring.mvc.baobob.vo.Theater_seatVO;
 
 @Service
@@ -474,6 +478,132 @@ public class Host_movieServiceImpl implements Host_movieService{
 		}
 		
 	}
+	
+	// 스케줄 조회
+	@Override
+	public void hostScheduleList(HttpServletRequest req, Model model) {
+		SimpleDateFormat date = new SimpleDateFormat ( "yy-MM-dd", Locale.KOREA );
+		Date sysdate = new Date();
+		String today = date.format ( sysdate ); 
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("theater_index", 1);
+		map.put("startDate", today+"-00:00");
+		map.put("endDate", today+"-23:59");
+		
+		// 선택날짜 스케줄 조회
+		ArrayList<Theater_scheduleVO> vos1 = dao.hostScheduleList(map);
+		
+		// 1일 후 스케줄 조회
+		sysdate.setDate(sysdate.getDate()+1);
+		today = date.format ( sysdate ); //1일 후
+		map.replace("startDate", today+"-00:00");
+		map.replace("endDate", today+"-23:59");
+		ArrayList<Theater_scheduleVO> vos2 = dao.hostScheduleList(map);
+
+		// 2일 후 스케줄 조회
+		sysdate.setDate(sysdate.getDate()+1);
+		today = date.format ( sysdate ); //1일 후
+		map.replace("startDate", today+"-00:00");
+		map.replace("endDate", today+"-23:59");
+		ArrayList<Theater_scheduleVO> vos3 = dao.hostScheduleList(map);
+		
+		// 3일 후 스케줄 조회
+		sysdate.setDate(sysdate.getDate()+1);
+		today = date.format ( sysdate ); //1일 후
+		map.replace("startDate", today+"-00:00");
+		map.replace("endDate", today+"-23:59");
+		ArrayList<Theater_scheduleVO> vos4 = dao.hostScheduleList(map);
+		
+		// 4일 후 스케줄 조회
+		sysdate.setDate(sysdate.getDate()+1);
+		today = date.format ( sysdate ); //1일 후
+		map.replace("startDate", today+"-00:00");
+		map.replace("endDate", today+"-23:59");
+		ArrayList<Theater_scheduleVO> vos5 = dao.hostScheduleList(map);
+		
+		// 모든 상영관 정보
+		ArrayList<TheaterVO> theaterVOS = dao.getTheaterAllList();
+		
+		model.addAttribute("vos1", vos1);
+		model.addAttribute("vos2", vos2);
+		model.addAttribute("vos3", vos3);
+		model.addAttribute("vos4", vos4);
+		model.addAttribute("vos5", vos5);
+
+
+
+		model.addAttribute("theaterVOS", theaterVOS);
+
+		
+	}
+	
+	// 스케줄 검색 목록 조회
+	@Override
+	public void hostScheduleSearch(HttpServletRequest req, Model model) {
+		String selDate = req.getParameter("date");
+		int theater_index = Integer.parseInt(req.getParameter("theater_index"));
+		String[] date = selDate.split("-");
+		SimpleDateFormat dateForm = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		
+		try {
+			Date sysdate = dateForm.parse("20"+selDate+" 00:00:00");
+			System.out.println("selectDate = " + sysdate);
+			
+			System.out.println(dateForm.format(sysdate));
+
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		
+		
+//		sysdate.setYear(Integer.parseInt(date[0]));
+//		sysdate.setMonth(Integer.parseInt(date[1]));
+//		sysdate.setDate(Integer.parseInt(date[2]));
+		
+//		String selectDate = dateForm.format(sysdate);
+		System.out.println("111111111111111111111111111111111");
+		System.out.println("selectDate = " + selDate);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("theater_index", theater_index);
+		map.put("startDate", selDate+"-00:00");
+		map.put("endDate", selDate+"-23:59");
+		
+//		// 선택 날짜 스케줄 조회
+//		ArrayList<Theater_scheduleVO> vos1 = dao.hostScheduleList(map);
+//		
+//		// 1일 후 스케줄 조회
+//		System.out.println("222222222222222222222222222");
+//		System.out.println("selectDate = " + selectDate);
+//		
+//		sysdate.setDate(sysdate.getDate()+1);
+//		selectDate = dateForm.format ( sysdate ); //1일 후
+//		map.replace("startDate", selectDate+"-00:00");
+//		map.replace("endDate", selectDate+"-23:59");
+//		ArrayList<Theater_scheduleVO> vos2 = dao.hostScheduleList(map);
+//
+//		ArrayList<Theater_scheduleVO> vos3 = dao.hostScheduleList(map);
+//
+//		ArrayList<Theater_scheduleVO> vos4 = dao.hostScheduleList(map);
+//
+//		ArrayList<Theater_scheduleVO> vos5 = dao.hostScheduleList(map);
+
+		// 모든 상영관 정보
+		ArrayList<TheaterVO> theaterVOS = dao.getTheaterAllList();
+		
+		
+		
+		model.addAttribute("date", selDate);
+		model.addAttribute("theater_index", theater_index);
+//		model.addAttribute("vos1", vos1);
+//		model.addAttribute("vos2", vos2);
+//		model.addAttribute("vos3", vos3);
+//		model.addAttribute("vos4", vos4);
+//		model.addAttribute("vos5", vos5);
+		model.addAttribute("theaterVOS", theaterVOS);
+
+	}
 
 	// 상영관 추가 폼 영화 정보와 상영관 정보 가져오기
 	@Override
@@ -500,6 +630,7 @@ public class Host_movieServiceImpl implements Host_movieService{
 		
 		// 상영 가능한 상영관
 		int cnt = dao.checkPosTheaterCnt(schedule_start);
+		System.out.println("cnt : " + cnt);
 		if(cnt == 0) {
 			theaterVOS = dao.getTheaterAllList();
 		} else {
@@ -546,6 +677,9 @@ public class Host_movieServiceImpl implements Host_movieService{
 		model.addAttribute("cnt", cnt);
 		
 	}
+
+	
+
 
 	
 

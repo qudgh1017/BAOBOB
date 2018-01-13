@@ -137,7 +137,17 @@ public class Host_movieController {
 	public String hostSchedule(HttpServletRequest req, Model model) {
 		System.out.println("hostSchedule");
 		
+		service.hostScheduleList(req, model);
 		
+		return "host/host_movie/hostSchedule";
+	}
+	
+	// 스케줄 조회하기 버튼
+	@RequestMapping(value="hostScheduleSearch")
+	public String hostScheduleSearch(HttpServletRequest req, Model model) {
+		System.out.println("hostScheduleSearch");
+		
+		service.hostScheduleSearch(req, model);
 		
 		return "host/host_movie/hostSchedule";
 	}

@@ -145,3 +145,13 @@ function checkPosTheater(){
 	
 	window.location="checkPosTheater?schedule_startDate="+date+"&schedule_startTime="+time;
 }
+
+// 선택한 시간에 따른 스케줄 목록 조회
+function hostScheduleSearch(){
+	var date = document.getElementById("datepicker").value;
+	var theater_index = document.getElementById("theater_index").value;
+	
+	window.location="hostScheduleSearch?date="+date+"&theater_index="+theater_index;
+	
+}
+

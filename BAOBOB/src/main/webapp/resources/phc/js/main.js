@@ -146,7 +146,7 @@ jQuery(document).ready(function($){
 				modalHeight = ( windowHeight*.8 > self.modalMaxHeight ) ? self.modalMaxHeight : windowHeight*.8;
 
 			var modalTranslateX = parseInt((windowWidth - modalWidth)/2 - eventLeft),
-				modalTranslateY = parseInt((windowHeight - modalHeight)/2 - eventTop);
+				modalTranslateY = parseInt((windowHeight - modalHeight)/4 - eventTop);
 			
 			var HeaderBgScaleY = modalHeight/eventHeight,
 				BodyBgScaleX = (modalWidth - eventWidth);
