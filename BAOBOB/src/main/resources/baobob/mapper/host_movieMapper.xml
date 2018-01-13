@@ -123,6 +123,30 @@
 		SELECT * FROM theater_tbl
 	</select>
 	
+	<!-- 상영 가능한 상영관 count -->
+	<select id="checkPosTheaterCnt" resultType="int">
+		<![CDATA[
+			SELECT count(*)
+			  FROM theater_tbl
+			 WHERE NOT theater_index = (SELECT theater_index 
+									      FROM theater_schedule_tbl 
+									     WHERE (schedule_startTime < to_char(to_date(#{schedule_start}, 'YY-MM-DD-HH24-MI')+3/24, 'YY-MM-DD-HH24-MI') 
+									       AND (to_char(to_date(#{schedule_start}, 'YY-MM-DD-HH24-MI')-30/24/60, 'YY-MM-DD-HH24-MI') < schedule_endTime)))
+		]]>
+	</select>
+	
+	<!-- 선택한 시간대에 상영 가능한 상영관 -->
+	<select id="checkImposTheater" resultType="spring.mvc.baobob.vo.TheaterVO">
+		<![CDATA[
+			SELECT * 
+			  FROM theater_tbl
+			 WHERE NOT theater_index = (SELECT theater_index 
+									      FROM theater_schedule_tbl 
+									     WHERE (schedule_startTime < to_char(to_date(#{schedule_start}, 'YY-MM-DD-HH24-MI')+3/24, 'YY-MM-DD-HH24-MI') 
+									       AND (to_char(to_date(#{schedule_start}, 'YY-MM-DD-HH24-MI')-30/24/60, 'YY-MM-DD-HH24-MI') < schedule_endTime)))
+		]]>
+	</select>
+	
 	<!-- 스케줄 추가 처리 -->
 	<insert id="hostScheduleAddPro" parameterType="java.util.Map">
 		INSERT INTO theater_schedule_tbl 

@@ -214,7 +214,29 @@ public class Host_movieDAOImpl implements Host_movieDAO {
 		
 		return vos;
 	}
+	
+	// 상영가능한 상영관 count
+	@Override
+	public int checkPosTheaterCnt(String schedule_start) {
+		int cnt = 0;
+		
+		Host_movieDAO dao = sqlSession.getMapper(Host_movieDAO.class);
+		cnt = dao.checkPosTheaterCnt(schedule_start);
+		
+		return cnt;
+	}
 
+	// 상영가능한 상영관 정보
+	@Override
+	public ArrayList<TheaterVO> checkPosTheater(String schedule_start) {
+		ArrayList<TheaterVO> vos = null;
+		
+		Host_movieDAO dao = sqlSession.getMapper(Host_movieDAO.class);
+		vos = dao.checkPosTheater(schedule_start);
+		
+		return vos;
+	}
+	
 	// 스케줄 추가 처리
 	@Override
 	public int hostScheduleAddPro(Map<String, Object> map) {
@@ -225,6 +247,10 @@ public class Host_movieDAOImpl implements Host_movieDAO {
 		
 		return cnt;
 	}
+
+	
+
+	
 
 
 
