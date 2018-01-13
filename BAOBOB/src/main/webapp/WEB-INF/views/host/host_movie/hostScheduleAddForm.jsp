@@ -19,6 +19,7 @@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
 <script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
+<script src="${projectRes}phc/js/script.js"></script>
 <title>Insert title here</title>
 <script type="text/javascript">
  $(function() {
@@ -47,12 +48,18 @@
 		<table align="center" style="border:1px solid black;">
 			<tr>
 				<td>날짜 선택</td>
-				<td><input type="text" name="schedule_startDate" id="datepicker" class="datepicker" /></td>
+				<td><input type="text" name="schedule_startDate" id="datepicker" class="datepicker" value="${schedule_startDate}"/></td>
 			</tr>
 			<tr>
 				<td>시간 선택</td>
-				<td><input type="text" name="schedule_startTime" placeholder="시간선택"  id="timepicker" required size="8" maxlength="5"></td>
+				<td><input type="text" name="schedule_startTime" placeholder="시간선택"  id="timepicker" required size="8" maxlength="5" value="${schedule_startTime}"></td>
 			</tr>
+			<tr>
+				<td colspan="2">
+					<input type="button" value="상영가능한 상영관 확인하기" onclick="checkPosTheater();"/>
+				</td>
+			</tr>
+			
 			<tr>
 				<td>영화 선택</td>
 				<td>

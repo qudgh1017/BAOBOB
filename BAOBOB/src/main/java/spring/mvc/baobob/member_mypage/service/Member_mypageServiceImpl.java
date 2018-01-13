@@ -1,5 +1,9 @@
 package spring.mvc.baobob.member_mypage.service;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -10,6 +14,8 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import spring.mvc.baobob.member_mypage.persistence.Member_mypageDAO;
 import spring.mvc.baobob.vo.BoardVO;
@@ -219,7 +225,17 @@ public class Member_mypageServiceImpl implements Member_mypageService{
 	}
 	
 /*----------------------------------------------------------------------------*/
+
+	//회원카드정보 가져오기
+	public void memberCard(HttpServletRequest req, Model model) {
+		String strId=(String) req.getSession().getAttribute("memId"); 
+		
+		Member vo = dao.getMemberInfo(strId);
+		model.addAttribute("vo", vo);
+	}
 	
+	
+/*----------------------------------------------------------------------------*/	
 	//정보수정 입력페이지
 	public void memPModifyView(HttpServletRequest req, Model model) {
 		//1단계. 화면으로부터 아이디, 패스워드 값을 받아온다.
@@ -246,45 +262,73 @@ public class Member_mypageServiceImpl implements Member_mypageService{
 	
 /*----------------------------------------------------------------------------*/
 	
-	//정보수정 처리페이지
-	public void memPPro(HttpServletRequest req, Model model) {
-		Member vo = new Member();
+	//JSP 파일 업로드(재고추가 처리페이지)
+	@Override
+	public void memPPro(MultipartHttpServletRequest req, Model model) {
+		System.out.println("Service/memPPro");
 		
-		String id = (String)req.getSession().getAttribute("memId");
-		vo.setMember_id(id);
-		vo.setMember_pwd(req.getParameter("pwd"));
-		vo.setMember_name(req.getParameter("name"));
-		vo.setMember_address(req.getParameter("address"));
+		MultipartFile file = req.getFile("profile");
+        
+		//저장 경로(C:\Dev\workspace\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\SPRING_BMS_Project\resources\images\)
+        String saveDir = req.getRealPath("/resources/images/lgt/profile/"); 
+        String realDir="C:\\Dev\\workspace_baobob\\BAOBOB\\BAOBOB\\src\\main\\webapp\\resources\\images\\lgt\\profile\\"; // 저장 경로
+        //C:/Dev/workspace_baobob/BAOBOB/BAOBOB/src/main/webapp/resources/images/lgt/profile
+        
+        try {
+            file.transferTo(new File(saveDir+file.getOriginalFilename()));
+            
+            FileInputStream fis = new FileInputStream(saveDir + file.getOriginalFilename());
+            FileOutputStream fos = new FileOutputStream(realDir + file.getOriginalFilename());
+            
+            int data = 0;
+            
+            while((data = fis.read()) != -1) {
+                fos.write(data);
+            }
+            fis.close();
+            fos.close();
+ 
+            Member vo = new Member();
+            
+    		String id = (String)req.getSession().getAttribute("memId");
+    		String fileName = file.getOriginalFilename();
+    		vo.setMember_id(id);
+    		vo.setMember_pwd(req.getParameter("pwd"));
+    		vo.setMember_name(req.getParameter("name"));
+    		vo.setMember_address(req.getParameter("address"));
+    		vo.setMember_img(fileName);
+    		
+    		//hp
+    		String hp = "";
+    		String hp1=req.getParameter("hp1");
+    		String hp2=req.getParameter("hp2");
+    		String hp3=req.getParameter("hp3");
+    		
+    		//필수입력 항목이 아니므로 null 체크없이 무조건 insert하면 null pointer Exception 발생
+    		if(!hp1.equals("") && !hp2.equals("") && !hp3.equals("")) {
+    			 hp = hp1 + "-" + hp2 + "-" + hp3;
+    		}
+    		//핸드폰 번호가 없어졌다면 if문을 타지않은	hp = "";이 들어간다.
+    		vo.setMember_tel(hp);
+    		
+    		//email
+    		String email="";
+    		String email1=req.getParameter("email1");
+    		String email2=req.getParameter("email2");
+    		email = email1 + "@" + email2;
+    		vo.setMember_email(email);
+    		
+    		int cnt = dao.updateMember(vo);
+    		
+    		model.addAttribute("cnt", cnt);
+            
+            
+        } catch(IOException e) {
+            e.printStackTrace();
+        }
 		
-		//hp
-		String hp = "";
-		String hp1=req.getParameter("hp1");
-		String hp2=req.getParameter("hp2");
-		String hp3=req.getParameter("hp3");
-		
-		//필수입력 항목이 아니므로 null 체크없이 무조건 insert하면 null pointer Exception 발생
-		if(!hp1.equals("") && !hp2.equals("") && !hp3.equals("")) {
-			 hp = hp1 + "-" + hp2 + "-" + hp3;
-		}
-		//핸드폰 번호가 없어졌다면 if문을 타지않은	hp = "";이 들어간다.
-		vo.setMember_tel(hp);
-		
-		//email
-		String email="";
-		String email1=req.getParameter("email1");
-		String email2=req.getParameter("email2");
-		email = email1 + "@" + email2;
-		vo.setMember_email(email);
-		
-		int cnt = dao.updateMember(vo);
-		
-		model.addAttribute("cnt", cnt);
 	}
-	
-	
-	
-	
-	
+
 	
 	
 	
