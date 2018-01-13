@@ -40,6 +40,9 @@ public interface Host_movieService {
 	// 상영관 추가 폼 영화 정보와 상영관 정보 가져오기
 	public void hostScheduleAddForm(HttpServletRequest req, Model model);
 	
+	// 상영가능한 상영관 확인
+	public void checkPosTheater(HttpServletRequest req, Model model);
+	
 	// 상영관 추가 처리
 	public void hostScheduleAddPro(HttpServletRequest req, Model model);
 	

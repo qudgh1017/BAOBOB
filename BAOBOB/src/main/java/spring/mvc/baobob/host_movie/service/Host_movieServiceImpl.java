@@ -488,6 +488,32 @@ public class Host_movieServiceImpl implements Host_movieService{
 		model.addAttribute("theaterVOS", theaterVOS);
 	}
 
+	// 상영가능한 상영관 조회
+	@Override
+	public void checkPosTheater(HttpServletRequest req, Model model) {
+		String schedule_startDate = req.getParameter("schedule_startDate");
+		String schedule_startTime = req.getParameter("schedule_startTime");
+		
+		ArrayList<TheaterVO> theaterVOS = null;
+		
+		String schedule_start = schedule_startDate +"-"+ schedule_startTime;
+		
+		// 상영 가능한 상영관
+		int cnt = dao.checkPosTheaterCnt(schedule_start);
+		if(cnt == 0) {
+			theaterVOS = dao.getTheaterAllList();
+		} else {
+			theaterVOS = dao.checkPosTheater(schedule_start);
+		}
+		
+		// 상영중인 영화 정보
+		ArrayList<MovieVO> movieVOS = dao.getMovieING();
+		
+
+		model.addAttribute("movieVOS", movieVOS);
+		model.addAttribute("theaterVOS", theaterVOS);
+	}
+	
 	// 스케줄 추가 처리
 	@Override
 	public void hostScheduleAddPro(HttpServletRequest req, Model model) {
@@ -503,7 +529,7 @@ public class Host_movieServiceImpl implements Host_movieService{
 		} else if(04<=time && time<=10) { // 04<=time && time<=10
 			schedule_MDNstate = 0;
 		}
-//		to_char(to_date(#{schedule_start}, 'YY-MM-DD-HH24:MI')+(SELECT movie_runTime FROM movie_tbl WHERE movie_index=#{movie_index})/24/60
+		
 		String schedule_start = schedule_startDate +"-"+ schedule_startTime;
 		System.out.println("schedule_start = " +schedule_start);
 		System.out.println("movie_index = " +movie_index);
@@ -520,6 +546,8 @@ public class Host_movieServiceImpl implements Host_movieService{
 		model.addAttribute("cnt", cnt);
 		
 	}
+
+	
 
 	
 	

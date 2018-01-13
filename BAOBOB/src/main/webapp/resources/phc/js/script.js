@@ -137,3 +137,11 @@ function hostTheaterMod(theater_index, col, row){
 				
 	window.location="hostTheaterModPro?"+param;
 }
+
+// 선택한 스케줄 시간에 따른 상영 가능한 상영관 찾기
+function checkPosTheater(){
+	var date = document.getElementById("datepicker").value;
+	var time = document.getElementById("timepicker").value;
+	
+	window.location="checkPosTheater?schedule_startDate="+date+"&schedule_startTime="+time;
+}
