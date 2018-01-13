@@ -57,7 +57,7 @@ $(document).ready(function() {
  	//search버튼 눌렀을때
     $('#search_btn').click(function() {
     	
-    	var movie_title = document.getElementById("movie_title").value;
+    	var keyword = document.getElementById("keyword").value;
     	var sel = document.getElementById("select").value;
 		//movie_janre이름을 가진 것 중 체크된 것만 값 가져오기
 	   var size = document.getElementsByName("movie_janre").length;
@@ -89,7 +89,7 @@ $(document).ready(function() {
 				movie_age[i] = -1;
 			}
 		}
-	   alert(movie_title);
+	   alert(keyword);
 	   alert(sel);
 
 
@@ -99,7 +99,7 @@ $(document).ready(function() {
 			url: 'searchResult',
 			type: 'GET',
 			data: {
-				movie_title, sel, movie_janre, movie_country, movie_age
+				keyword, sel, movie_janre, movie_country, movie_age
 			},
 			
 			success: function(msg) {
@@ -159,7 +159,7 @@ $(document).ready(function() {
 										    <option value="movie_star">주연배우</option>
 										    <option value="movie_director">감독</option>
 										</select>
-										<input type="text" id="movie_title" name="movie_title" placeholder="키워드를 입력해 주세요" style="font-size:12px; width:400px; height:25px">
+										<input type="text" id="keyword" name="keyword" placeholder="키워드를 입력해 주세요" style="font-size:12px; width:400px; height:25px">
 									</td>
 								</tr>
 								
@@ -222,7 +222,7 @@ $(document).ready(function() {
 										<button id="search_btn" class="btn btn-danger">검색</button>
 										<input class="btn btn-info" type="reset" value="초기화">
 										
-										<input class="btn btn-danger" type="submit" value="검색">
+										<!-- <input class="btn btn-danger" type="submit" value="검색"> -->
 									</td>
 								</tr>
 							</table>
@@ -232,20 +232,15 @@ $(document).ready(function() {
 				<div class="col-md-offset-1"></div>
 			</div><br><br>
 		</div>
-		
-		<div class="container" style="margin-top:50px;">
-			<div class="row">
-				<div class="col-md-offset-1"></div>
-				<div class="col-md-10" align="center">
-					
-					<!-- 결과 출력할 곳 -->
-					<div id="result" align="left"></div>
-				</div>
-				<div class="col-md-offset-1"></div>
-			</div>
-		</div>
-			
 	</section>
+	
+	<!-- 결과 출력할 곳 -->
+	<section id="result" align="left">
+	
+	</section>	
+	
+			
+	
 	<br>
 	<br>
 	<br>
