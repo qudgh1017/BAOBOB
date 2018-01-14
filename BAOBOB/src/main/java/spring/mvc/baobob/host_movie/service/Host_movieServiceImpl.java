@@ -645,7 +645,7 @@ public class Host_movieServiceImpl implements Host_movieService{
 		// 상영중인 영화 정보
 		ArrayList<MovieVO> movieVOS = dao.getMovieING();
 		
-
+		model.addAttribute("confirm", 1);
 		model.addAttribute("movieVOS", movieVOS);
 		model.addAttribute("theaterVOS", theaterVOS);
 	}

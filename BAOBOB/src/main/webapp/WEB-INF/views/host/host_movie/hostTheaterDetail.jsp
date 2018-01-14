@@ -44,7 +44,7 @@
 						<button type="button" onclick="spaceType('5')"><img src="${projectRes}images/phc/icon/theater_couple.png"></button>
 					</div>
 					
-					<input type="button" value="상영관 수정하기" onclick="hostTheaterMod(${vo.theater_index}, ${vo.theater_col}, ${vo.theater_row});"/>
+					<input style="background-color:#343a40; color:white; border:1px solid black; width:200px; height:40px; margin-left:177px; margin-bottom:15px;" type="button" value="상영관 수정하기" onclick="hostTheaterMod(${vo.theater_index}, ${vo.theater_col}, ${vo.theater_row});"/>
 				</td>
 			</tr>
 		</table>
@@ -55,6 +55,7 @@
 	</div>
 	
 	<!-- Footer -->
-	<%@ include file="../common/footer.jsp" %>
+	<script src="${projectRes}adminBootstrap/vendor/jquery/jquery.min.js"></script>
+	<%@ include file="movie_footer.jsp" %>
 </body>
 </html>

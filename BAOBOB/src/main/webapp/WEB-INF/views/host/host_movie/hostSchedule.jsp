@@ -31,7 +31,7 @@
 	
 	
 	
-	<div class="content-wrapper" style="height:1800px;">
+	<div class="content-wrapper" style="height:2000px;">
 		
 		<div id="content">
 			<center><h3><b>스케줄 목록</b></h3></center>
@@ -198,6 +198,6 @@
 	</div>
 	
 	<!-- Footer -->
-<%-- 	<%@ include file="../common/footer.jsp" %> --%>
+	<%@ include file="movie_footer.jsp" %>
 </body>
 </html>
