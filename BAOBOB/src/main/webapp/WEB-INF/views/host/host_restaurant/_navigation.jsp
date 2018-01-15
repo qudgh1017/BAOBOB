@@ -220,8 +220,8 @@
 				</form>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link" data-toggle="modal" data-target="#exampleModal" href="mainSignOut">
-				 <i class="fa fa-fw fa-sign-out"></i>Logout
+				<a class="nav-link" href="mainSignOut">
+					<i class="fa fa-fw fa-sign-out"></i>Logout
 				</a>
 			</li>
 		</ul>
