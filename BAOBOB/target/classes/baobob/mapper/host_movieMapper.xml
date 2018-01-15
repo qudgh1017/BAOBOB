@@ -163,4 +163,40 @@
 		   AND theater_index = #{theater_index}
 		]]>
 	</select>
+	
+	<!-- 스케줄 상세 -->
+	<select id="hostScheduleDetail" resultType="spring.mvc.baobob.vo.Theater_scheduleVO">
+		SELECT * FROM theater_schedule_tbl WHERE theater_schedule_index = #{theater_schedule_index}
+	</select>
+	
+	<!-- 스케줄 수정 - 선택한 시간에 다른 스케줄이 있는지 확인 -->
+	<select id="chkCnt" resultType="int">
+		<![CDATA[
+		SELECT count(*) 
+		  FROM theater_schedule_tbl 
+		 WHERE (schedule_startTime > to_char(to_date(#{schedule_startTime}, 'YY-MM-DD-HH24-MI')-3/24, 'YY-MM-DD-HH24-MI') 
+		   AND (to_char(to_date(#{schedule_startTime}, 'YY-MM-DD-HH24-MI')+4/24, 'YY-MM-DD-HH24-MI') >	schedule_endTime))
+		   AND theater_schedule_index IN (select theater_schedule_index FROM theater_schedule_tbl WHERE NOT theater_schedule_index = #{theater_schedule_index})
+		   AND theater_index = #{theater_index}
+	   ]]>
+	</select>
+	
+	<!-- 스케줄 수정 처리 -->
+	<update id="updateSchedule" parameterType="java.util.Map">
+		UPDATE theater_schedule_tbl 
+   		   SET schedule_startTime = #{schedule_startTime}, 
+       		   schedule_startDate = #{schedule_startTime}, 
+       		   movie_index = #{movie_index},
+       		   theater_index = #{theater_index},
+       	 	   schedule_endTime = to_char(to_date(#{schedule_startTime}, 'YY-MM-DD-HH24-MI')+(SELECT movie_runTime 
+                                                                                  		        FROM movie_tbl 
+                                                                                  		       WHERE movie_index=#{movie_index})/24/60, 'YY-MM-DD-HH24-MI'), 
+      		   schedule_MDNstate =  #{schedule_MDNstate} 
+	    WHERE theater_schedule_index = #{theater_schedule_index}
+	</update>
+	
+	<!-- 스케줄 삭제 처리 -->
+	<delete id="hostScheduleDelPro" parameterType="int">
+		DELETE theater_schedule_tbl WHERE theater_schedule_index = #{theater_schedule_index}
+	</delete>
 </mapper>

@@ -195,11 +195,11 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 		dto.setRestaurant_index(req.getParameter("index"));
 
 		int cnt = dao.resetTable(dto);
-		
+
 		if (cnt != 0) {
 			cnt = dao.delRestaurant(dto);
 		}
-		
+
 		model.addAttribute("cnt", cnt);
 	}
 
@@ -443,6 +443,13 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 		if (cnt != 0) {
 			cnt = dao.updateStep(map);
 		}
+
 		model.addAttribute("cnt", cnt);
+	}
+
+	@Override
+	public void hostReservList(HttpServletRequest req, Model model) {
+		// TODO Auto-generated method stub
+		log.debug("service.hostReservList()");
 	}
 }

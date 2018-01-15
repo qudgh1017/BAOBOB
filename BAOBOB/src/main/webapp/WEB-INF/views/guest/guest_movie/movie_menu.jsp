@@ -4,6 +4,8 @@
 <head>
 <link href="${projectRes}/ybh/css/head.css" rel="stylesheet" type="text/css">
 <link href="${projectRes}/ybh/css/search.css" rel="stylesheet" type="text/css">
+<!-- JQuery쓰기위해 -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
 <html>
 <body>
@@ -17,8 +19,8 @@
 				<div class="col-md-2">
 					<div class="dropdown">
 					  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
-					    	<a href="movie">영화</a>
-					    <span class="caret"></span>
+					    <a href="movie">영화</a>
+					  	<span class="caret"></span>
 					  </button>
 					  <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1" style="background-image: url('${projectRes}images/ybh/movie_menu.jpg'); background-size: 140px 120px;">
 					    <li role="presentation"><a role="menuitem" tabindex="-1" href="movieChart?movie_state=1">무비차트</a></li>

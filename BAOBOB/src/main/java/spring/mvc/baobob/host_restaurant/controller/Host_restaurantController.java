@@ -198,4 +198,14 @@ public class Host_restaurantController {
 
 		return "host/host_restaurant/hostEmployeeDel";
 	}
+	
+	// 식당[1] 예약 리스트
+	@RequestMapping(value = "/hostReservList")
+	public String hostReservList(HttpServletRequest req, Model model) {
+		log.debug("hostReservList");
+		
+		service.hostReservList(req, model);
+		
+		return "host/host_restaurant/hostReservList";
+	}
 }

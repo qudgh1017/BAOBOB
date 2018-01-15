@@ -76,4 +76,15 @@ public interface Host_movieDAO {
 	// 스케줄 추가 처리
 	public int hostScheduleAddPro(Map<String, Object> map);
 	
+	// 스케줄 상세
+	public Theater_scheduleVO hostScheduleDetail(int theater_schedule_index);
+	
+	// 스케줄 수정 - 선택한 시간에 다른 스케줄이 있는지 확인
+	public int chkCnt(Map<String, Object> map);
+	
+	// 스케줄 수정 처리
+	public int updateSchedule(Map<String, Object> map);
+	
+	// 스케줄 삭제 처리
+	public int hostScheduleDelPro(int theater_schedule_index);
 }

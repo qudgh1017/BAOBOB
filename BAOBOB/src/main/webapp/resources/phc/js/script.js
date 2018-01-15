@@ -181,11 +181,41 @@ function checkPosTheater(){
 
 // 선택한 시간에 따른 스케줄 목록 조회
 function hostScheduleSearch(){
+	
 	var date = document.getElementById("datepicker").value;
 	var theater_index = document.getElementById("theater_index").value;
+	if(date == ""){
+		alert("날짜를 선택하세요");
+		document.getElementById("datepicker").focus();
+		return false;
+	}else if(theater_index==""){
+		alert("상영관을 선택하세요");
+		return false;
+	}
 	
 	window.location="hostScheduleSearch?date="+date+"&theater_index="+theater_index;
 	
 }
 
+// 스케줄 삭제
+function chkDeleteSchedule(theater_schedule_index){
+	
+    if (confirm("스케줄을 삭제하시겠습니까?")!=0) {
+         window.location="hostScheduleDelPro?theater_schedule_index="+theater_schedule_index;
+    } else {
+    }
+}
 
+// 스케줄 등록시 select박스 체크 확인
+function chkScheduleAdd(){
+	if(document.getElementById("movie_index").value==""){
+		alert("영화를 선택해주세요");
+		document.getElementById("movie_index").focus();
+		return false;
+	}else if(document.getElementById("theater_index").value==""){
+		alert("상영관을 선택해주세요");
+		document.getElementById("theater_index").focus();
+		return false;
+	}
+	
+}
