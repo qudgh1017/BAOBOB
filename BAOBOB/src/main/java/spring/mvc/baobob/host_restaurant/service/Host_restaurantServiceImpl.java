@@ -152,7 +152,7 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 		String info = req.getParameter("info");
 
 		RestaurantVO dto = new RestaurantVO();
-		dto.setRestaurant_index(req.getParameter("index"));
+		dto.setRestaurant_index(Integer.parseInt(req.getParameter("index")));
 		dto.setRestaurant_tel(req.getParameter("tel"));
 		dto.setRestaurant_name(req.getParameter("name"));
 
@@ -199,7 +199,7 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 
 		RestaurantVO dto = new RestaurantVO();
 
-		dto.setRestaurant_index(req.getParameter("index"));
+		dto.setRestaurant_index(Integer.parseInt(req.getParameter("index")));
 
 		int cnt = dao.resetTable(dto);
 
@@ -491,7 +491,7 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 		System.out.println("endTime : " + endTime);
 		
 		RestaurantVO dto = new RestaurantVO();
-		dto.setRestaurant_index(req.getParameter("index"));
+		dto.setRestaurant_index(Integer.parseInt(req.getParameter("index")));
 		
 		cnt = dao.resetTable(dto);
 
