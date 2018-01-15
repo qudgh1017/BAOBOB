@@ -35,7 +35,7 @@
 </div>
 
 <!-- Bootstrap core JavaScript-->
-<script src="${projectRes}adminBootstrap/vendor/jquery/jquery.min.js"></script>
+<%-- <script src="${projectRes}adminBootstrap/vendor/jquery/jquery.min.js"></script> --%>
 <script src="${projectRes}adminBootstrap/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 <!-- Core plugin JavaScript-->

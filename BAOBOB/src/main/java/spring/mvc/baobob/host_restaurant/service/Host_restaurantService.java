@@ -55,4 +55,7 @@ public interface Host_restaurantService {
 
 	// 식당[1] 직원 삭제 처리
 	public void employeeDel(HttpServletRequest req, Model model);
+
+	// 식당[1] 예약 리스트
+	public void hostReservList(HttpServletRequest req, Model model);
 }
