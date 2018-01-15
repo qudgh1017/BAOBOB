@@ -186,4 +186,34 @@ public class Host_movieController {
 		
 		return "host/host_movie/hostScheduleAddPro";
 	}
+	
+	// 스케줄 상세 내용
+	@RequestMapping(value="hostScheduleDetail")
+	public String hostScheduleDetail(HttpServletRequest req, Model model) {
+		System.out.println("hostScheduleDetail");
+		
+		service.hostScheduleDetail(req, model);
+		
+		return "host/host_movie/hostScheduleDetail";
+	}
+	
+	// 스케줄 수정 처리
+	@RequestMapping(value="hostScheduleModPro")
+	public String hostScheduleModPro(HttpServletRequest req, Model model) {
+		System.out.println("hostScheduleModPro");
+		
+		service.hostScheduleModPro(req, model);
+		
+		return "host/host_movie/hostScheduleModPro";
+	}
+
+	// 스케줄 삭제 처리
+	@RequestMapping(value="hostScheduleDelPro")
+	public String hostScheduleDelPro(HttpServletRequest req, Model model) {
+		System.out.println("hostScheduleDelPro");
+		
+		service.hostScheduleDelPro(req, model);
+		
+		return "host/host_movie/hostScheduleDelPro";
+	}
 }

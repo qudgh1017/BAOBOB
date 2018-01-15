@@ -42,7 +42,7 @@
 	
 	<div class="content-wrapper">
 
-	<form action="hostScheduleAddPro" method="post" >
+	<form action="hostScheduleAddPro" method="post" onsubmit="return chkScheduleAdd();">
 		<center><h3><b>스케줄 등록</b></h3></center>
 		<hr style="border:3px solid black;">
 		<table align="center" style="border:1px solid black;">
@@ -63,7 +63,7 @@
 			<tr>
 				<td>영화 선택</td>
 				<td>
-					<select name="movie_index">
+					<select name="movie_index" id="movie_index">
 							<option value="">영화 선택</option>
 						<c:forEach var="movieVO" items="${movieVOS}">
 							<option value="${movieVO.movie_index}">${movieVO.movie_title}(${movieVO.movie_runTime}분)</option>
@@ -74,7 +74,7 @@
 			<tr>
 				<td>상영관 선택</td>
 				<td>
-					<select name="theater_index">
+					<select name="theater_index" id="theater_index">
 							<option value="">상영관 선택</option>
 						<c:forEach var="theaterVO" items="${theaterVOS}">
 							<option value="${theaterVO.theater_index}">${theaterVO.theater_index}관(${theaterVO.theater_row}행, ${theaterVO.theater_col}열)</option>
@@ -84,19 +84,13 @@
 			</tr>
 			<tr>
 				<td colspan="2" align="center">
-					<input style="background-color:#343a40; color:white; border:1px solid black; width:200px; height:40px;" type="submit" value="스케줄 등록"/>
+					<input type="submit" style="background-color:#343a40; color:white; border:1px solid black; width:200px; height:40px;"  value="스케줄 등록"/>
 				</td>
 			</tr>
 			</c:if>
 		</table>
 	</form>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
+
 	</div>
 	
 	<!-- Footer -->

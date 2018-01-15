@@ -260,6 +260,50 @@ public class Host_movieDAOImpl implements Host_movieDAO {
 		return cnt;
 	}
 
+	// 스케줄 상세
+	@Override
+	public Theater_scheduleVO hostScheduleDetail(int theater_schedule_index) {
+		Theater_scheduleVO vo = null;
+		
+		Host_movieDAO dao = sqlSession.getMapper(Host_movieDAO.class);
+		vo = dao.hostScheduleDetail(theater_schedule_index);
+		
+		return vo;
+	}
+
+	// 스케줄 수정 - 선택한 시간에 다른 스케줄이 있는지 확인
+	@Override
+	public int chkCnt(Map<String, Object> map) {
+		int cnt = 0;
+		
+		Host_movieDAO dao = sqlSession.getMapper(Host_movieDAO.class);
+		cnt = dao.chkCnt(map);
+		
+		return cnt;
+	}
+
+	// 스케줄 수정 처리
+	@Override
+	public int updateSchedule(Map<String, Object> map) {
+		int cnt = 0;
+		
+		Host_movieDAO dao = sqlSession.getMapper(Host_movieDAO.class);
+		cnt = dao.updateSchedule(map);
+		
+		return cnt;
+	}
+
+	// 스케줄 삭제 처리
+	@Override
+	public int hostScheduleDelPro(int theater_schedule_index) {
+		int cnt = 0;
+		
+		Host_movieDAO dao = sqlSession.getMapper(Host_movieDAO.class);
+		cnt = dao.hostScheduleDelPro(theater_schedule_index);
+		
+		return cnt;
+	}
+
 
 	
 
