@@ -438,7 +438,7 @@ public class Host_parkingServiceImpl implements Host_parkingService {
 		Map<String, Integer> timePrice = new HashMap<String, Integer>(); //월별 주차 시간에 따른 금액
 		Map<String, Integer> userPrice = new HashMap<String, Integer>(); //월별 받은 금액
 		for(ParkingHistory ph : thisPh) {
-			Long userTime = ph.getP_history_out().getTime() - ph.getP_history_in().getTime();
+			long userTime = ph.getP_history_out().getTime() - ph.getP_history_in().getTime();
 			long minute = (userTime / 1000) / 60; //이용 시간(분)
 			
 			String month = ph.getP_history_out().toString().substring(5, 7); //이용한 월

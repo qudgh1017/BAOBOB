@@ -98,6 +98,9 @@ public class Guest_parkingController {
 	@RequestMapping("guestParkingPayPro")
 	public String guestParkingPay(HttpServletRequest req, Model model) {
 		System.out.println("guestParkingPay()");
+		
+		service.guestParkingPay(req, model);
+		
 		return "guest/guest_parking/guestParkingPayPro";
 	}
 	
@@ -106,6 +109,16 @@ public class Guest_parkingController {
 	public String guestParkingReceipt(HttpServletRequest req, Model model) {
 		System.out.println("guestParkingReceipt()");
 		return "guest/guest_parking/guestParkingReceipt";
+	}
+	
+	//주차 내역 출력
+	@RequestMapping("guestParkingMy")
+	public String guestParkingMy(HttpServletRequest req, Model model) {
+		System.out.println("guestParkingMy()");
+		
+		service.guestParkingMy(req, model);
+		
+		return "guest/guest_parking/guestParkingMy";
 	}
 
 }

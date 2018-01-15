@@ -47,5 +47,45 @@
             AND p_history_space = #{key}
 	</select>
 	
+	<!-- 입차 시간 -->
+	<select id="getParkingInTime" resultType="java.sql.Timestamp">
+		SELECT p_history_in
+		FROM park_history_tbl
+		WHERE p_history_space = #{key}
+	</select>
+	
+	<!-- 영화 건수 -->
+	<select id="getMovieHistoryCount" resultType="int">
+		SELECT COUNT(*)
+		FROM park_history_tbl ph, history_tbl ht, movie_history_tbl mh
+		WHERE  ph.history_index = ht.history_index
+		    AND ht.history_index = mh.history_index
+		    AND p_history_space = #{key}
+	</select>
+	
+	<!-- 식당 건수 -->
+	<select id="getRestaurantHistoryCount" resultType="int">
+		SELECT COUNT(*)
+		FROM park_history_tbl ph, history_tbl ht, restaurant_history_tbl rh
+		WHERE  ph.history_index = ht.history_index
+		    AND ht.history_index = rh.history_index
+		    AND p_history_space = #{key}	
+	</select>
+	
+	<!-- 퇴장 -->
+	<update id="parkingHistoryUpdate" parameterType="java.util.Map">
+		UPDATE park_history_tbl  
+		SET
+			p_history_out = SYSTIMESTAMP,
+			p_history_price = #{p_history_price}
+		WHERE p_history_space = #{key}
+	</update>
+	
+	<!-- 해당 주차 정보 -->
+	<select id="getParkingHistory" resultType="spring.mvc.baobob.vo.ParkingHistory">
+		SELECT *
+		FROM park_history_tbl
+		WHERE p_history_space = #{key}
+	</select>
 	
 </mapper>
