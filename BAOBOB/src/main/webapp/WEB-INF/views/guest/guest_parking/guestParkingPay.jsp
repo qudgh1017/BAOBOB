@@ -34,14 +34,14 @@
 	  			}, 1000);
 	  		
 	  			setTimeout(function() {
-	  				window.location = 'guestParkingPayPro';
-	  			}, 30000);
+	  				window.location = 'guestParkingPayPro?key=${key}';
+	  			}, 10000);
 	  		</script>
 	  	</c:if>
 	  	<c:if test="${mem == 0}">
 		  	<form action="guestParkingPayPro" id="inform">
-		  		<input class="form-control input" type="text" value="${cnt}">
-		  		<button class="btn btn-block">확인</button>
+		  		<input type="hidden" name="key" value="${key}">
+		  		<button class="btn btn-block input">결제</button>
 		  	</form>
 	  	</c:if>
 	  </div>

@@ -12,4 +12,9 @@ public interface Guest_parkingService {
 	//퇴장 번호 확인
 	public void guestParkingOutCheckPro(HttpServletRequest req, Model model);
 	
+	//퇴장 처리
+	public void guestParkingPay(HttpServletRequest req, Model model);
+
+	//주차 내역 출력
+	public void guestParkingMy(HttpServletRequest req, Model model);
 }
