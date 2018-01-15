@@ -1,19 +1,23 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%-- <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %> --%>
     
 <%@ include file="/resources/setting.jsp"%>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>BAOBOX</title>
-<!-- slide -->
-<!-- slide 기능 사용위한 라이브러리 -->
-<%-- <link href="${projectRes}ybh/css/slick.css" rel="stylesheet" type="text/css">
-<script type="text/javascript" src="http://code.jquery.com/jquery-3.2.1.min.js"></script>
-<script type="text/javascript" src="${projectRes}ybh/js/slick.min.js"></script>
-<script type="text/javascript" src="${projectRes}ybh/js/slide.js"></script>	
- --%>	
 </head>
+<script type="text/javascript">
+
+function loginCheck(){
+	window.open("loginCheck","loginCheck","top=50 left=100 width=400 height=300");
+}
+/* 리뷰작성 */
+function reviewWrite(movie_index){
+	window.open("movieReviewWrite?movie_index="+movie_index, "host_logout", "top=200 left=300 width=600 height=400");
+}
+</script>
 <body>
 	
 	<!-- CSS,JavaScript 참조 -->
@@ -53,7 +57,7 @@
 						예매율:
 					</span><br><hr>
 					<span style="font-size:12px; font-weight:bold;">
-						감독: ${movie.movie_director} / 배우:${movie.movie_star}<br><br>
+						감독: ${movie.movie_director}&nbsp;/&nbsp;배우:${movie.movie_star}<br><br>
 						장르: 
 						<c:choose>
 							<c:when test="${movie.movie_janre==1}">가족</c:when>
@@ -64,13 +68,14 @@
 							<c:when test="${movie.movie_janre==6}">코미디</c:when>
 							<c:when test="${movie.movie_janre==7}">애니메이션</c:when>
 						</c:choose>
-						 /기본:
+						 &nbsp;/&nbsp;기본:
 						 <c:if test="${movie.movie_age==0}">전체관람가,</c:if>
 						 <c:if test="${movie.movie_age!=0}">${movie.movie_age}세 이상,</c:if>
 						 
-						 <%-- ${movie.movie_runtime} --%>분,<%-- ${movie.moive_country} --%>
+						 ${movie.movie_runTime}분, ${movie.movie_country}
 						 <br><br>
 						 개봉: 20${movie.movie_rel_date}
+						 <%-- <fmt:formatDate type="both" pattern="yyyy-MM-dd" value="${movie.movie_rel_date}" /> --%>
 					</span>
 				</div>
 				<div class="col-md-offset-1"></div>
@@ -109,22 +114,36 @@
 				<div class="col-md-offset-1"></div>
 			</div><br><br>
 			
-			<!-- 리뷰1 -->
+			<!-- 리뷰표시 -->
 			<div class="row">
 				<div class="col-md-offset-1"></div>
-				<div class="col-md-10" align="left" style="height:40px; background-color:#EEEEEE;">
-					<span style="font-size:15px; font-weight:bold">
+				<div class="col-md-10" align="left" style="height:60px; background-color:#EEEEEE;">
+					<div align="left" style="font-size:15px; font-weight:bold;">
 						리뷰
-					</span>
+					</div>
+						<!-- 로그인 서비스 -->
+						<c:if test="${memId==null}">
+							<div align="right">
+								<button class="btn btn-danger" onclick="loginCheck();">평점등록</button>
+							</div>
+						</c:if>
+						<c:if test="${memId!=null}">
+							<div align="right">
+								<button class="btn btn-danger" onclick="reviewWrite(${movie.movie_index});">평점등록</button>
+							</div>
+						</c:if>
+					
 				</div>
 				<div class="col-md-offset-1"></div>
 			</div><br>
 			
-			<!-- 리뷰2 -->
+			<!-- 리뷰정보 -->
 			<div class="row">
 				<div class="col-md-offset-1"></div>
 				<div class="col-md-10" align="center">
-					리뷰들어갈곳~~
+					
+				
+					<%-- <%@ include file="/WEB-INF/views/guest/guest_movie/movie/review.jsp" %>  --%>
 				</div>
 				<div class="col-md-offset-1"></div>
 			</div><br><br>

@@ -99,6 +99,23 @@ public class HomeController {
 		
 		return "main/mainJoinPro";
 	}
+
+	//비밀번호 찾기 화면
+	@RequestMapping("mainPwd")
+	public String mainPwd(HttpServletRequest req, Model model) {
+		System.out.println("mainPwd()");
+		return "main/mainPwd";
+	}
+	
+	//비밀번호 찾기 인증 메일 전송
+	@RequestMapping("mainPwdEmail")
+	public String mainPwdEmail(HttpServletRequest req, Model model) {
+		System.out.println("mainPwdEmail()");
+
+		service.mainPwdEmail(req, model);
+		
+		return "main/mainPwdEmail";
+	}
 	
 	//인증 메일 확인
 	@RequestMapping("mainConfirmEmail")
@@ -110,7 +127,17 @@ public class HomeController {
 		return "main/mainConfirmEmail";
 	}
 	
-	//로그인 mainSignIn
+	//비밀번호 찾기 인증 메일 확인
+	@RequestMapping("mainConfirmPwdEmail")
+	public String mainConfirmPwdEmail(HttpServletRequest req, Model model) {
+		System.out.println("mainConfirmPwdEmail");
+		
+		service.confirmPwdEmail(req, model);
+		
+		return "main/mainConfirmPwdEmail";
+	}
+	
+	//로그인
 	@RequestMapping("mainSignIn")
 	public String mainSignIn(HttpServletRequest req, Model model) {
 		System.out.println("mainSignIno()");
@@ -125,6 +152,16 @@ public class HomeController {
 		service.signInPro(req, model);
 
 		return "main/mainSignInPro";
+	}
+	
+	//firebase - facebook 로그인
+	@RequestMapping("firebaseLogin")
+	public String firebaseLogin(HttpServletRequest req, Model model) {
+		System.out.println("firebaseLogin");
+		
+		service.firebaseLoginPro(req, model);
+		
+		return "main/firebaseLogin";
 	}
 	
 	//로그아웃

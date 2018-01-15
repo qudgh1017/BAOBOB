@@ -10,7 +10,7 @@ public class ParkingHistory {
 	private Timestamp p_history_in; //입차시간
 	private Timestamp p_history_out; //출차 시간
 	private int p_history_price; //가격
-	private String p_history_space; //일반
+	private String p_history_space; //일반 ============> 주차증 번호
 	private Timestamp p_history_date; //등록일
 	private HistoryVO history;
 

@@ -4,9 +4,12 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,8 +22,10 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import spring.mvc.baobob.host_movie.persistence.Host_movieDAO;
 import spring.mvc.baobob.host_movie.persistence.Host_movieDAOImpl;
+import spring.mvc.baobob.vo.Member;
 import spring.mvc.baobob.vo.MovieVO;
 import spring.mvc.baobob.vo.TheaterVO;
+import spring.mvc.baobob.vo.Theater_scheduleVO;
 import spring.mvc.baobob.vo.Theater_seatVO;
 
 @Service
@@ -474,6 +479,154 @@ public class Host_movieServiceImpl implements Host_movieService{
 		}
 		
 	}
+	
+	// 스케줄 조회
+	@Override
+	public void hostScheduleList(HttpServletRequest req, Model model) {
+		SimpleDateFormat date = new SimpleDateFormat ( "yy-MM-dd", Locale.KOREA );
+		Date sysdate = new Date();
+		String today = date.format ( sysdate ); 
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("theater_index", 1);
+		map.put("startDate", today+"-00:00");
+		map.put("endDate", today+"-23:59");
+		
+		// 선택날짜 스케줄 조회
+		ArrayList<Theater_scheduleVO> vos1 = dao.hostScheduleList(map);
+		
+		model.addAttribute("day0", today);
+
+		
+		// 1일 후 스케줄 조회
+		sysdate.setDate(sysdate.getDate()+1);
+		today = date.format ( sysdate ); //1일 후
+		map.replace("startDate", today+"-00:00");
+		map.replace("endDate", today+"-23:59");
+		model.addAttribute("day1", today);
+		ArrayList<Theater_scheduleVO> vos2 = dao.hostScheduleList(map);
+
+		// 2일 후 스케줄 조회
+		sysdate.setDate(sysdate.getDate()+1);
+		today = date.format ( sysdate ); //1일 후
+		map.replace("startDate", today+"-00:00");
+		map.replace("endDate", today+"-23:59");
+		model.addAttribute("day2", today);
+		ArrayList<Theater_scheduleVO> vos3 = dao.hostScheduleList(map);
+		
+		// 3일 후 스케줄 조회
+		sysdate.setDate(sysdate.getDate()+1);
+		today = date.format ( sysdate ); //1일 후
+		map.replace("startDate", today+"-00:00");
+		map.replace("endDate", today+"-23:59");
+		model.addAttribute("day3", today);
+		ArrayList<Theater_scheduleVO> vos4 = dao.hostScheduleList(map);
+		
+		// 4일 후 스케줄 조회
+		sysdate.setDate(sysdate.getDate()+1);
+		today = date.format ( sysdate ); //1일 후
+		map.replace("startDate", today+"-00:00");
+		map.replace("endDate", today+"-23:59");
+		model.addAttribute("day4", today);
+		ArrayList<Theater_scheduleVO> vos5 = dao.hostScheduleList(map);
+		
+		// 모든 상영관 정보
+		ArrayList<TheaterVO> theaterVOS = dao.getTheaterAllList();
+		
+		model.addAttribute("vos1", vos1);
+		model.addAttribute("vos2", vos2);
+		model.addAttribute("vos3", vos3);
+		model.addAttribute("vos4", vos4);
+		model.addAttribute("vos5", vos5);
+
+
+
+		model.addAttribute("theaterVOS", theaterVOS);
+
+		
+	}
+	
+	// 스케줄 검색 목록 조회
+	@Override
+	public void hostScheduleSearch(HttpServletRequest req, Model model) {
+		String selDate = req.getParameter("date");
+		int theater_index = Integer.parseInt(req.getParameter("theater_index"));
+		SimpleDateFormat dateForm = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		SimpleDateFormat dateForm2 = new SimpleDateFormat("yy-MM-dd");
+		try {
+			Date sysdate = dateForm.parse("20"+selDate+" 00:00:00");
+			System.out.println("selectDate = " + sysdate);
+			
+			String date = dateForm2.format(sysdate);
+			
+			System.out.println("111111111111111111111111111111111");
+			System.out.println("selectDate = " + selDate);
+			
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("theater_index", theater_index);
+			map.put("startDate", date+"-00:00");
+			map.put("endDate", date+"-23:59");
+			
+			// 선택 날짜 스케줄 조회
+			ArrayList<Theater_scheduleVO> vos1 = dao.hostScheduleList(map);
+			
+			model.addAttribute("day0", date);
+			
+			// 1일 후 스케줄 조회
+			sysdate.setDate(sysdate.getDate()+1);
+			date = dateForm2.format ( sysdate ); //1일 후
+			map.replace("startDate", date+"-00:00");
+			map.replace("endDate", date+"-23:59");
+			model.addAttribute("day1", date);
+
+			ArrayList<Theater_scheduleVO> vos2 = dao.hostScheduleList(map);
+			
+			// 2일 후 스케줄 조회
+			sysdate.setDate(sysdate.getDate()+1);
+			date = dateForm2.format ( sysdate ); //1일 후
+			map.replace("startDate", date+"-00:00");
+			map.replace("endDate", date+"-23:59");
+			model.addAttribute("day2", date);
+
+			ArrayList<Theater_scheduleVO> vos3 = dao.hostScheduleList(map);
+						
+			// 3일 후 스케줄 조회
+			sysdate.setDate(sysdate.getDate()+1);
+			date = dateForm2.format ( sysdate ); //1일 후
+			map.replace("startDate", date+"-00:00");
+			map.replace("endDate", date+"-23:59");
+			model.addAttribute("day3", date);
+
+			ArrayList<Theater_scheduleVO> vos4 = dao.hostScheduleList(map);
+			
+			// 4일 후 스케줄 조회
+			sysdate.setDate(sysdate.getDate()+1);
+			date = dateForm2.format ( sysdate ); //1일 후
+			map.replace("startDate", date+"-00:00");
+			map.replace("endDate", date+"-23:59");
+			model.addAttribute("day4", date);
+
+			ArrayList<Theater_scheduleVO> vos5 = dao.hostScheduleList(map);
+			
+			// 모든 상영관 정보
+			ArrayList<TheaterVO> theaterVOS = dao.getTheaterAllList();
+			
+			
+			
+			model.addAttribute("date", selDate);
+			model.addAttribute("theater_index", theater_index);
+			model.addAttribute("vos1", vos1);
+			model.addAttribute("vos2", vos2);
+			model.addAttribute("vos3", vos3);
+			model.addAttribute("vos4", vos4);
+			model.addAttribute("vos5", vos5);
+			model.addAttribute("theaterVOS", theaterVOS);
+
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		
+	}
 
 	// 상영관 추가 폼 영화 정보와 상영관 정보 가져오기
 	@Override
@@ -500,6 +653,7 @@ public class Host_movieServiceImpl implements Host_movieService{
 		
 		// 상영 가능한 상영관
 		int cnt = dao.checkPosTheaterCnt(schedule_start);
+		System.out.println("cnt : " + cnt);
 		if(cnt == 0) {
 			theaterVOS = dao.getTheaterAllList();
 		} else {
@@ -509,7 +663,7 @@ public class Host_movieServiceImpl implements Host_movieService{
 		// 상영중인 영화 정보
 		ArrayList<MovieVO> movieVOS = dao.getMovieING();
 		
-
+		model.addAttribute("confirm", 1);
 		model.addAttribute("movieVOS", movieVOS);
 		model.addAttribute("theaterVOS", theaterVOS);
 	}
@@ -546,6 +700,132 @@ public class Host_movieServiceImpl implements Host_movieService{
 		model.addAttribute("cnt", cnt);
 		
 	}
+
+	// 스케줄 상세 정보 가져오기
+	@Override
+	public void hostScheduleDetail(HttpServletRequest req, Model model) {
+		int theater_index = Integer.parseInt(req.getParameter("theater_index"));
+		int movie_index = Integer.parseInt(req.getParameter("movie_index"));
+		int theater_schedule_index = Integer.parseInt(req.getParameter("theater_schedule_index"));
+		
+		TheaterVO theaterVO = dao.hostTheaterDetail(theater_index);
+		MovieVO movieVO = dao.hostMovieDetail(movie_index);
+		Theater_scheduleVO scheduleVO = dao.hostScheduleDetail(theater_schedule_index);
+		
+		// 상영중인 영화 정보
+		ArrayList<MovieVO> movieVOS = dao.getMovieING();
+		
+		// 모든 상영관 정보
+		ArrayList<TheaterVO> theaterVOS = dao.getTheaterAllList();
+		
+		model.addAttribute("theaterVO", theaterVO);
+		model.addAttribute("movieVO", movieVO);
+		model.addAttribute("scheduleVO", scheduleVO);
+		model.addAttribute("movieVOS", movieVOS);
+		model.addAttribute("theaterVOS", theaterVOS);
+	}
+
+	// 스케줄 수정 처리
+	@Override
+	public void hostScheduleModPro(HttpServletRequest req, Model model) {
+		String startDate = req.getParameter("startDate");
+		String startTime = req.getParameter("startTime");
+		int theater_index = Integer.parseInt(req.getParameter("theater_index"));
+		int movie_index = Integer.parseInt(req.getParameter("movie_index"));
+		int theater_schedule_index = Integer.parseInt(req.getParameter("theater_schedule_index"));
+		
+		String schedule_startTime = startDate+"-"+startTime;
+		
+		int cnt = 0;
+		// 수정하려는 시간에 다른 스케줄이 있는지 확인
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("schedule_startTime", schedule_startTime);
+		map.put("theater_schedule_index", theater_schedule_index);
+		map.put("theater_index", theater_index);
+		int sche_chkCnt = dao.chkCnt(map); // 1이상이면 수정못함, 0이면 수정 가능
+		
+		System.out.println("=============================");
+		System.out.println("=============================");
+		System.out.println("sche_chkCnt : " + sche_chkCnt);
+		System.out.println("=============================");
+		System.out.println("=============================");
+		
+		if(sche_chkCnt == 0) { // 수정가능
+			map.put("movie_index", movie_index);
+			
+			int schedule_MDNstate = 1;
+			
+			int time = Integer.parseInt(startTime.split(":")[0]);
+			if(22<=time && time<=23 || 00<=time && time<=03) { //22<=time && time<=23 || 00<=time && time<=03
+				schedule_MDNstate = 2;
+			} else if(04<=time && time<=10) { // 04<=time && time<=10
+				schedule_MDNstate = 0;
+			}
+			map.put("schedule_MDNstate", schedule_MDNstate);
+			
+			cnt = dao.updateSchedule(map);//기존 정보 수정
+		}
+		
+		System.out.println("=============================");
+		System.out.println("cnt : " + cnt);
+		System.out.println("=============================");
+		
+		model.addAttribute("cnt", cnt);
+	}
+
+	// 스케줄 삭제 처리
+	@Override
+	public void hostScheduleDelPro(HttpServletRequest req, Model model) {
+		int theater_schedule_index = Integer.parseInt(req.getParameter("theater_schedule_index"));
+		
+		int cnt = dao.hostScheduleDelPro(theater_schedule_index);
+		
+		model.addAttribute("cnt", cnt);
+	}
+
+	
+	// 직원 고용 아이디 확인
+	@Override
+	public void hostMovieEmpChkMemberId(HttpServletRequest req, Model model) {
+		String member_id = req.getParameter("member_id");
+		
+		int idCnt = dao.hostMovieEmpChkMemberId(member_id);
+		
+		if(idCnt != 0) {
+			Member vo = dao.hostMovieEmpInfo(member_id); 	// 아이디로 고용할 직원 정보 가져오기
+			model.addAttribute("vo", vo);
+		}
+		
+		model.addAttribute("member_id", member_id);
+		model.addAttribute("idCnt", idCnt);
+	}
+
+	// 직원 고용 처리
+	@Override
+	public void hostMovieEmpAddPro(HttpServletRequest req, Model model) {
+		String member_id = req.getParameter("member_id");
+		String employee_jumin2 = req.getParameter("employee_jumin2");
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("member_id", member_id);
+		map.put("employee_jumin2", employee_jumin2);
+		
+		int cnt = dao.memberChangeState(member_id);
+		
+		if(cnt == 1) {
+			int insertCnt = dao.insertEmp(map);
+			if(insertCnt==1) {
+				cnt = 1;
+			}else {
+				cnt = 0;
+			}
+		}
+		model.addAttribute("cnt", cnt);
+		
+	}
+
+	
+
 
 	
 

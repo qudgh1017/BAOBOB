@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
-<%@ include file="/resources/setting.jsp"%>
+<%@ include file="/resources/chg/setting.jsp"%>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -38,31 +37,32 @@
 	<!-- Navigation -->
 	<%@ include file="_navigation.jsp"%>
 	
-	<form action="hostMenuModPro" method="POST" name="add_mod_form" enctype="multipart/form-data" onsubmit="return add_mod_Check()">
+	<form action="hostMenuModPro" method="POST" name="add_mod_form" enctype="multipart/form-data">
 		<div class="content-wrapper">
 			<div class="container-fluid" style="width: 1000px;">
 				<div class="card mb-3">
 					<div class="card-header">
-						<i class="fa fa-table"></i> 메뉴 수정
+						<i class="fa fa-fw fa-dashboard"></i> 메뉴 수정
 					</div>
 					<div class="card-body">
 						<div class="table-responsive">
 							<table border=1 style="border: lightgray; width: 800px;">
 								<tr>
 									<td>&bull; 메뉴명</td>
-									<td><input type="text" name="name" value="${dto.restaurant_menu_name}"></td>
+									<td><input type="text" name="name" value="${dto.restaurant_menu_name}" required></td>
 								</tr>
 								<tr>
 									<td>&bull; 가격</td>
-									<td><input type="text" name="price" value="${dto.restaurant_menu_price}"></td>
+									<td><input type="text" name="price" value="${dto.restaurant_menu_price}" onkeydown='return onlyNumber(event)'
+										onkeyup='removeChar(event)' style='ime-mode: disabled;' required></td>
 								</tr>
 								<tr>
 									<td>&bull; 메뉴 소개</td>
-									<td><textarea name="content" rows="5" cols="50">${dto.restaurant_menu_content}</textarea></td>
+									<td><textarea name="content" rows="5" cols="50" required>${dto.restaurant_menu_content}</textarea></td>
 								</tr>
 								<tr>
 									<td rowspan="2">&bull; 메뉴 이미지</td>
-									<td><input type="file" id="img" name="img" accept="image/*" value="${restaurant_images}${dto.restaurant_menu_img}"></td>
+									<td><input type="file" id="img" name="img" accept="image/*" value="${restaurant_images}${dto.restaurant_menu_img}" required></td>
 								</tr>
 								<tr>
 									<td><img src="${restaurant_images}${dto.restaurant_menu_img}" id="imgView" name="imgView" style="width: 400px;"></td>

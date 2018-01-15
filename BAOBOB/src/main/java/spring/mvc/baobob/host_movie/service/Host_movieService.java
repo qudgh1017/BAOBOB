@@ -37,7 +37,13 @@ public interface Host_movieService {
 	// 상영관 삭제 처리
 	public void hostTheaterDel(HttpServletRequest req, Model model);
 	
-	// 상영관 추가 폼 영화 정보와 상영관 정보 가져오기
+	// 스케줄 목록
+	public void hostScheduleList(HttpServletRequest req, Model model);
+	
+	// 스케줄 검색
+	public void hostScheduleSearch(HttpServletRequest req, Model model);
+	
+	// 스케줄 추가 폼 영화 정보와 상영관 정보 가져오기
 	public void hostScheduleAddForm(HttpServletRequest req, Model model);
 	
 	// 상영가능한 상영관 확인
@@ -46,5 +52,19 @@ public interface Host_movieService {
 	// 상영관 추가 처리
 	public void hostScheduleAddPro(HttpServletRequest req, Model model);
 	
+	// 스케줄 상세 정보 가져오기
+	public void hostScheduleDetail(HttpServletRequest req, Model model);
+	
+	// 스케줄 수정 처리
+	public void hostScheduleModPro(HttpServletRequest req, Model model);
+	
+	// 스케줄 삭제 처리
+	public void hostScheduleDelPro(HttpServletRequest req, Model model);
+	
+	// 직원 고용 아이디 확인
+	public void hostMovieEmpChkMemberId(HttpServletRequest req, Model model);
+	
+	// 직원 고용 처리
+	public void hostMovieEmpAddPro(HttpServletRequest req, Model model);
 	
 }

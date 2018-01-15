@@ -42,28 +42,28 @@
 	
 	<div class="content-wrapper">
 
-	<form action="hostScheduleAddPro" method="post">
+	<form action="hostScheduleAddPro" method="post" onsubmit="return chkScheduleAdd();">
 		<center><h3><b>스케줄 등록</b></h3></center>
 		<hr style="border:3px solid black;">
 		<table align="center" style="border:1px solid black;">
 			<tr>
 				<td>날짜 선택</td>
-				<td><input type="text" name="schedule_startDate" id="datepicker" class="datepicker" value="${schedule_startDate}"/></td>
+				<td><input type="text" name="schedule_startDate" id="datepicker" class="datepicker" value="${schedule_startDate}" placeholder="날짜 선택" required/></td>
 			</tr>
 			<tr>
 				<td>시간 선택</td>
 				<td><input type="text" name="schedule_startTime" placeholder="시간선택"  id="timepicker" required size="8" maxlength="5" value="${schedule_startTime}"></td>
 			</tr>
 			<tr>
-				<td colspan="2">
-					<input type="button" value="상영가능한 상영관 확인하기" onclick="checkPosTheater();"/>
+				<td colspan="2" align="center">
+					<input style="background-color:#343a40; color:white; border:1px solid black; width:200px; height:40px;" type="button" value="확인" onclick="checkPosTheater();"/>
 				</td>
 			</tr>
-			
+			<c:if test="${confirm==1}">
 			<tr>
 				<td>영화 선택</td>
 				<td>
-					<select name="movie_index">
+					<select name="movie_index" id="movie_index">
 							<option value="">영화 선택</option>
 						<c:forEach var="movieVO" items="${movieVOS}">
 							<option value="${movieVO.movie_index}">${movieVO.movie_title}(${movieVO.movie_runTime}분)</option>
@@ -74,7 +74,7 @@
 			<tr>
 				<td>상영관 선택</td>
 				<td>
-					<select name="theater_index">
+					<select name="theater_index" id="theater_index">
 							<option value="">상영관 선택</option>
 						<c:forEach var="theaterVO" items="${theaterVOS}">
 							<option value="${theaterVO.theater_index}">${theaterVO.theater_index}관(${theaterVO.theater_row}행, ${theaterVO.theater_col}열)</option>
@@ -83,22 +83,17 @@
 				</td>
 			</tr>
 			<tr>
-				<td colspan="2">
-					<input type="submit" value="스케줄 등록"/>
+				<td colspan="2" align="center">
+					<input type="submit" style="background-color:#343a40; color:white; border:1px solid black; width:200px; height:40px;"  value="스케줄 등록"/>
 				</td>
 			</tr>
+			</c:if>
 		</table>
 	</form>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
+
 	</div>
 	
 	<!-- Footer -->
-<%-- 	<%@ include file="../common/footer.jsp" %> --%>
+	<%@ include file="movie_footer.jsp" %>
 </body>
 </html>

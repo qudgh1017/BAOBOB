@@ -39,16 +39,24 @@
 				</ul>
 			</li>
 			<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Charts">
-				<a class="nav-link" href="hostTheater"> 
+				<a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#theaterManage" data-parent="#exampleAccordion"> 
 					<i class="fa fa-fw fa-area-chart"></i> 
 					<span class="nav-link-text">상영관 관리</span>
 				</a>
+				<ul class="sidenav-second-level collapse" id="theaterManage">
+					<li><a href="hostTheater">상영관 목록</a></li>
+					<li><a href="hostTheaterAddForm">상영관 등록</a></li>
+				</ul>
 			</li>
 			<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
-				<a class="nav-link" href="hostSchedule"> 
+				<a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#scheduleManage" data-parent="#exampleAccordion"> 
 					<i class="fa fa-fw fa-table"></i> 
 					<span class="nav-link-text">스케줄 관리</span>
 				</a>
+				<ul class="sidenav-second-level collapse" id="scheduleManage">
+					<li><a href="hostSchedule">스케줄 목록</a></li>
+					<li><a href="hostScheduleAddForm">스케줄 등록</a></li>
+				</ul>
 			</li>
 			<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
 				<a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents" data-parent="#exampleAccordion"> 
@@ -56,8 +64,8 @@
 					<span class="nav-link-text">직원 관리</span>
 				</a>
 				<ul class="sidenav-second-level collapse" id="collapseComponents">
-					<li><a href="#">Navbar</a></li>
-					<li><a href="#">Cards</a></li>
+					<li><a href="hostMovieEmp">직원 목록</a></li>
+					<li><a href="#">직원 채용</a></li>
 				</ul>
 			</li>
 			<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Example Pages">
@@ -70,30 +78,7 @@
 					<li><a href="#">Registration Page</a></li>
 					<li><a href="#">Forgot Password Page</a></li>
 					<li><a href="#">Blank Page</a></li>
-				</ul></li>
-			<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Menu Levels">
-				<a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseMulti" data-parent="#exampleAccordion"> 
-					<i class="fa fa-fw fa-sitemap"></i> 
-					<span class="nav-link-text">Menu Levels</span>
-				</a>
-				<ul class="sidenav-second-level collapse" id="collapseMulti">
-					<li><a href="#">Second Level Item</a></li>
-					<li><a href="#">Second Level Item</a></li>
-					<li><a href="#">Second Level Item</a></li>
-					<li><a class="nav-link-collapse collapsed"
-						data-toggle="collapse" href="#collapseMulti2">Third Level</a>
-						<ul class="sidenav-third-level collapse" id="collapseMulti2">
-							<li><a href="#">Third Level Item</a></li>
-							<li><a href="#">Third Level Item</a></li>
-							<li><a href="#">Third Level Item</a></li>
-						</ul></li>
 				</ul>
-			</li>
-			<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Link">
-				<a class="nav-link" href="#"> 
-					<i class="fa fa-fw fa-link"></i> 
-					<span class="nav-link-text">Link</span>
-				</a>
 			</li>
 		</ul>
 		<ul class="navbar-nav sidenav-toggler">

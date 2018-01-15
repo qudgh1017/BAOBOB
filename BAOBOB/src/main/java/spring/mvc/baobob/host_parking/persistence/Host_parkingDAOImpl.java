@@ -2,6 +2,7 @@ package spring.mvc.baobob.host_parking.persistence;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
@@ -19,6 +20,34 @@ public class Host_parkingDAOImpl implements Host_parkingDAO {
 	@Autowired
 	SqlSession sqlSession;
 
+	// 현재 이용자 수 
+	public int getParkingMember() {
+		Host_parkingDAO mapper = sqlSession.getMapper(Host_parkingDAO.class);
+		int cnt = mapper.getParkingMember();
+		return cnt;
+	}
+
+	//평균 주차 시간
+	public List<Map<String, Object>> getAvgPakingTime(){
+		Host_parkingDAO mapper = sqlSession.getMapper(Host_parkingDAO.class);
+		List<Map<String, Object>> list = mapper.getAvgPakingTime();
+		return list;
+	}
+
+	// 오늘 영화 이용자 수 
+	public int getParkingMovieMember() {
+		Host_parkingDAO mapper = sqlSession.getMapper(Host_parkingDAO.class);
+		int cnt = mapper.getParkingMovieMember();
+		return cnt;
+	}
+	
+	// 오늘 식당 이용자 수 
+	public int getParkingRestaurantMember() {
+		Host_parkingDAO mapper = sqlSession.getMapper(Host_parkingDAO.class);
+		int cnt = mapper.getParkingMovieMember();
+		return cnt;
+	}
+	
 	//주차장 구역 정보, 존재 여부
 	@Override
 	public ParkingSpace getParkingSpace() {
@@ -131,21 +160,64 @@ public class Host_parkingDAOImpl implements Host_parkingDAO {
 		return cnt;
 	}
 
+	//주차 차트 - 입차 시간별 이용자수
+	public List<Map<String, Object>> getDayInTimeAvg() {
+		Host_parkingDAO mapper = sqlSession.getMapper(Host_parkingDAO.class);
+		List<Map<String, Object>> list = mapper.getDayInTimeAvg();
+		return list;
+	}
+	
+	//주차 차트 - 출차 시간별 이용자수
+	public List<Map<String, Object>> getDayOutTimeAvg() {
+		Host_parkingDAO mapper = sqlSession.getMapper(Host_parkingDAO.class);
+		List<Map<String, Object>> list = mapper.getDayOutTimeAvg();
+		return list;
+	}
+
+	//주차 차트 - 요일별 입차 수
+	public List<Map<String, Object>> getWeekIn(){
+		Host_parkingDAO mapper = sqlSession.getMapper(Host_parkingDAO.class);
+		List<Map<String, Object>> list = mapper.getWeekIn();
+		return list;
+	}
+
+	//주차 차트 - 요일별 출차 수
+	public List<Map<String, Object>> getWeekOut() {
+		Host_parkingDAO mapper = sqlSession.getMapper(Host_parkingDAO.class);
+		List<Map<String, Object>> list = mapper.getWeekOut();
+		return list;
+	}
+	
+
+	//주차 차트 - 월별 입차 수
+	public List<Map<String, Object>> getMonthIn(){
+		Host_parkingDAO mapper = sqlSession.getMapper(Host_parkingDAO.class);
+		List<Map<String, Object>> list = mapper.getMonthIn();
+		return list;
+	}
+
+	//주차 차트 - 월별 출차 수
+	public List<Map<String, Object>> getMonthOut(){
+		Host_parkingDAO mapper = sqlSession.getMapper(Host_parkingDAO.class);
+		List<Map<String, Object>> list = mapper.getMonthIn();
+		return list;
+	}
+	
 	//주차 내역 총개수
-	@Override
+	/*@Override
 	public int getParkingHistoryCnt() {
 		Host_parkingDAO mapper = sqlSession.getMapper(Host_parkingDAO.class);
 		int cnt = mapper.getParkingHistoryCnt();;
 		return cnt;
-	}
+	}*/
 
 	//주차 내역
-	@Override
+	/*@Override
 	public ArrayList<ParkingHistory> getParkingHistory(Map<String, Integer> map) {
 		Host_parkingDAO mapper = sqlSession.getMapper(Host_parkingDAO.class);
 		ArrayList<ParkingHistory> list = mapper.getParkingHistory(map);
 		return list;
-	}
+	}*/
 
 	//납부 내역 총개수
 	public int getParkingPayCnt() {
@@ -169,11 +241,18 @@ public class Host_parkingDAOImpl implements Host_parkingDAO {
 		return space;
 	}
 
-
 	//해당 주차 구역의 마지막 사용자
 	public ArrayList<String> getParkLastDateMember(Timestamp park_last_date) {
 		Host_parkingDAO mapper = sqlSession.getMapper(Host_parkingDAO.class);
 		ArrayList<String> lasts = mapper.getParkLastDateMember(park_last_date);
 		return lasts;
 	}
+
+	//올해 납부 내역
+	public ArrayList<ParkingHistory> getThisYearPayList() {
+		Host_parkingDAO mapper = sqlSession.getMapper(Host_parkingDAO.class);
+		ArrayList<ParkingHistory> list = mapper.getThisYearPayList();
+		return list;
+	}
+	
 }

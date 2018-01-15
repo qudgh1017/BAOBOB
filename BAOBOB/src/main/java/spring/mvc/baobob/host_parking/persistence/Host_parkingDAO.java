@@ -2,6 +2,7 @@ package spring.mvc.baobob.host_parking.persistence;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import spring.mvc.baobob.vo.Parking;
@@ -11,6 +12,18 @@ import spring.mvc.baobob.vo.ParkingSpace;
 
 public interface Host_parkingDAO {
 
+	// 현재 이용자 수 
+	public int getParkingMember();
+	
+	//평균 주차 시간
+	public List<Map<String, Object>> getAvgPakingTime();
+
+	// 오늘 영화 이용자 수 
+	public int getParkingMovieMember();
+	
+	// 오늘 식당 이용자 수 
+	public int getParkingRestaurantMember();
+	
 	//주차장 구역 정보
 	public ParkingSpace getParkingSpace();
 	
@@ -43,12 +56,30 @@ public interface Host_parkingDAO {
 	
 	//주차 기본 요금 수정
 	public int parkingFeeUpdate(ParkingFee pf);
+
+	//주차 차트 - 입차 시간별 이용자수
+	public List<Map<String, Object>> getDayInTimeAvg();
+	
+	//주차 차트 - 출차 시간별 이용자수
+	public List<Map<String, Object>> getDayOutTimeAvg();
+
+	//주차 차트 - 요일별 입차 수
+	public List<Map<String, Object>> getWeekIn();
+
+	//주차 차트 - 요일별 출차 수
+	public List<Map<String, Object>> getWeekOut();
+
+	//주차 차트 - 월별 입차 수
+	public List<Map<String, Object>> getMonthIn();
+
+	//주차 차트 - 월별 출차 수
+	public List<Map<String, Object>> getMonthOut();
 	
 	//주차 내역 총개수
-	public int getParkingHistoryCnt();
+	/*public int getParkingHistoryCnt();*/
 	
 	//주차 내역
-	public ArrayList<ParkingHistory> getParkingHistory(Map<String, Integer> map);
+	/*public ArrayList<ParkingHistory> getParkingHistory(Map<String, Integer> map);*/
 
 	//납부 내역 총개수
 	public int getParkingPayCnt();
@@ -61,4 +92,7 @@ public interface Host_parkingDAO {
 	
 	//해당 주차 구역의 마지막 사용자
 	public ArrayList<String> getParkLastDateMember(Timestamp park_last_date);
+	
+	//올해 납부 내역
+	public ArrayList<ParkingHistory> getThisYearPayList();
 }

@@ -60,6 +60,20 @@ function getSeatInfo(col, row, state){
 
 // 상영관 좌석 생성
 function seatSet(){
+	if(!document.getElementById("theater_index").value){
+		alert("상영관 index를 입력하세요");
+		document.getElementById("theater_index").focus();
+		return false;
+	}else if(!document.getElementById("row").value){
+		alert("행을 입력하세요");
+		document.getElementById("row").focus();
+		return false;
+	}else if(!document.getElementById("col").value){
+		alert("열을 입력하세요");
+		document.getElementById("col").focus();
+		return false;
+	}
+	
 	var row = document.hostTheaterAddForm.theater_row.value;
 	var col = document.hostTheaterAddForm.theater_col.value;
 //		alert("행 : " + row + "칸 , 열 : " + col + "칸" );
@@ -76,6 +90,8 @@ function seatSet(){
 	
 	var theaterSet = document.getElementById("theaterSet");
 	theaterSet.innerHTML = seat;
+	
+	document.getElementById("chkConfirm").value = 1;
 }
 
 // 상영관 좌석 state 변경
@@ -96,6 +112,12 @@ function seatChange(seat){
 
 // 상영관 생성 DB
 function hostTheaterAdd(){
+	if(document.getElementById("chkConfirm").value!=1){
+		alert("확인을 클릭해주세요");
+		document.getElementById("chkConfirm").focus();
+		return false;
+	}
+	
 	var item = document.querySelectorAll('.t_spaceBtn'); //배열판의 버튼들
 	var theater_index = document.getElementById('theater_index').value;
 	var col = document.getElementById('col').value;
@@ -107,7 +129,7 @@ function hostTheaterAdd(){
 	});
 	
 	var state = array.join(',');
-	alert("state : " + state);
+//	alert("state : " + state);
 	
 	var param = 'theater_index=' + theater_index + '&'
 				+ 'col=' + col + '&'
@@ -140,8 +162,72 @@ function hostTheaterMod(theater_index, col, row){
 
 // 선택한 스케줄 시간에 따른 상영 가능한 상영관 찾기
 function checkPosTheater(){
+	
+	if(!document.getElementById("datepicker").value){
+		alert("날짜를 선택해주세요");
+		document.getElementById("datepicker").focus();
+		return false;
+	}else if(!document.getElementById("timepicker").value){
+		alert("시간을 선택해주세요");
+		return false;
+	}
+	
+	
 	var date = document.getElementById("datepicker").value;
 	var time = document.getElementById("timepicker").value;
 	
 	window.location="checkPosTheater?schedule_startDate="+date+"&schedule_startTime="+time;
+}
+
+// 선택한 시간에 따른 스케줄 목록 조회
+function hostScheduleSearch(){
+	
+	var date = document.getElementById("datepicker").value;
+	var theater_index = document.getElementById("theater_index").value;
+	if(date == ""){
+		alert("날짜를 선택하세요");
+		document.getElementById("datepicker").focus();
+		return false;
+	}else if(theater_index==""){
+		alert("상영관을 선택하세요");
+		return false;
+	}
+	
+	window.location="hostScheduleSearch?date="+date+"&theater_index="+theater_index;
+	
+}
+
+// 스케줄 삭제
+function chkDeleteSchedule(theater_schedule_index){
+	
+    if (confirm("스케줄을 삭제하시겠습니까?")!=0) {
+         window.location="hostScheduleDelPro?theater_schedule_index="+theater_schedule_index;
+    } else {
+    }
+}
+
+// 스케줄 등록시 select박스 체크 확인
+function chkScheduleAdd(){
+	if(document.getElementById("movie_index").value==""){
+		alert("영화를 선택해주세요");
+		document.getElementById("movie_index").focus();
+		return false;
+	}else if(document.getElementById("theater_index").value==""){
+		alert("상영관을 선택해주세요");
+		document.getElementById("theater_index").focus();
+		return false;
+	}
+	
+}
+
+// 직원으로 고용할 아이디 확인
+function chkId(){
+	if(!document.hostMovieEmpAddForm.member_id.value){
+		alert("직원 아이디를 입력하세요");
+		document.hostMovieEmpAddForm.member_id.focus();
+		return false;
+	}else{
+		var member_id = document.hostMovieEmpAddForm.member_id.value;
+		window.location="hostMovieEmpChkMemberId?member_id="+member_id;
+	}
 }

@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ include file="/resources/setting.jsp"%>
+<%@ include file="/resources/chg/setting.jsp"%>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -17,7 +17,7 @@
 		<div class="container-fluid" style="width: 1000px;">
 			<div class="card mb-3">
 				<div class="card-header">
-					<i class="fa fa-table"></i> 메뉴 목록
+					<i class="fa fa-fw fa-dashboard"></i> 메뉴 목록
 				</div>
 				<div class="card-body">
 					<div class="table-responsive">
@@ -30,8 +30,8 @@
 								</tr>
 							</thead>
 							<tbody>
-							<c:if test="${cnt > 0}">
-								<c:forEach var="dto" items="${dtos}">
+							<c:if test="${cnt_menu > 0}">
+								<c:forEach var="dto" items="${dtos_menu}">
 									<tr>
 										<td>
 											<span><b>[${dto.restaurant_menu_name}]</b> - </span>
@@ -42,11 +42,11 @@
 											</div>
 										</td>
 										<td><input type="button" value="수정" onclick="window.location='hostMenuModForm?index=${dto.restaurant_menu_index}'"></td>
-										<td><input type="button" value="삭제" onclick="delCheck(${dto.restaurant_menu_index});"></td>
+										<td><input type="button" value="삭제" onclick="delCheck(${dto.restaurant_menu_index}, 'menu');"></td>
 									</tr>
 								</c:forEach>
 							</c:if>
-							<c:if test="${cnt == 0}">
+							<c:if test="${cnt_menu == 0}">
 								<tr>
 									<td>등록된 메뉴가 없습니다.</td>
 								</tr>
