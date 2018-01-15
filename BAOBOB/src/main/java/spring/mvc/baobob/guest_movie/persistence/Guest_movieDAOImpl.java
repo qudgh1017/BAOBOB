@@ -71,6 +71,28 @@ public class Guest_movieDAOImpl implements Guest_movieDAO{
 		
 		return movie;
 	}
+	
+	//movie_index에 따른 리뷰 갯수
+	@Override
+	public int getMovieReviewCnt(int movie_index) {
+		int cnt = 0;
+		
+		Guest_movieDAO gmdao = sqlSession.getMapper(Guest_movieDAO.class);
+		cnt = gmdao.getMovieReviewCnt(movie_index);
+		
+		return cnt;
+	}
+
+	//movie_index에 따른 리뷰 리스트
+	@Override
+	public ArrayList<ReviewVO> getAllMovieReviews(Map<String, Object> map) {
+		ArrayList<ReviewVO> reviews = null;
+		
+		Guest_movieDAO gmdao = sqlSession.getMapper(Guest_movieDAO.class);
+		reviews = gmdao.getAllMovieReviews(map);
+		
+		return reviews;
+	}
 
 	//한아이디로 한영화에 한 리뷰만 쓸수 있음 - 썼었는지 확인
 	@Override
@@ -84,7 +106,7 @@ public class Guest_movieDAOImpl implements Guest_movieDAO{
 	}
 	
 	//review_index 불러오기
-	@Override
+	/*@Override
 	public String getReviewIndex(Map<String,Object> map) {
 		String review_index = null;
 		
@@ -98,7 +120,7 @@ public class Guest_movieDAOImpl implements Guest_movieDAO{
 		}
 		
 		return review_index;
-	}
+	}*/
 
 	//review 추가
 	@Override
@@ -121,6 +143,8 @@ public class Guest_movieDAOImpl implements Guest_movieDAO{
 		
 		return cnt;
 	}
+
+	
 
 
 	

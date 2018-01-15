@@ -89,6 +89,7 @@ public class Guest_movieController {
 		log.debug("====== Guest_movieController/movieDetail ======");
 
 		gmservice.movieInfo(req, model);
+		gmservice.reviewList(req, model);
 		
 		return "/guest/guest_movie/movie/movieDetail";
 	}

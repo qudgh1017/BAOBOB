@@ -43,9 +43,9 @@
 						<input type="hidden" name="member_id" value="${memId}">
 						<input type="hidden" name="movie_index" value="${movie.movie_index}">
 						
-						<input type="radio" name="review_grade" value="0">좋아요
+						<input type="radio" name="review_grade" value="1">좋아요
 						${memId}
-						<input type="radio" name="review_grade" value="1">싫어요<br><br>	
+						<input type="radio" name="review_grade" value="0">싫어요<br><br>	
 						<textarea name="review_content" placeholder="리뷰작성" rows="7" cols="100" style="resize:none; width:500px"></textarea>
 						
 						<input type="submit" value="작성">&nbsp; <!-- onclick="reviewSuccess();" -->

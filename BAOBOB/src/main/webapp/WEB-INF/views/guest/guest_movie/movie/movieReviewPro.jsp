@@ -10,15 +10,21 @@
 <body>
 <!-- CSS,JavaScript 참조 -->
 <%@ include file="/WEB-INF/views/guest/common/head.jsp" %>
+<!-- 내꺼 JavaScript 참조 -->
+<script type="text/javascript" src="${projectRes}ybh/js/ybh.js"></script>
 
 <!-- 성공 -->
 <c:if test="${cnt==1}">  
-성공
+	<script type="text/javascript">
+		subAlert(review_msg);
+	</script>
 </c:if>
 
 <!-- 실패 -->
 <c:if test="${cnt==0}">  
-실패
+	<script type="text/javascript">
+		subAlert(review_error);
+	</script>
 </c:if>
 </body>
 </html>

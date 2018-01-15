@@ -23,11 +23,17 @@ public  interface Guest_movieDAO {
 	//영화 상세정보
 	public MovieVO getMovie(int movie_index);
 	
+	//movie_index에 따른 리뷰 갯수
+	public int getMovieReviewCnt(int movie_index);
+	
+	//movie_index에 따른 리뷰 리스트
+	public ArrayList<ReviewVO> getAllMovieReviews(Map<String,Object> map);
+	
 	//한아이디로 한영화에 한 리뷰만 쓸수 있음 - 썼었는지 확인
 	public int movieReviewCheck(Map<String,Object> map);
 	
 	//review_index 불러오기
-	public String getReviewIndex(Map<String,Object> map);
+	//public String getReviewIndex(Map<String,Object> map);
 	
 	//리뷰 작성
 	public int insertReview(ReviewVO review);
