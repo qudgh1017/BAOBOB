@@ -11,7 +11,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
 import spring.mvc.baobob.guest_movie.persistence.Guest_movieDAO;
+import spring.mvc.baobob.vo.Member;
+import spring.mvc.baobob.vo.MovieReviewVO;
 import spring.mvc.baobob.vo.MovieVO;
+import spring.mvc.baobob.vo.ReviewVO;
 
 @Service
 public class Guest_movieServiceImpl implements Guest_movieService{
@@ -314,10 +317,62 @@ public class Guest_movieServiceImpl implements Guest_movieService{
 	//영화 리뷰작성처리
 	@Override
 	public void movieReviewPro(HttpServletRequest req, Model model) {
-		String review_grade = req.getParameter("review_grade");
-		String member_id = req.getParameter("memId");
-		String review_content = req.getParameter("review_content");
+		ReviewVO review = new ReviewVO();
 		
+		String review_grade = req.getParameter("review_grade");
+		String member_id = req.getParameter("member_id");
+		String review_content = req.getParameter("review_content");
+		int movie_index = Integer.parseInt(req.getParameter("movie_index"));
+		int cnt = 0;
+		
+		//1. 영화에 한사람이 하나의 리뷰만 가능
+		Map<String,Object> map1 = new HashMap<String,Object>();
+		map1.put("member_id", member_id);
+		map1.put("movie_index", movie_index);
+		
+		//2. review_tbl insert
+		review.setReview_content(review_content);
+		review.setReview_grade(review_grade);
+		review.setMember_id(member_id);
+		review.setReview_state(1);
+		cnt = gmdao.insertReview(review);
+		
+		//3. movie_review_tbl insert
+		if(cnt==1) {//review 입력 성공하면 reviewIndex 값 select
+			Map<String,Object> map2 = new HashMap<String,Object>();
+			map2.put("movie_index", movie_index);
+			cnt = gmdao.insertMovieReview(map2);
+			
+		}else {// 실패
+			cnt = 0;
+		}
+		model.addAttribute("cnt", cnt);
+		
+	}
+
+	//리뷰 썼었는지 체크
+	@Override
+	public void movieReviewCheck(HttpServletRequest req, Model model) {
+		String member_id = (String) req.getSession().getAttribute("memId");
+		int movie_index = Integer.parseInt(req.getParameter("movie_index"));
+		System.out.println("member_id: "+ member_id);
+		int cnt = 0;
+		System.out.println("movie_index: "+ movie_index);
+		
+		//1. 영화에 한사람이 하나의 리뷰만 가능
+		Map<String,Object> map1 = new HashMap<String,Object>();
+		map1.put("member_id", member_id);
+		map1.put("movie_index", movie_index);
+		cnt = gmdao.movieReviewCheck(map1);
+		System.out.println("cnt1:"+cnt);
+		
+		if(cnt>0) { //이미 해당영화에 리뷰를 적은경우
+			cnt = 0;
+		}else { //리뷰 안적은 경우
+			cnt = 1;
+		}
+		System.out.println("cnt2:"+cnt);
+		model.addAttribute("cnt", cnt);
 		
 	}
 	

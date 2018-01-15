@@ -107,6 +107,7 @@ public class Guest_movieController {
 	public String reviewWrite(HttpServletRequest req, Model model) {
 		log.debug("====== Guest_movieController/movieReviewWrite ======");
 		
+		gmservice.movieReviewCheck(req, model);
 		gmservice.movieInfo(req, model);
 		
 		return "/guest/guest_movie/movie/movieReviewWrite";

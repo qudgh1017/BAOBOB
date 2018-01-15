@@ -58,5 +58,37 @@
 		FROM movie_tbl
 		WHERE movie_index = #{movie_index}
 	</select>
+	
+	<!-- 한아이디로 한영화에 한 리뷰만 쓸수 있음 - 썼었는지 확인 -->
+	<select id="movieReviewCheck" resultType="int">
+		SELECT COUNT(*)
+		FROM movie_review_tbl join review_tbl
+		ON (review_tbl.review_index = movie_review_tbl.review_index)
+		WHERE member_id = #{member_id} 
+		AND movie_index = #{movie_index}
+		AND review_state = 1
+	</select>
+	
+	<!-- review_index 불러오기 -->
+	<select id="getReviewIndex" resultType="String">
+		SELECT review_tbl.review_index
+		FROM review_tbl 
+		JOIN movie_review_tbl 
+		ON review_tbl.review_index = movie_review_tbl.review_index
+        JOIN movie_tbl ON movie_tbl.movie_index = movie_review_tbl.movie_index
+		WHERE review_tbl.member_id = #{member_id} 
+		AND movie_tbl.movie_index = #{movie_index}
+		AND review_state = 1
+	</select>
+	
+	<!-- 리뷰 작성 -->
+	<insert id="insertReview" parameterType="spring.mvc.baobob.vo.ReviewVO">
+		INSERT INTO review_tbl VALUES(review_tbl_seq.nextval, #{review_grade}, #{review_content}, #{member_id}, #{review_state}, sysdate)
+	</insert>
+	
+	<!-- movieReview 추가 -->
+	<insert id="insertMovieReview" parameterType="java.util.Map">
+		INSERT INTO movie_review_tbl VALUES(review_tbl_seq.currval, #{movie_index})
+	</insert>
 
 </mapper>
