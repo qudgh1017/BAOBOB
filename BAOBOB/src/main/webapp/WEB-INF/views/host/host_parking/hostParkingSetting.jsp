@@ -4,12 +4,13 @@
 <%@ include file="/resources/setting.jsp"%>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<title>Insert title here</title>
 
 	<style type="text/css">
 		body .p_body{min-height:450px;overflow-x:auto;}
-		body .p_div{display:flex;}/* flex-wrap:wrap; */
+		body .p_div{display:flex;width:fit-content;margin:0 auto;}/* flex-wrap:wrap; */
 		.m_btn{width:40px;height:auto;background:lightgray;border:transparent;border-radius:0.2em;padding:5px;margin:2px;}
 		.p_img{width:100%;height:auto;}
 		body .p_btn{max-width:40px;height:fit-content;background:lightgray;border:transparent;border-radius:0.2em;padding:5px;margin:2px;} /* flex:1 0 120px; */

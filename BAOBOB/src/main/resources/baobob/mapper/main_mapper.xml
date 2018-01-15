@@ -15,6 +15,7 @@
 	<!-- 가입처리 -->
 	<insert id="memberInsert" parameterType="spring.mvc.baobob.vo.Member">
 		INSERT INTO member_tbl
+			(member_id, member_pwd, member_name, member_tel, member_email, member_birth, member_sex, member_address, member_point, member_step, member_cumPoint, member_reg_date)
 		VALUES
 			(#{member_id}, #{member_pwd}, #{member_name}, #{member_tel}, #{member_email}, #{member_birth}, #{member_sex}, #{member_address}, #{member_point}, #{member_step}, #{member_cumPoint}, SYSTIMESTAMP)
 	</insert>
@@ -22,8 +23,16 @@
 	<!-- 인증키 저장 -->
 	<insert id="memberKeyInsert" parameterType="java.util.Map">
 		INSERT INTO member_key_tbl
+			(member_id, member_key)
 		VALUES (#{member_id}, #{member_key})
 	</insert>
+	
+	<!-- 메일 존재 여부 -->
+	<select id="memberEmailId" resultType="String">
+		SELECT member_id
+		FROM member_tbl
+		WHERE member_email = #{member_email}
+	</select>
 	
 	<!-- 인증키 존재 여부 -->
 	<select id="memberKeySelect" resultType="int">
@@ -32,10 +41,18 @@
 		WHERE member_id = #{member_id} AND member_key = #{member_key}
 	</select>
 	
+	<!-- 비밀번호 찾기 인증키 존재 여부 -->
+	<select id="memberConfirmPwdKey" resultType="String">
+		SELECT member_pwd
+		FROM member_key_tbl mk, member_tbl m
+		WHERE m.member_email = #{member_email}
+			AND mk.member_key = #{member_key}
+	</select>
+	
 	<!-- 인증키 삭제 -->
 	<insert id="memberKeyDelete" parameterType="String">
 		DELETE FROM member_key_tbl
-		WHERE member_id = #{member_id}
+		WHERE member_key = #{member_key}
 	</insert>
 	
 	<!-- 회원 등급 수정 -->
@@ -51,6 +68,13 @@
 		SELECT member_step
 		FROM member_tbl
 		WHERE member_id = #{member_id} AND member_pwd = #{member_pwd}
+	</select>
+	
+	<!-- facebook 존재 여부 -->
+	<select id="getMemberCheck" resultType="int">
+		SELECT COUNT(*)
+		FROM member_tbl
+		WHERE member_id = #{userId}
 	</select>
 	
 </mapper>
