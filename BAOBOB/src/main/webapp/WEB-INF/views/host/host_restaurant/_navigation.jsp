@@ -55,7 +55,7 @@
 				<ul class="sidenav-second-level collapse" id="collapseComponents">
 					<li><a href="hostRestaurantList">매장 목록</a></li>
 					<li><a href="hostRestaurantAddForm">매장 추가</a></li>
-					<li><a href="hostAllRestaurantAccount">결산</a></li>
+					<li><a href="#">결산</a></li>
 				</ul>
 			</li>
 			<li class="nav-item" data-toggle="tooltip" data-placement="right">
@@ -89,7 +89,7 @@
 				</ul>
 			</li>
 			<li class="nav-item" data-toggle="tooltip" data-placement="right">
-				<a class="nav-link" href="hostRestaurantAccount">
+				<a class="nav-link" href="#">
 					<i class="fa fa-fw fa-area-chart"></i> 
 					<span class="nav-link-text">결산</span>
 				</a>

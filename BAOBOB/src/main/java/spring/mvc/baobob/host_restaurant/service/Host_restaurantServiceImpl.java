@@ -22,6 +22,7 @@ import spring.mvc.baobob.vo.EmployeeVO;
 import spring.mvc.baobob.vo.Member;
 import spring.mvc.baobob.vo.MenuVO;
 import spring.mvc.baobob.vo.RestaurantVO;
+import spring.mvc.baobob.vo.Restaurant_scheduleVO;
 import spring.mvc.baobob.vo.TableVO;
 
 @Service
@@ -97,6 +98,9 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 		// TODO Auto-generated method stub
 		log.debug("service.restaurantView()");
 
+		String date = req.getParameter("date");
+		String time = req.getParameter("time");
+		
 		RestaurantVO dto = new RestaurantVO();
 		dto = dao.viewRestaurant(req.getParameter("index"));
 
@@ -130,6 +134,8 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 		model.addAttribute("info", info);
 		model.addAttribute("col", col);
 		model.addAttribute("row", row);
+		model.addAttribute("date", date);
+		model.addAttribute("time", time);
 	}
 
 	// 식당 총 관리자 - 매장 수정 처리
@@ -451,5 +457,61 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 	public void hostReservList(HttpServletRequest req, Model model) {
 		// TODO Auto-generated method stub
 		log.debug("service.hostReservList()");
+	}
+
+	// 식당[1] 예약 추가
+	@Override
+	public void reservAdd(HttpServletRequest req, Model model) {
+		// TODO Auto-generated method stub
+		log.debug("service.reservAdd()");
+
+		int cnt = 0;
+		int index = 0;
+		int row = Integer.parseInt(req.getParameter("row"));
+		int col = Integer.parseInt(req.getParameter("col"));
+		String info = req.getParameter("info");
+		String date = req.getParameter("date");
+		String time = req.getParameter("time");
+		String start = date + "-" + time;
+
+		System.out.println("date : " + date);
+		System.out.println("time : " + time);
+		System.out.println("start : " + start);
+		/*
+		RestaurantVO dto = new RestaurantVO();
+		dto.setRestaurant_index(req.getParameter("index"));
+		
+		cnt = dao.resetTable(dto);
+
+		TableVO dto2 = new TableVO();
+		Restaurant_scheduleVO dto3 = new Restaurant_scheduleVO();
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("dto", dto);
+		map.put("dto2", dto2);
+
+		if (cnt != 0) {
+			String[] state = info.split(",");
+
+			for (int i = 0; i < row; i++) {
+				for (int j = 0; j < col; j++) {
+					dto2.setIndex(index);
+					dto2.setState(state[index]);
+					dto2.setTable_row(i);
+					dto2.setTable_col(j);
+
+					map.replace("dto2", dto2);
+
+					cnt = dao.modTable(map);
+
+					if (cnt != 0) {
+						index++;
+					}
+				}
+			}
+		}
+
+		model.addAttribute("cnt", cnt);
+		*/
 	}
 }

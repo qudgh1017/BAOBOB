@@ -1,20 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="/resources/chg/setting.jsp"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
-<!-- Navigation -->
-<%@ include file="_navigation.jsp"%>
 <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600" rel="stylesheet">
 <link rel="stylesheet" href="${restaurant_css}">
 <link rel="stylesheet" href="${projectRes}chg/css/reserv_reset.css"> <!-- CSS reset -->
 <link rel="stylesheet" href="${projectRes}chg/css/reserv_style.css"> <!-- Resource style -->
-
-<!-- Resource style -->
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="${restaurant_js}"></script>
 <script type="text/javascript">
@@ -24,118 +20,139 @@
 		});
 	});
 </script>
-
+<style type="text/css">
+	body .p_body {
+		min-height: 450px;
+	}
+	
+	body .p_div {
+		display: flex;
+		justify-content: center;
+	} /* flex-wrap:wrap; */
+	.m_btn {
+		width: 40px;
+		height: auto;
+		background: lightgray;
+		border: transparent;
+		border-radius: 0.2em;
+		padding: 5px;
+		margin: 2px;
+	}
+	
+	.p_img {
+		width: 100%;
+		height: auto;
+	}
+		
+	#spaceDiv .p_btn {
+		max-width: 40px;
+		height: fit-content;
+		background: lightgray;
+		border: transparent;
+		border-radius: 0.2em;
+		padding: 5px;
+		margin: 2px;
+	} /* flex:1 0 120px; */
+	
+	.card-body .form-control {
+		margin-top: 5px;
+	}
+</style>
 </head>
 <body class="fixed-nav sticky-footer bg-dark">
-	<div class="content-wrapper" style="height: 2000px;">
-		<div id="content">
-			<h3 align="center">
-				<b>스케줄 목록</b>
-			</h3>
-			<hr style="border: 3px solid black;">
-			<input style="background-color: #343a40; color: white; border: 1px solid black; width: 200px; height: 40px; 
-					margin-left: 177px; margin-bottom: 15px;" type="button" name="hostMovieAddForm"
-					onclick="window.location='hostReservAddForm'" value="예약 추가하기" />
-			<div>
-				<input style="background-color: #343a40; color: white; border: 1px solid black; float: right; 
-						width: 200px; height: 40px; margin-bottom: 15px;" type="button" name="hostMovieAddForm"
-						onclick="hostScheduleSearch();" value="예약 조회하기" />
-					<select id="theater_index" name="theater_index" style="float: right;">
-					<option value="">상영관 선택</option>
-					<c:forEach var="theaterVO" items="${theaterVOS}">
-						<c:if test="${theaterVO.theater_index == theater_index}">
-							<option value="${theaterVO.theater_index}" selected>${theaterVO.theater_index}관</option>
-						</c:if>
-						<c:if test="${theaterVO.theater_index != theater_index}">
-							<option value="${theaterVO.theater_index}">${theaterVO.theater_index}관</option>
-						</c:if>
-					</c:forEach>
-				</select>
-				<input type="text" style="float: right;" name="date" id="datepicker" 
-						class="datepicker" placeholder="날짜선택" value="${date}" />
-			</div>
-		</div>
-
-		<div class="cd-schedule loading">
-			<div class="timeline">
-				<ul>
-					<li><span>07:00</span></li>
-					<li><span>07:30</span></li>
-					<li><span>08:00</span></li>
-					<li><span>08:30</span></li>
-					<li><span>09:00</span></li>
-					<li><span>09:30</span></li>
-					<li><span>10:00</span></li>
-					<li><span>10:30</span></li>
-					<li><span>11:00</span></li>
-					<li><span>11:30</span></li>
-					<li><span>12:00</span></li>
-					<li><span>12:30</span></li>
-					<li><span>13:00</span></li>
-					<li><span>13:30</span></li>
-					<li><span>14:00</span></li>
-					<li><span>14:30</span></li>
-					<li><span>15:00</span></li>
-					<li><span>15:30</span></li>
-					<li><span>16:00</span></li>
-					<li><span>16:30</span></li>
-					<li><span>17:00</span></li>
-					<li><span>17:30</span></li>
-					<li><span>18:00</span></li>
-					<li><span>18:30</span></li>
-					<li><span>19:00</span></li>
-					<li><span>19:30</span></li>
-					<li><span>20:00</span></li>
-				</ul>
-			</div>
-			
-			<!-- .timeline -->
-			<div class="events">
-				<ul>
-					<li class="events-group">
-						<div class="top-info" id="selectDay0">
-							<span><c:if test="${date == null}">선택날짜</c:if>${date}</span>
-						</div>
-						<ul>
-							<c:forEach var="vo1" items="${vos1}">
-								<li class="single-event" 
-									data-start="<fmt:formatDate type="both" pattern="HH:mm" value="${vo1.schedule_startTime}" />"
-									data-end="<fmt:formatDate type="both" pattern="HH:mm" value="${vo1.schedule_endTime}" />"
-									data-content="event-abs-circuit" data-event="event-3">
-									<a href="#0"><em class="event-name">${vo1.theater_index}관 ${vo1.movie_index}번 영화</em></a>
-								</li>
-							</c:forEach>
-						</ul>
-					</li>
-				</ul>
-			<div class="event-modal">
-				<header class="header">
-					<div class="content">
-						<span class="event-date"></span>
-						<h3 class="event-name"></h3>
+	<!-- Navigation -->
+	<%@ include file="_navigation.jsp"%>
+	
+	<div class="content-wrapper">
+		<div class="container-fluid" style="width: 1000px;">
+			<div class="col-lg-10">
+				<div class="card mb-3">
+					<div class="card-header">
+						<i class="fa fa-fw fa-table"></i> 예약 목록
 					</div>
-					<div class="header-bg"></div>
-				</header>
-				
-				<div class="body">
-					<div class="event-info"></div>
-					<div class="body-bg"></div>
+					<div class="card-body">
+						<div style="text-align: center;">
+							<input class="form-control" type="text" style="display: inline-block; width: 165px; text-align: center;" name="date" id="datepicker" 
+								class="datepicker" placeholder="달력 보기" value="${date}" />
+							<input class="form-control" style="display: inline-block; width: 100px; background-color: #343a40; color: white;" type="button" name="hostReservAddForm"
+								onclick="hostScheduleSearch();" value="조회" />
+						</div>
+						<div class="cd-schedule loading">
+							<div class="timeline">
+								<ul>
+									<li><span>10:00</span></li>
+									<li><span>10:30</span></li>
+									<li><span>11:00</span></li>
+									<li><span>11:30</span></li>
+									<li><span>12:00</span></li>
+									<li><span>12:30</span></li>
+									<li><span>13:00</span></li>
+									<li><span>13:30</span></li>
+									<li><span>14:00</span></li>
+									<li><span>14:30</span></li>
+									<li><span>15:00</span></li>
+									<li><span>15:30</span></li>
+									<li><span>16:00</span></li>
+									<li><span>16:30</span></li>
+									<li><span>17:00</span></li>
+									<li><span>17:30</span></li>
+									<li><span>18:00</span></li>
+									<li><span>18:30</span></li>
+									<li><span>19:00</span></li>
+									<li><span>19:30</span></li>
+									<li><span>20:00</span></li>
+								</ul>
+							</div>
+							
+							<!-- .timeline -->
+							<div class="events">
+								<ul>
+									<li class="events-group">
+										<div class="top-info" id="selectDay0">
+											<span><c:if test="${date == null}">선택날짜</c:if>${date}</span>
+										</div>
+										<ul>
+											<c:forEach var="vo1" items="${vos1}">
+												<li class="single-event" 
+													data-start="<fmt:formatDate type="both" pattern="HH:mm" value="${vo1.schedule_startTime}" />"
+													data-end="<fmt:formatDate type="both" pattern="HH:mm" value="${vo1.schedule_endTime}" />"
+													data-content="event-abs-circuit" data-event="event-3">
+													<a href="#0"><em class="event-name">${vo1.theater_index}관 ${vo1.movie_index}번 영화</em></a>
+												</li>
+											</c:forEach>
+										</ul>
+									</li>
+								</ul>
+								<div class="event-modal">
+									<header class="header">
+										<div class="content">
+											<span class="event-date"></span>
+											<h3 class="event-name"></h3>
+										</div>
+										<div class="header-bg"></div>
+									</header>
+									
+									<div class="body">
+										<div class="event-info"></div>
+										<div class="body-bg"></div>
+									</div>
+									<a href="#0" class="close">Close</a>
+								</div>
+								<div class="cover-layer"></div>
+							</div>
+							
+							<!-- .cd-schedule -->
+							<script src="${projectRes}chg/js/modernizr.js"></script>
+							<script>
+								if (!window.jQuery) {
+									document.write('<script src="/baobobs/resources/chg/js/jquery-3.0.0.min.js"><\/script>');
+								}
+							</script>
+							<script src="${projectRes}chg/js/main.js"></script>
+						</div>
+					</div>
 				</div>
-				<a href="#0" class="close">Close</a>
 			</div>
-			<div class="cover-layer"></div>
-		</div>
-		<!-- .cd-schedule -->
-		<script src="${projectRes}chg/js/modernizr.js"></script>
-		<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script> -->
-		<script>
-			if (!window.jQuery)
-				document
-						.write('<script src="/baobobs/resources/chg/js/jquery-3.0.0.min.js"><\/script>');
-		</script>
-		<script src="${projectRes}chg/js/main.js"></script>
-		<!-- Resource jQuery -->
-		<br><br>
 		</div>
 	</div>
 
