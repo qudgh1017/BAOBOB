@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 
 <%@ include file="/resources/setting.jsp" %>
+<script src="${projectRes}ymk/js/mainJS.js"></script>
 
 <c:if test="${cnt == 1}">
 	<script type="text/javascript">

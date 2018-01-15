@@ -186,4 +186,76 @@ public class Host_movieController {
 		
 		return "host/host_movie/hostScheduleAddPro";
 	}
+	
+	// 스케줄 상세 내용
+	@RequestMapping(value="hostScheduleDetail")
+	public String hostScheduleDetail(HttpServletRequest req, Model model) {
+		System.out.println("hostScheduleDetail");
+		
+		service.hostScheduleDetail(req, model);
+		
+		return "host/host_movie/hostScheduleDetail";
+	}
+	
+	// 스케줄 수정 처리
+	@RequestMapping(value="hostScheduleModPro")
+	public String hostScheduleModPro(HttpServletRequest req, Model model) {
+		System.out.println("hostScheduleModPro");
+		
+		service.hostScheduleModPro(req, model);
+		
+		return "host/host_movie/hostScheduleModPro";
+	}
+
+	// 스케줄 삭제 처리
+	@RequestMapping(value="hostScheduleDelPro")
+	public String hostScheduleDelPro(HttpServletRequest req, Model model) {
+		System.out.println("hostScheduleDelPro");
+		
+		service.hostScheduleDelPro(req, model);
+		
+		return "host/host_movie/hostScheduleDelPro";
+	}
+	
+	// 직원 관리
+	@RequestMapping(value="hostMovieEmp")
+	public String hostMovieEmp(HttpServletRequest req, Model model) {
+		System.out.println("hostMovieEmp");
+		
+		
+		
+		
+		return "host/host_movie/hostMovieEmp";
+	}
+	
+	// 직원 고용하기
+	@RequestMapping(value="hostMovieEmpAddForm")
+	public String hostMovieEmpAddForm(HttpServletRequest req, Model model) {
+		System.out.println("hostMovieEmpAddForm");
+		
+		
+		
+		
+		return "host/host_movie/hostMovieEmpAddForm";
+	}
+	
+	// 직원 고용을 위한 회원 아이디 확인하기
+	@RequestMapping(value="hostMovieEmpChkMemberId")
+	public String hostMovieEmpChkMemberId(HttpServletRequest req, Model model) {
+		System.out.println("hostMovieEmpChkMemberId");
+		
+		service.hostMovieEmpChkMemberId(req, model);
+		
+		return "host/host_movie/hostMovieEmpAddForm";
+	}
+	
+	// 직원 고용 처리
+	@RequestMapping(value="hostMovieEmpAddPro")
+	public String hostMovieEmpAddPro(HttpServletRequest req, Model model) {
+		System.out.println("hostMovieEmpAddPro");
+		
+		service.hostMovieEmpAddPro(req, model);
+		
+		return "host/host_movie/hostMovieEmpAddPro";
+	}
 }

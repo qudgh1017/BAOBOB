@@ -9,19 +9,19 @@
 <title>Insert title here</title>
 </head>
 <body>
-<%@ include file="../common/head.jsp" %>
+<%@ include file="../../common/head.jsp" %>
 
 <!-- Navigation -->
-<%@ include file="../common/navigation.jsp" %>
+<%@ include file="../../common/navigation.jsp" %>
 
 <!-- 개인정보 카드 -->
-<%@ include file="../common/memberCard.jsp" %>
+<%@ include file="../../common/memberCard.jsp" %>
 
 <section class="mypageSection">
 <table class=board>
 	<tr>
 		<!-- 사이드 메뉴 -->
-		<%@ include file="../common/sideMenu.jsp" %>	
+		<%@ include file="../../common/sideMenu.jsp" %>	
 
 		<!-- 알맹이 -->
 		<td style="padding:0px;margin:0px;width:100%;height:100%;">
@@ -84,9 +84,9 @@
 </section>
 	
 <!-- Footer -->
-<%@ include file="../common/footer.jsp" %>
+<%@ include file="../../common/footer.jsp" %>
 	
 <!-- FooterCopyright -->
-<%@ include file="../common/footerCopyright.jsp" %>
+<%@ include file="../../common/footerCopyright.jsp" %>
 </body>
 </html>

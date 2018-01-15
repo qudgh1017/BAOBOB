@@ -67,6 +67,28 @@ public class MainServiceImpl implements MainService {
 		}
 		model.addAttribute("cnt", cnt);
 	}
+	
+
+	//비밀번호 찾기
+	public void mainPwdEmail(HttpServletRequest req, Model model) {
+		String key = emailSend(req); //메일 전송
+		String email = req.getParameter("email");
+		
+		//아이디 존재 확인
+		String id = dao.memberEmailId(email);
+		
+		int cnt = 0;
+		if(id != null) {
+			Map<String, String> map = new HashMap<String, String>();
+			map.put("member_key", key);
+			map.put("member_id", id);
+			cnt = dao.memberKeyInsert(map); //인증키 저장
+		} else {
+			cnt = 9;
+			System.out.println("mainPwdEmail cnt - " + cnt);
+		}
+		model.addAttribute("cnt", cnt);
+	}
 
 	// 인증 메일 전송
 	@Override
@@ -111,11 +133,30 @@ public class MainServiceImpl implements MainService {
 			map.put("member_id",  id);
 			map.put("member_step", "9");
 			cnt = dao.memberStepUpdate(map);
-			dao.memberKeyDelete(id);
+			dao.memberKeyDelete(key);
 		}
 		model.addAttribute("cnt", cnt);
 	}
 
+	//비밀번호 찾기 이메일 인증
+	public void confirmPwdEmail(HttpServletRequest req, Model model) {
+		String email = req.getParameter("email");
+		String key = req.getParameter("key");
+		
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("member_email",  email);
+		map.put("member_key", key);
+		String pwd = dao.memberConfirmPwdKey(map);
+		
+		int cnt = 0;
+		if(pwd != null) {
+			cnt = dao.memberKeyDelete(key);
+			System.out.println(cnt);
+		}
+		model.addAttribute("cnt", cnt);
+		model.addAttribute("pwd", pwd);
+	}
+	
 	//로그인 처리
 	@Override
 	public void signInPro(HttpServletRequest req, Model model) {
@@ -136,6 +177,38 @@ public class MainServiceImpl implements MainService {
 			cnt = 1;
 		}
 		
+		model.addAttribute("cnt", cnt);
+	}
+
+	//firebase - facebook 로그인
+	@Override
+	public void firebaseLoginPro(HttpServletRequest req, Model model) {
+		String userId = req.getParameter("userId");
+		String userName = req.getParameter("userName");
+		String userEmail = req.getParameter("userEmail");
+		
+		int cnt = dao.getMemberCheck(userId);
+		if(cnt == 0) {
+			Member m = new Member();
+			m.setMember_id(userId);
+			m.setMember_pwd("null");
+			m.setMember_name(userName);
+			m.setMember_tel("null");
+			m.setMember_email(userEmail);
+			m.setMember_birth("null");
+			m.setMember_sex("null");
+			m.setMember_address("null");
+			m.setMember_point(0);
+			m.setMember_step(9);
+			m.setMember_cumPoint(0);
+
+			cnt = dao.memberInsert(m);
+		} else {
+			req.getSession().setAttribute("memId", userId);
+			cnt = 1;
+		}
+		
+		System.out.println("id " + userId + "/" + userName + "/" + userEmail);
 		model.addAttribute("cnt", cnt);
 	}
 	

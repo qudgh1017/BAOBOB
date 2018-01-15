@@ -11,8 +11,14 @@ public interface Member_mypageDAO {
 	//1:1문의 글갯수 구하기
 	public int getArticleCnt();
 	
+	//분실물문의 글갯수 구하기
+	public int getArticleLCnt();
+	
 	//1:1문의글 목록 조회
 	public ArrayList<BoardVO> getArticleList(Map<String, Integer> map);
+	
+	//분실물 문의글 목록 조회
+	public ArrayList<BoardVO> getArticleLList(Map<String, Integer> map);
 	
 	//1:1문의 상세페이지 가져오기
 	public BoardVO getArticle(int num);
@@ -35,6 +41,9 @@ public interface Member_mypageDAO {
 	//1:1문의 작성
 	public int insertQuestion(BoardVO dto);
 	
+	//분실물 문의 작성
+	public int insertLost(BoardVO dto);
+	
 	//답글이 존재하는지 여부
 	public int checkReply(BoardVO dto);
 	
@@ -55,6 +64,9 @@ public interface Member_mypageDAO {
 	
 	//회원정보 수정 처리
 	public int updateMember(Member vo);
+	
+	//회원탈퇴 처리
+	public int memPDelPro(String strId);
 	
 
 }

@@ -7,6 +7,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import spring.mvc.baobob.vo.Member;
 import spring.mvc.baobob.vo.MovieVO;
 import spring.mvc.baobob.vo.TheaterVO;
 import spring.mvc.baobob.vo.Theater_scheduleVO;
@@ -256,6 +257,95 @@ public class Host_movieDAOImpl implements Host_movieDAO {
 		
 		Host_movieDAO dao = sqlSession.getMapper(Host_movieDAO.class);
 		cnt = dao.hostScheduleAddPro(map);
+		
+		return cnt;
+	}
+
+	// 스케줄 상세
+	@Override
+	public Theater_scheduleVO hostScheduleDetail(int theater_schedule_index) {
+		Theater_scheduleVO vo = null;
+		
+		Host_movieDAO dao = sqlSession.getMapper(Host_movieDAO.class);
+		vo = dao.hostScheduleDetail(theater_schedule_index);
+		
+		return vo;
+	}
+
+	// 스케줄 수정 - 선택한 시간에 다른 스케줄이 있는지 확인
+	@Override
+	public int chkCnt(Map<String, Object> map) {
+		int cnt = 0;
+		
+		Host_movieDAO dao = sqlSession.getMapper(Host_movieDAO.class);
+		cnt = dao.chkCnt(map);
+		
+		return cnt;
+	}
+
+	// 스케줄 수정 처리
+	@Override
+	public int updateSchedule(Map<String, Object> map) {
+		int cnt = 0;
+		
+		Host_movieDAO dao = sqlSession.getMapper(Host_movieDAO.class);
+		cnt = dao.updateSchedule(map);
+		
+		return cnt;
+	}
+
+	// 스케줄 삭제 처리
+	@Override
+	public int hostScheduleDelPro(int theater_schedule_index) {
+		int cnt = 0;
+		
+		Host_movieDAO dao = sqlSession.getMapper(Host_movieDAO.class);
+		cnt = dao.hostScheduleDelPro(theater_schedule_index);
+		
+		return cnt;
+	}
+
+	
+	// 직원 고용 아이디 확인
+	@Override
+	public int hostMovieEmpChkMemberId(String member_id) {
+		int cnt = 0;
+		
+		Host_movieDAO dao = sqlSession.getMapper(Host_movieDAO.class);
+		cnt = dao.hostMovieEmpChkMemberId(member_id);
+		
+		return cnt;
+	}
+
+	// 아이디로 고용할 직원 정보 가져오기
+	@Override
+	public Member hostMovieEmpInfo(String member_id) {
+		Member vo = null;
+		
+		Host_movieDAO dao = sqlSession.getMapper(Host_movieDAO.class);
+		vo = dao.hostMovieEmpInfo(member_id);
+		
+		return vo;
+	}
+
+	// 고용할 직원의 아이디 state 변경
+	@Override
+	public int memberChangeState(String member_id) {
+		int cnt = 0;
+		
+		Host_movieDAO dao = sqlSession.getMapper(Host_movieDAO.class);
+		cnt = dao.memberChangeState(member_id);
+		
+		return cnt;
+	}
+
+	// 영화 직원 목록에 추가하기
+	@Override
+	public int insertEmp(Map<String, Object> map) {
+		int cnt = 0;
+		
+		Host_movieDAO dao = sqlSession.getMapper(Host_movieDAO.class);
+		cnt = dao.insertEmp(map);
 		
 		return cnt;
 	}

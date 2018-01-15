@@ -202,10 +202,39 @@ public class Host_restaurantController {
 	// 식당[1] 예약 리스트
 	@RequestMapping(value = "/hostReservList")
 	public String hostReservList(HttpServletRequest req, Model model) {
-		log.debug("hostReservList");
+		log.debug("hostReservList()");
 		
 		service.hostReservList(req, model);
 		
 		return "host/host_restaurant/hostReservList";
+	}
+	
+	// 식당[1] 예약 페이지
+	@RequestMapping(value = "/hostReservAddForm")
+	public String hostReservAddForm(HttpServletRequest req, Model model) {
+		log.debug("hostReservAddForm()");
+				
+		return "host/host_restaurant/hostReservAddForm";
+	}
+	
+	// 식당[1] 예약 - 테이블 선택 위한 매장 내 테이블 조회
+	@RequestMapping(value="checkPosRestaurant")
+	public String checkPosRestaurant(HttpServletRequest req, Model model) {
+		log.debug("checkPosRestaurant()");
+
+		service.restaurantView(req, model);
+		model.addAttribute("confirm", 1);
+		
+		return "host/host_restaurant/hostReservAddForm";
+	}
+
+	// 식당[1] 예약 처리
+	@RequestMapping(value = "/hostReservAddPro")
+	public String hostReservAddPro(HttpServletRequest req, Model model) {
+		log.debug("hostReservAddPro()");
+
+		service.reservAdd(req, model);
+
+		return "host/host_restaurant/hostReservAddPro";
 	}
 }

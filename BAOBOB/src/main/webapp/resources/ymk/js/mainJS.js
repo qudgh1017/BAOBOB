@@ -165,3 +165,8 @@ function signInChk() {
 		return false;
 	}
 }
+
+function mainPwdEmail() {
+	var email = document.getElementById('email').value;
+	window.location = 'mainPwdEmail?email=' + email;
+}

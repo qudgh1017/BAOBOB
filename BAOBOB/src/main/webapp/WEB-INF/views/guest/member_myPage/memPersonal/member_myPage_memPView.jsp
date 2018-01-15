@@ -8,24 +8,24 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>1 : 1 문의</title>
+<title>My Page</title>
 </head>
 <body>
 <!-- 비밀번호 일치시 -->
 <c:if test="${selectCnt==1}">
-<%@ include file="../common/head.jsp" %>
+<%@ include file="../../common/head.jsp" %>
 
 <!-- Navigation -->
-<%@ include file="../common/navigation.jsp" %>
+<%@ include file="../../common/navigation.jsp" %>
 
 <!-- 개인정보 카드 -->
-<%@ include file="../common/memberCard.jsp" %>
+<%@ include file="../../common/memberCard.jsp" %>
 
 <section class="mypageSection">
 <table class="board">
 	<tr>
 		<!-- 사이드 메뉴 -->
-		<%@ include file="../common/sideMenu.jsp" %>
+		<%@ include file="../../common/sideMenu.jsp" %>
 		
 		<!-- 알맹이td -->
 		<td style="padding:0rem 10rem;margin:0px;width:100%;height:100%;">
@@ -115,6 +115,12 @@
 					        <fmt:formatDate type="both" pattern="yyyy-MM-dd HH:mm" value="${vo.getMember_reg_date()}" />
 					        </td>
 					    </tr>
+					    <tr>
+					    	<th colspan="2">
+								<input type="button" class="button" value="회원 탈퇴" style="width:150px; margin-top:0px" 
+									onclick="window.location='memPDelForm'">					    
+					    	</th>
+					    </tr>
 					    <tr style="align:center">
 							<td colspan="2" style="border-bottom: none;">
 								<input type="submit" class="button" value="  Done  ">
@@ -142,9 +148,9 @@
 </c:if>
 
 <!-- Footer -->
-<%@ include file="../common/footer.jsp" %>
+<%@ include file="../../common/footer.jsp" %>
 	
 <!-- FooterCopyright -->
-<%@ include file="../common/footerCopyright.jsp" %>
+<%@ include file="../../common/footerCopyright.jsp" %>
 </body>
 </html>

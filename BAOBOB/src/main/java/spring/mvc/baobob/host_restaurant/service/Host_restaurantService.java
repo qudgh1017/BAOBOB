@@ -58,4 +58,7 @@ public interface Host_restaurantService {
 
 	// 식당[1] 예약 리스트
 	public void hostReservList(HttpServletRequest req, Model model);
+
+	// 식당[1] 예약 추가
+	public void reservAdd(HttpServletRequest req, Model model);
 }

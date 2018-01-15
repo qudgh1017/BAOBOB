@@ -5,44 +5,6 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
-<style type="text/css">
-	body .p_body {
-		min-height: 450px;
-	}
-	
-	body .p_div {
-		display: flex;
-		justify-content: center;
-	} /* flex-wrap:wrap; */
-	.m_btn {
-		width: 40px;
-		height: auto;
-		background: lightgray;
-		border: transparent;
-		border-radius: 0.2em;
-		padding: 5px;
-		margin: 2px;
-	}
-	
-	.p_img {
-		width: 100%;
-		height: auto;
-	}
-		
-	#spaceDiv .p_btn {
-		max-width: 40px;
-		height: fit-content;
-		background: lightgray;
-		border: transparent;
-		border-radius: 0.2em;
-		padding: 5px;
-		margin: 2px;
-	} /* flex:1 0 120px; */
-	
-	.card-body .form-control {
-		margin-top: 5px;
-	}
-</style>
 <link href="${restaurant_css}" rel="stylesheet" type="text/css">
 <script src="${restaurant_js}"></script>
 </head>
@@ -87,7 +49,7 @@
 				</div>
 			</div>
 		</div>
-	</div> 
+	</div>
 	
 	<!-- Footer -->
 	<%@ include file="_footer.jsp" %>

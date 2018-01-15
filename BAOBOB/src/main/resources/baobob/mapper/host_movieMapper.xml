@@ -163,4 +163,60 @@
 		   AND theater_index = #{theater_index}
 		]]>
 	</select>
+	
+	<!-- 스케줄 상세 -->
+	<select id="hostScheduleDetail" resultType="spring.mvc.baobob.vo.Theater_scheduleVO">
+		SELECT * FROM theater_schedule_tbl WHERE theater_schedule_index = #{theater_schedule_index}
+	</select>
+	
+	<!-- 스케줄 수정 - 선택한 시간에 다른 스케줄이 있는지 확인 -->
+	<select id="chkCnt" resultType="int">
+		<![CDATA[
+		SELECT count(*) 
+		  FROM theater_schedule_tbl 
+		 WHERE (schedule_startTime > to_char(to_date(#{schedule_startTime}, 'YY-MM-DD-HH24-MI')-3/24, 'YY-MM-DD-HH24-MI') 
+		   AND (to_char(to_date(#{schedule_startTime}, 'YY-MM-DD-HH24-MI')+4/24, 'YY-MM-DD-HH24-MI') >	schedule_endTime))
+		   AND theater_schedule_index IN (select theater_schedule_index FROM theater_schedule_tbl WHERE NOT theater_schedule_index = #{theater_schedule_index})
+		   AND theater_index = #{theater_index}
+	   ]]>
+	</select>
+	
+	<!-- 스케줄 수정 처리 -->
+	<update id="updateSchedule" parameterType="java.util.Map">
+		UPDATE theater_schedule_tbl 
+   		   SET schedule_startTime = #{schedule_startTime}, 
+       		   schedule_startDate = #{schedule_startTime}, 
+       		   movie_index = #{movie_index},
+       		   theater_index = #{theater_index},
+       	 	   schedule_endTime = to_char(to_date(#{schedule_startTime}, 'YY-MM-DD-HH24-MI')+(SELECT movie_runTime 
+                                                                                  		        FROM movie_tbl 
+                                                                                  		       WHERE movie_index=#{movie_index})/24/60, 'YY-MM-DD-HH24-MI'), 
+      		   schedule_MDNstate =  #{schedule_MDNstate} 
+	    WHERE theater_schedule_index = #{theater_schedule_index}
+	</update>
+	
+	<!-- 스케줄 삭제 처리 -->
+	<delete id="hostScheduleDelPro" parameterType="int">
+		DELETE theater_schedule_tbl WHERE theater_schedule_index = #{theater_schedule_index}
+	</delete>
+	
+	<!-- 직원 고용 아이디 확인 -->
+	<select id="hostMovieEmpChkMemberId" resultType="int">
+		SELECT count(*) FROM member_tbl WHERE member_id = #{member_id}
+	</select>
+	
+	<!-- 아이디로 고용할 직원 정보 가져오기 -->
+	<select id="hostMovieEmpInfo" resultType="spring.mvc.baobob.vo.Member">
+		SELECT * FROM member_tbl WHERE member_id=#{member_id}
+	</select>
+	
+	<!-- 고용할 직원의 아이디 state 변경 -->
+	<update id="memberChangeState" parameterType="String">
+		UPDATE member_tbl SET member_step = 3 WHERE member_id = #{member_id}
+	</update>
+	
+	<!-- 영화 직원 목록에 추가하기 -->
+	<insert id="insertEmp" parameterType="java.util.Map">
+		INSERT INTO employee_tbl VALUES(employee_tbl_SEQ.NEXTVAL, #{member_id}, #{employee_jumin2}, SYSDATE)
+	</insert>
 </mapper>

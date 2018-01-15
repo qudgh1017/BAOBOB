@@ -6,6 +6,9 @@ import org.springframework.ui.Model;
 
 public interface Host_parkingService {
 
+	//주차장 메인
+	public void hostParkingMain(HttpServletRequest req, Model model);
+	
 	//주차장 구역 정보
 	public void getParkingSpace(HttpServletRequest req, Model model);
 	
@@ -15,12 +18,20 @@ public interface Host_parkingService {
 	//해당 주차 구역 정보
 	public void getSpaceState(HttpServletRequest req, Model model);
 	
-	//주차장 실시간 현황
+	//주차장 실시간 상태
 	public void getParkingSpaceState(HttpServletRequest req, Model model);
 	
+	//주차 현황  차트
+	public void getHostParkingChart(HttpServletRequest req, Model model);
 	//주차 내역
-	public void getParkingHistory(HttpServletRequest req, Model model);
+	/*public void getParkingHistory(HttpServletRequest req, Model model);*/
+	
+	//주차 현황  차트 - ajax 월별
+	public void getHostParkingChartMonth(HttpServletRequest req, Model model);
 	
 	//납부 내역(출차한 차량만)
 	public void getParkingPayList(HttpServletRequest req, Model model);
+	
+	//납부 현황
+	public void getParkingPayChart(HttpServletRequest req, Model model);
 }

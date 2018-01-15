@@ -12,19 +12,19 @@
 </head>
 <body>
 
-<%@ include file="../common/head.jsp" %>
+<%@ include file="../../common/head.jsp" %>
 
 <!-- Navigation -->
-<%@ include file="../common/navigation.jsp" %>
+<%@ include file="../../common/navigation.jsp" %>
 
 <!-- 개인정보 카드 -->
-<%@ include file="../common/memberCard.jsp" %>
+<%@ include file="../../common/memberCard.jsp" %>
 
 <section class="mypageSection">
 <table class="board">
 	<tr>
 		<!-- 사이드 메뉴 -->
-		<%@ include file="../common/sideMenu.jsp" %>	
+		<%@ include file="../../common/sideMenu.jsp" %>	
 		
 		<td style="padding:0rem 10rem; margin:0px;width:100%;height:100%;">
 		<!-- 알맹이td -->
@@ -45,7 +45,7 @@
 			<c:if test="${cnt > 0 }">
 				<c:forEach var="dto" items="${dtos}">
 					<!-- 게시글 -->
-					<c:if test="${dto.board_type eq 02}">
+					<%-- <c:if test="${dto.board_type eq 2}"> --%>
 				    <tbody>
 				    <tr>
 				    	<th style="text-align:center;">
@@ -80,7 +80,7 @@
 				        <td>${dto.board_ip}</td>
 				    </tr>
 				    </tbody>
-				    </c:if>
+				    <%-- </c:if> --%>
 			    </c:forEach>
 			    <tr>
 			    	<td colspan="6" style="border-bottom: none; text-align:right;">
@@ -117,7 +117,6 @@
 					<c:if test="${i != currentPage}">
 						<a href="memQuestion?pageNum=${i}">[${i}]</a>
 					</c:if>
-					
 				</c:forEach>
 				
 				<c:if test="${pageCount > endPage }">
@@ -132,9 +131,9 @@
 </section>
 	
 <!-- Footer -->
-<%@ include file="../common/footer.jsp" %>
+<%@ include file="../../common/footer.jsp" %>
 	
 <!-- FooterCopyright -->
-<%@ include file="../common/footerCopyright.jsp" %>	
+<%@ include file="../../common/footerCopyright.jsp" %>	
 </body>
 </html>

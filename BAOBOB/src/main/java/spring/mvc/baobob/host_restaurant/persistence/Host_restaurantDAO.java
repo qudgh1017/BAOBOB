@@ -93,4 +93,7 @@ public interface Host_restaurantDAO {
 
 	// 식당[1] 직원 정보 삭제
 	public int delEmployee(Map<String, Object> map);
+
+	// 식당[1] 예약 추가
+	public int addReserv(Map<String, Object> map);
 }
