@@ -319,4 +319,15 @@ public class Host_restaurantDAOImpl implements Host_restaurantDAO {
 
 		return dao.delEmployee(map);
 	}
+
+	// 식당[1] 예약 추가
+	@Override
+	public int addReserv(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		log.debug("dao.addReserv()");
+
+		Host_restaurantDAO dao = sqlSession.getMapper(Host_restaurantDAO.class);
+
+		return dao.addReserv(map);
+	}
 }

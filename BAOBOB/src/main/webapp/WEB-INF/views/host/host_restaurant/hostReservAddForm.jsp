@@ -67,7 +67,7 @@
 									<tr>
 										<td colspan="2" style="text-align: center;">
 											<div class="container-fluid row">
-												<div class="col-lg-10">
+												<div class="col-lg-9">
 													<div class="card mb-3" align="center">
 														<div class="card-header"><b>테이블 선택</b></div>
 														<div class="card-body p_body">
@@ -75,15 +75,15 @@
 														</div>
 													</div>
 												</div>
-												<div class="col-lg-2">
+												<div class="col-lg-3">
 													<div class="card mb-3">
 														<div class="card-header">매장 설정</div>
 														<div class="card-body">
 															<input class="form-control" id="widthX" type="number" style="display: none;" min="1" max="100" value="${col}" onload="spaceDivChange();" onchange="spaceDivChange();" required><br>
 															<input class="form-control" id="heightY" type="number" style="display: none;" min="1" max="100" value="${row}" onload="spaceDivChange();" onchange="spaceDivChange();" required>
 															
-															<button class="m_btn" onclick="spaceType('3')"><img class="p_img" src="${restaurant_images}icon_tmp.png"></button>
-															<button class="m_btn" onclick="spaceType('4')"><img class="p_img" src="${restaurant_images}table.jpg"></button>
+															<button class="m_btn" onclick="spaceType('0')"><img class="p_img" src="${restaurant_images}icon_tmp.png"></button>
+															<button class="m_btn" onclick="spaceType('1')"><img class="p_img" src="${restaurant_images}table.jpg"></button>
 														</div>
 														<div class="card-footer small text-muted">
 															<button class="btn btn-primary" value="1" onclick="spaceTypeChange2('1');">예약</button>

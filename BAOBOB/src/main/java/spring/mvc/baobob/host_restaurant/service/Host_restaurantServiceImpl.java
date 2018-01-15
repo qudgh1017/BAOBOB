@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -470,26 +471,44 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 		int row = Integer.parseInt(req.getParameter("row"));
 		int col = Integer.parseInt(req.getParameter("col"));
 		String info = req.getParameter("info");
-		String date = req.getParameter("date");
-		String time = req.getParameter("time");
-		String start = date + "-" + time;
+		
+		String date = "20" + req.getParameter("date");
+		String time = req.getParameter("time") + ":00";
+		String startTime = date + " " + time;
+		String[] end = time.split(":");
+		
+		if(end[1] == "00") {
+			end[1] = "30";
+		} else if(end[1] == "30") {
+			end[0] = String.valueOf((Integer.parseInt(end[0]) + 1));
+			end[1] = "00";
+		}
+		
+		String endTime = end[0] + ":" + end[1] + ":00";
+		endTime = date + " " + endTime;
 
-		System.out.println("date : " + date);
-		System.out.println("time : " + time);
-		System.out.println("start : " + start);
-		/*
+		System.out.println("startTime : " + startTime);
+		System.out.println("endTime : " + endTime);
+		
 		RestaurantVO dto = new RestaurantVO();
 		dto.setRestaurant_index(req.getParameter("index"));
 		
 		cnt = dao.resetTable(dto);
 
-		TableVO dto2 = new TableVO();
 		Restaurant_scheduleVO dto3 = new Restaurant_scheduleVO();
-		
+
+		dto3.setSchedule_startDate(Timestamp.valueOf(startTime));
+		dto3.setSchedule_startTime(Timestamp.valueOf(startTime));
+		dto3.setSchedule_endTime(Timestamp.valueOf(endTime));
+
+		TableVO dto2 = new TableVO();
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("dto", dto);
 		map.put("dto2", dto2);
+		map.put("dto3", dto3);
 
+		cnt = dao.addReserv(map);
+		
 		if (cnt != 0) {
 			String[] state = info.split(",");
 
@@ -512,6 +531,5 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 		}
 
 		model.addAttribute("cnt", cnt);
-		*/
 	}
 }
