@@ -205,8 +205,6 @@ public class Guest_movieServiceImpl implements Guest_movieService{
 		if(movie != null) {
 			model.addAttribute("movie",movie);
 		}
-		
-		
 	}
 
 	//검색결과 리스트
@@ -310,6 +308,16 @@ public class Guest_movieServiceImpl implements Guest_movieService{
 			model.addAttribute("pageCount", pageCount);// 페이지 갯수
 			model.addAttribute("currentPage", currentPage);// 현재 페이지
 		}
+		
+	}
+
+	//영화 리뷰작성처리
+	@Override
+	public void movieReviewPro(HttpServletRequest req, Model model) {
+		String review_grade = req.getParameter("review_grade");
+		String member_id = req.getParameter("memId");
+		String review_content = req.getParameter("review_content");
+		
 		
 	}
 	

@@ -4,20 +4,21 @@ import java.util.List;
 
 public class MovieReviewVO {
 
-	private List<MovieVO> movies;
-	private List<ReviewVO> reviews;
+	private MovieVO movie;
+	private ReviewVO review;
 	
-	public List<MovieVO> getMovies() {
-		return movies;
+	public MovieVO getMovie() {
+		return movie;
 	}
-	public void setMovies(List<MovieVO> movies) {
-		this.movies = movies;
+	public void setMovie(MovieVO movie) {
+		this.movie = movie;
 	}
-	public List<ReviewVO> getReviews() {
-		return reviews;
+	public ReviewVO getReview() {
+		return review;
 	}
-	public void setReviews(List<ReviewVO> reviews) {
-		this.reviews = reviews;
+	public void setReview(ReviewVO review) {
+		this.review = review;
 	}
+
 	
 }

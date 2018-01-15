@@ -117,7 +117,7 @@ public class Guest_movieController {
 	public String movieReviewPro(HttpServletRequest req, Model model) {
 		log.debug("====== Guest_movieController/movieReviewPro ======");
 		
-		
+		gmservice.movieReviewPro(req, model);
 		
 		return "/guest/guest_movie/movie/movieReviewPro";
 	}

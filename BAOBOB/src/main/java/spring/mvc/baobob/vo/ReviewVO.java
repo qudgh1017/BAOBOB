@@ -6,7 +6,7 @@ public class ReviewVO {
 	private int review_index;
 	private String review_grade;
 	private String review_content;
-	private List<Member> members;
+	private Member member;
 	
 	public int getReview_index() {
 		return review_index;
@@ -26,11 +26,12 @@ public class ReviewVO {
 	public void setReview_content(String review_content) {
 		this.review_content = review_content;
 	}
-	public List<Member> getMembers() {
-		return members;
+	public Member getMember() {
+		return member;
 	}
-	public void setMembers(List<Member> members) {
-		this.members = members;
+	public void setMember(Member member) {
+		this.member = member;
 	}
+	
 	
 }
