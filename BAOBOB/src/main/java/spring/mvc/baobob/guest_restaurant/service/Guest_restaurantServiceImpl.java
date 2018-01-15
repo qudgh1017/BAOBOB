@@ -162,9 +162,10 @@ public class Guest_restaurantServiceImpl implements Guest_restaurantService{
 		ReviewVO dto = new ReviewVO();
 		dto.setReview_grade(review_grade);
 		dto.setReview_content(review_content);
+		//dto.setReview_state(review_state);
 		dto.setMember_id(member_id);
 		
-		//º°Á¡/¸®ºä/ review_grade, review_content, member_id, review_date 
+		//º°Á¡/¸®ºä/ review_grade, review_content, member_id, review_reg_date  
 		int insertCnt = dao.insertReviewPro(dto);
 		
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -172,6 +173,7 @@ public class Guest_restaurantServiceImpl implements Guest_restaurantService{
 		
 		int insertCnt2 = dao.insertRestaurant_review_Pro(map);
 		
+		System.out.println("===== State : " + dto.getReview_state() +" =====");
 		model.addAttribute("restaurant_index", restaurant_index);
 		model.addAttribute("insertCnt", insertCnt);
 		System.out.println("restaurant_index : "+ restaurant_index);
@@ -180,7 +182,6 @@ public class Guest_restaurantServiceImpl implements Guest_restaurantService{
 
 	}
 
-	
 	
 	//4-3-2. ¸®ºä ¼öÁ¤
 	@Override
@@ -226,7 +227,7 @@ public class Guest_restaurantServiceImpl implements Guest_restaurantService{
 		System.out.println("pageNum : " + pageNum);
 	}
 	
-	//4-3-3
+	//4-3-3 ¸®ºä ¼öÁ¤
 	@Override
 	public void review_modeifyPro(HttpServletRequest req, Model model) {
 		System.out.println("===== ¸®ºä ¼öÁ¤ Ã³¸® review_modeifyPro - ½ÃÀÛ =====");

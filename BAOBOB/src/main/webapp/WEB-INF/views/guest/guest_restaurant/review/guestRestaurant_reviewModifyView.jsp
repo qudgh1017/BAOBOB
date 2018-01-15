@@ -43,7 +43,7 @@
 				<tr>
 					<th>날짜</th> 
 					<td>
-						${dto.review_date}
+						${dto.review_reg_date}
 					</td>
 				</tr>
 				

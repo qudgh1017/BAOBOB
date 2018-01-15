@@ -147,7 +147,7 @@
 								<tr>
 									<th><h6>날짜</h6></th> 
 									<td>
-										<fmt:formatDate type="both" pattern="yyyy/MM:dd HH:mm" value="${dto.review_date}"/>
+										<fmt:formatDate type="both" pattern="yyyy/MM:dd HH:mm" value="${dto.review_reg_date}"/>
 									</td>
 								</tr>
 								<br>

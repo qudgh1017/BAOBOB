@@ -20,7 +20,7 @@ public class Guest_restaurantController {
 	//==========================================================================
 	//=============================== 레스토랑 선택  ===============================
 	//==========================================================================
-	//레스토랑 선택 페이지(레스토랑 선택)
+	//레스토랑 선택 페이지(레스토랑 선택)review_date
 	@RequestMapping("guestRestaurantList")
 	public String guestRestaurantList(HttpServletRequest req, Model model) {
 		//log.debug("===== Guest_restaurantController/guestRestaurantList() =====");

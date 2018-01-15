@@ -50,26 +50,26 @@
             review_grade,
             review_content,   
             member_id,
-            review_date 
+            review_reg_date  
 	  FROM (SELECT  rrt.restaurant_index restaurant_index,
                     rt.review_index review_index,
                     review_grade,
                     review_content,   
                     member_id,
-                    review_date
+                    review_reg_date 
               FROM  review_tbl rt
               JOIN  restaurant_review_tbl rrt
                 ON  rt.review_index=rrt.review_index
-            ORDER BY review_date desc
+            ORDER BY review_reg_date  desc
             )
 	 WHERE restaurant_index=#{restaurant_index}
 	</select>
 	
 	<!--===== 4-2-1. 리뷰 추가(Review_tbl) =====-->
 	<insert id="insertReviewPro" parameterType="spring.mvc.baobob.vo.ReviewVO">
-	INSERT INTO review_tbl(review_index, review_grade, review_content, member_id, review_date) 
-	VALUES (review_tbl_SEQ.nextval, #{review_grade}, #{review_content}, #{member_id}, sysdate)
-	</insert>
+	INSERT INTO review_tbl(review_index, review_grade, review_content, member_id, review_state, review_reg_date ) 
+	VALUES (review_tbl_SEQ.nextval, #{review_grade}, #{review_content}, #{member_id}, 2, sysdate)
+	</insert><!-- review_state : 2 = 레스토랑  -->
 	
 	<!--===== 4-2-2. 리뷰 추가(Restaurant_review_tbl) =====-->
 	<insert id="insertRestaurant_review_Pro" parameterType="java.util.Map">
