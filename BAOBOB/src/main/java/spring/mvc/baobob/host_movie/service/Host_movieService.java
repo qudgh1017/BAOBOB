@@ -61,4 +61,10 @@ public interface Host_movieService {
 	// 스케줄 삭제 처리
 	public void hostScheduleDelPro(HttpServletRequest req, Model model);
 	
+	// 직원 고용 아이디 확인
+	public void hostMovieEmpChkMemberId(HttpServletRequest req, Model model);
+	
+	// 직원 고용 처리
+	public void hostMovieEmpAddPro(HttpServletRequest req, Model model);
+	
 }

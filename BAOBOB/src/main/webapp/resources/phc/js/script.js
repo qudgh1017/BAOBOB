@@ -219,3 +219,15 @@ function chkScheduleAdd(){
 	}
 	
 }
+
+// 직원으로 고용할 아이디 확인
+function chkId(){
+	if(!document.hostMovieEmpAddForm.member_id.value){
+		alert("직원 아이디를 입력하세요");
+		document.hostMovieEmpAddForm.member_id.focus();
+		return false;
+	}else{
+		var member_id = document.hostMovieEmpAddForm.member_id.value;
+		window.location="hostMovieEmpChkMemberId?member_id="+member_id;
+	}
+}

@@ -3,6 +3,7 @@ package spring.mvc.baobob.host_movie.persistence;
 import java.util.ArrayList;
 import java.util.Map;
 
+import spring.mvc.baobob.vo.Member;
 import spring.mvc.baobob.vo.MovieVO;
 import spring.mvc.baobob.vo.TheaterVO;
 import spring.mvc.baobob.vo.Theater_scheduleVO;
@@ -87,4 +88,16 @@ public interface Host_movieDAO {
 	
 	// 스케줄 삭제 처리
 	public int hostScheduleDelPro(int theater_schedule_index);
+	
+	// 직원 고용 아이디 확인
+	public int hostMovieEmpChkMemberId(String member_id);
+	
+	// 아이디로 고용할 직원 정보 가져오기
+	public Member hostMovieEmpInfo(String member_id);
+	
+	// 고용학 직원 아이디의 state 변경
+	public int memberChangeState(String member_id);
+	
+	// 영화 직원 목록에 추가하기
+	public int insertEmp(Map<String, Object> map);
 }

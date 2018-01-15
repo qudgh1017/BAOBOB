@@ -22,6 +22,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import spring.mvc.baobob.host_movie.persistence.Host_movieDAO;
 import spring.mvc.baobob.host_movie.persistence.Host_movieDAOImpl;
+import spring.mvc.baobob.vo.Member;
 import spring.mvc.baobob.vo.MovieVO;
 import spring.mvc.baobob.vo.TheaterVO;
 import spring.mvc.baobob.vo.Theater_scheduleVO;
@@ -780,6 +781,47 @@ public class Host_movieServiceImpl implements Host_movieService{
 		int cnt = dao.hostScheduleDelPro(theater_schedule_index);
 		
 		model.addAttribute("cnt", cnt);
+	}
+
+	
+	// 직원 고용 아이디 확인
+	@Override
+	public void hostMovieEmpChkMemberId(HttpServletRequest req, Model model) {
+		String member_id = req.getParameter("member_id");
+		
+		int idCnt = dao.hostMovieEmpChkMemberId(member_id);
+		
+		if(idCnt != 0) {
+			Member vo = dao.hostMovieEmpInfo(member_id); 	// 아이디로 고용할 직원 정보 가져오기
+			model.addAttribute("vo", vo);
+		}
+		
+		model.addAttribute("member_id", member_id);
+		model.addAttribute("idCnt", idCnt);
+	}
+
+	// 직원 고용 처리
+	@Override
+	public void hostMovieEmpAddPro(HttpServletRequest req, Model model) {
+		String member_id = req.getParameter("member_id");
+		String employee_jumin2 = req.getParameter("employee_jumin2");
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("member_id", member_id);
+		map.put("employee_jumin2", employee_jumin2);
+		
+		int cnt = dao.memberChangeState(member_id);
+		
+		if(cnt == 1) {
+			int insertCnt = dao.insertEmp(map);
+			if(insertCnt==1) {
+				cnt = 1;
+			}else {
+				cnt = 0;
+			}
+		}
+		model.addAttribute("cnt", cnt);
+		
 	}
 
 	
