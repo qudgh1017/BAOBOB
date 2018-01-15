@@ -18,4 +18,6 @@ public interface Guest_movieService {
 	//무비파인더 검색결과
 	public void searchResult(HttpServletRequest req, Model model);
 	
+	
+	
 }

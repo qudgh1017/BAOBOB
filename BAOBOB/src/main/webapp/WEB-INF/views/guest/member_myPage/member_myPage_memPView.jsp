@@ -19,57 +19,17 @@
 <%@ include file="../common/navigation.jsp" %>
 
 <!-- 개인정보 카드 -->
-<div class="mybaobob">
-	<table class="board">
-	    <thead>
-	    	<tr>
-	    		<td colspan=3>
-	    		<span class="text-uppercase bigfont" style="text-align:left">${memId}님</span>&emsp;
-				<a href="memPForm"  title="회원정보 수정"><i class="material-icons">edit</i></a>
-				<hr style="border: dotted 3px white;">
-				<h4 class="text-capitalize" style="text-align:left">고객님은 SVIP입니다.</h4>
-	    		</td>
-	    	</tr>
-	    	<tr>
-	    		<td rowspan=2>
-					<img class="mybaobob" src="${projectRes}images/lgt/default_img.png">
-	    		</td>
-		    	<th class="middlefont">POINT</th>
-		    	<th class="middlefont">TOTAL POINT</th>
-		    </tr>
-			<tr>
-		        <td class="samllfont">14000점</td>
-		        <td class="samllfont">26000점</td>
-		    </tr>
-	    </thead>
-	</table>
-</div>
+<%@ include file="../common/memberCard.jsp" %>
 
 <section class="mypageSection">
 <table class="board">
 	<tr>
-		<td>
-			<!-- SIDE MENU -->
-			<div class="vertical-menu">
-				<a href="memMyPageMain" class="active" style="cursor:pointer">My BAOBOB</a>
-				<a href="#!" class="active">SERVICE</a>
-				<a href="#!">회원 등급</a>
-				<a href="#!">포인트/쿠폰</a>
-				<a href="#!">방문 내역</a>
-				<a href="#!" class="active">MOVIE</a>
-				<a href="#!">무비 로그</a>
-				<a href="#!">예매 내역</a>
-				<a href="#!" class="active">RESTAURANT</a>
-				<a href="#!">레스토랑 로그</a>
-				<a href="#!">레스토랑 예약</a>
-				<a href="#!" class="active">문의 내역</a>
-				<a href="memQuestion">1 : 1 문의</a>
-				<a href="#!">분실물 문의</a>
-			</div>
-		</td>
+		<!-- 사이드 메뉴 -->
+		<%@ include file="../common/sideMenu.jsp" %>
+		
 		<!-- 알맹이td -->
 		<td style="padding:0rem 10rem;margin:0px;width:100%;height:100%;">
-			<form action="memPPro" method="post" name="modifyform" onsubmit="return modifyCheck();">
+			<form action="memPPro" method="post" name="modifyform" onsubmit="return modifyCheck();" enctype="multipart/form-data">
 				<table id="mainBody" style="width:800px; margin:auto;">
 					<caption>개인정보 수정</caption>
 				    <thead>
@@ -80,19 +40,19 @@
 					    <tr>
 							<th>Password</th>
 							<td>
-								<input type="password" name="pwd" maxlength="20" value="${vo.getMember_pwd()}" >
+								<input type="password" name="pwd" maxlength="20" value="${vo.getMember_pwd()}" required>
 							</td>
 						</tr>
 						<tr>
 							<th>Re_Password</th>
 							<td>
-								<input type="password" name="repwd" maxlength="20" value="${vo.getMember_pwd()}" >
+								<input type="password" name="repwd" maxlength="20" value="${vo.getMember_pwd()}" required>
 							</td>
 						</tr>
 						<tr>
 							<th>Name</th>
 							<td>
-								<input type="text" name="name" maxlength="20" value="${vo.getMember_name()}" >
+								<input type="text" name="name" maxlength="20" value="${vo.getMember_name()}" required>
 							</td>
 						</tr>
 						<tr>
@@ -106,7 +66,7 @@
 						<tr>
 							<th>Address</th>
 							<td>
-								<input type="text" name="address" maxlength="100" style="width:300px" value="${vo.getMember_address()}" >
+								<input type="text" name="address" maxlength="100" style="width:300px" value="${vo.getMember_address()}" required>
 							</td>
 						</tr>
 						<tr>
@@ -137,10 +97,16 @@
 							<td>
 								<c:set var="emailArr" value="${fn:split(vo.getMember_email(), '@' )}" />
 								<input type="text" class="input" name="email1" maxlength="10" style="width:65px"
-									value="${emailArr[0]}">
+									value="${emailArr[0]}" required>
 								@
 								<input type="text" class="input" name="email2" maxlength="10" style="width:65px"
-									value="${emailArr[1]}">	
+									value="${emailArr[1]}" required>	
+							</td>
+						</tr>
+						<tr>
+							<th>Profile picture</th>
+							<td>
+								<input type="file" name="profile" style="width:300px;">
 							</td>
 						</tr>
 					    <tr>

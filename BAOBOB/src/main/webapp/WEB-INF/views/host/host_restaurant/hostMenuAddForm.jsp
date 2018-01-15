@@ -38,31 +38,32 @@
 	<!-- Navigation -->
 	<%@ include file="_navigation.jsp"%>
 	
-	<form action="hostMenuAddPro" method="POST" name="add_mod_form" enctype="multipart/form-data" onsubmit="return add_mod_Check()">
+	<form action="hostMenuAddPro" method="POST" name="add_mod_form" enctype="multipart/form-data">
 		<div class="content-wrapper">
 			<div class="container-fluid" style="width: 1000px;">
 				<div class="card mb-3">
 					<div class="card-header">
-						<i class="fa fa-table"></i> 메뉴 추가
+						<i class="fa fa-fw fa-dashboard"></i> 메뉴 추가
 					</div>
 					<div class="card-body">
 						<div class="table-responsive">
 							<table border=1 style="border: lightgray; width: 800px;">
 								<tr>
 									<th>&bull; 메뉴명</th>
-									<td><input type="text" name="name" placeholder="메뉴명"></td>
+									<td><input type="text" name="name" placeholder="메뉴명" required></td>
 								</tr>
 								<tr>
 									<th>&bull; 가격</th>
-									<td><input type="text" name="price" placeholder="가격(원)"></td>
+									<td><input type="text" name="price" placeholder="가격(원)" onkeydown='return onlyNumber(event)'
+										onkeyup='removeChar(event)' style='ime-mode: disabled;' required></td>
 								</tr>
 								<tr>
 									<th>&bull; 메뉴 소개</th>
-									<td><textarea name="content" rows="5" cols="50" placeholder="메뉴 소개"></textarea></td>
+									<td><textarea name="content" rows="5" cols="50" placeholder="메뉴 소개" required></textarea></td>
 								</tr>
 								<tr>
 									<th rowspan="2">&bull; 메뉴 이미지</th>
-									<td><input type="file" id="img" name="img" accept="image/*"></td>
+									<td><input type="file" id="img" name="img" accept="image/*" required></td>
 								</tr>
 								<tr>
 									<td><img src="" id="imgView" name="imgView" style="width: 400px;"></td>

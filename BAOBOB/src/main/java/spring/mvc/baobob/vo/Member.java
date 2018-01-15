@@ -4,7 +4,6 @@ import java.sql.Timestamp;
 
 public class Member {
 	// member_tbl
-
 	private String member_id;
 	private String member_pwd;
 	private String member_name;
@@ -16,6 +15,16 @@ public class Member {
 	private int member_point;
 	private int member_step;
 	private int member_cumPoint;
+	private String member_img;
+	
+	public String getMember_img() {
+		return member_img;
+	}
+
+	public void setMember_img(String member_img) {
+		this.member_img = member_img;
+	}
+
 	private Timestamp member_reg_date;
 
 	public String getMember_id() {

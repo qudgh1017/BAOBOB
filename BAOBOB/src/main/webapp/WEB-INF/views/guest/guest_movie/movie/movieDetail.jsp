@@ -9,9 +9,13 @@
 <title>BAOBOX</title>
 </head>
 <script type="text/javascript">
+
+function loginCheck(){
+	window.open("loginCheck","loginCheck","top=50 left=100 width=400 height=300");
+}
 /* 리뷰작성 */
 function reviewWrite(movie_index){
-	window.open("reviewWrite?movie_index="+movie_index, "host_logout", "top=200 left=300 width=600 height=400"); 
+	window.open("movieReviewWrite?movie_index="+movie_index, "host_logout", "top=200 left=300 width=600 height=400");
 }
 </script>
 <body>
@@ -117,9 +121,18 @@ function reviewWrite(movie_index){
 					<div align="left" style="font-size:15px; font-weight:bold;">
 						리뷰
 					</div>
-					<div align="right">
-						<button class="btn btn-danger" onclick="reviewWrite(${movie.movie_index});">평점등록</button>
-					</div>
+						<!-- 로그인 서비스 -->
+						<c:if test="${memId==null}">
+							<div align="right">
+								<button class="btn btn-danger" onclick="loginCheck();">평점등록</button>
+							</div>
+						</c:if>
+						<c:if test="${memId!=null}">
+							<div align="right">
+								<button class="btn btn-danger" onclick="reviewWrite(${movie.movie_index});">평점등록</button>
+							</div>
+						</c:if>
+					
 				</div>
 				<div class="col-md-offset-1"></div>
 			</div><br>

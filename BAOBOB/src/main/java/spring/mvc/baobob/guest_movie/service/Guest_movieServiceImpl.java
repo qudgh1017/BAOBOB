@@ -219,7 +219,6 @@ public class Guest_movieServiceImpl implements Guest_movieService{
 		String[] str_movie_janre = req.getParameterValues("movie_janre");
 		String[] str_movie_age = req.getParameterValues("movie_age");
 		String[] movie_country = req.getParameterValues("movie_country");
-
 		
 		int[] movie_janre = new int[str_movie_janre.length];
 

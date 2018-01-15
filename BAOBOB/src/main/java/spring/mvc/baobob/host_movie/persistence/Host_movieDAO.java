@@ -5,6 +5,7 @@ import java.util.Map;
 
 import spring.mvc.baobob.vo.MovieVO;
 import spring.mvc.baobob.vo.TheaterVO;
+import spring.mvc.baobob.vo.Theater_scheduleVO;
 import spring.mvc.baobob.vo.Theater_seatVO;
 
 public interface Host_movieDAO {
@@ -57,6 +58,9 @@ public interface Host_movieDAO {
 	// 상영관 좌석 삭제 처리
 	public int hostTheaterSeatDel(int theater_index);
 	
+	// 스케줄 목록 조회
+	public ArrayList<Theater_scheduleVO> hostScheduleList(Map<String, Object> map);
+	
 	// 상영중인 영화 정보
 	public ArrayList<MovieVO> getMovieING();
 	
@@ -68,7 +72,6 @@ public interface Host_movieDAO {
 	
 	// 선택한시간에 정보가 없는 상영 가능한 상영관 가져오기
 	public ArrayList<TheaterVO> checkPosTheater(String schedule_start);
-	
 	
 	// 스케줄 추가 처리
 	public int hostScheduleAddPro(Map<String, Object> map);

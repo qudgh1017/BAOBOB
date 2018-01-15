@@ -78,6 +78,6 @@
 	</div>
 	
 	<!-- Footer -->
-	<%@ include file="../common/footer.jsp" %>
+	<%@ include file="movie_footer.jsp" %>
 </body>
 </html>

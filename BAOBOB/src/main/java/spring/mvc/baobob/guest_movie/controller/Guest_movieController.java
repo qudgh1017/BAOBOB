@@ -26,6 +26,14 @@ public class Guest_movieController {
 		return "/guest/guest_movie/movie_main";
 	}
 	
+	// 로그인이 필요한 서비스 일때
+	@RequestMapping("loginCheck")
+	public String loginCheck(HttpServletRequest req, Model model) {
+		log.debug("====== Guest_movieController/guest_movie ======");
+		
+		return "/guest/guest_movie/movie/loginCheck";
+	}
+	
 	//영화-무비차트
 	@RequestMapping("movieChart")
 	public String movieChart(HttpServletRequest req, Model model) {
@@ -95,13 +103,23 @@ public class Guest_movieController {
 	}
 	
 	//영화-리뷰작성
-	@RequestMapping("reviewWrite")
+	@RequestMapping("movieReviewWrite")
 	public String reviewWrite(HttpServletRequest req, Model model) {
-		log.debug("====== Guest_movieController/reviewWrite ======");
+		log.debug("====== Guest_movieController/movieReviewWrite ======");
 		
 		gmservice.movieInfo(req, model);
 		
-		return "/guest/guest_movie/movie/reviewWrite";
+		return "/guest/guest_movie/movie/movieReviewWrite";
+	}
+	
+	//영화-리뷰작성처리
+	@RequestMapping("movieReviewPro")
+	public String movieReviewPro(HttpServletRequest req, Model model) {
+		log.debug("====== Guest_movieController/movieReviewPro ======");
+		
+		
+		
+		return "/guest/guest_movie/movie/movieReviewPro";
 	}
 	
 	//예매-빠른예매

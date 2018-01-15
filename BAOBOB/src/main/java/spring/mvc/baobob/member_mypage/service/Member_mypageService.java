@@ -3,6 +3,9 @@ package spring.mvc.baobob.member_mypage.service;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.ui.Model;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+
+import spring.mvc.baobob.vo.Member;
 
 public interface Member_mypageService {
 	
@@ -24,11 +27,14 @@ public interface Member_mypageService {
 	//1:1문의 삭제 처리페이지
 	public void memQDelPro(HttpServletRequest req, Model model);
 	
+	//회원카드정보 가져오기
+	public void memberCard(HttpServletRequest req, Model model);
+	
 	//정보수정 입력페이지
 	public void memPModifyView(HttpServletRequest req, Model model);
 	
 	//정보수정 처리페이지
-	public void memPPro(HttpServletRequest req, Model model);
+	public void memPPro(MultipartHttpServletRequest req, Model model);
 	
 	
 	

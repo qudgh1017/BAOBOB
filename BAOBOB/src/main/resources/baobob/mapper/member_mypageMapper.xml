@@ -123,7 +123,8 @@
 			member_name=#{member_name},
 			member_address=#{member_address},
 			member_tel=#{member_tel},
-			member_email=#{member_email} 
+			member_email=#{member_email}, 
+			member_img=#{member_img}
 		WHERE member_id=#{member_id}
 	</update>
 

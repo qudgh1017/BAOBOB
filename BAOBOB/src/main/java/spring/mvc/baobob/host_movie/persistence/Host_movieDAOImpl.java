@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import spring.mvc.baobob.vo.MovieVO;
 import spring.mvc.baobob.vo.TheaterVO;
+import spring.mvc.baobob.vo.Theater_scheduleVO;
 import spring.mvc.baobob.vo.Theater_seatVO;
 
 @Repository
@@ -193,6 +194,17 @@ public class Host_movieDAOImpl implements Host_movieDAO {
 		return cnt;
 	}
 
+	// 스케줄 목록 조회
+	@Override
+	public ArrayList<Theater_scheduleVO> hostScheduleList(Map<String, Object> map) {
+		ArrayList<Theater_scheduleVO> vos = null;
+		
+		Host_movieDAO dao = sqlSession.getMapper(Host_movieDAO.class);
+		vos = dao.hostScheduleList(map);
+		
+		return vos;
+	}
+	
 	// 상영중인 영화 정보
 	@Override
 	public ArrayList<MovieVO> getMovieING() {
@@ -247,6 +259,7 @@ public class Host_movieDAOImpl implements Host_movieDAO {
 		
 		return cnt;
 	}
+
 
 	
 

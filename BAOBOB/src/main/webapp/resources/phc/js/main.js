@@ -97,7 +97,7 @@ jQuery(document).ready(function($){
 				eventHeight = self.eventSlotHeight*duration/self.timelineUnitDuration;
 			
 			$(this).css({
-				top: (eventTop -1) +'px',
+				top: (eventTop -5) +'px',
 				height: (eventHeight+1)+'px'
 			});
 		});
@@ -146,7 +146,7 @@ jQuery(document).ready(function($){
 				modalHeight = ( windowHeight*.8 > self.modalMaxHeight ) ? self.modalMaxHeight : windowHeight*.8;
 
 			var modalTranslateX = parseInt((windowWidth - modalWidth)/2 - eventLeft),
-				modalTranslateY = parseInt((windowHeight - modalHeight)/2 - eventTop);
+				modalTranslateY = parseInt((windowHeight - modalHeight)/4 - eventTop);
 			
 			var HeaderBgScaleY = modalHeight/eventHeight,
 				BodyBgScaleX = (modalWidth - eventWidth);

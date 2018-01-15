@@ -12,6 +12,7 @@
 	opener.location.href="movieDetail?movie_index="+movie_index; //오픈해준 페이지 reload
 } */
 </script>
+<%@ include file="/resources/setting.jsp"%>
 <body>
 <!-- CSS,JavaScript 참조 -->
 <%@ include file="/WEB-INF/views/guest/common/head.jsp" %>
@@ -22,14 +23,14 @@
 			<div class="col-md-12" align="center">
 				<h3>${movie.movie_title}</h3>
 				<hr><br><br>
-				<form action="reviewPro" >
-					<input type="radio" name="review_grade" value="0">좋아
+				<form action="movieReviewPro" name="movieReviewPro" method="post">
+					<input type="radio" name="review_grade" value="0">좋아요
 					<input type="hidden" name="member_id" value="${memId}">
 					${memId}
-					<input type="radio" name="review_grade" value="1">구려<br><br>	
-					<textarea name="review_content" placeholder="리뷰작성" rows="7" cols="100" style="resize:none;"></textarea>
+					<input type="radio" name="review_grade" value="1">싫어요<br><br>	
+					<textarea name="review_content" placeholder="리뷰작성" rows="7" cols="100" style="resize:none; width:500px"></textarea>
 					
-					<input class="btn btn-danger" type="submit" value="작성"> <!-- onclick="reviewSuccess();" -->
+					<input type="submit" value="작성">&nbsp; <!-- onclick="reviewSuccess();" -->
 					<input type="reset" value="다시작성">
 				</form>
 			</div>
