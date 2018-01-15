@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>1 : 1 문의</title>
+<title>My Page</title>
 
 </head>
 <body>
