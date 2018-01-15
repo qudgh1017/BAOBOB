@@ -239,8 +239,6 @@ $(document).ready(function() {
 	
 	</section>	
 	
-			
-	
 	<br>
 	<br>
 	<br>

@@ -63,6 +63,13 @@ public interface Host_movieDAO {
 	// 모든 상영관 정보
 	public ArrayList<TheaterVO> getTheaterAllList();
 	
+	// 상영 가능 상영관 count
+	public int checkPosTheaterCnt(String schedule_start);
+	
+	// 선택한시간에 정보가 없는 상영 가능한 상영관 가져오기
+	public ArrayList<TheaterVO> checkPosTheater(String schedule_start);
+	
+	
 	// 스케줄 추가 처리
 	public int hostScheduleAddPro(Map<String, Object> map);
 	

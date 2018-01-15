@@ -116,35 +116,37 @@ $('.page').click(function() {
 </div>
 
 <div class="container" style="margin-top: 50px">
-	<div class="row">
-		<div class="col-md-12" align="center">
-			<c:if test="${cnt > 0}">
-				<!-- 처음[◀◀] / 이전블록[◀] 특수문자:ㅁ + 한자키 -->
-				<c:if test="${startPage > pageBlock}">
-					<a href="searchResult">[◀◀]</a>
-					<a href="searchResult - pageBlock}">[◀]</a>
-				</c:if>
-
-				<c:forEach var="i" begin="${startPage}" end="${endPage}">
-					<c:if test="${i == currentPage}">
-						<span><b>[${i}]</b></span>
+		<div class="row">
+			<div class="col-md-12" align="center">
+				<c:if test="${cnt > 0}">
+					<!-- 처음[◀◀] / 이전블록[◀] 특수문자:ㅁ + 한자키 -->
+					<c:if test="${startPage > pageBlock}">
+						<a href="searchResult">[◀◀]</a>
+						<a href="searchResult - pageBlock}">[◀]</a>
 					</c:if>
-					<c:if test="${i != currentPage}">
-						<a class="page" href="searchResult?pageNum=${i}">[${i}]</a>
+	
+					<c:forEach var="i" begin="${startPage}" end="${endPage}">
+						<c:if test="${i == currentPage}">
+							<span><b>[${i}]</b></span>
+						</c:if>
+						<c:if test="${i != currentPage}">
+							<a class="page" href="searchResult?pageNum=${i}">[${i}]</a>
+						</c:if>
+					</c:forEach>
+	
+					<!-- 다음블록 [▶] / 끝[▶▶] -->
+					<c:if test="${pageCount > endPage}">
+						<a class="page" href="searchResult?pageNum=${startPage + pageBlock}">[▶]</a>
+						<a class="page" href="searchResult?pageNum=${pageCount}">[▶▶]</a>
+						<!-- 마지막페이지로 -->
 					</c:if>
-				</c:forEach>
-
-				<!-- 다음블록 [▶] / 끝[▶▶] -->
-				<c:if test="${pageCount > endPage}">
-					<a class="page" href="searchResult?pageNum=${startPage + pageBlock}">[▶]</a>
-					<a class="page" href="searchResult?pageNum=${pageCount}">[▶▶]</a>
-					<!-- 마지막페이지로 -->
+	
 				</c:if>
-
-			</c:if>
+			</div>
 		</div>
 	</div>
-</div>
+
+
 
 
 

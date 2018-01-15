@@ -7,14 +7,13 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>BAOBOX</title>
-<!-- slide -->
-<!-- slide 기능 사용위한 라이브러리 -->
-<%-- <link href="${projectRes}ybh/css/slick.css" rel="stylesheet" type="text/css">
-<script type="text/javascript" src="http://code.jquery.com/jquery-3.2.1.min.js"></script>
-<script type="text/javascript" src="${projectRes}ybh/js/slick.min.js"></script>
-<script type="text/javascript" src="${projectRes}ybh/js/slide.js"></script>	
- --%>	
 </head>
+<script type="text/javascript">
+/* 리뷰작성 */
+function reviewWrite(movie_index){
+	window.open("reviewWrite?movie_index="+movie_index, "host_logout", "top=200 left=300 width=600 height=400"); 
+}
+</script>
 <body>
 	
 	<!-- CSS,JavaScript 참조 -->
@@ -111,22 +110,27 @@
 				<div class="col-md-offset-1"></div>
 			</div><br><br>
 			
-			<!-- 리뷰1 -->
+			<!-- 리뷰표시 -->
 			<div class="row">
 				<div class="col-md-offset-1"></div>
-				<div class="col-md-10" align="left" style="height:40px; background-color:#EEEEEE;">
-					<span style="font-size:15px; font-weight:bold">
+				<div class="col-md-10" align="left" style="height:60px; background-color:#EEEEEE;">
+					<div align="left" style="font-size:15px; font-weight:bold;">
 						리뷰
-					</span>
+					</div>
+					<div align="right">
+						<button class="btn btn-danger" onclick="reviewWrite(${movie.movie_index});">평점등록</button>
+					</div>
 				</div>
 				<div class="col-md-offset-1"></div>
 			</div><br>
 			
-			<!-- 리뷰2 -->
+			<!-- 리뷰정보 -->
 			<div class="row">
 				<div class="col-md-offset-1"></div>
 				<div class="col-md-10" align="center">
-					리뷰들어갈곳~~
+					
+				
+					<%-- <%@ include file="/WEB-INF/views/guest/guest_movie/movie/review.jsp" %>  --%>
 				</div>
 				<div class="col-md-offset-1"></div>
 			</div><br><br>

@@ -76,14 +76,14 @@ public class Guest_movieController {
 	
 	//상세영화
 	//영화-HD트레일러 실행하는 상세 페이지
-		@RequestMapping("movieDetail")
-		public String movieDetail(HttpServletRequest req, Model model) {
-			log.debug("====== Guest_movieController/movieDetail ======");
+	@RequestMapping("movieDetail")
+	public String movieDetail(HttpServletRequest req, Model model) {
+		log.debug("====== Guest_movieController/movieDetail ======");
 
-			gmservice.movieInfo(req, model);
-			
-			return "/guest/guest_movie/movie/movieDetail";
-		}
+		gmservice.movieInfo(req, model);
+		
+		return "/guest/guest_movie/movie/movieDetail";
+	}
 	
 	
 	//영화-평점
@@ -92,6 +92,16 @@ public class Guest_movieController {
 		log.debug("====== Guest_movieController/movieReview ======");
 		
 		return "/guest/guest_movie/movie/movieReview";
+	}
+	
+	//영화-리뷰작성
+	@RequestMapping("reviewWrite")
+	public String reviewWrite(HttpServletRequest req, Model model) {
+		log.debug("====== Guest_movieController/reviewWrite ======");
+		
+		gmservice.movieInfo(req, model);
+		
+		return "/guest/guest_movie/movie/reviewWrite";
 	}
 	
 	//예매-빠른예매

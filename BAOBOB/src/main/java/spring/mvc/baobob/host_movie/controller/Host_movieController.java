@@ -152,6 +152,21 @@ public class Host_movieController {
 		return "host/host_movie/hostScheduleAddForm";
 	}
 	
+	// 상영 가능한 상영관 찾기
+	@RequestMapping(value="checkPosTheater")
+	public String checkPosTheater(HttpServletRequest req, Model model) {
+		System.out.println("checkPosTheater");
+		
+		service.checkPosTheater(req, model);
+		
+		String schedule_startDate = req.getParameter("schedule_startDate");
+		String schedule_startTime = req.getParameter("schedule_startTime");
+		model.addAttribute("schedule_startDate", schedule_startDate);
+		model.addAttribute("schedule_startTime", schedule_startTime);
+		
+		return "host/host_movie/hostScheduleAddForm";
+	}
+	
 	// 스케줄 추가 처리
 	@RequestMapping(value="hostScheduleAddPro")
 	public String hostScheduleAddPro(HttpServletRequest req, Model model) {
