@@ -38,9 +38,7 @@ public class EmailHandler {
 
     public void setFrom(String email, String name) 
                 throws UnsupportedEncodingException, MessagingException {
-    	System.out.println("******************1111111111111");
         msgHelper.setFrom(email, name);
-    	System.out.println("******************2222222222222");
     }
 
     public void setTo(String email) throws MessagingException {

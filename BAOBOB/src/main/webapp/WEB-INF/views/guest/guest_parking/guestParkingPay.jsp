@@ -7,6 +7,10 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<title>Insert title here</title>
+	
+	<style type="text/css">
+		#pay{font-size:75px;margin:0 auto;display:block;width:fit-content;margin-top:15%;}
+	</style>
 </head>
 <body>
 	<%@ include file="../common/head.jsp" %>
@@ -16,11 +20,30 @@
 	<section>
 	  <div class="container">
 	  
-	  	<form action="guestParkingPayPro" id="inform">
-	  		<input class="form-control input" type="text" value="${cnt}">
-	  		<button class="btn btn-block">확인</button>
-	  	</form>
-	  	
+	  	<c:if test="${mem != 0}">
+	  		<span id="pay">자동 결제 중</span>
+	  		<script type="text/javascript">
+	  			var count = 0;
+	  			var jj = '.';
+	  			setInterval(function(){
+	  				document.getElementById('pay').innerHTML = '자동 결제 중' + jj;
+	  				
+	  				count += 1;
+	  				jj += '.';
+	  				if(count == 3){ count=0; jj = '.';}
+	  			}, 1000);
+	  		
+	  			setTimeout(function() {
+	  				window.location = 'guestParkingPayPro';
+	  			}, 30000);
+	  		</script>
+	  	</c:if>
+	  	<c:if test="${mem == 0}">
+		  	<form action="guestParkingPayPro" id="inform">
+		  		<input class="form-control input" type="text" value="${cnt}">
+		  		<button class="btn btn-block">확인</button>
+		  	</form>
+	  	</c:if>
 	  </div>
 	</section>
 	

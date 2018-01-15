@@ -37,7 +37,15 @@
 		WHERE p_history_space = #{key}
 	</select>
 	
-	<!-- 자동 결제 -->
+	<!-- 카드 등록된 회원인지 확인 (자동 결제) -->
+	<select id="parkingOutMemberCheck" resultType="int">
+		SELECT COUNT(*)
+		FROM park_history_tbl ph, history_tbl ht, card_tbl ct
+		WHERE  ph.history_index = ht.history_index
+            AND ht.member_id = ct.member_id
+            AND ht.member_id != #{key}
+            AND p_history_space = #{key}
+	</select>
 	
 	
 </mapper>

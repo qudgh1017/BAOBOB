@@ -80,8 +80,15 @@ public class Guest_parkingServiceImpl implements Guest_parkingService{
 	@Override
 	public void guestParkingOutCheckPro(HttpServletRequest req, Model model) {
 		String key = req.getParameter("key");
+
+		int mem = 0;
 		int cnt = dao.parkingOutKeyCheck(key);
+		if(cnt != 0) {
+			mem = dao.parkingOutMemberCheck(key);
+		}
+		
 		model.addAttribute("cnt", cnt);
+		model.addAttribute("mem", mem);
 	}
 
 }

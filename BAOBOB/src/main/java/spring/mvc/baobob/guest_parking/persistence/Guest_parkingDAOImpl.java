@@ -43,4 +43,12 @@ public class Guest_parkingDAOImpl implements Guest_parkingDAO {
 		return cnt;
 	}
 
+	//퇴장 - 카드 등록된 회원 구분
+	@Override
+	public int parkingOutMemberCheck(String key) {
+		Guest_parkingDAO mapper = sqlSession.getMapper(Guest_parkingDAO.class);
+		int cnt = mapper.parkingOutMemberCheck(key);
+		return cnt;
+	}
+
 }
