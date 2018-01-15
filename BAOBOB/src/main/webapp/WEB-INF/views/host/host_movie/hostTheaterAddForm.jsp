@@ -21,19 +21,20 @@
 		<table align="center" style="border:1px solid black;">
 			<tr>
 				<td>관</td>
-				<td><input type="number" id="theater_index" name="theater_index" placeholder="빈 영화관의 index(관)"/>관</td>
+				<td><input type="number" id="theater_index" name="theater_index" placeholder="빈 영화관의 index(관)" required/>관</td>
 			</tr>
 			<tr>
 				<td>행</td>
-				<td><input type="text" id="row" name="theater_row" placeholder="행 갯수(최대 26)"/></td>
+				<td><input type="text" id="row" name="theater_row" placeholder="행 갯수(최대 26)" required/></td>
 			</tr>
 			<tr>
 				<td>열</td>
-				<td><input type="text" id="col" name="theater_col" placeholder="열 갯수"/></td>
+				<td><input type="text" id="col" name="theater_col" placeholder="열 갯수" required/></td>
 			</tr>
 			<tr>
 				<td colspan="2" align="center">
-					<input type="button" id="seatSize" onclick="seatSet();" value="확인"/>
+					<input type="hidden" id="chkConfirm" value==0/>
+					<input style="background-color:#343a40; color:white; border:1px solid black; width:200px; height:40px;" type="button" id="seatSize" onclick="seatSet();" value="확인"/>
 				</td>
 			</tr>	
 		</table>
@@ -52,12 +53,13 @@
 		<button type="button" onclick="spaceType('5')"><img src="${projectRes}images/phc/icon/theater_couple.png"></button>
 	</div>
 	
-	<input type="button" value="상영관 등록하기" onclick="hostTheaterAdd();"/>
+	<input style="background-color:#343a40; color:white; border:1px solid black; width:200px; height:40px; margin-left:177px; margin-bottom:15px;" type="button" value="상영관 등록하기" onclick="hostTheaterAdd();"/>
 	</form>
 	
 	</div>
 	
 	<!-- Footer -->
-	<%@ include file="../common/footer.jsp" %>
+	<script src="${projectRes}adminBootstrap/vendor/jquery/jquery.min.js"></script>
+	<%@ include file="movie_footer.jsp" %>
 </body>
 </html>

@@ -15,7 +15,7 @@
 	<div id="content">
 		<center><h3><b>영화 목록</b></h3></center>
 		<hr style="border:3px solid black;">
-		<input style="background-color:#8888ff; border:1px solid black; height:40px; margin-left:177px; margin-bottom:15px;" type="button" name="hostMovieAddForm" onclick="window.location='hostMovieAddForm'" value="영화 등록하기"/>
+		<input style="background-color:#343a40; color:white; border:1px solid black; width:200px; height:40px; margin-left:177px; margin-bottom:15px;" type="button" name="hostMovieAddForm" onclick="window.location='hostMovieAddForm'" value="영화 등록하기"/>
 		<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0" style="width:800px; border:1px solid black;" align="center">
 			<thead>
 			<tr>
@@ -103,6 +103,7 @@
 	</div>
 	
 	<!-- Footer -->
-	<%@ include file="../common/footer.jsp" %>
+	<script src="${projectRes}adminBootstrap/vendor/jquery/jquery.min.js"></script>
+	<%@ include file="movie_footer.jsp" %>
 </body>
 </html>

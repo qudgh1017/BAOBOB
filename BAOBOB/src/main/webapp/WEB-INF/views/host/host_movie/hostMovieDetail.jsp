@@ -6,6 +6,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+
 </head>
 <body class="fixed-nav sticky-footer bg-dark">
 
@@ -241,7 +243,7 @@
 			<tr>
 				<td colspan="2">
 					<br><br>
-					<center><input style="border:1px solid black;" type="submit" value="영화 수정하기"/></center>
+					<input style="background-color:#343a40; color:white; border:1px solid black; width:200px; height:40px; margin-left:177px; margin-bottom:15px;" type="submit" value="영화 수정하기"/>
 					<br><br>
 				</td>
 			</tr>
@@ -253,6 +255,6 @@
 	</div>
 	
 	<!-- Footer -->
-	<%@ include file="../common/footer.jsp" %>
+	<%@ include file="movie_footer.jsp" %>
 </body>
 </html>
