@@ -1,10 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
+
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>    
 <%@ include file="/resources/setting.jsp"%>
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<title>Insert title here</title>
 	
 	<style type="text/css">
@@ -13,14 +15,14 @@
 		.clearfix{clear:both;}
 		.ul_head{font-weight:bold;border-bottom:2px solid #e9ecef;}
 		.ul_body{border-bottom:1px solid #e9ecef;}
-		.li_item{float:left;padding:5px 15px;border-right:1px solid #e9ecef;}
-		.li_head{padding-bottom:10px;}
+		.li_item{float:left;padding:5px 15px;border-right:1px solid #e9ecef;text-align:center;}
+		.li_head{padding-bottom:10px;text-align:center;}
 		
-		.l1{width:10%;}
-		.l2{width:20%;}
+		.l1{width:7%;}
+		.l2{width:15%;}
 		.l3{width:15%;}
-		.l4{width:20%;}
-		.l5{width:20%;}
+		.l4{width:24%;}
+		.l5{width:24%;}
 		.l6{width:15%;border-right:none;}
 		
 		.card-footer{text-align:center;}
@@ -62,7 +64,7 @@
 									${number}
 									<c:set var="number" value="${number-1}"/>
 								</li>
-								<li class="li_item l2">${ph.p_history_date}</li>
+								<li class="li_item l2">${fn:substring(ph.p_history_date, 0, 10)}</li>
 								<li class="li_item l3">${ph.history.getMember_id()}</li>
 								<li class="li_item l4">${ph.p_history_in}</li>
 								<li class="li_item l5">${ph.p_history_out}</li>
@@ -111,10 +113,5 @@
 	<%@ include file="../common/footer.jsp" %>
 	
 	<script src="${projectRes}ymk/js/parkingCart.js"></script>
-	<script src="https://www.gstatic.com/charts/loader.js"></script>
-	<script type="text/javascript">
-		google.charts.load('current', {'packages':['corechart']});
-		google.charts.setOnLoadCallback(drawChart);
-	</script>
 </body>
 </html>

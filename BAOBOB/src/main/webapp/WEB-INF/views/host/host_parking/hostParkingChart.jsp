@@ -5,32 +5,12 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<title>Insert title here</title>
 	
 	<style type="text/css">
-		li{color:#212529;}
-
-		.clearfix{clear:both;}
-		.ul_head{font-weight:bold;border-bottom:2px solid #e9ecef;}
-		.ul_body{border-bottom:1px solid #e9ecef;}
-		.li_item{float:left;padding:5px 15px;border-right:1px solid #e9ecef;}
-		.li_head{padding-bottom:10px;}
-		
-		.l1{width:10%;}
-		.l2{width:20%;}
-		.l3{width:15%;}
-		.l4{width:20%;}
-		.l5{width:20%;}
-		.l6{width:15%;border-right:none;}
-		
-		.card-footer{text-align:center;}
-		body .pagination{display:block;}
-		.page-item{border:1px solid #ddd;padding:.5rem .75rem;}
-		body .current{background:white;color:#007bff;}
-		
-		/* 가로 스크롤 */
-		.mb-3{overflow-x:auto;}
-		.min_size{min-width:1012px;}
+		.card-body{overflow-x:hidden;}
+		.md-3{margin-bottom:15px;}
 	</style>
 </head>
 <body class="fixed-nav sticky-footer bg-dark">
@@ -40,81 +20,137 @@
 	
 	<div class="content-wrapper">
 		<div class="container-fluid">
-			<div class="card mb-3">
-				<div class="card-header min_size">주차 현황</div>
-				<div class="card-body min_size">
-					<c:if test="${postCnt > 0}">
-					<ul class="ul_top">
-						<li>
-							<ul class="clearfix ul_head">
-								<li class="li_item li_head l1">번호</li>
-								<li class="li_item li_head l2">날짜</li>
-								<li class="li_item li_head l3">회원</li>
-								<li class="li_item li_head l4">입차</li>
-								<li class="li_item li_head l5">출차</li>
-								<li class="li_item li_head l6">금액</li>
-							</ul>
-						</li>
-						<li>
-							<c:forEach var="ph" items="${phs}">
-							<ul class="clearfix ul_body">
-								<li class="li_item l1">
-									${number}
-									<c:set var="number" value="${number-1}"/>
-								</li>
-								<li class="li_item l2">${ph.p_history_date}</li>
-								<li class="li_item l3">${ph.history.getMember_id()}</li>
-								<li class="li_item l4">${ph.p_history_in}</li>
-								<li class="li_item l5">${ph.p_history_out}</li>
-								<li class="li_item l6">${ph.p_history_price}</li>
-							</ul>
-							</c:forEach>
-						</li>
-					</ul>
-					</c:if>
-					<c:if test="${postCnt == 0}">
-						주차 내역이 존재하지 않습니다.
-					</c:if>
+			
+			<div class="row">
+				<div class="col-lg-6">
+					<div class="card md-3">
+						<div class="card-header">시간대별 입차수</div>
+						<div class="card-body">
+							<div id="dayInChart" style="width:100%; height:240px;"></div>
+						</div>
+						<div class="card-footer small text-muted">시간대별 입차 비율</div>
+					</div>
 				</div>
-				<div class="card-footer small text-muted min_size">
-					<c:if test="${postCnt > 0}">
-					<nav class="pagination">
-						<c:if test="${startNav > navSize}">
-							<a class="page-item" href="hostParkingChart">시작</a>
-							<a class="page-item" href="hostParkingChart?pageNum=${startNav - navSize}">전</a>
-						</c:if>
-						<c:forEach var="page" begin="${startNav}" end="${endNav}">
-							<c:if test="${pageNum == page}">
-								<a class="page-item current" href="hostParkingChart?pageNum=${page}">${page}</a>
-							</c:if>
-							<c:if test="${pageNum != page}">
-								<a class="page-item" href="hostParkingChart?pageNum=${page}">${page}</a>
-							</c:if>
-						</c:forEach>
-						<c:if test="${endNav < navCnt}">
-							<a class="page-item" href="hostParkingChart?pageNum=${(endNav + navSize) > navCnt ? navCnt : (endNav + navSize)}">후</a>
-							<a class="page-item" href="hostParkingChart?pageNum=${navCnt}">끝</a>
-						</c:if>
-					</nav>
-					</c:if>
+				<div class="col-lg-6">
+					<div class="card md-3">
+						<div class="card-header">시간대별 출차수</div>
+						<div class="card-body">
+							<div id="dayOutChart" style="width:100%; height:240px;"></div>
+						</div>
+						<div class="card-footer small text-muted">시간대별 출차 비율</div>
+					</div>
 				</div>
 			</div>
-			<!-- <div class="card mb-3">
-				<div class="card-header">차트</div>
-				<div class="card-body"></div>
-				<div class="card-footer small text-muted">가장 많은 날은 '월요일'</div>
-			</div> -->
+			
+			<div class="card mb-3">
+				<div class="card-header" id="weekTitle">올해 요일별 입/출차수</div>
+				<div class="card-body">
+					<button class="btn btn-primary" id="chartChange" onclick="month();">월별</button>
+					<div id="weekChart" style="width:100%; height:500px;"></div>
+				</div>
+				<div class="card-footer small text-muted" id="weekFooter">올해 요일별 입차, 출차 현황</div>
+			</div>
+			
 		</div>
 	</div>
 	
 	<!-- Footer -->
 	<%@ include file="../common/footer.jsp" %>
 	
+	<script src="${projectRes}ymk/js/ajax.js"></script>
 	<script src="${projectRes}ymk/js/parkingCart.js"></script>
 	<script src="https://www.gstatic.com/charts/loader.js"></script>
 	<script type="text/javascript">
 		google.charts.load('current', {'packages':['corechart']});
 		google.charts.setOnLoadCallback(drawChart);
+
+		function drawChart() {
+			chartDayInTimeAvg();
+			chartDayOutTimeAvg();
+			weekChart();
+		}
+
+		function chartDayInTimeAvg() {
+			var data = google.visualization.arrayToDataTable([
+				['Hour', '이용자수'],
+				['9시', ${HI9}],
+				['10시', ${HI10}],
+				['11시', ${HI11}],
+				['12시', ${HI12}],
+				['13시', ${HI13}],
+				['14시', ${HI14}],
+				['15시', ${HI15}],
+				['16시', ${HI16}],
+				['17시', ${HI17}],
+				['18시', ${HI18}],
+				['19시', ${HI19}],
+				['20시', ${HI20}],
+				['21시', ${HI21}]
+			]);
+			
+			var options = {
+			}
+			
+			var chart = new google.visualization.PieChart(document.getElementById('dayInChart'));
+			chart.draw(data, options);
+		}
+		
+		function chartDayOutTimeAvg() {
+			var data = google.visualization.arrayToDataTable([
+				['Hour', '이용자수'],
+				['9시', ${HO9}],
+				['10시', ${HO10}],
+				['11시', ${HO11}],
+				['12시', ${HO12}],
+				['13시', ${HO13}],
+				['14시', ${HO14}],
+				['15시', ${HO15}],
+				['16시', ${HO16}],
+				['17시', ${HO17}],
+				['18시', ${HO18}],
+				['19시', ${HO19}],
+				['20시', ${HO20}],
+				['21시', ${HO21}]
+			]);
+			
+			var options = {
+			}
+			
+			var chart = new google.visualization.PieChart(document.getElementById('dayOutChart'));
+			chart.draw(data, options);
+		}
+		
+		function weekChart() {
+			var data = google.visualization.arrayToDataTable([
+				['요일', '입차', '출차'],
+				['월요일', ${I2}, ${O2}],
+				['화요일', ${I3}, ${O3}],
+				['수요일', ${I4}, ${O4}],
+				['목요일', ${I5}, ${O5}],
+				['금요일', ${I6}, ${O6}],
+				['토요일', ${I7}, ${O7}],
+				['일요일', ${I1}, ${O1}]
+			]);
+			
+			var options = {
+				 isStacked: false,
+			     vAxis: {minValue: 0}
+			};
+			
+			var chart = new google.visualization.AreaChart(document.getElementById('weekChart'));
+			chart.draw(data, options);
+		}
+		
+		function week() {
+			google.charts.load('current', {'packages':['corechart']});
+		    google.charts.setOnLoadCallback(weekChart);
+
+		    var btn = document.getElementById('chartChange');
+	    	btn.innerHTML='월별';
+	    	btn.setAttribute('onclick', 'month();');
+	    	document.getElementById('weekTitle').innerHTML = '올해 요일별 입/출차수';
+	    	document.getElementById('weekFooter').innerHTML = '올해 요일별 입차, 출차 현황';
+		}
 	</script>
 </body>
 </html>

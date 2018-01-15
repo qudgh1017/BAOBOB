@@ -9,19 +9,19 @@
 <title>Insert title here</title>
 </head>
 <body>
-<%@ include file="../common/head.jsp" %>
+<%@ include file="../../common/head.jsp" %>
 
 <!-- Navigation -->
-<%@ include file="../common/navigation.jsp" %>
+<%@ include file="../../common/navigation.jsp" %>
 
 <!-- 개인정보 카드 -->
-<%@ include file="../common/memberCard.jsp" %>
+<%@ include file="../../common/memberCard.jsp" %>
 
 <section class="mypageSection">
 <table class=board>
 	<tr>
 		<!-- 사이드 메뉴 -->
-		<%@ include file="../common/sideMenu.jsp" %>	
+		<%@ include file="../../common/sideMenu.jsp" %>	
 
 		<!-- 알맹이 -->
 		<td style="padding:0rem 10rem; margin:0px;width:100%;height:100%;">
@@ -49,18 +49,22 @@
 						<th colspan="3" style="text-align:left;">${dto.board_subject}</th>
 					</tr>
 					<tr>
-						<th colspan="4" style="text-align:left; height:200px;">${dto.board_content}</th>
+						<th colspan="4" style="text-align:left; height:200px;">
+							<img src="${projectRes}images/lgt/lost/${dto.board_img}">
+							<br>
+							${dto.board_content}
+						</th>
 					</tr>
 					<tr>
 						<td colspan="4" style="border-bottom:none;">
 							<input type="button" class="button" value="Modify"
-								onclick="window.location='memQModifyForm?num=${dto.board_index}&pageNum=${pageNum}'">
+								onclick="window.location='memLModifyForm?num=${dto.board_index}&pageNum=${pageNum}'">
 							<input type="button" class="button" value="Delete"
-								onclick="window.location='memQDelForm?num=${dto.board_index}&pageNum=${pageNum}'">
+								onclick="window.location='memLDelForm?num=${dto.board_index}&pageNum=${pageNum}'">
 							<input type="button" class="button" value="Reply"
-								onclick="window.location='memQWriteForm?num=${dto.board_index}&ref=${dto.board_ref}&ref_step=${dto.board_ref_step}&ref_level=${dto.board_ref_level}'">	
+								onclick="window.location='memLWriteForm?num=${dto.board_index}&ref=${dto.board_ref}&ref_step=${dto.board_ref_step}&ref_level=${dto.board_ref_level}'">	
 							<input type="button" class="button" value="List"
-								onclick="window.location='memQuestion?pageNum=${pageNum}'">
+								onclick="window.location='memLost?pageNum=${pageNum}'">
 						</td>	
 					</tr>
 				</thead>
@@ -74,9 +78,9 @@
 </section>
 	
 <!-- Footer -->
-<%@ include file="../common/footer.jsp" %>
+<%@ include file="../../common/footer.jsp" %>
 	
 <!-- FooterCopyright -->
-<%@ include file="../common/footerCopyright.jsp" %>
+<%@ include file="../../common/footerCopyright.jsp" %>
 </body>
 </html>

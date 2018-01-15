@@ -39,7 +39,7 @@ public class Member_mypageController {
 	@RequestMapping("memPForm")
 	public String memPView(HttpServletRequest req, Model model) {
 		service.memberCard(req, model);
-		return "guest/member_myPage/member_myPage_memPForm";
+		return "guest/member_myPage/memPersonal/member_myPage_memPForm";
 	}
 	
 	//정보수정 입력페이지	
@@ -49,7 +49,7 @@ public class Member_mypageController {
 		service.memberCard(req, model);
 		service.memPModifyView(req, model);
 		
-		return "guest/member_myPage/member_myPage_memPView";
+		return "guest/member_myPage/memPersonal/member_myPage_memPView";
 	}
 	
 	//정보수정 처리페이지
@@ -59,11 +59,29 @@ public class Member_mypageController {
 		service.memberCard(req, model);
 		service.memPPro(req, model);
 		
-		return "guest/member_myPage/member_myPage_memPPro";
+		return "guest/member_myPage/memPersonal/member_myPage_memPPro";
+	}
+	
+	//회원탈퇴 폼페이지
+	@RequestMapping("memPDelForm")
+	public String memPDelForm(HttpServletRequest req, Model model) {
+		service.memberCard(req, model);
+		
+		return "guest/member_myPage/memPersonal/member_myPage_memPDelForm";
+	}
+	
+	//회원탈퇴 처리페이지
+	@RequestMapping("memPDelPro")
+	public String memPDelPro(HttpServletRequest req, Model model) {
+		
+		service.memPDelPro(req, model);
+		
+		return "guest/member_myPage/memPersonal/member_myPage_memPDelPro";
 	}
 	
 	
 /*----------------------------- 1:1문의 ----------------------------------------*/
+	
 	//1:1문의 리스트
 	@RequestMapping("memQuestion")
 	public String memQuestion(HttpServletRequest req, Model model) {
@@ -71,7 +89,7 @@ public class Member_mypageController {
 		service.memberCard(req, model);
 		service.memQuestionList(req, model);
 		
-		return "guest/member_myPage/member_myPage_memQuestion";
+		return "guest/member_myPage/memQuestion/member_myPage_memQuestion";
 	}
 	
 	//1:1문의 상세
@@ -80,7 +98,7 @@ public class Member_mypageController {
 		service.memberCard(req, model);
 		service.memQuestionContentForm(req, model);
 		
-		return "guest/member_myPage/member_myPage_memQContentForm";
+		return "guest/member_myPage/memQuestion/member_myPage_memQContentForm";
 	}
 
 	//1:1문의 수정 폼 페이지
@@ -97,7 +115,7 @@ public class Member_mypageController {
 		req.setAttribute("num", num);
 		req.setAttribute("pageNum", pageNum);
 		
-		return "guest/member_myPage/member_myPage_memQModifyForm";
+		return "guest/member_myPage/memQuestion/member_myPage_memQModifyForm";
 	}
 	
 	//1:1문의 수정 상세 페이지
@@ -106,7 +124,7 @@ public class Member_mypageController {
 		service.memberCard(req, model);
 		service.memQModifyView(req, model);
 		
-		return "guest/member_myPage/member_myPage_memQModifyView";
+		return "guest/member_myPage/memQuestion/member_myPage_memQModifyView";
 	}
 	
 	//1:1문의 수정 처리
@@ -115,10 +133,10 @@ public class Member_mypageController {
 		service.memberCard(req, model);
 		service.memQModifyPro(req, model);
 		
-		return "guest/member_myPage/member_myPage_memQModifyPro";
+		return "guest/member_myPage/memQuestion/member_myPage_memQModifyPro";
 	}
 	
-	//문의하기 작성폼 페이지
+	//1:1문의하기 작성폼 페이지
 	@RequestMapping("memQWriteForm")
 	public String memQWriteForm(HttpServletRequest req, Model model) {
 		
@@ -145,19 +163,19 @@ public class Member_mypageController {
 		req.setAttribute("ref_step", ref_step);
 		req.setAttribute("ref_level", ref_level);
 		
-		return "guest/member_myPage/member_myPage_memQWriteForm";
+		return "guest/member_myPage/memQuestion/member_myPage_memQWriteForm";
 	}
 	
-	//문의하기 처리페이지	
+	//1:1문의하기 처리페이지	
 	@RequestMapping("memQWritePro")
 	public String memQWritePro(HttpServletRequest req, Model model) {
 		service.memberCard(req, model);
 		service.memQWritePro(req, model);
 		
-		return "guest/member_myPage/member_myPage_memQWritePro";
+		return "guest/member_myPage/memQuestion/member_myPage_memQWritePro";
 	}
 	
-	//문의하기 삭제폼 페이지	
+	//1:1문의하기 삭제폼 페이지	
 	@RequestMapping("memQDelForm")
 	public String memQDelForm(HttpServletRequest req, Model model) {
 		
@@ -170,10 +188,10 @@ public class Member_mypageController {
 		req.setAttribute("num", num);
 		req.setAttribute("pageNum", pageNum);
 		
-		return "guest/member_myPage/member_myPage_memQDelForm";
+		return "guest/member_myPage/memQuestion/member_myPage_memQDelForm";
 	}
 	
-	//문의하기 삭제 처리페이지
+	//1:1문의하기 삭제 처리페이지
 	@RequestMapping("memQDelPro")
 	public String memQDelPro(HttpServletRequest req, Model model) {
 		service.memberCard(req, model);
@@ -185,8 +203,157 @@ public class Member_mypageController {
 		req.setAttribute("num", num);
 		req.setAttribute("pageNum", pageNum);
 		
-		return "guest/member_myPage/member_myPage_memQDelPro";
+		return "guest/member_myPage/memQuestion/member_myPage_memQDelPro";
 	}
+	
+/*----------------------------- 분실물 문의 ----------------------------------------*/	
+	
+	//분실물 문의 리스트
+	@RequestMapping("memLost")
+	public String memLost(HttpServletRequest req, Model model) {
+		log.debug("====== Member_mypageController/memLost() ======");
+		service.memberCard(req, model);
+		service.memLostList(req, model);
+		
+		return "guest/member_myPage/memLost/member_myPage_memLost";
+	}
+	
+	//분실물 문의 상세
+	@RequestMapping("memLostContentForm")
+	public String memLostContentForm(HttpServletRequest req, Model model) {
+		service.memberCard(req, model);
+		service.memQuestionContentForm(req, model);
+		
+		return "guest/member_myPage/memLost/member_myPage_memLContentForm";
+	}
+	
+	//분실물 문의 수정 폼 페이지
+	@RequestMapping("memLModifyForm")
+	public String memLModifyForm(HttpServletRequest req, Model model) {
+		
+		service.memberCard(req, model);
+		
+		//contentForm에서 글수정버튼을 눌렀을때 넘긴 값들을 받는다.
+		int num = Integer.parseInt(req.getParameter("num"));
+		int pageNum = Integer.parseInt(req.getParameter("pageNum"));
+		
+		//받아온값들을 저장해서 modifyForm.jsp에서 받아라
+		req.setAttribute("num", num);
+		req.setAttribute("pageNum", pageNum);
+		
+		return "guest/member_myPage/memLost/member_myPage_memLModifyForm";
+	}
+	
+	//분실물 문의 수정 상세 페이지
+	@RequestMapping("memLModifyView")
+	public String memLModifyView(HttpServletRequest req, Model model) {
+		service.memberCard(req, model);
+		service.memQModifyView(req, model);
+		
+		return "guest/member_myPage/memLost/member_myPage_memLModifyView";
+	}
+	
+	//분실물 문의 수정 처리
+	@RequestMapping("memLModifyPro")
+	public String memLModifyPro(HttpServletRequest req, Model model) {
+		service.memberCard(req, model);
+		service.memQModifyPro(req, model);
+		
+		return "guest/member_myPage/memLost/member_myPage_memLModifyPro";
+	}
+	
+	//분실물 문의하기 삭제폼 페이지	
+	@RequestMapping("memLDelForm")
+	public String memLDelForm(HttpServletRequest req, Model model) {
+		
+		service.memberCard(req, model);
+		
+		//contentForm.jsp에서 삭제button을 눌렀을떄 get방식으로 넘긴 값을 가져온다.
+		int num = Integer.parseInt(req.getParameter("num"));
+		int pageNum = Integer.parseInt(req.getParameter("pageNum"));
+		
+		req.setAttribute("num", num);
+		req.setAttribute("pageNum", pageNum);
+		
+		return "guest/member_myPage/memLost/member_myPage_memLDelForm";
+	}
+
+	//분실물 문의하기 삭제 처리페이지
+	@RequestMapping("memLDelPro")
+	public String memLDelPro(HttpServletRequest req, Model model) {
+		service.memberCard(req, model);
+		service.memQDelPro(req, model);
+		
+		int num = Integer.parseInt(req.getParameter("num"));
+		int pageNum = Integer.parseInt(req.getParameter("pageNum"));
+		
+		req.setAttribute("num", num);
+		req.setAttribute("pageNum", pageNum);
+		
+		return "guest/member_myPage/memLost/member_myPage_memLDelPro";
+	}
+	
+	//분실물 문의하기 작성폼 페이지
+	@RequestMapping("memLWriteForm")
+	public String memLWriteForm(HttpServletRequest req, Model model) {
+		
+		service.memberCard(req, model);
+		
+		//제목글쓰기(답변글이 아닌경우)
+		int num = 0;
+		int ref = 0; //그룹화 아이디
+		int ref_step = 0; //답변글 순서(행)
+		int ref_level = 0; //답변글 레벨(들여쓰기) 
+		
+		//답글쓰기
+		//contentForm에서 답글쓰기 버튼을 눌렀을때 넘긴 값들을 받는다.
+		if(req.getParameter("num") != null) {
+			num = Integer.parseInt(req.getParameter("num"));
+			ref = Integer.parseInt(req.getParameter("ref"));
+			ref_step = Integer.parseInt(req.getParameter("ref_step"));
+			ref_level = Integer.parseInt(req.getParameter("ref_level"));
+		}
+		
+		//받아온값들을 저장해서 writeForm.jsp에서 받아라
+		req.setAttribute("num", num);
+		req.setAttribute("ref", ref);
+		req.setAttribute("ref_step", ref_step);
+		req.setAttribute("ref_level", ref_level);
+		
+		return "guest/member_myPage/memLost/member_myPage_memLWriteForm";
+	}
+	
+	//분실물 문의하기 처리페이지	
+	@RequestMapping(value="memLWritePro", method=RequestMethod.POST)
+	public String memLWritePro(MultipartHttpServletRequest req, Model model) {
+		
+		log.debug("====== Member_mypageController/memLWritePro() ======");
+		
+		service.memberCard(req, model);
+		service.memLWritePro(req, model);
+		
+		return "guest/member_myPage/memLost/member_myPage_memLWritePro";
+	}
+	
+/*----------------------------- 무비 로그 ----------------------------------------*/	
+	
+	//무비로그 위시리스트
+	@RequestMapping("MovieWish")
+	public String MovieWish(HttpServletRequest req, Model model) {
+		service.memberCard(req, model);
+		
+		return "guest/member_myPage/memMovie/member_myPage_MovieWish";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	

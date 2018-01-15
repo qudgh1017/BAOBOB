@@ -36,7 +36,7 @@
 				<li>
 					<c:if test="${space != null}">
 						<ul class="clearfix">
-							<li class="li_item l1">${space.park_index}</li>
+							<li class="li_item l1" id="idex1">${spaceNumber}</li>
 							<li class="li_item l2">${space.getParkState()}</li>
 							<li class="li_item l3">${space.getParkTheme()}</li>
 							<li class="li_item l4">${space.park_last_date}</li>
@@ -53,7 +53,7 @@
 				</li>
 			</ul>
 		</div>
-		<div class="card-footer small text-muted">${space.park_index}번 구역 정보</div>
+		<div class="card-footer small text-muted" id="idex2">${spaceNumber}번 구역 정보</div>
 	</div>
 </div>
 <div class="col-lg-6 div_mw">

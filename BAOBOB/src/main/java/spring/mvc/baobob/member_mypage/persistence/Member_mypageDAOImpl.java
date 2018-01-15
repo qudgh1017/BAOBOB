@@ -149,7 +149,6 @@ public class Member_mypageDAOImpl implements Member_mypageDAO{
 		dto.setBoard_ref_level(ref_level);
 		
 		cnt = dao.insertQuestion(dto);
-		System.out.println(cnt);
 		
 		return cnt;
 	}
@@ -270,21 +269,88 @@ public class Member_mypageDAOImpl implements Member_mypageDAO{
 		return cnt;
 	}
 	
+/*----------------------------------------------------------------------------*/
 	
+	//분실물문의 글갯수 구하기
+	public int getArticleLCnt() {
+		int cnt = 0;
+		
+		Member_mypageDAO dao = sqlSession.getMapper(Member_mypageDAO.class);
+		cnt = dao.getArticleLCnt();
+		
+		return cnt;
+	}
 	
+/*----------------------------------------------------------------------------*/
 	
+	//분실물 문의글 목록 조회
+	public ArrayList<BoardVO> getArticleLList(Map<String, Integer> map){
+		ArrayList<BoardVO> dtos = null;
+		
+		Member_mypageDAO dao = sqlSession.getMapper(Member_mypageDAO.class);
+		dtos = dao.getArticleLList(map);
+		
+		return dtos;
+	}
+
+/*----------------------------------------------------------------------------*/	
 	
+	//분실물 문의 작성
+	public int insertLost(BoardVO dto) {
+		int cnt = 0;
+		
+		Member_mypageDAO dao = sqlSession.getMapper(Member_mypageDAO.class);
+		
+		int num = dto.getBoard_index();
+		int ref = dto.getBoard_ref();
+		int ref_step = dto.getBoard_ref_step();
+		int ref_level = dto.getBoard_ref_level();
+		
+		//제목글인 경우
+		if(num == 0) {
+			cnt = getArticleCnt();
+			//첫글이 아닌 경우
+			if(cnt > 0) {
+				ref = getMaxNum() + 1;
+			//첫글인 경우
+			} else {
+				ref = 1;
+			}
+			
+			//초기화
+			ref_step = 0;
+			ref_level = 0;
+			
+		//답변글인 경우
+		} else {
+			//삽입할 글보다 아래쪽 글들을 update
+			dao.updateReply(dto);
+			ref_step++;
+			ref_level++;
+		}
+		
+		//주의사항!
+		//밑에 3가지는 위에서 값이 바뀌었기때문에 바뀐 그값을 dto에 넣어서 insertBoard에서 받아야 한다.
+		dto.setBoard_ref(ref);
+		dto.setBoard_ref_step(ref_step);
+		dto.setBoard_ref_level(ref_level);
+		
+		cnt = dao.insertLost(dto);
+		
+		return cnt;
+	}
 	
+/*----------------------------------------------------------------------------*/
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	//회원탈퇴 처리
+	public int memPDelPro(String strId) {
+		int cnt = 0;
+		
+		Member_mypageDAO dao = sqlSession.getMapper(Member_mypageDAO.class);
+		cnt = dao.memPDelPro(strId);
+		
+		return cnt;
+	}
 	
 	
 	

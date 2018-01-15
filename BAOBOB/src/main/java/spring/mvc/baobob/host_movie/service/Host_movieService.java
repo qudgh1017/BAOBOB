@@ -52,5 +52,19 @@ public interface Host_movieService {
 	// 상영관 추가 처리
 	public void hostScheduleAddPro(HttpServletRequest req, Model model);
 	
+	// 스케줄 상세 정보 가져오기
+	public void hostScheduleDetail(HttpServletRequest req, Model model);
+	
+	// 스케줄 수정 처리
+	public void hostScheduleModPro(HttpServletRequest req, Model model);
+	
+	// 스케줄 삭제 처리
+	public void hostScheduleDelPro(HttpServletRequest req, Model model);
+	
+	// 직원 고용 아이디 확인
+	public void hostMovieEmpChkMemberId(HttpServletRequest req, Model model);
+	
+	// 직원 고용 처리
+	public void hostMovieEmpAddPro(HttpServletRequest req, Model model);
 	
 }

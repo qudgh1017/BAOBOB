@@ -17,8 +17,11 @@ public class Host_parkingController {
 	
 	//주차장 관리 메인
 	@RequestMapping("hostParkingMain")
-	public String hostParkingMain() {
+	public String hostParkingMain(HttpServletRequest req, Model model) {
 		System.out.println("hostParkingMain()");
+		
+		service.hostParkingMain(req, model);
+		
 		return "host/host_parking/hostParkingMain";
 	}
 	
@@ -66,9 +69,21 @@ public class Host_parkingController {
 	public String hostParkingChart(HttpServletRequest req, Model model) {
 		System.out.println("hostParkingChart()");
 		
-		service.getParkingHistory(req, model);
+		/*service.getParkingHistory(req, model);*/
+		service.getHostParkingChart(req, model);
 		
 		return "host/host_parking/hostParkingChart";
+	}
+
+	//주차 현황 - ajax 월별
+	@RequestMapping("hostParkingChartMonth")
+	public String hostParkingChartMonth(HttpServletRequest req, Model model) {
+		System.out.println("hostParkingChartMonth()");
+		
+		/*service.getParkingHistory(req, model);*/
+		service.getHostParkingChartMonth(req, model);
+		
+		return "host/host_parking/hostParkingChartMonth";
 	}
 
 	//주차 납부 내역
@@ -79,5 +94,15 @@ public class Host_parkingController {
 		service.getParkingPayList(req, model);
 		
 		return "host/host_parking/hostParkingPay";
+	}
+	
+	//주차 납부 현황
+	@RequestMapping("hostParkingPayChart")
+	public String hostParkingPayChart(HttpServletRequest req, Model model) {
+		System.out.println("hostParkingPayChart()");
+		
+		service.getParkingPayChart(req, model);
+		
+		return "host/host_parking/hostParkingPayChart";
 	}
 }

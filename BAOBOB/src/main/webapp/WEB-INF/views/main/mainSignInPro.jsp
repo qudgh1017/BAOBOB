@@ -24,9 +24,7 @@
 		</c:when>
 		<c:when test="${sessionScope.memStep == 4 || sessionScope.memStep == 5 || sessionScope.memStep == 6}">
 			<!-- 식당 총관리 | 식당 관리자 | 식당 직원 -->
-			<script type="text/javascript">
-				errorAlert('식당 총관리 | 식당 관리자 | 식당 직원');
-			</script>
+			<c:redirect url="hostReservList"/>
 		</c:when>
 		<c:when test="${sessionScope.memStep == 7}">
 			<!-- 주차장 관리자 -->

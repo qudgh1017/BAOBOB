@@ -6,7 +6,7 @@ public class Parking {
 //park_tbl
 	private int park_index; //park_tbl_SEQ
 	private int park_state; //0:주차가능, 1:주차불가능
-	private int park_theme;
+	private int park_theme; //전기차, 임산부, 장애인, 일반
 	private Timestamp park_last_date; //마지막 입차 시간 - ParkingHistory의 p_history_in = 5분 내외
 
 	public int getPark_index() {

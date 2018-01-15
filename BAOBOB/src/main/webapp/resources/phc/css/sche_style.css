@@ -3,31 +3,32 @@
 Primary style
 
 -------------------------------- */
-*, *::after, *::before {
-  box-sizing: border-box;
-}
+/* *, *::after, *::before { */
+/*   box-sizing: border-box; */
+/* } */
 
-html {
-  font-size: 62.5%;
-}
+/* html { */
+/*   font-size: 62.5%; */
+/* } */
 
-body {
-  font-size: 1.6rem;
-  font-family: "Source Sans Pro", sans-serif;
-  color: #222222;
-  background-color: white;
-}
+/* body { */
+/*   font-size: 1.6rem; */
+/*   font-family: "Source Sans Pro", sans-serif; */
+/*   color: #222222; */
+/*   background-color: white; */
+/* } */
 
-a {
-  color: #A2B9B2;
-  text-decoration: none;
-}
+/* a { */
+/*   color: #A2B9B2; */
+/*   text-decoration: none; */
+/* } */
 
 /* -------------------------------- 
 
 Main Components 
 
 -------------------------------- */
+
 .cd-schedule {
   position: relative;
   margin: 2em 0;
@@ -284,13 +285,13 @@ Main Components
 
 @media only screen and (min-width: 800px) {
   .cd-schedule .event-name {
-    font-size: 2rem;
+    font-size: 1.0rem;
   }
 }
 
 .cd-schedule .event-date {
   /* they are not included in the the HTML but added using JavScript */
-  font-size: 1.4rem;
+  font-size: .9rem;
   opacity: .7;
   line-height: 1.2;
   margin-bottom: .2em;

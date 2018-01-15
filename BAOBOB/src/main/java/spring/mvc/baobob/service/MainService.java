@@ -13,6 +13,9 @@ public interface MainService {
 	
 	//가입 처리
 	public void joinPro(HttpServletRequest req, Model model);
+
+	//비밀번호 찾기
+	public void mainPwdEmail(HttpServletRequest req, Model model);
 	
 	//인증 이메일 전송
 	public String emailSend(HttpServletRequest req);
@@ -20,6 +23,12 @@ public interface MainService {
 	//이메일 인증
 	public void confirmEmail(HttpServletRequest req, Model model);
 	
+	//비밀번호 찾기 이메일 인증
+	public void confirmPwdEmail(HttpServletRequest req, Model model);
+	
 	//로그인 처리
 	public void signInPro(HttpServletRequest req, Model model);
+	
+	//firebase - facebook 로그인
+	public void firebaseLoginPro(HttpServletRequest req, Model model);
 }

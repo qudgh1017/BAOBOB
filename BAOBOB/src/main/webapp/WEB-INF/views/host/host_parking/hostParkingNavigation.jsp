@@ -25,7 +25,7 @@
 <body>
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
 		
-		<a class="navbar-brand" href="#">주차장 관리자</a>
+		<a class="navbar-brand" href="hostParkingMain">주차장 관리자</a>
 		<button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive"
 			aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
@@ -58,7 +58,7 @@
 					</a>
 					<ul class="sidenav-second-level collapse" id="collapseComponents">
 						<li><a href="hostParkingPay">납부 내역</a></li>
-						<li><a onclick="ajax('hostParkingPay');">납부 결산</a></li>
+						<li><a href="hostParkingPayChart">납부 결산</a></li>
 					</ul>
 				</li>
 			</ul>

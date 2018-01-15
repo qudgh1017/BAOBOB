@@ -32,28 +32,40 @@
 						<label for="exampleInputPassword1">비밀번호</label> 
 						<input class="form-control" name="pwd" type="password" placeholder="Password">
 					</div>
-					<!-- <div class="form-group">
-						<div class="form-check">
-							<label class="form-check-label"> 
-								<input class="form-check-input" type="checkbox"> 비밀번호 저장
-							</label>
-						</div>
-					</div> -->
 					<button class="btn btn-primary btn-block">로그인</button>
+					<button class="btn btn-primary btn-block" type="button" onclick="firebaseLogin();">페이스북 로그인</button>
 				</form>
 				<div class="text-center">
 					<a class="d-block small mt-3" href="mainJoin">회원가입</a> 
-					<a class="d-block small" href="#">비밀번호를 잊으셨나요?</a>
+					<a class="d-block small" href="mainPwd">비밀번호를 잊으셨나요?</a>
 				</div>
 			</div>
 		</div>
 	</div>
-	<!-- Bootstrap core JavaScript-->
-	<script src="${projectRes}adminBootstrap/vendor/jquery/jquery.min.js"></script>
-	<script src="${projectRes}adminBootstrap/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-	<!-- Core plugin JavaScript-->
-	<script src="${projectRes}adminBootstrap/vendor/jquery-easing/jquery.easing.min.js"></script>
+	
 	<script src="${projectRes}ymk/js/mainJS.js"></script>
+	<script src="${projectRes}ymk/js/firebase.js"></script>
+	<!-- firebase 
+		 인증, Cloud Storage, 실시간 데이터베이스를 사용하도록 Firebase 자바스크립트 SDK를 구성하는 초기화 정보를 포함하고 있습니다
+		 firebase-app - 핵심 firebase 클라이언트(필수)
+		 firebase-auth - Firebase 인증(선택사항)
+		 firebase-database - Firebase 실시간 데이터베이스(선택사항)
+	-->
+	<script src="https://www.gstatic.com/firebasejs/4.8.2/firebase.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/4.2.0/firebase-app.js"></script><!-- 해당 설정은 Initialize Firebase보다 위에 위치해야 한다.-->
+	<script src="https://www.gstatic.com/firebasejs/4.2.0/firebase-auth.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/4.2.0/firebase-database.js"></script>
+	<script type="text/javascript">
+		// Initialize Firebase
+		var config = {
+		  apiKey: "AIzaSyAX7Dd8nYQoA7EjFKsh8vn5Rb1ocAT2OAk",
+		  authDomain: "baobob-kosmo-project.firebaseapp.com",
+		  databaseURL: "https://baobob-kosmo-project.firebaseio.com",
+		  projectId: "baobob-kosmo-project",
+		  storageBucket: "",
+		  messagingSenderId: "249594142081"
+		};
+		firebase.initializeApp(config);
+	</script>
 </body>
-
 </html>

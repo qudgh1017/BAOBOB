@@ -116,8 +116,11 @@ jQuery(document).ready(function($){
 		this.modal.attr('data-event', event.parent().attr('data-event'));
 
 		//update event content
-		this.modalBody.find('.event-info').load(event.parent().attr('data-content')+'.html .event-info > *', function(data){
+//		this.modalBody.find('.event-info').load(event.parent().attr('data-content')+'.html .event-info > *', function(data){
+		this.modalBody.find('.event-info').load(event.parent().attr('data-content')+' > *', function(data){
+
 			//once the event content has been loaded
+		
 			self.element.addClass('content-loaded');
 		});
 
@@ -146,7 +149,7 @@ jQuery(document).ready(function($){
 				modalHeight = ( windowHeight*.8 > self.modalMaxHeight ) ? self.modalMaxHeight : windowHeight*.8;
 
 			var modalTranslateX = parseInt((windowWidth - modalWidth)/2 - eventLeft),
-				modalTranslateY = parseInt((windowHeight - modalHeight)/4 - eventTop);
+				modalTranslateY = parseInt((windowHeight - modalHeight)/7 - eventTop);
 			
 			var HeaderBgScaleY = modalHeight/eventHeight,
 				BodyBgScaleX = (modalWidth - eventWidth);
