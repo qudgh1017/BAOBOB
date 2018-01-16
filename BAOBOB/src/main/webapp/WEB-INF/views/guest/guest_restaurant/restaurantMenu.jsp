@@ -19,7 +19,7 @@
 					  <!-- <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true"> -->
 					  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1">
 					  
-					    	<a href="guestRestaurant_info?restaurant_index=${restaurant_index}">식당 안내</a>
+					    	<a href="guestRestaurantMain?restaurant_index=${restaurant_index}">식당 안내</a>
 					    <span class="caret"></span>
 					  </button>
 				</div>
