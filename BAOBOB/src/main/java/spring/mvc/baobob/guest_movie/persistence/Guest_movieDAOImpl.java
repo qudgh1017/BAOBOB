@@ -144,6 +144,49 @@ public class Guest_movieDAOImpl implements Guest_movieDAO{
 		return cnt;
 	}
 
+	//좋아요 누른 사람 수
+	@Override
+	public String movieLike(int movie_index) {
+		String likeCnt = "0";
+		
+		Guest_movieDAO gmdao = sqlSession.getMapper(Guest_movieDAO.class);
+		likeCnt = gmdao.movieLike(movie_index);
+		
+		return likeCnt;
+	}
+
+	//리뷰수정
+	@Override
+	public int updateReview(ReviewVO review) {
+		int cnt = 0;
+		
+		Guest_movieDAO gmdao = sqlSession.getMapper(Guest_movieDAO.class);
+		cnt = gmdao.updateReview(review);
+		
+		return cnt;
+	}
+
+	// movieReview 삭제 
+	@Override
+	public int deleteMovieReview(Map<String, Object> map) {
+		int cnt = 0;
+		
+		Guest_movieDAO gmdao = sqlSession.getMapper(Guest_movieDAO.class);
+		cnt = gmdao.deleteMovieReview(map);
+		return cnt;
+	}
+
+	//리뷰 삭제
+	@Override
+	public int deleteReview(int review_index) {
+		int cnt = 0;
+		
+		Guest_movieDAO gmdao = sqlSession.getMapper(Guest_movieDAO.class);
+		cnt = gmdao.deleteReview(review_index);
+		
+		return cnt;
+	}
+
 	
 
 

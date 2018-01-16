@@ -8,16 +8,6 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>BAOBOX</title>
 </head>
-<script type="text/javascript">
-
-function loginCheck(){
-	window.open("loginCheck","loginCheck","top=50 left=100 width=400 height=300");
-}
-/* 리뷰작성 */
-function reviewWrite(movie_index){
-	window.open("movieReviewWrite?movie_index="+movie_index, "host_logout", "top=200 left=300 width=600 height=400");
-}
-</script>
 <body>
 	
 	<!-- CSS,JavaScript 참조 -->
@@ -27,7 +17,7 @@ function reviewWrite(movie_index){
 	<!-- main_menu -->
 	<%@ include file="/WEB-INF/views/guest/guest_movie/movie_menu.jsp" %>
 	
-	<section>
+	<section style="padding-top:0px;">
 		<div class="container">
 			<div class="row">
 				<div class="col-md-offset-1"></div>
