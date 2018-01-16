@@ -43,8 +43,11 @@
 						<input type="hidden" name="member_id" value="${memId}">
 						<input type="hidden" name="movie_index" value="${movie.movie_index}">
 						
+						<!-- 작성일때 -->
+						<input type="hidden" name="pro" value="1">
+						
 						<input type="radio" name="review_grade" value="1">좋아요
-						${memId}
+							${memId}
 						<input type="radio" name="review_grade" value="0">싫어요<br><br>	
 						<textarea name="review_content" placeholder="리뷰작성" rows="7" cols="100" style="resize:none; width:500px"></textarea>
 						
@@ -53,11 +56,6 @@
 					</form>
 				</div>
 			</div>
-			<%-- <div class="row">
-				<div class="col-md-10" align="left" style="border:1px solid white; height:200px;">
-					<span style="color:white; font-size:13px">${movie.movie_content}</span>
-				</div>
-			</div> --%>
 		</div>
 	</section>
 </c:if>

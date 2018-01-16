@@ -3,11 +3,18 @@ package spring.mvc.baobob.vo;
 import java.sql.Timestamp;
 
 public class Restaurant_scheduleVO {
+	public int restaurant_index;
 	public int restaurant_schedule_index;
 	public Timestamp schedule_startDate;
 	public Timestamp schedule_startTime;
 	public Timestamp schedule_endTime;
-	
+
+	public int getRestaurant_index() {
+		return restaurant_index;
+	}
+	public void setRestaurant_index(int restaurant_index) {
+		this.restaurant_index = restaurant_index;
+	}
 	public int getRestaurant_schedule_index() {
 		return restaurant_schedule_index;
 	}

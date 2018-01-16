@@ -75,13 +75,11 @@
 							<input class="form-control" type="text" style="display: inline-block; width: 165px; text-align: center;" name="date" id="datepicker" 
 								class="datepicker" placeholder="달력 보기" value="${date}" />
 							<input class="form-control" style="display: inline-block; width: 100px; background-color: #343a40; color: white;" type="button" name="hostReservAddForm"
-								onclick="hostScheduleSearch();" value="조회" />
+								onclick="reservView();" value="조회" />
 						</div>
 						<div class="cd-schedule loading">
 							<div class="timeline">
 								<ul>
-									<li><span>10:00</span></li>
-									<li><span>10:30</span></li>
 									<li><span>11:00</span></li>
 									<li><span>11:30</span></li>
 									<li><span>12:00</span></li>
@@ -112,12 +110,12 @@
 											<span><c:if test="${date == null}">선택날짜</c:if>${date}</span>
 										</div>
 										<ul>
-											<c:forEach var="vo1" items="${vos1}">
+											<c:forEach var="dto" items="${dtos}" varStatus="status">
 												<li class="single-event" 
-													data-start="<fmt:formatDate type="both" pattern="HH:mm" value="${vo1.schedule_startTime}" />"
-													data-end="<fmt:formatDate type="both" pattern="HH:mm" value="${vo1.schedule_endTime}" />"
-													data-content="event-abs-circuit" data-event="event-3">
-													<a href="#0"><em class="event-name">${vo1.theater_index}관 ${vo1.movie_index}번 영화</em></a>
+													data-start="<fmt:formatDate type="both" pattern="HH:mm" value="${dto.schedule_startTime}" />"
+													data-end="<fmt:formatDate type="both" pattern="HH:mm" value="${dto.schedule_endTime}" />"
+													data-content="event-abs-circuit" data-event="event-${status.index + 1}">
+													<a href="#0"><em class="event-name"></em></a>
 												</li>
 											</c:forEach>
 										</ul>
@@ -129,7 +127,11 @@
 											<span class="event-date"></span>
 											<h3 class="event-name"></h3>
 										</div>
-										<div class="header-bg"></div>
+										<div class="header-bg">
+											<div class="result">
+												<!-- 출력 -->
+											</div>
+										</div>
 									</header>
 									
 									<div class="body">

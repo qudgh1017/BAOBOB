@@ -151,8 +151,8 @@ public class Guest_restaurantServiceImpl implements Guest_restaurantService{
 		int restaurant_index = Integer.parseInt(req.getParameter("restaurant_index"));
 		String review_grade = req.getParameter("review_grade");
 		String review_content = req.getParameter("review_content");
-		//String member_id = (String) req.getSession().getAttribute("memberId");
-		String member_id = "member_id 1";
+		String member_id = (String) req.getSession().getAttribute("memId");
+		//String member_id = "member_id 1";
 		
 		System.out.println("restaurant_index : " + restaurant_index);
 		System.out.println("review_grade : " + review_grade);
@@ -190,9 +190,9 @@ public class Guest_restaurantServiceImpl implements Guest_restaurantService{
 		int review_index = Integer.parseInt(req.getParameter("review_index"));
 		int restaurant_index = Integer.parseInt(req.getParameter("restaurant_index"));
 		int pageNum = Integer.parseInt(req.getParameter("pageNum"));
-		//String member_id = (String) req.getSession().getAttribute("member_id");
+		String member_id = (String) req.getSession().getAttribute("memId");
 		
-		String member_id = "member_id 1";
+		//String member_id = "member_id 1";
 		String member_pwd = req.getParameter("member_pwd");
 		//1234
 		
@@ -234,8 +234,8 @@ public class Guest_restaurantServiceImpl implements Guest_restaurantService{
 		int restaurant_index = Integer.parseInt(req.getParameter("restaurant_index"));
 		int review_index = Integer.parseInt(req.getParameter("review_index"));
 		int pageNum = Integer.parseInt(req.getParameter("pageNum"));
-		//String member_id = (String) req.getSession().getAttribute("member_id");
-		String member_id = "member_id 1";
+		String member_id = (String) req.getSession().getAttribute("memId");
+		//String member_id = "member_id 1";
 		//System.out.println("restaurant_index : " + restaurant_index);
 		System.out.println("review_index : " + review_index);
 		System.out.println("pageNum : " + pageNum);
@@ -265,7 +265,8 @@ public class Guest_restaurantServiceImpl implements Guest_restaurantService{
 		int restaurant_index = Integer.parseInt(req.getParameter("restaurant_index"));
 		int review_index = Integer.parseInt(req.getParameter("review_index"));
 		int pageNum = Integer.parseInt(req.getParameter("pageNum"));
-		String member_id = "member_id 1";
+		//String member_id = "member_id 1";
+		String member_id = (String) req.getSession().getAttribute("memId");
 		String member_pwd = req.getParameter("member_pwd");
 		//1234
 		
