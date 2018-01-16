@@ -17,7 +17,7 @@
 			<div class="card mb-3">
 				<div class="card-header">올해 결산액</div>
 				<div class="card-body">
-					<div id="thisChart" style="width:100% height:500px"></div>
+					<div id="thisChart" style="width:100%; height:500px;"></div>
 				</div>
 				<div class="card-footer small text-muted">주차 시간에 따른 금액과 실제 받은 금액</div>
 			</div>

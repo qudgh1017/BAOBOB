@@ -9,6 +9,7 @@
 	<title>Insert title here</title>
 	
 	<style type="text/css">
+		#back_btn{display:none;}
 		.portfolio{margin-top:60px;}
 	</style>
 </head>
@@ -16,6 +17,8 @@
 	<%@ include file="../common/head.jsp" %>
 
 	<%@ include file="guestParkingHeader.jsp" %>
+	
+	<img class="back_img" src="${projectRes}images/ymk/guest_parking/map.png">
 	
 	<section>
 	  <div class="container">

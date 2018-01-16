@@ -42,7 +42,7 @@
 				<li class="nav-item" data-toggle="tooltip" data-placement="right" title="state">
 					<a class="nav-link" href="hostParkingState"> 
 						<i class="fa fa-fw fa-dashboard"></i>
-						<span class="nav-link-text">실시간 주차 현황</span>
+						<span class="nav-link-text">실시간 주차 상태</span>
 					</a>
 				</li>
 				<li class="nav-item" data-toggle="tooltip" data-placement="right" title="grape">
