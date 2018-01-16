@@ -65,7 +65,7 @@
 				</a>
 			</div>
 			<div class="col-lg-4">
-				<a class="portfolio-item d-block mx-auto" href="#">
+				<a class="portfolio-item d-block mx-auto" href="guestRestaurantList">
 					<img class="img-fluid" src="${projectRes}images/ymk/main/foodIcon.png">
 				</a>
 			</div>

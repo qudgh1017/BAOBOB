@@ -89,6 +89,7 @@ public class Guest_movieController {
 		log.debug("====== Guest_movieController/movieDetail ======");
 
 		gmservice.movieInfo(req, model);
+		gmservice.reviewList(req, model);
 		
 		return "/guest/guest_movie/movie/movieDetail";
 	}
@@ -107,6 +108,7 @@ public class Guest_movieController {
 	public String reviewWrite(HttpServletRequest req, Model model) {
 		log.debug("====== Guest_movieController/movieReviewWrite ======");
 		
+		gmservice.movieReviewCheck(req, model);
 		gmservice.movieInfo(req, model);
 		
 		return "/guest/guest_movie/movie/movieReviewWrite";

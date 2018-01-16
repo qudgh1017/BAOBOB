@@ -1,12 +1,14 @@
 package spring.mvc.baobob.vo;
 
-import java.util.List;
+import java.sql.Timestamp;
 
 public class ReviewVO {
 	private int review_index;
 	private String review_grade;
 	private String review_content;
-	private Member member;
+	private String member_id;
+	private int review_state;
+	private Timestamp review_reg_date;
 	
 	public int getReview_index() {
 		return review_index;
@@ -26,12 +28,23 @@ public class ReviewVO {
 	public void setReview_content(String review_content) {
 		this.review_content = review_content;
 	}
-	public Member getMember() {
-		return member;
+	public String getMember_id() {
+		return member_id;
 	}
-	public void setMember(Member member) {
-		this.member = member;
+	public void setMember_id(String member_id) {
+		this.member_id = member_id;
 	}
-	
+	public int getReview_state() {
+		return review_state;
+	}
+	public void setReview_state(int review_state) {
+		this.review_state = review_state;
+	}
+	public Timestamp getReview_reg_date() {
+		return review_reg_date;
+	}
+	public void setReview_reg_date(Timestamp review_reg_date) {
+		this.review_reg_date = review_reg_date;
+	}
 	
 }
