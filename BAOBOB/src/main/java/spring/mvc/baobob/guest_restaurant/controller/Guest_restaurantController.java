@@ -84,8 +84,9 @@ public class Guest_restaurantController {
 	public String guestRestaurantReserv(HttpServletRequest req, Model model) {
 		//log.debug("===== Guest_restaurantController/guestRestaurantMain() =====");
 
-		
-		return "guest/guest_restaurant/reserv/guestRestaurant_reserv";
+		//·Î±×ÀÎ
+		//return "main/mainSignIn";
+		return "guest/guest_restaurant/reserv/guestRestaurant_reserv2";
 	}
 	
 	

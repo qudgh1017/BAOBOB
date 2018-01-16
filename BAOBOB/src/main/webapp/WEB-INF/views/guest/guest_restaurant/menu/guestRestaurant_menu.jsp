@@ -60,15 +60,39 @@
 	
 	<section>
 		<div class="container">
-			<div class="row">
-				<div class="col-md-offset-1"></div>
-				<div class="col-md-10">
-					<br>
-					<h3 align=left;>どきどきDokidoki</h3>
-					<hr style="border:2px solid black;">
+			<c:if test="${restaurant_index==1}"> 
+				<div class="row">
+					<div class="col-md-offset-1"></div>
+					<div class="col-md-10">
+						<br>
+						<h3 align=left;>どきどきDokidoki</h3>
+						<hr style="border:2px solid black;">
+					</div>
+					<div class="col-md-offset-1"></div>
 				</div>
-				<div class="col-md-offset-1"></div>
-			</div>
+			</c:if>
+			<c:if test="${restaurant_index==2}"> 
+				<div class="row">
+					<div class="col-md-offset-1"></div>
+					<div class="col-md-10">
+						<br>
+						<h3 align=left;>한식이요</h3>
+						<hr style="border:2px solid black;">
+					</div>
+					<div class="col-md-offset-1"></div>
+				</div>
+			</c:if>
+			<c:if test="${restaurant_index==3}"> 
+				<div class="row">
+					<div class="col-md-offset-1"></div>
+					<div class="col-md-10">
+						<br>
+						<h3 align=left;>양식이요</h3>
+						<hr style="border:2px solid black;">
+					</div>
+					<div class="col-md-offset-1"></div>
+				</div>
+			</c:if>
 			
 			<div class="row">
 				<div class="col-md-offset-1"></div>
