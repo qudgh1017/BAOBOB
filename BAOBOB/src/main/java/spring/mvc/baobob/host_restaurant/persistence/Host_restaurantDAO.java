@@ -7,6 +7,7 @@ import spring.mvc.baobob.vo.EmployeeVO;
 import spring.mvc.baobob.vo.Member;
 import spring.mvc.baobob.vo.MenuVO;
 import spring.mvc.baobob.vo.RestaurantVO;
+import spring.mvc.baobob.vo.Restaurant_scheduleVO;
 import spring.mvc.baobob.vo.TableVO;
 
 public interface Host_restaurantDAO {
@@ -96,4 +97,7 @@ public interface Host_restaurantDAO {
 
 	// 식당[1] 예약 추가
 	public int addReserv(Map<String, Object> map);
+
+	// 식당[1] 날짜별 예약 조회
+	public ArrayList<Restaurant_scheduleVO> getReservList(Map<String, Object> map);
 }

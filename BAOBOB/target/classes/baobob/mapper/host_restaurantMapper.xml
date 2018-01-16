@@ -143,6 +143,14 @@
 	
 	<!-- 식당[1] 예약 추가 처리 -->
 	<insert id="addReserv" parameterType="Map">
-		INSERT INTO restaurant_schedule_tbl(restaurant_index, restaurantschedule_index, schedule_startDate, schedule_startTime, schedule_endTime) VALUES(#{dto.restaurant_index}, restaurant_schedule_tbl_SEQ.nextval, #{dto3.schedule_startDate}, #{dto3.schedule_startTime}, #{dto3.schedule_endTime})
+		INSERT INTO restaurant_schedule_tbl(restaurant_index, restaurant_schedule_index, schedule_startDate, schedule_startTime, schedule_endTime) VALUES(#{dto.restaurant_index}, restaurant_schedule_tbl_SEQ.nextval, #{dto3.schedule_startDate}, #{dto3.schedule_startTime}, #{dto3.schedule_endTime})
 	</insert>
+	
+	<!-- 식당[1] 선택 날짜 예약 조회 -->
+	<select id="getReservList" resultType="spring.mvc.baobob.vo.Restaurant_scheduleVO">
+		SELECT * FROM restaurant_schedule_tbl 
+		WHERE schedule_startTime &gt; to_char(to_date(#{startDate}, 'YY-MM-DD-HH24-MI'), 'YY-MM-DD-HH24-MI') 
+		AND schedule_startTime &lt; to_char(to_date(#{endDate}, 'YY-MM-DD-HH24-MI'), 'YY-MM-DD-HH24-MI') 
+		AND restaurant_index = #{index}
+	</select>
 </mapper>
