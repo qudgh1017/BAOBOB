@@ -5,8 +5,11 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -25,6 +28,8 @@ import spring.mvc.baobob.vo.MenuVO;
 import spring.mvc.baobob.vo.RestaurantVO;
 import spring.mvc.baobob.vo.Restaurant_scheduleVO;
 import spring.mvc.baobob.vo.TableVO;
+import spring.mvc.baobob.vo.TheaterVO;
+import spring.mvc.baobob.vo.Theater_scheduleVO;
 
 @Service
 public class Host_restaurantServiceImpl implements Host_restaurantService {
@@ -101,7 +106,7 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 
 		String date = req.getParameter("date");
 		String time = req.getParameter("time");
-		
+
 		RestaurantVO dto = new RestaurantVO();
 		dto = dao.viewRestaurant(req.getParameter("index"));
 
@@ -454,10 +459,27 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 		model.addAttribute("cnt", cnt);
 	}
 
+	// 식당[1] 날짜별 예약 조회
 	@Override
 	public void hostReservList(HttpServletRequest req, Model model) {
 		// TODO Auto-generated method stub
 		log.debug("service.hostReservList()");
+
+		SimpleDateFormat date = new SimpleDateFormat("yy-MM-dd", Locale.KOREA);
+		Date sysdate = new Date();
+		String today = date.format(sysdate);
+
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("index", 1);
+		map.put("startDate", today + "-00:00");
+		map.put("endDate", today + "-23:59");
+
+		// 선택 날짜 예약 조회
+		ArrayList<Restaurant_scheduleVO> dtos = dao.getReservList(map);
+
+		model.addAttribute("index", 1);
+		model.addAttribute("date", today);
+		model.addAttribute("dtos", dtos);
 	}
 
 	// 식당[1] 예약 추가
@@ -471,28 +493,28 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 		int row = Integer.parseInt(req.getParameter("row"));
 		int col = Integer.parseInt(req.getParameter("col"));
 		String info = req.getParameter("info");
-		
+
 		String date = "20" + req.getParameter("date");
 		String time = req.getParameter("time") + ":00";
 		String startTime = date + " " + time;
 		String[] end = time.split(":");
-		
-		if(end[1] == "00") {
+
+		if (end[1].equals("00")) {
 			end[1] = "30";
-		} else if(end[1] == "30") {
+		} else if (end[1].equals("30")) {
 			end[0] = String.valueOf((Integer.parseInt(end[0]) + 1));
 			end[1] = "00";
 		}
-		
+
 		String endTime = end[0] + ":" + end[1] + ":00";
 		endTime = date + " " + endTime;
 
 		System.out.println("startTime : " + startTime);
 		System.out.println("endTime : " + endTime);
-		
+
 		RestaurantVO dto = new RestaurantVO();
 		dto.setRestaurant_index(Integer.parseInt(req.getParameter("index")));
-		
+
 		cnt = dao.resetTable(dto);
 
 		Restaurant_scheduleVO dto3 = new Restaurant_scheduleVO();
@@ -508,7 +530,7 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 		map.put("dto3", dto3);
 
 		cnt = dao.addReserv(map);
-		
+
 		if (cnt != 0) {
 			String[] state = info.split(",");
 

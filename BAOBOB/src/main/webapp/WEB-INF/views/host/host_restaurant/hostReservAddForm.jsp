@@ -13,16 +13,19 @@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="${restaurant_js}"></script>
 <script type="text/javascript">
- $(function() {
-   $( "#datepicker" ).datepicker({
-     dateFormat: 'y-mm-dd'
-   });
+$(function() {
+	$( "#datepicker" ).datepicker({
+     	dateFormat: 'y-mm-dd'
+	});
    
-   $( "#timepicker" ).timepicker({
-	   step: 30, 
-	   timeFormat: "HH:mm"
-   });
- });
+	$( "#timepicker" ).timepicker({
+	   	step: 30, 
+	   	timeFormat: "HH:mm",
+	   	minHour: 11,
+	   	maxHour: 20,
+	   	dynamic: false
+   	});
+});
 </script>
 </head>
 <body class="fixed-nav sticky-footer bg-dark" onload="spaceBody('${info}', '${col}', '${row}');">

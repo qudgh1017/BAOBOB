@@ -42,7 +42,7 @@ Main Components
     left: 0;
     height: 100%;
     width: 100%;
-    padding-top: 50px;
+    padding-top: 30px;
   }
   .cd-schedule .timeline li {
     position: relative;
@@ -188,7 +188,7 @@ Main Components
     margin-bottom: 0;
   }
   .cd-schedule .events .events-group > ul {
-    height: 1070px;
+    height: 950px;
     /* reset style */
     display: block;
     overflow: visible;
