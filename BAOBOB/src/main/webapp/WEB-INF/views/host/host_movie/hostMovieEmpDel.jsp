@@ -19,16 +19,16 @@
 	<br>
 	<br>
 	<br>
-	<c:if test="${cnt== 1 }">
+	<c:if test="${cnt >= 1 }">
 		<script type="text/javascript">
-			alert("직원 등록 성공!");
+			alert("직원 해고 성공!");
 			window.location="hostMovieEmp";
 		</script>
 	</c:if>
-	<c:if test="${cnt!= 1 }">
+	<c:if test="${cnt != 1 }">
 		<script type="text/javascript">
-			alert("직원 등록 실패");
-			window.history.back(-2);
+			alert("영화 해고 실패");
+			window.location="hostMovieEmp";
 		</script>
 	</c:if>
 	<br>

@@ -29,7 +29,10 @@
    
    $( "#timepicker" ).timepicker({
 	   step: 30, 
-	   timeFormat: "HH:mm"
+	   timeFormat: "HH:mm",
+	   maxHour:22,
+	   minHour:7,
+	   dynamic:false
    });
  });
 </script>
