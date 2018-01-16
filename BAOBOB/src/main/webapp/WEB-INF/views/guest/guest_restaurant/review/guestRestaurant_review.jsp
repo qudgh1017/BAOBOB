@@ -52,14 +52,14 @@
 	<!-- 레스토랑 메뉴 -->
 	<%@ include file="/WEB-INF/views/guest/guest_restaurant/restaurantMenu.jsp" %>
 	
-	<!-- 식당1-사진 -->
-	<header class="bg-primary text-white text-center head_header" style="background-color: #2c3e50!important;">
+	<!--===== 식당1-사진 =====-->
+	<%-- <header class="bg-primary text-white text-center head_header" style="background-color: #2c3e50!important;">
 	<div class="head_screen"><!-- container -->
 		<h1>Japanese Food</h1>
 		<!-- <h2>Multiplex Baobob</h2> -->
 	</div>
 	<img class="img-fluid mb-5 d-block mx-auto mainImg" src="${projectRes}images/mhj/choice/jap_2.jpg" width="100%" height="100px">
-	</header>
+	</header> --%>
 	<!--======= Header 종료 =======-->
 	
 	

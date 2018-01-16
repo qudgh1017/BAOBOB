@@ -40,12 +40,13 @@
 					<br>
 					
 					<div id="Restaurant" style="background-image: url(${projectRes}/images/mhj/choice/jsp2.jpg); height:400px; background-repeat:no-repeat;">
-						<div style="height:250px;"></div>
-						<div style="background:rgba(0, 0, 0, 0.7); color:white; height:150px">
+						<div style="height:280px;"></div>
+						<div style="background:rgba(0, 0, 0, 0.7); color:white; height:120px">
 							<br>
-							<br>
-							한국소프트웨어인재개발원<br>
-							서울특별시 금천구 가산동 426-5 월드 메르디앙 벤처 센터 2 차 410 호<br>
+							모던한 공간 속에서 감각적인 일본의 맛과 멋을 만날 수 있는 공간입니다. <br>
+							합리적인 가격의 음식을 편안하고 세련된 분위기에서 일본의 새로운 미식 문화를 즐기며 <br>
+							친구 또는 지인들과 특별한 시간을 함께 하시길 바랍니다.<br>
+							
 						</div>
 					</div>
 					<hr style="border:2px solid black;">
