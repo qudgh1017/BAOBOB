@@ -1,6 +1,8 @@
+
+
 /**
  * Host Parking Setting - 주차장 관리
- */
+ *//*
 var pageNum = 0;
 function ajax(url) {
 	sendRequest(view_callback, url, 'GET', '');
@@ -213,10 +215,10 @@ function sendCheck() {
 
 
 
-/**
+*//**
  * 
  * 
- */
+ *//*
 stateTypeImg = '';
 function parkingStatus(col, row, states) {
 	var state = states.split(',');
@@ -259,7 +261,7 @@ function spaceStateType(type) {
 
 
 
-
+*/
 
 
 

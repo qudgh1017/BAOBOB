@@ -6,6 +6,7 @@ document.getElementById('spaceDiv').addEventListener('mousemove', function(e) {
 	e.preventDefault();
 
 	var idx = e.target.getAttribute('data-index');
+	console.log(idx);
 	if(idx != null) {
 		var moveNum = document.getElementById('moveNum');
 		moveNumView = moveNum;
