@@ -6,3 +6,5 @@
 
 <link rel="stylesheet" href="/baobob/resources/reset.css">
 <c:set var="projectRes" value="/baobob/resources/" />
+
+<link rel="icon" href="${projectRes}images/lgt/lost/The-Baobab-Tree-4.jpg" type="image/x-icon" />
