@@ -186,9 +186,9 @@
 		
 			<div class="event-modal">
 				<header class="header">
-					<div class="content">
+					<div class="content" align="center">
 						<span class="event-date"></span>
-						<h3 class="event-name"></h3>
+						<h3 class="event-name"></h3><br><br>
 						<div id="theaterSeat"></div>
 					</div>
 		
@@ -207,7 +207,7 @@
 		</div> <!-- .cd-schedule -->
 		<script src="${projectRes}phc/js/modernizr.js"></script>
 <!-- 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script> -->
-		<script>
+		<script type="text/javascript">
  			if( !window.jQuery ) document.write('<script src="/baobobs/resources/phc/js/jquery-3.0.0.min.js"><\/script>');
  		</script>
 		<script src="${projectRes}phc/js/main.js"></script> <!-- Resource jQuery -->

@@ -165,7 +165,7 @@ jQuery(document).ready(function($){
 
 			//set modalHeader width
 			self.modalHeader.css({
-				width: eventWidth+'px',
+				width: 800+'px',
 			});
 			//set modalBody left margin
 			self.modalBody.css({
@@ -182,7 +182,7 @@ jQuery(document).ready(function($){
 			//change modal modalHeaderBg height/width and scale it
 			self.modalHeaderBg.css({
 				height: eventHeight+'px',
-				width: eventWidth+'px',
+				width: 800+'px',
 			});
 			transformElement(self.modalHeaderBg, 'scaleY('+HeaderBgScaleY+')');
 			
