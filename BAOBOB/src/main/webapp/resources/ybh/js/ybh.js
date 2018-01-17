@@ -76,13 +76,17 @@ function reviewDeleteCheck(memId, member_id, movie_index, review_index){
 	});
 }*/
 
+function nonPlaying(){
+	alert("상영예정작입니다.\n 상영중인 영화를 선택해주세요.");
+	window.location.reload();
+	
+	return false;
+}
+
 //영화 movieTicekt
-//영화에서 날짜결과로 가는 ajax
 
 //영화버튼 클릭했을때
 function movieClick(movie_index){
-	
-	var movie_index = movie_index;
 
     $.ajaxSettings.traditional = true;//배열 형태로 서버쪽 전송을 위한 설정
     
@@ -94,7 +98,7 @@ function movieClick(movie_index){
 		},
 		
 		success: function(msg) {
-			$('#resultDate').html(msg);					
+			$('#resultSchedule').html(msg);					
 		},				
 		error: function() {
 			alert('오류');

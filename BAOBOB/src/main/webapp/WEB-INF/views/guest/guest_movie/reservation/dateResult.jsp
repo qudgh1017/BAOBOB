@@ -12,7 +12,6 @@
 <!-- 영화별 스케줄 있을때 -->
 <c:if test="${cnt>0}">
 	<br>
-	
 	<c:forEach var="schedule" items="${schedules}">
 		<button type="button" class="btn btn-black" data-toggle="button" aria-pressed="false" autocomplete="off" style="width:95%; height:50px; ">
 			<div class="reserveTab" align="left" >

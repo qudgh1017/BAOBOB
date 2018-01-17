@@ -63,7 +63,7 @@
 								<c:if test="${movie.movie_state==1}">
 									<%-- <input type="hidden" name="movie_index" value="${movie.movie_index}"> --%>
 									<button onclick="movieClick(${movie.movie_index});" type="button" class="btn btn-black" data-toggle="button" aria-pressed="false" autocomplete="off" style="width:95%; height:50px; ">
-										<div class="reserveTab" align="left" >
+										<div align="left" >
 											<c:if test="${movie.movie_age==0}">전체</c:if>
 											<c:if test="${movie.movie_age!=0}">${movie.movie_age}</c:if>&nbsp; 
 											${movie.movie_title}
@@ -73,8 +73,8 @@
 								
 								<!-- 상영예정작 -->
 								<c:if test="${movie.movie_state==0}">
-									<button type="button" class="btn" data-toggle="button" aria-pressed="false" autocomplete="off" style="height:50px; color: rgba(0,0,0,0.5);background-color: rgba(255, 255, 255, 0.5); width:95%;">
-										<div class="reserveTab" align="left" >
+									<button onclick="nonPlaying();" type="button" class="btn" data-toggle="button" aria-pressed="false" autocomplete="off" style="height:50px; color: rgba(0,0,0,0.5);background-color: rgba(255, 255, 255, 0.5); width:95%;">
+										<div align="left" >
 											<c:if test="${movie.movie_age==0}">전체</c:if>
 											<c:if test="${movie.movie_age!=0}">${movie.movie_age}</c:if>&nbsp;
 											${movie.movie_title}
@@ -89,16 +89,28 @@
 				<div class="col-md-2" align="center" style="height:600px; color:black; font-weight:bold; border:1px solid white; background-color:#EEEEEE">
 					
 					<div style="overflow:auto; width:100%; height:100%; background-color:#EEEEEE">
-						<!-- 날짜 결과값 출력될 곳 -->
 						<div id="resultDate" class="reserveTab" align="center" style="height:30px;">
 							<span><fmt:formatDate value="<%=new Date()%>" pattern="YYYY" /></span><br>
 							<span style="font-size: 30px; margin-bottom: 10px;"><fmt:formatDate value="<%=new Date()%>" pattern="MM" /></span><br>
-							<span class="selectdate"><fmt:formatDate value="<%=new Date(new Date().getTime())%>" pattern="E dd" /></span><br>
-							<span class="selectdate"><fmt:formatDate value="<%=new Date(new Date().getTime() + 60 * 60 * 24 * 1000)%>" pattern="E dd" /></span><br>
-							<span class="selectdate"><fmt:formatDate value="<%=new Date(new Date().getTime() + 60 * 60 * 24 * 1000 * 2)%>" pattern="E dd" /></span><br>
-							<span class="selectdate"><fmt:formatDate value="<%=new Date(new Date().getTime() + 60 * 60 * 24 * 1000 * 3)%>" pattern="E dd" /></span><br>
-							<span class="selectdate"><fmt:formatDate value="<%=new Date(new Date().getTime() + 60 * 60 * 24 * 1000 * 4)%>" pattern="E dd" /></span><br>
-							<span class="selectdate"><fmt:formatDate value="<%=new Date(new Date().getTime() + 60 * 60 * 24 * 1000 * 5)%>" pattern="E dd" /></span>	<br>
+							
+							<button onclick="" type="button" class="btn btn-black" data-toggle="button" aria-pressed="false" autocomplete="off" style="width:95%; height:50px; ">
+								<span><fmt:formatDate value="<%=new Date(new Date().getTime())%>" pattern="E dd" /></span>
+							</button>
+							<button onclick="" type="button" class="btn btn-black" data-toggle="button" aria-pressed="false" autocomplete="off" style="width:95%; height:50px; ">
+								<span ><fmt:formatDate value="<%=new Date(new Date().getTime() + 60 * 60 * 24 * 1000)%>" pattern="E dd" /></span>
+							</button>
+							<button onclick="" type="button" class="btn btn-black" data-toggle="button" aria-pressed="false" autocomplete="off" style="width:95%; height:50px; ">
+								<span><fmt:formatDate value="<%=new Date(new Date().getTime() + 60 * 60 * 24 * 1000 * 2)%>" pattern="E dd" /></span>
+							</button>
+							<button onclick="" type="button" class="btn btn-black" data-toggle="button" aria-pressed="false" autocomplete="off" style="width:95%; height:50px; ">
+								<span><fmt:formatDate value="<%=new Date(new Date().getTime() + 60 * 60 * 24 * 1000 * 3)%>" pattern="E dd" /></span>
+							</button>
+							<button onclick="" type="button" class="btn btn-black" data-toggle="button" aria-pressed="false" autocomplete="off" style="width:95%; height:50px; ">
+								<span><fmt:formatDate value="<%=new Date(new Date().getTime() + 60 * 60 * 24 * 1000 * 4)%>" pattern="E dd" /></span>
+							</button>
+							<button onclick="" type="button" class="btn btn-black" data-toggle="button" aria-pressed="false" autocomplete="off" style="width:95%; height:50px; ">
+								<span><fmt:formatDate value="<%=new Date(new Date().getTime() + 60 * 60 * 24 * 1000 * 5)%>" pattern="E dd" /></span>
+							</button>
 						</div>
 					</div>
 				</div>
