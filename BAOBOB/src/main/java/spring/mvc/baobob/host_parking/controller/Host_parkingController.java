@@ -25,6 +25,16 @@ public class Host_parkingController {
 		return "host/host_parking/hostParkingMain";
 	}
 	
+	//메인 ajax. 주차 구역 변화
+	@RequestMapping("hostParkingMainSpace")
+	public String hostParkingMainSpace(HttpServletRequest req, Model model) {
+		System.out.println("hostParkingMainSpace()");
+		
+		service.hostParkingMainSpace(req, model);
+		
+		return "host/host_parking/hostParkingMainSpace";
+	}
+	
 	//주차장 구역 정보 페이지
 	@RequestMapping("hostParkingSetting")
 	public String hostParkingSetting(HttpServletRequest req, Model model) {
@@ -96,6 +106,16 @@ public class Host_parkingController {
 		return "host/host_parking/hostParkingPay";
 	}
 	
+	//주차 납부 내역 ajax
+	@RequestMapping("hostParkingPayList")
+	public String hostParkingPayList(HttpServletRequest req, Model model) {
+		System.out.println("hostParkingPayList()");
+		
+		service.getParkingPayList(req, model);
+		
+		return "host/host_parking/hostParkingPayList";
+	}
+	
 	//주차 납부 현황
 	@RequestMapping("hostParkingPayChart")
 	public String hostParkingPayChart(HttpServletRequest req, Model model) {
@@ -104,5 +124,13 @@ public class Host_parkingController {
 		service.getParkingPayChart(req, model);
 		
 		return "host/host_parking/hostParkingPayChart";
+	}
+	
+	@RequestMapping("arduinoInput")
+	public String arduinoInput(HttpServletRequest req, Model model) {
+		
+		service.arduinoInput(req,  model);
+		
+		return "host/host_parking/arduinoInput";
 	}
 }

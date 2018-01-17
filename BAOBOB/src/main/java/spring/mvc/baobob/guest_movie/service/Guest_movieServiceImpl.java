@@ -1,6 +1,7 @@
 package spring.mvc.baobob.guest_movie.service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -11,10 +12,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
 import spring.mvc.baobob.guest_movie.persistence.Guest_movieDAO;
-import spring.mvc.baobob.vo.Member;
-import spring.mvc.baobob.vo.MovieReviewVO;
 import spring.mvc.baobob.vo.MovieVO;
 import spring.mvc.baobob.vo.ReviewVO;
+import spring.mvc.baobob.vo.Theater_scheduleVO;
 
 @Service
 public class Guest_movieServiceImpl implements Guest_movieService{
@@ -197,7 +197,7 @@ public class Guest_movieServiceImpl implements Guest_movieService{
 		}
 	}
 
-	//movie정보 이용
+	//movie정보 이용(+ 좋아요 갯수)
 	@Override
 	public void movieInfo(HttpServletRequest req, Model model) {
 		int movie_index = Integer.parseInt(req.getParameter("movie_index"));
@@ -207,6 +207,21 @@ public class Guest_movieServiceImpl implements Guest_movieService{
 		System.out.println(movie.getMovie_trailer());
 		if(movie != null) {
 			model.addAttribute("movie",movie);
+			String strLikeCnt = gmdao.movieLike(movie_index);
+			if(strLikeCnt != null) {
+				//좋아요 퍼센트 구하기
+				int reviewCnt = gmdao.getMovieReviewCnt(movie_index);
+				int likeCnt = Integer.parseInt(strLikeCnt);
+				int likePercent = 0;
+				if(reviewCnt == 0) {
+					likePercent = 0;
+				}else {
+					likePercent = (int)((likeCnt*100)/reviewCnt);
+				}
+				
+				System.out.println("likePercent:" + likePercent);
+				model.addAttribute("likePercent", likePercent);
+			}
 		}
 	}
 
@@ -400,33 +415,74 @@ public class Guest_movieServiceImpl implements Guest_movieService{
 	public void movieReviewPro(HttpServletRequest req, Model model) {
 		ReviewVO review = new ReviewVO();
 		
-		String review_grade = req.getParameter("review_grade");
-		String member_id = req.getParameter("member_id");
-		String review_content = req.getParameter("review_content");
+		//dao나눠서 처리하기 위해 pro로 구분(1일땐 작성/ 2일땐 수정 / 3일때 삭제)
+		int pro = Integer.parseInt(req.getParameter("pro"));
+		
 		int movie_index = Integer.parseInt(req.getParameter("movie_index"));
 		int cnt = 0;
 		
-		//1. 영화에 한사람이 하나의 리뷰만 가능
-		Map<String,Object> map1 = new HashMap<String,Object>();
-		map1.put("member_id", member_id);
-		map1.put("movie_index", movie_index);
-		
-		//2. review_tbl insert
-		review.setReview_content(review_content);
-		review.setReview_grade(review_grade);
-		review.setMember_id(member_id);
-		review.setReview_state(1);
-		cnt = gmdao.insertReview(review);
-		
-		//3. movie_review_tbl insert
-		if(cnt==1) {//review 입력 성공하면 reviewIndex 값 select
-			Map<String,Object> map2 = new HashMap<String,Object>();
-			map2.put("movie_index", movie_index);
-			cnt = gmdao.insertMovieReview(map2);
+		if(pro==1) { //작성일시
+			String review_grade = req.getParameter("review_grade");
+			String member_id = req.getParameter("member_id");
+			String review_content = req.getParameter("review_content");
 			
-		}else {// 실패
-			cnt = 0;
+			//1. 영화에 한사람이 하나의 리뷰만 가능
+			Map<String,Object> map1 = new HashMap<String,Object>();
+			map1.put("member_id", member_id);
+			map1.put("movie_index", movie_index);
+			
+			//2. review_tbl insert
+			review.setReview_content(review_content);
+			review.setReview_grade(review_grade);
+			review.setMember_id(member_id);
+			review.setReview_state(1);
+			cnt = gmdao.insertReview(review);
+			
+			//3. movie_review_tbl insert
+			if(cnt==1) {//review 입력 성공하면 reviewIndex currval
+				Map<String,Object> map2 = new HashMap<String,Object>();
+				map2.put("movie_index", movie_index);
+				cnt = gmdao.insertMovieReview(map2);
+				
+			}else {// 실패
+				cnt = 0;
+			}
+			
+		}else{// 수정,삭제 일시
+			int review_index = Integer.parseInt(req.getParameter("review_index"));
+			
+			if(pro==2) { //수정일때
+				String review_grade = req.getParameter("review_grade");
+				String member_id = req.getParameter("member_id");
+				String review_content = req.getParameter("review_content");
+				
+				//1. review_tbl update
+				review.setReview_index(review_index);
+				review.setReview_content(review_content);
+				review.setReview_grade(review_grade);
+				review.setMember_id(member_id);
+				review.setReview_state(1);
+				cnt = gmdao.updateReview(review);
+				
+			}else {//pro==3 삭제일때
+				//1. movie_review_tbl 먼저 삭제
+				Map<String,Object> map2 = new HashMap<String,Object>();
+				map2.put("movie_index", movie_index);
+				map2.put("review_index", review_index);
+				cnt = gmdao.deleteMovieReview(map2);
+				
+				//2. review_tbl 삭제(pk인 review_index만 있으면 됨) 
+				if(cnt==1) {//review 입력 성공하면 
+					cnt = gmdao.deleteReview(review_index);
+					
+				}else {// 실패
+					cnt = 0;
+				}
+						
+			}
 		}
+		
+		model.addAttribute("pro", pro);
 		model.addAttribute("cnt", cnt);
 		
 	}
@@ -445,15 +501,64 @@ public class Guest_movieServiceImpl implements Guest_movieService{
 		map1.put("member_id", member_id);
 		map1.put("movie_index", movie_index);
 		cnt = gmdao.movieReviewCheck(map1);
-		System.out.println("cnt1:"+cnt);
 		
 		if(cnt>0) { //이미 해당영화에 리뷰를 적은경우
 			cnt = 0;
 		}else { //리뷰 안적은 경우
 			cnt = 1;
 		}
-		System.out.println("cnt2:"+cnt);
 		model.addAttribute("cnt", cnt);
+	}
+
+	//예매창에 띄울 영화리스트(상영종료인 거 빼고)
+	@Override
+	public void reserveMovieList(HttpServletRequest req, Model model) {
+		
+		int cnt = 0;// 영화 갯수
+		
+		//전체 영화 갯수
+		cnt = gmdao.getMovieCnt();
+		
+		if(cnt > 0) {
+			//게시글 목록 조회
+			ArrayList<MovieVO> movies = null;
+			// movie_state에 따른 영화 리스트 구하기
+			movies = gmdao.getAllReserveMovies();
+			
+			model.addAttribute("movies", movies); 
+		}
+		
+		model.addAttribute("cnt", cnt);//전체 영화갯수
+		
+	}
+
+	//영화 되는 날짜, 상영관 정보
+	@Override
+	public void reserveDateList(HttpServletRequest req, Model model) {
+		int cnt = 0;// 날짜 갯수
+		
+		int movie_index = Integer.parseInt(req.getParameter("movie"));
+		int plusDay = Integer.parseInt(req.getParameter("plusDay"));
+		
+		/*Date theater_schedule_startdate =*/ 
+		/*String theater_schedule_startdate = req.getParameter("click");
+		System.out.println(req.getParameter("click"));*/
+		
+		//되는 날짜 갯수
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("movie_index", movie_index);
+		map.put("plusDay", plusDay);
+		cnt = gmdao.getDateCnt(map);
+		
+		if(cnt > 0) {
+			//영화별 되는 날짜, 상영관 정보 담을 곳
+			ArrayList<Theater_scheduleVO> schedules = null;
+			schedules = gmdao.getAllReserveSchedules(map);
+			
+			model.addAttribute("schedules", schedules); 
+		}
+		
+		model.addAttribute("cnt", cnt);//전체 영화갯수
 	}
 
 	

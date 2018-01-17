@@ -173,4 +173,13 @@ public class HomeController {
 
 		return "main/mainIndex";
 	}
+	
+	@RequestMapping("mainHelp")
+	public String mainHelp(HttpServletRequest req, Model model) {
+		System.out.println("mainHelp");
+		
+		service.mainHelp(req, model);
+		
+		return "main/mainHelp";
+	}
 }

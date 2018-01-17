@@ -7,9 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import spring.mvc.baobob.host_restaurant.service.Host_restaurantService;
+import spring.mvc.baobob.vo.TableVO;
 
 @Controller
 public class Host_restaurantController {
@@ -204,7 +206,7 @@ public class Host_restaurantController {
 	public String hostReservList(HttpServletRequest req, Model model) {
 		log.debug("hostReservList()");
 
-		service.hostReservList(req, model);
+		service.reservList(req, model);
 
 		return "host/host_restaurant/hostReservList";
 	}
@@ -228,6 +230,18 @@ public class Host_restaurantController {
 		return "host/host_restaurant/hostReservAddForm";
 	}
 
+	// 식당[1] 예약된 날짜와 테이블 등 상세 조회
+	@RequestMapping(value = "checkPosRestaurant2")
+	public String checkPosRestaurant2(HttpServletRequest req, Model model) {
+		log.debug("checkPosRestaurant2()");
+
+		service.reservList(req, model);
+		service.restaurantView(req, model);
+		model.addAttribute("confirm", 1);
+
+		return "host/host_restaurant/hostReservList";
+	}
+
 	// 식당[1] 예약 처리
 	@RequestMapping(value = "/hostReservAddPro")
 	public String hostReservAddPro(HttpServletRequest req, Model model) {
@@ -237,15 +251,24 @@ public class Host_restaurantController {
 
 		return "host/host_restaurant/hostReservAddPro";
 	}
-/*
-	// 스케줄 조회하기 버튼
-	@RequestMapping(value = "hostScheduleSearch")
-	public String hostScheduleSearch(HttpServletRequest req, Model model) {
-		System.out.println("hostScheduleSearch");
 
-		service.hostReservList(req, model);
+	// 스케줄 조회하기 버튼
+	@RequestMapping(value = "/reservView")
+	public String hostScheduleSearch(HttpServletRequest req, Model model) {
+		log.debug("reservView()");
+
+		service.reservView(req, model);
 
 		return "host/host_restaurant/hostReservList";
 	}
-*/
+
+	// 스케줄 내 예약된 테이블 조회
+	@RequestMapping(value = "/restaurantView")
+	public @ResponseBody TableVO restaurantView(HttpServletRequest req, Model model) {
+		log.debug("restaurantView()");
+
+		TableVO dto = service.restaurantView2(req, model);
+
+		return dto;
+	}
 }

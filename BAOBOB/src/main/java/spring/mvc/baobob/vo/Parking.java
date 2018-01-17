@@ -5,9 +5,10 @@ import java.sql.Timestamp;
 public class Parking {
 //park_tbl
 	private int park_index; //park_tbl_SEQ
-	private int park_state; //0:주차가능, 1:주차불가능
+	private int park_state; //1:주차가능, 0:주차불가능 -  0(접근.주차중)/1(접근X.미주차중)
 	private int park_theme; //전기차, 임산부, 장애인, 일반
 	private Timestamp park_last_date; //마지막 입차 시간 - ParkingHistory의 p_history_in = 5분 내외
+	private Timestamp park_last_out;
 
 	public int getPark_index() {
 		return park_index;
@@ -40,11 +41,19 @@ public class Parking {
 	public void setPark_last_date(Timestamp park_last_date) {
 		this.park_last_date = park_last_date;
 	}
+	
+	public Timestamp getPark_last_out() {
+		return park_last_out;
+	}
+
+	public void setPark_last_out(Timestamp park_last_out) {
+		this.park_last_out = park_last_out;
+	}
 
 	public String getParkState() {
 		switch(park_state) {
-		case 0: return "주차 가능";
-		default: return "주차 불가능";
+		case 1: return "주차 가능";
+		default: return "주차중";
 		}
 	}
 	

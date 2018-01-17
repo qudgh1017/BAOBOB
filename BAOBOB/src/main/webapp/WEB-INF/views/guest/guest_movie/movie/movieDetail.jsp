@@ -8,16 +8,6 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>BAOBOX</title>
 </head>
-<script type="text/javascript">
-
-function loginCheck(){
-	window.open("loginCheck","loginCheck","top=50 left=100 width=400 height=300");
-}
-/* 리뷰작성 */
-function reviewWrite(movie_index){
-	window.open("movieReviewWrite?movie_index="+movie_index, "host_logout", "top=200 left=300 width=600 height=400");
-}
-</script>
 <body>
 	
 	<!-- CSS,JavaScript 참조 -->
@@ -27,7 +17,7 @@ function reviewWrite(movie_index){
 	<!-- main_menu -->
 	<%@ include file="/WEB-INF/views/guest/guest_movie/movie_menu.jsp" %>
 	
-	<section>
+	<section style="padding-top:0px;">
 		<div class="container">
 			<div class="row">
 				<div class="col-md-offset-1"></div>
@@ -46,12 +36,13 @@ function reviewWrite(movie_index){
 					<img src="${projectRes}/images/phc/${movie.movie_poster}">
 				</div>
 				<div class="col-md-7" align="left">
+					
 					<h3 style="display:inline-block;">${movie.movie_title}</h3>
-						<c:choose>
-							<c:when test="${movie.movie_state==0}">상영예정</c:when>
-							<c:when test="${movie.movie_state==1}">상영중</c:when>
-							<c:when test="${movie.movie_state==2}">상영종료</c:when>
-						</c:choose>
+					<c:choose>
+						<c:when test="${movie.movie_state==0}">상영예정</c:when>
+						<c:when test="${movie.movie_state==1}">상영중</c:when>
+						<c:when test="${movie.movie_state==2}">상영종료</c:when>
+					</c:choose>
 					<br>
 					<span style="font-size:15px; color:gray;">
 						예매율:
@@ -69,10 +60,12 @@ function reviewWrite(movie_index){
 							<c:when test="${movie.movie_janre==7}">애니메이션</c:when>
 						</c:choose>
 						 &nbsp;/&nbsp;기본:
-						 <c:if test="${movie.movie_age==0}">전체관람가,</c:if>
-						 <c:if test="${movie.movie_age!=0}">${movie.movie_age}세 이상,</c:if>
-						 
-						 ${movie.movie_runTime}분, ${movie.movie_country}
+						
+						 ${movie.movie_runTime}분, ${movie.movie_country}, &nbsp; 
+						<c:if test="${movie.movie_age==0}"><img src="${projectRes}/images/ybh/전체관람가.png" style="width:20px; height:20px;"></c:if>
+						<c:if test="${movie.movie_age==12}"><img src="${projectRes}/images/ybh/12세 관람가.png" style="width:20px; height:20px;"></c:if>
+						<c:if test="${movie.movie_age==15}"><img src="${projectRes}/images/ybh/15세 관람가.png" style="width:20px; height:20px;"></c:if>
+						<c:if test="${movie.movie_age==19}"><img src="${projectRes}/images/ybh/청소년 관람불가.png" style="width:20px; height:20px;"></c:if>
 						 <br><br>
 						 개봉: 20${movie.movie_rel_date}
 						 <%-- <fmt:formatDate type="both" pattern="yyyy-MM-dd" value="${movie.movie_rel_date}" /> --%>

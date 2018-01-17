@@ -24,16 +24,15 @@ public class Host_parkingServiceImpl implements Host_parkingService {
 	@Autowired
 	Host_parkingDAO dao;
 
-
-	//주차장 메인
+	// 주차장 메인
 	public void hostParkingMain(HttpServletRequest req, Model model) {
 		// 현재 이용자수
 		int notOutCount = dao.getParkingMember();
 		model.addAttribute("notOut", notOutCount);
-		
-		//평균 주차 시간
+
+		// 평균 주차 시간
 		List<Map<String, Object>> list = dao.getAvgPakingTime();
-		if(list.get(0) != null) {
+		if (list.get(0) != null) {
 			String hour = String.valueOf(list.get(0).get("HOUR"));
 			String minute = String.valueOf(list.get(0).get("MINUTE"));
 			model.addAttribute("hour", hour);
@@ -42,12 +41,24 @@ public class Host_parkingServiceImpl implements Host_parkingService {
 			model.addAttribute("hour", 0);
 			model.addAttribute("minute", 0);
 		}
-		
-		//오늘 영화 / 식당 이용자
+
+		// 오늘 영화 / 식당 이용자
 		int movie = dao.getParkingMovieMember();
 		int rest = dao.getParkingRestaurantMember();
 		model.addAttribute("movie", movie);
 		model.addAttribute("rest", rest);
+	}
+	
+	//메인 ajax. 주차 구역 변화
+	public void hostParkingMainSpace(HttpServletRequest req, Model model) {
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		map.put("order", 0);
+		ArrayList<Parking> psIn = dao.getParkChageState(map);
+		model.addAttribute("psIn", psIn);
+		
+		map.put("order", 1);
+		ArrayList<Parking> psOut = dao.getParkChageState(map);
+		model.addAttribute("psOut", psOut);
 	}
 	
 	// 주차장 구역 정보
@@ -116,12 +127,18 @@ public class Host_parkingServiceImpl implements Host_parkingService {
 		int col = ps.getP_space_col();
 		int row = ps.getP_space_row();
 		int last_idx = col * row;
-
-		// 주차장 구역 상태 정보
+		
+		//주차장 구역 타입 정보
+		String[] spaces = ps.getP_space_info().split(","); 
+		
+		//주차장 구역 상태 정보
 		ArrayList<String> list = dao.getParkingStates(last_idx);
 		String states = "";
-		for (String state : list) {
-			states += states.equals("") ? state : "," + state;
+		for (int i = 0; i < list.size(); i += 1) {
+			if(spaces[i].equals("0")) {
+				list.set(i, "2");
+			}
+			states += states.equals("") ? list.get(i) : "," + list.get(i);
 		}
 
 		model.addAttribute("col", col);
@@ -170,9 +187,7 @@ public class Host_parkingServiceImpl implements Host_parkingService {
 					avg = e.getValue();
 				}
 			}
-			if (hour != null && avg != null) {
-				inMap.put(hour, avg);
-			}
+			if (hour != null && avg != null) inMap.put(hour, avg);
 		}
 		// dayOutTimeAvg : List<Map<String, Object>> =>> Map<String, Object>으로 바꾸기
 		Map<String, Object> outMap = new HashMap<String, Object>();
@@ -187,9 +202,7 @@ public class Host_parkingServiceImpl implements Host_parkingService {
 					avg = e.getValue();
 				}
 			}
-			if (hour != null && avg != null) {
-				outMap.put(hour, avg);
-			}
+			if (hour != null && avg != null) outMap.put(hour, avg);
 		}
 		// dayInTimeAvg, dayOutTimeAvg 차트 요소 Attribute에 저장
 		for (int i = 0; i < time.length; i += 1) {
@@ -202,19 +215,15 @@ public class Host_parkingServiceImpl implements Host_parkingService {
 					flg1 = true;
 				}
 			}
-			if (!flg1) {
-				model.addAttribute("HI" + time[i], "0");
-			}
-
+			if (!flg1) model.addAttribute("HI" + time[i], "0");
+			
 			for (Entry<String, Object> e : outMap.entrySet()) {
 				if (e.getKey().equals(time[i])) {
 					model.addAttribute("HO" + e.getKey(), e.getValue());
 					flg2 = true;
 				}
 			}
-			if (!flg2) {
-				model.addAttribute("HO" + time[i], "0");
-			}
+			if (!flg2) model.addAttribute("HO" + time[i], "0");
 		}
 
 		// 2
@@ -233,9 +242,7 @@ public class Host_parkingServiceImpl implements Host_parkingService {
 					key = String.valueOf(e.getValue());
 				}
 			}
-			if (key != null && value != null) {
-				weekInMap.put(key, value);
-			}
+			if (key != null && value != null) weekInMap.put(key, value);
 		}
 		Map<String, Object> weekOutMap = new HashMap<String, Object>();
 		for (Map<String, Object> map : weekOut) {
@@ -248,9 +255,7 @@ public class Host_parkingServiceImpl implements Host_parkingService {
 					key = String.valueOf(e.getValue());
 				}
 			}
-			if (key != null && value != null) {
-				weekOutMap.put(key, value);
-			}
+			if (key != null && value != null) weekOutMap.put(key, value);
 		}
 
 		String[] week = { "2", "3", "4", "5", "6", "7", "1" };
@@ -272,16 +277,42 @@ public class Host_parkingServiceImpl implements Host_parkingService {
 				}
 			}
 
-			if (!flg1) {
-				model.addAttribute("I" + week[i], "0");
+			if (!flg1) model.addAttribute("I" + week[i], "0");
+			if (!flg2) model.addAttribute("O" + week[i], "0");
+
+		}
+
+		// 3
+		// 성 비율
+		List<Map<String, Object>> sexList = dao.getParkingSexRatio();
+		Map<String, Object> sexMap = new HashMap<String, Object>();
+		for (Map<String, Object> map : sexList) {
+			Object key = null;
+			Object value = null;
+			for (Entry<String, Object> e : map.entrySet()) {
+				if (e.getKey().equals("SEX")) {
+					key = e.getValue();
+				} else if (e.getKey().equals("COUNT")) {
+					value = e.getValue();
+				}
 			}
-			if (!flg2) {
-				model.addAttribute("O" + week[i], "0");
+			if (key != null & value != null)
+				sexMap.put(String.valueOf(key), value);
+		}
+		String[] sexs = {"null", "여", "남"};
+		for(int i = 0; i < sexs.length; i += 1) {
+			boolean flg = false;
+			for(Entry<String, Object> e : sexMap.entrySet()) {
+				if(e.getKey().equals(sexs[i])) {
+					model.addAttribute("sex" + i, e.getValue());
+					flg = true;
+				}
 			}
+			if(!flg) model.addAttribute("sex" + i, 0);
 		}
 	}
-	
-	//주차 현황  차트 - ajax 올해 월별
+
+	// 주차 현황 차트 - ajax 올해 월별
 	public void getHostParkingChartMonth(HttpServletRequest req, Model model) {
 		List<Map<String, Object>> mothIn = dao.getMonthIn();
 		List<Map<String, Object>> mothOut = dao.getMonthOut();
@@ -317,7 +348,7 @@ public class Host_parkingServiceImpl implements Host_parkingService {
 			}
 		}
 
-		String[] week = { "01", "02", "03", "04", "0", "06", "07", "08", "09" , "10" , "11" , "12" };
+		String[] week = { "01", "02", "03", "04", "0", "06", "07", "08", "09", "10", "11", "12" };
 
 		for (int i = 0; i < week.length; i += 1) {
 			boolean flg1 = false;
@@ -344,7 +375,7 @@ public class Host_parkingServiceImpl implements Host_parkingService {
 			}
 		}
 	};
-	
+
 	// 주차 내역
 	/*
 	 * @Override public void getParkingHistory(HttpServletRequest req, Model model)
@@ -380,6 +411,11 @@ public class Host_parkingServiceImpl implements Host_parkingService {
 	// 납부내역(출차한 차량만)
 	@Override
 	public void getParkingPayList(HttpServletRequest req, Model model) {
+		String standard = req.getParameter("standard");
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("standard", standard);
+		
 		int postCnt = dao.getParkingPayCnt();
 		if (postCnt != 0) {
 			String pageNum = req.getParameter("pageNum");
@@ -414,7 +450,6 @@ public class Host_parkingServiceImpl implements Host_parkingService {
 			int number = postCnt - startPost + 1;
 			model.addAttribute("number", number);
 
-			Map<String, Integer> map = new HashMap<String, Integer>();
 			map.put("start", startPost);
 			map.put("end", endPost);
 
@@ -424,32 +459,32 @@ public class Host_parkingServiceImpl implements Host_parkingService {
 		model.addAttribute("postCnt", postCnt);
 	}
 
-	//납부 현황
+	// 납부 현황
 	@Override
 	public void getParkingPayChart(HttpServletRequest req, Model model) {
-		//월별 주차 시간에 따른 금액과 실제 받은 금액
-		
-		//주차 요금
+		// 월별 주차 시간에 따른 금액과 실제 받은 금액
+
+		// 주차 요금
 		ParkingFee fee = dao.getParkingFee();
-		
-		//올해 납부 내역
+
+		// 올해 납부 내역
 		ArrayList<ParkingHistory> thisPh = dao.getThisYearPayList();
-		
-		Map<String, Integer> timePrice = new HashMap<String, Integer>(); //월별 주차 시간에 따른 금액
-		Map<String, Integer> userPrice = new HashMap<String, Integer>(); //월별 받은 금액
-		for(ParkingHistory ph : thisPh) {
+
+		Map<String, Integer> timePrice = new HashMap<String, Integer>(); // 월별 주차 시간에 따른 금액
+		Map<String, Integer> userPrice = new HashMap<String, Integer>(); // 월별 받은 금액
+		for (ParkingHistory ph : thisPh) {
 			long userTime = ph.getP_history_out().getTime() - ph.getP_history_in().getTime();
-			long minute = (userTime / 1000) / 60; //이용 시간(분)
-			
-			String month = ph.getP_history_out().toString().substring(5, 7); //이용한 월
-			long time = minute - fee.getP_fee_base_time(); //이용 초과 시간
-			int price = fee.getP_fee_base_price(); //기본 요금
-			while(time > 0) {
+			long minute = (userTime / 1000) / 60; // 이용 시간(분)
+
+			String month = ph.getP_history_out().toString().substring(5, 7); // 이용한 월
+			long time = minute - fee.getP_fee_base_time(); // 이용 초과 시간
+			int price = fee.getP_fee_base_price(); // 기본 요금
+			while (time > 0) {
 				time -= fee.getP_fee_exc_time();
 				price += fee.getP_fee_exc_price();
 			}
 
-			if(timePrice.get("P" + month) != null) {
+			if (timePrice.get("P" + month) != null) {
 				timePrice.put("P" + month, timePrice.get("P" + month) + price);
 				userPrice.put("U" + month, userPrice.get("U" + month) + ph.getP_history_price());
 			} else {
@@ -457,22 +492,83 @@ public class Host_parkingServiceImpl implements Host_parkingService {
 				userPrice.put("U" + month, ph.getP_history_price());
 			}
 		}
-		
-		String[] month = {"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"};
-		for(int i = 0; i < month.length; i += 1) {
+
+		String[] month = { "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12" };
+		for (int i = 0; i < month.length; i += 1) {
 			boolean flg = false;
-			for(Entry<String, Integer> e : timePrice.entrySet()) {
-				if(e.getKey().equals("P" + month[i])) { 
+			for (Entry<String, Integer> e : timePrice.entrySet()) {
+				if (e.getKey().equals("P" + month[i])) {
 					flg = true;
 					model.addAttribute("P" + month[i], e.getValue());
-					model.addAttribute("U" + month[i], userPrice.get("U"+ month[i]));
+					model.addAttribute("U" + month[i], userPrice.get("U" + month[i]));
 				}
 			}
-			if(!flg) {
+			if (!flg) {
 				model.addAttribute("P" + month[i], 0);
 				model.addAttribute("U" + month[i], 0);
 			}
 		}
+		
+		//수익
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		map.put("year",  0);
+		String totalPrice = dao.getTotalPrice(map);
+		if(totalPrice == null) totalPrice = "0"; 
+		map.put("year",  1);
+		String yearPrice = dao.getTotalPrice(map); //올해 수정
+		if(yearPrice == null) yearPrice = "0"; 
+		map.put("year",  -1);
+		String prevPrice = dao.getTotalPrice(map);
+		if(prevPrice == null) prevPrice = "0";
+		
+		model.addAttribute("totalPrice", totalPrice);
+		model.addAttribute("yearPrice", yearPrice);
+		model.addAttribute("prevPrice", prevPrice);
 	}
 
+	//아두이노. 구역 상태 수정
+	public void arduinoInput(HttpServletRequest req, Model model) {
+		//1. 핀 저장
+		Map<Integer, Object> pinMap = new HashMap<Integer, Object>();
+		for(int i = 0; i < 6; i += 1) {
+			String pin = req.getParameter("pin" + (i + 1));
+			if(pin != null) {
+				pinMap.put(i, pin);
+			} else {
+				pinMap.put(i, 0);
+			}
+		}
+		
+		//수정 부분. 테스트 필요
+		ParkingSpace ps = dao.getParkingSpace();
+		
+		// 주차장 구역 상태 정보
+		int last_idx = ps.getP_space_col() * ps.getP_space_row();
+		ArrayList<String> list = dao.getParkingStates(last_idx);
+		
+		// 주차장 구역 타입 정보
+		String[] spaces = ps.getP_space_info().split(",");
+		
+		//2. 인덱스 저장
+		int count = 0;
+		Map<Integer, Object> idxMap = new HashMap<Integer, Object>();
+		for(int i = 0; i < list.size(); i += 1) {
+			if(!spaces[i].equals("0")) { //빈공간이 아니면
+				idxMap.put(count, i);
+				count++;
+			}
+			if(count == 6) { break; }
+		}
+		
+		//3. 해당 인덱스에 핀 저장
+		int cnt = 0;
+		Map<String, Object> map = new HashMap<String, Object>();
+		for(int i = 0 ; i < 6; i += 1) {
+			map.put("index", idxMap.get(i));
+			map.put("pin", pinMap.get(i));
+			cnt = dao.arduinoInput(map);
+		}
+		
+		model.addAttribute("cnt", cnt);
+	}
 }

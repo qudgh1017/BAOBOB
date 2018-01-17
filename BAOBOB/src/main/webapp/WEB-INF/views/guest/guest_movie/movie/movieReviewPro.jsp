@@ -13,18 +13,55 @@
 <!-- 내꺼 JavaScript 참조 -->
 <script type="text/javascript" src="${projectRes}ybh/js/ybh.js"></script>
 
-<!-- 성공 -->
-<c:if test="${cnt==1}">  
-	<script type="text/javascript">
-		subAlert(review_msg);
-	</script>
+<!-- 글 작성시 -->
+<c:if test="${pro==1}">
+	<!-- 성공 -->
+	<c:if test="${cnt==1}">  
+		<script type="text/javascript">
+			subAlert(review_insert);
+		</script>
+	</c:if>
+	
+	<!-- 실패 -->
+	<c:if test="${cnt==0}">  
+		<script type="text/javascript">
+			subAlert(review_insert_error);
+		</script>
+	</c:if>
 </c:if>
 
-<!-- 실패 -->
-<c:if test="${cnt==0}">  
-	<script type="text/javascript">
-		subAlert(review_error);
-	</script>
+<!-- 글 수정시 -->
+<c:if test="${pro==2}">
+	<!-- 성공 -->
+	<c:if test="${cnt==1}">  
+		<script type="text/javascript">
+			subAlert(review_modify);
+		</script>
+	</c:if>
+	
+	<!-- 실패 -->
+	<c:if test="${cnt==0}">  
+		<script type="text/javascript">
+			subAlert(review_modify_error);
+		</script>
+	</c:if>
 </c:if>
+
+<!-- 글 삭제시 -->
+<c:if test="${pro==3}">
+	<!-- 성공 -->
+	<c:if test="${cnt==1}">  
+		<script type="text/javascript">
+			subAlert(review_delete);
+		</script>
+	</c:if>
+	
+	<!-- 실패 -->
+	<c:if test="${cnt==0}">  
+		<script type="text/javascript">
+			subAlert(review_delete_error);
+		</script>
+	</c:if>
+</c:if>	
 </body>
 </html>

@@ -36,8 +36,9 @@
 		<div id="content">
 			<center><h3><b>스케줄 목록</b></h3></center>
 			<hr style="border:3px solid black;">
-			<input style="background-color:#343a40; color:white; border:1px solid black; width:200px; height:40px; margin-left:177px; margin-bottom:15px;" type="button" name="hostMovieAddForm" onclick="window.location='hostScheduleAddForm'" value="스케줄 추가하기"/>
 			<div >
+				<input style="background-color:#343a40; color:white; border:1px solid black; float:left; width:200px; height:40px; margin-left:177px; margin-bottom:15px;" type="button" name="hostMovieAddForm" onclick="window.location='hostScheduleAddForm'" value="스케줄 추가하기"/>
+			
 				<input style="background-color:#343a40; color:white; border:1px solid black; float:right; width:200px; height:40px;  margin-bottom:15px;" type="button" name="hostMovieAddForm" onclick="return hostScheduleSearch();" value="스케줄 조회하기"/>
 				<select id="theater_index" name="theater_index" style="float:right;">
 					<option value="">상영관 선택</option>

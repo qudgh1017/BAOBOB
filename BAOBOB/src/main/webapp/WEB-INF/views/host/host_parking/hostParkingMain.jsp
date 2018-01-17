@@ -16,8 +16,17 @@
 
 	<div class="content-wrapper">
 		<div class="container-fluid">
+		
+			<ol class="breadcrumb">
+				<li class="breadcrumb-item">ToDay</li>
+				<li class="breadcrumb-item active">
+					<jsp:useBean id="toDay" class="java.util.Date"/>
+					<fmt:formatDate var="day" value="${toDay}" pattern="yyyy-MM-dd"/>
+					${day}
+				</li>
+			</ol>
 			
-			<div class="row">
+			<div class="row" id="top">
 				<div class="col-xl-3 col-sm-6 mb-3">
 					<div class="card text-white bg-primary o-hidden">
 						<div class="card-header">현재 이용자수</div>
@@ -52,12 +61,41 @@
 				</div>
 			</div>
 			
+			<div id="result"></div>
 		</div>
 	</div>
 	
 	<%@ include file="../common/footer.jsp" %>
 	
 	<script src="${projectRes}ymk/js/ajax.js"></script>
-	<script src="${projectRes}ymk/js/script.js"></script>
+	<script type="text/javascript">
+		spaceState();
+		
+		setInterval(function() {
+			spaceState();
+		}, 100000);
+		
+		function spaceState() {
+			sendRequest(spaceState_callback, 'hostParkingMainSpace', 'GET', '');
+		}
+		
+		function spaceState_callback() {
+			if(httpRequest.readyState == 4) {
+				if(httpRequest.status == 200) {
+					var data = httpRequest.responseText;
+					document.getElementById('result').innerHTML = data;
+					
+					var day = new Date();
+					document.getElementById('inUpdateTime').innerHTML = 'Update ' + day; 
+					document.getElementById('outUpdateTime').innerHTML = 'Update ' + day; 
+					console.log('완료');
+				} else {
+					console.log('오류');
+				}
+			} else {
+				console.log('에러 ' + httpRequest.readyState);
+			}
+		} 
+	</script>
 </body>
 </html>

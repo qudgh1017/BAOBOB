@@ -305,6 +305,27 @@ public class Host_movieDAOImpl implements Host_movieDAO {
 		return cnt;
 	}
 
+	// 직원 수
+	@Override
+	public int hostMovieEmpCnt() {
+		int cnt = 0;
+		
+		Host_movieDAO dao = sqlSession.getMapper(Host_movieDAO.class);
+		cnt = dao.hostMovieEmpCnt();
+		
+		return cnt;
+	}
+	
+	// 직원 목록 가져오기
+	@Override
+	public ArrayList<Member> hostMovieEmpList() {
+		ArrayList<Member> vos = null;
+		
+		Host_movieDAO dao = sqlSession.getMapper(Host_movieDAO.class);
+		vos = dao.hostMovieEmpList();
+		
+		return vos;
+	}
 	
 	// 직원 고용 아이디 확인
 	@Override
@@ -349,6 +370,87 @@ public class Host_movieDAOImpl implements Host_movieDAO {
 		
 		return cnt;
 	}
+
+	// 종합 포인트 등급 가져오기
+	@Override
+	public int getMemberPoint(String member_id) {
+		int point = 0;
+		
+		Host_movieDAO dao = sqlSession.getMapper(Host_movieDAO.class);
+		point = dao.getMemberPoint(member_id);
+		
+		return point;
+	}
+
+	// 직원 목록에서 삭제
+	@Override
+	public int hostMovieEmpDel(String member_id) {
+		int cnt = 0;
+		
+		Host_movieDAO dao = sqlSession.getMapper(Host_movieDAO.class);
+		cnt = dao.hostMovieEmpDel(member_id);
+		
+		return cnt;
+	}
+
+	// 회원 step 변경하기
+	@Override
+	public int updateMemberStep(Member vo) {
+		int cnt = 0;
+		
+		Host_movieDAO dao = sqlSession.getMapper(Host_movieDAO.class);
+		cnt = dao.updateMemberStep(vo);
+		
+		return cnt;
+	}
+
+	// 상영관의 선택한 좌석 state 불러오기
+	@Override
+	public int getTheaterSeatState(Map<String, Integer> map) {
+		int state = 0;
+		
+		Host_movieDAO dao = sqlSession.getMapper(Host_movieDAO.class);
+		state = dao.getTheaterSeatState(map);
+		
+		return state;
+	}
+	
+	// 상영관의 선택한 좌석 price 불러오기
+	@Override
+	public int getTheaterSeatPrice(Map<String, Integer> map) {
+		int price = 0;
+		
+		Host_movieDAO dao = sqlSession.getMapper(Host_movieDAO.class);
+		price = dao.getTheaterSeatPrice(map);
+		
+		return price;
+	}
+
+	// 스케줄에 해당하는 좌석 생성
+	@Override
+	public int TheaterScheduleSeatAddPro(Map<String, Integer> map) {
+		int cnt = 0;
+		
+		Host_movieDAO dao = sqlSession.getMapper(Host_movieDAO.class);
+		cnt = dao.TheaterScheduleSeatAddPro(map);
+		
+		return cnt;
+	}
+
+	// 스케줄에 해당하는 좌석 정보 가져오기
+	@Override
+	public ArrayList<Theater_seatVO> hostTheaterScheduleSeatDetail(Map<String, Integer> map) {
+		ArrayList<Theater_seatVO> vos = null;
+		
+		Host_movieDAO dao = sqlSession.getMapper(Host_movieDAO.class);
+		vos = dao.hostTheaterScheduleSeatDetail(map);
+		
+		return vos;
+	}
+
+
+
+
 
 
 	

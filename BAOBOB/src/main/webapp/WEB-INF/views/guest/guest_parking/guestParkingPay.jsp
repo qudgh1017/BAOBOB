@@ -9,6 +9,7 @@
 	<title>Insert title here</title>
 	
 	<style type="text/css">
+		.mar{margin:19rem auto;padding:0;}
 		#pay{font-size:75px;margin:0 auto;display:block;width:fit-content;margin-top:15%;}
 	</style>
 </head>
@@ -18,7 +19,7 @@
 	<%@ include file="guestParkingHeader.jsp" %>
 	
 	<section>
-	  <div class="container">
+	  <div class="container mar">
 	  
 	  	<c:if test="${mem != 0}">
 	  		<span id="pay">자동 결제 중</span>

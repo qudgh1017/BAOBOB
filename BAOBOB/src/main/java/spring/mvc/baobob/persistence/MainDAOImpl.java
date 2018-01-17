@@ -1,5 +1,6 @@
 package spring.mvc.baobob.persistence;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 import javax.mail.internet.InternetAddress;
@@ -15,6 +16,7 @@ import org.springframework.scheduling.quartz.SimpleThreadPoolTaskExecutor;
 import org.springframework.stereotype.Repository;
 
 import spring.mvc.baobob.service.EmailHandler;
+import spring.mvc.baobob.vo.FaqVO;
 import spring.mvc.baobob.vo.Member;
 
 @Repository
@@ -148,4 +150,10 @@ public class MainDAOImpl implements MainDAO {
 		return cnt;
 	}
 
+	//∞Ì∞¥ºæ≈Õ
+	public ArrayList<FaqVO> getHelper(Map<String, Integer> map) {
+		MainDAO mapper = sqlSession.getMapper(MainDAO.class);
+		ArrayList<FaqVO> list = mapper.getHelper(map);
+		return list;
+	}
 }

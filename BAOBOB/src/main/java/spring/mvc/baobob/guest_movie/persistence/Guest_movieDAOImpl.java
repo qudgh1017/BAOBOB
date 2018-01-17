@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import spring.mvc.baobob.vo.Member;
 import spring.mvc.baobob.vo.MovieVO;
 import spring.mvc.baobob.vo.ReviewVO;
+import spring.mvc.baobob.vo.Theater_scheduleVO;
 
 @Repository
 public class Guest_movieDAOImpl implements Guest_movieDAO{
@@ -142,6 +143,82 @@ public class Guest_movieDAOImpl implements Guest_movieDAO{
 		cnt = gmdao.insertMovieReview(map);
 		
 		return cnt;
+	}
+
+	//좋아요 누른 사람 수
+	@Override
+	public String movieLike(int movie_index) {
+		String likeCnt = "0";
+		
+		Guest_movieDAO gmdao = sqlSession.getMapper(Guest_movieDAO.class);
+		likeCnt = gmdao.movieLike(movie_index);
+		
+		return likeCnt;
+	}
+
+	//리뷰수정
+	@Override
+	public int updateReview(ReviewVO review) {
+		int cnt = 0;
+		
+		Guest_movieDAO gmdao = sqlSession.getMapper(Guest_movieDAO.class);
+		cnt = gmdao.updateReview(review);
+		
+		return cnt;
+	}
+
+	// movieReview 삭제 
+	@Override
+	public int deleteMovieReview(Map<String, Object> map) {
+		int cnt = 0;
+		
+		Guest_movieDAO gmdao = sqlSession.getMapper(Guest_movieDAO.class);
+		cnt = gmdao.deleteMovieReview(map);
+		return cnt;
+	}
+
+	//리뷰 삭제
+	@Override
+	public int deleteReview(int review_index) {
+		int cnt = 0;
+		
+		Guest_movieDAO gmdao = sqlSession.getMapper(Guest_movieDAO.class);
+		cnt = gmdao.deleteReview(review_index);
+		
+		return cnt;
+	}
+
+	//예매 - 전체 영화 리스트(상영종료인 거 빼고)
+	@Override
+	public ArrayList<MovieVO> getAllReserveMovies() {
+		ArrayList<MovieVO> movies = null;
+		
+		Guest_movieDAO gmdao = sqlSession.getMapper(Guest_movieDAO.class);
+		movies = gmdao.getAllReserveMovies();
+		
+		return movies;
+	}
+
+	//예매되는 날짜
+	@Override
+	public int getDateCnt(Map<String,Object> map) {
+		int cnt = 0;
+
+		Guest_movieDAO gmdao = sqlSession.getMapper(Guest_movieDAO.class);
+		cnt = gmdao.getDateCnt(map);
+		
+		return cnt;
+	}
+
+	//예매 - 영화 되는 날짜, 상영관 정보
+	@Override
+	public ArrayList<Theater_scheduleVO> getAllReserveSchedules(Map<String,Object> map) {
+		ArrayList<Theater_scheduleVO> schedules = null;
+		
+		Guest_movieDAO gmdao = sqlSession.getMapper(Guest_movieDAO.class);
+		schedules = gmdao.getAllReserveSchedules(map);
+		
+		return schedules;
 	}
 
 	

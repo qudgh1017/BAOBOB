@@ -10,20 +10,27 @@
 	<title>Insert title here</title>
 	
 	<style type="text/css">
+		.sorting::before{right:1em;content:"\2191";opacity:0.3;position:absolute;}
+		.sorting::after{right:0.5em;content:"\2193";opacity:0.3;position:absolute;}
+		.sorting_desc::before{right:1em;content:"\2191";opacity:0.3;position:absolute;}
+		.sorting_desc::after{right:0.5em;content:"\2193";opacity:1;position:absolute;}
+		.sorting_asc::before{right:1em;content:"\2191";opacity:1;position:absolute;}
+		.sorting_asc::after{right:0.5em;content:"\2193";opacity:0.3;position:absolute;}
+		
 		li{color:#212529;}
 
 		.clearfix{clear:both;}
+		.clearfix > li{float:left;padding:5px 15px;border-right:1px solid #e9ecef;text-align:center;}
 		.ul_head{font-weight:bold;border-bottom:2px solid #e9ecef;}
 		.ul_body{border-bottom:1px solid #e9ecef;}
-		.li_item{float:left;padding:5px 15px;border-right:1px solid #e9ecef;text-align:center;}
-		.li_head{padding-bottom:10px;text-align:center;}
+		.li_head{position:relative;padding-bottom:10px;text-align:center;}
 		
 		.l1{width:7%;}
-		.l2{width:15%;}
-		.l3{width:15%;}
+		.l2{width:10%;}
+		.l3{width:24%;}
 		.l4{width:24%;}
 		.l5{width:24%;}
-		.l6{width:15%;border-right:none;}
+		.l6{width:11%;border-right:none;}
 		
 		.card-footer{text-align:center;}
 		body .pagination{display:block;}
@@ -33,6 +40,7 @@
 		/* 가로 스크롤 */
 		.mb-3{overflow-x:auto;}
 		.min_size{min-width:1012px;}
+		
 	</style>
 </head>
 <body class="fixed-nav sticky-footer bg-dark">
@@ -42,19 +50,19 @@
 	
 	<div class="content-wrapper">
 		<div class="container-fluid">
-			<div class="card mb-3">
+			<div class="card mb-3"  id="result">
 				<div class="card-header min_size">납부 내역</div>
 				<div class="card-body min_size">
 					<c:if test="${postCnt > 0}">
 					<ul class="ul_top">
 						<li>
 							<ul class="clearfix ul_head">
-								<li class="li_item li_head l1">번호</li>
-								<li class="li_item li_head l2">날짜</li>
-								<li class="li_item li_head l3">회원</li>
-								<li class="li_item li_head l4">입차</li>
-								<li class="li_item li_head l5">출차</li>
-								<li class="li_item li_head l6">금액</li>
+								<li class="li_head l1">번호</li>
+								<li class="li_head l2 sorting" onclick="payList('2');">날짜</li>
+								<li class="li_head l3 sorting" onclick="payList('3');">회원</li>
+								<li class="li_head l4 sorting" onclick="payList('4');">입차</li>
+								<li class="li_head l5 sorting" onclick="payList('5');">출차</li>
+								<li class="li_head l6 sorting" onclick="payList('6');">금액</li>
 							</ul>
 						</li>
 						<li>
@@ -64,11 +72,11 @@
 									${number}
 									<c:set var="number" value="${number-1}"/>
 								</li>
-								<li class="li_item l2">${fn:substring(ph.p_history_date, 0, 10)}</li>
-								<li class="li_item l3">${ph.history.getMember_id()}</li>
-								<li class="li_item l4">${ph.p_history_in}</li>
-								<li class="li_item l5">${ph.p_history_out}</li>
-								<li class="li_item l6">${ph.p_history_price}</li>
+								<li class="l2">${fn:substring(ph.p_history_date, 0, 10)}</li>
+								<li class="l3">${ph.history.getMember_id()}</li>
+								<li class="l4">${ph.p_history_in}</li>
+								<li class="l5">${ph.p_history_out}</li>
+								<li class="l6"><fmt:formatNumber value="${ph.p_history_price}" type="number"/></li>
 							</ul>
 							</c:forEach>
 						</li>
@@ -101,17 +109,64 @@
 					</c:if>
 				</div>
 			</div>
-			<!-- <div class="card mb-3">
-				<div class="card-header">차트</div>
-				<div class="card-body"></div>
-				<div class="card-footer small text-muted">가장 많은 날은 '월요일'</div>
-			</div> -->
 		</div>
 	</div>
 	
 	<!-- Footer -->
 	<%@ include file="../common/footer.jsp" %>
 	
-	<script src="${projectRes}ymk/js/parkingCart.js"></script>
+	<script src="${projectRes}ymk/js/ajax.js"></script>
+	<script type="text/javascript">
+		var order;
+		
+		function payList(standard) {
+			console.log(standard);
+			order = standard;
+			sendRequest(payList_callback, 'hostParkingPayList', 'GET', 'standard=' + standard);
+		}
+		
+		function payList_callback() {
+			if(httpRequest.readyState == 4) {
+				if(httpRequest.status == 200) {
+					var data = httpRequest.responseText;
+					
+					document.getElementById('result').innerHTML = data;
+					standard(order);
+					console.log('완료');
+				} else {
+					console.log('오류');
+				}
+			} else {
+				console.log('에러 ' + httpRequest.readyState);
+			}
+		}
+
+		function standard(id) {
+			var item = document.getElementsByClassName('li_head');
+			switch(id) {
+			case '2': item[1].className = 'li_head l2 sorting_asc'; 
+			 		  item[1].setAttribute('onclick', 'payList("8")'); break;
+			case '3': item[2].className = 'li_head l3 sorting_asc'; 
+			 	  	  item[2].setAttribute('onclick', 'payList("9")'); break;
+			case '4': item[3].className = 'li_head l4 sorting_asc'; 
+			 		  item[3].setAttribute('onclick', 'payList("10")'); break;
+			case '5': item[4].className = 'li_head l5 sorting_asc'; 
+			  		  item[4].setAttribute('onclick', 'payList("11")'); break;
+			case '6': item[5].className = 'li_head l6 sorting_asc'; 
+			 		  item[5].setAttribute('onclick', 'payList("12")'); break;
+			 		  
+			case '8': item[1].className = 'li_head l2 sorting_desc'; 
+			 		  item[1].setAttribute('onclick', 'payList("2")'); break;
+			case '9': item[2].className = 'li_head l3 sorting_desc'; 
+			 		  item[2].setAttribute('onclick', 'payList("3")'); break;
+			case '10': item[3].className = 'li_head l4 sorting_desc'; 
+			 		  item[3].setAttribute('onclick', 'payList("4")'); break;
+			case '11': item[4].className = 'li_head l5 sorting_desc'; 
+			 		  item[4].setAttribute('onclick', 'payList("5")'); break;
+			case '12': item[5].className = 'li_head l6 sorting_desc'; 
+			 		  item[5].setAttribute('onclick', 'payList("6")'); break;
+			}
+		}
+	</script>
 </body>
 </html>

@@ -36,7 +36,6 @@ public class Member_mypageDAOImpl implements Member_mypageDAO{
 		dtos = dao.getArticleList(map);
 		
 		return dtos;
-		
 	}
 	
 /*----------------------------------------------------------------------------*/

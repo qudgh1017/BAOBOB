@@ -9,13 +9,13 @@
 	<title>Insert title here</title>
 	
 	<style type="text/css">
-		body .card{max-width:700px;margin:0 auto;margin-bottom:20px;}
 		.cnt{font-size:50px;display:block;text-align:center;margin:20px;}
 		.clear{clear:both;}
 		.item{float:left;}
 		.u{width:209px;text-align:center;}
 		.u > li{padding:10px;}
 		body .l_h{border-bottom:1px solid #e9ecef;font-weight:bold;padding-bottom:20px;}
+		body .mar{padding:0;margin:15rem auto;max-width:700px;}
 	</style>
 </head>
 <body>
@@ -24,7 +24,7 @@
 	<%@ include file="guestParkingHeader.jsp" %>
 	
 	<section>
-	  <div class="container">
+	  <div class="container mar">
 	  		<div class="card">
 		  		<input class="input" type="text" id="key" placeholder="발급받은 번호를 입력하세요">
 			  	<button class="btn btn-block" onclick="myParking();">확인</button>

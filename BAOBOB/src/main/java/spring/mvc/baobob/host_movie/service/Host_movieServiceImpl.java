@@ -23,6 +23,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import spring.mvc.baobob.host_movie.persistence.Host_movieDAO;
 import spring.mvc.baobob.host_movie.persistence.Host_movieDAOImpl;
 import spring.mvc.baobob.vo.Member;
+import spring.mvc.baobob.vo.MovieResViewVO;
 import spring.mvc.baobob.vo.MovieVO;
 import spring.mvc.baobob.vo.TheaterVO;
 import spring.mvc.baobob.vo.Theater_scheduleVO;
@@ -697,6 +698,54 @@ public class Host_movieServiceImpl implements Host_movieService{
 		map.put("schedule_MDNstate", schedule_MDNstate);
 		int cnt = dao.hostScheduleAddPro(map);
 		
+		// 스케줄에 상영관 인덱스로 스케줄 좌석 테이블에 복사 붙여넣기
+		// 상영관의 총 행과 총 열을 가져옴
+		TheaterVO theaterVO = dao.hostTheaterDetail(theater_index);
+		
+		// 가져온 총 행과 총 열을 가지고 2중 for문을 돌려서 2차배열에 좌석state 저장
+		int totalCol = theaterVO.getTheater_col(); // 총 열
+		int totalRow = theaterVO.getTheater_row(); // 총 행
+		System.out.println("totalCol : " + totalCol);
+		System.out.println("totalRow : " + totalRow);
+		
+		int[][] seatState = new int[totalRow][totalCol];
+		int[][] seatPrice = new int[totalRow][totalCol];
+
+		Map<String, Integer> map2 = new HashMap<String, Integer>();
+		map2.put("theater_index", theater_index);
+		map2.put("row", 0);
+		map2.put("col", 0);
+		
+		for(int row = 1; row<=totalRow; row++) {
+			for(int col = 1; col<=totalCol; col++) {
+				System.out.println("row : " + row);
+				System.out.println("col : " + col);
+				map2.replace("row", row);
+				map2.replace("col", col);
+				seatState[row-1][col-1] = dao.getTheaterSeatState(map2);
+				seatPrice[row-1][col-1] = dao.getTheaterSeatPrice(map2);
+			}
+		}
+		System.out.println("===============================================");
+		System.out.println("seatState : " + seatState);
+		
+		// 2중 for문을 이용하여 스케줄 시트 테이블에 insert
+		map2.put("seatState", 0);
+		map2.put("seatPrice", 0);
+		for(int row = 1; row<=totalRow; row++) {
+			for(int col = 1; col<=totalCol; col++) {
+				map2.replace("row", row);
+				map2.replace("col", col);
+				map2.replace("seatState", seatState[row-1][col-1]);
+				map2.replace("seatPrice", seatPrice[row-1][col-1]);
+				System.out.println("seatPrice : " + seatPrice[row-1][col-1]);
+				dao.TheaterScheduleSeatAddPro(map2);
+				
+			}
+		}
+				
+						
+		
 		model.addAttribute("cnt", cnt);
 		
 	}
@@ -782,7 +831,20 @@ public class Host_movieServiceImpl implements Host_movieService{
 		
 		model.addAttribute("cnt", cnt);
 	}
-
+	
+	// 직원 목록
+	@Override
+	public void hostMovieEmp(HttpServletRequest req, Model model) {
+		int cnt = dao.hostMovieEmpCnt();
+		
+		if(cnt > 0) { // 직원 목록이 존재하면
+			ArrayList<Member> vos = dao.hostMovieEmpList();
+			model.addAttribute("vos", vos);
+			
+		}
+		model.addAttribute("cnt", cnt);
+		
+	}
 	
 	// 직원 고용 아이디 확인
 	@Override
@@ -822,6 +884,114 @@ public class Host_movieServiceImpl implements Host_movieService{
 		}
 		model.addAttribute("cnt", cnt);
 		
+	}
+
+	// 직원 하고
+	@Override
+	public void hostMovieEmpDel(HttpServletRequest req, Model model) {
+		String member_id = req.getParameter("member_id");
+		
+		// 회원으로 돌아가기 전 종합포인트 등급 확인
+		int point = dao.getMemberPoint(member_id);
+		
+		int member_step = 9;
+		
+		if(point <= 15000 ) {
+			member_step = 9;
+		}else if(point <= 30000) {
+			member_step = 10;
+		}else if(point <= 45000) {
+			member_step = 11;
+		}else {
+			member_step = 12;
+		}
+		
+		int cnt = dao.hostMovieEmpDel(member_id); // 직원 목록에서 삭제
+		
+		if(cnt > 0) {
+			Member vo = new Member();
+			vo.setMember_id(member_id);
+			vo.setMember_step(member_step);
+			
+			cnt = dao.updateMemberStep(vo);
+		}
+		
+		model.addAttribute("cnt", cnt);
+		
+	}
+
+	// 예매 상세
+	@Override
+	public void hostTheaterScheduleDetail(HttpServletRequest req, Model model) {
+		
+		TheaterVO vo = null;
+		ArrayList<Theater_seatVO> seat_vos = null;
+		
+		int theater_index = Integer.parseInt(req.getParameter("theater_index"));
+		int theater_schedule_index = Integer.parseInt(req.getParameter("theater_schedule_index"));
+		
+		ArrayList<Integer> state = new ArrayList<Integer>();
+		
+		vo = dao.hostTheaterDetail(theater_index);
+		
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		map.put("theater_index", theater_index);
+		map.put("theater_schedule_index", theater_schedule_index);
+		seat_vos = dao.hostTheaterScheduleSeatDetail(map);
+		for(Theater_seatVO seat_vo : seat_vos) {
+			state.add(seat_vo.getSeat_state());
+		}
+		
+		System.out.println("=========================");
+		System.out.println("state : " + state);
+		System.out.println("=========================");
+		
+		model.addAttribute("vo", vo);
+		model.addAttribute("seat_vos", seat_vos);
+		model.addAttribute("state", state);
+		
+	}
+
+	// 예매 상세
+	@Override
+	public MovieResViewVO hostMovieResView(HttpServletRequest req, Model model) {
+		MovieResViewVO viewVO = new MovieResViewVO();
+		
+		TheaterVO vo = null;
+		ArrayList<Theater_seatVO> seat_vos = null;
+		
+		int theater_index = Integer.parseInt(req.getParameter("theater_index"));
+		int theater_schedule_index = Integer.parseInt(req.getParameter("theater_schedule_index"));
+		
+		ArrayList<Integer> state = new ArrayList<Integer>();
+		
+		vo = dao.hostTheaterDetail(theater_index);
+		System.out.println("theater_col " + vo.getTheater_col());
+		System.out.println("theater_row " + vo.getTheater_row());
+
+		
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		map.put("theater_index", theater_index);
+		map.put("theater_schedule_index", theater_schedule_index);
+		seat_vos = dao.hostTheaterScheduleSeatDetail(map);
+		for(Theater_seatVO seat_vo : seat_vos) {
+			state.add(seat_vo.getSeat_state());
+		}
+		
+		viewVO.setTotalRow(vo.getTheater_row());
+		viewVO.setTotalCol(vo.getTheater_col());
+		viewVO.setState(state);
+		
+		System.out.println("=========================");
+		System.out.println("state : " + state);
+		System.out.println("=========================");
+		
+//		model.addAttribute("vo", vo);
+//		model.addAttribute("seat_vos", seat_vos);
+//		model.addAttribute("state", state);
+		
+		
+		return viewVO;
 	}
 
 	

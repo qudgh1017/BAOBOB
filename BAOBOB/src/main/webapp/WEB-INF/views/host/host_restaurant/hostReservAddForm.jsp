@@ -44,8 +44,8 @@ $(function() {
 							<table class="table table-bordered" id="dataTable">
 								<thead>
 									<tr>
-										<th style="text-align: center;">날짜 선택</th>
-										<th style="text-align: center;">시간 선택</th>
+										<th style="text-align: center;"><i class="fa fa-fw fa-table"></i>날짜 선택</th>
+										<th style="text-align: center;"><i class="fa fa-fw fa-clock-o"></i>시간 선택</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -80,13 +80,12 @@ $(function() {
 												</div>
 												<div class="col-lg-3">
 													<div class="card mb-3">
-														<div class="card-header">매장 설정</div>
+														<div class="card-header"><b>예약</b></div>
 														<div class="card-body">
 															<input class="form-control" id="widthX" type="number" style="display: none;" min="1" max="100" value="${col}" onload="spaceDivChange();" onchange="spaceDivChange();" required><br>
 															<input class="form-control" id="heightY" type="number" style="display: none;" min="1" max="100" value="${row}" onload="spaceDivChange();" onchange="spaceDivChange();" required>
 															
-															<button class="m_btn" onclick="spaceType('0')"><img class="p_img" src="${restaurant_images}icon_tmp.png"></button>
-															<button class="m_btn" onclick="spaceType('1')"><img class="p_img" src="${restaurant_images}table.jpg"></button>
+															<button class="m_btn" onclick="spaceType('3')"><img class="p_img" src="${restaurant_images}table_use.jpg"></button>
 														</div>
 														<div class="card-footer small text-muted">
 															<button class="btn btn-primary" value="1" onclick="spaceTypeChange2('1');">예약</button>

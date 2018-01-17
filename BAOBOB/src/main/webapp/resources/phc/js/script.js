@@ -197,6 +197,22 @@ function hostScheduleSearch(){
 	
 }
 
+//
+function hostResSearch(){
+	var date = document.getElementById("datepicker").value;
+	var theater_index = document.getElementById("theater_index").value;
+	if(date == ""){
+		alert("날짜를 선택하세요");
+		document.getElementById("datepicker").focus();
+		return false;
+	}else if(theater_index==""){
+		alert("상영관을 선택하세요");
+		return false;
+	}
+	
+	window.location="hostResSearch?date="+date+"&theater_index="+theater_index;
+}
+
 // 스케줄 삭제
 function chkDeleteSchedule(theater_schedule_index){
 	
@@ -229,5 +245,43 @@ function chkId(){
 	}else{
 		var member_id = document.hostMovieEmpAddForm.member_id.value;
 		window.location="hostMovieEmpChkMemberId?member_id="+member_id;
+	}
+}
+
+// 예약 조회시 좌석도 뿌리기
+function getScheduleSeatInfo(col, row, state){
+	var seat = "<input type='button' style='background-color:lightgray; width:"+col*20+"px;' value='SCREEN'> <br><br>";
+	for(var i = 0; i<row; i++){
+		for(var j = 1; j<=col; j++){
+			
+			
+			seat += "<button type='button'  style='margin:1px 1px; height:20; width:20;' id='"+seatRow[i]+j+"' name='seat"+seatRow[i]+j+"' value='"+state[(i)*col-1+j]+"'>" +
+						"<img id='img"+seatRow[i]+j+"' style='width:20; height:20;' src='/baobob/resources/images/phc/icon/theater_blank.png'>" +
+					"</button>";
+			
+		}
+		
+		seat += "<br>";
+	}
+	var theaterSeat = document.getElementById("theaterSeat");
+	theaterSeat.innerHTML = seat;
+	
+	for(var i = 0; i<row; i++){
+		for(var j = 1; j<=col; j++){
+			var stateImg = '';
+			
+			switch(document.getElementById(seatRow[i]+j).value) {
+			case '5': stateImg = 'theater_couple.png'; break;
+			case '4': stateImg = 'theater_premium.png'; break;
+			case '3': stateImg = 'theater_normal.png'; break;
+			case '2': stateImg = 'theater_out.png'; break;
+			case '1': stateImg = 'theater_in.png'; break;
+			case '0': stateImg = 'theater_blank.png'; break;
+			}
+			
+			var spaceImg = document.getElementById("img"+seatRow[i]+j);
+			spaceImg.src = "/baobob/resources/images/phc/icon/" + stateImg;
+			
+		}
 	}
 }

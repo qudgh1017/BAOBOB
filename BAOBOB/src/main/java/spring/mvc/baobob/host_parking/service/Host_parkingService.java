@@ -9,6 +9,9 @@ public interface Host_parkingService {
 	//주차장 메인
 	public void hostParkingMain(HttpServletRequest req, Model model);
 	
+	//메인 ajax. 주차 구역 변화
+	public void hostParkingMainSpace(HttpServletRequest req, Model model);
+	
 	//주차장 구역 정보
 	public void getParkingSpace(HttpServletRequest req, Model model);
 	
@@ -34,4 +37,8 @@ public interface Host_parkingService {
 	
 	//납부 현황
 	public void getParkingPayChart(HttpServletRequest req, Model model);
+	
+	//아두이노
+	public void arduinoInput(HttpServletRequest req, Model model);
+	
 }

@@ -94,7 +94,6 @@ public class Guest_movieController {
 		return "/guest/guest_movie/movie/movieDetail";
 	}
 	
-	
 	//영화-평점
 	@RequestMapping("movieReview")
 	public String movieReview(HttpServletRequest req, Model model) {
@@ -103,7 +102,7 @@ public class Guest_movieController {
 		return "/guest/guest_movie/movie/movieReview";
 	}
 	
-	//영화-리뷰작성
+	//영화-리뷰작성폼
 	@RequestMapping("movieReviewWrite")
 	public String reviewWrite(HttpServletRequest req, Model model) {
 		log.debug("====== Guest_movieController/movieReviewWrite ======");
@@ -114,7 +113,20 @@ public class Guest_movieController {
 		return "/guest/guest_movie/movie/movieReviewWrite";
 	}
 	
-	//영화-리뷰작성처리
+	//영화-리뷰수정폼
+	@RequestMapping("movieReviewModify")
+	public String movieReviewModify(HttpServletRequest req, Model model) {
+		log.debug("====== Guest_movieController/movieReviewModify ======");
+		
+		int review_index = Integer.parseInt(req.getParameter("review_index"));
+		System.out.println("review_index: "+review_index);
+		model.addAttribute("review_index",review_index);
+		gmservice.movieInfo(req, model);
+		
+		return "/guest/guest_movie/movie/movieReviewModify";
+	}
+	
+	//영화-리뷰 작성, 수정, 삭제처리
 	@RequestMapping("movieReviewPro")
 	public String movieReviewPro(HttpServletRequest req, Model model) {
 		log.debug("====== Guest_movieController/movieReviewPro ======");
@@ -129,7 +141,19 @@ public class Guest_movieController {
 	public String movieTicket(HttpServletRequest req, Model model) {
 		log.debug("====== Guest_movieController/movieTicket ======");
 
+		gmservice.reserveMovieList(req, model);
+		
 		return "/guest/guest_movie/reservation/movieTicket";
+	}
+	
+	//예매-빠른예매(영화선택시 - ajax 처리 =>dateResult로 )
+	@RequestMapping("dateResult")
+	public String dateResult(HttpServletRequest req, Model model) {
+		log.debug("====== Guest_movieController/dateResult ======");
+		
+		gmservice.reserveDateList(req, model);
+		
+		return "/guest/guest_movie/reservation/dateResult";
 	}
 	
 	//예매-상영시간표

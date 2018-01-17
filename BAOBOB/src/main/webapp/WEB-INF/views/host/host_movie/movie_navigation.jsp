@@ -19,7 +19,7 @@
 
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
-	<a class="navbar-brand" href="#">BAOBOX 관리자</a>
+	<a class="navbar-brand" href="hostMovie">BAOBOX 관리자</a>
 	<button class="navbar-toggler navbar-toggler-right" type="button"
 		data-toggle="collapse" data-target="#navbarResponsive"
 		aria-controls="navbarResponsive" aria-expanded="false"
@@ -65,7 +65,7 @@
 				</a>
 				<ul class="sidenav-second-level collapse" id="collapseComponents">
 					<li><a href="hostMovieEmp">직원 목록</a></li>
-					<li><a href="#">직원 채용</a></li>
+					<li><a href="hostMovieEmpAddForm">직원 채용</a></li>
 				</ul>
 			</li>
 			<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Example Pages">
@@ -74,7 +74,7 @@
 					<span class="nav-link-text">예매 관리</span>
 				</a>
 				<ul class="sidenav-second-level collapse" id="collapseExamplePages">
-					<li><a href="#">Login Page</a></li>
+					<li><a href="hostMovieRes">예매 조회</a></li>
 					<li><a href="#">Registration Page</a></li>
 					<li><a href="#">Forgot Password Page</a></li>
 					<li><a href="#">Blank Page</a></li>
@@ -206,7 +206,7 @@
 				</form>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link" data-toggle="modal" data-target="#exampleModal">
+				<a class="nav-link" href="mainSignOut">
 				 <i class="fa fa-fw fa-sign-out"></i>Logout
 				</a>
 			</li>

@@ -73,7 +73,7 @@
 		SELECT count(*) FROM theater_tbl
 	</select>
 	
-	<!-- 상영관 목록 조회 hostTheaterDetail -->
+	<!-- 상영관 목록 조회 getTheaterList -->
 	<select id="getTheaterList" resultType="spring.mvc.baobob.vo.TheaterVO">
 		<![CDATA[
 		SELECT * 
@@ -95,7 +95,7 @@
 	
 	<!-- 상영관 상세 좌석 정보 hostTheaterSeatDetail -->
 	<select id="hostTheaterSeatDetail" resultType="spring.mvc.baobob.vo.Theater_seatVO">
-		SELECT * FROM theater_seat_tbl WHERE theater_index=#{theater_index}
+		SELECT * FROM theater_seat_tbl WHERE theater_index=#{theater_index} AND theater_schedule_index=-1
 	</select>
 	
 	<!-- 상영관 좌석 수정 처리 modify_theater_seat -->
@@ -219,4 +219,50 @@
 	<insert id="insertEmp" parameterType="java.util.Map">
 		INSERT INTO employee_tbl VALUES(employee_tbl_SEQ.NEXTVAL, #{member_id}, #{employee_jumin2}, SYSDATE)
 	</insert>
+	
+	<!-- 영화 직원 수 -->
+	<select id="hostMovieEmpCnt" resultType="int">
+		SELECT COUNT(*) FROM member_tbl WHERE member_step IN(2, 3)
+	</select>
+	
+	<!-- 영화 직원 목록 가져오기 -->
+	<select id="hostMovieEmpList" resultType="spring.mvc.baobob.vo.Member">
+		SELECT member_tbl.member_id member_id, member_tbl.member_name member_name, member_tbl.member_tel member_tel, employee_tbl.employee_date member_reg_date FROM member_tbl JOIN employee_tbl ON member_tbl.member_id = employee_tbl.member_id WHERE member_tbl.member_step IN(2, 3)
+	</select>
+	
+	<!-- 종합 포인트 등급 가져오기 -->
+	<select id="getMemberPoint" resultType="int">
+		SELECT member_cumPoint FROM member_tbl WHERE member_id = #{member_id}
+	</select>
+	
+	<!-- 직원 목록에서 삭제하기 -->
+	<delete id="hostMovieEmpDel" parameterType="String">
+		DELETE employee_tbl WHERE member_id = #{member_id}
+	</delete>
+	
+	<!-- 회원 step 변경하기 -->
+	<update id="updateMemberStep" parameterType="spring.mvc.baobob.vo.Member">
+		UPDATE member_tbl SET member_step = #{member_step} WHERE member_id = #{member_id}
+	</update>
+	
+	<!-- 상영관의 선택한 좌석 state 불러오기 -->
+	<select id="getTheaterSeatState" resultType="int">
+		SELECT seat_state FROM theater_seat_tbl WHERE seat_row = #{row} AND seat_col = #{col} AND theater_index = #{theater_index} AND theater_schedule_index = -1
+	</select>
+	
+	<!-- 상영관의 선택한 좌석 price 불러오기 -->
+	<select id="getTheaterSeatPrice" resultType="int">
+				SELECT seat_price FROM theater_seat_tbl WHERE seat_row = #{row} AND seat_col = #{col} AND theater_index = #{theater_index} AND theater_schedule_index = -1
+	</select>
+	
+	<!-- 스케줄에 해당하는 좌석 생성 -->
+	<insert id="TheaterScheduleSeatAddPro" parameterType="java.util.Map">
+		INSERT INTO theater_seat_tbl VALUES(theater_seat_tbl_SEQ.nextval, #{theater_index}, #{row}, #{col}, #{seatState}, #{seatPrice}, (SELECT MAX(theater_schedule_index) FROM theater_schedule_tbl))
+	</insert>
+	
+	<!-- 스케줄에 해당하는 좌석 정보 가져오기 -->
+	<select id="hostTheaterScheduleSeatDetail" resultType="spring.mvc.baobob.vo.Theater_seatVO">
+		SELECT * FROM theater_seat_tbl WHERE theater_index=#{theater_index} AND theater_schedule_index=#{theater_schedule_index}
+	</select>
+	
 </mapper>

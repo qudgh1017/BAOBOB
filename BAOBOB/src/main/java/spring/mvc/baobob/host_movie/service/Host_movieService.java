@@ -5,6 +5,8 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import spring.mvc.baobob.vo.MovieResViewVO;
+
 public interface Host_movieService {
 	
 	// 영화 목록
@@ -61,10 +63,21 @@ public interface Host_movieService {
 	// 스케줄 삭제 처리
 	public void hostScheduleDelPro(HttpServletRequest req, Model model);
 	
+	// 직원 목록
+	public void hostMovieEmp(HttpServletRequest req, Model model);
+	
 	// 직원 고용 아이디 확인
 	public void hostMovieEmpChkMemberId(HttpServletRequest req, Model model);
 	
 	// 직원 고용 처리
 	public void hostMovieEmpAddPro(HttpServletRequest req, Model model);
 	
+	// 직원 해고
+	public void hostMovieEmpDel(HttpServletRequest req, Model model);
+	
+	// 예매 상세
+	public void hostTheaterScheduleDetail(HttpServletRequest req, Model model);
+	
+	// 예매 상세
+	public MovieResViewVO hostMovieResView(HttpServletRequest req, Model model);
 }

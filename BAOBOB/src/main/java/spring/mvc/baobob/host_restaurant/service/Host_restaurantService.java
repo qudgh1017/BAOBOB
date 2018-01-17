@@ -5,6 +5,8 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import spring.mvc.baobob.vo.TableVO;
+
 public interface Host_restaurantService {
 	// 식당 총 관리자 - 매장 리스트
 	public void restaurantList(HttpServletRequest req, Model model);
@@ -57,8 +59,14 @@ public interface Host_restaurantService {
 	public void employeeDel(HttpServletRequest req, Model model);
 
 	// 식당[1] 예약 리스트
-	public void hostReservList(HttpServletRequest req, Model model);
+	public void reservList(HttpServletRequest req, Model model);
 
 	// 식당[1] 예약 추가
 	public void reservAdd(HttpServletRequest req, Model model);
+
+	// 선택한 날짜에 있는 모든 예약 조회
+	public void reservView(HttpServletRequest req, Model model);
+
+	// 
+	public TableVO restaurantView2(HttpServletRequest req, Model model);
 }

@@ -9,6 +9,7 @@
 	<title>Insert title here</title>
 	
 	<style type="text/css">
+		.mar{margin:13rem auto;padding:0;}
 		body .card{max-width:700px;margin:0 auto;}
 		.cnt{font-size:50px;display:block;text-align:center;margin:20px;}
 		.clear{clear:both;}
@@ -25,7 +26,7 @@
 	<%@ include file="guestParkingHeader.jsp" %>
 	
 	<section>
-	  <div class="container">
+	  <div class="container mar">
 	  
 	  		<span class="cnt">결제가 완료되었습니다.</span>
 	  		<div class="card md-3">
@@ -47,7 +48,7 @@
 						<li class="item">
 							<ul class="u">
 								<li class="l_h">결제 금액</li>
-								<li>${ph.p_history_price} 원</li>
+								<li><fmt:formatNumber value="${ph.p_history_price}" type="number"/> 원</li>
 							</ul>
 						</li>
 					</ul>

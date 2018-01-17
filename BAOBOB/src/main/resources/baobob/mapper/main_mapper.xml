@@ -77,4 +77,14 @@
 		WHERE member_id = #{userId}
 	</select>
 	
+	<!-- 고객센터 -->
+	<select id="getHelper" resultType="spring.mvc.baobob.vo.FaqVO">
+		<![CDATA[
+		SELECT *
+		FROM (SELECT faq_index, faq_title, faq_sub_title, faq_content, rownum num
+			  FROM faq_tbl)
+		WHERE num >= #{start} AND num <= #{end}
+		]]>
+	</select>
+	
 </mapper>

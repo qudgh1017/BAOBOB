@@ -9,6 +9,7 @@
 	<title>Insert title here</title>
 	
 	<style type="text/css">
+		.mar{margin:-6rem auto;padding:0;}
 		.portfolio{margin-top:60px;}
 	</style>
 </head>
@@ -17,17 +18,19 @@
 
 	<%@ include file="guestParkingHeader.jsp" %>
 	
+	<img class="back_img" src="${projectRes}images/ymk/guest_parking/map.png">
+	
 	<section class="portfolio section">
-	  <div class="container">
+	  <div class="container mar">
 	    <div class="row">
 			<div class="col-lg-6">
 				<a class="portfolio-item d-block mx-auto" href="guestParkingMember">
-					<img class="img-fluid" src="${projectRes}images/ymk/guest_parking/inIcon.png">
+					<img class="img-fluid" src="${projectRes}images/ymk/guest_parking/memberIcon.png">
 				</a>
 			</div>
 			<div class="col-lg-6">
 				<a class="portfolio-item d-block mx-auto" href="guestParkingGuest">
-					<img class="img-fluid" src="${projectRes}images/ymk/guest_parking/outIcon.png">
+					<img class="img-fluid" src="${projectRes}images/ymk/guest_parking/guestIcon.png">
 				</a>
 			</div>
 	    </div>

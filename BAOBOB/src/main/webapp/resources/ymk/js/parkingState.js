@@ -6,6 +6,7 @@ document.getElementById('spaceDiv').addEventListener('mousemove', function(e) {
 	e.preventDefault();
 
 	var idx = e.target.getAttribute('data-index');
+	console.log(idx);
 	if(idx != null) {
 		var moveNum = document.getElementById('moveNum');
 		moveNumView = moveNum;
@@ -37,14 +38,21 @@ function parkingStatus(col, row, states) {
 			var idx = x + y * col;
 			spaceStateType(state[idx]);
 			
-			space += '<button class="p_spaceBtn p_btn" '
-					+ 'onclick="spaceState(&#39;' + location + '&#39;)">'
-						+ '<img class="p_img space_img" '
-						+ 'id="' + imgId + '" '
-						+ 'data-type="' + state[idx] + '" '
-						+ 'data-index="' + idx + '"'
-						+ 'src="/baobob/resources/images/ymk/host_parking/' + stateTypeImg + '">' 
-					+ '</button>';
+			if(state[idx] != 2) {
+				space += '<button class="p_spaceBtn p_btn" '
+						+ 'onclick="spaceState(&#39;' + location + '&#39;)">'
+							+ '<img class="p_img space_img" '
+							+ 'id="' + imgId + '" '
+							+ 'data-type="' + state[idx] + '" '
+							+ 'data-index="' + idx + '"'
+							+ 'src="/baobob/resources/images/ymk/host_parking/' + stateTypeImg + '">' 
+						+ '</button>';
+			} else {
+				space += '<button class="p_spaceBtn p_btn">'
+							+ '<img class="p_img space_img" '
+							+ 'src="/baobob/resources/images/ymk/host_parking/' + stateTypeImg + '">' 
+						+ '</button>';
+			}
 		}
 		space += '</div>';
 	}
@@ -57,8 +65,9 @@ function parkingStatus(col, row, states) {
 
 function spaceStateType(type) {
 	switch(type) {
-	case '0': stateTypeImg = 'icon_true.png'; break;
-	case '1': stateTypeImg = 'icon_false.png'; break;
+	case '0': stateTypeImg = 'icon_false.png'; break;
+	case '1': stateTypeImg = 'icon_true.png'; break;
+	case '2': stateTypeImg = 'icon_tmp.png'; break;
 	}
 }
 

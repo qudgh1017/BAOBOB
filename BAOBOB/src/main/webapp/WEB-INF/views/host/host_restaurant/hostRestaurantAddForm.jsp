@@ -42,9 +42,9 @@
 						
 						<hr>
 						
-						<button class="m_btn" onclick="spaceType('0')"><img class="p_img" src="${restaurant_images}icon_tmp.png"></button>
-						<button class="m_btn" onclick="spaceType('1')"><img class="p_img" src="${restaurant_images}table.jpg"></button>
-						<button class="m_btn" onclick="spaceType('2')"><img class="p_img" src="${restaurant_images}icon_enter.png"></button>
+						<button class="m_btn" onclick="spaceType('0');"><img class="p_img" src="${restaurant_images}icon_tmp.png"></button>
+						<button class="m_btn" onclick="spaceType('1');"><img class="p_img" src="${restaurant_images}table.jpg"></button>
+						<button class="m_btn" onclick="spaceType('2');"><img class="p_img" src="${restaurant_images}icon_enter.png"></button>
 					</div>
 				</div>
 			</div>
