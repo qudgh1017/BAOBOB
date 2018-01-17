@@ -5,6 +5,7 @@ import java.util.Map;
 
 import spring.mvc.baobob.vo.MovieVO;
 import spring.mvc.baobob.vo.ReviewVO;
+import spring.mvc.baobob.vo.Theater_scheduleVO;
 
 public  interface Guest_movieDAO {
 
@@ -49,5 +50,14 @@ public  interface Guest_movieDAO {
 	
 	//리뷰 삭제
 	public int deleteReview(int review_index);
+	
+	//예매 - 전체 영화 리스트(상영종료인 거 빼고)
+	public ArrayList<MovieVO> getAllReserveMovies();
+	
+	//예매 되는 날짜 갯수
+	public int getDateCnt(int movie_index);
+	
+	//예매 - 영화 되는 날짜, 상영관 정보
+	public ArrayList<Theater_scheduleVO> getAllReserveSchedules(int movie_index);
 	
 }

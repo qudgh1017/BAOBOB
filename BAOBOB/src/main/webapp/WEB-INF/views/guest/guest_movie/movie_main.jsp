@@ -13,6 +13,7 @@
 <script type="text/javascript" src="${projectRes}ybh/js/slick.min.js"></script>
 <script type="text/javascript" src="${projectRes}ybh/js/slide.js"></script>	
  --%>	
+
 </head>
 <body>
 	
@@ -28,6 +29,14 @@
 			<div class="row">
 				<div class="col-md-12" align="center">
 					<img src="${projectRes}images/ybh/movie1.jpg">
+					
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12" align="center">
+					<%-- <jsp:include page="/WEB-INF/views/guest/guest_movie/mainPoster.jsp"/> --%>
+					
+					<%-- <%@ include file="/WEB-INF/views/guest/guest_movie/mainPoster.jsp" %> --%>
 				</div>
 			</div>
 			<div id="ajax">
