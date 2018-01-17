@@ -1,0 +1,59 @@
+@CHARSET "UTF-8";
+.option{
+		text-align:right;
+		margin-bottom:6px; 
+		font-size: 15px
+	
+	}
+
+	.reviewId{
+		float:left;
+		margin-right:8px;
+		margin-top: 6px;
+		
+		
+	}
+	.reviewContents{
+		float:left;
+		margin-right:8px;
+		margin-top: 8px;
+		
+		
+	}
+	.like{
+		background: white;
+<<<<<<< HEAD
+		border: 1px solid #E8D9FF;	
+=======
+		border: 1px solid #d1d1d1;	
+>>>>>>> origin/master
+		width: 100px;
+		height: 100px;	
+		margin: 0px; 
+		padding: 0px;
+		text-align: center;
+		
+	
+	}
+	.like:hover{
+<<<<<<< HEAD
+		background: #E8D9FF;
+		border: 1px solid #E8D9FF;
+=======
+		background: #d1d1d1;
+		border: 1px solid #d1d1d1;
+>>>>>>> origin/master
+		width: 100px;
+		height: 100px;	
+		margin: 0px; 
+		padding: 0px;
+		text-align: center;
+	
+	}
+	.chucheon{
+		height:10px; 
+		font-size: 17px; 
+		margin-top:0; 
+		padding-bottom:20px; 
+		margin-bottom:20px;
+	}

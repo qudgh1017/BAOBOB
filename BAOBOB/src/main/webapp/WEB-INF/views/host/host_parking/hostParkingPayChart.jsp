@@ -6,7 +6,11 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<title>Insert title here</title>
+	<title>납부 현황</title>
+	
+	<style>
+		.rg{text-align:right;}
+	</style>
 </head>
 <body class="fixed-nav sticky-footer bg-dark">
 
@@ -14,10 +18,41 @@
 	
 	<div class="content-wrapper">
 		<div class="container-fluid">
+		
+			<div class="row">
+				<div class="col-xl-4 col-sm-6 mb-3">
+					<div class="card text-white bg-primary o-hidden">
+						<div class="card-header">
+							<jsp:useBean id="toDay" class="java.util.Date"/>
+							<fmt:formatDate var="year" value="${toDay}" pattern="yyyy"/>
+							${year}년도 수익
+						</div>
+						<div class="card-body rg">
+							<fmt:formatNumber value="${yearPrice}" type="number"/> 원
+						</div>
+					</div>
+				</div>
+				<div class="col-xl-4 col-sm-6 mb-3">
+					<div class="card text-white bg-danger o-hidden">
+						<div class="card-header">누적 수익</div>
+						<div class="card-body rg">
+							<fmt:formatNumber value="${totalPrice}" type="number"/> 원
+						</div>
+					</div>
+				</div>
+				<div class="col-xl-4 col-sm-6 mb-3">
+					<div class="card text-white bg-success o-hidden">
+						<div class="card-header">전년도 수익</div>
+						<div class="card-body rg">
+							<fmt:formatNumber value="${prevPrice}" type="number"/> 원
+						</div>
+					</div>
+				</div>
+			</div>
 			<div class="card mb-3">
 				<div class="card-header">올해 결산액</div>
 				<div class="card-body">
-					<div id="thisChart" style="width:100% height:500px"></div>
+					<div id="thisChart" style="width:100%; height:500px;"></div>
 				</div>
 				<div class="card-footer small text-muted">주차 시간에 따른 금액과 실제 받은 금액</div>
 			</div>
@@ -61,8 +96,6 @@
 			var chart = new google.visualization.AreaChart(document.getElementById('thisChart'));
 			chart.draw(data, options);
 		}
-		
-		
 	</script>
 </body>
 </html>

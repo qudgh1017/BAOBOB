@@ -22,7 +22,7 @@
 		<div class="container-fluid">
 			
 			<div class="row">
-				<div class="col-lg-6">
+				<div class="col-lg-4">
 					<div class="card md-3">
 						<div class="card-header">시간대별 입차수</div>
 						<div class="card-body">
@@ -31,13 +31,22 @@
 						<div class="card-footer small text-muted">시간대별 입차 비율</div>
 					</div>
 				</div>
-				<div class="col-lg-6">
+				<div class="col-lg-4">
 					<div class="card md-3">
 						<div class="card-header">시간대별 출차수</div>
 						<div class="card-body">
 							<div id="dayOutChart" style="width:100%; height:240px;"></div>
 						</div>
 						<div class="card-footer small text-muted">시간대별 출차 비율</div>
+					</div>
+				</div>
+				<div class="col-lg-4">
+					<div class="card md-3">
+						<div class="card-header">성 비율</div>
+						<div class="card-body">
+							<div id="sexRatioChart" style="width:100%; height:240px;"></div>
+						</div>
+						<div class="card-footer small text-muted">이용자 성 비율</div>
 					</div>
 				</div>
 			</div>
@@ -67,6 +76,7 @@
 		function drawChart() {
 			chartDayInTimeAvg();
 			chartDayOutTimeAvg();
+			sexRatioChart();
 			weekChart();
 		}
 
@@ -117,6 +127,20 @@
 			}
 			
 			var chart = new google.visualization.PieChart(document.getElementById('dayOutChart'));
+			chart.draw(data, options);
+		}
+		
+		function sexRatioChart() {
+			var data = google.visualization.arrayToDataTable([
+				['성별', '이용자수'],
+				['알 수 없음', ${sex0}],
+				['여', ${sex1}],
+				['남', ${sex2}]
+			]);
+			
+			var options = {}
+			
+			var chart = new google.visualization.PieChart(document.getElementById('sexRatioChart'));
 			chart.draw(data, options);
 		}
 		

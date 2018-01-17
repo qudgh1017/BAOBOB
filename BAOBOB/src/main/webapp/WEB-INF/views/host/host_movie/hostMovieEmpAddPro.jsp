@@ -22,7 +22,7 @@
 	<c:if test="${cnt== 1 }">
 		<script type="text/javascript">
 			alert("직원 등록 성공!");
-			window.location="hostMovie";
+			window.location="hostMovieEmp";
 		</script>
 	</c:if>
 	<c:if test="${cnt!= 1 }">

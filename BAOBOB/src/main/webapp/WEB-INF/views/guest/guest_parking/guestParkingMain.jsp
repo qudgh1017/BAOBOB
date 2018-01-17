@@ -9,6 +9,8 @@
 	<title>Insert title here</title>
 	
 	<style type="text/css">
+		.mar{margin:11rem auto;padding:0;}
+		#back_btn{display:none;}
 		.portfolio{margin-top:60px;}
 	</style>
 </head>
@@ -17,8 +19,10 @@
 
 	<%@ include file="guestParkingHeader.jsp" %>
 	
+	<img class="back_img" src="${projectRes}images/ymk/guest_parking/map.png">
+	
 	<section>
-	  <div class="container">
+	  <div class="container mar">
 	    <div class="row">
 			<div class="col-lg-4">
 				<a class="portfolio-item d-block mx-auto" href="guestParkingIn">

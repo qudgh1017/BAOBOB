@@ -95,8 +95,7 @@
 		UPDATE park_tbl
 		SET
 			park_state = #{park_state},
-			park_theme = #{park_theme},
-			park_last_date = #{park_last_date}
+			park_theme = #{park_theme}
 		WHERE park_index = #{park_index}
 	</update>
 	
@@ -106,6 +105,7 @@
 		SELECT park_state
 		FROM park_tbl
 		WHERE park_index < #{last_idx}
+        ORDER BY park_index
 		]]>
 	</select>
 	
@@ -181,14 +181,48 @@
 	
 	<!-- 납부 내역 : 출차하지 않은 구역 제외 -->
 	<select id="getParkingPayList" resultMap="pHistoryMap">
-		<![CDATA[
 		SELECT * 
 		FROM (SELECT p_history_index, history_index, p_history_in, p_history_out, p_history_price, p_history_space, p_history_date, member_id, rownum as num
 			  FROM (SELECT p_history_index, ph.history_index, p_history_in, p_history_out, p_history_price, p_history_space, p_history_date, ht.member_id
 				    FROM park_history_tbl ph, history_tbl ht
 				    WHERE ph.history_index = ht.history_index
 				    	AND ph.p_history_out IS NOT NULL
+			<choose>
+				<when test="standard == 2">
+					ORDER BY p_history_date DESC))
+				</when>
+				<when test="standard == 3">
+					ORDER BY ht.member_id DESC))
+				</when>
+				<when test="standard == 4">
+					ORDER BY p_history_in DESC))
+				</when>
+				<when test="standard == 5">
+					ORDER BY p_history_out DESC))
+				</when>
+				<when test="standard == 6">
+					ORDER BY p_history_price DESC))
+				</when>
+				<when test="standard == 8">
+					ORDER BY p_history_date))
+				</when>
+				<when test="standard == 9">
+					ORDER BY ht.member_id))
+				</when>
+				<when test="standard == 10">
+					ORDER BY p_history_in))
+				</when>
+				<when test="standard == 11">
+					ORDER BY p_history_out))
+				</when>
+				<when test="standard == 12">
+					ORDER BY p_history_price))
+				</when>
+				<otherwise>
 				    ORDER BY p_history_index DESC))
+				</otherwise>
+			</choose>
+	<![CDATA[
 		WHERE num >= #{start} AND NUM <= #{end}
 		]]>
 	</select>
@@ -217,14 +251,14 @@
 			       + extract(minute from intvl) * 60
 			       + extract(second from intvl)
 			       ) as test
-				  FROM (SELECT member_id mem,p_history_in - TO_TIMESTAMP(#{park_last_date}, 'YY/mm/dd hh24:mi:ss.FF9') intvl 
+				  FROM (SELECT member_id mem, p_history_in - TO_TIMESTAMP(#{park_last_date}, 'YY/mm/dd hh24:mi:ss.FF9') intvl 
 				  		FROM park_history_tbl pht, history_tbl ht
 						WHERE pht.history_index = ht.history_index
 			))
 			GROUP BY mem
 			ORDER BY test
         )
-        WHERE test < 100
+        WHERE test < 500
 		]]>
 	</select>
 	
@@ -262,6 +296,25 @@
 		    GROUP BY year, month, day, hour
 			)
 		GROUP BY hour
+	</select>
+	
+	<!-- 구역 변화 -->
+	<select id="getParkChageState" resultType="spring.mvc.baobob.vo.Parking">
+		SELECT *
+		FROM (
+			SELECT park_index, park_state, park_theme, park_last_date, rownum num
+			FROM (SELECT park_index, park_state, park_theme, park_last_date
+		      	  FROM park_tbl
+		   <if test="order == 0">
+		      	  ORDER BY park_last_date DESC))
+		   </if>
+		   <if test="order == 1">
+		      	  WHERE park_last_out IS NOT NULL
+		      	  ORDER BY park_last_out DESC))
+		   </if>
+		<![CDATA[
+		WHERE num >= 1 AND num <= 13
+		]]>
 	</select>
 	
 	<!-- 올해 요일별 입차수 -->
@@ -312,6 +365,15 @@
 		GROUP BY mon
 	</select>
 	
+	<!-- 성비율 -->
+	<select id="getParkingSexRatio" resultType="java.util.Map">
+		SELECT member_sex sex, COUNT(member_sex) count
+		FROM park_history_tbl ph, history_tbl ht, member_tbl mt
+		WHERE ph.history_index = ht.history_index
+		    AND ht.member_id = mt.member_id
+		GROUP BY member_sex	
+	</select>
+	
 	<!-- 올해 납부 내역 -->
 	<select id="getThisYearPayList" resultType="spring.mvc.baobob.vo.ParkingHistory">
 		SELECT *
@@ -319,4 +381,32 @@
 		WHERE p_history_out IS NOT NULL
 		    AND TO_CHAR(p_history_out, 'Y') = TO_CHAR(SYSDATE, 'Y')
 	</select>
+	
+	<!-- 총 수익 -->
+	<select id="getTotalPrice" resultType="String">
+		SELECT SUM(p_history_price) 
+		FROM park_history_tbl
+		WHERE p_history_out IS NOT NULL
+		<if test="year != null and year == 1">
+		    AND TO_CHAR(p_history_in, 'YY') = TO_CHAR(SYSDATE, 'YY')
+		</if>
+		<if test="year != null and year == -1">
+			AND TO_CHAR(p_history_in, 'YY') = TO_CHAR(SYSDATE, 'YY')-1
+		</if>
+	</select>
+	
+	<!-- 아두이노. 주차 구역 상태 수정 -->
+	<update id="arduinoInput" parameterType="java.util.Map">
+		UPDATE park_tbl
+		SET
+			park_state = #{pin}
+		<if test="pin == 0">
+			, park_last_date = SYSTIMESTAMP
+		</if>
+		<if test="pin == 1">
+			, park_last_out = SYSTIMESTAMP
+		</if>
+		WHERE park_index = #{index}
+			AND park_state != #{pin}
+	</update>
 </mapper>

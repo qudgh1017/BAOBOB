@@ -7,6 +7,10 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<title>Insert title here</title>
+	
+	<style>
+		.mar{margin:15rem auto;padding:0;}
+	</style>
 </head>
 <body>
 	<%@ include file="../common/head.jsp" %>
@@ -14,7 +18,7 @@
 	<%@ include file="guestParkingHeader.jsp" %>
 	
 	<section>
-	  <div class="container">
+	  <div class="container mar">
 	  
 	  	<form action="guestParkingMemberIn" id="inform">
 	  		<input class="form-control input" type="text" name="id" placeholder="아이디">
