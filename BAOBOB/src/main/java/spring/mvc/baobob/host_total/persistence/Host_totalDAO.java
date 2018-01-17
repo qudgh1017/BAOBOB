@@ -3,6 +3,8 @@ package spring.mvc.baobob.host_total.persistence;
 import java.util.ArrayList;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.MapKey;
+
 import spring.mvc.baobob.vo.Member;
 
 public interface Host_totalDAO {
@@ -27,6 +29,14 @@ public interface Host_totalDAO {
 	
 	//회원삭제 처리
 	public int hostTMemDelPro(String strId);
+	
+	//영화관 결산 총액 구하기
+	public int getMovieSale();
+	
+	//영화관 결산페이지(챠트)
+	@MapKey("kind")
+	public Map<String,Integer> getMovieChart();
+	
 	
 	
 	

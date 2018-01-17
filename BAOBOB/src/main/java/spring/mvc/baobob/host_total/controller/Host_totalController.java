@@ -100,7 +100,14 @@ public class Host_totalController {
 		return "host/host_total/hostTMemDelPro";
 	}
 	
-	
+	//영화관 결산페지
+	@RequestMapping("hostTMovie")
+	public String hostTMovie(HttpServletRequest req, Model model) {
+		
+		service.movieChart(req, model);
+		
+		return "host/host_total/hostTMovie";
+	}
 	
 	
 	

@@ -162,7 +162,7 @@ public class Host_totalServiceImpl implements Host_totalService{
 		model.addAttribute("cnt", cnt);
 	}
 	
-	/*----------------------------------------------------------------------------*/
+/*----------------------------------------------------------------------------*/
 	
 	//회원삭제 처리페이지
 	public void hostTMemDelPro(HttpServletRequest req, Model model) {
@@ -175,8 +175,21 @@ public class Host_totalServiceImpl implements Host_totalService{
 		model.addAttribute("deleteCnt", deleteCnt);
 	}
 	
+/*----------------------------------------------------------------------------*/
 	
-	
+	//영화관 결산페이지
+	public void movieChart(HttpServletRequest req, Model model) {
+		System.out.println("결산서비스");
+		
+		//총판매액을 가져옴
+		int movieSale = dao.getMovieSale(); 
+		model.addAttribute("movieSale",movieSale);
+		System.out.println("총액" + movieSale);
+		
+		//상품종류별 구매수
+		//Map<String,Integer> map = (Map<String,Integer>)dao.getMovieChart(); 
+		//model.addAttribute("movieChart",map);
+	}
 	
 	
 	

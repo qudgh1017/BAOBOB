@@ -42,7 +42,7 @@
 					<span class="nav-link-text">결산</span>
 				</a>
 				<ul class="sidenav-second-level collapse" id="collapseComponents">
-					<li><a href="#">영화관 결산</a></li>
+					<li><a href="hostTMovie">영화관 결산</a></li>
 					<li><a href="#">식당 결산</a></li>
 					<li><a href="#">주차장 결산</a></li>
 				</ul>

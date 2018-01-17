@@ -55,9 +55,24 @@
 		DELETE FROM member_tbl WHERE member_id = #{strId}
 	</delete>
 	
+	<!-- 영화관 결산 총액 구하기 -->
+	<select id="getMovieSale" resultType="int">
+		SELECT SUM(movie_history_price) FROM movie_history_tbl
+	</select>
 	
-	
-	
+	<!-- 결산페이지(챠트) -->
+	<resultMap type="spring.mvc.baobob.vo.hostTChartVO" id="chart">
+		<id 	property="kind" 	column="kind" />
+		<result property="sum" 		column="sum" />
+	</resultMap>
+	<select id="getMovieChart" resultMap="chart">
+		SELECT NVL(m.movie_janre,0) kind, SUM(h.movie_history_price) sum 
+		FROM movie_tbl m JOIN theater_schedule_tbl t  
+		ON m.movie_index = t.movie_index
+		JOIN movie_history_tbl h
+		ON t.theater_schedule_index = h.theater_schedule_index
+		GROUP BY ROLLUP(m.movie_janre)
+	</select>
 	
 	
 	
