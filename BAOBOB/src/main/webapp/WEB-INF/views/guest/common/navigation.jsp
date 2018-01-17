@@ -5,7 +5,7 @@
 <body>
 	<nav class="navbar navbar-expand-lg bg-secondary fixed-top text-uppercase" id="mainNav">
 		<div class="container">
-			<a class="navbar-brand js-scroll-trigger" href="#page-top">Baobob</a>
+			<a class="navbar-brand js-scroll-trigger" href="mainIndex">Baobob</a>
 			<button class="navbar-toggler navbar-toggler-right text-uppercase bg-primary text-white rounded"
 				type="button" data-toggle="collapse" data-target="#navbarResponsive"
 				aria-controls="navbarResponsive" aria-expanded="false"
@@ -47,4 +47,7 @@
 			</div>
 		</div>
 	</nav>
+	
+	<script src="${projectRes}mainBootstrap/vendor/jquery/jquery.min.js"></script>
+	<script src="${projectRes}mainBootstrap/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 </body>

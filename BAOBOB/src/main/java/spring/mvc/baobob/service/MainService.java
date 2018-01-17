@@ -31,4 +31,10 @@ public interface MainService {
 	
 	//firebase - facebook 로그인
 	public void firebaseLoginPro(HttpServletRequest req, Model model);
+	
+	//고객센터
+	public void mainHelp(HttpServletRequest req, Model model);
+	
+	//랜덤키
+	public String randomKey();
 }

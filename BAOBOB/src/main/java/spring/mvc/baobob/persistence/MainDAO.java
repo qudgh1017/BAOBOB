@@ -1,7 +1,9 @@
 package spring.mvc.baobob.persistence;
 
+import java.util.ArrayList;
 import java.util.Map;
 
+import spring.mvc.baobob.vo.FaqVO;
 import spring.mvc.baobob.vo.Member;
 
 public interface MainDAO {
@@ -38,4 +40,7 @@ public interface MainDAO {
 	
 	//아이디 존재 여부
 	public int getMemberCheck(String userId);
+	
+	//고객센터
+	public ArrayList<FaqVO> getHelper(Map<String, Integer> map);
 }

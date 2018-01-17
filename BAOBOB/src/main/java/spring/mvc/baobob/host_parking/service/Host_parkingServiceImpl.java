@@ -127,10 +127,11 @@ public class Host_parkingServiceImpl implements Host_parkingService {
 		int col = ps.getP_space_col();
 		int row = ps.getP_space_row();
 		int last_idx = col * row;
-
 		
+		//주차장 구역 타입 정보
 		String[] spaces = ps.getP_space_info().split(","); 
-		// 주차장 구역 상태 정보
+		
+		//주차장 구역 상태 정보
 		ArrayList<String> list = dao.getParkingStates(last_idx);
 		String states = "";
 		for (int i = 0; i < list.size(); i += 1) {
@@ -527,16 +528,45 @@ public class Host_parkingServiceImpl implements Host_parkingService {
 
 	//아두이노. 구역 상태 수정
 	public void arduinoInput(HttpServletRequest req, Model model) {
-		Map<String, Object> map = new HashMap<String, Object>();
-		int cnt = 0;
-		
-		for(int i = 1; i <= 6; i += 1) {
-			String pin = req.getParameter("pin" + i);
+		//1. 핀 저장
+		Map<Integer, Object> pinMap = new HashMap<Integer, Object>();
+		for(int i = 0; i < 6; i += 1) {
+			String pin = req.getParameter("pin" + (i + 1));
 			if(pin != null) {
-				map.put("index", i);
-				map.put("pin", pin);
-				cnt = dao.arduinoInput(map);
+				pinMap.put(i, pin);
+			} else {
+				pinMap.put(i, 0);
 			}
+		}
+		
+		//수정 부분. 테스트 필요
+		ParkingSpace ps = dao.getParkingSpace();
+		
+		// 주차장 구역 상태 정보
+		int last_idx = ps.getP_space_col() * ps.getP_space_row();
+		ArrayList<String> list = dao.getParkingStates(last_idx);
+		
+		// 주차장 구역 타입 정보
+		String[] spaces = ps.getP_space_info().split(",");
+		
+		//2. 인덱스 저장
+		int count = 0;
+		Map<Integer, Object> idxMap = new HashMap<Integer, Object>();
+		for(int i = 0; i < list.size(); i += 1) {
+			if(!spaces[i].equals("0")) { //빈공간이 아니면
+				idxMap.put(count, i);
+				count++;
+			}
+			if(count == 6) { break; }
+		}
+		
+		//3. 해당 인덱스에 핀 저장
+		int cnt = 0;
+		Map<String, Object> map = new HashMap<String, Object>();
+		for(int i = 0 ; i < 6; i += 1) {
+			map.put("index", idxMap.get(i));
+			map.put("pin", pinMap.get(i));
+			cnt = dao.arduinoInput(map);
 		}
 		
 		model.addAttribute("cnt", cnt);

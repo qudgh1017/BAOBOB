@@ -201,7 +201,6 @@
 	
 	<!-- footerCopyright -->
 	<%@ include file="../guest/common/footerCopyright.jsp" %>
-
 </body>
 
 </html>
