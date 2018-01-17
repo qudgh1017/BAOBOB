@@ -60,3 +60,52 @@ function reviewDeleteCheck(memId, member_id, movie_index, review_index){
 		alert("자신이 작성한 글만 삭제가 가능합니다.");
 	}
 }
+
+
+//영화 movieTicekt 에서 div클릭시 css변경(여러개 왜 안됨...ㅠ)
+//토글 써볼것!!!!!!!! 부트스트랩!!
+/*function movieCSS(movie_index){
+	
+	var movie_tab = $('#movie'+movie_index);
+	
+	movie_tab.click(function(){
+		
+		movie_tab.css('color','white');
+		movie_tab.css('background-color','black');
+		movie_tab.css('font-weight','bold');
+	});
+}*/
+
+function nonPlaying(){
+	alert("상영예정작입니다.\n 상영중인 영화를 선택해주세요.");
+	window.location.reload();
+	
+	return false;
+}
+
+//영화 movieTicekt
+
+//영화버튼 클릭했을때
+function movieClick(movie_index){
+
+    $.ajaxSettings.traditional = true;//배열 형태로 서버쪽 전송을 위한 설정
+    
+	$.ajax({
+		url: 'dateResult',
+		type: 'GET',
+		data: {
+			movie_index
+		},
+		
+		success: function(msg) {
+			$('#resultSchedule').html(msg);					
+		},				
+		error: function() {
+			alert('오류');
+		}	
+		
+	});
+}
+  
+
+

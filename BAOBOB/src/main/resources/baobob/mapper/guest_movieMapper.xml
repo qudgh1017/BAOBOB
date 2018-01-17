@@ -133,5 +133,33 @@
 		DELETE FROM review_tbl 
 		WHERE review_index = #{review_index}
 	</delete>
+	
+	<!-- 예매 - 전체 영화 리스트(상영 종료 된것 빼고) -->
+	<select id="getAllReserveMovies" resultType="spring.mvc.baobob.vo.MovieVO">
+		SELECT *
+		FROM movie_tbl
+		WHERE movie_state!=2
+		ORDER BY movie_state DESC
+	</select>
+	
+	<!-- 영화별 예매 되는 날짜 갯수 -->
+	<select id="getDateCnt" resultType="int">
+		SELECT COUNT(*)
+		FROM  theater_tbl
+		JOIN theater_schedule_tbl
+		ON (theater_tbl.theater_index = theater_schedule_tbl.theater_index) JOIN movie_tbl
+		ON (theater_schedule_tbl.movie_index = movie_tbl.movie_index)
+		WHERE movie_tbl.movie_index = #{movie_index}
+	</select>
+	
+	<!-- 예매 - 영화 되는 날짜, 상영관 정보 -->
+	<select id="getAllReserveSchedules" resultType="spring.mvc.baobob.vo.Theater_scheduleVO">
+		SELECT movie_tbl.movie_index, theater_tbl.theater_index, theater_schedule_tbl.schedule_startdate 
+		FROM  theater_tbl
+		JOIN theater_schedule_tbl
+		ON (theater_tbl.theater_index = theater_schedule_tbl.theater_index) JOIN movie_tbl
+		ON (theater_schedule_tbl.movie_index = movie_tbl.movie_index)
+		WHERE movie_tbl.movie_index = #{movie_index}
+	</select>
 
 </mapper>

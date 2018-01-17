@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import spring.mvc.baobob.vo.Member;
 import spring.mvc.baobob.vo.MovieVO;
 import spring.mvc.baobob.vo.ReviewVO;
+import spring.mvc.baobob.vo.Theater_scheduleVO;
 
 @Repository
 public class Guest_movieDAOImpl implements Guest_movieDAO{
@@ -185,6 +186,39 @@ public class Guest_movieDAOImpl implements Guest_movieDAO{
 		cnt = gmdao.deleteReview(review_index);
 		
 		return cnt;
+	}
+
+	//예매 - 전체 영화 리스트(상영종료인 거 빼고)
+	@Override
+	public ArrayList<MovieVO> getAllReserveMovies() {
+		ArrayList<MovieVO> movies = null;
+		
+		Guest_movieDAO gmdao = sqlSession.getMapper(Guest_movieDAO.class);
+		movies = gmdao.getAllReserveMovies();
+		
+		return movies;
+	}
+
+	//예매되는 날짜
+	@Override
+	public int getDateCnt(int movie_index) {
+		int cnt = 0;
+
+		Guest_movieDAO gmdao = sqlSession.getMapper(Guest_movieDAO.class);
+		cnt = gmdao.getDateCnt(movie_index);
+		
+		return cnt;
+	}
+
+	//예매 - 영화 되는 날짜, 상영관 정보
+	@Override
+	public ArrayList<Theater_scheduleVO> getAllReserveSchedules(int movie_index) {
+		ArrayList<Theater_scheduleVO> schedules = null;
+		
+		Guest_movieDAO gmdao = sqlSession.getMapper(Guest_movieDAO.class);
+		schedules = gmdao.getAllReserveSchedules(movie_index);
+		
+		return schedules;
 	}
 
 	

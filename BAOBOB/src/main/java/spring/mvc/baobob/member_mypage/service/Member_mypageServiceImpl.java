@@ -256,7 +256,6 @@ public class Member_mypageServiceImpl implements Member_mypageService{
 		
 		//3단계. request나 session에 처리 결과를 저장하고 jsp(view)에서 받는다.
 		model.addAttribute("selectCnt", selectCnt);
-		
 	}
 	
 /*----------------------------------------------------------------------------*/
@@ -493,7 +492,6 @@ public class Member_mypageServiceImpl implements Member_mypageService{
 	
 	//회원탈퇴 처리페이지
 	public void memPDelPro(HttpServletRequest req, Model model) {
-		
 		String strId = (String)req.getSession().getAttribute("memId");
 		String strPwd = req.getParameter("pwd");
 		

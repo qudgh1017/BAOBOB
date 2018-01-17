@@ -11,10 +11,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
 import spring.mvc.baobob.guest_movie.persistence.Guest_movieDAO;
-import spring.mvc.baobob.vo.Member;
-import spring.mvc.baobob.vo.MovieReviewVO;
 import spring.mvc.baobob.vo.MovieVO;
 import spring.mvc.baobob.vo.ReviewVO;
+import spring.mvc.baobob.vo.Theater_scheduleVO;
 
 @Service
 public class Guest_movieServiceImpl implements Guest_movieService{
@@ -508,6 +507,49 @@ public class Guest_movieServiceImpl implements Guest_movieService{
 			cnt = 1;
 		}
 		model.addAttribute("cnt", cnt);
+	}
+
+	//예매창에 띄울 영화리스트(상영종료인 거 빼고)
+	@Override
+	public void reserveMovieList(HttpServletRequest req, Model model) {
+		
+		int cnt = 0;// 영화 갯수
+		
+		//전체 영화 갯수
+		cnt = gmdao.getMovieCnt();
+		
+		if(cnt > 0) {
+			//게시글 목록 조회
+			ArrayList<MovieVO> movies = null;
+			// movie_state에 따른 영화 리스트 구하기
+			movies = gmdao.getAllReserveMovies();
+			
+			model.addAttribute("movies", movies); 
+		}
+		
+		model.addAttribute("cnt", cnt);//전체 영화갯수
+		
+	}
+
+	//영화 되는 날짜, 상영관 정보
+	@Override
+	public void reserveDateList(HttpServletRequest req, Model model) {
+		int cnt = 0;// 날짜 갯수
+		int movie_index = Integer.parseInt(req.getParameter("movie_index"));
+		
+		//되는 날짜 갯수
+		cnt = gmdao.getDateCnt(movie_index);
+		
+		if(cnt > 0) {
+			//영화별 되는 날짜, 상영관 정보 담을 곳
+			ArrayList<Theater_scheduleVO> schedules = null;
+			schedules = gmdao.getAllReserveSchedules(movie_index);
+			
+			model.addAttribute("schedules", schedules); 
+		}
+		
+		model.addAttribute("cnt", cnt);//전체 영화갯수
+		
 	}
 
 	
