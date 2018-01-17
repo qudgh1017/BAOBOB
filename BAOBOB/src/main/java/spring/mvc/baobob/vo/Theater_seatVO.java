@@ -7,6 +7,7 @@ public class Theater_seatVO {
 	private int seat_col;
 	private int seat_state;
 	private int seat_price;
+	private int theater_schedule_index;
 
 	public int getSeat_index() {
 		return seat_index;

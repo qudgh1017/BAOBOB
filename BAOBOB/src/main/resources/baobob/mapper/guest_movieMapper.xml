@@ -150,16 +150,19 @@
 		ON (theater_tbl.theater_index = theater_schedule_tbl.theater_index) JOIN movie_tbl
 		ON (theater_schedule_tbl.movie_index = movie_tbl.movie_index)
 		WHERE movie_tbl.movie_index = #{movie_index}
+		AND TO_CHAR(theater_schedule_tbl.schedule_startdate,'YYMMDD') = TO_CHAR(SYSDATE+#{plusDay},'YYMMDD')
 	</select>
 	
 	<!-- 예매 - 영화 되는 날짜, 상영관 정보 -->
 	<select id="getAllReserveSchedules" resultType="spring.mvc.baobob.vo.Theater_scheduleVO">
-		SELECT movie_tbl.movie_index, theater_tbl.theater_index, theater_schedule_tbl.schedule_startdate 
+		SELECT * 
 		FROM  theater_tbl
 		JOIN theater_schedule_tbl
 		ON (theater_tbl.theater_index = theater_schedule_tbl.theater_index) JOIN movie_tbl
 		ON (theater_schedule_tbl.movie_index = movie_tbl.movie_index)
 		WHERE movie_tbl.movie_index = #{movie_index}
+		AND TO_CHAR(theater_schedule_tbl.schedule_startdate,'YYMMDD') = TO_CHAR(SYSDATE+#{plusDay},'YYMMDD')
+		ORDER BY theater_tbl.theater_index ASC, theater_schedule_tbl.schedule_startdate ASC
 	</select>
 
 </mapper>

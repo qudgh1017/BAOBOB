@@ -3,13 +3,13 @@ package spring.mvc.baobob.vo;
 import java.sql.Timestamp;
 
 public class Theater_scheduleVO {
-	public int theater_schedule_index;
-	public int movie_index;
-	public int theater_index;
-	public Timestamp schedule_startDate;
-	public Timestamp schedule_startTime;
-	public Timestamp schedule_endTime;
-	public int schedule_MDNstate;
+	private int theater_schedule_index;
+	private int movie_index;
+	private int theater_index;
+	private Timestamp schedule_startDate;
+	private Timestamp schedule_startTime;
+	private Timestamp schedule_endTime;
+	private int schedule_MDNstate;
 
 	public int getTheater_schedule_index() {
 		return theater_schedule_index;

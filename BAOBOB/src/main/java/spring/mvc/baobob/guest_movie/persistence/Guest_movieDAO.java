@@ -55,9 +55,9 @@ public  interface Guest_movieDAO {
 	public ArrayList<MovieVO> getAllReserveMovies();
 	
 	//예매 되는 날짜 갯수
-	public int getDateCnt(int movie_index);
+	public int getDateCnt(Map<String,Object> map);
 	
 	//예매 - 영화 되는 날짜, 상영관 정보
-	public ArrayList<Theater_scheduleVO> getAllReserveSchedules(int movie_index);
+	public ArrayList<Theater_scheduleVO> getAllReserveSchedules(Map<String,Object> map);
 	
 }
