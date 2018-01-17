@@ -8,3 +8,7 @@
 <c:set var="projectRes" value="/baobob/resources/" />
 
 <link rel="icon" href="${projectRes}images/lgt/lost/The-Baobab-Tree-4.jpg" type="image/x-icon" />
+
+<!-- 구글챠트 -->
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script>google.charts.load('current', {packages:['corechart']});</script>		

@@ -23,6 +23,10 @@ public interface Host_totalService {
 	
 	//회원삭제 처리페이지
 	public void hostTMemDelPro(HttpServletRequest req, Model model);
-	//memPDelPro
+	
+	//영화관 결산페이지
+	public void movieChart(HttpServletRequest req, Model model);
+	
+	
 	
 }

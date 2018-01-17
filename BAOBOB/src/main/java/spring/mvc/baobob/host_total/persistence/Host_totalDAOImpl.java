@@ -1,6 +1,7 @@
 package spring.mvc.baobob.host_total.persistence;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
@@ -100,6 +101,55 @@ public class Host_totalDAOImpl implements Host_totalDAO{
 		
 		return cnt;
 	}
+	
+/*----------------------------------------------------------------------------*/
+	
+	//영화관 결산 총액 구하기
+	public int getMovieSale() {
+		System.out.println("결산다오");
+		int cnt = 0;
+		
+		Host_totalDAO dao = sqlSession.getMapper(Host_totalDAO.class);
+		cnt = dao.getMovieSale();
+		
+		System.out.println("총액:" + cnt);
+		return cnt;
+	}
+	
+/*----------------------------------------------------------------------------*/
+	
+	//영화관 결산페이지(챠트)
+	public Map<String,Integer> getMovieChart(){
+		Map<String,Integer> m = null;
+		
+		Host_totalDAO dao = sqlSession.getMapper(Host_totalDAO.class);
+		
+		m = new HashMap<String,Integer>();
+		m.put("janre1",0);
+		m.put("janre2",0);
+		m.put("janre3",0);
+		m.put("janre4",0);
+		m.put("janre5",0);
+		m.put("janre6",0);
+		m.put("janre7",0);
+		m.put("janre8",0);
+		m.put("janre9",0);
+		m.put("janre10",0);
+		
+		m = dao.getMovieChart();
+		
+		System.out.println("챠트:" + m);
+		return m;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	
