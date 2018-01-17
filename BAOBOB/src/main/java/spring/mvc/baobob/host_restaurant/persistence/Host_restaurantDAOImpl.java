@@ -331,6 +331,17 @@ public class Host_restaurantDAOImpl implements Host_restaurantDAO {
 
 		return dao.addReserv(map);
 	}
+	
+	// 식당[1] 선택 날짜 예약 조회
+	@Override
+	public int modTable2(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		log.debug("dao.modTable2()");
+
+		Host_restaurantDAO dao = sqlSession.getMapper(Host_restaurantDAO.class);
+
+		return dao.modTable2(map);
+	}
 
 	// 식당[1] 날짜별 예약 조회
 	@Override
@@ -341,5 +352,15 @@ public class Host_restaurantDAOImpl implements Host_restaurantDAO {
 		Host_restaurantDAO dao = sqlSession.getMapper(Host_restaurantDAO.class);
 
 		return dao.getReservList(map);
+	}
+
+	@Override
+	public int getScheduleIndex(Restaurant_scheduleVO dto) {
+		// TODO Auto-generated method stub
+		log.debug("dao.getScheduleIndex()");
+
+		Host_restaurantDAO dao = sqlSession.getMapper(Host_restaurantDAO.class);
+
+		return dao.getScheduleIndex(dto);
 	}
 }

@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.Timestamp;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -28,8 +29,6 @@ import spring.mvc.baobob.vo.MenuVO;
 import spring.mvc.baobob.vo.RestaurantVO;
 import spring.mvc.baobob.vo.Restaurant_scheduleVO;
 import spring.mvc.baobob.vo.TableVO;
-import spring.mvc.baobob.vo.TheaterVO;
-import spring.mvc.baobob.vo.Theater_scheduleVO;
 
 @Service
 public class Host_restaurantServiceImpl implements Host_restaurantService {
@@ -104,9 +103,6 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 		// TODO Auto-generated method stub
 		log.debug("service.restaurantView()");
 
-		String date = req.getParameter("date");
-		String time = req.getParameter("time");
-
 		RestaurantVO dto = new RestaurantVO();
 		dto = dao.viewRestaurant(req.getParameter("index"));
 
@@ -140,8 +136,14 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 		model.addAttribute("info", info);
 		model.addAttribute("col", col);
 		model.addAttribute("row", row);
+		
+		String date = req.getParameter("date");
 		model.addAttribute("date", date);
-		model.addAttribute("time", time);
+
+		if (req.getParameter("time") != "") {
+			String time = req.getParameter("time");
+			model.addAttribute("time", time);
+		}
 	}
 
 	// 식당 총 관리자 - 매장 수정 처리
@@ -461,9 +463,9 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 
 	// 식당[1] 날짜별 예약 조회
 	@Override
-	public void hostReservList(HttpServletRequest req, Model model) {
+	public void reservList(HttpServletRequest req, Model model) {
 		// TODO Auto-generated method stub
-		log.debug("service.hostReservList()");
+		log.debug("service.reservList()");
 
 		SimpleDateFormat date = new SimpleDateFormat("yy-MM-dd", Locale.KOREA);
 		Date sysdate = new Date();
@@ -515,8 +517,6 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 		RestaurantVO dto = new RestaurantVO();
 		dto.setRestaurant_index(Integer.parseInt(req.getParameter("index")));
 
-		cnt = dao.resetTable(dto);
-
 		Restaurant_scheduleVO dto3 = new Restaurant_scheduleVO();
 
 		dto3.setSchedule_startDate(Timestamp.valueOf(startTime));
@@ -543,7 +543,7 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 
 					map.replace("dto2", dto2);
 
-					cnt = dao.modTable(map);
+					cnt = dao.modTable2(map);
 
 					if (cnt != 0) {
 						index++;
@@ -553,5 +553,103 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 		}
 
 		model.addAttribute("cnt", cnt);
+	}
+
+	// 선택한 날짜에 있는 모든 예약 조회
+	@Override
+	public void reservView(HttpServletRequest req, Model model) {
+		// TODO Auto-generated method stub
+		log.debug("service.reservView()");
+
+		String searchDate = req.getParameter("date");
+		int index = Integer.parseInt(req.getParameter("index"));
+		SimpleDateFormat dateForm = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		SimpleDateFormat dateForm2 = new SimpleDateFormat("yy-MM-dd");
+		
+		try {
+			Date sysdate = dateForm.parse("20" + searchDate + " 00:00:00");
+			String date = dateForm2.format(sysdate);
+			
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("index", index);
+			map.put("startDate", date + "-00:00");
+			map.put("endDate", date + "-23:59");
+			
+			// 선택한 날짜에 있는 모든 예약 조회
+			ArrayList<Restaurant_scheduleVO> dtos = dao.getReservList(map);
+
+			model.addAttribute("date", searchDate);
+			model.addAttribute("index", index);
+			model.addAttribute("dtos", dtos);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+	}
+
+	// 
+	@Override
+	public TableVO restaurantView2(HttpServletRequest req, Model model) {
+		// TODO Auto-generated method stub
+		log.debug("service.restaurantView2()");
+		
+		RestaurantVO dto = new RestaurantVO();
+		Restaurant_scheduleVO schedule_dto = new Restaurant_scheduleVO();
+
+		schedule_dto.setSchedule_startDate(Timestamp.valueOf(req.getParameter("startTime")));
+		schedule_dto.setSchedule_startTime(Timestamp.valueOf(req.getParameter("startTime")));
+		schedule_dto.setSchedule_endTime(Timestamp.valueOf(req.getParameter("endTime")));
+		
+		// 스케줄 인덱스 조회
+		int schedule_index = dao.getScheduleIndex(schedule_dto);
+		
+		// 식당 정보 조회
+		dto = dao.viewRestaurant(req.getParameter("index"));
+
+		TableVO dto2 = new TableVO();
+		// 테이블 행열 조회
+		dto2 = dao.getColRow("1");
+
+		int col = dto2.getTable_col() + 1;
+		int row = dto2.getTable_row() + 1;
+
+		String info = "";
+		int index = 0;
+
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("restaurant_index", "1");
+		map.put("restaurant_table_index", index);
+		map.put("restaurant_schedule_index", schedule_index);
+
+		for (int i = 0; i < row; i++) {
+			for (int j = 0; j < col; j++) {
+				map.replace("restaurant_table_index", index);
+
+				info += dao.getState(map);
+
+				if (!(i + 1 == row && j + 1 == col)) {
+					info += ',';
+					index++;
+				}
+			}
+		}
+
+		dto2.setState(info);
+		dto2.setTable_col(col);
+		dto2.setTable_row(row);
+		
+		model.addAttribute("dto", dto);
+		model.addAttribute("info", info);
+		model.addAttribute("col", col);
+		model.addAttribute("row", row);
+		
+		String date = req.getParameter("date");
+		model.addAttribute("date", date);
+
+		if (req.getParameter("time") != "") {
+			String time = req.getParameter("time");
+			model.addAttribute("time", time);
+		}
+		
+		return dto2;
 	}
 }

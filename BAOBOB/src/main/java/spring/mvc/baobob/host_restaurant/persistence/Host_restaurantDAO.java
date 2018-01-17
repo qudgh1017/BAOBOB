@@ -98,6 +98,12 @@ public interface Host_restaurantDAO {
 	// 식당[1] 예약 추가
 	public int addReserv(Map<String, Object> map);
 
+	// 식당[1] 선택 날짜 예약 조회
+	int modTable2(Map<String, Object> map);
+	
 	// 식당[1] 날짜별 예약 조회
 	public ArrayList<Restaurant_scheduleVO> getReservList(Map<String, Object> map);
+
+	// 예약한 좌석 확인을 위한 스케줄 인덱스 조회
+	public int getScheduleIndex(Restaurant_scheduleVO schedule_dto);
 }

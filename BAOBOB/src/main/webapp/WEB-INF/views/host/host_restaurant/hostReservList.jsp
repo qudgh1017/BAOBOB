@@ -20,6 +20,25 @@
 		});
 	});
 </script>
+
+<!-- 실시간 예약 현황 조회 -->
+<script type="text/javascript">
+	function restaurantView(date, startTime, endTime, index) {
+		$.ajax({
+			url : "restaurantView?date=" + date + "&startTime=" + startTime + "&endTime=" + endTime + "&index=" + index,
+			type : 'GET',
+			contentType : "application/x-www-form-urlencoded; charset=UTF-8",
+			success : function(dto) {
+				spaceBody(dto.state, dto.table_col, dto.table_row);
+			},
+			error : function() {
+				alert('error');
+			}
+		})
+	}
+</script>
+<!-- 실시간 예약 현황 조회 -->
+
 <style type="text/css">
 	body .p_body {
 		min-height: 450px;
@@ -59,7 +78,7 @@
 	}
 </style>
 </head>
-<body class="fixed-nav sticky-footer bg-dark">
+<body class="fixed-nav sticky-footer bg-dark" onload="spaceBody('${info}', '${col}', '${row}');" >
 	<!-- Navigation -->
 	<%@ include file="_navigation.jsp"%>
 	
@@ -75,7 +94,7 @@
 							<input class="form-control" type="text" style="display: inline-block; width: 165px; text-align: center;" name="date" id="datepicker" 
 								class="datepicker" placeholder="달력 보기" value="${date}" />
 							<input class="form-control" style="display: inline-block; width: 100px; background-color: #343a40; color: white;" type="button" name="hostReservAddForm"
-								onclick="reservView();" value="조회" />
+								onclick="reservView('${date}', ${dto.restaurant_schedule_index});" value="조회" />
 						</div>
 						<div class="cd-schedule loading">
 							<div class="timeline">
@@ -114,8 +133,8 @@
 												<li class="single-event" 
 													data-start="<fmt:formatDate type="both" pattern="HH:mm" value="${dto.schedule_startTime}" />"
 													data-end="<fmt:formatDate type="both" pattern="HH:mm" value="${dto.schedule_endTime}" />"
-													data-content="event-abs-circuit" data-event="event-${status.index + 1}">
-													<a href="#0"><em class="event-name"></em></a>
+													data-content="${dto.restaurant_schedule_index}번 예약" data-event="event-${status.index + 1}">
+													<a href="" onclick="restaurantView('${date}', '${dto.schedule_startTime}', '${dto.schedule_endTime}', ${dto.restaurant_schedule_index});"><em class="event-name" style="display: none;">${dto.restaurant_schedule_index}번 예약</em></a>
 												</li>
 											</c:forEach>
 										</ul>
@@ -126,11 +145,9 @@
 										<div class="content">
 											<span class="event-date"></span>
 											<h3 class="event-name"></h3>
+											<div id="spaceDiv"></div>
 										</div>
 										<div class="header-bg">
-											<div class="result">
-												<!-- 출력 -->
-											</div>
 										</div>
 									</header>
 									

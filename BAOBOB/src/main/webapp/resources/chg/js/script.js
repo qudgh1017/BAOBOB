@@ -70,6 +70,9 @@ var typeImg = ''; // 선택한 버튼 이미지
 function spaceType(type) {
 	typeNum = type; // 선택한 버튼 번호 저장
 	switch (typeNum) {
+	case '3':
+		typeImg = 'table_use.jpg';
+		break;
 	case '2':
 		typeImg = 'icon_enter.png';
 		break;
@@ -199,6 +202,7 @@ function spaceBody(info, col, row) {
 	}
 	var spaceDiv = document.getElementById('spaceDiv');
 	spaceDiv.innerHTML = space;
+	typeImg = '';
 }
 
 // 선택된 날짜에 있는 예약 조회
@@ -223,4 +227,29 @@ function checkPosRestaurant() {
 	} else {
 		window.location = 'checkPosRestaurant?date=' + date + '&time=' + time + '&index=1';
 	}
+}
+
+// 선택한 식당, 날짜, 시간에 예약이 가능한 테이블 조회
+function checkPosRestaurant2() {
+	var date = document.getElementById('datepicker').value;
+
+	if (document.getElementById('datepicker').value == "") {
+		alert('날짜를 골라주세요!');
+		return false;
+	} else {
+		window.location = 'checkPosRestaurant2?date=' + date + '&time=' + '&index=1';
+	}
+}
+
+// 선택한 날짜에 있는 모든 예약 조회
+function reservView() {
+	var date = document.getElementById("datepicker").value;
+	
+	if (date == "") {
+		alert("날짜를 선택하세요");
+		document.getElementById("datepicker").focus();
+		return false;
+	}
+
+	window.location = "reservView?date=" + date + "&index=1";
 }
