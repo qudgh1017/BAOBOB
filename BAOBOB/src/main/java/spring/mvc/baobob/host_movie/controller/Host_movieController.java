@@ -6,9 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import spring.mvc.baobob.host_movie.service.Host_movieServiceImpl;
+import spring.mvc.baobob.vo.MovieResViewVO;
 
 
 @Controller
@@ -263,5 +265,47 @@ public class Host_movieController {
 		service.hostMovieEmpDel(req, model);
 		
 		return "host/host_movie/hostMovieEmpDel";
+	}
+	
+	// 예매 조회
+	@RequestMapping(value="hostMovieRes")
+	public String hostMovieResList(HttpServletRequest req, Model model) {
+		System.out.println("hostMovieRes");
+		
+		service.hostScheduleList(req, model);
+		
+		return "host/host_movie/hostMovieRes";
+	}
+	
+	// 예매 상세
+	@RequestMapping(value="hostMovieResDetail")
+	public String hostMovieResDetail(HttpServletRequest req, Model model) {
+		System.out.println("hostMovieResDetail");
+		
+		service.hostTheaterScheduleDetail(req, model);
+		
+		return "host/host_movie/hostMovieResDetail";
+	}
+	
+	// 예매 조회하기 버튼
+	@RequestMapping(value="hostResSearch")
+	public String hostResSearch(HttpServletRequest req, Model model) {
+		System.out.println("hostResSearch");
+		
+		service.hostScheduleSearch(req, model);
+		
+		return "host/host_movie/hostMovieRes";
+	}
+	
+	// 예매 상세
+	@RequestMapping(value="hostMovieResView")
+	public @ResponseBody MovieResViewVO hostMovieResView(HttpServletRequest req, Model model) {
+		System.out.println("hostMovieResView");
+		
+		MovieResViewVO vo = null;
+		
+		vo = service.hostMovieResView(req, model);
+		
+		return vo;
 	}
 }
