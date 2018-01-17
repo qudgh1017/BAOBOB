@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <%@ include file="/resources/setting.jsp" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -27,7 +26,7 @@
 				</li>
 			</ol>
 			
-			<div class="row">
+			<div class="row" id="top">
 				<div class="col-xl-3 col-sm-6 mb-3">
 					<div class="card text-white bg-primary o-hidden">
 						<div class="card-header">현재 이용자수</div>
@@ -62,11 +61,7 @@
 				</div>
 			</div>
 			
-			<div class="card md-3">
-				<div class="card-header">오늘 주차 기록</div>
-				<div class="card-body" id="stateResult"></div>
-				<div class="card-footer small text-muted" id="updateTime"></div>
-			</div>
+			<div id="result"></div>
 		</div>
 	</div>
 	
@@ -88,10 +83,11 @@
 			if(httpRequest.readyState == 4) {
 				if(httpRequest.status == 200) {
 					var data = httpRequest.responseText;
-					document.getElementById('stateResult').innerHTML = data;
+					document.getElementById('result').innerHTML = data;
 					
 					var day = new Date();
-					document.getElementById('updateTime').innerHTML = 'Update ' + day; 
+					document.getElementById('inUpdateTime').innerHTML = 'Update ' + day; 
+					document.getElementById('outUpdateTime').innerHTML = 'Update ' + day; 
 					console.log('완료');
 				} else {
 					console.log('오류');

@@ -9,9 +9,10 @@
 	<title>Insert title here</title>
 	
 	<style type="text/css">
+		body .mar{margin:11rem auto;padding:0;}
 		.park_number{text-align:center;margin-top:3%;}
 		.number{font-size:75px;}
-		body .btn{width:300px;margin:0 auto;}
+		body .btn_ok{width:300px;margin:0 auto;}
 	</style>
 </head>
 <body>
@@ -20,7 +21,7 @@
 	<%@ include file="guestParkingHeader.jsp" %>
 	
 	<section>
-	  <div class="container">
+	  <div class="container mar">
 	  	<div class="park_number">
 	  	
 	  		퇴장 시 다음 코드를 입력하세요.
@@ -41,7 +42,7 @@
 			<br><br>
 			<br><br>
 			
-			<button class="btn btn-block" onclick="window.location='guestParkingMain';">확인</button><br>
+			<button class="btn btn-block btn_ok" onclick="window.location='guestParkingMain';">확인</button><br>
 			<span id="out">60초 후 처음 화면으로 돌아갑니다.</span>
 	  	</div>
 	  </div>
@@ -52,6 +53,10 @@
 	
 	<script src="${projectRes}ymk/js/mainJS.js"></script>
 	<script type="text/javascript">
+		var back_btn = document.getElementById('back_btn')
+		back_btn.innerHTML = '확인';
+		back_btn.setAttribute('onclick', 'window.location="guestParkingMain"');
+	
 		var out = 59;
 		setInterval(function() {
 			document.getElementById('out').innerHTML = out + '초 후 처음 화면으로 돌아갑니다.';

@@ -2,10 +2,9 @@
 
 <style>
 	.back_img{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;}
-	section{margin-top:10%;}
-	body .section{margin-top:9%;}
+	body .section{margin:15rem 0;}
 	.img-fluid{border-radius:0.5em;}
-	#inform{width:700px;margin:0 auto;margin-top:13%;}
+	#inform{width:700px;margin:0 auto;}
 	body .input{height:100px;font-size:32px;text-align:center;}
 	.btn{background:#2c3e50!important;color:white;}
 	.back_btn{height:50px;border:1px solid #495057;padding:0 25px;}

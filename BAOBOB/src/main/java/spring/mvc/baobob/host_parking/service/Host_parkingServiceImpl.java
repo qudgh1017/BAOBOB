@@ -51,8 +51,14 @@ public class Host_parkingServiceImpl implements Host_parkingService {
 	
 	//메인 ajax. 주차 구역 변화
 	public void hostParkingMainSpace(HttpServletRequest req, Model model) {
-		ArrayList<Parking> ps = dao.getParkChageState();
-		model.addAttribute("ps", ps);
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		map.put("order", 0);
+		ArrayList<Parking> psIn = dao.getParkChageState(map);
+		model.addAttribute("psIn", psIn);
+		
+		map.put("order", 1);
+		ArrayList<Parking> psOut = dao.getParkChageState(map);
+		model.addAttribute("psOut", psOut);
 	}
 	
 	// 주차장 구역 정보
@@ -122,11 +128,16 @@ public class Host_parkingServiceImpl implements Host_parkingService {
 		int row = ps.getP_space_row();
 		int last_idx = col * row;
 
+		
+		String[] spaces = ps.getP_space_info().split(","); 
 		// 주차장 구역 상태 정보
 		ArrayList<String> list = dao.getParkingStates(last_idx);
 		String states = "";
-		for (String state : list) {
-			states += states.equals("") ? state : "," + state;
+		for (int i = 0; i < list.size(); i += 1) {
+			if(spaces[i].equals("0")) {
+				list.set(i, "2");
+			}
+			states += states.equals("") ? list.get(i) : "," + list.get(i);
 		}
 
 		model.addAttribute("col", col);
@@ -496,20 +507,36 @@ public class Host_parkingServiceImpl implements Host_parkingService {
 				model.addAttribute("U" + month[i], 0);
 			}
 		}
+		
+		//수익
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		map.put("year",  0);
+		String totalPrice = dao.getTotalPrice(map);
+		if(totalPrice == null) totalPrice = "0"; 
+		map.put("year",  1);
+		String yearPrice = dao.getTotalPrice(map); //올해 수정
+		if(yearPrice == null) yearPrice = "0"; 
+		map.put("year",  -1);
+		String prevPrice = dao.getTotalPrice(map);
+		if(prevPrice == null) prevPrice = "0";
+		
+		model.addAttribute("totalPrice", totalPrice);
+		model.addAttribute("yearPrice", yearPrice);
+		model.addAttribute("prevPrice", prevPrice);
 	}
 
 	//아두이노. 구역 상태 수정
 	public void arduinoInput(HttpServletRequest req, Model model) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		int cnt = 0;
+		
 		for(int i = 1; i <= 6; i += 1) {
 			String pin = req.getParameter("pin" + i);
-			if(pin == null) {
-				pin = "0";
+			if(pin != null) {
+				map.put("index", i);
+				map.put("pin", pin);
+				cnt = dao.arduinoInput(map);
 			}
-			map.put("index", i);
-			map.put("pin", pin);
-			cnt = dao.arduinoInput(map);
 		}
 		
 		model.addAttribute("cnt", cnt);
