@@ -1,5 +1,6 @@
 package spring.mvc.baobob.guest_parking.Service;
 
+import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -11,8 +12,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
 import spring.mvc.baobob.guest_parking.persistence.Guest_parkingDAO;
+import spring.mvc.baobob.host_parking.persistence.Host_parkingDAO;
 import spring.mvc.baobob.persistence.MainDAO;
 import spring.mvc.baobob.vo.Member;
+import spring.mvc.baobob.vo.ParkingFee;
+import spring.mvc.baobob.vo.ParkingHistory;
 
 @Service
 public class Guest_parkingServiceImpl implements Guest_parkingService{
@@ -21,6 +25,8 @@ public class Guest_parkingServiceImpl implements Guest_parkingService{
 	Guest_parkingDAO dao;
 	@Autowired
 	MainDAO mDao;
+	@Autowired
+	Host_parkingDAO hDao;
 	
 	//입장 시 번호 생성
 	@Override
@@ -87,8 +93,51 @@ public class Guest_parkingServiceImpl implements Guest_parkingService{
 			mem = dao.parkingOutMemberCheck(key);
 		}
 		
+		model.addAttribute("key", key);
 		model.addAttribute("cnt", cnt);
 		model.addAttribute("mem", mem);
+	}
+
+	//퇴장 처리
+	@Override
+	public void guestParkingPay(HttpServletRequest req, Model model) {
+		String key = req.getParameter("key");
+		
+		Timestamp inTime = dao.getParkingInTime(key);
+		Timestamp outTime = new Timestamp(System.currentTimeMillis());
+		long userTime = outTime.getTime() - inTime.getTime();
+		
+		ParkingFee pf = hDao.getParkingFee();
+		long time = (userTime / 1000) / 60 - pf.getP_fee_base_time();
+		int price = pf.getP_fee_base_price();
+		while(time > 0) {
+			time -= pf.getP_fee_exc_time();
+			price += pf.getP_fee_exc_price();
+		}
+		
+		int movie = dao.getMovieHistoryCount(key);
+		int rest = dao.getRestaurantHistoryCount(key);
+		price = price - (movie * 1000) - (rest * 1000);
+		if(price < 0) { price = 0; }
+
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("p_history_price", price);
+		map.put("key", key);
+		int cnt = dao.parkingHistoryUpdate(map);
+		model.addAttribute("cnt", cnt);
+		
+		ParkingHistory ph = dao.getParkingHistory(key);
+		model.addAttribute("ph", ph);
+		model.addAttribute("movie", movie);
+		model.addAttribute("rest", rest);
+	}
+
+	//주차 내역 출력
+	@Override
+	public void guestParkingMy(HttpServletRequest req, Model model) {
+		String key = req.getParameter("key");
+		ParkingHistory ph = dao.getParkingHistory(key);
+		model.addAttribute("ph", ph);
 	}
 
 }

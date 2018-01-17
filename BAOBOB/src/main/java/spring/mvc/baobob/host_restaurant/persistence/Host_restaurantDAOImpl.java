@@ -12,6 +12,7 @@ import spring.mvc.baobob.vo.EmployeeVO;
 import spring.mvc.baobob.vo.Member;
 import spring.mvc.baobob.vo.MenuVO;
 import spring.mvc.baobob.vo.RestaurantVO;
+import spring.mvc.baobob.vo.Restaurant_scheduleVO;
 import spring.mvc.baobob.vo.TableVO;
 
 @Repository
@@ -318,5 +319,27 @@ public class Host_restaurantDAOImpl implements Host_restaurantDAO {
 		Host_restaurantDAO dao = sqlSession.getMapper(Host_restaurantDAO.class);
 
 		return dao.delEmployee(map);
+	}
+
+	// 식당[1] 예약 추가
+	@Override
+	public int addReserv(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		log.debug("dao.addReserv()");
+
+		Host_restaurantDAO dao = sqlSession.getMapper(Host_restaurantDAO.class);
+
+		return dao.addReserv(map);
+	}
+
+	// 식당[1] 날짜별 예약 조회
+	@Override
+	public ArrayList<Restaurant_scheduleVO> getReservList(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		log.debug("dao.getReservList()");
+
+		Host_restaurantDAO dao = sqlSession.getMapper(Host_restaurantDAO.class);
+
+		return dao.getReservList(map);
 	}
 }

@@ -22,33 +22,29 @@ function hdTrailerPlaying(movie_index){
 	<!-- main_menu -->
 	<%@ include file="/WEB-INF/views/guest/guest_movie/movie_menu.jsp" %>
 	
-	<section>
-		<div class="container">
-			<div class="row">
-				<div class="col-md-offset-1"></div>
+<section>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-offset-1"></div>
 				<div class="col-md-10" align="left">
 					<br>
 					<h3 align=left;>트레일러</h3>
 					<hr style="border:2px solid black;">
 				</div>
-				<div class="col-md-offset-1"></div>
+			<div class="col-md-offset-1"></div>
 		</div><br><br>
 		
 		<!-- 트레일러 포스터 선택 -->
 		<div class="container">
 			<div class="row">
-			
-			<!-- <table class="movie"> -->
 				
+				<!-- 게시글 있으면 -->
 				<c:if test="${cnt>0}">
-					<!-- <tr> -->
 					<c:forEach var="movie" items="${movies}">
 						<div class="col-md-3" style="margin:10px auto">
 							<a onclick="hdTrailerPlaying(${movie.movie_index});"><img src="${projectRes}images/phc/${movie.movie_poster}"></a>
-							<%-- <a href="hdTrailerPlaying?movie_index=${movie.movie_index}"><img src="${projectRes}images/phc/${movie.movie_poster}"></a> --%>
 						</div>
 					</c:forEach>
-					<!-- </tr> -->
 				</c:if>
 				
 				<!-- 게시글이 없으면 -->
@@ -89,7 +85,8 @@ function hdTrailerPlaying(movie_index){
 				</div>
 			</div>
 		</div>
-	</section>
+	</div>
+</section>
 	<br>
 		
 	<!-- Footer -->

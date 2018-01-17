@@ -219,4 +219,29 @@
 	<insert id="insertEmp" parameterType="java.util.Map">
 		INSERT INTO employee_tbl VALUES(employee_tbl_SEQ.NEXTVAL, #{member_id}, #{employee_jumin2}, SYSDATE)
 	</insert>
+	
+	<!-- 영화 직원 수 -->
+	<select id="hostMovieEmpCnt" resultType="int">
+		SELECT COUNT(*) FROM member_tbl WHERE member_step IN(2, 3)
+	</select>
+	
+	<!-- 영화 직원 목록 가져오기 -->
+	<select id="hostMovieEmpList" resultType="spring.mvc.baobob.vo.Member">
+		SELECT member_tbl.member_id member_id, member_tbl.member_name member_name, member_tbl.member_tel member_tel, employee_tbl.employee_date member_reg_date FROM member_tbl JOIN employee_tbl ON member_tbl.member_id = employee_tbl.member_id WHERE member_tbl.member_step IN(2, 3)
+	</select>
+	
+	<!-- 종합 포인트 등급 가져오기 -->
+	<select id="getMemberPoint" resultType="int">
+		SELECT member_cumPoint FROM member_tbl WHERE member_id = #{member_id}
+	</select>
+	
+	<!-- 직원 목록에서 삭제하기 -->
+	<delete id="hostMovieEmpDel" parameterType="String">
+		DELETE employee_tbl WHERE member_id = #{member_id}
+	</delete>
+	
+	<!-- 회원 step 변경하기 -->
+	<update id="updateMemberStep" parameterType="spring.mvc.baobob.vo.Member">
+		UPDATE member_tbl SET member_step = #{member_step} WHERE member_id = #{member_id}
+	</update>
 </mapper>

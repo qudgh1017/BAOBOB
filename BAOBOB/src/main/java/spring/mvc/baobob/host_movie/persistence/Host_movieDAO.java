@@ -89,6 +89,12 @@ public interface Host_movieDAO {
 	// 스케줄 삭제 처리
 	public int hostScheduleDelPro(int theater_schedule_index);
 	
+	// 직원 수
+	public int hostMovieEmpCnt();
+	
+	// 직원 목록 가져오기
+	public ArrayList<Member> hostMovieEmpList();
+	
 	// 직원 고용 아이디 확인
 	public int hostMovieEmpChkMemberId(String member_id);
 	
@@ -100,4 +106,13 @@ public interface Host_movieDAO {
 	
 	// 영화 직원 목록에 추가하기
 	public int insertEmp(Map<String, Object> map);
+	
+	// 종합포인트 가져오기
+	public int getMemberPoint(String member_id);
+	
+	// 직원 목록에서 삭제
+	public int hostMovieEmpDel(String member_id);
+	
+	// 회원 step 수정하기
+	public int updateMemberStep(Member vo);
 }

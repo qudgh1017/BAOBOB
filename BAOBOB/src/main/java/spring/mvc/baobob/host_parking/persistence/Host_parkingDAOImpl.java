@@ -47,6 +47,13 @@ public class Host_parkingDAOImpl implements Host_parkingDAO {
 		int cnt = mapper.getParkingMovieMember();
 		return cnt;
 	}
+
+	//ajax 구역 변화
+	public ArrayList<Parking> getParkChageState() {
+		Host_parkingDAO mapper = sqlSession.getMapper(Host_parkingDAO.class);
+		ArrayList<Parking> ps = mapper.getParkChageState();
+		return ps;
+	}
 	
 	//주차장 구역 정보, 존재 여부
 	@Override
@@ -227,7 +234,7 @@ public class Host_parkingDAOImpl implements Host_parkingDAO {
 	
 	//납부 내역
 	@Override
-	public ArrayList<ParkingHistory> getParkingPayList(Map<String, Integer> map) {
+	public ArrayList<ParkingHistory> getParkingPayList(Map<String, Object> map) {
 		Host_parkingDAO mapper = sqlSession.getMapper(Host_parkingDAO.class);
 		ArrayList<ParkingHistory> list = mapper.getParkingPayList(map);
 		return list;
@@ -254,5 +261,21 @@ public class Host_parkingDAOImpl implements Host_parkingDAO {
 		ArrayList<ParkingHistory> list = mapper.getThisYearPayList();
 		return list;
 	}
+
+	//성비율
+	@Override
+	public List<Map<String, Object>> getParkingSexRatio() {
+		Host_parkingDAO mapper = sqlSession.getMapper(Host_parkingDAO.class);
+		List<Map<String, Object>> list = mapper.getParkingSexRatio(); 
+		return list;
+	}
 	
+
+	//아두이노. 주차 구역 상태 수정
+	@Override
+	public int arduinoInput(Map<String, Object> map) {
+		Host_parkingDAO mapper = sqlSession.getMapper(Host_parkingDAO.class);
+		int cnt = mapper.arduinoInput(map);
+		return cnt;
+	}
 }

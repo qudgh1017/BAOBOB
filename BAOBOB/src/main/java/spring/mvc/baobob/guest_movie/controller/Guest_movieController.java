@@ -89,6 +89,7 @@ public class Guest_movieController {
 		log.debug("====== Guest_movieController/movieDetail ======");
 
 		gmservice.movieInfo(req, model);
+		gmservice.reviewList(req, model);
 		
 		return "/guest/guest_movie/movie/movieDetail";
 	}
@@ -102,17 +103,31 @@ public class Guest_movieController {
 		return "/guest/guest_movie/movie/movieReview";
 	}
 	
-	//영화-리뷰작성
+	//영화-리뷰작성폼
 	@RequestMapping("movieReviewWrite")
 	public String reviewWrite(HttpServletRequest req, Model model) {
 		log.debug("====== Guest_movieController/movieReviewWrite ======");
 		
+		gmservice.movieReviewCheck(req, model);
 		gmservice.movieInfo(req, model);
 		
 		return "/guest/guest_movie/movie/movieReviewWrite";
 	}
 	
-	//영화-리뷰작성처리
+	//영화-리뷰수정폼
+	@RequestMapping("movieReviewModify")
+	public String movieReviewModify(HttpServletRequest req, Model model) {
+		log.debug("====== Guest_movieController/movieReviewModify ======");
+		
+		int review_index = Integer.parseInt(req.getParameter("review_index"));
+		System.out.println("review_index: "+review_index);
+		model.addAttribute("review_index",review_index);
+		gmservice.movieInfo(req, model);
+		
+		return "/guest/guest_movie/movie/movieReviewModify";
+	}
+	
+	//영화-리뷰 작성, 수정, 삭제처리
 	@RequestMapping("movieReviewPro")
 	public String movieReviewPro(HttpServletRequest req, Model model) {
 		log.debug("====== Guest_movieController/movieReviewPro ======");

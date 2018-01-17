@@ -106,6 +106,7 @@
 		SELECT park_state
 		FROM park_tbl
 		WHERE park_index < #{last_idx}
+        ORDER BY park_index
 		]]>
 	</select>
 	
@@ -181,14 +182,36 @@
 	
 	<!-- 납부 내역 : 출차하지 않은 구역 제외 -->
 	<select id="getParkingPayList" resultMap="pHistoryMap">
-		<![CDATA[
 		SELECT * 
 		FROM (SELECT p_history_index, history_index, p_history_in, p_history_out, p_history_price, p_history_space, p_history_date, member_id, rownum as num
 			  FROM (SELECT p_history_index, ph.history_index, p_history_in, p_history_out, p_history_price, p_history_space, p_history_date, ht.member_id
 				    FROM park_history_tbl ph, history_tbl ht
 				    WHERE ph.history_index = ht.history_index
 				    	AND ph.p_history_out IS NOT NULL
+			<choose>
+				<when test="standard == 1">
+					ORDER BY p_history_index DESC))
+				</when>
+				<when test="standard == 2">
+					ORDER BY p_history_date DESC))
+				</when>
+				<when test="standard == 3">
+					ORDER BY ht.member_id DESC))
+				</when>
+				<when test="standard == 4">
+					ORDER BY p_history_in DESC))
+				</when>
+				<when test="standard == 5">
+					ORDER BY p_history_out DESC))
+				</when>
+				<when test="standard == 6">
+					ORDER BY p_history_price DESC))
+				</when>
+				<otherwise>
 				    ORDER BY p_history_index DESC))
+				</otherwise>
+			</choose>
+	<![CDATA[
 		WHERE num >= #{start} AND NUM <= #{end}
 		]]>
 	</select>
@@ -264,6 +287,17 @@
 		GROUP BY hour
 	</select>
 	
+	<!-- 구역 변화 -->
+	<select id="getParkChageState" resultType="spring.mvc.baobob.vo.Parking">
+		<![CDATA[
+		SELECT *
+		FROM (SELECT park_index, park_state, park_theme, park_last_date, rownum num
+			  FROM park_tbl 
+			  ORDER BY park_last_date DESC)
+		WHERE num >= 1 AND num <= 13
+		]]>
+	</select>
+	
 	<!-- 올해 요일별 입차수 -->
 	<select id="getWeekIn" resultType="java.util.Map">
 		SELECT COUNT(ins) count, day
@@ -319,4 +353,21 @@
 		WHERE p_history_out IS NOT NULL
 		    AND TO_CHAR(p_history_out, 'Y') = TO_CHAR(SYSDATE, 'Y')
 	</select>
+	
+	<!-- 성비율 -->
+	<select id="getParkingSexRatio" resultType="java.util.Map">
+		SELECT member_sex sex, COUNT(member_sex) count
+		FROM park_history_tbl ph, history_tbl ht, member_tbl mt
+		WHERE ph.history_index = ht.history_index
+		    AND ht.member_id = mt.member_id
+		GROUP BY member_sex	
+	</select>
+	
+	<!-- 아두이노. 주차 구역 상태 수정 -->
+	<update id="arduinoInput" parameterType="java.util.Map">
+		UPDATE park_tbl
+		SET
+			park_state = #{pin}
+		WHERE park_index = #{index}
+	</update>
 </mapper>

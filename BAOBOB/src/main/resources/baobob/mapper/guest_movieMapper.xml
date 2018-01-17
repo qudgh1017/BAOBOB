@@ -58,5 +58,80 @@
 		FROM movie_tbl
 		WHERE movie_index = #{movie_index}
 	</select>
+	
+	<!-- movie_index에 따른 리뷰 갯수 -->
+	<select id="getMovieReviewCnt" resultType="int">
+		SELECT COUNT(*)
+		FROM movie_review_tbl
+		WHERE movie_index = #{movie_index}
+	</select>
+	
+	<!-- movie_index에 따른 리뷰 리스트 -->
+	<select id="getAllMovieReviews" resultType="spring.mvc.baobob.vo.ReviewVO">
+		<![CDATA[
+			SELECT * 
+			FROM (SELECT review_index, review_grade, review_content, member_id, review_state, 
+			            review_reg_date, rownum rNum 
+			        FROM ( 
+			                SELECT review_tbl.review_index, review_grade, review_content, member_id, review_state, 
+			           				 review_reg_date 
+			                FROM review_tbl JOIN movie_review_tbl
+			                ON (review_tbl.review_index = movie_review_tbl.review_index)
+			                JOIN movie_tbl
+			                ON (movie_review_tbl.movie_index = movie_tbl.movie_index)
+			                WHERE movie_review_tbl.movie_index= #{movie_index}
+			                ORDER BY review_tbl.review_reg_date DESC, review_tbl.review_index ASC 
+			             ) 
+			     ) 
+			 WHERE  rNum >= #{start} AND rNum <= #{end}
+		]]>
+	</select>
+	
+	<!-- 한아이디로 한영화에 한 리뷰만 쓸수 있음 - 썼었는지 확인 -->
+	<select id="movieReviewCheck" resultType="int">
+		SELECT COUNT(*)
+		FROM movie_review_tbl join review_tbl
+		ON (review_tbl.review_index = movie_review_tbl.review_index)
+		WHERE member_id = #{member_id} 
+		AND movie_index = #{movie_index}
+		AND review_state = 1
+	</select>
+	
+	<!-- 리뷰 작성 -->
+	<insert id="insertReview" parameterType="spring.mvc.baobob.vo.ReviewVO">
+		INSERT INTO review_tbl VALUES(review_tbl_seq.nextval, #{review_grade}, #{review_content}, #{member_id}, #{review_state}, sysdate)
+	</insert>
+	
+	<!-- movieReview 추가 -->
+	<insert id="insertMovieReview" parameterType="java.util.Map">
+		INSERT INTO movie_review_tbl VALUES(review_tbl_seq.currval, #{movie_index})
+	</insert>
+	
+	<!-- 좋아요 누른 사람 수 -->
+	<select id="movieLike" resultType="String">
+		SELECT COUNT(*)
+		FROM movie_review_tbl JOIN review_tbl
+		ON (movie_review_tbl.review_index = review_tbl.review_index)
+		WHERE movie_review_tbl.movie_index = #{movie_index}
+		AND review_tbl.review_grade = 1
+	</select>
+	
+	<!-- 리뷰 수정 -->
+	<update id="updateReview" parameterType="spring.mvc.baobob.vo.ReviewVO">
+		UPDATE review_tbl SET review_grade = #{review_grade}, review_content = #{review_content}
+		WHERE review_index = #{review_index}
+	</update>
+	
+	<!-- movieReview 삭제 -->
+	<delete id="deleteMovieReview" parameterType="java.util.Map">
+		DELETE FROM movie_review_tbl
+		WHERE movie_index = #{movie_index} AND review_index = #{review_index}
+	</delete>
+	
+	<!-- 리뷰 삭제 -->
+	<delete id="deleteReview" parameterType="int">
+		DELETE FROM review_tbl 
+		WHERE review_index = #{review_index}
+	</delete>
 
 </mapper>

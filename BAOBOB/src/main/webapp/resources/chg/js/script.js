@@ -150,21 +150,26 @@ function spaceTypeChange() {
 // 매장 수정(정보 설정 AJAX)
 function spaceTypeChange2(index) {
 	var item = document.querySelectorAll('.p_spaceBtn'); // 배열판의 버튼들
-
+	
 	// 매장 정보
 	var x = document.getElementById('widthX').value; // col
 	var y = document.getElementById('heightY').value; // row
-	var name = document.getElementById('name').value; // name
-	var tel = document.getElementById('tel').value; // tel
-
+	
 	// 배열판 버튼들의 아이콘 index 배열
 	var array = new Array();
 	item.forEach(function(space) {
 		array.push(space.value);
 	});
 	var info = array.join(',');
-
-	window.location = 'hostRestaurantModPro?info=' + info + '&col=' + x + '&row=' + y + '&name=' + name + '&tel=' + tel + '&index=' + index;
+	if (document.getElementById('name') && document.getElementById('tel')) {
+		var name = document.getElementById('name').value; // name
+		var tel = document.getElementById('tel').value; // tel
+		window.location = 'hostRestaurantModPro?info=' + info + '&col=' + x + '&row=' + y + '&name=' + name + '&tel=' + tel + '&index=' + index;
+	} else {
+		var date = document.getElementById('datepicker').value;
+		var time = document.getElementById('timepicker').value;
+		window.location = 'hostReservAddPro?info=' + info + '&col=' + x + '&row=' + y + '&index=' + index + '&date=' + date + '&time=' + time;
+	}
 }
 
 // 설정한 배열판이 있을 경우
@@ -194,4 +199,28 @@ function spaceBody(info, col, row) {
 	}
 	var spaceDiv = document.getElementById('spaceDiv');
 	spaceDiv.innerHTML = space;
+}
+
+// 선택된 날짜에 있는 예약 조회
+function hostReservList() {
+	var date = document.getElementById('datepicker').value;
+
+	window.location = 'hostReservList?date=' + date + '&index=1';
+
+}
+
+// 선택한 식당, 날짜, 시간에 예약이 가능한 테이블 조회
+function checkPosRestaurant() {
+	var date = document.getElementById('datepicker').value;
+	var time = document.getElementById('timepicker').value;
+
+	if (document.getElementById('datepicker').value == "") {
+		alert('날짜를 골라주세요!');
+		return false;
+	} else if (document.getElementById('timepicker').value == "") {
+		alert('시간을 골라주세요!');
+		return false;
+	} else {
+		window.location = 'checkPosRestaurant?date=' + date + '&time=' + time + '&index=1';
+	}
 }

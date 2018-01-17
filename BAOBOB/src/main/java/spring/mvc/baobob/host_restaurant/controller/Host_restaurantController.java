@@ -22,12 +22,12 @@ public class Host_restaurantController {
 	@RequestMapping(value = "/hostRestaurantList")
 	public String hostRestaurantList(HttpServletRequest req, Model model) {
 		log.debug("hostRestaurantList()");
-		
+
 		service.restaurantList(req, model);
-		
+
 		return "host/host_restaurant/hostRestaurantList";
 	}
-	
+
 	// 식당 총 관리자 - 매장 추가
 	@RequestMapping(value = "/hostRestaurantAddForm")
 	public String hostRestaurantAddForm() {
@@ -42,7 +42,7 @@ public class Host_restaurantController {
 		log.debug("hostRestaurantAddPro()");
 
 		service.restaurantAdd(req, model);
-		
+
 		return "host/host_restaurant/hostRestaurantAddPro";
 	}
 
@@ -75,7 +75,7 @@ public class Host_restaurantController {
 
 		return "host/host_restaurant/hostRestaurantDel";
 	}
-	
+
 	/////////////////////////////////////////////////////////////////////////////////////////
 
 	// 식당[1] 메뉴 리스트
@@ -198,14 +198,54 @@ public class Host_restaurantController {
 
 		return "host/host_restaurant/hostEmployeeDel";
 	}
-	
+
 	// 식당[1] 예약 리스트
 	@RequestMapping(value = "/hostReservList")
 	public String hostReservList(HttpServletRequest req, Model model) {
-		log.debug("hostReservList");
-		
+		log.debug("hostReservList()");
+
 		service.hostReservList(req, model);
-		
+
 		return "host/host_restaurant/hostReservList";
 	}
+
+	// 식당[1] 예약 페이지
+	@RequestMapping(value = "/hostReservAddForm")
+	public String hostReservAddForm(HttpServletRequest req, Model model) {
+		log.debug("hostReservAddForm()");
+
+		return "host/host_restaurant/hostReservAddForm";
+	}
+
+	// 식당[1] 예약 - 테이블 선택 위한 매장 내 테이블 조회
+	@RequestMapping(value = "checkPosRestaurant")
+	public String checkPosRestaurant(HttpServletRequest req, Model model) {
+		log.debug("checkPosRestaurant()");
+
+		service.restaurantView(req, model);
+		model.addAttribute("confirm", 1);
+
+		return "host/host_restaurant/hostReservAddForm";
+	}
+
+	// 식당[1] 예약 처리
+	@RequestMapping(value = "/hostReservAddPro")
+	public String hostReservAddPro(HttpServletRequest req, Model model) {
+		log.debug("hostReservAddPro()");
+
+		service.reservAdd(req, model);
+
+		return "host/host_restaurant/hostReservAddPro";
+	}
+/*
+	// 스케줄 조회하기 버튼
+	@RequestMapping(value = "hostScheduleSearch")
+	public String hostScheduleSearch(HttpServletRequest req, Model model) {
+		System.out.println("hostScheduleSearch");
+
+		service.hostReservList(req, model);
+
+		return "host/host_restaurant/hostReservList";
+	}
+*/
 }

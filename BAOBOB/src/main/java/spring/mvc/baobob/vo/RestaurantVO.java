@@ -1,14 +1,14 @@
 package spring.mvc.baobob.vo;
 
 public class RestaurantVO {
-	private String restaurant_index;	// 매장번호
+	private int restaurant_index;	// 매장번호
 	private String restaurant_tel; // 전화번호
 	private String restaurant_name; // 매장명
 	
-	public String getRestaurant_index() {
+	public int getRestaurant_index() {
 		return restaurant_index;
 	}
-	public void setRestaurant_index(String restaurant_index) {
+	public void setRestaurant_index(int restaurant_index) {
 		this.restaurant_index = restaurant_index;
 	}
 	public String getRestaurant_tel() {
