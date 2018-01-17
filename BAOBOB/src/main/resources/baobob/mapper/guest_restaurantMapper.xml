@@ -35,9 +35,42 @@
 	 WHERE restaurant_index=#{restaurant_index}
 	</select>
 
+
+
+	<!-- ========================================================================== -->
+	<!-- ============================== 3. 레스토랑 예약 ============================== -->
+	<!-- ========================================================================== -->
+
+	<!-- ===== 매장 정보 조회 ===== -->
+	<select id="reserv_tableList" resultType="spring.mvc.baobob.vo.RestaurantVO">
+		SELECT * FROM restaurant_tbl WHERE restaurant_index = #{index}
+	</select>
+	
+	<!-- ===== 매장 내 테이블 정보 조회를 위한 좌석수(행,열) 조회 ===== -->	
+	<select id="getColRow" resultType="spring.mvc.baobob.vo.TableVO">
+		SELECT MAX(table_row) table_row, MAX(table_col) table_col 
+		FROM restaurant_table_tbl 
+		WHERE restaurant_index = #{index}
+	</select>
+	
+	<!-- ===== 레스토랑 테이블 정보 조회 ===== -->
+	<select id="getState" resultType="String">
+		SELECT table_state 
+		FROM restaurant_table_tbl 
+		WHERE restaurant_index = #{restaurant_index} AND restaurant_table_index = #{restaurant_table_index}
+	</select>
 	
 	
 	
+	
+	
+	
+	
+	
+	
+	<!-- ========================================================================== -->
+	<!-- ============================== 4. 레스토랑 리뷰 ============================== -->
+	<!-- ========================================================================== -->
 	<!-- ===== 4-1. 리뷰 개수 ===== -->
 	<select id="getReviewCnt" resultType="int">
 	SELECT COUNT(*) FROM  restaurant_review_tbl WHERE restaurant_index=#{restaurant_index}

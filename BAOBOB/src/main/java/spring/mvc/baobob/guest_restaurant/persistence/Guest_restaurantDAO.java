@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.Map;
 
 import spring.mvc.baobob.vo.MenuVO;
+import spring.mvc.baobob.vo.RestaurantVO;
 import spring.mvc.baobob.vo.ReviewVO;
+import spring.mvc.baobob.vo.TableVO;
 
 public interface Guest_restaurantDAO {
 
@@ -23,8 +25,11 @@ public interface Guest_restaurantDAO {
 	//============================== 3. 레스토랑 예약 ==============================
 	//==========================================================================
 	//3. 예약하기
+	public RestaurantVO reserv_tableList(String index);
+	//
+	public TableVO getColRow(String index);
 	
-	
+	public String getState(Map<String, Object> map);
 	
 	
 	//==========================================================================

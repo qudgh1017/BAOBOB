@@ -6,18 +6,22 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
 import spring.mvc.baobob.guest_restaurant.persistence.Guest_restaurantDAO;
-import spring.mvc.baobob.vo.Member;
 import spring.mvc.baobob.vo.MenuVO;
+import spring.mvc.baobob.vo.RestaurantVO;
 import spring.mvc.baobob.vo.ReviewVO;
+import spring.mvc.baobob.vo.TableVO;
 
 @Service
 public class Guest_restaurantServiceImpl implements Guest_restaurantService{
-	
+
+	private Logger log = Logger.getLogger(this.getClass());
+
 	@Autowired 
 	Guest_restaurantDAO dao;
 	//==========================================================================
@@ -51,6 +55,54 @@ public class Guest_restaurantServiceImpl implements Guest_restaurantService{
 	//==========================================================================
 	//============================== 3. 레스토랑 예약 ==============================
 	//==========================================================================
+	//테이블 검색
+	@Override
+	public void restaurant_tableList(HttpServletRequest req, Model model) {
+		log.debug("===== Service/restaurant_tableList() =====");
+
+		String date = req.getParameter("date");
+		String time = req.getParameter("time");
+
+		RestaurantVO dto = new RestaurantVO();
+		dto = dao.reserv_tableList(req.getParameter("index"));
+
+		TableVO dto2 = new TableVO();
+		dto2 = dao.getColRow(req.getParameter("index"));
+		
+		int col = dto2.getTable_col() + 1;
+		int row = dto2.getTable_row() + 1;
+
+		String info = "";
+		int index = 0;
+
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("restaurant_index", req.getParameter("index"));
+		map.put("restaurant_table_index", index);
+
+		for (int i = 0; i < row; i++) {
+			for (int j = 0; j < col; j++) {
+				map.replace("restaurant_table_index", index);
+
+				info += dao.getState(map);
+
+				if (!(i + 1 == row && j + 1 == col)) {
+					info += ',';
+					index++;
+				}
+			}
+		}
+
+		model.addAttribute("dto", dto);
+		model.addAttribute("info", info);
+		model.addAttribute("col", col);
+		model.addAttribute("row", row);
+		model.addAttribute("date", date);
+		model.addAttribute("time", time);
+	}
+
+	
+	
+	
 	
 	
 	//==========================================================================

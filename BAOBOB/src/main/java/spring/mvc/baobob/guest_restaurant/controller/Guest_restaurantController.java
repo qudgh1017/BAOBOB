@@ -2,6 +2,7 @@ package spring.mvc.baobob.guest_restaurant.controller;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,7 +16,7 @@ public class Guest_restaurantController {
 	@Autowired 
 	Guest_restaurantService service;
 	
-	//private Logger log = Logger.getLogger(this.getClass());
+	private Logger log = Logger.getLogger(this.getClass());
 
 	//==========================================================================
 	//=============================== 레스토랑 선택  ===============================
@@ -79,19 +80,40 @@ public class Guest_restaurantController {
 	//==========================================================================
 	//============================== 3. 레스토랑 예약 ==============================
 	//==========================================================================
-	//3-1. 레스토랑 예약화면-1(인원선택/테이블/날짜)
-	@RequestMapping("guestRestaurant_reserv")
-	public String guestRestaurantReserv(HttpServletRequest req, Model model) {
-		//log.debug("===== Guest_restaurantController/guestRestaurantMain() =====");
-
+	//3-1. 레스토랑 예약 화면-1(테이블/날짜)
+	@RequestMapping("guestReserv_addForm")
+	public String guestReserv_addForm(HttpServletRequest req, Model model) {
+		log.debug("===== Guest_restaurantController/guestReserv_addForm() =====");
+		System.out.println("===== guestReserv_addForm 1 =====");
 		//로그인
 		//return "main/mainSignIn";
-		return "guest/guest_restaurant/reserv/guestRestaurant_reserv2";
+		return "guest/guest_restaurant/reserv/guestReserv_addForm";
 	}
 	
+	//3-2. 레스토랑 테이블 조회
+	@RequestMapping("guestReserv_chkTable")
+	public String guestReserv_chkTable(HttpServletRequest req, Model model) {
+		log.debug("===== Guest_restaurantController/guestReserv_chkTable() =====");
+		System.out.println("===== guestReserv_addForm 2 =====");
+
+		service.restaurant_tableList(req, model);
+		model.addAttribute("confirm", 1);
+		
+		return "guest/guest_restaurant/reserv/guestReserv_addForm";
+	}
 	
-
-
+	@RequestMapping("guestRestaurantModPro")
+	public String guestRestaurantModPro(HttpServletRequest req, Model model) {
+		
+		return "";
+	}
+	//3-3. 레스토랑 예약 처리
+	/*@RequestMapping("guestReservAddPro")
+	public String guestReservAddPro(HttpServletRequest req, Model model){
+		
+		return "guest
+	}
+*/
 	
 	//==========================================================================
 	//============================== 4. 레스토랑 리뷰 ==============================
