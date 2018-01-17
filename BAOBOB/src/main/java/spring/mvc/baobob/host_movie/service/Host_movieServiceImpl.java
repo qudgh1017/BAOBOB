@@ -782,7 +782,20 @@ public class Host_movieServiceImpl implements Host_movieService{
 		
 		model.addAttribute("cnt", cnt);
 	}
-
+	
+	// 직원 목록
+	@Override
+	public void hostMovieEmp(HttpServletRequest req, Model model) {
+		int cnt = dao.hostMovieEmpCnt();
+		
+		if(cnt > 0) { // 직원 목록이 존재하면
+			ArrayList<Member> vos = dao.hostMovieEmpList();
+			model.addAttribute("vos", vos);
+			
+		}
+		model.addAttribute("cnt", cnt);
+		
+	}
 	
 	// 직원 고용 아이디 확인
 	@Override
@@ -823,6 +836,42 @@ public class Host_movieServiceImpl implements Host_movieService{
 		model.addAttribute("cnt", cnt);
 		
 	}
+
+	// 직원 하고
+	@Override
+	public void hostMovieEmpDel(HttpServletRequest req, Model model) {
+		String member_id = req.getParameter("member_id");
+		
+		// 회원으로 돌아가기 전 종합포인트 등급 확인
+		int point = dao.getMemberPoint(member_id);
+		
+		int member_step = 9;
+		
+		if(point <= 15000 ) {
+			member_step = 9;
+		}else if(point <= 30000) {
+			member_step = 10;
+		}else if(point <= 45000) {
+			member_step = 11;
+		}else {
+			member_step = 12;
+		}
+		
+		int cnt = dao.hostMovieEmpDel(member_id); // 직원 목록에서 삭제
+		
+		if(cnt > 0) {
+			Member vo = new Member();
+			vo.setMember_id(member_id);
+			vo.setMember_step(member_step);
+			
+			cnt = dao.updateMemberStep(vo);
+		}
+		
+		model.addAttribute("cnt", cnt);
+		
+	}
+
+
 
 	
 

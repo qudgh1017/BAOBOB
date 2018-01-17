@@ -9,7 +9,7 @@
 	<title>Insert title here</title>
 	
 	<style type="text/css">
-		body .card{max-width:700px;margin:0 auto;margin-bottom:20px;}
+		body .card{max-width:700px;margin:0 auto;margin-bottom:20px;margin-top:13%;}
 		.cnt{font-size:50px;display:block;text-align:center;margin:20px;}
 		.clear{clear:both;}
 		.item{float:left;}

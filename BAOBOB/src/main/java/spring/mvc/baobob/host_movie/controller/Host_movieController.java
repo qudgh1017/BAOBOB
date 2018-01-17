@@ -222,8 +222,7 @@ public class Host_movieController {
 	public String hostMovieEmp(HttpServletRequest req, Model model) {
 		System.out.println("hostMovieEmp");
 		
-		
-		
+		service.hostMovieEmp(req, model);
 		
 		return "host/host_movie/hostMovieEmp";
 	}
@@ -232,9 +231,6 @@ public class Host_movieController {
 	@RequestMapping(value="hostMovieEmpAddForm")
 	public String hostMovieEmpAddForm(HttpServletRequest req, Model model) {
 		System.out.println("hostMovieEmpAddForm");
-		
-		
-		
 		
 		return "host/host_movie/hostMovieEmpAddForm";
 	}
@@ -257,5 +253,15 @@ public class Host_movieController {
 		service.hostMovieEmpAddPro(req, model);
 		
 		return "host/host_movie/hostMovieEmpAddPro";
+	}
+	
+	// 직원 해고하기
+	@RequestMapping(value="hostMovieEmpDel")
+	public String hostMovieEmpDel(HttpServletRequest req, Model model) {
+		System.out.println("hostMovieEmpDel");
+		
+		service.hostMovieEmpDel(req, model);
+		
+		return "host/host_movie/hostMovieEmpDel";
 	}
 }

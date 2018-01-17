@@ -107,7 +107,7 @@
 					<div style="overflow:auto; width:100%; height:100%; background-color:#EEEEEE">
 						<!-- 스케줄 결과값 출력 될곳 -->
 						<div id="resultSchedule" class="reserveTab" align="center" style="height:30px;">
-						
+							<center>영화와 날짜를 선택해주세요.</center>
 						</div>
 					</div>
 				</div>

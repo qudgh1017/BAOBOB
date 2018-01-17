@@ -24,6 +24,9 @@ public interface Host_parkingDAO {
 	// 오늘 식당 이용자 수 
 	public int getParkingRestaurantMember();
 	
+	//ajax 구역 변화
+	public ArrayList<Parking> getParkChageState();
+	
 	//주차장 구역 정보
 	public ParkingSpace getParkingSpace();
 	
@@ -85,7 +88,7 @@ public interface Host_parkingDAO {
 	public int getParkingPayCnt();
 	
 	//납부 내역
-	public ArrayList<ParkingHistory> getParkingPayList(Map<String, Integer> map);
+	public ArrayList<ParkingHistory> getParkingPayList(Map<String, Object> map);
 	
 	//해당 주차 구역 정보
 	public Parking getSpaceState(int park_index);
@@ -95,4 +98,10 @@ public interface Host_parkingDAO {
 	
 	//올해 납부 내역
 	public ArrayList<ParkingHistory> getThisYearPayList();
+	
+	//성비율
+	public List<Map<String, Object>> getParkingSexRatio();
+	
+	//아두이노. 주차 구역 상태 수정
+	public int arduinoInput(Map<String, Object> map);
 }

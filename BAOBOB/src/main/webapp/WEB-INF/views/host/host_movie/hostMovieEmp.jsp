@@ -20,7 +20,7 @@
 			<thead>
 			<tr>
 				<th style="width:30%;"> 이름 </th>
-				<th style="width:30%;"> 생년월일 </th>
+				<th style="width:30%;"> 연락처 </th>
 				<th style="width:30%;"> 고용일 </th>
 				<th style="width:10%;"> 해고 </th>
 			</tr>
@@ -31,25 +31,16 @@
 				<c:forEach var="vo" items="${vos}">
 					<tr>
 						<td>
-							${vo.movie_index}
+							${vo.member_name}
 						</td>
 						<td>
-							<a href="hostMovieDetail?movie_index=${vo.movie_index}">${vo.movie_title}</a>
+							${vo.member_tel}
 						</td>
 						<td>
-							${vo.movie_director}
+							${vo.member_reg_date}
 						</td>
 						<td>
-							${vo.movie_janre}
-						</td>
-						<td>
-							${vo.movie_rel_date}
-						</td>
-						<td>
-							${vo.movie_state}
-						</td>
-						<td>
-							<input type="button" onclick="window.location='hostMovieDel?movie_index=${vo.movie_index}'" value="삭제"/>
+							<input type="button" onclick="window.location='hostMovieEmpDel?member_id=${vo.member_id}'" value="해고"/>
 						</td>
 					</tr>
 				</c:forEach>
@@ -58,41 +49,10 @@
 			<c:if test="${cnt==0}">
 				<tr>
 					<td colspan="7" align="center">
-						영화 정보가 없습니다. 영화를 등록해 주세요.!!
+						직원 정보가 없습니다. 직원을 고용해 주세요.!!
 					</td>
 				</tr>
 			</c:if>
-		</table>
-		
-		<!-- 페이지 컨트롤 -->
-		<table style="width:800px" align="center">
-			<tr align="center">
-				<th align="center">
-					<c:if test="${cnt > 0}">
-						<!-- 처음[◀◀] / 이전블록[◀] -->
-						<c:if test="${startPage > pageBlock}">
-							<a href="hostMovie">[◀◀]</a>
-							<a href="hostMovie?pageNum=${startPage - pageBlock}">[◀]</a>
-						</c:if>
-						
-						<c:forEach var="i" begin="${startPage}" end="${endPage}">
-							<c:if test="${i == currentPage}">
-								<span><b>[${i}]</b></span>
-							</c:if>
-							<c:if test="${i != currentPage}">
-								<a href="hostMovie?pageNum=${i}">[${i}]</a>
-							</c:if>
-						</c:forEach>
-						
-						<!-- 다음블록[▶] / 끝[▶▶] -->
-						<c:if test="${pageCount > endPage}">
-							<a href="hostMovie?pageNum=${startPage + pageBlock}">[▶]</a>
-							<a href="hostMovie?pageNum=${pageCount}">[▶▶]</a>
-						</c:if>
-						
-					</c:if>
-				</th>
-			</tr>
 		</table>
 	</div>
 	<br>
