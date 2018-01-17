@@ -2,6 +2,7 @@
 //member
 //=============================================================================
 var msg_id = "아이디를 입력하세요";
+var msg_step = "등급을 선택하세요."
 var msg_pwd = "비밀번호를 입력하세요";
 var msg_repwd = "비밀번호를 한 번 더 입력하세요.";
 var msg_pwdChk = "비밀번호가 일치하지 않습니다.";
@@ -16,6 +17,17 @@ var deleteError = "회원탈퇴 실패하였습니다. \n확인 후 다시 시�
 var updateError = "회원정보 수정에 실패하였습니다. \n확인 후 다시 시도해주세요.";
 var pwdErorr = "비밀번호가 일치하지 않습니다. \n확인 후 다시 시도하세요";
 var idErorr = "아이디가 존재하지 않습니다. \n확인 후 다시 시도하세요";
+
+var name_msg = '이름을 입력하세요';
+var id_msg = '아이디를 입력하세요';
+var pwd_msg = '비밀번호를 입력하세요';
+var pwdRe_msg = '비밀번호 확인을 입력하세요';
+var pwd_check_msg = '비밀번호가 일치하지 않습니다';
+var birth_msg = '생일을 입력하세요';
+var sex_msg = '성별을 선택하세요';
+var address_msg = '주소를 입력하세요';
+var email_msg = '이메일을 입력하세요';
+var tel_msg = '연락처를 입력하세요';
 
 //에러 메시지
 function errorAlert(errorMsg){
@@ -394,6 +406,148 @@ function refundApprove(id, number, name, size, price, count, img){
 							   "&p_count=" + count +
 							   "&p_img=" + img;
 }
+
+//종합관리자 member 추가
+function joinCheck() {
+	var emailReg = /^(1|2)(9|0|1){1}[0-9]{2}(0|1){1}[0-9]{1}[0-3]{1}[0-9]{1}$/;
+
+	if (!document.joinForm.name.value) {
+		alert(name_msg);
+		document.joinForm.name.focus();
+		return false;
+		
+	} else if (!document.joinForm.id.value) {
+		alert(id_msg);
+		document.joinForm.id.focus();
+		return false;
+		
+	} else if(document.joinForm.step.value == 0){
+		alert(msg_step);
+		document.joinForm.step.focus();
+		return false;
+		
+	}else if (!document.joinForm.pwd.value) {
+		alert(pwd_msg);
+		document.joinForm.pwd.focus();
+		return false;
+		
+	} else if (!document.joinForm.pwdRe.value) {
+		alert(pwdRe_msg);
+		document.joinForm.pwdRe.focus();
+		return false;
+		
+	} else if(document.joinForm.pwd.value != document.joinForm.pwdRe.value) {
+		alert(pwd_check_msg);
+		document.joinForm.pwdRe.focus();
+		return false;
+		
+	} else if (!document.joinForm.email.value) {
+		alert(email_msg);
+		document.joinForm.email.focus();
+		return false;
+		
+	} else if (!document.joinForm.sex.value) {
+		alert(sex_msg);
+		document.joinForm.sex.focus();
+		return false;
+
+	} else if (!document.joinForm.birth.value) {
+		alert(birth_msg);
+		document.joinForm.birth.focus();
+		return false;
+
+	} else if(!emailReg.test(document.joinForm.birth.value)) {
+		alert('어느 시대 사람이신가요?');
+		document.joinForm.birth.focus();
+		return false;
+		
+	} else if (!document.joinForm.tel.value) {
+		alert(tel_msg);
+		document.joinForm.tel.focus();
+		return false;
+		
+	} else if (!document.joinForm.address.value) {
+		alert(address_msg);
+		document.joinForm.address.focus();
+		return false;
+	}
+}
+
+//아이디 중복확인
+function hostTConfirmId() {
+	var param = 'id=' + document.joinForm.id.value;
+	sendRequest(hostTConfirmId_callback, 'hostTConfirmId', 'GET', param);
+}
+
+function hostTConfirmId_callback() {
+	if(httpRequest.readyState == 4) {
+		if(httpRequest.status == 200) {
+			var date = httpRequest.responseText;
+			
+			console.log('성공');
+			if(date == 0) {
+				alert('사용할 수 있는 아이디입니다.');
+			} else {
+				alert('사용할 수 없는 아이디입니다.');
+			}
+			console.log(date);
+		} else {
+			console.log('에러 발생');
+		}
+	} else {
+		console.log('에러 상태 : ' + httpRequest.readyState);
+	}
+}
+
+//성별 선택
+function sexBtnChange(sex) {
+	var sexBtn = document.getElementsByClassName('sexBtn');
+	if(sex == 'M') {
+		sexBtn[0].style.backgroundColor = '#007bff';
+		sexBtn[0].style.color = 'white';
+		
+		sexBtn[1].style.backgroundColor = 'white';
+		sexBtn[1].style.color = '#495057';
+		
+		document.joinForm.sex.value='남';
+	} else if(sex == 'Y') {
+		sexBtn[0].style.backgroundColor = 'white';
+		sexBtn[0].style.color = '#495057';
+		
+		sexBtn[1].style.backgroundColor = '#007bff';
+		sexBtn[1].style.color = 'white';
+		
+		document.joinForm.sex.value='여';
+	}
+}
+
+//주소찾기
+function addressSearch() {
+	new daum.Postcode({
+		oncomplete: function(data) {
+			var full = '';
+			var extra = '';
+			
+			if(data.userSelectedType === 'R') { //도로명 주소
+				if(data.bname !== '') { // 법정동명
+					extra += data.bname;
+				}
+				if(data.buildingName !== '') { //건물명
+					extra += (extra !== '' ? ',' + data.buildingName : data.buildingName);
+				}
+
+				full = data.roadAddress + (extra !== '' ? '(' + extra + ')' : '');
+			} else { //지번 주소
+				full = data.jibunAddress;
+			}
+			
+			document.joinForm.address.value = full;
+		}
+	}).open();
+}
+
+
+
 
 
 
