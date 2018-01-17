@@ -56,5 +56,12 @@ public class Theater_seatVO {
 	public void setSeat_price(int seat_price) {
 		this.seat_price = seat_price;
 	}
+	public int getTheater_schedule_index() {
+		return theater_schedule_index;
+	}
+	
+	public void setTheater_schedule_index(int theater_schedule_index) {
+		this.theater_schedule_index = theater_schedule_index;
+	}
 
 }
