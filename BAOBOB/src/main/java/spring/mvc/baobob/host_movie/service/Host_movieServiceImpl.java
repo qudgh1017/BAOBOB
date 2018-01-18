@@ -9,6 +9,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -28,6 +29,7 @@ import spring.mvc.baobob.vo.MovieVO;
 import spring.mvc.baobob.vo.TheaterVO;
 import spring.mvc.baobob.vo.Theater_scheduleVO;
 import spring.mvc.baobob.vo.Theater_seatVO;
+import spring.mvc.baobob.vo.hostTChartVO;
 
 @Service
 public class Host_movieServiceImpl implements Host_movieService{
@@ -999,6 +1001,39 @@ public class Host_movieServiceImpl implements Host_movieService{
 		
 		
 		return viewVO;
+	}
+
+	
+	// 첫 그래프
+	@Override
+	public void movieChart(HttpServletRequest req, Model model) {
+		//총판매액
+		int movieSale = dao.getMovieSale(); 
+		model.addAttribute("movieSale",movieSale);
+		
+		
+		Map<String , Object> map = new HashMap<String,Object>();
+
+		//상품종류별 구매수
+		//mapper에서 불러온 kind와 sum가 다건이기때문에 vo형태의 List형으로 받아준다.
+//		List<hostTChartVO> voList = dao.getMovieChart(); 
+		
+		//vo데이터타입 i 에 List데이터들을 한건씩 빼와서 map에 담아준다.
+		//(map의 key값이 String이기때문에 int형인 kind를 String으로 형변환 해준다.
+//		for (hostTChartVO i : voList) {
+//			map.put(Integer.toString(i.getKind()) , i.getSum());
+//		}
+//		
+//		model.addAttribute("movieChart",map);
+//		
+//		//test용(feat.준열)
+//		System.out.println("준열's pointcut");
+//		map.forEach((k,v)->{
+//			System.out.println(k + " : " + v);
+//		});
+//		
+		
+		
 	}
 
 	

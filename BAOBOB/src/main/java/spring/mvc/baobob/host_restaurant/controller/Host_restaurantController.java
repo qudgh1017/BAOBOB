@@ -80,7 +80,7 @@ public class Host_restaurantController {
 
 	/////////////////////////////////////////////////////////////////////////////////////////
 
-	// 식당[1] 메뉴 리스트
+	// 식당별 메뉴 리스트
 	@RequestMapping(value = "/hostMenuList")
 	public String hostMenuList(HttpServletRequest req, Model model) {
 		log.debug("hostMenuList()");
@@ -90,7 +90,7 @@ public class Host_restaurantController {
 		return "host/host_restaurant/hostMenuList";
 	}
 
-	// 식당[1] 메뉴 추가
+	// 식당별 메뉴 추가
 	@RequestMapping(value = "/hostMenuAddForm")
 	public String hostMenuAddForm() {
 		log.debug("hostMenuAddForm()");
@@ -98,7 +98,7 @@ public class Host_restaurantController {
 		return "host/host_restaurant/hostMenuAddForm";
 	}
 
-	// 식당[1] 메뉴 추가 처리
+	// 메뉴 추가 처리
 	@RequestMapping(value = "/hostMenuAddPro")
 	public String hostMenuAddPro(MultipartHttpServletRequest req, Model model) {
 		log.debug("hostMenuAddPro()");
@@ -108,7 +108,7 @@ public class Host_restaurantController {
 		return "host/host_restaurant/hostMenuAddPro";
 	}
 
-	// 식당[1] 수정할 메뉴 정보 조회 / 수정할 정보 입력
+	// 수정할 메뉴 정보 조회 / 수정할 정보 입력
 	@RequestMapping(value = "/hostMenuModForm")
 	public String hostMenuModForm(HttpServletRequest req, Model model) {
 		log.debug("hostMenuModForm()");
@@ -118,7 +118,7 @@ public class Host_restaurantController {
 		return "host/host_restaurant/hostMenuModForm";
 	}
 
-	// 식당[1] 메뉴 수정 처리
+	// 메뉴 수정 처리
 	@RequestMapping(value = "/hostMenuModPro")
 	public String hostMenuModPro(MultipartHttpServletRequest req, Model model) {
 		log.debug("hostMenuModPro()");
@@ -128,7 +128,7 @@ public class Host_restaurantController {
 		return "host/host_restaurant/hostMenuModPro";
 	}
 
-	// 식당[1] 메뉴 삭제 처리
+	// 메뉴 삭제 처리
 	@RequestMapping(value = "/hostMenuDel")
 	public String hostMenuDel(HttpServletRequest req, Model model) {
 		log.debug("hostMenuDel()");
@@ -138,7 +138,7 @@ public class Host_restaurantController {
 		return "host/host_restaurant/hostMenuDel";
 	}
 
-	// 식당[1] 직원 리스트
+	// 식당별 직원 리스트
 	@RequestMapping(value = "/hostEmployeeList")
 	public String hostEmployeeList(HttpServletRequest req, Model model) {
 		log.debug("hostEmployeeList()");
@@ -148,7 +148,7 @@ public class Host_restaurantController {
 		return "host/host_restaurant/hostEmployeeList";
 	}
 
-	// 전체 회원 목록(식당[1] 직원 등록)
+	// 전체 회원 목록(직원 등록 전)
 	@RequestMapping(value = "/hostMemberList")
 	public String hostMemberList(HttpServletRequest req, Model model) {
 		log.debug("hostMemberList()");
@@ -158,18 +158,18 @@ public class Host_restaurantController {
 		return "host/host_restaurant/hostMemberList";
 	}
 
-	// 식당[1] 직원 등록
+	// 직원 등록
 	@RequestMapping(value = "/hostEmployeeAddForm")
 	public String hostEmployeeAddView(HttpServletRequest req, Model model) {
 		log.debug("hostEmployeeAddForm()");
 
-		// 식당[1] 직원으로 등록할 회원 정보 조회
+		// 직원으로 등록할 회원 정보 조회
 		service.memberView(req, model);
 
 		return "host/host_restaurant/hostEmployeeAddForm";
 	}
 
-	// 식당[1] 직원 등록 처리
+	// 직원 등록 처리
 	@RequestMapping(value = "/hostEmployeeAddPro")
 	public String hostEmployeeAddPro(HttpServletRequest req, Model model) {
 		log.debug("hostMenuAddPro()");
@@ -179,7 +179,7 @@ public class Host_restaurantController {
 		return "host/host_restaurant/hostEmployeeAddPro";
 	}
 
-	// 식당[1] 직원 등록
+	// 직원 등록
 	@RequestMapping(value = "/hostEmployeeView")
 	public String hostEmployeeView(HttpServletRequest req, Model model) {
 		log.debug("hostEmployeeView()");
@@ -191,7 +191,7 @@ public class Host_restaurantController {
 		return "host/host_restaurant/hostEmployeeView";
 	}
 
-	// 식당[1] 직원 삭제 처리
+	// 직원 삭제 처리
 	@RequestMapping(value = "/hostEmployeeDel")
 	public String hostEmployeeDel(HttpServletRequest req, Model model) {
 		log.debug("hostEmployeeDel()");
@@ -201,7 +201,7 @@ public class Host_restaurantController {
 		return "host/host_restaurant/hostEmployeeDel";
 	}
 
-	// 식당[1] 예약 리스트
+	// 식당별 예약 리스트
 	@RequestMapping(value = "/hostReservList")
 	public String hostReservList(HttpServletRequest req, Model model) {
 		log.debug("hostReservList()");
@@ -211,7 +211,7 @@ public class Host_restaurantController {
 		return "host/host_restaurant/hostReservList";
 	}
 
-	// 식당[1] 예약 페이지
+	// 식당별 예약 페이지
 	@RequestMapping(value = "/hostReservAddForm")
 	public String hostReservAddForm(HttpServletRequest req, Model model) {
 		log.debug("hostReservAddForm()");
@@ -219,7 +219,7 @@ public class Host_restaurantController {
 		return "host/host_restaurant/hostReservAddForm";
 	}
 
-	// 식당[1] 예약 - 테이블 선택 위한 매장 내 테이블 조회
+	// 예약 - 테이블 선택 위한 매장 내 테이블 조회
 	@RequestMapping(value = "checkPosRestaurant")
 	public String checkPosRestaurant(HttpServletRequest req, Model model) {
 		log.debug("checkPosRestaurant()");
@@ -230,7 +230,7 @@ public class Host_restaurantController {
 		return "host/host_restaurant/hostReservAddForm";
 	}
 
-	// 식당[1] 예약된 날짜와 테이블 등 상세 조회
+	// 예약된 날짜와 테이블 등 상세 조회
 	@RequestMapping(value = "checkPosRestaurant2")
 	public String checkPosRestaurant2(HttpServletRequest req, Model model) {
 		log.debug("checkPosRestaurant2()");
@@ -242,7 +242,7 @@ public class Host_restaurantController {
 		return "host/host_restaurant/hostReservList";
 	}
 
-	// 식당[1] 예약 처리
+	// 예약 처리
 	@RequestMapping(value = "/hostReservAddPro")
 	public String hostReservAddPro(HttpServletRequest req, Model model) {
 		log.debug("hostReservAddPro()");

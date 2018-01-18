@@ -43,8 +43,8 @@
 				</a>
 				<ul class="sidenav-second-level collapse" id="collapseComponents">
 					<li><a href="hostTMovie">영화관 결산</a></li>
-					<li><a href="#">식당 결산</a></li>
-					<li><a href="#">주차장 결산</a></li>
+					<li><a href="hostTRestaurant">식당 결산</a></li>
+					<li><a href="hostTParkingChart">주차장 결산</a></li>
 				</ul>
 			</li>
 			<!-- <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">

@@ -43,10 +43,13 @@
 			    border-radius: 0.5em;
 			    margin-left: 10px;
 		}
+		body .navbar-brand {margin:1rem;font-family:Montserrat;font-size:1.25rem;line-height:inherit;white-space:nowrap;color:white;}
 	</style>
 </head>
 
 <body class="bg-dark">
+	<a class="navbar-brand js-scroll-trigger" href="mainIndex">Baobob</a>
+	
 	<div class="container">
 		<div class="card card-register mx-auto mt-5">
 			<div class="card-header">필수 정보</div>
@@ -111,7 +114,7 @@
 				</form>
 				
 				<div class="text-center">
-					<a class="d-block small mt-3" href="mainSignIn">Login Page</a>
+					<a class="d-block small mt-3" onclick="goMainSignIn();">Login Page</a>
 				</div>
 			</div>
 		</div>

@@ -22,9 +22,14 @@
 			<!-- 영화 관리자 | 영화 직원  -->
 			<c:redirect url="hostMovie"/>
 		</c:when>
-		<c:when test="${sessionScope.memStep == 4 || sessionScope.memStep == 5 || sessionScope.memStep == 6}">
-			<!-- 식당 총관리 | 식당 관리자 | 식당 직원 -->
-			<c:redirect url="hostReservList"/>
+		<c:when test="${sessionScope.memStep == 4}">
+			<!-- 식당 총관리자 -->
+			<c:redirect url="hostRestaurantList"/>
+		</c:when>
+		<c:when
+			test="${(51 <= sessionScope.memStep && sessionScope.memStep <= 53) || (61 <= sessionScope.memStep && sessionScope.memStep <= 63)}">
+			<!-- 식당 관리자 | 식당 직원 -->
+			<c:redirect url="hostReservList" />
 		</c:when>
 		<c:when test="${sessionScope.memStep == 7}">
 			<!-- 주차장 관리자 -->

@@ -94,7 +94,7 @@
 							<input class="form-control" type="text" style="display: inline-block; width: 165px; text-align: center;" name="date" id="datepicker" 
 								class="datepicker" placeholder="달력 보기" value="${date}" />
 							<input class="form-control" style="display: inline-block; width: 100px; background-color: #343a40; color: white;" type="button" name="hostReservAddForm"
-								onclick="reservView('${date}', ${dto.restaurant_schedule_index});" value="조회" />
+								onclick="reservView(${sessionScope.memStep});" value="조회" />
 						</div>
 						<div class="cd-schedule loading">
 							<div class="timeline">
@@ -133,8 +133,8 @@
 												<li class="single-event" 
 													data-start="<fmt:formatDate type="both" pattern="HH:mm" value="${dto.schedule_startTime}" />"
 													data-end="<fmt:formatDate type="both" pattern="HH:mm" value="${dto.schedule_endTime}" />"
-													data-content="${dto.restaurant_schedule_index}번 예약" data-event="event-${status.index + 1}">
-													<a href="" onclick="restaurantView('${date}', '${dto.schedule_startTime}', '${dto.schedule_endTime}', ${dto.restaurant_schedule_index});"><em class="event-name" style="display: none;">${dto.restaurant_schedule_index}번 예약</em></a>
+													data-content="" data-event="event-${status.index + 1}">
+													<a href="" onclick="restaurantView('${date}', '${dto.schedule_startTime}', '${dto.schedule_endTime}', ${sessionScope.memStep});"><em class="event-name" style="display: none;">예약 정보</em></a>
 												</li>
 											</c:forEach>
 										</ul>

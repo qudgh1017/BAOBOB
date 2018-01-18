@@ -459,6 +459,13 @@ public class Host_movieDAOImpl implements Host_movieDAO {
 		return cnt;
 	}
 
+	
+	@Override
+	public int getMovieSale() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 
 
 

@@ -35,6 +35,12 @@ public interface MainService {
 	//고객센터
 	public void mainHelp(HttpServletRequest req, Model model);
 	
+	//고객센터 검색 제안어 ajax
+	public void mainHelpKeywordSuggest(HttpServletRequest req, Model model);
+	
+	//고객센터 검색 결과 페이지
+	public void mainHelpKeywordSearch(HttpServletRequest req, Model model);
+	
 	//랜덤키
 	public String randomKey();
 }

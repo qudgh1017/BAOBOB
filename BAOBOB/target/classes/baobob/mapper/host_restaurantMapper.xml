@@ -21,17 +21,17 @@
 	
 	<!-- 식당 총 관리자 - 식당 내 테이블 추가 처리 -->
 	<insert id="addTable" parameterType="spring.mvc.baobob.vo.TableVO">
-		INSERT INTO restaurant_table_tbl(restaurant_index, restaurant_table_index, table_row, table_col, table_state) VALUES((SELECT MAX(restaurant_index) FROM restaurant_tbl), #{index}, #{table_row}, #{table_col}, #{state})
+		INSERT INTO restaurant_table_tbl(restaurant_index, restaurant_table_index, table_row, table_col, table_state) VALUES((SELECT MAX(restaurant_index) FROM restaurant_tbl), #{restaurant_table_index}, #{table_row}, #{table_col}, #{state})
 	</insert>
 	
 	<!-- 식당 총 관리자 - 매장 정보 조회 -->
 	<select id="viewRestaurant" resultType="spring.mvc.baobob.vo.RestaurantVO">
-		SELECT * FROM restaurant_tbl WHERE restaurant_index = #{index}
+		SELECT * FROM restaurant_tbl WHERE restaurant_index = #{restaurant_index}
 	</select>
 	
 	<!-- 식당 총 관리자 - 매장 내 테이블 정보 조회를 위한 좌석 수 조회 -->
 	<select id="getColRow" resultType="spring.mvc.baobob.vo.TableVO">
-		SELECT MAX(table_row) table_row, MAX(table_col) table_col FROM restaurant_table_tbl WHERE restaurant_index = #{index} AND restaurant_schedule_index IS null
+		SELECT MAX(table_row) table_row, MAX(table_col) table_col FROM restaurant_table_tbl WHERE restaurant_index = #{restaurant_index} AND restaurant_schedule_index IS null
 	</select>
 	
 	<!-- 식당 총 관리자 - 매장 내 테이블 정보 조회 -->
@@ -69,22 +69,22 @@
 	
 	<!-- 식당[1] 메뉴 개수 조회 -->
 	<select id="getMenuCnt" resultType="int">
-		SELECT count(*) FROM restaurant_menu_tbl
+		SELECT count(*) FROM restaurant_menu_tbl WHERE restaurant_index = #{restaurant_index}
 	</select>
 	
 	<!-- 식당[1] 각 메뉴 정보 조회 -->
 	<select id="getMenuList" resultType="spring.mvc.baobob.vo.MenuVO">
-		SELECT * FROM restaurant_menu_tbl ORDER BY restaurant_menu_index DESC
+		SELECT * FROM restaurant_menu_tbl WHERE restaurant_index = #{restaurant_index} ORDER BY restaurant_menu_index DESC
 	</select>
 	
 	<!-- 식당[1] 메뉴 추가 처리 -->
 	<insert id="addMenu" parameterType="spring.mvc.baobob.vo.MenuVO">
-		INSERT INTO restaurant_menu_tbl(restaurant_index, restaurant_menu_index, restaurant_menu_name, restaurant_menu_img, restaurant_menu_content, restaurant_menu_price) VALUES(1, restaurant_menu_tbl_SEQ.nextval, #{restaurant_menu_name}, #{restaurant_menu_img}, #{restaurant_menu_content}, #{restaurant_menu_price})
+		INSERT INTO restaurant_menu_tbl(restaurant_index, restaurant_menu_index, restaurant_menu_name, restaurant_menu_img, restaurant_menu_content, restaurant_menu_price) VALUES(#{restaurant_index}, restaurant_menu_tbl_SEQ.nextval, #{restaurant_menu_name}, #{restaurant_menu_img}, #{restaurant_menu_content}, #{restaurant_menu_price})
 	</insert>
 	
 	<!-- 식당[1] 수정할 메뉴 정보 보기 -->
 	<select id="viewMenu" resultType="spring.mvc.baobob.vo.MenuVO">
-		SELECT * FROM restaurant_menu_tbl WHERE restaurant_menu_index = #{restaurant_menu_index}
+		SELECT * FROM restaurant_menu_tbl WHERE restaurant_index = #{restaurant_index} AND restaurant_menu_index = #{restaurant_menu_index}
 	</select>
 	
 	<!-- 식당[1] 메뉴 수정 처리 -->
@@ -99,22 +99,22 @@
 	
 	<!-- 식당[1] 직원 수 조회 -->
 	<select id="getEmployeeCnt" resultType="int">
-		SELECT count(empl.member_id) FROM employee_tbl empl, member_tbl mem WHERE mem.member_id = empl.member_id AND mem.member_step IN (61, 62, 63)
+		SELECT count(empl.member_id) FROM employee_tbl empl, member_tbl mem WHERE mem.member_id = empl.member_id AND mem.member_step IN (#{member_step}, (#{member_step} + 10))
 	</select>
 	
 	<!-- 식당[1] 각 메뉴 정보 조회 -->
 	<select id="getEmployeeList" resultType="spring.mvc.baobob.vo.EmployeeVO">
-		SELECT empl.* FROM employee_tbl empl, member_tbl mem WHERE mem.member_id = empl.member_id AND mem.member_step IN (61, 62, 63)
+		SELECT empl.* FROM employee_tbl empl, member_tbl mem WHERE mem.member_id = empl.member_id AND mem.member_step IN (#{member_step}, (#{member_step} + 10))
 	</select>
 	
 	<!-- 전체 회원 수 조회(식당[1] 직원 제외) -->
 	<select id="getMemberCnt" resultType="int">
-		SELECT count(*) FROM member_tbl WHERE NOT member_step IN (51, 61)
+		SELECT count(*) FROM member_tbl WHERE NOT member_step IN (1, 2, 3, 4, 7, 8, 13, 51, 52, 53, 61, 62, 63)
 	</select>
 	
 	<!-- 각 회원 정보 조회(식당[1] 직원 제외) -->
 	<select id="getMemberList" resultType="spring.mvc.baobob.vo.Member">
-		SELECT * FROM member_tbl WHERE NOT member_step IN (51, 61) ORDER BY member_reg_date DESC
+		SELECT * FROM member_tbl WHERE NOT member_step IN (1, 2, 3, 4, 7, 8, 13, 51, 52, 53, 61, 62, 63) ORDER BY member_reg_date DESC
 	</select>
 	
 	<!-- 각 회원 정보 조회(식당[1] 직원 제외) -->
@@ -149,7 +149,7 @@
 	
 	<!-- 식당[1] 예약 추가 처리 -->
 	<insert id="addReserv" parameterType="Map">
-		INSERT INTO restaurant_schedule_tbl(restaurant_index, restaurant_schedule_index, schedule_startDate, schedule_startTime, schedule_endTime) VALUES(#{dto.restaurant_index}, restaurant_schedule_tbl_SEQ.nextval, #{dto3.schedule_startDate}, #{dto3.schedule_startTime}, #{dto3.schedule_endTime})
+		INSERT INTO restaurant_schedule_tbl(restaurant_index, restaurant_schedule_index, schedule_startTime, schedule_endTime) VALUES(#{dto.restaurant_index}, restaurant_schedule_tbl_SEQ.nextval, #{dto3.schedule_startTime}, #{dto3.schedule_endTime})
 	</insert>
 	
 	<!-- 식당[1] 날짜에 해당하는 테이블 예약 -->
@@ -160,13 +160,13 @@
 	<!-- 식당[1] 선택 날짜 예약 조회 -->
 	<select id="getReservList" resultType="spring.mvc.baobob.vo.Restaurant_scheduleVO">
 		SELECT * FROM restaurant_schedule_tbl 
-		WHERE schedule_startTime &gt; to_char(to_date(#{startDate}, 'YY-MM-DD-HH24-MI'), 'YY-MM-DD-HH24-MI') 
-		AND schedule_startTime &lt; to_char(to_date(#{endDate}, 'YY-MM-DD-HH24-MI'), 'YY-MM-DD-HH24-MI') 
-		AND restaurant_index = #{index}
+		WHERE schedule_startTime &gt; to_char(to_date(#{startTime}, 'YY-MM-DD-HH24-MI'), 'YY-MM-DD-HH24-MI') 
+		AND schedule_startTime &lt; to_char(to_date(#{endTime}, 'YY-MM-DD-HH24-MI'), 'YY-MM-DD-HH24-MI') 
+		AND restaurant_index = #{restaurant_index}
 	</select>
 	
 	<!--  -->
 	<select id="getScheduleIndex" resultType="int">
-		SELECT restaurant_schedule_index FROM restaurant_schedule_tbl WHERE schedule_startdate = #{schedule_startDate} AND schedule_starttime = #{schedule_startTime} AND schedule_endtime = #{schedule_endTime}
+		SELECT restaurant_schedule_index FROM restaurant_schedule_tbl WHERE schedule_starttime = #{schedule_startTime} AND schedule_endtime = #{schedule_endTime} AND restaurant_index = #{restaurant_index}
 	</select>
 </mapper>

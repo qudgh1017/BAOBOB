@@ -65,8 +65,8 @@
 								</tr>
 								<tr>
 									<td colspan="2" style="text-align: center;">
-										<input size="10" type="submit" value="직원 등록">
-										<input size="10" type="button" value="취소" onclick="window.history.back();">
+										<input class="btn btn-secondary" style="background-color: #007bff; color: white;" size="10" type="submit" value="직원 등록">
+										<input class="btn btn-secondary" style="background-color: #868e96; color: white;" size="10" type="button" value="취소" onclick="window.history.back();">
 									</td>
 								</tr>
 							</table>

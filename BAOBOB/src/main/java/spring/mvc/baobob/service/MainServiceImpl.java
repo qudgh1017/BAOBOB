@@ -201,13 +201,16 @@ public class MainServiceImpl implements MainService {
 	
 	//고객센터
 	public void mainHelp(HttpServletRequest req, Model model) {
-		String last = req.getParameter("last");
-		if(last == null) { last = "1";}
+		String next = req.getParameter("next");
+		if(next == null) { next = "1";}
+		int current = Integer.parseInt(next);
 		
+		int totalCnt = dao.getHelperCnt();
 		int rowSize = 5;
 		
-		int start = (Integer.parseInt(last) - 1) * rowSize + 1;
+		int start = (current - 1) * rowSize + 1;
 		int end = start + rowSize - 1;
+		if(end > totalCnt) { end = totalCnt; }
 		
 		Map<String, Integer> map = new HashMap<String, Integer>();
 		map.put("start",  start);
@@ -215,7 +218,53 @@ public class MainServiceImpl implements MainService {
 		
 		ArrayList<FaqVO> list = dao.getHelper(map);
 		model.addAttribute("help", list);
+		model.addAttribute("totalCnt", totalCnt);
+		model.addAttribute("end", end);
+		model.addAttribute("current", current);
 	}
+
+	//고객센터 검색 제안어 ajax
+	public void mainHelpKeywordSuggest(HttpServletRequest req, Model model) {
+		String keyword = req.getParameter("keyword");
+		
+		ArrayList<String> list = dao.helpKeywordSuggest(keyword);
+		String suggest = "";
+		for(String str : list) {
+			suggest += !suggest.equals("") ? "," + str : str;  
+		}
+		
+		model.addAttribute("suggest", suggest);
+	}
+
+	//고객센터 검색 Ajax
+	public void mainHelpKeywordSearch(HttpServletRequest req, Model model) {
+		String keyword = req.getParameter("keyword");
+
+		String next = req.getParameter("next");
+		if(next == null) { next = "1";}
+		int current = Integer.parseInt(next);
+
+		int totalCnt = dao.helpKeywordSearchCnt(keyword);
+		int rowSize = 5;
+		
+		int start = (current - 1) * rowSize + 1;
+		int end = start + rowSize - 1;
+		if(end > totalCnt) { end = totalCnt; }
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("start",  start);
+		map.put("end",  end);
+		map.put("keyword", keyword);
+		ArrayList<FaqVO> help = dao.helpKeywordSearch(map);
+		
+		model.addAttribute("help", help);
+		model.addAttribute("totalCnt", totalCnt);
+		model.addAttribute("end", end);
+		model.addAttribute("current", current);
+		
+		model.addAttribute("keyword", keyword);
+	}
+	
 	
 	//랜덤키
 	@Override

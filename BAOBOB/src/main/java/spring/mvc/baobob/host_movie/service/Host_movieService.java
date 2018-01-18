@@ -80,4 +80,7 @@ public interface Host_movieService {
 	
 	// 예매 상세
 	public MovieResViewVO hostMovieResView(HttpServletRequest req, Model model);
+	
+	// 첫 그래프
+	public void movieChart(HttpServletRequest req, Model model);
 }

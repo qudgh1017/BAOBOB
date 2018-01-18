@@ -8,6 +8,11 @@ var delChk3 = "의 정보를 삭제하시겠습니까?\n삭제한 정보는 다�
 var addChk = " 님을 직원으로 등록하시겠습니까?";
 var numChk = "이 입력란은 숫자만 입력 가능합니다.";
 
+function errorAlert(msg) {
+	alert(msg);
+	window.history.back();
+}
+
 // 메뉴 & 직원 삭제 확인
 function delCheck(index, chk) {
 	if (chk == 'menu') {
@@ -167,11 +172,11 @@ function spaceTypeChange2(index) {
 	if (document.getElementById('name') && document.getElementById('tel')) {
 		var name = document.getElementById('name').value; // name
 		var tel = document.getElementById('tel').value; // tel
-		window.location = 'hostRestaurantModPro?info=' + info + '&col=' + x + '&row=' + y + '&name=' + name + '&tel=' + tel + '&index=' + index;
+		window.location = 'hostRestaurantModPro?info=' + info + '&col=' + x + '&row=' + y + '&name=' + name + '&tel=' + tel + '&index=' + index.toString().substring(1, 2);
 	} else {
 		var date = document.getElementById('datepicker').value;
 		var time = document.getElementById('timepicker').value;
-		window.location = 'hostReservAddPro?info=' + info + '&col=' + x + '&row=' + y + '&index=' + index + '&date=' + date + '&time=' + time;
+		window.location = 'hostReservAddPro?info=' + info + '&col=' + x + '&row=' + y + '&index=' + index.toString().substring(1, 2) + '&date=' + date + '&time=' + time;
 	}
 }
 
@@ -214,7 +219,7 @@ function hostReservList() {
 }
 
 // 선택한 식당, 날짜, 시간에 예약이 가능한 테이블 조회
-function checkPosRestaurant() {
+function checkPosRestaurant(step) {
 	var date = document.getElementById('datepicker').value;
 	var time = document.getElementById('timepicker').value;
 
@@ -225,7 +230,7 @@ function checkPosRestaurant() {
 		alert('시간을 골라주세요!');
 		return false;
 	} else {
-		window.location = 'checkPosRestaurant?date=' + date + '&time=' + time + '&index=1';
+		window.location = 'checkPosRestaurant?date=' + date + '&time=' + time + '&index=' + step.toString().substring(1, 2);
 	}
 }
 
@@ -242,7 +247,7 @@ function checkPosRestaurant2() {
 }
 
 // 선택한 날짜에 있는 모든 예약 조회
-function reservView() {
+function reservView(step) {
 	var date = document.getElementById("datepicker").value;
 	
 	if (date == "") {
@@ -250,6 +255,6 @@ function reservView() {
 		document.getElementById("datepicker").focus();
 		return false;
 	}
-
-	window.location = "reservView?date=" + date + "&index=1";
+	
+	window.location = "reservView?date=" + date + "&index=" + step.toString().substring(1, 2);
 }

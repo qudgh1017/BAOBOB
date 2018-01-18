@@ -41,14 +41,18 @@
 												<textarea rows="5" cols="50">${dto.restaurant_menu_content}</textarea>
 											</div>
 										</td>
-										<td><input type="button" value="수정" onclick="window.location='hostMenuModForm?index=${dto.restaurant_menu_index}'"></td>
-										<td><input type="button" value="삭제" onclick="delCheck(${dto.restaurant_menu_index}, 'menu');"></td>
+										<td style="text-align: center; vertical-align: middle;">
+											<button class="btn btn-secondary" style="display: inline-block;" value="1" onclick="window.location='hostMenuModForm?index=${dto.restaurant_menu_index}'">수정</button>
+										</td>
+										<td style="text-align: center; vertical-align: middle;">
+											<button class="btn btn-secondary" style="display: inline-block;" value="1" onclick="delCheck(${dto.restaurant_menu_index}, 'menu');">삭제</button>
+										</td>
 									</tr>
 								</c:forEach>
 							</c:if>
 							<c:if test="${cnt_menu == 0}">
 								<tr>
-									<td>등록된 메뉴가 없습니다.</td>
+									<td colspan="3" style="text-align: center;">등록된 메뉴가 없습니다.</td>
 								</tr>
 							</c:if>
 							</tbody>

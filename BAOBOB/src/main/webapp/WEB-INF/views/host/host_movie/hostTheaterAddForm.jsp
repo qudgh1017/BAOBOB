@@ -16,46 +16,89 @@
 	<div class="content-wrapper">
 
 	<form name="hostTheaterAddForm">
-		<center><h3><b>상영관 등록</b></h3></center>
-		<hr style="border:3px solid black;">
-		<table align="center" style="border:1px solid black;">
-			<tr>
-				<td>관</td>
-				<td><input type="number" id="theater_index" name="theater_index" placeholder="빈 영화관의 index(관)" required/>관</td>
-			</tr>
-			<tr>
-				<td>행</td>
-				<td><input type="text" id="row" name="theater_row" placeholder="행 갯수(최대 26)" required/></td>
-			</tr>
-			<tr>
-				<td>열</td>
-				<td><input type="text" id="col" name="theater_col" placeholder="열 갯수" required/></td>
-			</tr>
-			<tr>
-				<td colspan="2" align="center">
-					<input type="hidden" id="chkConfirm" value==0/>
-					<input style="background-color:#343a40; color:white; border:1px solid black; width:200px; height:40px;" type="button" id="seatSize" onclick="seatSet();" value="확인"/>
-				</td>
-			</tr>	
-		</table>
-
-	<br>
-	<div id="theaterSet" align="center">
-		<!-- 상영관 좌석도 -->
-	</div>
-	<br>
-	<div align="center">
-		<button type="button" onclick="spaceType('0')"><img src="${projectRes}images/phc/icon/theater_blank.png"></button>
-		<button type="button" onclick="spaceType('1')"><img src="${projectRes}images/phc/icon/theater_in.png"></button>
-		<button type="button" onclick="spaceType('2')"><img src="${projectRes}images/phc/icon/theater_out.png"></button>
-		<button type="button" onclick="spaceType('3')"><img src="${projectRes}images/phc/icon/theater_normal.png"></button>
-		<button type="button" onclick="spaceType('4')"><img src="${projectRes}images/phc/icon/theater_premium.png"></button>
-		<button type="button" onclick="spaceType('5')"><img src="${projectRes}images/phc/icon/theater_couple.png"></button>
-	</div>
+		<div class="container-fluid row">
+			<div class="col-lg-10">
+				<div class="card mb-3">
+					<div class="card-header">상영관 좌석도</div>
+					<div class="card-body p_body" id="theaterSet" align="center">
+						<!-- 상영관 좌석도 -->
+					</div>
+					<div class="card-footer small text-muted">
+						아이콘을 선택하여 좌석을 설정해주세요.
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-2">
+				<div class="card mb-3">
+					<button type="button" class="btn btn-primary" onclick="hostTheaterAdd();">등록</button>
+				</div>
+				<div class="card mb-3">
+					<div class="card-header">상영관 설정</div>
+					<div class="card-body" align="center">
+						<input class="form-control" type="number" id="theater_index" name="theater_index" placeholder="빈 영화관의 index(관)" required/>
+						<input class="form-control" type="text" id="row" name="theater_row" placeholder="행 갯수(최대 26)" required/>
+						<input class="form-control" type="text" id="col" name="theater_col" placeholder="열 갯수" required/>
+						<br>
+						<input type="hidden" id="chkConfirm" value==0/>
+						<button class="btn btn-primary"type="button" onclick="seatSet();">확인</button>
+						
+						<hr>
+						<table>
+							<tr>
+								<td>
+									<button class="m_btn" type="button" onclick="spaceType('0')"><img class="p_img" src="${projectRes}images/phc/icon/theater_blank.png"></button>
+								</td>
+								<td>
+									빈 공간
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<button class="m_btn" type="button" onclick="spaceType('1')"><img class="p_img" src="${projectRes}images/phc/icon/theater_in.png"></button>
+								</td>
+								<td>
+									입구
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<button class="m_btn" type="button" onclick="spaceType('2')"><img class="p_img" src="${projectRes}images/phc/icon/theater_out.png"></button>
+								</td>
+								<td>
+									출구
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<button class="m_btn" type="button" onclick="spaceType('3')"><img class="p_img" src="${projectRes}images/phc/icon/theater_green.png"></button>
+								</td>
+								<td>
+									일반석
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<button class="m_btn" type="button" onclick="spaceType('4')"><img class="p_img" src="${projectRes}images/phc/icon/theater_red.png"></button>
+								</td>
+								<td>
+									프리미엄석
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<button class="m_btn" type="button" onclick="spaceType('5')"><img class="p_img" src="${projectRes}images/phc/icon/theater_pink.png"></button>
+								</td>
+								<td>
+									커플석
+								</td>
+							</tr>
+						</table>
 	
-	<input style="background-color:#343a40; color:white; border:1px solid black; width:200px; height:40px; margin-left:177px; margin-bottom:15px;" type="button" value="상영관 등록하기" onclick="hostTheaterAdd();"/>
+						
+					</div>
+			</div>
+		</div>
 	</form>
-	
 	</div>
 	
 	<!-- Footer -->
