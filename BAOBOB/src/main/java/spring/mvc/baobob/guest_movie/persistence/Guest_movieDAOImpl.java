@@ -201,24 +201,46 @@ public class Guest_movieDAOImpl implements Guest_movieDAO{
 
 	//예매되는 날짜
 	@Override
-	public int getDateCnt(int movie_index) {
+	public int getDateCnt(Map<String,Object> map) {
 		int cnt = 0;
 
 		Guest_movieDAO gmdao = sqlSession.getMapper(Guest_movieDAO.class);
-		cnt = gmdao.getDateCnt(movie_index);
+		cnt = gmdao.getDateCnt(map);
 		
 		return cnt;
 	}
 
 	//예매 - 영화 되는 날짜, 상영관 정보
 	@Override
-	public ArrayList<Theater_scheduleVO> getAllReserveSchedules(int movie_index) {
+	public ArrayList<Theater_scheduleVO> getAllReserveSchedules(Map<String,Object> map) {
 		ArrayList<Theater_scheduleVO> schedules = null;
 		
 		Guest_movieDAO gmdao = sqlSession.getMapper(Guest_movieDAO.class);
-		schedules = gmdao.getAllReserveSchedules(movie_index);
+		schedules = gmdao.getAllReserveSchedules(map);
 		
 		return schedules;
+	}
+
+	//상영관 갯수
+	@Override
+	public int theaterCnt() {
+		int cnt = 0;
+		
+		Guest_movieDAO gmdao = sqlSession.getMapper(Guest_movieDAO.class);
+		cnt = gmdao.theaterCnt();
+		
+		return cnt;
+	}
+	
+	//각 상영관 마다의 총좌석 갯수 구하기
+	@Override
+	public int theaterSeats(int theater_index) {
+		int cnt = 0;
+		
+		Guest_movieDAO gmdao = sqlSession.getMapper(Guest_movieDAO.class);
+		cnt = gmdao.theaterSeats(theater_index);
+		
+		return cnt;
 	}
 
 	

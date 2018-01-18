@@ -74,9 +74,9 @@
 					<span class="nav-link-text">예매 관리</span>
 				</a>
 				<ul class="sidenav-second-level collapse" id="collapseExamplePages">
-					<li><a href="#">Login Page</a></li>
-					<li><a href="#">Registration Page</a></li>
-					<li><a href="#">Forgot Password Page</a></li>
+					<li><a href="hostMovieRes">예매 조회</a></li>
+					<li><a href="#">예매 순위</a></li>
+					<li><a href="#">결산</a></li>
 					<li><a href="#">Blank Page</a></li>
 				</ul>
 			</li>

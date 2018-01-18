@@ -84,28 +84,52 @@ function nonPlaying(){
 }
 
 //영화 movieTicekt
+var flag = false;
+var movie; //movie_index
+var plusDay;//sysdate에 더할날짜
 
-//영화버튼 클릭했을때
-function movieClick(movie_index){
-
-    $.ajaxSettings.traditional = true;//배열 형태로 서버쪽 전송을 위한 설정
-    
-	$.ajax({
-		url: 'dateResult',
-		type: 'GET',
-		data: {
-			movie_index
-		},
-		
-		success: function(msg) {
-			$('#resultSchedule').html(msg);					
-		},				
-		error: function() {
-			alert('오류');
-		}	
-		
-	});
+//영화/ 날짜 둘다 체크하면  ajax통신
+function common(){
+	if(!movie){
+	}else if(!plusDay){
+	}else{
+		$.ajaxSettings.traditional = true;//배열 형태로 서버쪽 전송을 위한 설정
+	
+			$.ajax({
+				url: 'dateResult',
+				type: 'GET',
+				data: {
+					movie, plusDay
+				},
+				
+				success: function(msg) {
+					$('#resultSchedule').html(msg);					
+				},				
+				error: function() {
+					alert('오류');
+				}	
+				
+			});
+	}
 }
+//영화버튼 클릭했을때
+function clickMovie(movie_index){
+	movie = movie_index;
+	common();
+}
+	
+//날짜 클릭 했을때
+function clickDate(num){
+	plusDay = num;
+	/*var now = new Date();
+	//선택한 날짜
+	var clickDate = new Date(Date.parse(now) + num * 1000 * 60 * 60 * 24);
+	//
+	click = clickDate;*/
+	common();
+}
+
+
   
 
 

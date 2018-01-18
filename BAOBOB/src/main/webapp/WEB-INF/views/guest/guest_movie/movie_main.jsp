@@ -57,31 +57,6 @@
 	<br>
 	<br>
 	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<div id="contact">contact</div>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
 		
 	<!-- Footer -->
 	<%@ include file="/WEB-INF/views/guest/guest_movie/movie_footer.jsp" %> 

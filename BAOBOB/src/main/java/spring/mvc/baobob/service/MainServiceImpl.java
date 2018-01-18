@@ -1,5 +1,6 @@
 package spring.mvc.baobob.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
 import spring.mvc.baobob.persistence.MainDAO;
+import spring.mvc.baobob.vo.FaqVO;
 import spring.mvc.baobob.vo.Member;
 
 @Service
@@ -93,22 +95,7 @@ public class MainServiceImpl implements MainService {
 	// 인증 메일 전송
 	@Override
 	public String emailSend(HttpServletRequest req) {
-
-		StringBuffer tmp = new StringBuffer();
-		Random rnd = new Random();
-
-		for (int i = 0; i < 6; i += 1) {
-			int rIdx = rnd.nextInt(2);
-			switch (rIdx) {
-			case 0:
-				tmp.append((char) ((int) (rnd.nextInt(26)) + 65));
-				break;
-			case 1:
-				tmp.append(rnd.nextInt(10));
-				break;
-			}
-		}
-		String key = tmp.toString();
+		String key = randomKey();
 		
 		int cnt = dao.sendEmail(req.getParameter("email"), req.getParameter("id"), key);
 		if(cnt != 0) {
@@ -191,7 +178,7 @@ public class MainServiceImpl implements MainService {
 		if(cnt == 0) {
 			Member m = new Member();
 			m.setMember_id(userId);
-			m.setMember_pwd("null");
+			m.setMember_pwd(randomKey());
 			m.setMember_name(userName);
 			m.setMember_tel("null");
 			m.setMember_email(userEmail);
@@ -212,4 +199,41 @@ public class MainServiceImpl implements MainService {
 		model.addAttribute("cnt", cnt);
 	}
 	
+	//고객센터
+	public void mainHelp(HttpServletRequest req, Model model) {
+		String last = req.getParameter("last");
+		if(last == null) { last = "1";}
+		
+		int rowSize = 5;
+		
+		int start = (Integer.parseInt(last) - 1) * rowSize + 1;
+		int end = start + rowSize - 1;
+		
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		map.put("start",  start);
+		map.put("end",  end);
+		
+		ArrayList<FaqVO> list = dao.getHelper(map);
+		model.addAttribute("help", list);
+	}
+	
+	//랜덤키
+	@Override
+	public String randomKey() {
+		StringBuffer tmp = new StringBuffer();
+		Random rnd = new Random();
+
+		for (int i = 0; i < 6; i += 1) {
+			int rIdx = rnd.nextInt(2);
+			switch (rIdx) {
+			case 0:
+				tmp.append((char) ((int) (rnd.nextInt(26)) + 65));
+				break;
+			case 1:
+				tmp.append(rnd.nextInt(10));
+				break;
+			}
+		}
+		return tmp.toString();
+	}
 }

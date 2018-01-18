@@ -115,4 +115,20 @@ public interface Host_movieDAO {
 	
 	// 회원 step 수정하기
 	public int updateMemberStep(Member vo);
+	
+	// 상영관의 선택한 좌석 state 불러오기
+	public int getTheaterSeatState(Map<String, Integer> map);
+	
+	// 상영관의 선택한 좌석 price 불러오기
+	public int getTheaterSeatPrice(Map<String, Integer> map);
+	
+	// 스케줄에 해당하는 좌석 생성
+	public int TheaterScheduleSeatAddPro(Map<String, Integer> map);
+	
+	// 스케줄에 해당하는 좌석 정보 가져오기
+	public ArrayList<Theater_seatVO> hostTheaterScheduleSeatDetail(Map<String, Integer> map);
+	
+	// 영화 스케줄에 빈좌석 업데이트하기
+	public int updateEmpty_seat(int empty_seat);
+	
 }

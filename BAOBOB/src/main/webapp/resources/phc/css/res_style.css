@@ -506,8 +506,8 @@ Main Components
   }
   .cd-schedule .event-modal .body {
     height: 100%;
-    width: auto;
-/* 	width: 600px; */
+/*     width: auto; */
+	width: 0px;
   }
   .cd-schedule .event-modal .header-bg, .cd-schedule .event-modal .body-bg {
     /* Force Hardware acceleration */

@@ -72,6 +72,10 @@
 								<div align="left" style="width:195px;">
 										<span style="font-weight:bold;">
 											${movie.movie_title}
+											<c:if test="${movie.movie_age==0}"><img src="${projectRes}/images/ybh/전체관람가.png" style="width:15px; height:15px;"></c:if>
+											<c:if test="${movie.movie_age==12}"><img src="${projectRes}/images/ybh/12세 관람가.png" style="width:15px; height:15px;"></c:if>
+											<c:if test="${movie.movie_age==15}"><img src="${projectRes}/images/ybh/15세 관람가.png" style="width:15px; height:15px;"></c:if>
+											<c:if test="${movie.movie_age==19}"><img src="${projectRes}/images/ybh/청소년 관람불가.png" style="width:15px; height:15px;"></c:if>
 										</span><br>
 										<span style="font-weight:bold; color:gray; font-size:12px">
 											20${movie.movie_rel_date} 개봉

@@ -58,10 +58,6 @@
     <i class="fa fa-chevron-up"></i>
   </a>
 </div>
-	
-<!-- Bootstrap core JavaScript -->
-<script src="${projectRes}mainBootstrap/vendor/jquery/jquery.min.js"></script>
-<script src="${projectRes}mainBootstrap/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 <!-- Plugin JavaScript -->
 <script src="${projectRes}mainBootstrap/vendor/jquery-easing/jquery.easing.min.js"></script>

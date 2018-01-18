@@ -1,5 +1,6 @@
 package spring.mvc.baobob.persistence;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 import javax.mail.internet.InternetAddress;
@@ -15,6 +16,7 @@ import org.springframework.scheduling.quartz.SimpleThreadPoolTaskExecutor;
 import org.springframework.stereotype.Repository;
 
 import spring.mvc.baobob.service.EmailHandler;
+import spring.mvc.baobob.vo.FaqVO;
 import spring.mvc.baobob.vo.Member;
 
 @Repository
@@ -62,7 +64,7 @@ public class MainDAOImpl implements MainDAO {
 			} else {
 				sendMail.setSubject("BAOBOB 비밀번호 찾기 인증 메일");
 				sendMail.setText(new StringBuffer("<html>링크를 눌어 인증을 완료하세요.<br><br>")
-						.append("<a href='http://192.168.0.158/baobob/mainConfirmPwdEmail?key=").append(key)
+						.append("<a href='http://192.168.0.158:8087/baobob/mainConfirmPwdEmail?key=").append(key)
 						.append("&email=" + email + "'>인증</a></html>").toString());
 			}
 			sendMail.setFrom("admin@baobob.com", "BAOBOB");
@@ -148,4 +150,10 @@ public class MainDAOImpl implements MainDAO {
 		return cnt;
 	}
 
+	//고객센터
+	public ArrayList<FaqVO> getHelper(Map<String, Integer> map) {
+		MainDAO mapper = sqlSession.getMapper(MainDAO.class);
+		ArrayList<FaqVO> list = mapper.getHelper(map);
+		return list;
+	}
 }

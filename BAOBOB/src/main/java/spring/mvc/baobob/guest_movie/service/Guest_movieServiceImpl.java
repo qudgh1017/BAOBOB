@@ -1,6 +1,7 @@
 package spring.mvc.baobob.guest_movie.service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -535,21 +536,35 @@ public class Guest_movieServiceImpl implements Guest_movieService{
 	@Override
 	public void reserveDateList(HttpServletRequest req, Model model) {
 		int cnt = 0;// 날짜 갯수
-		int movie_index = Integer.parseInt(req.getParameter("movie_index"));
 		
-		//되는 날짜 갯수
-		cnt = gmdao.getDateCnt(movie_index);
+		int movie_index = Integer.parseInt(req.getParameter("movie"));
+		int plusDay = Integer.parseInt(req.getParameter("plusDay"));
+		
+		//영화,날짜별 스케줄 갯수
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("movie_index", movie_index);
+		map.put("plusDay", plusDay);
+		cnt = gmdao.getDateCnt(map);
 		
 		if(cnt > 0) {
+			//상영관 갯수
+			int theaterCnt = gmdao.theaterCnt();
+			int[] theaterSeats = new int[theaterCnt+1];
+			
+			//각 상영관 마다의 총좌석 갯수 구하기
+			for(int i=1; i<=theaterCnt; i++) {
+				theaterSeats[i] = gmdao.theaterSeats(i);
+			}
+			model.addAttribute("theaterSeats", theaterSeats);
+			
 			//영화별 되는 날짜, 상영관 정보 담을 곳
 			ArrayList<Theater_scheduleVO> schedules = null;
-			schedules = gmdao.getAllReserveSchedules(movie_index);
+			schedules = gmdao.getAllReserveSchedules(map);
 			
 			model.addAttribute("schedules", schedules); 
 		}
 		
 		model.addAttribute("cnt", cnt);//전체 영화갯수
-		
 	}
 
 	

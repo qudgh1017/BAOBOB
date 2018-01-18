@@ -12,8 +12,8 @@
 	<!-- Navigation -->
 	<%@ include file="movie_navigation.jsp" %>
 	<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600" rel="stylesheet">
-	<link rel="stylesheet" href="${projectRes}phc/css/sche_reset.css"> <!-- CSS reset -->
-	<link rel="stylesheet" href="${projectRes}phc/css/sche_style.css"> <!-- Resource style -->
+	<link rel="stylesheet" href="${projectRes}phc/css/res_reset.css"> <!-- CSS reset -->
+	<link rel="stylesheet" href="${projectRes}phc/css/res_style.css"> <!-- Resource style -->
 	
 	
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
@@ -29,17 +29,30 @@
 	 });
 	</script>
 	
-	
+	<script type="text/javascript">
+	function hostMovieResView(theater_index, movie_index, theater_schedule_index) {
+		$.ajax({
+			url : "hostMovieResView?theater_index=" + theater_index + "&movie_index=" + movie_index + "&theater_schedule_index=" + theater_schedule_index,
+			type : 'GET',
+			contentType : "application/x-www-form-urlencoded; charset=UTF-8",
+			success : function(vo) {
+				getScheduleSeatInfo(vo.totalCol, vo.totalRow, vo.state);
+			},
+			error : function() {
+				alert('error');
+			}
+		})
+	}
+</script>
 	
 	<div class="content-wrapper" style="height:2000px;">
 		
 		<div id="content">
-			<center><h3><b>스케줄 목록</b></h3></center>
+			<center><h3><b>예매 목록</b></h3></center>
 			<hr style="border:3px solid black;">
+<!-- 			<input style="background-color:#343a40; color:white; border:1px solid black; width:200px; height:40px; margin-left:177px; margin-bottom:15px;" type="button" name="hostMovieAddForm" onclick="window.location='hostScheduleAddForm'" value="스케줄 추가하기"/> -->
 			<div >
-				<input style="background-color:#343a40; color:white; border:1px solid black; float:left; width:200px; height:40px; margin-left:177px; margin-bottom:15px;" type="button" name="hostMovieAddForm" onclick="window.location='hostScheduleAddForm'" value="스케줄 추가하기"/>
-			
-				<input style="background-color:#343a40; color:white; border:1px solid black; float:right; width:200px; height:40px;  margin-bottom:15px;" type="button" name="hostMovieAddForm" onclick="return hostScheduleSearch();" value="스케줄 조회하기"/>
+				<input style="background-color:#343a40; color:white; border:1px solid black; float:right; width:200px; height:40px;  margin-bottom:15px;" type="button" onclick="return hostResSearch();" value="조회하기"/>
 				<select id="theater_index" name="theater_index" style="float:right;">
 					<option value="">상영관 선택</option>
 					<c:forEach var="theaterVO" items="${theaterVOS}">
@@ -103,8 +116,8 @@
 						<div class="top-info" id="selectDay0"><span>${day0}</span></div>
 						<ul>
 						<c:forEach var="vo1" items="${vos1}">
-							<li class="single-event" data-start="<fmt:formatDate type="both" pattern="HH:mm" value="${vo1.schedule_startTime}" />" data-end="<fmt:formatDate type="both" pattern="HH:mm" value="${vo1.schedule_endTime}" />" data-content="hostScheduleDetail?theater_index=${vo1.theater_index}&movie_index=${vo1.movie_index}&theater_schedule_index=${vo1.theater_schedule_index}" data-event="event-3">
-							<a href="#0">
+							<li class="single-event" data-start="<fmt:formatDate type="both" pattern="HH:mm" value="${vo1.schedule_startTime}" />" data-end="<fmt:formatDate type="both" pattern="HH:mm" value="${vo1.schedule_endTime}" />" data-event="event-3">
+							<a href="#0" onclick="hostMovieResView(${vo1.theater_index}, ${vo1.movie_index}, ${vo1.theater_schedule_index})">
 								<em class="event-name">${vo1.theater_index}관 ${vo1.movie_index}번 영화</em>
 							</a>
 							</li>
@@ -117,8 +130,8 @@
 		
 						<ul>
 							<c:forEach var="vo2" items="${vos2}">
-							<li class="single-event" data-start="<fmt:formatDate type="both" pattern="HH:mm" value="${vo2.schedule_startTime}" />" data-end="<fmt:formatDate type="both" pattern="HH:mm" value="${vo2.schedule_endTime}" />" data-content="hostScheduleDetail?theater_index=${vo2.theater_index}&movie_index=${vo2.movie_index}&theater_schedule_index=${vo2.theater_schedule_index}" data-event="event-2">
-							<a href="#0">
+							<li class="single-event" data-start="<fmt:formatDate type="both" pattern="HH:mm" value="${vo2.schedule_startTime}" />" data-end="<fmt:formatDate type="both" pattern="HH:mm" value="${vo2.schedule_endTime}" />" data-content="hostMovieResDetail?theater_index=${vo2.theater_index}&movie_index=${vo2.movie_index}&theater_schedule_index=${vo2.theater_schedule_index}" data-event="event-2">
+							<a href="#0" onclick="hostMovieResView(${vo2.theater_index}, ${vo2.movie_index}, ${vo2.theater_schedule_index})">
 								<em class="event-name">${vo2.theater_index}관 ${vo2.movie_index}번 영화</em>
 							</a>
 							</li>
@@ -131,8 +144,8 @@
 		
 						<ul>
 							<c:forEach var="vo3" items="${vos3}">
-							<li class="single-event" data-start="<fmt:formatDate type="both" pattern="HH:mm" value="${vo3.schedule_startTime}" />" data-end="<fmt:formatDate type="both" pattern="HH:mm" value="${vo3.schedule_endTime}" />" data-content="hostScheduleDetail?theater_index=${vo3.theater_index}&movie_index=${vo3.movie_index}&theater_schedule_index=${vo3.theater_schedule_index}" data-event="event-1">
-							<a href="#0">
+							<li class="single-event" data-start="<fmt:formatDate type="both" pattern="HH:mm" value="${vo3.schedule_startTime}" />" data-end="<fmt:formatDate type="both" pattern="HH:mm" value="${vo3.schedule_endTime}" />" data-content="hostMovieResDetail?theater_index=${vo3.theater_index}&movie_index=${vo3.movie_index}&theater_schedule_index=${vo3.theater_schedule_index}" data-event="event-1">
+							<a href="#0" onclick="hostMovieResView(${vo3.theater_index}, ${vo3.movie_index}, ${vo3.theater_schedule_index})">
 								<em class="event-name">${vo3.theater_index}관 ${vo3.movie_index}번 영화</em>
 							</a>
 							</li>
@@ -145,8 +158,8 @@
 		
 						<ul>
 							<c:forEach var="vo4" items="${vos4}">
-							<li class="single-event" data-start="<fmt:formatDate type="both" pattern="HH:mm" value="${vo4.schedule_startTime}" />" data-end="<fmt:formatDate type="both" pattern="HH:mm" value="${vo4.schedule_endTime}" />" data-content="hostScheduleDetail?theater_index=${vo4.theater_index}&movie_index=${vo4.movie_index}&theater_schedule_index=${vo4.theater_schedule_index}" data-event="event-3">
-							<a href="#0">
+							<li class="single-event" data-start="<fmt:formatDate type="both" pattern="HH:mm" value="${vo4.schedule_startTime}" />" data-end="<fmt:formatDate type="both" pattern="HH:mm" value="${vo4.schedule_endTime}" />" data-event="event-3">
+							<a href="#0" onclick="hostMovieResView(${vo4.theater_index}, ${vo4.movie_index}, ${vo4.theater_schedule_index})">
 								<em class="event-name">${vo4.theater_index}관 ${vo4.movie_index}번 영화</em>
 							</a>
 							</li>
@@ -159,9 +172,10 @@
 		
 						<ul>
 							<c:forEach var="vo5" items="${vos5}">
-							<li class="single-event" data-start="<fmt:formatDate type="both" pattern="HH:mm" value="${vo5.schedule_startTime}" />" data-end="<fmt:formatDate type="both" pattern="HH:mm" value="${vo5.schedule_endTime}" />" data-content="hostScheduleDetail?theater_index=${vo5.theater_index}&movie_index=${vo5.movie_index}&theater_schedule_index=${vo5.theater_schedule_index}" data-event="event-2">
-							<a href="#0">
+							<li class="single-event" data-start="<fmt:formatDate type="both" pattern="HH:mm" value="${vo5.schedule_startTime}" />" data-end="<fmt:formatDate type="both" pattern="HH:mm" value="${vo5.schedule_endTime}" />" data-event="event-2">
+							<a href="#0" onclick="hostMovieResView(${vo5.theater_index}, ${vo5.movie_index}, ${vo5.theater_schedule_index})">
 								<em class="event-name">${vo5.theater_index}관 ${vo5.movie_index}번 영화</em>
+								
 							</a>
 							</li>
 							</c:forEach>
@@ -172,9 +186,10 @@
 		
 			<div class="event-modal">
 				<header class="header">
-					<div class="content">
+					<div class="content" align="center">
 						<span class="event-date"></span>
-						<h3 class="event-name"></h3>
+						<h3 class="event-name"></h3><br><br>
+						<div id="theaterSeat"></div>
 					</div>
 		
 					<div class="header-bg"></div>
@@ -192,10 +207,10 @@
 		</div> <!-- .cd-schedule -->
 		<script src="${projectRes}phc/js/modernizr.js"></script>
 <!-- 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script> -->
-		<script>
+		<script type="text/javascript">
  			if( !window.jQuery ) document.write('<script src="/baobobs/resources/phc/js/jquery-3.0.0.min.js"><\/script>');
  		</script>
-		<script src="${projectRes}phc/js/main.js"></script> <!-- Resource jQuery -->
+		<script src="${projectRes}phc/js/res_main.js"></script> <!-- Resource jQuery -->
 	<br>
 	<br>
 	</div>

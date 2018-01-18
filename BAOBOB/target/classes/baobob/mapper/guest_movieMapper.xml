@@ -150,16 +150,34 @@
 		ON (theater_tbl.theater_index = theater_schedule_tbl.theater_index) JOIN movie_tbl
 		ON (theater_schedule_tbl.movie_index = movie_tbl.movie_index)
 		WHERE movie_tbl.movie_index = #{movie_index}
+		AND TO_CHAR(theater_schedule_tbl.schedule_startdate,'YYMMDD') = TO_CHAR(SYSDATE+#{plusDay},'YYMMDD')
 	</select>
 	
 	<!-- 예매 - 영화 되는 날짜, 상영관 정보 -->
 	<select id="getAllReserveSchedules" resultType="spring.mvc.baobob.vo.Theater_scheduleVO">
-		SELECT movie_tbl.movie_index, theater_tbl.theater_index, theater_schedule_tbl.schedule_startdate 
+		SELECT * 
 		FROM  theater_tbl
 		JOIN theater_schedule_tbl
 		ON (theater_tbl.theater_index = theater_schedule_tbl.theater_index) JOIN movie_tbl
 		ON (theater_schedule_tbl.movie_index = movie_tbl.movie_index)
 		WHERE movie_tbl.movie_index = #{movie_index}
+		AND TO_CHAR(theater_schedule_tbl.schedule_startdate,'YYMMDD') = TO_CHAR(SYSDATE+#{plusDay},'YYMMDD')
+		ORDER BY theater_tbl.theater_index ASC, theater_schedule_tbl.schedule_startdate ASC
 	</select>
+	
+	<!-- 상영관 갯수 -->
+	<select id="theaterCnt" resultType="int">
+		SELECT COUNT(*) FROM theater_tbl
+	</select>
+	
+	<!-- 각 상영관 마다의 총좌석 갯수 구하기 -->
+	<select id="theaterSeats" resultType="int">
+		SELECT COUNT(*)
+		FROM theater_seat_tbl
+		WHERE theater_index = #{theater_index}
+		AND theater_schedule_index = -1
+		AND seat_state IN(3,4,5)
+	</select>
+
 
 </mapper>
