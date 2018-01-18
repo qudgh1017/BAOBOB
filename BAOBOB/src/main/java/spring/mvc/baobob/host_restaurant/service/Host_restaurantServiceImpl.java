@@ -586,7 +586,7 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 			String date = dateForm2.format(sysdate);
 			
 			Map<String, Object> map = new HashMap<String, Object>();
-			map.put("index", index);
+			map.put("restaurant_index", index);
 			map.put("startTime", date + "-00:00");
 			map.put("endTime", date + "-23:59");
 			
