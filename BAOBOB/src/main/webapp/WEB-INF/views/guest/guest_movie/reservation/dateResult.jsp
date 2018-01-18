@@ -21,7 +21,7 @@
 			</div>
 	 	</label>
 		${schedule.theater_index}관
-		${schedule.MDNstate}
+		${schedule.schedule_MDNstate}
 	 	
 		
 	</c:forEach>

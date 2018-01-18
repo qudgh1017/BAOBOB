@@ -65,7 +65,7 @@
 	
 	<!-- 상영관 좌석별 상태 insert_theater_seat -->
 	<insert id="insert_theater_seat" parameterType="java.util.Map">
-		INSERT INTO theater_seat_tbl values(theater_seat_tbl_seq.nextval, #{theater_index}, #{row}, #{col}, #{state}, #{price})
+		INSERT INTO theater_seat_tbl values(theater_seat_tbl_seq.nextval, #{theater_index}, #{row}, #{col}, #{state}, #{price}, -1)
 	</insert>
 	
 	<!-- 상영관 존재 여부 getTheaterCnt -->
