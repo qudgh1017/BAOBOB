@@ -51,7 +51,7 @@
 			<center><h3><b>예매 목록</b></h3></center>
 			<hr style="border:3px solid black;">
 <!-- 			<input style="background-color:#343a40; color:white; border:1px solid black; width:200px; height:40px; margin-left:177px; margin-bottom:15px;" type="button" name="hostMovieAddForm" onclick="window.location='hostScheduleAddForm'" value="스케줄 추가하기"/> -->
-			<div >
+			<div style="height:40px;">
 				<input style="background-color:#343a40; color:white; border:1px solid black; float:right; width:200px; height:40px;  margin-bottom:15px;" type="button" onclick="return hostResSearch();" value="조회하기"/>
 				<select id="theater_index" name="theater_index" style="float:right;">
 					<option value="">상영관 선택</option>
@@ -66,9 +66,8 @@
 				</select>
 				<input type="text" style="float:right;" name="date" id="datepicker" class="datepicker" placeholder="날짜선택" value="${date}"/>
 			</div>
-		</div>
-		
-		<div class="cd-schedule loading">
+			
+			<div class="cd-schedule loading">
 			<div class="timeline">
 				<ul>
 					<li><span>07:00</span></li>
@@ -205,6 +204,10 @@
 		
 			<div class="cover-layer"></div>
 		</div> <!-- .cd-schedule -->
+			
+		</div>
+		
+		
 		<script src="${projectRes}phc/js/modernizr.js"></script>
 <!-- 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script> -->
 		<script type="text/javascript">

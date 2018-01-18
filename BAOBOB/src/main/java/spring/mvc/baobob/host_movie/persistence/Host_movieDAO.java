@@ -131,4 +131,7 @@ public interface Host_movieDAO {
 	// 영화 스케줄에 빈좌석 업데이트하기
 	public int updateEmpty_seat(int empty_seat);
 	
+	// 총 판매액
+	public int getMovieSale();
+	
 }
