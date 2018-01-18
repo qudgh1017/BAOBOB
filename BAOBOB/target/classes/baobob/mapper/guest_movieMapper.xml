@@ -164,5 +164,20 @@
 		AND TO_CHAR(theater_schedule_tbl.schedule_startdate,'YYMMDD') = TO_CHAR(SYSDATE+#{plusDay},'YYMMDD')
 		ORDER BY theater_tbl.theater_index ASC, theater_schedule_tbl.schedule_startdate ASC
 	</select>
+	
+	<!-- 상영관 갯수 -->
+	<select id="theaterCnt" resultType="int">
+		SELECT COUNT(*) FROM theater_tbl
+	</select>
+	
+	<!-- 각 상영관 마다의 총좌석 갯수 구하기 -->
+	<select id="theaterSeats" resultType="int">
+		SELECT COUNT(*)
+		FROM theater_seat_tbl
+		WHERE theater_index = #{theater_index}
+		AND theater_schedule_index = -1
+		AND seat_state IN(3,4,5)
+	</select>
+
 
 </mapper>

@@ -68,20 +68,8 @@
 							<c:forEach var="movie" items="${movies}"> 
 								<!-- 상영 중 -->
 								<c:if test="${movie.movie_state==1}">
-									<%-- <input type="hidden" value="${movie.movie_index}">
-									<button onclick="movieClick(${movie.movie_index});" type="button" class="btn btn-black" data-toggle="button" aria-pressed="false" autocomplete="off" style="width:95%; height:50px; ">
-										<div align="left">
-											<c:if test="${movie.movie_age==0}"><img src="${projectRes}/images/ybh/전체관람가.png" style="width:15px; height:15px;"></c:if>
-											<c:if test="${movie.movie_age==12}"><img src="${projectRes}/images/ybh/12세 관람가.png" style="width:15px; height:15px;"></c:if>
-											<c:if test="${movie.movie_age==15}"><img src="${projectRes}/images/ybh/15세 관람가.png" style="width:15px; height:15px;"></c:if>
-											<c:if test="${movie.movie_age==19}"><img src="${projectRes}/images/ybh/청소년 관람불가.png" style="width:15px; height:15px;"></c:if>&nbsp; 
-											${movie.movie_title}
-										</div>
-									</button> --%>
-									
 									<label onclick="clickMovie('${movie.movie_index}')" class="btn movie" style="height:50px; width:95%;">
 									    <input type="radio" name="movie_index" autocomplete="off">
-										<%-- <input type="hidden" value="${movie.movie_index}"> --%>
 										<div align="left">
 											<c:if test="${movie.movie_age==0}"><img src="${projectRes}/images/ybh/전체관람가.png" style="width:15px; height:15px;"></c:if>
 											<c:if test="${movie.movie_age==12}"><img src="${projectRes}/images/ybh/12세 관람가.png" style="width:15px; height:15px;"></c:if>

@@ -60,4 +60,9 @@ public  interface Guest_movieDAO {
 	//예매 - 영화 되는 날짜, 상영관 정보
 	public ArrayList<Theater_scheduleVO> getAllReserveSchedules(Map<String,Object> map);
 	
+	//상영관 갯수
+	public int theaterCnt();
+	
+	//각 상영관 마다 총좌석 갯수구하기
+	public int theaterSeats(int theater_index);
 }

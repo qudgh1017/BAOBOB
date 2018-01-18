@@ -221,6 +221,28 @@ public class Guest_movieDAOImpl implements Guest_movieDAO{
 		return schedules;
 	}
 
+	//»ó¿µ°ü °¹¼ö
+	@Override
+	public int theaterCnt() {
+		int cnt = 0;
+		
+		Guest_movieDAO gmdao = sqlSession.getMapper(Guest_movieDAO.class);
+		cnt = gmdao.theaterCnt();
+		
+		return cnt;
+	}
+	
+	//°¢ »ó¿µ°ü ¸¶´ÙÀÇ ÃÑÁÂ¼® °¹¼ö ±¸ÇÏ±â
+	@Override
+	public int theaterSeats(int theater_index) {
+		int cnt = 0;
+		
+		Guest_movieDAO gmdao = sqlSession.getMapper(Guest_movieDAO.class);
+		cnt = gmdao.theaterSeats(theater_index);
+		
+		return cnt;
+	}
+
 	
 
 
