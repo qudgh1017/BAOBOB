@@ -35,13 +35,15 @@
 										<td style="text-align: center;">
 											<span><b>[${dto.member_id}]</b></span>
 										</td>
-										<td><input type="button" value="상세 정보" onclick="window.location='hostEmployeeView?id=${dto.member_id}'"></td>
+										<td style="text-align: center; vertical-align: middle;">
+											<input class="btn btn-secondary" style="background-color: #007bff; color: white;" type="button" value="상세 정보" onclick="window.location='hostEmployeeView?id=${dto.member_id}'">
+										</td>
 									</tr>
 								</c:forEach>
 							</c:if>
 							<c:if test="${cnt_empl == 0}">
 								<tr>
-									<td>등록된 직원이 없습니다.</td>
+									<td colspan="2" style="text-align: center;">등록된 직원이 없습니다.</td>
 								</tr>
 							</c:if>
 							</tbody>

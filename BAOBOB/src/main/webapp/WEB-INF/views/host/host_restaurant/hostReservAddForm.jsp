@@ -62,7 +62,7 @@ $(function() {
 									<tr>
 										<td colspan="2" style="text-align: center;">
 											<input style="background-color: #343a40; color: white; border: 1px solid black; width: 200px; height: 40px;" 
-													type="button" value="확인" onclick="checkPosRestaurant()" />
+													type="button" value="확인" onclick="checkPosRestaurant(${sessionScope.memStep})" />
 										</td>
 									</tr>
 								</tbody>
@@ -88,7 +88,7 @@ $(function() {
 															<button class="m_btn" onclick="spaceType('3')"><img class="p_img" src="${restaurant_images}table_use.jpg"></button>
 														</div>
 														<div class="card-footer small text-muted">
-															<button class="btn btn-primary" value="1" onclick="spaceTypeChange2('1');">예약</button>
+															<button class="btn btn-primary" value="1" onclick="spaceTypeChange2(${sessionScope.memStep});">예약</button>
 														</div>
 													</div>
 												</div>

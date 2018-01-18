@@ -26,24 +26,11 @@
 			<!-- 식당 총관리자 -->
 			<c:redirect url="hostRestaurantList"/>
 		</c:when>
-		<c:when test="${sessionScope.memStep == 51 || sessionScope.memStep == 61}">
-			<!-- 일식(도키도키) 관리자 | 식당 직원 -->
-			<c:redirect url="hostReservList"/>
+		<c:when
+			test="${(51 <= sessionScope.memStep && sessionScope.memStep <= 53) || (61 <= sessionScope.memStep && sessionScope.memStep <= 63)}">
+			<!-- 식당 관리자 | 식당 직원 -->
+			<c:redirect url="hostReservList" />
 		</c:when>
-		
-	<%-- 
-		한식, 양식 링크 추가할 부분
-		
-		<c:when test="${sessionScope.memStep == 52 || sessionScope.memStep == 62}">
-			<!-- 한식 식당 관리자 | 식당 직원 -->
-			<c:redirect url="hostReservList"/>
-		</c:when>
-		<c:when test="${sessionScope.memStep == 53 || sessionScope.memStep == 63}">
-			<!-- 양식 식당 관리자 | 식당 직원 -->
-			<c:redirect url="hostReservList"/>
-		</c:when>
-	 --%>
-	 
 		<c:when test="${sessionScope.memStep == 7}">
 			<!-- 주차장 관리자 -->
 			<c:redirect url="hostParkingMain"/>

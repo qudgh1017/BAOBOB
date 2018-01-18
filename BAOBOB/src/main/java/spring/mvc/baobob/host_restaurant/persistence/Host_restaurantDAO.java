@@ -25,10 +25,10 @@ public interface Host_restaurantDAO {
 	public int addTable(TableVO dto);
 
 	// 식당 총 관리자 - 수정할 매장 정보 조회 / 수정할 정보 입력
-	public RestaurantVO viewRestaurant(String index);
+	public RestaurantVO viewRestaurant(int restaurant_index);
 	
 	// 식당 총 관리자 - 매장 내 테이블 정보 조회를 위한 좌석 수 조회
-	public TableVO getColRow(String index);
+	public TableVO getColRow(int restaurant_index);
 
 	// 식당 총 관리자 - 매장 내 테이블 정보 조회를 위한 테이블 상태 조회
 	public String getState(Map<String, Object> map);
@@ -48,16 +48,16 @@ public interface Host_restaurantDAO {
 	/////////////////////////////////////////////////////////////////////////////////////////
 	
 	// 식당[1] 메뉴 개수
-	public int getMenuCnt(); 
+	public int getMenuCnt(int restaurant_index); 
 
 	// 식당[1] 각 메뉴 정보
-	public ArrayList<MenuVO> getMenuList();
+	public ArrayList<MenuVO> getMenuList(int restaurant_index);
 	
 	// 식당[1] 메뉴 추가
 	public int addMenu(MenuVO dto);
 	
 	// 식당[1] 수정할 메뉴 정보 보기
-	public MenuVO viewMenu(int index);
+	public MenuVO viewMenu(MenuVO dto);
 	
 	// 식당[1] 메뉴 수정 처리
 	public int modMenu(MenuVO dto);
@@ -66,10 +66,10 @@ public interface Host_restaurantDAO {
 	public int delMenu(MenuVO dto);
 
 	// 식당[1] 직원 수
-	public int getEmployeeCnt();
+	public int getEmployeeCnt(int member_step);
 
 	// 식당[1] 각 직원 정보
-	public ArrayList<EmployeeVO> getEmployeeList();
+	public ArrayList<EmployeeVO> getEmployeeList(int member_step);
 
 	// 전체 회원 수
 	public int getMemberCnt();

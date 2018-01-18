@@ -12,6 +12,8 @@
 	<!-- Navigation -->
 	<%@ include file="_navigation.jsp" %>
 	
+	<!-- 총 관리자 메뉴는 총 관리자만 이용할 수 있다. -->
+	<c:if test="${sessionScope.memStep == 4}">
  	<div class="content-wrapper">
 		<div class="container-fluid row">
 			<div class="col-lg-10">
@@ -50,6 +52,12 @@
 			</div>
 		</div>
 	</div>
+	</c:if>
+	<c:if test="${sessionScope.memStep != 4}">
+		<script type="text/javascript">
+			errorAlert('이용할 수 없는 메뉴입니다.\n총 관리자 계정으로 로그인해주세요.');
+		</script>
+	</c:if>
 	
 	<!-- Footer -->
 	<%@ include file="_footer.jsp" %>
