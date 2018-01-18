@@ -448,6 +448,17 @@ public class Host_movieDAOImpl implements Host_movieDAO {
 		return vos;
 	}
 
+	// 영화 스케줄에 빈좌석 업데이트하기
+	@Override
+	public int updateEmpty_seat(int empty_seat) {
+		int cnt = 0;
+		
+		Host_movieDAO dao = sqlSession.getMapper(Host_movieDAO.class);
+		cnt = dao.updateEmpty_seat(empty_seat);
+		
+		return cnt;
+	}
+
 
 
 
