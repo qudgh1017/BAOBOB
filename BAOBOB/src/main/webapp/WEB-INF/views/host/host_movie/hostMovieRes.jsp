@@ -12,8 +12,8 @@
 	<!-- Navigation -->
 	<%@ include file="movie_navigation.jsp" %>
 	<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600" rel="stylesheet">
-	<link rel="stylesheet" href="${projectRes}phc/css/sche_reset.css"> <!-- CSS reset -->
-	<link rel="stylesheet" href="${projectRes}phc/css/sche_style.css"> <!-- Resource style -->
+	<link rel="stylesheet" href="${projectRes}phc/css/res_reset.css"> <!-- CSS reset -->
+	<link rel="stylesheet" href="${projectRes}phc/css/res_style.css"> <!-- Resource style -->
 	
 	
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
@@ -210,7 +210,7 @@
 		<script type="text/javascript">
  			if( !window.jQuery ) document.write('<script src="/baobobs/resources/phc/js/jquery-3.0.0.min.js"><\/script>');
  		</script>
-		<script src="${projectRes}phc/js/main.js"></script> <!-- Resource jQuery -->
+		<script src="${projectRes}phc/js/res_main.js"></script> <!-- Resource jQuery -->
 	<br>
 	<br>
 	</div>

@@ -716,6 +716,7 @@ public class Host_movieServiceImpl implements Host_movieService{
 		map2.put("row", 0);
 		map2.put("col", 0);
 		
+		int empty_seat = 0;
 		for(int row = 1; row<=totalRow; row++) {
 			for(int col = 1; col<=totalCol; col++) {
 				System.out.println("row : " + row);
@@ -724,8 +725,14 @@ public class Host_movieServiceImpl implements Host_movieService{
 				map2.replace("col", col);
 				seatState[row-1][col-1] = dao.getTheaterSeatState(map2);
 				seatPrice[row-1][col-1] = dao.getTheaterSeatPrice(map2);
+				
+				if(seatState[row-1][col-1] == 3 || seatState[row-1][col-1] == 4 || seatState[row-1][col-1] == 5) {
+					empty_seat += 1;
+				}
 			}
 		}
+		// ºóÁÂ¼® ¾÷µ¥ÀÌÆ®ÇÏ±â
+		dao.updateEmpty_seat(empty_seat);
 		System.out.println("===============================================");
 		System.out.println("seatState : " + seatState);
 		
