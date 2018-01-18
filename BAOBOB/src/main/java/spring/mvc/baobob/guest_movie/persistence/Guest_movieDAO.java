@@ -65,4 +65,9 @@ public  interface Guest_movieDAO {
 	
 	//각 상영관 마다 총좌석 갯수구하기
 	public int theaterSeats(int theater_index);
+	
+	//스케줄 정보
+	public Theater_scheduleVO getSchedule(int theater_schedule_index);
+	
+	
 }

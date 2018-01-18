@@ -106,23 +106,6 @@ public class Guest_movieDAOImpl implements Guest_movieDAO{
 		return cnt;
 	}
 	
-	//review_index 불러오기
-	/*@Override
-	public String getReviewIndex(Map<String,Object> map) {
-		String review_index = null;
-		
-		Guest_movieDAO gmdao = sqlSession.getMapper(Guest_movieDAO.class);
-		//review_index = gmdao.getReviewIndex(map);
-		
-		if(gmdao.getReviewIndex(map)==null) {
-			review_index="0";
-		}else {
-			review_index = gmdao.getReviewIndex(map);
-		}
-		
-		return review_index;
-	}*/
-
 	//review 추가
 	@Override
 	public int insertReview(ReviewVO review) {
@@ -241,6 +224,17 @@ public class Guest_movieDAOImpl implements Guest_movieDAO{
 		cnt = gmdao.theaterSeats(theater_index);
 		
 		return cnt;
+	}
+
+	//스케줄 정보
+	@Override
+	public Theater_scheduleVO getSchedule(int theater_schedule_index) {
+		Theater_scheduleVO schedule = null;
+		
+		Guest_movieDAO gmdao = sqlSession.getMapper(Guest_movieDAO.class);
+		schedule = gmdao.getSchedule(theater_schedule_index);
+		
+		return schedule;
 	}
 
 	

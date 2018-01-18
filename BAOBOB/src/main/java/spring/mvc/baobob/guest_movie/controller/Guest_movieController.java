@@ -156,6 +156,51 @@ public class Guest_movieController {
 		return "/guest/guest_movie/reservation/dateResult";
 	}
 	
+	//예매선택한 영화정보
+	@RequestMapping("reserveMovieInfo")
+	public String reserveMovieInfo(HttpServletRequest req, Model model) {
+		log.debug("====== Guest_movieController/reserveMovieInfo ======");
+		
+		gmservice.reserveMovieResult(req, model);
+		
+		return "/guest/guest_movie/reservation/reserveMovieInfo";
+	}
+	
+	//예매선택한 영화정보
+	@RequestMapping("reserveScheduleInfo")
+	public String reserveScheduleInfo(HttpServletRequest req, Model model) {
+		log.debug("====== Guest_movieController/reserveScheduleInfo ======");
+		
+		gmservice.reserveScheduleResult(req, model);
+		
+		return "/guest/guest_movie/reservation/reserveScheduleInfo";
+	}
+	
+	//다음페이지 선택하는 버튼(movie_index, theater_schedule_index);
+	@RequestMapping("nextSeatButton")
+	public String nextSeatButton(HttpServletRequest req, Model model) {
+		log.debug("====== Guest_movieController/nextSeatButton ======");
+		
+		int movie_index = Integer.parseInt(req.getParameter("movie_index"));
+		int theater_schedule_index = Integer.parseInt(req.getParameter("theater_schedule_index"));
+		model.addAttribute("movie_index", movie_index);
+		model.addAttribute("theater_schedule_index", theater_schedule_index);
+		
+		return "/guest/guest_movie/reservation/nextSeatButton";
+	}
+	
+	//예매-빠른예매 2번째페이지 - 좌석 선택
+	@RequestMapping("movieTicket2")
+	public String movieTicket2(HttpServletRequest req, Model model) {
+		log.debug("====== Guest_movieController/movieTicket2 ======");
+
+		//예매 선택한 영화, 스케줄정보
+		gmservice.reserveMovieResult(req, model);
+		gmservice.reserveScheduleResult(req, model);
+		
+		return "/guest/guest_movie/reservation/movieTicket2";
+	}
+	
 	//예매-상영시간표
 	@RequestMapping("movieSchedule")
 	public String movieSchedule(HttpServletRequest req, Model model) {

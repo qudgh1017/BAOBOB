@@ -520,11 +520,20 @@ public class Guest_movieServiceImpl implements Guest_movieService{
 		cnt = gmdao.getMovieCnt();
 		
 		if(cnt > 0) {
+			//상영관 갯수
+			int theaterCnt = gmdao.theaterCnt();
+			int[] theaterSeats = new int[theaterCnt+1];
+			
+			//각 상영관 마다의 총좌석 갯수 구하기
+			for(int i=1; i<=theaterCnt; i++) {
+				theaterSeats[i] = gmdao.theaterSeats(i);
+			}
+			model.addAttribute("theaterSeats", theaterSeats);
+			
 			//게시글 목록 조회
 			ArrayList<MovieVO> movies = null;
 			// movie_state에 따른 영화 리스트 구하기
 			movies = gmdao.getAllReserveMovies();
-			
 			model.addAttribute("movies", movies); 
 		}
 		
@@ -547,25 +556,38 @@ public class Guest_movieServiceImpl implements Guest_movieService{
 		cnt = gmdao.getDateCnt(map);
 		
 		if(cnt > 0) {
-			//상영관 갯수
-			int theaterCnt = gmdao.theaterCnt();
-			int[] theaterSeats = new int[theaterCnt+1];
-			
-			//각 상영관 마다의 총좌석 갯수 구하기
-			for(int i=1; i<=theaterCnt; i++) {
-				theaterSeats[i] = gmdao.theaterSeats(i);
-			}
-			model.addAttribute("theaterSeats", theaterSeats);
 			
 			//영화별 되는 날짜, 상영관 정보 담을 곳
 			ArrayList<Theater_scheduleVO> schedules = null;
 			schedules = gmdao.getAllReserveSchedules(map);
-			
 			model.addAttribute("schedules", schedules); 
 		}
 		
 		model.addAttribute("cnt", cnt);//전체 영화갯수
 	}
+
+	//영화 정보들(예매에서 Ajax로 받을 값들)
+	@Override
+	public void reserveMovieResult(HttpServletRequest req, Model model) {
+		
+		//#movieInfo로 갈 정보
+		int movie_index = Integer.parseInt(req.getParameter("movie_index"));
+		MovieVO movie = gmdao.getMovie(movie_index);
+		model.addAttribute("movie", movie);
+	}
+
+	//스케줄 정보들(예매에서 Ajax로 받을 값들)
+	@Override
+	public void reserveScheduleResult(HttpServletRequest req, Model model) {
+
+		//#scheduleInfo로 갈정보
+		int theater_schedule_index = Integer.parseInt(req.getParameter("theater_schedule_index"));
+		Theater_scheduleVO schedule = gmdao.getSchedule(theater_schedule_index);
+		model.addAttribute("schedule", schedule);
+	}
+
+	
+	
 
 	
 	

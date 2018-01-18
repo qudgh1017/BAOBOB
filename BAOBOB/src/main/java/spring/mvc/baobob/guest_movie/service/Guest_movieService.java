@@ -32,4 +32,12 @@ public interface Guest_movieService {
 	
 	//영화,상영관별 되는 날짜 
 	public void reserveDateList(HttpServletRequest req, Model model);
+	
+	//영화 정보들(예매에서 Ajax로 받을 값들)
+	public void reserveMovieResult(HttpServletRequest req, Model model);
+	
+	//스케줄 정보들(예매에서 Ajax로 받을 값들)
+	public void reserveScheduleResult(HttpServletRequest req, Model model);
+
+
 }
