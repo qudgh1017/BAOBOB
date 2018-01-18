@@ -77,6 +77,11 @@
 		WHERE member_id = #{userId}
 	</select>
 	
+	<!-- 고객센터글수 -->
+	<select id="getHelperCnt" resultType="int">
+		SELECT COUNT(*) FROM faq_tbl
+	</select>
+	
 	<!-- 고객센터 -->
 	<select id="getHelper" resultType="spring.mvc.baobob.vo.FaqVO">
 		<![CDATA[
@@ -87,4 +92,31 @@
 		]]>
 	</select>
 	
+	<!-- 고객센터 검색 제안 -->
+	<select id="helpKeywordSuggest" resultType="String">
+		SELECT faq_sub_title
+		FROM faq_tbl
+		WHERE faq_sub_title LIKE '%'||#{keyword}||'%'
+	</select>
+	
+	<!-- 고객센터 검색 결과수 -->
+	<select id="helpKeywordSearchCnt" resultType="int">
+		SELECT COUNT(*)
+		FROM faq_tbl
+		WHERE faq_sub_title LIKE '%'||#{keyword}||'%'
+			OR faq_content LIKE '%'||#{keyword}||'%'
+	</select>
+	
+	<!-- 고객센터 검색 -->
+	<select id="helpKeywordSearch" resultType="spring.mvc.baobob.vo.FaqVO">
+		<![CDATA[
+		SELECT *
+		FROM (SELECT faq_index, faq_title, faq_sub_title, faq_content, rownum num
+			  FROM faq_tbl
+			  WHERE faq_sub_title LIKE '%'||#{keyword}||'%'
+			  	OR faq_content LIKE '%'||#{keyword}||'%'
+			  )
+		WHERE num >= #{start} AND num <= #{end}
+		]]>
+	</select>
 </mapper>

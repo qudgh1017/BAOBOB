@@ -132,6 +132,7 @@ function joinCheck() {
 	}
 }
 
+//성별 선택
 function sexBtnChange(sex) {
 	var sexBtn = document.getElementsByClassName('sexBtn');
 	if(sex == 'M') {
@@ -153,7 +154,14 @@ function sexBtnChange(sex) {
 	}
 }
 
+//회원가입 페이지의 로그인 페이지로 가기
+function goMainSignIn() {
+	if(confirm('작성을 취소하시겠습니까?')) {
+		window.location = 'mainSignIn';
+	}
+}
 
+//로그인 입력창 값 유무 확인
 function signInChk() {
 	if(!document.mainSignInForm.id.value){
 		alert(id_msg);

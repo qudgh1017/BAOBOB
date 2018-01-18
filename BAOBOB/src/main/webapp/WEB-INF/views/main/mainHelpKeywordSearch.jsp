@@ -11,7 +11,6 @@
     <meta name="author" content="">
 
     <title>Baobob</title>
-    
     <link href="${projectRes}ymk/css/mainHelp.css" rel="stylesheet">
 </head>
 
@@ -69,7 +68,7 @@
 var current = ${current}; //현재 페이지번호
 function help_list_more() {
 	var param = 'next=' + ((current-0) + 1);
-	sendRequest(help_list_more_callback, 'mainHelpListMore', 'GET', param);
+	sendRequest(help_list_more_callback, 'mmainHelpKeywordSearchMore', 'GET', param);
 }
 
 function help_list_more_callback(){

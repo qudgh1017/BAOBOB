@@ -174,6 +174,7 @@ public class HomeController {
 		return "main/mainIndex";
 	}
 	
+	//고객센터
 	@RequestMapping("mainHelp")
 	public String mainHelp(HttpServletRequest req, Model model) {
 		System.out.println("mainHelp");
@@ -181,5 +182,45 @@ public class HomeController {
 		service.mainHelp(req, model);
 		
 		return "main/mainHelp";
+	}
+	
+	//고객센터 더보기 ajax
+	@RequestMapping("mainHelpListMore")
+	public String mainHelpListMore(HttpServletRequest req, Model model) {
+		System.out.println("mainHelpListMore();");
+		
+		service.mainHelp(req, model);
+		
+		return "main/mainHelpListMore";
+	}
+
+	//고객센터 검색 제안어
+	@RequestMapping("mainHelpKeywordSuggest")
+	public String mainHelpSendKeyword(HttpServletRequest req, Model model) {
+		System.out.println("mainHelpSendKeyword");
+		
+		service.mainHelpKeywordSuggest(req, model);
+		
+		return "main/mainHelpKeywordSuggest";
+	}
+	
+	//고객센터 검색 결과 페이지
+	@RequestMapping("mainHelpKeywordSearch")
+	public String mainHelpKeywordSearch(HttpServletRequest req, Model model) {
+		System.out.println("mainHelpKeywordSearch()");
+		
+		service.mainHelpKeywordSearch(req, model);
+		
+		return "main/mainHelpKeywordSearch";
+	}
+	
+	//고객센터 검색 결과 페이지 ajax
+	@RequestMapping("mainHelpKeywordSearchMore")
+	public String mmainHelpKeywordSearchMore(HttpServletRequest req, Model model) {
+		System.out.println("mmainHelpKeywordSearchMore()");
+		
+		service.mainHelpKeywordSearch(req, model);
+		
+		return "main/mainHelpListMore";
 	}
 }
