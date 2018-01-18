@@ -57,15 +57,15 @@
 	
 	<!-- 영화관 결산 총액 구하기 -->
 	<select id="getMovieSale" resultType="int">
-		SELECT SUM(movie_history_price) FROM movie_history_tbl
+		SELECT NVL(SUM(movie_history_price),0) FROM movie_history_tbl
 	</select>
 	
-	<!-- 결산페이지(챠트) -->
-	<resultMap type="spring.mvc.baobob.vo.hostTChartVO" id="chart">
-		<id 	property="kind" 	column="kind" />
+	<!-- 영화관 결산페이지(챠트) -->
+	<resultMap type="spring.mvc.baobob.vo.hostTChartVO" id="movieChart">
+		<id		property="kind" 	column="kind" />
 		<result property="sum" 		column="sum" />
-	</resultMap>
-	<select id="getMovieChart" resultMap="chart">
+	</resultMap> 
+	<select id="getMovieChart" resultMap="movieChart">
 		SELECT NVL(m.movie_janre,0) kind, SUM(h.movie_history_price) sum 
 		FROM movie_tbl m JOIN theater_schedule_tbl t  
 		ON m.movie_index = t.movie_index
@@ -73,18 +73,50 @@
 		ON t.theater_schedule_index = h.theater_schedule_index
 		GROUP BY ROLLUP(m.movie_janre)
 	</select>
+	<!-- 
+		<select id="getMovieChart" resultType="spring.mvc.baobob.vo.hostTChartVO">
+		SELECT NVL(m.movie_janre,0) kind, SUM(h.movie_history_price) sum 
+		FROM movie_tbl m JOIN theater_schedule_tbl t  
+		ON m.movie_index = t.movie_index
+		JOIN movie_history_tbl h
+		ON t.theater_schedule_index = h.theater_schedule_index
+		GROUP BY ROLLUP(m.movie_janre)
+	</select> 
+	-->
 	
+	<!-- 식당 결산 총액 구하기 -->
+	<select id="getRestaurantSale" resultType="int">
+		SELECT NVL(SUM(fh.restaurant_menu_count * m.restaurant_menu_price),0)
+		FROM restaurant_food_history_tbl fh JOIN restaurant_menu_tbl m
+		ON m.restaurant_menu_index = fh.restaurant_menu_index
+	</select>
 	
+	<!-- 식당 결산페이지(챠트) -->
+	<resultMap type="spring.mvc.baobob.vo.hostTChartVO" id="restaurantChart">
+		<id		property="kind" 	column="kind" />
+		<result property="sum" 		column="sum" />
+	</resultMap> 
+	<select id="getRestaurantChart" resultMap="restaurantChart">
+		SELECT NVL(fh.restaurant_index,0) kind, 
+		       NVL(SUM(fh.restaurant_menu_count * m.restaurant_menu_price),SUM(1 * m.restaurant_menu_price)) sum
+		FROM restaurant_food_history_tbl fh JOIN restaurant_menu_tbl m
+		ON m.restaurant_menu_index = fh.restaurant_menu_index
+		GROUP BY ROLLUP(fh.restaurant_index)
+	</select>
 	
+	<!-- 주차 기본요금 -->
+	<select id="getParkingFee" resultType="spring.mvc.baobob.vo.ParkingFee">
+		SELECT *
+		FROM park_fee_tbl
+	</select>
 	
-	
-	
-	
-	
-	
-	
-	
-	
+	<!-- 올해 납부 내역 -->
+	<select id="getThisYearPayList" resultType="spring.mvc.baobob.vo.ParkingHistory">
+		SELECT *
+		FROM park_history_tbl
+		WHERE p_history_out IS NOT NULL
+		AND TO_CHAR(p_history_out, 'Y') = TO_CHAR(SYSDATE, 'Y')
+	</select>
 	
 	
 	

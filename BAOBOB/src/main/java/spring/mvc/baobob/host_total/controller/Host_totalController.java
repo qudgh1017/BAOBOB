@@ -100,7 +100,7 @@ public class Host_totalController {
 		return "host/host_total/hostTMemDelPro";
 	}
 	
-	//영화관 결산페지
+	//영화관 결산페이지
 	@RequestMapping("hostTMovie")
 	public String hostTMovie(HttpServletRequest req, Model model) {
 		
@@ -109,9 +109,24 @@ public class Host_totalController {
 		return "host/host_total/hostTMovie";
 	}
 	
+	//영화관 결산페이지
+	@RequestMapping("hostTRestaurant")
+	public String hostTRestaurant(HttpServletRequest req, Model model) {
+		
+		service.restaurantChart(req, model);
+		
+		return "host/host_total/hostTRestaurant";
+	}
 	
-	
-	
+	//주차장 결산페이지
+	@RequestMapping("hostTParkingChart")
+	public String hostTParkingChart(HttpServletRequest req, Model model) {
+		System.out.println("hostParkingPayChart()");
+		
+		service.getParkingPayChart(req, model);
+		
+		return "host/host_total/hostParkingPayChart";
+	}
 	
 	
 	
