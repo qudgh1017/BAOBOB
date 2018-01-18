@@ -102,8 +102,9 @@ public class Guest_restaurantController {
 		return "guest/guest_restaurant/reserv/guestReserv_addForm";
 	}
 	
-	@RequestMapping("guestRestaurantModPro")
-	public String guestRestaurantModPro(HttpServletRequest req, Model model) {
+	//3-3. 레스토랑 예약처리
+	@RequestMapping("guestReservAddPro")
+	public String guestReservAddPro(HttpServletRequest req, Model model) {
 		
 		return "";
 	}
