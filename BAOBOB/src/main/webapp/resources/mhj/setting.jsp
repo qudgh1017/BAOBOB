@@ -7,7 +7,7 @@
 
 <!-- 예약 관리 js -->
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<c:set var="projectRes" value="/baobob/resources/" />>
+<c:set var="projectRes" value="/baobob/resources/"/>
 
 <!-- 민현준 -->
 <c:set var="restaurant_css" value="/baobob/resources/mhj/css/style.css" />

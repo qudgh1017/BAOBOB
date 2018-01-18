@@ -86,7 +86,7 @@
 					<hr style="border:2px solid black;">
 					<form id="reviewForm" action="Restaurant_reviewWrite" method="POST">
 						<input type="hidden" value="${restaurant_index}" name="restaurant_index">
-						<table class="table" border="1">
+						<table class="table table-bordered" border="1">
 							<tr>
 								<th>별점</th> 
 								<td>
@@ -136,7 +136,7 @@
 							<c:if test="${cnt>0}">
 								<c:forEach var="dto" items="${dtos}">
 									<form id="reviewListForm">
-										<table class="table" border="1">
+										<table class="table table-bordered" border="1">
 											<input type="hidden" value="${dto.review_index}" name="review_index">
 											<tr>
 												<th style="width:40px"><h6>Id</h6></th> 

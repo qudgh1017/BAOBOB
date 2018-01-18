@@ -107,6 +107,7 @@ public class Guest_restaurantController {
 		
 		return "";
 	}
+	
 	//3-3. 레스토랑 예약 처리
 	/*@RequestMapping("guestReservAddPro")
 	public String guestReservAddPro(HttpServletRequest req, Model model){

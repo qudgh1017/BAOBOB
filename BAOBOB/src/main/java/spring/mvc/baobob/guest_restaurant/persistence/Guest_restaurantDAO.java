@@ -25,9 +25,9 @@ public interface Guest_restaurantDAO {
 	//============================== 3. 레스토랑 예약 ==============================
 	//==========================================================================
 	//3. 예약하기
-	public RestaurantVO reserv_tableList(String index);
+	public RestaurantVO reserv_tableList(int index);
 	//
-	public TableVO getColRow(String index);
+	public TableVO getColRow(int index);
 	
 	public String getState(Map<String, Object> map);
 	

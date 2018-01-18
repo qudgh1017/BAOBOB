@@ -55,20 +55,18 @@ public class Guest_restaurantServiceImpl implements Guest_restaurantService{
 	//==========================================================================
 	//============================== 3. 레스토랑 예약 ==============================
 	//==========================================================================
-	//테이블 검색
+	//레스토랑 테이블 확인
 	@Override
 	public void restaurant_tableList(HttpServletRequest req, Model model) {
 		log.debug("===== Service/restaurant_tableList() =====");
 
-		String date = req.getParameter("date");
-		String time = req.getParameter("time");
 
 		RestaurantVO dto = new RestaurantVO();
-		dto = dao.reserv_tableList(req.getParameter("index"));
+		dto = dao.reserv_tableList(Integer.parseInt(req.getParameter("index")));
 
 		TableVO dto2 = new TableVO();
-		dto2 = dao.getColRow(req.getParameter("index"));
-		
+		dto2 = dao.getColRow(Integer.parseInt(req.getParameter("index")));
+
 		int col = dto2.getTable_col() + 1;
 		int row = dto2.getTable_row() + 1;
 
@@ -76,7 +74,7 @@ public class Guest_restaurantServiceImpl implements Guest_restaurantService{
 		int index = 0;
 
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("restaurant_index", req.getParameter("index"));
+		map.put("restaurant_index", Integer.parseInt(req.getParameter("index")));
 		map.put("restaurant_table_index", index);
 
 		for (int i = 0; i < row; i++) {
@@ -96,8 +94,14 @@ public class Guest_restaurantServiceImpl implements Guest_restaurantService{
 		model.addAttribute("info", info);
 		model.addAttribute("col", col);
 		model.addAttribute("row", row);
+		
+		String date = req.getParameter("date");
 		model.addAttribute("date", date);
-		model.addAttribute("time", time);
+
+		if (req.getParameter("time") != "") {
+			String time = req.getParameter("time");
+			model.addAttribute("time", time);
+		}
 	}
 
 	
@@ -111,13 +115,13 @@ public class Guest_restaurantServiceImpl implements Guest_restaurantService{
 	//4-1. 리뷰 리스트
 	@Override
 	public void reviewList(HttpServletRequest req, Model model) {
-		int pageSize = 3; 	// 한 페이지당 출력할 게시글 갯수
-		int pageBlock = 5; 	// 한 블럭당 페이지 갯수
+		int pageSize = 3; 		// 한 페이지당 출력할 게시글 갯수
+		int pageBlock = 5; 		// 한 블럭당 페이지 갯수
 
-		int cnt = 0; 		// 게시글 갯수
-		int start = 0; 		// 현재 페이지 게시글 시작 번호
-		int end = 0;		// 현재 페이지 게시글 마지막 번호
-		int number = 0; 	// 출력할 게시글 번호
+		int cnt = 0; 			// 게시글 갯수
+		int start = 0; 			// 현재 페이지 게시글 시작 번호
+		int end = 0;			// 현재 페이지 게시글 마지막 번호
+		int number = 0; 		// 출력할 게시글 번호
 		String pageNum = null; 	// 페이지 번호
 		int currentPage = 0; 	// 현재 페이지
 

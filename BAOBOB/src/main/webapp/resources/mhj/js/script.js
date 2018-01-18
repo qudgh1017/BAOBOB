@@ -89,6 +89,7 @@ var typeImg = ''; // 선택한 버튼 이미지
 
 // type에 따라 버튼 이미지 설정
 function spaceType(type) {
+	alert("type : "+ type);
 	typeNum = type; // 선택한 버튼 번호 저장
 	switch (typeNum) {
 	case '2':
@@ -143,6 +144,9 @@ function spaceBtnChange(location) {
 		var btnId = 'btn' + location;
 		var spaceBtn = document.getElementById(btnId);
 		spaceBtn.value = typeNum;
+		alert("imgId : " + imgId +"<br>" + "spaceImg : " + spaceImg +"<br>" 
+				+ "btnId : " + btnId +"<br>" + "spaceBtn : " + spaceBtn +"<br>");
+
 	} else {
 		alert('아이콘을 선택해주세요.');
 	}
@@ -170,6 +174,7 @@ function spaceTypeChange() {
 
 // 매장 수정(정보 설정 AJAX)
 function spaceTypeChange2(index) {
+	alert("spaceTypeChange2 index : " + index);
 	var item = document.querySelectorAll('.p_spaceBtn'); // 배열판의 버튼들
 	
 	// 매장 정보
@@ -201,6 +206,7 @@ function spaceBody(info, col, row) {
 	for (var y = 0; y < row; y += 1) {
 		space += '<div class="p_div">';
 		for (var x = 0; x < col; x += 1) {
+			alert(""+index+"<br>"+"location" + location +"<br>");
 			var index = x + (y * col);
 			console.log(index + '번째 : ' + arr[index] + '/{' + x + ',' + y + '}');
 
@@ -226,7 +232,7 @@ function spaceBody(info, col, row) {
 function hostReservList() {
 	var date = document.getElementById('datepicker').value;
 
-	window.location = 'hostReservList?date=' + date + '&index=1';
+	window.location = 'hostReservList?date=' + date + '&index='+1;
 
 }
 
@@ -243,6 +249,6 @@ function guestReserv_chkTable() {
 		alert('시간을 골라주세요!');
 		return false;
 	} else {
-		window.location = 'guestReserv_chkTable?date=' + date + '&time=' + time + '&index=1';
+		window.location = 'guestReserv_chkTable?date=' + date + '&time=' + time + '&index='+ 1;
 	}
 }

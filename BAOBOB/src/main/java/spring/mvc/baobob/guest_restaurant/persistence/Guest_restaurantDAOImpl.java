@@ -54,17 +54,17 @@ public class Guest_restaurantDAOImpl implements Guest_restaurantDAO{
 	//============================== 3. ·¹½ºÅä¶û ¿¹¾à ==============================
 	//==========================================================================
 	@Override
-	public RestaurantVO reserv_tableList(String index) {
+	public RestaurantVO reserv_tableList(int index) {
 		log.debug("===== DAO/reserv_tableList() =====");
-
+		System.out.println("index : " + index);
 		Guest_restaurantDAO dao = sqlSession.getMapper(Guest_restaurantDAO.class);
 		
 		return dao.reserv_tableList(index);
 	}
 
 	@Override
-	public TableVO getColRow(String index) {
-		log.debug("===== DAO/reserv_tableList() =====");
+	public TableVO getColRow(int index) {
+		log.debug("===== DAO/getColRow() =====");
 
 		Guest_restaurantDAO dao = sqlSession.getMapper(Guest_restaurantDAO.class);
 		
@@ -73,7 +73,7 @@ public class Guest_restaurantDAOImpl implements Guest_restaurantDAO{
 
 	@Override
 	public String getState(Map<String, Object> map) {
-		log.debug("===== DAO/reserv_tableList() =====");
+		log.debug("===== DAO/getState() =====");
 
 		Guest_restaurantDAO dao = sqlSession.getMapper(Guest_restaurantDAO.class);
 		
@@ -87,7 +87,7 @@ public class Guest_restaurantDAOImpl implements Guest_restaurantDAO{
 	//4-1. ¸®ºä °¹¼ö
 	@Override
 	public int getReviewCnt(int restaurant_index) {
-		log.debug("===== DAO/reserv_tableList() =====");
+		log.debug("===== DAO/getReviewCnt() =====");
 
 		int cnt = 0;
 		

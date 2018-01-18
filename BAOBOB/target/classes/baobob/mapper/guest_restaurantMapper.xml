@@ -57,7 +57,14 @@
 	<select id="getState" resultType="String">
 		SELECT table_state 
 		FROM restaurant_table_tbl 
-		WHERE restaurant_index = #{restaurant_index} AND restaurant_table_index = #{restaurant_table_index}
+		WHERE restaurant_index = #{restaurant_index} 
+			AND restaurant_table_index = #{restaurant_table_index} 
+		<if test="restaurant_schedule_index == null">
+			AND restaurant_schedule_index IS null
+    	</if>
+		<if test="restaurant_schedule_index != null">
+			AND restaurant_schedule_index = #{restaurant_schedule_index}
+    	</if>
 	</select>
 	
 	
