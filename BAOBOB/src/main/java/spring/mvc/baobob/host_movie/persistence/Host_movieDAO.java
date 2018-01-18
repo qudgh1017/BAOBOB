@@ -128,5 +128,7 @@ public interface Host_movieDAO {
 	// 스케줄에 해당하는 좌석 정보 가져오기
 	public ArrayList<Theater_seatVO> hostTheaterScheduleSeatDetail(Map<String, Integer> map);
 	
+	// 영화 스케줄에 빈좌석 업데이트하기
+	public int updateEmpty_seat(int empty_seat);
 	
 }

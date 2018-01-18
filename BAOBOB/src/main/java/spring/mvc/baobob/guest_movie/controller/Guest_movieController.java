@@ -146,7 +146,7 @@ public class Guest_movieController {
 		return "/guest/guest_movie/reservation/movieTicket";
 	}
 	
-	//예매-빠른예매(영화선택시 - ajax 처리 =>dateResult로 )
+	//예매-빠른예매(영화,날짜선택시 - ajax 처리 =>dateResult로 )
 	@RequestMapping("dateResult")
 	public String dateResult(HttpServletRequest req, Model model) {
 		log.debug("====== Guest_movieController/dateResult ======");

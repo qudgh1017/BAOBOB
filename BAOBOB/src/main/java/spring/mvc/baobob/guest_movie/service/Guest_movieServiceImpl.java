@@ -540,17 +540,23 @@ public class Guest_movieServiceImpl implements Guest_movieService{
 		int movie_index = Integer.parseInt(req.getParameter("movie"));
 		int plusDay = Integer.parseInt(req.getParameter("plusDay"));
 		
-		/*Date theater_schedule_startdate =*/ 
-		/*String theater_schedule_startdate = req.getParameter("click");
-		System.out.println(req.getParameter("click"));*/
-		
-		//되는 날짜 갯수
+		//영화,날짜별 스케줄 갯수
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("movie_index", movie_index);
 		map.put("plusDay", plusDay);
 		cnt = gmdao.getDateCnt(map);
 		
 		if(cnt > 0) {
+			//상영관 갯수
+			int theaterCnt = gmdao.theaterCnt();
+			int[] theaterSeats = new int[theaterCnt+1];
+			
+			//각 상영관 마다의 총좌석 갯수 구하기
+			for(int i=1; i<=theaterCnt; i++) {
+				theaterSeats[i] = gmdao.theaterSeats(i);
+			}
+			model.addAttribute("theaterSeats", theaterSeats);
+			
 			//영화별 되는 날짜, 상영관 정보 담을 곳
 			ArrayList<Theater_scheduleVO> schedules = null;
 			schedules = gmdao.getAllReserveSchedules(map);

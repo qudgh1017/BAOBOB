@@ -40,7 +40,6 @@
 	<!-- ========================================================================== -->
 	<!-- ============================== 3. 레스토랑 예약 ============================== -->
 	<!-- ========================================================================== -->
-
 	<!-- ===== 매장 정보 조회 ===== -->
 	<select id="reserv_tableList" resultType="spring.mvc.baobob.vo.RestaurantVO">
 		SELECT * FROM restaurant_tbl WHERE restaurant_index = #{index}
@@ -67,11 +66,29 @@
     	</if>
 	</select>
 	
+	<!-- 식당[1] 예약 추가 처리 -->
+	<insert id="addReserv" parameterType="Map">
+		INSERT INTO restaurant_schedule_tbl(restaurant_index, restaurant_schedule_index, schedule_startDate, schedule_startTime, schedule_endTime)
+		VALUES(#{dto.restaurant_index}, restaurant_schedule_tbl_SEQ.nextval, #{dto3.schedule_startDate}, #{dto3.schedule_startTime}, #{dto3.schedule_endTime})
+	</insert>
 	
+	<!-- 식당[1] 날짜에 해당하는 테이블 예약 -->
+	<insert id="modTable2" parameterType="Map">
+		INSERT INTO restaurant_table_tbl(restaurant_index, restaurant_table_index, table_row, table_col, table_state, restaurant_schedule_index)
+		VALUES(#{dto.restaurant_index}, #{dto2.index}, #{dto2.table_row}, #{dto2.table_col}, #{dto2.state}, restaurant_schedule_tbl_SEQ.CURRVAL)
+	</insert>
+
+	<!-- 예약 내역 추가 history_table -->
+	<insert id="AddHistory" parameterType="Map">
+		INSERT INTO history_tbl(history_index, history_date, member_id)
+		VALUES(history_tbl_SEQ.NEXTVAL, sysdate, #{member_id})
+	</insert>
 	
-	
-	
-	
+	<!-- 레스토랑 예약 내역 추가 restaurant_history_tbl -->
+	<insert id="AddRHistory" parameterType="Map">
+		INSERT INTO restaurant_history_tbl(history_index, restaurant_schedule_index, restaurant_table_index)
+		VALUES(history_tbl_SEQ.CURRVAL, restaurant_schedule_tbl_SEQ.CURRVAL, #{dto2.index})
+	</insert>
 	
 	
 	
@@ -123,21 +140,10 @@
 							   WHERE rt.review_index=#{review_index}); -->
 	</insert>
 	
-	<!--===== ID 체크 ===== -->
-	<select id="idCheck" resultType="int">
-	SELECT COUNT(*) FROM review_tbl WHERE member_id=#{member_id}
-	</select>
-	
-	<!--===== Password 체크 =====-->
-	<select id="pwdCheck" resultType="int">
-	SELECT COUNT(*) from member_tbl WHERE member_id=#{member_id} AND member_pwd=#{member_pwd}
-	</select>
-	
 	<!--===== 4-3-2. 리뷰 수정 (값 불러오기) =====-->
 	<select id="getReviewInfo" resultType="spring.mvc.baobob.vo.ReviewVO">
 	SELECT * FROM review_tbl WHERE member_id=#{member_id} and review_index=#{review_index}
 	</select>
-	
 	
 	<!--===== 4-3-3. 리뷰 수정 (값 불러오기) =====-->
 	<update id="updateReviewPro" parameterType="spring.mvc.baobob.vo.ReviewVO">
@@ -150,10 +156,24 @@
 	DELETE FROM restaurant_review_tbl
 	WHERE review_index=#{review_index}
 	</delete>
+	
 	<!--===== 4-4-2. 리뷰 삭제 ===== -->
 	<delete id="delete_ReviewPro" parameterType="java.util.Map">
 	DELETE FROM review_tbl
 	WHERE member_id=#{member_id} AND review_index=#{review_index}
 	</delete>
 	
+	<!-- ========================================================================== -->
+	<!-- ============================= Id/Password 체크 ============================= -->
+	<!-- ========================================================================== -->
+	
+	<!--===== ID 체크 ===== -->
+	<select id="idCheck" resultType="int">
+	SELECT COUNT(*) FROM review_tbl WHERE member_id=#{member_id}
+	</select>
+	
+	<!--===== Password 체크 =====-->
+	<select id="pwdCheck" resultType="int">
+	SELECT COUNT(*) from member_tbl WHERE member_id=#{member_id} AND member_pwd=#{member_pwd}
+	</select>
 </mapper>

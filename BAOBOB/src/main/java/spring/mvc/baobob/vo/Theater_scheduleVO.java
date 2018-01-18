@@ -10,6 +10,8 @@ public class Theater_scheduleVO {
 	private Timestamp schedule_startTime;
 	private Timestamp schedule_endTime;
 	private int schedule_MDNstate;
+	private int schedule_empty_seat;
+	private int schedule_seat;
 
 	public int getTheater_schedule_index() {
 		return theater_schedule_index;
@@ -66,5 +68,20 @@ public class Theater_scheduleVO {
 	public void setSchedule_MDNstate(int schedule_MDNstate) {
 		this.schedule_MDNstate = schedule_MDNstate;
 	}
+	public int getSchedule_empty_seat() {
+		return schedule_empty_seat;
+	}
+	public void setSchedule_empty_seat(int schedule_empty_seat) {
+		this.schedule_empty_seat = schedule_empty_seat;
+	}
 
+	public int getSchedule_seat() {
+		return schedule_seat;
+	}
+
+	public void setSchedule_seat(int schedule_seat) {
+		this.schedule_seat = schedule_seat;
+	}
+
+	
 }

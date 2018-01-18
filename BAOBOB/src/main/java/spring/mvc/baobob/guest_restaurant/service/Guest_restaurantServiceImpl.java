@@ -1,5 +1,6 @@
 package spring.mvc.baobob.guest_restaurant.service;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -14,6 +15,7 @@ import org.springframework.ui.Model;
 import spring.mvc.baobob.guest_restaurant.persistence.Guest_restaurantDAO;
 import spring.mvc.baobob.vo.MenuVO;
 import spring.mvc.baobob.vo.RestaurantVO;
+import spring.mvc.baobob.vo.Restaurant_scheduleVO;
 import spring.mvc.baobob.vo.ReviewVO;
 import spring.mvc.baobob.vo.TableVO;
 
@@ -60,7 +62,6 @@ public class Guest_restaurantServiceImpl implements Guest_restaurantService{
 	public void restaurant_tableList(HttpServletRequest req, Model model) {
 		log.debug("===== Service/restaurant_tableList() =====");
 
-
 		RestaurantVO dto = new RestaurantVO();
 		dto = dao.reserv_tableList(Integer.parseInt(req.getParameter("index")));
 
@@ -104,6 +105,79 @@ public class Guest_restaurantServiceImpl implements Guest_restaurantService{
 		}
 	}
 
+	//레스토랑 예약처리
+	@Override
+	public void reservAdd(HttpServletRequest req, Model model) {
+		log.debug("service.reservAdd()");
+		
+		int cnt=0;
+		int index=0;
+		int row=Integer.parseInt(req.getParameter("row"));
+		int col=Integer.parseInt(req.getParameter("col"));
+		String member_id = (String) req.getSession().getAttribute("memId");
+		System.out.println("=====member_id : " + member_id +"=====");
+		String info = req.getParameter("info");
+		
+		String date = "20" + req.getParameter("date");
+		String time = req.getParameter("time") + ":00";
+		String startTime = date + " " + time;
+		String[] end = time.split(":");
+		
+		if(end[1].equals("00")) {
+			end[1]="30";
+		} else if(end[1].equals("30")) {
+			end[0]=String.valueOf((Integer.parseInt(end[0]) + 1));
+			end[1]="00";
+		}
+		
+		String endTime = end[0] + ":" + end[1] + ":00";
+		endTime = date + " " + endTime;
+		
+		System.out.println("startTime : " + startTime);
+		System.out.println("endTime : " + endTime);
+		
+		RestaurantVO dto = new RestaurantVO();
+		dto.setRestaurant_index(Integer.parseInt(req.getParameter("index")));
+		
+		Restaurant_scheduleVO dto3 = new Restaurant_scheduleVO();
+		
+		dto3.setSchedule_startDate(Timestamp.valueOf(startTime));
+		dto3.setSchedule_startTime(Timestamp.valueOf(startTime));
+		dto3.setSchedule_endTime(Timestamp.valueOf(endTime));
+		
+		TableVO dto2 = new TableVO();
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("dto", dto);
+		map.put("dto2", dto2);
+		map.put("dto3", dto3);
+		map.put("member_id", member_id);
+		
+		cnt = dao.addReserv(map);
+		
+		if(cnt!=0) {
+			String[] state = info.split(",");
+			
+			for(int i=0; i<row; i++) {
+				for(int j=0; j<col; j++) {
+					dto2.setIndex(index);
+					dto2.setState(state[index]);
+					dto2.setTable_row(i);
+					dto2.setTable_col(j);
+					
+					map.replace("dto2", dto2);
+					
+					cnt = dao.modTable2(map);
+					dao.AddHistory(map);
+					dao.AddRHistory(map);
+					
+					if(cnt!=0) {
+						index++;
+					}
+				}
+			}
+		}
+		model.addAttribute("cnt", cnt);
+	}
 	
 	
 	
@@ -357,8 +431,6 @@ public class Guest_restaurantServiceImpl implements Guest_restaurantService{
 		model.addAttribute("pageNum", pageNum);
 		model.addAttribute("restaurant_index", restaurant_index);
 	}
-	
-	
 	
 	
 	

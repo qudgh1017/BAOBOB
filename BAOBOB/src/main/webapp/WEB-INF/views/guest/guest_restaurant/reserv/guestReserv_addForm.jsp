@@ -85,30 +85,30 @@ $(function() {
 				
 					<!-- 확인을 누르면 -->
 					<c:if test="${confirm==1}">
-							<div class="col-lg-12" style="padding-left:0px; padding-right:0px;">
-								<div class="card mb-3" align="center">
-									<div class="card-header"><b>테이블 선택</b></div>
-									<div class="card-body p_body" style="min-height:260px;">
-										<div id="spaceDiv"></div>
-									</div>
+						<div class="col-lg-12" style="padding-left:0px; padding-right:0px;">
+							<div class="card mb-3" align="center">
+								<div class="card-header"><b>테이블 선택</b></div>
+								<div class="card-body p_body" style="min-height:260px;">
+									<div id="spaceDiv"></div>
 								</div>
 							</div>
-							<div class="col-lg-12" style="padding-left:0px; padding-right:0px;">
-								<div class="card mb-3" align="center">
-									<div class="card-header">매장 설정</div>
-									<div class="card-body">
-										<input class="form-control" id="widthX" type="number" style="display: none;" min="1" max="100" value="${col}" onload="spaceDivChange();" onchange="spaceDivChange();" required>
-										<input class="form-control" id="heightY" type="number" style="display: none;" min="1" max="100" value="${row}" onload="spaceDivChange();" onchange="spaceDivChange();" required>
-										
-										<button class="m_btn" onclick="spaceType('3')"><img class="p_img" src="${restaurant_images}table_use.jpg"></button>
-										
-									</div>
-									<div class="card-footer small text-muted">
-										<button class="btn btn-primary btn-block" type="button" value="1" onclick="spaceTypeChange2('1');">예약 접수</button>
-										<button class="btn btn-primary btn-block" type="reset" onclick="window.history.go(-2);">취소</button>
-									</div>
+						</div>
+						<div class="col-lg-12" style="padding-left:0px; padding-right:0px;">
+							<div class="card mb-3" align="center">
+								<div class="card-header">매장 설정</div>
+								<div class="card-body">
+									<input class="form-control" id="widthX" type="number" style="display: none;" min="1" max="100" value="${col}" onload="spaceDivChange();" onchange="spaceDivChange();" required>
+									<input class="form-control" id="heightY" type="number" style="display: none;" min="1" max="100" value="${row}" onload="spaceDivChange();" onchange="spaceDivChange();" required>
+									
+									<button class="m_btn" onclick="spaceType('3')"><img class="p_img" src="${restaurant_images}table_use.jpg"></button>
+									
+								</div>
+								<div class="card-footer small text-muted">
+									<button class="btn btn-primary btn-block" type="button" value="1" onclick="spaceTypeChange2('1');">예약 접수</button>
+									<button class="btn btn-primary btn-block" type="reset" onclick="window.history.go(-2);">취소</button>
 								</div>
 							</div>
+						</div>
 					</c:if>
 				</div>
 			</div>

@@ -75,8 +75,6 @@ public class Guest_restaurantController {
 	}
 	
 	
-	
-	
 	//==========================================================================
 	//============================== 3. 레스토랑 예약 ==============================
 	//==========================================================================
@@ -105,8 +103,11 @@ public class Guest_restaurantController {
 	//3-3. 레스토랑 예약처리
 	@RequestMapping("guestReservAddPro")
 	public String guestReservAddPro(HttpServletRequest req, Model model) {
+		log.debug("=====Controller/guestReservAddPro()=====");
 		
-		return "";
+		service.reservAdd(req, model);
+		
+		return "guest/guest_restaurant/reserv/guestRestaurant_reservPro";
 	}
 	
 	//3-3. 레스토랑 예약 처리

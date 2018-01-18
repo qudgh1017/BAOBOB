@@ -53,6 +53,7 @@ public class Guest_restaurantDAOImpl implements Guest_restaurantDAO{
 	//==========================================================================
 	//============================== 3. 레스토랑 예약 ==============================
 	//==========================================================================
+	//매장 내 테이블 정보 조회
 	@Override
 	public RestaurantVO reserv_tableList(int index) {
 		log.debug("===== DAO/reserv_tableList() =====");
@@ -61,7 +62,8 @@ public class Guest_restaurantDAOImpl implements Guest_restaurantDAO{
 		
 		return dao.reserv_tableList(index);
 	}
-
+	
+	//매장 내 테이블 정보 조회를 위한 좌석 수 조회
 	@Override
 	public TableVO getColRow(int index) {
 		log.debug("===== DAO/getColRow() =====");
@@ -70,7 +72,8 @@ public class Guest_restaurantDAOImpl implements Guest_restaurantDAO{
 		
 		return dao.getColRow(index);
 	}
-
+	
+	//매장 내 테이블 정보 조회를 위한 테이블 상태 조회
 	@Override
 	public String getState(Map<String, Object> map) {
 		log.debug("===== DAO/getState() =====");
@@ -80,7 +83,53 @@ public class Guest_restaurantDAOImpl implements Guest_restaurantDAO{
 		return dao.getState(map);
 	}
 	
+	// 식당[1] 예약 추가
+	@Override
+	public int addReserv(Map<String, Object> map) {
+		log.debug("===== DAO/modTable2() =====");
+		
+		Guest_restaurantDAO dao = sqlSession.getMapper(Guest_restaurantDAO.class);
+		
+		return dao.addReserv(map);
+	}
 	
+	// 식당[1] 선택 날짜 예약 조회
+	@Override
+	public int modTable2(Map<String, Object> map) {
+		log.debug("===== DAO/modTable2() =====");
+		
+		Guest_restaurantDAO dao = sqlSession.getMapper(Guest_restaurantDAO.class);
+		
+		return dao.modTable2(map);
+	}
+	
+	//예약 내역 추가
+	@Override
+	public int AddHistory(Map<String, Object> map) {
+		log.debug("===== DAO/AddHistory() =====");
+		int cnt = 0;
+		
+		Guest_restaurantDAO dao = sqlSession.getMapper(Guest_restaurantDAO.class);
+		cnt = dao.AddHistory(map);
+
+		System.out.println(cnt<1? "실패":"AddHistory 성공");
+		
+		return cnt;
+	}
+		
+	//레스토랑 예약 내역 추가 
+	@Override
+	public int AddRHistory(Map<String, Object> map) {
+		log.debug("===== DAO/AddRHistory() =====");
+		int cnt = 0;
+		
+		Guest_restaurantDAO dao = sqlSession.getMapper(Guest_restaurantDAO.class);
+		cnt = dao.AddRHistory(map);
+		
+		System.out.println(cnt<1 ? "실패":"AddRHistory 성공");
+		
+		return cnt;
+	}
 	//==========================================================================
 	//============================== 4. 레스토랑 리뷰 ==============================
 	//==========================================================================
@@ -142,10 +191,7 @@ public class Guest_restaurantDAOImpl implements Guest_restaurantDAO{
 		}
 		return insertCnt;
 	}
-
 	
-	
-
 	//4-3. 정보가져오기
 	@Override
 	public ReviewVO getReviewInfo(Map<String, Object> map) {
@@ -157,7 +203,7 @@ public class Guest_restaurantDAOImpl implements Guest_restaurantDAO{
 		
 		return dto;
 	}
-
+	
 	//4-3. 리뷰 수정
 	@Override
 	public int updateReviewPro(ReviewVO dto) {
@@ -169,9 +215,6 @@ public class Guest_restaurantDAOImpl implements Guest_restaurantDAO{
 		
 		return updateCnt;
 	}
-
-	
-	
 	
 	//4-4. 리뷰 삭제
 	@Override

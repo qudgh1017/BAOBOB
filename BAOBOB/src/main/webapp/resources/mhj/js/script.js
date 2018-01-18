@@ -89,9 +89,11 @@ var typeImg = ''; // 선택한 버튼 이미지
 
 // type에 따라 버튼 이미지 설정
 function spaceType(type) {
-	alert("type : "+ type);
 	typeNum = type; // 선택한 버튼 번호 저장
 	switch (typeNum) {
+	case '3':
+		typeImg = 'table_use.jpg';
+		break;
 	case '2':
 		typeImg = 'icon_enter.png';
 		break;
@@ -144,9 +146,6 @@ function spaceBtnChange(location) {
 		var btnId = 'btn' + location;
 		var spaceBtn = document.getElementById(btnId);
 		spaceBtn.value = typeNum;
-		alert("imgId : " + imgId +"<br>" + "spaceImg : " + spaceImg +"<br>" 
-				+ "btnId : " + btnId +"<br>" + "spaceBtn : " + spaceBtn +"<br>");
-
 	} else {
 		alert('아이콘을 선택해주세요.');
 	}
@@ -172,9 +171,8 @@ function spaceTypeChange() {
 	window.location = 'hostRestaurantAddPro?info=' + info + '&col=' + x + '&row=' + y + '&name=' + name + '&tel=' + tel;
 }
 
-// 매장 수정(정보 설정 AJAX)
+//예약확인(정보 설정 AJAX)
 function spaceTypeChange2(index) {
-	alert("spaceTypeChange2 index : " + index);
 	var item = document.querySelectorAll('.p_spaceBtn'); // 배열판의 버튼들
 	
 	// 매장 정보
@@ -187,26 +185,20 @@ function spaceTypeChange2(index) {
 		array.push(space.value);
 	});
 	var info = array.join(',');
-	if (document.getElementById('name') && document.getElementById('tel')) {
-		var name = document.getElementById('name').value; // name
-		var tel = document.getElementById('tel').value; // tel
-		window.location = 'hostRestaurantModPro?info=' + info + '&col=' + x + '&row=' + y + '&name=' + name + '&tel=' + tel + '&index=' + index;
-	} else {
-		var date = document.getElementById('datepicker').value;
-		var time = document.getElementById('timepicker').value;
-		window.location = 'hostReservAddPro?info=' + info + '&col=' + x + '&row=' + y + '&index=' + index + '&date=' + date + '&time=' + time;
-	}
+	
+	var date = document.getElementById('datepicker').value;
+	var time = document.getElementById('timepicker').value;
+	window.location = 'guestReservAddPro?info=' + info + '&col=' + x + '&row=' + y + '&index=' + index + '&date=' + date + '&time=' + time;
 }
 
 // 설정한 배열판이 있을 경우
 function spaceBody(info, col, row) {
 	var arr = info.split(',');
-//	alert("spaceBody");
+
 	var space = '';
 	for (var y = 0; y < row; y += 1) {
 		space += '<div class="p_div">';
 		for (var x = 0; x < col; x += 1) {
-			alert(""+index+"<br>"+"location" + location +"<br>");
 			var index = x + (y * col);
 			console.log(index + '번째 : ' + arr[index] + '/{' + x + ',' + y + '}');
 
@@ -226,6 +218,7 @@ function spaceBody(info, col, row) {
 	}
 	var spaceDiv = document.getElementById('spaceDiv');
 	spaceDiv.innerHTML = space;
+	typeImg = '';
 }
 
 // 선택된 날짜에 있는 예약 조회

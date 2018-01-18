@@ -14,6 +14,7 @@ public class MovieVO {
 	private String movie_poster;
 	private String movie_trailer;
 	private int movie_state;
+	private int movie_count;
 
 	public int getMovie_index() {
 		return movie_index;
@@ -118,5 +119,14 @@ public class MovieVO {
 	public void setMovie_state(int movie_state) {
 		this.movie_state = movie_state;
 	}
+
+	public int getMovie_count() {
+		return movie_count;
+	}
+
+	public void setMovie_count(int movie_count) {
+		this.movie_count = movie_count;
+	}
+
 
 }
