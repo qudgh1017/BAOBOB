@@ -63,25 +63,24 @@ function getScheduleSeatInfo(col, row, state){
 
 var adultCnt;
 var teenagerCnt;
-var allCnt = 0;
 
 //일반 체크시 사람수
 function adultChk(cnt){
-	adultCnt = cnt-0;
-	
-	persconChk(adultCnt);
+	adultCnt = cnt;
+	personChk();
+	adultCnt = 0;
 }
 
 //청소년 체크시 사람수
 function teenagerChk(cnt){
-	teenagerCnt = cnt-0;
-	
-	persconChk(teenagerCnt);
+	teenagerCnt = cnt;
+	personChk();
+	teenagerCnt = 0;
 }
 
-function persconChk(cnt){
-	allCnt += cnt;
-	
+//총 사람 수
+function persconChk(){
+	allCnt = teenagerCnt + adultCnt;
 	alert(allCnt);
 }
 

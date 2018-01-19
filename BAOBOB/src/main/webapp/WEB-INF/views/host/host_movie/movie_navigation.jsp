@@ -69,14 +69,16 @@
 				</ul>
 			</li>
 			<li class="nav-item" data-toggle="tooltip" data-placement="right" title="예매 관리">
-				<a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseExamplePages" data-parent="#exampleAccordion"> 
+				<a class="nav-link" href="hostMovieRes"> 
 					<i class="fa fa-fw fa-file"></i> 
 					<span class="nav-link-text">예매 관리</span>
 				</a>
-				<ul class="sidenav-second-level collapse" id="collapseExamplePages">
-					<li><a href="hostMovieRes">예매 조회</a></li>
-					<li><a href="hostMovieSettlement">결산</a></li>
-				</ul>
+			</li>
+			<li class="nav-item" data-toggle="tooltip" data-placement="right" title="결산">
+				<a class="nav-link" href="hostMovieSettlement"> 
+					<i class="fa fa-fw fa-file"></i> 
+					<span class="nav-link-text">결산</span>
+				</a>
 			</li>
 		</ul>
 		<ul class="navbar-nav sidenav-toggler">

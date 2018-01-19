@@ -86,9 +86,10 @@ public class Member_mypageController {
 	@RequestMapping("memQuestion")
 	public String memQuestion(HttpServletRequest req, Model model) {
 		log.debug("====== Member_mypageController/memQuestion() ======");
-		service.memberCard(req, model);
-		service.memQuestionList(req, model);
-		
+		if(req.getSession().getAttribute("memId") != null) {
+			service.memberCard(req, model);
+			service.memQuestionList(req, model);
+		}
 		return "guest/member_myPage/memQuestion/member_myPage_memQuestion";
 	}
 	
@@ -212,9 +213,10 @@ public class Member_mypageController {
 	@RequestMapping("memLost")
 	public String memLost(HttpServletRequest req, Model model) {
 		log.debug("====== Member_mypageController/memLost() ======");
-		service.memberCard(req, model);
-		service.memLostList(req, model);
-		
+		if(req.getSession().getAttribute("memId") != null) {
+			service.memberCard(req, model);
+			service.memLostList(req, model);
+		}
 		return "guest/member_myPage/memLost/member_myPage_memLost";
 	}
 	

@@ -88,8 +88,8 @@ public class Guest_parkingServiceImpl implements Guest_parkingService{
 	//퇴장 번호 확인
 	@Override
 	public void guestParkingOutCheckPro(HttpServletRequest req, Model model) {
-		String key = req.getParameter("key");
-
+		String key = req.getParameter("key").trim();
+		
 		int mem = 0;
 		int cnt = dao.parkingOutKeyCheck(key);
 		if(cnt != 0) {
@@ -106,22 +106,32 @@ public class Guest_parkingServiceImpl implements Guest_parkingService{
 	public void guestParkingPay(HttpServletRequest req, Model model) {
 		String key = req.getParameter("key");
 		
+		//고객의 입차 시간
 		Timestamp inTime = dao.getParkingInTime(key);
+		//현재 출차하려는 시간
 		Timestamp outTime = new Timestamp(System.currentTimeMillis());
+		//고객의 주차 시간
 		long userTime = outTime.getTime() - inTime.getTime();
 		
+		//주차 요금
 		ParkingFee pf = hDao.getParkingFee();
-		long time = (userTime / 1000) / 60 - pf.getP_fee_base_time();
-		int price = pf.getP_fee_base_price();
-		while(time > 0) {
-			time -= pf.getP_fee_exc_time();
-			price += pf.getP_fee_exc_price();
-		}
 		
+		//고객의 바오밥 멀티플렉스 이용 내역
 		int movie = dao.getMovieHistoryCount(key);
 		int rest = dao.getRestaurantHistoryCount(key);
-		price = price - (movie * 1000) - (rest * 1000);
-		if(price < 0) { price = 0; }
+		
+		//계산될 시간 = 고객 이용 시간 - 할인 시간
+		long time = (userTime / 1000) / 60 - (pf.getP_fee_movie_time() * movie) - (pf.getP_fee_rest_time() * rest);
+		int price = 0;
+		if(time > 0) {
+			//계산될 시간 -= 기본 시간
+			time -= pf.getP_fee_base_time();
+			price = pf.getP_fee_base_price(); //기본 요금
+			while(time > 0) {
+				time -= pf.getP_fee_exc_time();
+				price += pf.getP_fee_exc_price();
+			}
+		}
 
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("p_history_price", price);
@@ -138,7 +148,7 @@ public class Guest_parkingServiceImpl implements Guest_parkingService{
 	//주차 내역 출력
 	@Override
 	public void guestParkingMy(HttpServletRequest req, Model model) {
-		String key = req.getParameter("key");
+		String key = req.getParameter("key").trim();
 		ParkingHistory ph = dao.getParkingHistory(key);
 		model.addAttribute("ph", ph);
 	}

@@ -1,13 +1,18 @@
 package spring.mvc.baobob.host_movie.persistence;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.MapKey;
+
+import spring.mvc.baobob.vo.HostMovieChartVO;
 import spring.mvc.baobob.vo.Member;
 import spring.mvc.baobob.vo.MovieVO;
 import spring.mvc.baobob.vo.TheaterVO;
 import spring.mvc.baobob.vo.Theater_scheduleVO;
 import spring.mvc.baobob.vo.Theater_seatVO;
+import spring.mvc.baobob.vo.hostTChartVO;
 
 public interface Host_movieDAO {
 	
@@ -131,7 +136,16 @@ public interface Host_movieDAO {
 	// 영화 스케줄에 빈좌석 업데이트하기
 	public int updateEmpty_seat(int empty_seat);
 	
-	// 총 판매액
-	public int getMovieSale();
+	// 장르별 영화 관람객 수
+	@MapKey("kind")
+	public List<HostMovieChartVO> getMovieCountChart();
+	
+	// 제한 연령별 매출
+	@MapKey("kind")
+	public List<hostTChartVO> movieAgeChart();
+
+	// 관람객 성별 수
+	@MapKey("kind")
+	public List<HostMovieChartVO> movieSexCountChart();
 	
 }

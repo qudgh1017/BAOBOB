@@ -91,11 +91,11 @@ function spaceBody(info, col, row) {
 
 //드래그 설정
 var moveFlg = false;
-document.getElementById('spaceDiv').addEventListener('mousedown', function(e) {
+document.getElementById('spaceDiv').addEventListener('mousedown', function(e) { //배열판을 클릭하고 있으면
 	e.preventDefault();
 	moveFlg = true;
 });
-document.getElementById('spaceDiv').addEventListener('mousemove', function(e) {
+document.getElementById('spaceDiv').addEventListener('mousemove', function(e) { //마우스를 움직일 경우 다음 이벤트 실행
 	e.preventDefault();
 	
 	if(e.target.id != '' && moveFlg) {
@@ -104,7 +104,7 @@ document.getElementById('spaceDiv').addEventListener('mousemove', function(e) {
 		space.setAttribute('data-type', typeNum);
 	}
 });
-document.getElementById('spaceDiv').addEventListener('mouseup', function(e) {
+document.getElementById('spaceDiv').addEventListener('mouseup', function(e) { //클릭 해제하면 이벤트 정지
 	e.preventDefault();
 	moveFlg = false;
 });
@@ -141,6 +141,16 @@ function sendCheck() {
 		alert('초과 요금을 입력하세요');
 		document.getElementById('excFee').focus();
 		return false;
+		
+	} else if(!document.getElementById('movieTime').value) {
+		alert('영화 1건당 무료 주차 시간을 입력하세요');
+		document.getElementById('movieTime').focus();
+		return false;
+		
+	} else if(!document.getElementById('restTime').value) {
+		alert('식사 1건당 무료 주차 시간을 입력하세요');
+		document.getElementById('restTime').focus();
+		return false;
 	}
 	return true;
 }
@@ -167,6 +177,8 @@ function spaceTypeChange() {
 		var baseFee = document.getElementById('baseFee').value;
 		var excTime = document.getElementById('excTime').value;
 		var excFee = document.getElementById('excFee').value;
+		var movieTime = document.getElementById('movieTime').value;
+		var restTime = document.getElementById('restTime').value;
 		
 		var param =   'col=' + x + '&'
 					+ 'row=' + y + '&'
@@ -174,7 +186,9 @@ function spaceTypeChange() {
 					+ 'baseTime=' + baseTime + '&'
 					+ 'baseFee=' + baseFee + '&'
 					+ 'excTime=' + excTime + '&' 
-					+ 'excFee=' + excFee;
+					+ 'excFee=' + excFee + '&'
+					+ 'movieTime=' + movieTime + '&'
+					+ 'restTime=' + restTime;
 		
 		sendRequest(space_callback, 'hostParkingSettingChange', 'POST', param);
 	}
