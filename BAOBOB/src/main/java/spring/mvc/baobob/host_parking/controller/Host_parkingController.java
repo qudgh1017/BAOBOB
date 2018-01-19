@@ -126,6 +126,7 @@ public class Host_parkingController {
 		return "host/host_parking/hostParkingPayChart";
 	}
 	
+	//아두이노
 	@RequestMapping("arduinoInput")
 	public String arduinoInput(HttpServletRequest req, Model model) {
 		
