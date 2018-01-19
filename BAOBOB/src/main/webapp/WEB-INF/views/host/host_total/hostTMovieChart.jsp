@@ -42,7 +42,6 @@
 	<%@ include file="common/footer.jsp" %>	
 			
 	<script type="text/javascript">
-		// 로딩 완료시 함수 실행하여 차트 생성
 		google.charts.setOnLoadCallback(drawChartFirst);
 		var firstChart_options = {
 				title : '영화관 결산', 

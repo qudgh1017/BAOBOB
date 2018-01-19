@@ -28,12 +28,6 @@
 	</button>
 	<div class="collapse navbar-collapse" id="navbarResponsive">
 		<ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
-			<!-- <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
-				<a class="nav-link" href="#"> 
-					<i class="fa fa-fw fa-dashboard"></i> 
-					<span class="nav-link-text">Dashboard</span>
-				</a>
-			</li> -->
 			
 			<!-- Charts -->
 			<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Charts">
@@ -47,34 +41,6 @@
 					<li><a href="hostTParkingChart">주차장 결산</a></li>
 				</ul>
 			</li>
-			<!-- <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
-				<a class="nav-link" href="#"> 
-					<i class="fa fa-fw fa-table"></i> 
-					<span class="nav-link-text">Tables</span>
-				</a>
-			</li> -->
-			<!-- <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
-				<a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents" data-parent="#exampleAccordion"> 
-					<i class="fa fa-fw fa-wrench"></i> 
-					<span class="nav-link-text">Components</span>
-				</a>
-				<ul class="sidenav-second-level collapse" id="collapseComponents">
-					<li><a href="#">Navbar</a></li>
-					<li><a href="#">Cards</a></li>
-				</ul>
-			</li> -->
-			<!-- <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Example Pages">
-				<a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseExamplePages" data-parent="#exampleAccordion"> 
-					<i class="fa fa-fw fa-file"></i> 
-					<span class="nav-link-text">Example Pages</span>
-				</a>
-				<ul class="sidenav-second-level collapse" id="collapseExamplePages">
-					<li><a href="#">Login Page</a></li>
-					<li><a href="#">Registration Page</a></li>
-					<li><a href="#">Forgot Password Page</a></li>
-					<li><a href="#">Blank Page</a></li>
-				</ul>
-			</li> -->
 			
 			<!-- Member MGMT -->
 			<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Member MGMT">
@@ -85,22 +51,7 @@
 				<ul class="sidenav-second-level collapse" id="collapseMulti">
 					<li><a href="hostTMemList">회원, 직원 목록</a></li>
 					<li><a href="hostTMemAdd">회원, 직원 추가</a></li>
-					<!-- <li><a class="nav-link-collapse collapsed"
-						data-toggle="collapse" href="#collapseMulti2">Third Level</a>
-						<ul class="sidenav-third-level collapse" id="collapseMulti2">
-							<li><a href="#">Third Level Item</a></li>
-							<li><a href="#">Third Level Item</a></li>
-							<li><a href="#">Third Level Item</a></li>
-						</ul></li> -->
 				</ul>
-			</li>
-			
-			<!-- Link -->
-			<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Link">
-				<a class="nav-link" href="#"> 
-					<i class="fa fa-fw fa-link"></i> 
-					<span class="nav-link-text">Link</span>
-				</a>
 			</li>
 		</ul>
 		<ul class="navbar-nav sidenav-toggler">

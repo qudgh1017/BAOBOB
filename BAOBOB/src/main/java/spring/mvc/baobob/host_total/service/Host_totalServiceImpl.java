@@ -250,6 +250,7 @@ public class Host_totalServiceImpl implements Host_totalService{
 
 		Map<String, Integer> timePrice = new HashMap<String, Integer>(); // 월별 주차 시간에 따른 금액
 		Map<String, Integer> userPrice = new HashMap<String, Integer>(); // 월별 받은 금액
+		
 		for (ParkingHistory ph : thisPh) {
 			long userTime = ph.getP_history_out().getTime() - ph.getP_history_in().getTime();
 			long minute = (userTime / 1000) / 60; // 이용 시간(분)
@@ -257,6 +258,7 @@ public class Host_totalServiceImpl implements Host_totalService{
 			String month = ph.getP_history_out().toString().substring(5, 7); // 이용한 월
 			long time = minute - fee.getP_fee_base_time(); // 이용 초과 시간
 			int price = fee.getP_fee_base_price(); // 기본 요금
+			
 			while (time > 0) {
 				time -= fee.getP_fee_exc_time();
 				price += fee.getP_fee_exc_price();
@@ -287,8 +289,19 @@ public class Host_totalServiceImpl implements Host_totalService{
 			}
 		}
 		
-		
 	}
+	
+	/*----------------------------------------------------------------------------*/
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	
