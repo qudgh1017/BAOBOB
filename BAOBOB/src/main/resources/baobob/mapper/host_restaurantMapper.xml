@@ -226,4 +226,11 @@
 	<insert id="addFoodHistory" parameterType="Map">
 		INSERT INTO restaurant_food_history_tbl(restaurant_schedule_index, restaurant_menu_index) VALUES(#{restaurant_schedule_index}, #{restaurant_menu_index})
 	</insert>
+	
+	<!-- 식당별 결산 -->
+	<select id="getAccount" resultType="Integer">
+		SELECT SUM(restaurant_menu_price) 
+		FROM restaurant_menu_tbl m, restaurant_food_history_tbl f 
+		WHERE m.restaurant_menu_index = f.restaurant_menu_index
+	</select>
 </mapper>

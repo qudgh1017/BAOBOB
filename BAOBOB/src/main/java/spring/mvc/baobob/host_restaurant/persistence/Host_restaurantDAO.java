@@ -118,4 +118,7 @@ public interface Host_restaurantDAO {
 
 	// 주문 내역 추가(판매 내역)
 	public int addFoodHistory(Map<String, Object> map);
+
+	// 식당별 결산
+	public Integer getAccount(int restaurant_index);
 }

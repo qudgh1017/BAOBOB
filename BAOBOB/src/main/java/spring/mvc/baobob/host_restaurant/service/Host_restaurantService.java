@@ -81,4 +81,7 @@ public interface Host_restaurantService {
 
 	// 테이블에 메뉴 추가(판매)
 	public void orderAdd(HttpServletRequest req, Model model);
+
+	// 식당별 결산
+	public void account(HttpServletRequest req, Model model);
 }

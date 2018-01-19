@@ -408,4 +408,15 @@ public class Host_restaurantDAOImpl implements Host_restaurantDAO {
 
 		return dao.addFoodHistory(map);
 	}
+
+	// 식당별 결산
+	@Override
+	public Integer getAccount(int restaurant_index) {
+		// TODO Auto-generated method stub
+		log.debug("dao.account()");
+
+		Host_restaurantDAO dao = sqlSession.getMapper(Host_restaurantDAO.class);
+
+		return dao.getAccount(restaurant_index);
+	}
 }

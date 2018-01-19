@@ -845,8 +845,7 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 		int use_table_cnt = 0;
 
 		// 로그인 한 아이디의 스텝 확인
-		int restaurant_index = Integer
-				.parseInt((String.valueOf(req.getSession().getAttribute("memStep")).substring(1, 2)));
+		int restaurant_index = Integer.parseInt((String.valueOf(req.getSession().getAttribute("memStep")).substring(1, 2)));
 		int restaurant_schedule_index = Integer.parseInt(req.getParameter("restaurant_schedule_index"));
 
 		Restaurant_scheduleVO schedule_dto = new Restaurant_scheduleVO();
@@ -913,8 +912,7 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 		// TODO Auto-generated method stub
 		log.debug("service.orderAdd()");
 
-		int restaurant_index = Integer
-				.parseInt((String.valueOf(req.getSession().getAttribute("memStep")).substring(1, 2)));
+		int restaurant_index = Integer.parseInt((String.valueOf(req.getSession().getAttribute("memStep")).substring(1, 2)));
 		int restaurant_schedule_index = Integer.parseInt(req.getParameter("restaurant_schedule_index"));
 		int table_Num = Integer.parseInt(req.getParameter("table_index"));
 		int menu_Num = Integer.parseInt(req.getParameter("menu_index"));
@@ -970,5 +968,17 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 		int cnt = dao.addFoodHistory(map);
 		
 		model.addAttribute("cnt", cnt);
+	}
+
+	// 식당별 결산
+	@Override
+	public void account(HttpServletRequest req, Model model) {
+		// TODO Auto-generated method stub
+		log.debug("service.account()");
+
+		int restaurant_index = Integer.parseInt((String.valueOf(req.getSession().getAttribute("memStep")).substring(1, 2)));
+		int account = dao.getAccount(restaurant_index);
+		
+		model.addAttribute("account", account);
 	}
 }

@@ -312,4 +312,14 @@ public class Host_restaurantController {
 		
 		return "host/host_restaurant/hostOrderAddPro";
 	}
+	
+	// 테이블에 메뉴 추가(판매)
+	@RequestMapping(value="/hostRestaurantAccount")
+	public String hostRestaurantAccount(HttpServletRequest req, Model model) {
+		log.debug("hostRestaurantAccount()");
+
+		service.account(req, model);
+		
+		return "host/host_restaurant/hostRestaurantAccount";
+	}
 }
