@@ -48,6 +48,8 @@
 				<ul class="sidenav-second-level collapse" id="collapseComponents">
 					<li><a href="hostRestaurantList">매장 목록</a></li>
 					<li><a href="hostRestaurantAddForm">매장 추가</a></li>
+					<li><a href="hostAllMenuList">매장별 메뉴 보기</a></li>
+					<li><a href="hostAllEmployeeList">매장별 직원 보기</a></li>
 					<li><a href="#">결산</a></li>
 				</ul>
 			</li>
