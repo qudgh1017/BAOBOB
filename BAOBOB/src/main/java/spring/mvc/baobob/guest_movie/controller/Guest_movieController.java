@@ -7,8 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import spring.mvc.baobob.guest_movie.service.Guest_movieService;
+import spring.mvc.baobob.vo.MovieResViewVO;
 
 @Controller
 public class Guest_movieController {
@@ -199,6 +201,19 @@ public class Guest_movieController {
 		gmservice.reserveScheduleResult(req, model);
 		
 		return "/guest/guest_movie/reservation/movieTicket2";
+	}
+	
+	//예매-빠른예매 2번째페이지 - 좌석도 정보 불러오기
+	@RequestMapping("reserveSeatInfo")
+	public @ResponseBody MovieResViewVO reserveSeatInfo(HttpServletRequest req, Model model) {
+		log.debug("====== Guest_movieController/reserveSeatInfo ======");
+
+		//좌석도 정보
+		MovieResViewVO seatInfo = null;
+		seatInfo = gmservice.hostMovieResView(req, model);
+		//ResponseBody로 자바 객체를 송신해준다. 
+		
+		return seatInfo;
 	}
 	
 	//예매-상영시간표

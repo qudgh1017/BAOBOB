@@ -7,10 +7,13 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import spring.mvc.baobob.host_movie.persistence.Host_movieDAO;
 import spring.mvc.baobob.vo.Member;
 import spring.mvc.baobob.vo.MovieVO;
 import spring.mvc.baobob.vo.ReviewVO;
+import spring.mvc.baobob.vo.TheaterVO;
 import spring.mvc.baobob.vo.Theater_scheduleVO;
+import spring.mvc.baobob.vo.Theater_seatVO;
 
 @Repository
 public class Guest_movieDAOImpl implements Guest_movieDAO{
@@ -237,6 +240,27 @@ public class Guest_movieDAOImpl implements Guest_movieDAO{
 		return schedule;
 	}
 
+	// 상영관 상세
+	@Override
+	public TheaterVO theaterDetail(int theater_index) {
+		TheaterVO theater = null;
+		
+		Guest_movieDAO gmdao = sqlSession.getMapper(Guest_movieDAO.class);
+		theater = gmdao.theaterDetail(theater_index);
+		
+		return theater;
+	}
+	
+	// 상영관 상세 좌석 정보
+	@Override
+	public ArrayList<Theater_seatVO> theaterSeatDetail(Map<String,Integer> map) {
+		ArrayList<Theater_seatVO> seats = null;
+		
+		Guest_movieDAO gmdao = sqlSession.getMapper(Guest_movieDAO.class);
+		seats = gmdao.theaterSeatDetail(map);
+		
+		return seats;
+	}
 	
 
 

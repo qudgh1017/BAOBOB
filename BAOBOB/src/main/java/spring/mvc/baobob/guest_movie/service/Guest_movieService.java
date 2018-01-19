@@ -4,6 +4,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.ui.Model;
 
+import spring.mvc.baobob.vo.MovieResViewVO;
+
 public interface Guest_movieService {
 
 	//영화리스트
@@ -39,5 +41,9 @@ public interface Guest_movieService {
 	//스케줄 정보들(예매에서 Ajax로 받을 값들)
 	public void reserveScheduleResult(HttpServletRequest req, Model model);
 
-
+	//좌석도 보여주기
+	public MovieResViewVO hostMovieResView(HttpServletRequest req, Model model);
+	
+	
+	
 }

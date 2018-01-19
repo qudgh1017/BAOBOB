@@ -185,6 +185,15 @@
 		FROM theater_schedule_tbl
 		WHERE theater_schedule_index = #{theater_schedule_index}
 	</select>
-
+	
+	<!-- 상영관 상세 theaterDetail -->
+	<select id="theaterDetail" resultType="spring.mvc.baobob.vo.TheaterVO">
+		SELECT * FROM theater_tbl WHERE theater_index=#{theater_index}
+	</select>
+	
+	<!-- 상영관 상세 좌석 정보 theaterSeatDetail -->
+	<select id="theaterSeatDetail" resultType="spring.mvc.baobob.vo.Theater_seatVO">
+		SELECT * FROM theater_seat_tbl WHERE theater_index=#{theater_index} AND theater_schedule_index=#{theater_schedule_index}
+	</select>
 
 </mapper>

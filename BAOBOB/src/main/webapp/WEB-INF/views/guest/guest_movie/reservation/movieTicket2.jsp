@@ -14,7 +14,7 @@
 }
 </style>
 
-<body>
+<body onload="guestTheaterSeat('${schedule.theater_index}', '${schedule.movie_index}', '${schedule.theater_schedule_index}')">
 	
 	<!-- CSS,JavaScript 참조 -->
 	<%@ include file="/WEB-INF/views/guest/common/head.jsp" %>
@@ -22,7 +22,11 @@
 	<%@ include file="/WEB-INF/views/guest/common/navigation.jsp" %>
 	<!-- main_menu -->
 	<%@ include file="/WEB-INF/views/guest/guest_movie/movie_menu.jsp" %>
+	<!-- 내 전용 script -->
 	<script type="text/javascript" src="${projectRes}ybh/js/ybh.js"></script>
+	<!-- 좌석관련 script -->
+	<script type="text/javascript" src="${projectRes}ybh/js/seat.js"></script>
+	
 	
 	<section style="padding-top:0px;">
 		<div class="container">
@@ -34,7 +38,7 @@
 					<hr style="border:2px solid black;">
 				</div>
 				<div class="col-md-1"></div>
-			</div><br><br>
+			</div>
 			
 			<!-- 영화/날짜/시간 -->
 			<div class="row">
@@ -45,11 +49,34 @@
 				<div class="col-md-1"></div>
 			</div>
 			
+			<!-- 인원수 선택 및 좌석현황 -->
 			<div class="row">
 				<div class="col-md-1"></div>
-				<div class="col-md-5" align="center" style="height:100px; color:black; font-weight:bold; border:1px solid white; background-color:#DDDDDD">
-					인원선택<br>
-				</div>
+				<!-- 인원수 선택 -->
+				<div class="col-md-5" align="left" style="height:100px; color:black; font-weight:bold; border:1px solid white; background-color:#DDDDDD">
+					<br>
+					<div class="btn-group" data-toggle="buttons" style="display:inline-block;">
+						<div style="width:50px; display:inline-block;">일반</div>
+						<c:forEach var="num" begin="0" end="8" step="1">
+							<label onclick="adultChk('${num}')" class="btn" style="height:30px; width:30px; border:1px solid black; font-weight:bold">
+							    <input type="radio" name="adult" autocomplete="off" value="${num}">
+								${num}
+						 	</label>
+					 	</c:forEach>
+				 	</div>	
+				 	<br>
+				 	<div class="btn-group" data-toggle="buttons" style="display:inline-block;">
+					 	<div style="width:50px; display:inline-block;">청소년</div>
+					 	<c:forEach var="num" begin="0" end="8" step="1">
+							<label onclick="teenagerChk('${num}')" class="btn" style="height:30px; width:30px; border:1px solid black; font-weight:bold">
+							    <input type="radio" name="teenager" autocomplete="off" value="${num}">
+								${num}
+						 	</label>
+					 	</c:forEach>
+					 </div>	
+				</div>	
+				
+				<!-- 좌석현황 -->	
 				<div class="col-md-5" align="center" style="height:100px; color:black; font-weight:bold; border:1px solid white; background-color:#DDDDDD">
 					${schedule.theater_index}관&nbsp;&nbsp;|&nbsp;&nbsp; 남은좌석 <span style="color:red; font-weight:bold;">${schedule.schedule_empty_seat}</span>/${schedule.schedule_seat}
 					<br><br>
@@ -61,26 +88,15 @@
 				<div class="col-md-1"></div>
 			</div>
 			
-			<!-- 영화 선택후 날짜로 ajax 날짜 선택후 시간 ajax -->
+			<!-- 좌석도 보여줄 곳 -->
 			<div class="row">
 				<div class="col-md-1"></div>
-				
 				<div class="col-md-10" align="center" style="height:500px; color:black; font-weight:bold; border:1px solid white; background-color:#EEEEEE">
-					<div style="overflow:auto; width:100%; height:100%; background-color:#EEEEEE">
-						<div id="resultDate" class="reserveTab" align="center" style="height:30px;">
-							<span><fmt:formatDate value="<%=new Date()%>" pattern="YYYY" /></span><br>
-							<span style="font-size: 30px; margin-bottom: 10px;"><fmt:formatDate value="<%=new Date()%>" pattern="MM" /></span><br>
-							<br>
-							<div class="btn-group" data-toggle="buttons" style="display:block;">
-								<label onclick="clickDate('0')" class="btn" style="height:50px; width:95%; display:block;">
-								    <input type="radio" name="date" id="date1" autocomplete="off" value="0">
-									<span><fmt:formatDate value="<%=new Date(new Date().getTime())%>" pattern="E dd" /></span>
-							 	</label>
-							</div>
-						</div>
+					<!-- 뿌리는 곳 -->
+					<div id="theaterSeat">
+					
 					</div>
 				</div>
-			
 				<div class="col-md-1"></div>
 			</div>
 			

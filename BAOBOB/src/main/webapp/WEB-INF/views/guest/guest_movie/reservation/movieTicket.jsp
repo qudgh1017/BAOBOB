@@ -34,7 +34,7 @@
 					<hr style="border:2px solid black;">
 				</div>
 				<div class="col-md-1"></div>
-			</div><br><br>
+			</div>
 			
 			<!-- 영화/날짜/시간 -->
 			<div class="row">
@@ -151,44 +151,45 @@
 				<div class="col-md-1"></div>
 			</div>
 			
-		</div>
-		<div class="row" style="background-color:black; height:150px;">
-			<!-- 영화정보 -->
-			<div class="col-md-3" align="center"; style="border: solid 1px gray; color:white;">
-				<div id="movieInfo">
-					<br><br>
-					<center style="color:gray">영화 선택</center>
+			</div>
+			<!-- Ajax정보 표시하는 곳들 -->
+				<div class="row" style="background-color:black; height:150px;">
+				<!-- 영화정보 -->
+				<div class="col-md-3" align="center"; style="border: solid 1px gray; color:white;">
+					<div id="movieInfo">
+						<br><br>
+						<center style="color:gray">영화 선택</center>
+					</div>
+				</div>
+				<!-- 일시, 상영관, 인원 -->
+				<div class="col-md-3" align="left" style="border: solid 1px gray; color:white">
+					<div id="scheduleInfo">
+						<br><br>
+						<center style="color:gray">스케줄 선택</center>
+					</div>
+				</div>
+				<!-- 좌석정보, 가격 -->
+				<div class="col-md-3" align="left" style="border: solid 1px gray; color:white">
+					<div id="seatInfo">
+						<br><br>
+						<center style="color:gray">
+							자리를 선택하기 위해 <br>
+							오른쪽의 버튼을 클릭해주세요
+						</center>
+					</div>
+				</div>
+				<!-- 좌석선택 아이콘 -->
+				<div class="col-md-3" align="center" style="border: solid 1px gray; color:gray; font-weight:bold;">
+					<div id="nextSeatButton">
+						<br><br>
+						<center style="color:gray">
+							영화, 날짜, 스케줄을 다 선택하셔야 <br>
+							다음페이지로 이동 가능합니다.
+						</center>
+					</div>
 				</div>
 			</div>
-			<!-- 일시, 상영관, 인원 -->
-			<div class="col-md-3" align="left" style="border: solid 1px gray; color:white">
-				<div id="scheduleInfo">
-					<br><br>
-					<center style="color:gray">스케줄 선택</center>
-				</div>
-			</div>
-			<!-- 좌석정보, 가격 -->
-			<div class="col-md-3" align="left" style="border: solid 1px gray; color:white">
-				<div id="seatInfo">
-					<br><br>
-					<center style="color:gray">
-						자리를 선택하기 위해 <br>
-						오른쪽의 버튼을 클릭해주세요
-					</center>
-				</div>
-			</div>
-			<!-- 좌석선택 아이콘 -->
-			<div class="col-md-3" align="center" style="border: solid 1px gray; color:gray; font-weight:bold;">
-				<div id="nextSeatButton">
-					<br><br>
-					<center style="color:gray">
-						영화, 날짜, 스케줄을 다 선택하셔야 <br>
-						다음페이지로 이동 가능합니다.
-					</center>
-				</div>
-				
-			</div>
-		</div>
+		
 	</section>
 	<br>
 	<br>

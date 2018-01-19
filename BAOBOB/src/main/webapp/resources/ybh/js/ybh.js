@@ -139,11 +139,6 @@ function clickMovie(movie_index){
 //날짜 클릭 했을때
 function clickDate(num){
 	plusDay = num;
-	/*var now = new Date();
-	//선택한 날짜
-	var clickDate = new Date(Date.parse(now) + num * 1000 * 60 * 60 * 24);
-	//
-	click = clickDate;*/
 	common();
 }
 

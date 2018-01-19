@@ -5,7 +5,9 @@ import java.util.Map;
 
 import spring.mvc.baobob.vo.MovieVO;
 import spring.mvc.baobob.vo.ReviewVO;
+import spring.mvc.baobob.vo.TheaterVO;
 import spring.mvc.baobob.vo.Theater_scheduleVO;
+import spring.mvc.baobob.vo.Theater_seatVO;
 
 public  interface Guest_movieDAO {
 
@@ -68,6 +70,13 @@ public  interface Guest_movieDAO {
 	
 	//스케줄 정보
 	public Theater_scheduleVO getSchedule(int theater_schedule_index);
+	
+	// 상영관 상세
+	public TheaterVO theaterDetail(int theater_index);
+	
+	// 상영관 상세 좌석 정보
+	public ArrayList<Theater_seatVO> theaterSeatDetail(Map<String,Integer> map);
+	
 	
 	
 }
