@@ -317,7 +317,11 @@ public class Host_movieController {
 	public String hostMovieSettlement(HttpServletRequest req, Model model) {
 		System.out.println("hostMovieSettlement");
 		
-		serviceT.movieChart(req, model);
+		serviceT.movieChart(req, model); // 장르별 매출
+		service.movieJanreCountChart(req, model); // 장르별 관람객 수
+		service.movieAgeChart(req, model); // 제한연령별 매출
+		service.movieSexCountChart(req, model); // 관람객 성별 수
+		
 		
 		return "host/host_movie/hostMovieSettlement";
 	}

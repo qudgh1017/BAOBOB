@@ -23,6 +23,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import spring.mvc.baobob.host_movie.persistence.Host_movieDAO;
 import spring.mvc.baobob.host_movie.persistence.Host_movieDAOImpl;
+import spring.mvc.baobob.vo.HostMovieChartVO;
 import spring.mvc.baobob.vo.Member;
 import spring.mvc.baobob.vo.MovieResViewVO;
 import spring.mvc.baobob.vo.MovieVO;
@@ -1003,38 +1004,70 @@ public class Host_movieServiceImpl implements Host_movieService{
 		return viewVO;
 	}
 
-	
-	// 첫 그래프
+	// 장르별 영화 관람객 수
 	@Override
-	public void movieChart(HttpServletRequest req, Model model) {
-		//총판매액
-		int movieSale = dao.getMovieSale(); 
-		model.addAttribute("movieSale",movieSale);
-		
-		
+	public void movieJanreCountChart(HttpServletRequest req, Model model) {
 		Map<String , Object> map = new HashMap<String,Object>();
 
-		//상품종류별 구매수
-		//mapper에서 불러온 kind와 sum가 다건이기때문에 vo형태의 List형으로 받아준다.
-//		List<hostTChartVO> voList = dao.getMovieChart(); 
+		//mapper에서 불러온 kind와 value가 다건이기때문에 vo형태의 List형으로 받아준다.
+		List<HostMovieChartVO> voList = dao.getMovieCountChart(); 
 		
 		//vo데이터타입 i 에 List데이터들을 한건씩 빼와서 map에 담아준다.
 		//(map의 key값이 String이기때문에 int형인 kind를 String으로 형변환 해준다.
-//		for (hostTChartVO i : voList) {
-//			map.put(Integer.toString(i.getKind()) , i.getSum());
-//		}
-//		
-//		model.addAttribute("movieChart",map);
-//		
-//		//test용(feat.준열)
-//		System.out.println("준열's pointcut");
-//		map.forEach((k,v)->{
-//			System.out.println(k + " : " + v);
-//		});
-//		
+		for (HostMovieChartVO i : voList) {
+			map.put(i.getKind() , i.getValue());
+		}
 		
+		model.addAttribute("movieJanreCountChart",map);
 		
+		map.forEach((k,v)->{
+			System.out.println(k + " : " + v);
+		});
 	}
+
+	// 제한 연령별 매출
+	@Override
+	public void movieAgeChart(HttpServletRequest req, Model model) {
+		Map<String , Object> map = new HashMap<String,Object>();
+
+		//mapper에서 불러온 kind와 sum가 다건이기때문에 vo형태의 List형으로 받아준다.
+		List<hostTChartVO> voList = dao.movieAgeChart(); 
+		
+		//vo데이터타입 i 에 List데이터들을 한건씩 빼와서 map에 담아준다.
+		//(map의 key값이 String이기때문에 int형인 kind를 String으로 형변환 해준다.
+		for (hostTChartVO i : voList) {
+			map.put(Integer.toString(i.getKind()) , i.getSum());
+		}
+		
+		model.addAttribute("movieAgeChart",map);
+		
+		map.forEach((k,v)->{
+			System.out.println(k + " : " + v);
+		});
+	}
+
+	// 관람객 성별 수
+	@Override
+	public void movieSexCountChart(HttpServletRequest req, Model model) {
+		Map<String , Object> map = new HashMap<String,Object>();
+
+		//mapper에서 불러온 kind와 value가 다건이기때문에 vo형태의 List형으로 받아준다.
+		List<HostMovieChartVO> voList = dao.movieSexCountChart(); 
+		
+		//vo데이터타입 i 에 List데이터들을 한건씩 빼와서 map에 담아준다.
+		//(map의 key값이 String이기때문에 int형인 kind를 String으로 형변환 해준다.
+		for (HostMovieChartVO i : voList) {
+			map.put(i.getKind() , i.getValue());
+		}
+		
+		model.addAttribute("movieSexCountChart",map);
+		
+		map.forEach((k,v)->{
+			System.out.println(k + " : " + v);
+		});
+	}
+
+
 
 	
 

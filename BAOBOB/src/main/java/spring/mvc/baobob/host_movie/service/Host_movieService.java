@@ -81,6 +81,12 @@ public interface Host_movieService {
 	// 예매 상세
 	public MovieResViewVO hostMovieResView(HttpServletRequest req, Model model);
 	
-	// 첫 그래프
-	public void movieChart(HttpServletRequest req, Model model);
+	// 장르별 영화 비울
+	public void movieJanreCountChart(HttpServletRequest req, Model model);
+	
+	// 제한 연령별 매출
+	public void movieAgeChart(HttpServletRequest req, Model model);
+
+	// 관람객 성별 매출
+	public void movieSexCountChart(HttpServletRequest req, Model model);
 }

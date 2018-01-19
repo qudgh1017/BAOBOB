@@ -56,7 +56,6 @@
 					<select name="movie_age">
 						<option value="">제한 연령 선택</option>
 						<option value="0">전체관람가</option>
-						<option value="7">만 7세 이상</option>
 						<option value="12">만 12세 이상</option>
 						<option value="15">만 15세 이상</option>
 						<option value="19">만 19세 이상</option>
