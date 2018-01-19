@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import spring.mvc.baobob.host_movie.service.Host_movieServiceImpl;
+import spring.mvc.baobob.host_total.service.Host_totalServiceImpl;
 import spring.mvc.baobob.vo.MovieResViewVO;
 
 
@@ -18,6 +19,8 @@ public class Host_movieController {
 	@Autowired
 	Host_movieServiceImpl service = new Host_movieServiceImpl();
 	
+	@Autowired
+	Host_totalServiceImpl serviceT = new Host_totalServiceImpl();
 	// 관리자 영화
 	@RequestMapping(value="hostMovie")
 	public String hostMovie(HttpServletRequest req, Model model) {
@@ -307,5 +310,19 @@ public class Host_movieController {
 		vo = service.hostMovieResView(req, model);
 		
 		return vo;
+	}
+	
+	// 예매 결산
+	@RequestMapping(value="hostMovieSettlement")
+	public String hostMovieSettlement(HttpServletRequest req, Model model) {
+		System.out.println("hostMovieSettlement");
+		
+		serviceT.movieChart(req, model); // 장르별 매출
+		service.movieJanreCountChart(req, model); // 장르별 관람객 수
+		service.movieAgeChart(req, model); // 제한연령별 매출
+		service.movieSexCountChart(req, model); // 관람객 성별 수
+		
+		
+		return "host/host_movie/hostMovieSettlement";
 	}
 }

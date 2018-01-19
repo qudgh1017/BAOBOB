@@ -147,7 +147,7 @@ public class MainServiceImpl implements MainService {
 	//로그인 처리
 	@Override
 	public void signInPro(HttpServletRequest req, Model model) {
-		String member_id = req.getParameter("id");
+		String member_id = req.getParameter("id").trim();
 		String member_pwd = req.getParameter("pwd");
 		
 		Map<String, String> map = new HashMap<>();

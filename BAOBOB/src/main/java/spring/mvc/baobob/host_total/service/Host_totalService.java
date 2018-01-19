@@ -27,6 +27,9 @@ public interface Host_totalService {
 	//영화관 결산페이지
 	public void movieChart(HttpServletRequest req, Model model);
 	
+	//영화관 결산페이지
+	public void restaurantChart(HttpServletRequest req, Model model);
 	
-	
+	//주차장 결산페이지
+	public void getParkingPayChart(HttpServletRequest req, Model model);
 }

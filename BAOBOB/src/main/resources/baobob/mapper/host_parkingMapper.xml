@@ -122,9 +122,9 @@
 	<!-- 주차 기본 요금 등록 -->
 	<insert id="parkingFeeChange" parameterType="spring.mvc.baobob.vo.ParkingFee">
 		INSERT INTO park_fee_tbl
-			(p_fee_exc_price, p_fee_exc_time, p_fee_base_price, p_fee_base_time)
+			(p_fee_exc_price, p_fee_exc_time, p_fee_base_price, p_fee_base_time, p_fee_movie_time, p_fee_rest_time)
 		VALUES 
-			(#{p_fee_exc_price}, #{p_fee_exc_time}, #{p_fee_base_price}, #{p_fee_base_time})
+			(#{p_fee_exc_price}, #{p_fee_exc_time}, #{p_fee_base_price}, #{p_fee_base_time}, #{p_fee_movie_time}, #{p_fee_rest_time})
 	</insert>
 	
 	<!-- 주차 기본 요금 수정 -->

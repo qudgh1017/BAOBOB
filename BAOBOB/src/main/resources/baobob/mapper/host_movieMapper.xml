@@ -269,4 +269,40 @@
 	<update id="updateEmpty_seat" parameterType="int">
 		UPDATE theater_schedule_tbl SET schedule_empty_seat = #{empty_seat} WHERE theater_schedule_index = (SELECT MAX(theater_schedule_index) FROM theater_schedule_tbl)
 	</update>
+	
+	<!-- 결산 - 영화 장르별 관람객 수 -->
+	<resultMap type="spring.mvc.baobob.vo.HostMovieChartVO" id="movieCountChart">
+		<id 		property="kind"		column="kind" />
+		<result 	property="value"	column="value" />
+	</resultMap>
+	<select id="getMovieCountChart" resultMap="movieCountChart">
+		SELECT NVL(movie_janre, 0) kind, sum(movie_count) value
+		  FROM movie_tbl
+		 GROUP BY ROLLUP(movie_janre)
+	</select>
+	
+	<resultMap type="spring.mvc.baobob.vo.hostTChartVO" id="movieAgeChart">
+		<id			property="kind"		column="kind" />
+		<result		property="sum"		column="sum" />
+	</resultMap>
+	<!-- 결산 - 영화 제한연령별 매출 -->
+	<select id="movieAgeChart" resultMap="movieAgeChart">
+		SELECT NVL(m.movie_age, 99) kind, SUM(h.movie_history_price) sum
+		  FROM movie_tbl m JOIN theater_schedule_tbl t  
+		    ON m.movie_index = t.movie_index
+		  JOIN movie_history_tbl h
+		    ON t.theater_schedule_index = h.theater_schedule_index
+		 GROUP BY ROLLUP(m.movie_age)
+	</select>
+	
+	<!-- 결산 - 관람객 성별 수 -->
+	<select id="movieSexCountChart" resultMap="movieCountChart">
+		SELECT NVL(m.member_sex, 'total') kind, SUM(mh.movie_history_price) value
+	      FROM member_tbl m 
+	      JOIN history_tbl h
+	        ON m.member_id = h.member_id
+	      JOIN movie_history_tbl mh
+	        ON h.history_index = mh.history_index
+	     GROUP BY ROLLUP(m.member_sex)
+	</select>
 </mapper>

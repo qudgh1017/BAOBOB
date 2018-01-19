@@ -1,17 +1,20 @@
 package spring.mvc.baobob.host_movie.persistence;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import spring.mvc.baobob.vo.HostMovieChartVO;
 import spring.mvc.baobob.vo.Member;
 import spring.mvc.baobob.vo.MovieVO;
 import spring.mvc.baobob.vo.TheaterVO;
 import spring.mvc.baobob.vo.Theater_scheduleVO;
 import spring.mvc.baobob.vo.Theater_seatVO;
+import spring.mvc.baobob.vo.hostTChartVO;
 
 @Repository
 public class Host_movieDAOImpl implements Host_movieDAO {
@@ -448,7 +451,7 @@ public class Host_movieDAOImpl implements Host_movieDAO {
 		return vos;
 	}
 
-	// 영화 스케줄에 빈좌석 업데이트하기
+	// 영화 스케줄에 빈좌석컬럼 업데이트하기
 	@Override
 	public int updateEmpty_seat(int empty_seat) {
 		int cnt = 0;
@@ -459,15 +462,38 @@ public class Host_movieDAOImpl implements Host_movieDAO {
 		return cnt;
 	}
 
+	// 장르별 영화 관람객수
+	@Override
+	public List<HostMovieChartVO> getMovieCountChart() {
+		List<HostMovieChartVO> voList = null;
+		
+		Host_movieDAO dao = sqlSession.getMapper(Host_movieDAO.class);
+		voList = dao.getMovieCountChart();
+		
+		return voList;
+	}
 
+	// 제한연령별 매출
+	@Override
+	public List<hostTChartVO> movieAgeChart() {
+		List<hostTChartVO> voList = null;
+		
+		Host_movieDAO dao = sqlSession.getMapper(Host_movieDAO.class);
+		voList = dao.movieAgeChart();
+				
+		return voList;
+	}
 
-
-
-
-	
-
-	
-
+	// 관람객 성별 수
+	@Override
+	public List<HostMovieChartVO> movieSexCountChart() {
+		List<HostMovieChartVO> voList = null;
+		
+		Host_movieDAO dao = sqlSession.getMapper(Host_movieDAO.class);
+		voList = dao.movieSexCountChart();
+		
+		return voList;
+	}
 
 
 	

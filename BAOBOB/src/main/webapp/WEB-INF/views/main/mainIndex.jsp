@@ -60,17 +60,17 @@
 	    <hr class="star-dark mb-5">
 	    <div class="row">
 			<div class="col-lg-4">
-				<a class="portfolio-item d-block mx-auto" href="guest_movie">
+				<a class="d-block mx-auto" href="guest_movie">
 					<img class="img-fluid" src="${projectRes}images/ymk/main/movieIcon.png">
 				</a>
 			</div>
 			<div class="col-lg-4">
-				<a class="portfolio-item d-block mx-auto" href="guestRestaurantList">
+				<a class="d-block mx-auto" href="guestRestaurantList">
 					<img class="img-fluid" src="${projectRes}images/ymk/main/foodIcon.png">
 				</a>
 			</div>
 			<div class="col-lg-4">
-				<a class="portfolio-item d-block mx-auto" href="#">
+				<a class="d-block mx-auto" href="mainHelp">
 					<img class="img-fluid" src="${projectRes}images/ymk/main/serviceIcon.png">
 				</a>
 			</div>
@@ -119,33 +119,33 @@
 	    	<hr class="star-dark mb-5">
 	    	<div class="row">
 				<div class="col-md-6 col-lg-4">
-					<a class="portfolio-item d-block mx-auto" href="#">
+					<a class="portfolio-item d-block mx-auto" href="#event-modal-1">
 						<div class="portfolio-item-caption d-flex position-absolute h-100 w-100">
 							<div class="portfolio-item-caption-content my-auto w-100 text-center text-white">
 								<i class="fa fa-search-plus fa-3x"></i>
 							</div>
 						</div>
-						<img class="img-fluid" src="${projectRes}images/ymk/main/event01.png" alt="">
+						<img class="img-fluid" src="${projectRes}images/ymk/main/event01.png" alt="다운 사이징 시사회">
 					</a>
 				</div>
 				<div class="col-md-6 col-lg-4">
-					<a class="portfolio-item d-block mx-auto" href="#">
+					<a class="portfolio-item d-block mx-auto" href="#event-modal-2">
 						<div class="portfolio-item-caption d-flex position-absolute h-100 w-100">
 							<div class="portfolio-item-caption-content my-auto w-100 text-center text-white">
 								<i class="fa fa-search-plus fa-3x"></i>
 							</div>
 						</div>
-						<img class="img-fluid" src="${projectRes}images/ymk/main/event02.png" alt="">
+						<img class="img-fluid" src="${projectRes}images/ymk/main/event02.png" alt="아름다운 별 상영회">
 					</a>
 				</div>
 				<div class="col-md-6 col-lg-4">
-					<a class="portfolio-item d-block mx-auto" href="#">
+					<a class="portfolio-item d-block mx-auto" href="#event-modal-3">
 						<div class="portfolio-item-caption d-flex position-absolute h-100 w-100">
 							<div class="portfolio-item-caption-content my-auto w-100 text-center text-white">
 								<i class="fa fa-search-plus fa-3x"></i>
 							</div>
 						</div>
-						<img class="img-fluid" src="${projectRes}images/ymk/main/event03.png" alt="">
+						<img class="img-fluid" src="${projectRes}images/ymk/main/event03.png" alt="조선명탐정 시사회">
 					</a>
 				</div>
 		    </div>
@@ -201,6 +201,83 @@
 	
 	<!-- footerCopyright -->
 	<%@ include file="../guest/common/footerCopyright.jsp" %>
+	
+	<!-- Portfolio Modals -->
+	
+	<!-- Portfolio Modal 1 -->
+	<div class="portfolio-modal mfp-hide" id="event-modal-1">
+	  <div class="portfolio-modal-dialog bg-white">
+	    <a class="close-button d-none d-md-block portfolio-modal-dismiss" href="#">
+	      <i class="fa fa-3x fa-times"></i>
+	    </a>
+	    <div class="container text-center">
+	      <div class="row">
+	        <div class="col-lg-8 mx-auto">
+	          <h2 class="text-secondary text-uppercase mb-0">다운사이징 GV 시사회</h2>
+	          <hr class="star-dark mb-5">
+	          <img class="img-fluid mb-5" src="${projectRes}images/ymk/main/event01_1.jpg" alt="다운사이징 이동진  GV 시사회 이벤트">
+	          <a class="btn btn-primary btn-lg rounded-pill portfolio-modal-dismiss" href="#">
+	            <i class="fa fa-close"></i>
+	            Close</a>
+	        </div>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	
+	<!-- Portfolio Modal 2 -->
+	<div class="portfolio-modal mfp-hide" id="event-modal-2">
+	  <div class="portfolio-modal-dialog bg-white">
+	    <a class="close-button d-none d-md-block portfolio-modal-dismiss" href="#">
+	      <i class="fa fa-3x fa-times"></i>
+	    </a>
+	    <div class="container text-center">
+	      <div class="row">
+	        <div class="col-lg-8 mx-auto">
+	          <h2 class="text-secondary text-uppercase mb-0">아름다운 별 상영회</h2>
+	          <hr class="star-dark mb-5">
+	          <img class="img-fluid mb-5" src="${projectRes}images/ymk/main/event02_1.jpg" alt="아름다운 별 상영회 이벤트">
+	          <a class="btn btn-primary btn-lg rounded-pill portfolio-modal-dismiss" href="#">
+	            <i class="fa fa-close"></i>
+	            Close</a>
+	        </div>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	
+	<!-- Portfolio Modal 3 -->
+	<div class="portfolio-modal mfp-hide" id="event-modal-3">
+	  <div class="portfolio-modal-dialog bg-white">
+	    <a class="close-button d-none d-md-block portfolio-modal-dismiss" href="#">
+	      <i class="fa fa-3x fa-times"></i>
+	    </a>
+	    <div class="container text-center">
+	      <div class="row">
+	        <div class="col-lg-8 mx-auto">
+	          <h2 class="text-secondary text-uppercase mb-0">조선 명탐정 시사회</h2>
+	          <hr class="star-dark mb-5">
+	          <img class="img-fluid mb-5" src="${projectRes}images/ymk/main/event03_1.jpg" alt="조선 명탐정 시사회 이벤트">
+	          <a class="btn btn-primary btn-lg rounded-pill portfolio-modal-dismiss" href="#">
+	            <i class="fa fa-close"></i>
+	            Close</a>
+	        </div>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	
+
+	<!-- Plugin JavaScript -->
+	<script src="${projectRes}mainBootstrap/vendor/jquery-easing/jquery.easing.min.js"></script>
+	<script src="${projectRes}mainBootstrap/vendor/magnific-popup/jquery.magnific-popup.min.js"></script>
+	
+	<!-- Contact Form JavaScript -->
+	<script src="${projectRes}mainBootstrap/js/jqBootstrapValidation.js"></script>
+	<script src="${projectRes}mainBootstrap/js/contact_me.js"></script>
+	
+	<!-- Custom scripts for this template -->
+	<script src="${projectRes}mainBootstrap/js/freelancer.min.js"></script>
 </body>
 
 </html>

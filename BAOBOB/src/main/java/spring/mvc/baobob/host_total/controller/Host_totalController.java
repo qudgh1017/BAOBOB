@@ -29,9 +29,16 @@ public class Host_totalController {
 	
 	//종합관리자 메인
 	@RequestMapping("hostTMain")
-	public String hostTMain(Model model) {
+	public String hostTMain(HttpServletRequest req, Model model) {
 		
 		log.debug("====== host_total.controller/hostTMain() ======");
+		
+		//영화관 결산 챠트
+		service.movieChart(req, model);
+		//식당 결산 챠트
+		service.restaurantChart(req, model);
+		//주차장 결산 챠트
+		service.getParkingPayChart(req, model);
 		
 		return "host/host_total/hostTMain";
 	}
@@ -100,18 +107,32 @@ public class Host_totalController {
 		return "host/host_total/hostTMemDelPro";
 	}
 	
-	//영화관 결산페지
+	//영화관 결산페이지
 	@RequestMapping("hostTMovie")
 	public String hostTMovie(HttpServletRequest req, Model model) {
 		
 		service.movieChart(req, model);
 		
-		return "host/host_total/hostTMovie";
+		return "host/host_total/hostTMovieChart";
 	}
 	
+	//식당 결산페이지
+	@RequestMapping("hostTRestaurant")
+	public String hostTRestaurant(HttpServletRequest req, Model model) {
+		
+		service.restaurantChart(req, model);
+		
+		return "host/host_total/hostTRestaurantChart";
+	}
 	
-	
-	
+	//주차장 결산페이지
+	@RequestMapping("hostTParkingChart")
+	public String hostTParkingChart(HttpServletRequest req, Model model) {
+		
+		service.getParkingPayChart(req, model);
+		
+		return "host/host_total/hostParkChart";
+	}
 	
 	
 	

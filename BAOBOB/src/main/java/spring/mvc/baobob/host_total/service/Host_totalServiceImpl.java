@@ -3,7 +3,9 @@ package spring.mvc.baobob.host_total.service;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -13,6 +15,9 @@ import org.springframework.ui.Model;
 
 import spring.mvc.baobob.host_total.persistence.Host_totalDAO;
 import spring.mvc.baobob.vo.Member;
+import spring.mvc.baobob.vo.ParkingFee;
+import spring.mvc.baobob.vo.ParkingHistory;
+import spring.mvc.baobob.vo.hostTChartVO;
 
 @Service
 public class Host_totalServiceImpl implements Host_totalService{
@@ -179,17 +184,118 @@ public class Host_totalServiceImpl implements Host_totalService{
 	
 	//영화관 결산페이지
 	public void movieChart(HttpServletRequest req, Model model) {
-		System.out.println("결산서비스");
-		
-		//총판매액을 가져옴
+		//총판매액
 		int movieSale = dao.getMovieSale(); 
 		model.addAttribute("movieSale",movieSale);
-		System.out.println("총액" + movieSale);
 		
+		
+		Map<String , Object> map = new HashMap<String,Object>();
+
 		//상품종류별 구매수
-		//Map<String,Integer> map = (Map<String,Integer>)dao.getMovieChart(); 
-		//model.addAttribute("movieChart",map);
+		//mapper에서 불러온 kind와 sum가 다건이기때문에 vo형태의 List형으로 받아준다.
+		List<hostTChartVO> voList = dao.getMovieChart(); 
+		
+		//vo데이터타입 i 에 List데이터들을 한건씩 빼와서 map에 담아준다.
+		//(map의 key값이 String이기때문에 int형인 kind를 String으로 형변환 해준다.
+		for (hostTChartVO i : voList) {
+			map.put(Integer.toString(i.getKind()) , i.getSum());
+		}
+		
+		model.addAttribute("movieChart",map);
+		
+		//test용(feat.준열)
+		System.out.println("준열's pointcut");
+		map.forEach((k,v)->{
+			System.out.println(k + " : " + v);
+		});
 	}
+	
+/*----------------------------------------------------------------------------*/
+	
+	//영화관 결산페이지
+	public void restaurantChart(HttpServletRequest req, Model model) {
+		//총판매액
+		int restaurantSale = dao.getRestaurantSale(); 
+		model.addAttribute("restaurantSale",restaurantSale);
+		
+		Map<String,Object> map = new HashMap<String,Object>();
+		
+		List<hostTChartVO> voList = dao.getRestaurantChart();
+		
+		for(hostTChartVO i : voList) {
+			map.put(Integer.toString(i.getKind()), i.getSum());
+		}
+		
+		model.addAttribute("restaurantChart", map);
+		
+		//test용(feat.준열)
+		System.out.println("건태's pointcut");
+		map.forEach((k,v)->{
+			System.out.println(k + " : " + v);
+		});
+		
+	}
+	
+/*----------------------------------------------------------------------------*/
+	
+	//주차장 결산페이지
+	public void getParkingPayChart(HttpServletRequest req, Model model) {
+		// 월별 주차 시간에 따른 금액과 실제 받은 금액
+
+		// 주차 요금
+		ParkingFee fee = dao.getParkingFee();
+
+		// 올해 납부 내역
+		ArrayList<ParkingHistory> thisPh = dao.getThisYearPayList();
+
+		Map<String, Integer> timePrice = new HashMap<String, Integer>(); // 월별 주차 시간에 따른 금액
+		Map<String, Integer> userPrice = new HashMap<String, Integer>(); // 월별 받은 금액
+		
+		for (ParkingHistory ph : thisPh) {
+			long userTime = ph.getP_history_out().getTime() - ph.getP_history_in().getTime();
+			long minute = (userTime / 1000) / 60; // 이용 시간(분)
+
+			String month = ph.getP_history_out().toString().substring(5, 7); // 이용한 월
+			long time = minute - fee.getP_fee_base_time(); // 이용 초과 시간
+			int price = fee.getP_fee_base_price(); // 기본 요금
+			
+			while (time > 0) {
+				time -= fee.getP_fee_exc_time();
+				price += fee.getP_fee_exc_price();
+			}
+
+			if (timePrice.get("P" + month) != null) {
+				timePrice.put("P" + month, timePrice.get("P" + month) + price);
+				userPrice.put("U" + month, userPrice.get("U" + month) + ph.getP_history_price());
+			} else {
+				timePrice.put("P" + month, price);
+				userPrice.put("U" + month, ph.getP_history_price());
+			}
+		}
+
+		String[] month = { "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12" };
+		for (int i = 0; i < month.length; i += 1) {
+			boolean flg = false;
+			for (Entry<String, Integer> e : timePrice.entrySet()) {
+				if (e.getKey().equals("P" + month[i])) {
+					flg = true;
+					model.addAttribute("P" + month[i], e.getValue());
+					model.addAttribute("U" + month[i], userPrice.get("U" + month[i]));
+				}
+			}
+			if (!flg) {
+				model.addAttribute("P" + month[i], 0);
+				model.addAttribute("U" + month[i], 0);
+			}
+		}
+		
+	}
+	
+	/*----------------------------------------------------------------------------*/
+	
+	
+	
+	
 	
 	
 	

@@ -13,6 +13,7 @@ public class hostTChartVO {
 	public int getKind() {
 		return kind;
 	}
+	
 	public void setKind(int kind) {
 		this.kind = kind;
 	}
@@ -20,6 +21,7 @@ public class hostTChartVO {
 	public int getSum() {
 		return sum;
 	}
+	
 	public void setSum(int sum) {
 		this.sum = sum;
 	}
