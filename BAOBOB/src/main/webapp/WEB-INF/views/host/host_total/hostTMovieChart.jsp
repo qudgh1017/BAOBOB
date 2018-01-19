@@ -27,11 +27,11 @@
 		<div class="container-fluid">
 			<div class="card mb-3">
 				<div class="card-header"><i class="fa fa-table">영화관 결산</i></div>
-				<div class="card-body" >
+				<div class="card-body" style="height:700px">
 					<div style="display: -webkit-box;">
 						<div id="movieChart" style="width:100%; height:500px;"></div>
 					</div>
-					영화관 총 매출액 : ${movieSale}원
+						<div style="font-weight:900; font-size:30px">영화관 총 매출액 : ${movieSale}원</div>
 				</div>
 				<div class="card-footer small text-muted">BAOBOX</div>
 			</div>
@@ -45,8 +45,8 @@
 		google.charts.setOnLoadCallback(drawChartFirst);
 		var firstChart_options = {
 				title : '영화관 결산', 
-				width : 1000, 
-				height : 400, 
+				width : 2200, 
+				height : 500, 
 				bar : {groupWidth : '30%'},
 				legend : {position : 'bottom'}};
 		function drawChartFirst(){

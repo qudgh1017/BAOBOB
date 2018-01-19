@@ -11,7 +11,7 @@
 <title>1 : 1 문의</title>
 </head>
 <body>
-<c:if test="${sessionScop.memId != null}">
+<c:if test="${sessionScope.memId != null}">
 	<%@ include file="../../common/head.jsp" %>
 	
 	<!-- Navigation -->
@@ -26,8 +26,8 @@
 			<!-- 사이드 메뉴 -->
 			<%@ include file="../../common/sideMenu.jsp" %>	
 			
-			<td style="padding:0rem 10rem; margin:0px;width:100%;height:100%;">
 			<!-- 알맹이td -->
+			<td style="padding:0rem 10rem; margin:0px;width:100%;height:100%;">
 			<table id="mainBody">
 				<caption>1 : 1 문의</caption>
 			    <thead>

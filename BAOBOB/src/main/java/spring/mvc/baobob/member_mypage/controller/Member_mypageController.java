@@ -340,15 +340,22 @@ public class Member_mypageController {
 /*----------------------------- 무비 로그 ----------------------------------------*/	
 	
 	//무비로그 위시리스트
-	@RequestMapping("MovieWish")
-	public String MovieWish(HttpServletRequest req, Model model) {
+	@RequestMapping("MovieLog")
+	public String MovieLog(HttpServletRequest req, Model model) {
 		service.memberCard(req, model);
 		
-		return "guest/member_myPage/memMovie/member_myPage_MovieWish";
+		return "guest/member_myPage/memMovie/member_myPage_MovieLog";
 	}
 	
-	
-	
+	//무비로그 위시리스트
+	@RequestMapping("wishList")
+	public String wishList(HttpServletRequest req, Model model) {
+		
+		service.movieWishList(req, model);
+		
+		return "guest/member_myPage/memMovie/member_myPage_WishList";
+	}
+		
 	
 	
 	
