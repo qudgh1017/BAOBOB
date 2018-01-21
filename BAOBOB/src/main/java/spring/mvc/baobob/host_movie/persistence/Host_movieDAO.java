@@ -20,7 +20,7 @@ public interface Host_movieDAO {
 	public int getMovieCnt();
 	
 	// 영화 전체 목록 조회(개봉일 순)
-	public ArrayList<MovieVO> getMovieList(Map<String, Integer> map);
+	public ArrayList<MovieVO> getMovieList();
 	
 	// 영화 추가 처리
 	public int hostMovieAddPro(MovieVO vo);
