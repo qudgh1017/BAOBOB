@@ -65,4 +65,13 @@ public  interface Guest_movieDAO {
 	
 	//각 상영관 마다 총좌석 갯수구하기
 	public int theaterSeats(int theater_index);
+	
+	//메인 - 영화 순위
+	public ArrayList<String> mainMovieRank();
+	
+	//메인 - 상영 중인 영화 갯수
+	public int mainMovieTheaterCnt();
+	
+	//메인 - 상영 중인 영화
+	public ArrayList<String> mainMovieTheater(Map<String, Object> map);
 }

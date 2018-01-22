@@ -243,9 +243,27 @@ public class Guest_movieDAOImpl implements Guest_movieDAO{
 		return cnt;
 	}
 
+	//메인 - 영화 순위
+	public ArrayList<String> mainMovieRank(){
+		Guest_movieDAO mapper = sqlSession.getMapper(Guest_movieDAO.class);
+		ArrayList<String> list = mapper.mainMovieRank();
+		return list;
+	}
+
+	//메인 - 상영 중인 영화 갯수
+	public int mainMovieTheaterCnt() {
+		Guest_movieDAO mapper = sqlSession.getMapper(Guest_movieDAO.class);
+		int cnt = mapper.mainMovieTheaterCnt();
+		return cnt;
+	}
 	
-
-
+	//메인 - 예매 영화
+	@Override
+	public ArrayList<String> mainMovieTheater(Map<String, Object> map) {
+		Guest_movieDAO mapper = sqlSession.getMapper(Guest_movieDAO.class);
+		ArrayList<String> list = mapper.mainMovieTheater(map);
+		return list;
+	}
 	
 
 	

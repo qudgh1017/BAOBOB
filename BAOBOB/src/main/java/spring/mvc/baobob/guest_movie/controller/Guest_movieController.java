@@ -23,7 +23,17 @@ public class Guest_movieController {
 	public String guest_movie(HttpServletRequest req, Model model) {
 		log.debug("====== Guest_movieController/guest_movie ======");
 		
+		gmservice.movieMain(req, model);
+		
 		return "/guest/guest_movie/movie_main";
+	}
+	
+	//영화관 메인 Ajax
+	@RequestMapping("gMovieMainRankUpdate")
+	public String gMovieMainRankUpdate(HttpServletRequest req, Model model) {
+		log.debug("====== Guest_movieController/gMovieMainRankUpdate ======");
+		gmservice.movieMain(req, model);
+		return "guest/guest_movie/movie_main_rank";
 	}
 	
 	// 로그인이 필요한 서비스 일때
