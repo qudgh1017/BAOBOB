@@ -59,8 +59,10 @@ function getScheduleSeatInfo(col, row, state){
 	}
 }
 function personInitial(){
-	document.all.adult.value = 0;
-	document.all.teenager.value = 0;
+	alert("dd");
+	$('input:radio[name=adult]:input[value=0]').attr("checked", true);
+	$('input:radio[name=teenager]:input[value=0]').attr("checked", true);
+
 }
 
 var adultCnt = 0;

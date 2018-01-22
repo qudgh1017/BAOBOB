@@ -150,8 +150,11 @@ public class Guest_movieController {
 	public String movieReviewPro(HttpServletRequest req, Model model) {
 		log.debug("====== Guest_movieController/movieReviewPro ======");
 		
+		int pro = Integer.parseInt(req.getParameter("pro"));
 		gmservice.movieReviewPro(req, model);
-		hmservice.wordAnalyzer(req, model);
+		if(pro == 1) {
+			hmservice.wordAnalyzer(req, model);
+		}
 		
 		return "/guest/guest_movie/movie/movieReviewPro";
 	}
