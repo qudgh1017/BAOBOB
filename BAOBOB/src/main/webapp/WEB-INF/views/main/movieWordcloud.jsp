@@ -11,7 +11,7 @@
 	<div>
 		<div style="float:left; width:500">
 			<div>
-				<canvas width="500" height="350" style="width:100%" id="myCanvas"> <!-- 	<p>Moyeo word cloud</p> -->
+				<canvas width="300" height=250" style="width:100%" id="myCanvas"> <!-- 	<p>Moyeo word cloud</p> -->
 				</canvas>
 			</div>
 			<div id="tags" style="float:left;">

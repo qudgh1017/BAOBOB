@@ -383,7 +383,7 @@
 	<select id="searchWordcloud2" parameterType="Map" resultType="spring.mvc.baobob.vo.WordVO">
 		SELECT *
 	      FROM (
-				SELECT word, count, type_of_speech, update_date, reg_date, rownum as rn
+				SELECT word, count, type_of_speech, update_date, reg_date, movie_index rownum as rn
 				  FROM (
 				  		SELECT *
                           FROM wordcloud_list
@@ -394,7 +394,7 @@
                   WHERE 
                   <if test="type == 1">
                   	type_of_speech = 'Noun' OR type_of_speech = 'ProperNoun'
-                  </if>
+                  </if>9
                   <if test="type == 2">
                   	type_of_speech = 'Verb'
                   </if>
