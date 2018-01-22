@@ -261,6 +261,17 @@ public class Guest_movieDAOImpl implements Guest_movieDAO{
 		
 		return seats;
 	}
+
+	//선택된 한개의 좌석 정보
+	@Override
+	public Theater_seatVO seatInfo(int seat_index) {
+		Theater_seatVO seat = null;
+		
+		Guest_movieDAO gmdao = sqlSession.getMapper(Guest_movieDAO.class);
+		seat = gmdao.seatInfo(seat_index);
+		
+		return seat;
+	}
 	
 
 

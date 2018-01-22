@@ -77,6 +77,7 @@ public  interface Guest_movieDAO {
 	// 상영관 상세 좌석 정보
 	public ArrayList<Theater_seatVO> theaterSeatDetail(Map<String,Integer> map);
 	
-	
+	//선택된 한개 좌석의 정보
+	public Theater_seatVO seatInfo(int seat_index);
 	
 }

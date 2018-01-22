@@ -195,5 +195,10 @@
 	<select id="theaterSeatDetail" resultType="spring.mvc.baobob.vo.Theater_seatVO">
 		SELECT * FROM theater_seat_tbl WHERE theater_index=#{theater_index} AND theater_schedule_index=#{theater_schedule_index}
 	</select>
+	
+	<!-- 선택된 한개의 좌석정보 -->
+	<select id="seatInfo" resultType="spring.mvc.baobob.vo.Theater_seatVO">
+		SELECT * FROM theater_seat_tbl WHERE seat_index = #{seat_index}
+	</select>
 
 </mapper>

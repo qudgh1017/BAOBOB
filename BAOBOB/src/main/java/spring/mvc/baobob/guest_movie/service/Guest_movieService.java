@@ -47,4 +47,6 @@ public interface Guest_movieService {
 	//좌석도 선택
 	public void seatSelect(HttpServletRequest req, Model model);
 	
+	//선택된 좌석들의 정보들
+	public void seatInfos(HttpServletRequest req, Model model);
 }

@@ -178,9 +178,15 @@ function clickSchedule(theater_schedule_index, movie_index){
 	});
 }
 
-//다음페이지 선택했을 때 좌석페이지로 넘어가게
+//영화,스케줄선택페이지에서 다음페이지 선택했을 때 좌석페이지로 넘어가게
 function ToSeat(movie_index, theater_schedule_index){
 	window.location.href="movieTicket2?movie_index="+movie_index+"&theater_schedule_index="+theater_schedule_index;
+}
+
+//좌석페이지에서 다음페이지 선택했을 때 결제페이지로 넘어가게
+function movieTicket3(adultCnt, teenagerCnt, theater_schedule_index, seats){
+	alert(seats);
+	window.location.href="movieTicket3?adultCnt="+adultCnt+"&teenagerCnt="+teenagerCnt+"&teenagerCnt="+theater_schedule_index+"&seats="+seats;
 }
 
 

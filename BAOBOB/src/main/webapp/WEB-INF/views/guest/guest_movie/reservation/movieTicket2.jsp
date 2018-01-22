@@ -13,8 +13,13 @@
 	color:white;
 }
 </style>
+<!-- 내 전용 script -->
+<script type="text/javascript" src="${projectRes}ybh/js/ybh.js"></script>
+<!-- 좌석관련 script -->
+<script type="text/javascript" src="${projectRes}ybh/js/seat.js"></script>
 
-<body onload="guestTheaterSeat('${schedule.theater_index}', '${schedule.movie_index}', '${schedule.theater_schedule_index}')">
+<!-- onload="guestTheaterSeat('${schedule.theater_index}', '${schedule.movie_index}', '${schedule.theater_schedule_index}')" -->
+<body>
 	
 	<!-- CSS,JavaScript 참조 -->
 	<%@ include file="/WEB-INF/views/guest/common/head.jsp" %>
@@ -22,11 +27,6 @@
 	<%@ include file="/WEB-INF/views/guest/common/navigation.jsp" %>
 	<!-- main_menu -->
 	<%@ include file="/WEB-INF/views/guest/guest_movie/movie_menu.jsp" %>
-	<!-- 내 전용 script -->
-	<script type="text/javascript" src="${projectRes}ybh/js/ybh.js"></script>
-	<!-- 좌석관련 script -->
-	<script type="text/javascript" src="${projectRes}ybh/js/seat.js"></script>
-	
 	
 	<section style="padding-top:0px;">
 		<div class="container">
@@ -76,7 +76,7 @@
 					 </div>	
 				</div>	
 				
-				<!-- 좌석현황 -->	
+				<!-- 좌석현황/ 영화상영시간 -->	
 				<div class="col-md-5" align="center" style="height:100px; color:black; font-weight:bold; border:1px solid white; background-color:#DDDDDD">
 					${schedule.theater_index}관&nbsp;&nbsp;|&nbsp;&nbsp; 남은좌석 <span style="color:red; font-weight:bold;">${schedule.schedule_empty_seat}</span>/${schedule.schedule_seat}
 					<br><br>
@@ -94,7 +94,6 @@
 				<div class="col-md-10" align="center" style="height:500px; color:black; font-weight:bold; border:1px solid white; background-color:#EEEEEE">
 					<!-- 뿌리는 곳 -->
 					<div id="theaterSeat">
-					
 					</div>
 				</div>
 				<div class="col-md-1"></div>
@@ -125,7 +124,7 @@
 			</div>
 			<!-- 좌석선택 아이콘 -->
 			<div class="col-md-3" align="center" style="border: solid 1px gray; color:gray; font-weight:bold;">
-				<div id="nextSeatButton2">
+				<div id="nextDealButton">
 					<br><br>
 					<center style="color:gray">
 						좌석을 선택하셔야 <br>

@@ -1,5 +1,7 @@
 package spring.mvc.baobob.guest_movie.controller;
 
+import java.util.ArrayList;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import spring.mvc.baobob.guest_movie.service.Guest_movieService;
 import spring.mvc.baobob.vo.MovieResViewVO;
+import spring.mvc.baobob.vo.Theater_seatVO;
 
 @Controller
 public class Guest_movieController {
@@ -226,6 +229,47 @@ public class Guest_movieController {
 		gmservice.seatSelect(req, model);
 		
 		return "/guest/guest_movie/reservation/reserveSeatInfo";
+	}
+	
+	//예매-빠른예매 2번째페이지 - 선택한 좌석 정보
+	@RequestMapping("selectSeatInfo")
+	public String selectSeatInfo(HttpServletRequest req, Model model) {
+		log.debug("====== Guest_movieController/selectSeatInfo ======");
+ 
+		int seat_index = Integer.parseInt(req.getParameter("seat_index"));
+		model.addAttribute("seat_index", seat_index);
+		
+		return "/guest/guest_movie/reservation/selectSeatInfo";
+	}
+	
+	//예매-빠른예매 2번째페이지 - nextDealButton 생성!
+	@RequestMapping("nextDealButton")
+	public String nextDealButton(HttpServletRequest req, Model model) {
+		log.debug("====== Guest_movieController/nextDealButton ======");
+		
+		gmservice.seatInfos(req, model);
+		
+		return "/guest/guest_movie/reservation/nextDealButton";
+	}
+	
+	//예매-빠른예매 2번째페이지 - 결제창
+	@RequestMapping("movieTicket3")
+	public String movieTicket3(HttpServletRequest req, Model model) {
+		log.debug("====== Guest_movieController/movieTicket3 ======");
+		
+		ArrayList<Theater_seatVO> seats = new ArrayList<Theater_seatVO>();
+		
+		int adultCnt = Integer.parseInt(req.getParameter("adultCnt"));
+		int teenagerCnt = Integer.parseInt(req.getParameter("teenagerCnt"));
+		int theater_schedule_index = Integer.parseInt(req.getParameter("theater_schedule_index"));
+		//seats = req.getParameterValues("seats");
+		
+		model.addAttribute("adultCnt", adultCnt);
+		model.addAttribute("teenagerCnt", teenagerCnt);
+		model.addAttribute("theater_schedule_index", theater_schedule_index);
+		//model.addAttribute("seats", seats);
+		
+		return "/guest/guest_movie/reservation/movieTicket3";
 	}
 	
 	//예매-상영시간표
