@@ -1,3 +1,38 @@
+//리뷰 별점 설정
+function showme(id) {
+    document.getElementById('result').innerHTML = 'My vote : '+id.value;
+    var r = ["0","0","0","0","0"];
+    var s='';
+    
+    alert('showme r : ' + r);
+    alert('showme id.value' + id.value);
+    for(var i=0;i<5;i++) {
+		if(id.value==(i+1).toString()) {
+			var x = parseInt(r[i])+1;
+		    r[i]=x.toString();
+		}
+		if(i==4) {s+=r[i];} else {s+=r[i]+',';}
+			alert('showme s : ' + s);
+		}
+    	document.getElementById('res').value=s;
+  }
+  
+//리뷰 별점 확인
+function calc() {
+    var x=document.getElementById('res').value.split(',');
+    var r=0;
+    var t=0;
+    alert("calc x : " + x);
+
+    for(var i=0;i<5;i++) {
+      t+=parseInt(x[i]);
+      r+=(parseInt(x[i])*(i+1));
+    }
+    var s=parseInt((r/t)*20);
+    document.getElementById('bar').style.width=s.toString()+'%';
+    document.getElementById('sta').innerHTML=s.toString()+'%';
+  }
+
 //리뷰 수정
 function guest_review_modify(pageNum, review_index, restaurant_index){
 	alert("review_index : " + review_index);

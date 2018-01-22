@@ -3,8 +3,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ include file="/resources/setting.jsp"%>
-<script src="${projectRes}mhj/script.js"></script>
+<%@ include file="/resources/mhj/setting.jsp"%>
 
 <html>
 <head>
@@ -40,7 +39,88 @@
 			    max-width: 540px;
 			}
 		}
-    </style>
+		
+		
+/*======= 별점 시작 =======*/
+
+#divRateCnt {
+   width: 130px;
+   position: relative;
+}
+
+#divRareCnt, #divStarsCnt{
+    height: 26px;
+    background: url(http://s4.postimg.org/wi683zp2h/stars.png) 0 0px repeat-x;
+}
+
+#divRateCnt input{
+    display: none;
+}
+
+#divRateCnt label{
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 26px;
+    width: 130px;
+    cursor: pointer;
+}
+#divRateCnt:hover label{
+    display: block;
+}
+#divRateCnt label:hover{
+    background: url(http://s4.postimg.org/wi683zp2h/stars.png) 0 -52px repeat-x;
+}
+
+#divRateCnt label + input + label{width: 104px;}
+#divRateCnt label + input + label + input + label{width: 78px;}
+#divRateCnt label + input + label + input + label + input + label{width: 52px;}
+#divRateCnt label + input + label + input + label + input + label + input + label{width: 26px;}
+
+#divRateCnt input:checked + label{
+    display: block;
+    background: url(http://s4.postimg.org/wi683zp2h/stars.png) 0 -52px repeat-x;
+}
+	
+/*======= 별점 종료 =======*/
+</style>
+<script src="${restaurant_js}"></script>
+<script type="text/javascript">
+function showme(id) {
+    document.getElementById('result').innerHTML = 'My vote : '+id.value;
+    var r = ["0","0","0","0","0"];
+    var s='';
+    
+    alert('showme r : ' + r);
+    alert('showme id.value' + id.value);
+    for(var i=0;i<5;i++) {
+		if(id.value==(i+1).toString()) {
+			var x = parseInt(r[i])+1;
+		    r[i]=x.toString();
+		}
+		if(i==4) {s+=r[i];} else {s+=r[i]+',';}
+			alert('showme s : ' + s);
+		}
+    	document.getElementById('res').value=s;
+  }
+  
+//리뷰 별점 확인
+function calc() {
+    var x=document.getElementById('res').value.split(',');
+    var r=0;
+    var t=0;
+    alert("calc x : " + x);
+
+    for(var i=0;i<5;i++) {
+      t+=parseInt(x[i]);
+      r+=(parseInt(x[i])*(i+1));
+    }
+    var s=parseInt((r/t)*20);
+    document.getElementById('bar').style.width=s.toString()+'%';
+    document.getElementById('sta').innerHTML=s.toString()+'%';
+  }
+</script>
 <title>레스토랑 메뉴</title>
 </head>
 <body>
@@ -90,6 +170,18 @@
 							<tr>
 								<th>별점</th> 
 								<td>
+									<!-- 별점 시작 -->
+									<input type="hidden" value="0,0,0,0,0" id="res" />
+									<div id="divRateCnt">
+										<div id="divStarsCnt"></div>
+										<input type="radio" name="rating" id="star5" value="5" onchange="showme(this);"><label for="star5"></label>
+										<input type="radio" name="rating" id="star4" value="4" onchange="showme(this);"><label for="star4"></label>
+										<input type="radio" name="rating" id="star3" value="3" onchange="showme(this);"><label for="star3"></label>
+										<input type="radio" name="rating" id="star2" value="2" onchange="showme(this);"><label for="star2"></label>
+										<input type="radio" name="rating" id="star1" value="1" onchange="showme(this);"><label for="star1"></label>
+									</div>
+									<span id="result"></span>
+									<!-- 별점 종료 -->
 									<input class="input" type="grade" value="" name="review_grade" style="width:50px" required/>
 								</td>
 							</tr>
@@ -152,6 +244,9 @@
 											<tr>
 												<th><h6>평점</h6></th> 
 												<td>
+													<div style="width:130px;height:26px;background:url(http://s4.postimg.org/wi683zp2h/stars.png) 0 0 repeat-x;position:relative;">
+														<div id="bar" style="width:130px;height:26px;background:url(http://s4.postimg.org/wi683zp2h/stars.png) 0 -26px repeat-x;position:absolute;top:0;left:0;width:0%;"></div>
+													</div>
 													${dto.review_grade}
 												</td>
 											</tr>

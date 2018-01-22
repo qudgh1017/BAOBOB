@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 <link rel="stylesheet" href="/baobob/resources/reset.css">
 
@@ -13,3 +14,8 @@
 <c:set var="restaurant_css" value="/baobob/resources/mhj/css/style.css" />
 <c:set var="restaurant_js" value="/baobob/resources/mhj/js/script.js" />
 <c:set var="restaurant_images" value="/baobob/resources/images/chg/" />
+
+
+
+
+
