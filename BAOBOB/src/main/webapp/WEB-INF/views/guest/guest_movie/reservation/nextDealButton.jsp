@@ -13,7 +13,7 @@
 <!-- 예매선택된 스케줄정보 -->
 <div style="font-size:13px; font-weight:bold;">
 	<br>
-	<a onclick="movieTicket3('${adultCnt}', '${teenagerCnt}', '${theater_schedule_index}', '${seats}')">
+	<a onclick="movieTicket3('${adultCnt}', '${teenagerCnt}', '${theater_schedule_index}')">
 		<img src="${projectRes}/images/ybh/post.png" style="height:80px">
 	</a>
 	<br>결제

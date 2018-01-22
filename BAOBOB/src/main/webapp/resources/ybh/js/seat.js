@@ -64,11 +64,15 @@ var teenagerCnt = 0;
 var allCnt;
 var maxChecked;   //선택가능한 체크박스 갯수
 var totalChecked = 0; // 체크된 갯수 
+var seatInfo="";
+var seat_index_arr = new Array();
+var i=0;
 
 //일반 체크시 사람수
 function adultChk(theater_index, movie_index, theater_schedule_index, cnt){
 	adultCnt = cnt-0;
 	personChk(theater_index, movie_index, theater_schedule_index);
+	
 	totalChecked = 0;
 	seatInfo = "";
 	i = 0;
@@ -79,6 +83,7 @@ function adultChk(theater_index, movie_index, theater_schedule_index, cnt){
 function teenagerChk(theater_index, movie_index, theater_schedule_index, cnt){
 	teenagerCnt = cnt-0;
 	personChk(theater_index, movie_index, theater_schedule_index);
+	
 	totalChecked = 0;
 	seatInfo = "";
 	i = 0;
@@ -111,29 +116,30 @@ function personChk(theater_index, movie_index, theater_schedule_index){
 }
 
 
-var seatInfo="";
-var seat_index_arr = new Array();
-var i=0;
+
 /*var total_seat_index[] = new array();*/
 function CountChecked(field) {
 	//maxChecked = allCnt;
 	var size = maxChecked;
 	alert("maxChecked:"+maxChecked);
-	if (field.checked){
+	
+	if (field.checked){ //체크 했을때
     	totalChecked += 1;
     	alert("totalChecked"+totalChecked);
-    }
-    else{
+    }else{//체크 취소할때
     	totalChecked -= 1;
+    	alert("totalChecked"+totalChecked);
     }
 
-    if (totalChecked > maxChecked) {
-        alert (allCnt +"좌석만 선택 가능합니다.");
+    if (totalChecked > maxChecked) { //체크된게 선택가능한 maxChecked보다 큰경우
+        alert(allCnt +"좌석만 선택 가능합니다.");
         field.checked = false;
         totalChecked -= 1;
-    }else{
+    }else{// 작거나 같은 경우
     	seat_index = field.value;
     	alert("seat_index:"+seat_index);
+    	
+    	//좌석정보 화면 ajax띄우기
     	$.ajax({
 			url: 'selectSeatInfo',
 			type: 'GET',
@@ -161,6 +167,9 @@ function CountChecked(field) {
 		i++;
 		alert(seat_index_arr);
 		
+		//화면에 값 저장해서 movieTicket3() 호출시 다시 저장해주기
+		document.all.seat_index_arr.value = seat_index_arr;
+		
 	   	if(totalChecked == maxChecked){
 	   		alert("adultCnt:"+adultCnt+"\n teenagerCnt:"+teenagerCnt);
 	   		
@@ -182,13 +191,19 @@ function CountChecked(field) {
 			});	
 	   	}
     }
-    
-    
+}
+function ResetCount(){
+	totalChecked=0;
 }
 
-function movieTicket3(){
+//좌석페이지에서 다음페이지 선택했을 때 결제페이지로 넘어가게
+function movieTicket3(adultCnt, teenagerCnt, theater_schedule_index){
+	//화면에 저장된 seat_index_arr값들 합쳐진것 저장(배열이 아닌 String값으로 나열되서 저장됨.)
+	var seat_index_arr = document.all.seat_index_arr.value;
+	alert(seat_index_arr);
 	
-	
+	window.location.href="movieTicket3?adultCnt="+adultCnt+"&teenagerCnt="+teenagerCnt+"&theater_schedule_index="+theater_schedule_index+"&seat_index_arr="+seat_index_arr;
 }
+
 
 

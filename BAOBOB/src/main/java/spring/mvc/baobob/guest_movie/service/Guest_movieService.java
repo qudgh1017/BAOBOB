@@ -49,4 +49,7 @@ public interface Guest_movieService {
 	
 	//선택된 좌석들의 정보들
 	public void seatInfos(HttpServletRequest req, Model model);
+	
+	//선택된 좌석들의 정보들
+	public void seatInfos2(HttpServletRequest req, Model model);
 }

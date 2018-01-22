@@ -183,11 +183,6 @@ function ToSeat(movie_index, theater_schedule_index){
 	window.location.href="movieTicket2?movie_index="+movie_index+"&theater_schedule_index="+theater_schedule_index;
 }
 
-//좌석페이지에서 다음페이지 선택했을 때 결제페이지로 넘어가게
-function movieTicket3(adultCnt, teenagerCnt, theater_schedule_index, seats){
-	alert(seats);
-	window.location.href="movieTicket3?adultCnt="+adultCnt+"&teenagerCnt="+teenagerCnt+"&teenagerCnt="+theater_schedule_index+"&seats="+seats;
-}
 
 
   

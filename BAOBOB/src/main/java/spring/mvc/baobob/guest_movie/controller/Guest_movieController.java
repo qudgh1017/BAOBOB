@@ -141,6 +141,7 @@ public class Guest_movieController {
 		log.debug("====== Guest_movieController/movieReviewPro ======");
 		
 		gmservice.movieReviewPro(req, model);
+		hmservice.movieWordcloud(req, model);
 		
 		return "/guest/guest_movie/movie/movieReviewPro";
 	}
@@ -151,7 +152,6 @@ public class Guest_movieController {
 		log.debug("====== Guest_movieController/movieTicket ======");
 
 		gmservice.reserveMovieList(req, model);
-		hmservice.movieWordcloud(req, model);
 		
 		return "/guest/guest_movie/reservation/movieTicket";
 	}
@@ -262,17 +262,7 @@ public class Guest_movieController {
 	public String movieTicket3(HttpServletRequest req, Model model) {
 		log.debug("====== Guest_movieController/movieTicket3 ======");
 		
-		ArrayList<Theater_seatVO> seats = new ArrayList<Theater_seatVO>();
-		
-		int adultCnt = Integer.parseInt(req.getParameter("adultCnt"));
-		int teenagerCnt = Integer.parseInt(req.getParameter("teenagerCnt"));
-		int theater_schedule_index = Integer.parseInt(req.getParameter("theater_schedule_index"));
-		//seats = req.getParameterValues("seats");
-		
-		model.addAttribute("adultCnt", adultCnt);
-		model.addAttribute("teenagerCnt", teenagerCnt);
-		model.addAttribute("theater_schedule_index", theater_schedule_index);
-		//model.addAttribute("seats", seats);
+		gmservice.seatInfos2(req, model);
 		
 		return "/guest/guest_movie/reservation/movieTicket3";
 	}

@@ -150,7 +150,7 @@
 	<insert id="hostScheduleAddPro" parameterType="java.util.Map">
 		INSERT INTO theater_schedule_tbl 
         values(theater_schedule_tbl_SEQ.NEXTVAL, #{movie_index}, #{theater_index}, #{schedule_start}, #{schedule_start}, 
-              to_char(to_date(#{schedule_start}, 'YY-MM-DD-HH24-MI')+(SELECT movie_runTime FROM movie_tbl WHERE movie_index=#{movie_index})/24/60, 'YY-MM-DD-HH24-MI'), #{schedule_MDNstate}, 0)
+              to_char(to_date(#{schedule_start}, 'YY-MM-DD-HH24-MI')+(SELECT movie_runTime FROM movie_tbl WHERE movie_index=#{movie_index})/24/60, 'YY-MM-DD-HH24-MI'), #{schedule_MDNstate}, 0, 0)
 	</insert>
 	
 	<!-- 스케줄 목록 조회 -->
