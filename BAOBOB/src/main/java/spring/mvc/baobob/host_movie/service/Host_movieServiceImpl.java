@@ -329,89 +329,19 @@ public class Host_movieServiceImpl implements Host_movieService{
 	// 상영관 리스트
 	@Override
 	public void hostTheaterList(HttpServletRequest req, Model model) {
-		int pageSize = 10;		//한 페이지당 출력할 게시글 갯수
-		int pageBlock = 3;		//한 블럭당 페이지 갯수
-		
 		int cnt = 0;			// 게시글 갯수
-		int start = 0;			// 현재 페이지 게시글 시작 번호
-		int end = 0;			// 현재 페이지 게시글 마지막 번호
-		int number = 0;			// 출력할 게시글 번호
-		String pageNum = null;	// 페이지 번호
-		int currentPage = 0;	// 현재 페이지
-		
-		int pageCount = 0;		// 페이지 갯수
-		int startPage = 0;		// 시작페이지
-		int endPage = 0;		// 마지막 페이지
 		
 		// 글갯수 구하기
 		cnt = dao.getTheaterCnt();
 		
-		pageNum = req.getParameter("pageNum");
-		
-		if(pageNum == null) {
-			pageNum = "1"; //첫페이지를 1페이지로 설정
-		}
-		
-		currentPage = Integer.parseInt(pageNum);// 현재페이지
-		System.out.println("currentPage : "+ currentPage);
-		
-		// pageCnt = 12 / 5 + 1; //나머지 2건이 1페이지로 할당되므로 3페이지
-		pageCount = (cnt / pageSize) + (cnt % pageSize > 0 ? 1 : 0);// 페이지 갯수
-		System.out.println("pageCount : "+ pageCount);
-		
-		// 1 = (1-1) * 5 + 1
-		// 6 = (2-1) * 5 + 1
-		start = (currentPage - 1) * pageSize + 1;// 현재 페이지 게시글 시작 번호
-	
-		// 5 = (1 + 5 - 1)
-		end = start + pageSize -1;//현재 페이지 게시글 마지막 번호
-		
-		System.out.println("start : " + start);
-		System.out.println("end : " + end);
-		
-		if(end > cnt) end = cnt;
-		
-		//  = 25 - (5-1) * 5;
-		number = cnt - (currentPage - 1) * pageSize;// 출력할 게시글 번호
-		
-		System.out.println("number : " + number);
 		System.out.println("cnt : " + cnt);
-		System.out.println("currentPage : " + currentPage);
-		System.out.println("pageSize : " + pageSize);
-		
 		if(cnt > 0) {
 			// 게시글 목록 조회
-			Map<String, Integer> map = new HashMap<String, Integer>();
-			map.put("start", start);
-			map.put("end", end);
-			ArrayList<TheaterVO> vos = dao.getTheaterList(map);
+			ArrayList<TheaterVO> vos = dao.getTheaterList();
 			model.addAttribute("vos", vos); //큰바구니 : 게시글목록 cf)작은바구니 : 게시글1건
 		}
-		
-		startPage = (currentPage / pageBlock) * pageBlock + 1; // 4 = (5/3)*3+1;
-		if(currentPage % pageBlock == 0) startPage -= pageBlock; // (5%3) == 0
-		System.out.println("startPage : " + startPage);
-		
-		endPage = startPage + pageBlock - 1; // 6 = 4 + 3 - 1;
-		if(endPage > pageCount) endPage = pageCount;
-		System.out.println("endPage : " + endPage);
-		
 		model.addAttribute("cnt", cnt);// 글갯수
-		model.addAttribute("number", number);// 글번호
-		model.addAttribute("pageNum", pageNum);// 페이지번호
-		
-		if(cnt > 0) {
-			model.addAttribute("startPage", startPage); // 시작페이지
-			model.addAttribute("endPage", endPage);// 마지막 페이지
-			model.addAttribute("pageBlock", pageBlock);// 출력할 페이지 갯수
-			model.addAttribute("pageCount", pageCount);// 페이지 갯수
-			model.addAttribute("currentPage", currentPage);// 현재 페이지
-			
-		}
-		
 		System.out.println("hostMovieList 정상 종료");
-		
-		
 	}
 	
 	// 상영관 상세

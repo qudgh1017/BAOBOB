@@ -48,7 +48,7 @@ public interface Host_movieDAO {
 	public int getTheaterCnt();
 	
 	// 상영관 목록 조회
-	public ArrayList<TheaterVO> getTheaterList(Map<String, Integer> map);
+	public ArrayList<TheaterVO> getTheaterList();
 	
 	// 상영관 상세
 	public TheaterVO hostTheaterDetail(int theater_index);

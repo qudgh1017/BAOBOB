@@ -45,7 +45,7 @@
 				</div>
 				
 				<div class="col-md-3"  align="center">
-					<iframe src="movieWordcloud?movie_index=${movie_index}"></iframe>
+					<iframe src="movieWordcloud?movie_index=${movie.movie_index}"></iframe>
 				</div>
 			</div>
 		</div>

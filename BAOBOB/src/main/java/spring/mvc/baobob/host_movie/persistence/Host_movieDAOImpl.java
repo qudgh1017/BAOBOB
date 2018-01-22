@@ -135,11 +135,11 @@ public class Host_movieDAOImpl implements Host_movieDAO {
 
 	// 상영관 리스트
 	@Override
-	public ArrayList<TheaterVO> getTheaterList(Map<String, Integer> map) {
+	public ArrayList<TheaterVO> getTheaterList() {
 		ArrayList<TheaterVO> vos = null;
 		
 		Host_movieDAO dao = sqlSession.getMapper(Host_movieDAO.class);
-		vos = dao.getTheaterList(map);
+		vos = dao.getTheaterList();
 		
 		return vos;
 	}

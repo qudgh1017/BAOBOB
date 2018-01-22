@@ -83,7 +83,6 @@
 		 		  		   ORDER BY theater_index ASC
 		 		  	    ) 
 		 		)  
-		  WHERE rNum >= #{start} AND rNum <= #{end} 
 		]]>
 	</select>
 	
