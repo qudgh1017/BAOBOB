@@ -472,14 +472,16 @@ public class Host_movieServiceImpl implements Host_movieService{
 		// 모든 상영관 정보
 		ArrayList<TheaterVO> theaterVOS = dao.getTheaterAllList();
 		
+		// 모든 영화 정보
+		ArrayList<MovieVO> movieVOS = dao.getMovieList();
+		
 		model.addAttribute("vos1", vos1);
 		model.addAttribute("vos2", vos2);
 		model.addAttribute("vos3", vos3);
 		model.addAttribute("vos4", vos4);
 		model.addAttribute("vos5", vos5);
-
-
-
+		
+		model.addAttribute("movieVOS", movieVOS);
 		model.addAttribute("theaterVOS", theaterVOS);
 
 		
@@ -550,7 +552,8 @@ public class Host_movieServiceImpl implements Host_movieService{
 			// 모든 상영관 정보
 			ArrayList<TheaterVO> theaterVOS = dao.getTheaterAllList();
 			
-			
+			// 모든 영화 정보
+			ArrayList<MovieVO> movieVOS = dao.getMovieList();
 			
 			model.addAttribute("date", selDate);
 			model.addAttribute("theater_index", theater_index);
@@ -559,6 +562,8 @@ public class Host_movieServiceImpl implements Host_movieService{
 			model.addAttribute("vos3", vos3);
 			model.addAttribute("vos4", vos4);
 			model.addAttribute("vos5", vos5);
+			
+			model.addAttribute("movieVOS", movieVOS);
 			model.addAttribute("theaterVOS", theaterVOS);
 
 		} catch (ParseException e) {
@@ -1008,56 +1013,56 @@ public class Host_movieServiceImpl implements Host_movieService{
 	// 워드 클라우드
 	
 	// 워드클라우드 리스트
-		private static List<WordVO> wordVos;
+	private static List<WordVO> wordVos;
 	
 	// 단어 형태소 분석을 처리하는 메서드 (영화 리뷰등록시 같이 적용)
-		@Override
-		public void wordAnalyzer(HttpServletRequest req, Model model) {
-			int movie_index = Integer.parseInt(req.getParameter("movie_index"));
-			StringBuilder sb = new StringBuilder(req.getParameter("review_content"));
-			wordExtractAndAnalyze(sb.toString(), movie_index);
-		}
+	@Override
+	public void wordAnalyzer(HttpServletRequest req, Model model) {
+		int movie_index = Integer.parseInt(req.getParameter("movie_index"));
+		StringBuilder sb = new StringBuilder(req.getParameter("review_content"));
+		wordExtractAndAnalyze(sb.toString(), movie_index);
+	}
 
-		// 형태소 분석된 결과를 데이터베이스에 저장하는 프로세스
-		@Override
-		public void wordExtractAndAnalyze(String text, int movie_index) {
-			System.out.println("WordCloud analyze");
-			new Runnable() {
-				public void run() {
+	// 형태소 분석된 결과를 데이터베이스에 저장하는 프로세스
+	@Override
+	public void wordExtractAndAnalyze(String text, int movie_index) {
+		System.out.println("WordCloud analyze");
+		new Runnable() {
+			public void run() {
 
-					List<WordVO> wordMap = KoreanParser.getWordsMap(text);
-					if(wordMap.isEmpty())return;
-					Timestamp time = new Timestamp(System.currentTimeMillis());
-					for(WordVO dto : wordMap) {
-						
-						// 기존에 있는 단어일 경우 카운트 업데이트
-						Map<String, Object> map = new HashMap<String, Object>();
-						map.put("word", dto.getWord());
-						map.put("movie_index", movie_index);
-						if(dao.checkWordCloud(map) == 1) {
-							dto.setUpdate_date(time);
-							dto.setMovie_index(movie_index);
-							dao.updateWordCloud(dto);
-							// 기존에 없는 단어일 경우 단어와 카운트 추가	
-						} else {
-							dto.setUpdate_date(time);
-							dto.setReg_date(time);
-							dto.setMovie_index(movie_index);
-							dao.addWordCloud(dto);
-						}
+				List<WordVO> wordMap = KoreanParser.getWordsMap(text);
+				if(wordMap.isEmpty())return;
+				Timestamp time = new Timestamp(System.currentTimeMillis());
+				for(WordVO dto : wordMap) {
+					
+					// 기존에 있는 단어일 경우 카운트 업데이트
+					Map<String, Object> map = new HashMap<String, Object>();
+					map.put("word", dto.getWord());
+					map.put("movie_index", movie_index);
+					if(dao.checkWordCloud(map) == 1) {
+						dto.setUpdate_date(time);
+						dto.setMovie_index(movie_index);
+						dao.updateWordCloud(dto);
+						// 기존에 없는 단어일 경우 단어와 카운트 추가	
+					} else {
+						dto.setUpdate_date(time);
+						dto.setReg_date(time);
+						dto.setMovie_index(movie_index);
+						dao.addWordCloud(dto);
 					}
-					// 워드 클라우드 모델을 refresh 해줌
-					setWordList();
-					System.out.println("WordCloud 분석 종료");
 				}
-			}.run();
-		}
+				// 워드 클라우드 모델을 refresh 해줌
+				setWordList();
+				System.out.println("WordCloud 분석 종료");
+			}
+		}.run();
+	}
 
-		// 워드클라우드 단어를 가져옴
-		public synchronized void setWordList() {
-			System.out.println("Word Cloud word set request");
-			wordVos = dao.getWordCloudModel();
-		}
+	// 워드클라우드 단어를 가져옴
+	public synchronized void setWordList() {
+		System.out.println("Word Cloud word set request");
+		wordVos = dao.getWordCloudModel();
+	}
 	
 	
 	
@@ -1151,10 +1156,11 @@ public class Host_movieServiceImpl implements Host_movieService{
 		return resultMsg;
 	}
 
+	// 영화 리뷰 워드 클라우드
 	@Override
 	public String movieWordcloud(HttpServletRequest req, Model model) {
 		int movie_index = Integer.parseInt(req.getParameter("movie_index"));
-		int countOfWords = 30;
+		int countOfWords = 50;
 		Map<String, Object> map = new HashMap<>();
 		int type = 6;
 
@@ -1171,7 +1177,8 @@ public class Host_movieServiceImpl implements Host_movieService{
 			if(vo.getType_of_speech().equals("Hashtag")){
 				resultMsg += "<li><a href='/moyeo/two/wordCloudSearchByTag?search_keyword=" + vo.getWord().replaceAll("#", "") + "' >" + vo.getWord() + "</a></li>";
 			} else {
-				resultMsg += "<li><a href='/moyeo/two/wordCloudSearch?search_keyword=" + vo.getWord() + "' >" + vo.getWord() + "</a></li>";
+				System.out.println("vo.getCount : " + vo.getCount());
+				resultMsg += "<li><a style='height:"+vo.getCount()+5+"px' href='/moyeo/two/wordCloudSearch?search_keyword=" + vo.getWord() + "' >" + vo.getWord() + "</a></li>";
 			}
 		}
 		if(wordList.isEmpty())resultMsg += "<li><a href='#' target='_blank'>단어가 없습니다.</a></li>";

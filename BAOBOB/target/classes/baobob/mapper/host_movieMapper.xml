@@ -369,13 +369,13 @@
                   	type_of_speech = 'Verb' OR type_of_speech = 'Hashtag'
                   </if>
                   <if test="type == 6">
-                  	type_of_speech = 'Noun' OR type_of_speech = 'ProperNoun' OR type_of_speech = 'Hashtag'
+                  	type_of_speech = 'Noun' OR type_of_speech = 'ProperNoun' OR type_of_speech = 'Verb' AND movie_index = #{movie_index}
                   </if>
                   <if test="type == 7">
                   	type_of_speech = 'Noun' OR type_of_speech = 'ProperNoun' OR type_of_speech = 'Verb' OR type_of_speech = 'Hashtag'
                   </if>
          		)
-    	 WHERE rn BETWEEN 1 AND #{countOfWords} AND movie_index = #{movie_index}
+    	 WHERE rn BETWEEN 1 AND #{countOfWords}
 	</select>
 	
 	<!-- 워드클라우드 단어 검색 (날짜포함)-->
