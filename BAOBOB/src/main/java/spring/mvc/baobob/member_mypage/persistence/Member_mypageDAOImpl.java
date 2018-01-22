@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import spring.mvc.baobob.vo.BoardVO;
 import spring.mvc.baobob.vo.Member;
+import spring.mvc.baobob.vo.MovieVO;
 
 @Repository
 public class Member_mypageDAOImpl implements Member_mypageDAO{
@@ -351,12 +352,30 @@ public class Member_mypageDAOImpl implements Member_mypageDAO{
 		return cnt;
 	}
 	
+/*----------------------------------------------------------------------------*/
 	
+	//movie_state에 따른 영화갯수
+	@Override
+	public int wishListCnt(String strId) {
+		int cnt = 0;
+		
+		Member_mypageDAO dao = sqlSession.getMapper(Member_mypageDAO.class);
+		cnt = dao.wishListCnt(strId);
+		
+		return cnt;
+	}
 	
+/*----------------------------------------------------------------------------*/
 	
-	
-	
-	
+	//movie_state에 따른 영화리스트
+	public ArrayList<MovieVO> getWishListMovies(Map<String,Object> map){
+		ArrayList<MovieVO> movies = null;
+		
+		Member_mypageDAO dao = sqlSession.getMapper(Member_mypageDAO.class);
+		movies = dao.getWishListMovies(map);
+		
+		return movies;
+	}
 	
 	
 	

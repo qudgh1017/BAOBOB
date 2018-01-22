@@ -150,10 +150,38 @@ public class MainDAOImpl implements MainDAO {
 		return cnt;
 	}
 
+	//고객센터 글수
+	public int getHelperCnt() {
+		MainDAO mapper = sqlSession.getMapper(MainDAO.class);
+		int cnt = mapper.getHelperCnt();
+		return cnt;
+	}
+	
 	//고객센터
 	public ArrayList<FaqVO> getHelper(Map<String, Integer> map) {
 		MainDAO mapper = sqlSession.getMapper(MainDAO.class);
 		ArrayList<FaqVO> list = mapper.getHelper(map);
+		return list;
+	}
+
+	//고객센터 검색 제안
+	public ArrayList<String> helpKeywordSuggest(String keyword) {
+		MainDAO mapper = sqlSession.getMapper(MainDAO.class);
+		ArrayList<String> list = mapper.helpKeywordSuggest(keyword);
+		return list;
+	}
+	
+	//고객센터 검색 결과수
+	public int helpKeywordSearchCnt(String keyword) {
+		MainDAO mapper = sqlSession.getMapper(MainDAO.class);
+		int cnt = mapper.helpKeywordSearchCnt(keyword);
+		return cnt;
+	}
+	
+	//고객센터 검색
+	public ArrayList<FaqVO> helpKeywordSearch(Map<String, Object> map) {
+		MainDAO mapper = sqlSession.getMapper(MainDAO.class);
+		ArrayList<FaqVO> list = mapper.helpKeywordSearch(map);
 		return list;
 	}
 }

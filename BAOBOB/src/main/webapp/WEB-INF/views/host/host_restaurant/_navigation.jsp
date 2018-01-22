@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <head>
 	<!-- Bootstrap core CSS-->
 	<link href="${projectRes}adminBootstrap/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -12,12 +13,25 @@
 	
 	<!-- Custom styles for this template-->
 	<link href="${projectRes}adminBootstrap/css/sb-admin.css" rel="stylesheet">
-	
 </head>
 
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
-	<a class="navbar-brand" href="#">식당[1] 관리</a>
+	
+	<a class="navbar-brand" href="#">
+		<c:if test="${sessionScope.memStep == 4}">
+			BAOBOB - 식당 관리
+		</c:if>
+		<c:if test="${sessionScope.memStep == 51 || sessionScope.memStep == 61}">
+			한식당 관리
+		</c:if>
+		<c:if test="${sessionScope.memStep == 52 || sessionScope.memStep == 62}">
+			도키도키 (ときどき) 관리
+		</c:if>
+		<c:if test="${sessionScope.memStep == 53 || sessionScope.memStep == 63}">
+			BOUTBACK steakhouse 관리
+		</c:if>
+	</a>
 	<button class="navbar-toggler navbar-toggler-right" type="button"
 		data-toggle="collapse" data-target="#navbarResponsive"
 		aria-controls="navbarResponsive" aria-expanded="false"
@@ -26,27 +40,6 @@
 	</button>
 	<div class="collapse navbar-collapse" id="navbarResponsive">
 		<ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
-		<!-- 
-			<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
-				<a class="nav-link" href="#"> 
-					<i class="fa fa-fw fa-wrench"></i>
-					<span class="nav-link-text">총 관리자 메뉴</span>
-				</a>
-			</li>
-			<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Charts">
-				<a class="nav-link" href="#"> 
-					<i class="fa fa-fw fa-link"></i> 
-					<span class="nav-link-text">메뉴 관리</span>
-				</a>
-			</li>
-			<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
-				<a class="nav-link" href="#"> 
-					<i class="fa fa-fw fa-file"></i> 
-					<span class="nav-link-text">결산</span>
-				</a>
-			</li>
-		 -->
-			 
 			<li class="nav-item" data-toggle="tooltip" data-placement="right">
 				<a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents" data-parent="#exampleAccordion"> 
 					<i class="fa fa-fw fa-wrench"></i>
@@ -55,6 +48,8 @@
 				<ul class="sidenav-second-level collapse" id="collapseComponents">
 					<li><a href="hostRestaurantList">매장 목록</a></li>
 					<li><a href="hostRestaurantAddForm">매장 추가</a></li>
+					<li><a href="hostAllMenuList">매장별 메뉴 보기</a></li>
+					<li><a href="hostAllEmployeeList">매장별 직원 보기</a></li>
 					<li><a href="#">결산</a></li>
 				</ul>
 			</li>
@@ -89,7 +84,7 @@
 				</ul>
 			</li>
 			<li class="nav-item" data-toggle="tooltip" data-placement="right">
-				<a class="nav-link" href="#">
+				<a class="nav-link" href="hostRestaurantAccount">
 					<i class="fa fa-fw fa-area-chart"></i> 
 					<span class="nav-link-text">결산</span>
 				</a>

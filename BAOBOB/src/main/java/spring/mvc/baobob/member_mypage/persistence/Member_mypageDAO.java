@@ -5,6 +5,7 @@ import java.util.Map;
 
 import spring.mvc.baobob.vo.BoardVO;
 import spring.mvc.baobob.vo.Member;
+import spring.mvc.baobob.vo.MovieVO;
 
 public interface Member_mypageDAO {
 	
@@ -68,5 +69,19 @@ public interface Member_mypageDAO {
 	//È¸¿øÅ»Åð Ã³¸®
 	public int memPDelPro(String strId);
 	
+	//wishList °¹¼ö
+	public int wishListCnt(String strId);
+	
+	//wishList ¸®½ºÆ®
+	public ArrayList<MovieVO> getWishListMovies(Map<String,Object> map);
+		
+		
+		
+		
+		
+		
+		
+		
+		
 
 }

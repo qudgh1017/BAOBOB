@@ -6,6 +6,8 @@ public class ParkingFee {
 	private int p_fee_exc_time;
 	private int p_fee_base_price;
 	private int p_fee_base_time;
+	private int p_fee_movie_time;
+	private int p_fee_rest_time;
 
 	public int getP_fee_exc_price() {
 		return p_fee_exc_price;
@@ -37,6 +39,22 @@ public class ParkingFee {
 
 	public void setP_fee_base_time(int p_fee_base_time) {
 		this.p_fee_base_time = p_fee_base_time;
+	}
+
+	public int getP_fee_movie_time() {
+		return p_fee_movie_time;
+	}
+
+	public void setP_fee_movie_time(int p_fee_movie_time) {
+		this.p_fee_movie_time = p_fee_movie_time;
+	}
+
+	public int getP_fee_rest_time() {
+		return p_fee_rest_time;
+	}
+
+	public void setP_fee_rest_time(int p_fee_rest_time) {
+		this.p_fee_rest_time = p_fee_rest_time;
 	}
 
 	@Override

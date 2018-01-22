@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import spring.mvc.baobob.host_movie.service.Host_movieServiceImpl;
+import spring.mvc.baobob.host_total.service.Host_totalServiceImpl;
 import spring.mvc.baobob.vo.MovieResViewVO;
 
 
@@ -17,6 +18,10 @@ import spring.mvc.baobob.vo.MovieResViewVO;
 public class Host_movieController {
 	@Autowired
 	Host_movieServiceImpl service = new Host_movieServiceImpl();
+	
+	@Autowired
+	Host_totalServiceImpl serviceT = new Host_totalServiceImpl();
+	
 	
 	// 관리자 영화
 	@RequestMapping(value="hostMovie")
@@ -308,4 +313,37 @@ public class Host_movieController {
 		
 		return vo;
 	}
+	
+	// 예매 결산
+	@RequestMapping(value="hostMovieSettlement")
+	public String hostMovieSettlement(HttpServletRequest req, Model model) {
+		System.out.println("hostMovieSettlement");
+		
+		serviceT.movieChart(req, model); // 장르별 매출
+		service.movieJanreCountChart(req, model); // 장르별 관람객 수
+		service.movieAgeChart(req, model); // 제한연령별 매출
+		service.movieSexCountChart(req, model); // 관람객 성별 매출
+		
+		
+		return "host/host_movie/hostMovieSettlement";
+	}
+	
+	
+	////////////////////////////////////
+	//////////////////////////////////
+//	// 워드 클라우드
+//	@RequestMapping(value="refreshWordcloud", produces = "application/json; charset=utf8")
+//	public String refreshWordcloud(Model model, HttpServletRequest req) {
+//		
+//		System.out.println("워드클라우드 재검색 요청");
+////		String viewPage = service.wordcloudRefresh(model);
+//		
+//		return "main/wordcloud";
+//	}
+	
+	
+	
+	/////////////////////////////////////
+	//////////////////////////////////
+	
 }

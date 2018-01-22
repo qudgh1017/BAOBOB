@@ -107,12 +107,16 @@ public class Host_parkingServiceImpl implements Host_parkingService {
 			int baseFee = Integer.parseInt(req.getParameter("baseFee"));
 			int excTime = Integer.parseInt(req.getParameter("excTime"));
 			int excFee = Integer.parseInt(req.getParameter("excFee"));
+			int movieTime = Integer.parseInt(req.getParameter("movieTime"));
+			int restTime = Integer.parseInt(req.getParameter("restTime"));
 
 			ParkingFee pf = new ParkingFee();
 			pf.setP_fee_base_price(baseFee);
 			pf.setP_fee_base_time(baseTime);
 			pf.setP_fee_exc_price(excFee);
 			pf.setP_fee_exc_time(excTime);
+			pf.setP_fee_movie_time(movieTime);
+			pf.setP_fee_rest_time(restTime);
 
 			cnt = dao.parkingFeeChange(pf);
 		}

@@ -80,4 +80,21 @@ public interface Host_movieService {
 	
 	// 예매 상세
 	public MovieResViewVO hostMovieResView(HttpServletRequest req, Model model);
+	
+	// 장르별 영화 비울
+	public void movieJanreCountChart(HttpServletRequest req, Model model);
+	
+	// 제한 연령별 매출
+	public void movieAgeChart(HttpServletRequest req, Model model);
+
+	// 관람객 성별 매출
+	public void movieSexCountChart(HttpServletRequest req, Model model);
+	
+	////////////////////////////////
+	////////////////////////////////
+	// 워드 클라우드
+	// 워드클라우드 재검색 요청
+//		public String wordcloudRefresh(HttpServletRequest req, Model model);
+	////////////////////////////////
+	////////////////////////////////
 }

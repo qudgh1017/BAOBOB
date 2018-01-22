@@ -38,6 +38,7 @@
 	<%@ include file="_navigation.jsp"%>
 	
 	<form action="hostMenuModPro" method="POST" name="add_mod_form" enctype="multipart/form-data">
+		<input type="hidden" name="restaurant_menu_index" value="${dto.restaurant_menu_index}">
 		<div class="content-wrapper">
 			<div class="container-fluid" style="width: 1000px;">
 				<div class="card mb-3">
@@ -69,8 +70,8 @@
 								</tr>
 								<tr>
 									<td colspan="2" style="text-align: center;">
-										<input size="10" type="submit" value="메뉴 수정" style="background-color: black; color: white; border: 1px solid;">
-										<input size="10" type="reset" value="취소" style="background-color: lightgray; color: black; border: 1px solid;">
+										<input class="btn btn-secondary" size="10" type="submit" value="수정" style="background-color: #007bff; color: white;">
+										<input class="btn btn-secondary" size="10" type="button" value="취소" onclick="window.history.back();" style="background-color: #868e96; color: white;">
 									</td>
 								</tr>
 							</table>
