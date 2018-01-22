@@ -27,8 +27,20 @@
 	<%@ include file="/WEB-INF/views/guest/common/navigation.jsp" %>
 	<!-- main_menu -->
 	<%@ include file="/WEB-INF/views/guest/guest_movie/movie_menu.jsp" %>
+	<div>
+	
+	${adultCnt}<br>
+	${teenagerCnt}<br>
+	${theater_schedule_index}<br>
 	
 	
+	<c:forEach var="seat" items="${seats}">
+		좌석정보
+		${seat.seat_index}<br>
+		${seat.theater_schedule_index}
+	</c:forEach>
+	
+	</div>
 
 </body>
 </html>

@@ -13,12 +13,12 @@
 <script type="text/javascript">
 
 //위시리스트 페이징 처리를 위한 AJAX
-function wishPage(page){
+function movieClearPage(page){
 	var object = new Object();
 	var jsonData = JSON.stringify(object);
 	$.ajax({
 		//GET방식의 URL
-		url : '${pageContext.request.contextPath}/wishList?pageNum=' + page,
+		url : '${pageContext.request.contextPath}/movieClear?pageNum=' + page,
 		type : 'GET',
 		success : function(msg) {
 			/* alert("success"); */  
@@ -32,6 +32,7 @@ function wishPage(page){
 }
 	
 </script>
+
 <style type="text/css">
 	.button{
 		margin-left:50px; 
@@ -46,7 +47,7 @@ function wishPage(page){
 <body>
 <table id="mainBody">
 	<tr>
-		<th style="font-size:30px">위시리스트</th>
+		<th style="font-size:30px">내가 본 영화</th>
 	</tr>
 	
 	<tr id="result">
@@ -54,7 +55,6 @@ function wishPage(page){
 		<div class="container">
 			<div class="row">
 				<c:if test="${cnt>0}">
-					<!-- <tr> -->
 					<c:forEach var="movie" items="${dtos}">
 						<div class="col-md-3" style="margin-right:10px auto">
 							<a href="movieDetail?movie_index=${movie.movie_index}"><img style="border:5px solid black;"src="${projectRes}images/phc/${movie.movie_poster}"></a>
@@ -67,15 +67,12 @@ function wishPage(page){
 									<c:if test="${movie.movie_age==19}"><img src="${projectRes}/images/ybh/청소년 관람불가.png" style="width:15px; height:15px;"></c:if>
 								</span><br>
 								<span style="font-weight:bold; color:gray; font-size:12px">
-									20${movie.movie_rel_date} 개봉 &emsp;&emsp;
-									<input type="button" onclick="window.location='delWishList?num=${movie.movie_index}'" value="삭제">
-								</span>
+									20${movie.movie_rel_date} 개봉
+								</span><br>
 							</div>
 							<br>
 						</div>
 					</c:forEach>
-				
-				<!-- </tr> -->
 				</c:if>
 				
 				<!-- 게시글이 없으면 -->
@@ -85,17 +82,16 @@ function wishPage(page){
 					</div>
 				</c:if>
 			</div>
-		</div>		
+		</div>	
 		
-		<!-- 페이징 컨트롤 -->	
 		<div class="container" style="margin-top:50px">
 			<div class="row">
 				<div class="col-md-12" align="center">
 					<c:if test="${cnt > 0}">
 						<!-- 처음[◀◀] / 이전블록[◀] 특수문자:ㅁ + 한자키 -->
 						<c:if test="${startPage > pageBlock}">
-							<a id="wishListPageStart" href="wishList">&laquo;</a>
-							<a id="wishListPagePrev" href="#!">&lsaquo;</a>
+							<a id="movieClearPageStart" href="wishList">&laquo;</a>
+							<a id="movieClearPagePrev" href="#!">&lsaquo;</a>
 						</c:if>
 						
 						<c:forEach var="i" begin="${startPage}" end="${endPage}">
@@ -103,14 +99,14 @@ function wishPage(page){
 								<span><b>[${i}]</b></span>
 							</c:if>
 							<c:if test="${i != currentPage}">
-								<a onclick="wishPage(${i});" href="#!">[${i}]</a>
+								<a onclick="movieClearPage(${i});" href="#!">[${i}]</a>
 							</c:if>
 						</c:forEach>
 						
 						<!-- 다음블록 [▶] / 끝[▶▶] -->
 						<c:if test="${pageCount > endPage}">
-							<a id="wishListPageNext" href="wishList?pageNum=${startPage + pageBlock}">&rsaquo;</a>
-							<a id="wishListPageEnd" href="wishList?pageNum=${pageCount}">&raquo;</a> 
+							<a id="movieClearPageNext" href="wishList?pageNum=${startPage + pageBlock}">&rsaquo;</a>
+							<a id="movieClearPageEnd" href="wishList?pageNum=${pageCount}">&raquo;</a> <!-- 마지막페이지로 -->
 						</c:if>
 					</c:if>
 				</div>

@@ -28,6 +28,10 @@
 	<!-- main_menu -->
 	<%@ include file="/WEB-INF/views/guest/guest_movie/movie_menu.jsp" %>
 	
+	<!-- 나중에 값을 넘길때 배열형식 저장할 공간 -->
+	<input type="hidden" name="seat_index_arr"  value="">
+	
+	
 	<section style="padding-top:0px;">
 		<div class="container">
 			<div class="row">
