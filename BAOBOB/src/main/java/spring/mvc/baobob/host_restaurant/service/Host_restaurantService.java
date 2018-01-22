@@ -25,48 +25,63 @@ public interface Host_restaurantService {
 	
 	/////////////////////////////////////////////////////////////////////////////////////////
 	
-	// 식당[1] 메뉴 리스트
+	// 메뉴 리스트
 	public void menuList(HttpServletRequest req, Model model);
 	
-	// 식당[1] 메뉴 추가 처리
+	// 메뉴 추가 처리
 	public void menuAdd(MultipartHttpServletRequest req, Model model);
 
-	// 식당[1] 수정할 메뉴 정보 조회 / 수정할 정보 입력
+	// 수정할 메뉴 정보 조회 / 수정할 정보 입력
 	public void menuView(HttpServletRequest req, Model model);
 	
-	// 식당[1] 메뉴 수정 처리
+	// 메뉴 수정 처리
 	public void menuMod(MultipartHttpServletRequest req, Model model);
 
-	// 식당[1] 메뉴 삭제 처리
+	// 메뉴 삭제 처리
 	public void menuDel(HttpServletRequest req, Model model);
 
-	// 식당[1] 직원 리스트
+	// 직원 리스트
 	public void employeeList(HttpServletRequest req, Model model);
 
-	// 전체 회원 리스트 (식당[1] 직원 추가)
+	// 전체 회원 리스트 (직원 추가)
 	public void memberList(HttpServletRequest req, Model model);
 
-	// 식당[1] 직원으로 등록할 회원 정보 조회
+	// 직원으로 등록할 회원 정보 조회
 	public void memberView(HttpServletRequest req, Model model);
 	
-	// 식당[1] 직원 추가 처리
+	// 직원 추가 처리
 	public void employeeAdd(HttpServletRequest req, Model model);
 
-	// 식당[1] 직원 정보 조회
+	// 직원 정보 조회
 	public void employeeView(HttpServletRequest req, Model model);
 
-	// 식당[1] 직원 삭제 처리
+	// 직원 삭제 처리
 	public void employeeDel(HttpServletRequest req, Model model);
 
-	// 식당[1] 예약 리스트
+	// 예약 리스트
 	public void reservList(HttpServletRequest req, Model model);
 
-	// 식당[1] 예약 추가
+	// 예약 추가
 	public void reservAdd(HttpServletRequest req, Model model);
 
 	// 선택한 날짜에 있는 모든 예약 조회
 	public void reservView(HttpServletRequest req, Model model);
 
-	// 
+	// 선택한 날짜에 들어있는 테이블 정보 조회
 	public TableVO restaurantView2(HttpServletRequest req, Model model);
+
+	// 모든 메뉴 리스트
+	public void allMenuList(HttpServletRequest req, Model model);
+
+	// 모든 직원 리스트
+	public void allEmployeeList(HttpServletRequest req, Model model);
+
+	// 예약된 테이블 조회
+	public void useTableView(HttpServletRequest req, Model model);
+
+	// 테이블에 메뉴 추가(판매)
+	public void orderAdd(HttpServletRequest req, Model model);
+
+	// 식당별 결산
+	public void account(HttpServletRequest req, Model model);
 }

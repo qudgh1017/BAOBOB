@@ -271,4 +271,55 @@ public class Host_restaurantController {
 
 		return dto;
 	}
+
+	// 모든 메뉴 리스트
+	@RequestMapping(value = "/hostAllMenuList")
+	public String hostAllMenuList(HttpServletRequest req, Model model) {
+		log.debug("hostAllMenuList()");
+
+		service.allMenuList(req, model);
+
+		return "host/host_restaurant/hostAllMenuList";
+	}
+
+	// 모든 직원 리스트
+	@RequestMapping(value = "/hostAllEmployeeList")
+	public String hostAllEmployeeList(HttpServletRequest req, Model model) {
+		log.debug("hostAllEmployeeList()");
+
+		service.allEmployeeList(req, model);
+
+		return "host/host_restaurant/hostAllEmployeeList";
+	}
+	
+	// 스케줄 상세 내용
+	@RequestMapping(value="/hostOrderAddForm")
+	public String hostOrderAddForm(HttpServletRequest req, Model model) {
+		log.debug("hostOrderAddForm()");
+
+		service.menuList(req, model);
+		service.useTableView(req, model);
+		
+		return "host/host_restaurant/hostOrderAddForm";
+	}
+	
+	// 테이블에 메뉴 추가(판매)
+	@RequestMapping(value="/hostOrderAddPro")
+	public String hostOrderAddPro(HttpServletRequest req, Model model) {
+		log.debug("hostOrderAddPro()");
+
+		service.orderAdd(req, model);
+		
+		return "host/host_restaurant/hostOrderAddPro";
+	}
+	
+	// 테이블에 메뉴 추가(판매)
+	@RequestMapping(value="/hostRestaurantAccount")
+	public String hostRestaurantAccount(HttpServletRequest req, Model model) {
+		log.debug("hostRestaurantAccount()");
+
+		service.account(req, model);
+		
+		return "host/host_restaurant/hostRestaurantAccount";
+	}
 }
