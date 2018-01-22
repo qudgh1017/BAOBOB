@@ -45,7 +45,7 @@
 				</div>
 				
 				<div class="col-md-3"  align="center">
-					표??
+					<iframe src="movieWordcloud?movie_index=${movie_index}"></iframe>
 				</div>
 			</div>
 		</div>

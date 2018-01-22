@@ -151,6 +151,7 @@ public class Guest_movieController {
 		log.debug("====== Guest_movieController/movieTicket ======");
 
 		gmservice.reserveMovieList(req, model);
+		hmservice.movieWordcloud(req, model);
 		
 		return "/guest/guest_movie/reservation/movieTicket";
 	}
