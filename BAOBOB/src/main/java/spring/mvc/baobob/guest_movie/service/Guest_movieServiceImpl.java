@@ -591,7 +591,7 @@ public class Guest_movieServiceImpl implements Guest_movieService{
 
 	//좌석도 보여주기
 	@Override
-	public MovieResViewVO hostMovieResView(HttpServletRequest req, Model model) {
+	public MovieResViewVO movieResView(HttpServletRequest req, Model model) {
 		// 좌석도 정보를 가질 바구니 생성
 		MovieResViewVO seatInfo = new MovieResViewVO();
 		
@@ -633,6 +633,53 @@ public class Guest_movieServiceImpl implements Guest_movieService{
 //		model.addAttribute("state", state);
 		
 		return seatInfo;
+	}
+
+	//좌석도 선택
+	@Override
+	public void seatSelect(HttpServletRequest req, Model model) {
+		// 좌석도 정보를 가질 바구니 생성
+		MovieResViewVO seatInfo = new MovieResViewVO();
+		
+		TheaterVO theater = null;
+		ArrayList<Theater_seatVO> seats = null;
+		
+		int theater_index = Integer.parseInt(req.getParameter("theater_index"));
+		int theater_schedule_index = Integer.parseInt(req.getParameter("theater_schedule_index"));
+		
+		//좌석 상태 정보를 담을 바구니
+		ArrayList<Integer> state = new ArrayList<Integer>();
+		//좌석 index정보를 담을 바구니
+		ArrayList<Integer> seat_index = new ArrayList<Integer>();;
+		
+		//극장정보 가져오기
+		theater = gmdao.theaterDetail(theater_index);
+		System.out.println("theater_col " + theater.getTheater_col());
+		System.out.println("theater_row " + theater.getTheater_row());
+
+		//해당 스케줄 상영관(theater_schedule_index)의 좌석 상태 가져오기
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		map.put("theater_index", theater_index);
+		map.put("theater_schedule_index", theater_schedule_index);
+		seats = gmdao.theaterSeatDetail(map);
+		
+		//좌석상태만 넘겨주기
+		for(Theater_seatVO seat : seats) {
+			state.add(seat.getSeat_state());
+			seat_index.add(seat.getSeat_index());
+		}
+		//좌석 정보에 극장의 row, col의 크기, 좌석상태들을 넘겨준다.
+		seatInfo.setTotalRow(theater.getTheater_row());
+		seatInfo.setTotalCol(theater.getTheater_col());
+		seatInfo.setState(state);
+		seatInfo.setSeat_index(seat_index);
+		
+		System.out.println("=========================");
+		System.out.println("state : " + state);
+		System.out.println("=========================");
+		
+		model.addAttribute("seatInfo", seatInfo);
+		
 	}
 
 	

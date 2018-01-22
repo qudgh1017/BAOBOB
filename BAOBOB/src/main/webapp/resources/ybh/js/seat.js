@@ -6,7 +6,7 @@ var seatRow = ["A","B","C","D","E","F","G","H","I","J","k","L","M","N","O","P","
 //예매- 좌석창 load와 동시 실행
 function guestTheaterSeat(theater_index, movie_index, theater_schedule_index) {
 	$.ajax({
-		url : "reserveSeatInfo?theater_index=" + theater_index + "&movie_index=" + movie_index + "&theater_schedule_index=" + theater_schedule_index,
+		url : "seatInfo?theater_index=" + theater_index + "&movie_index=" + movie_index + "&theater_schedule_index=" + theater_schedule_index,
 		type : 'GET',
 		contentType : "application/x-www-form-urlencoded; charset=UTF-8",
 		success : function(seatInfo) {
@@ -28,11 +28,9 @@ function getScheduleSeatInfo(col, row, state){
 		
 		for(var j = 1; j<=col; j++){
 			
-			seat += "<button type='button'  style='margin:1px 1px; height:30; width:30;' id='"+seatRow[i]+j+"' name='seat"+seatRow[i]+j+"' value='"+state[(i)*col-1+j]+"'>" +
-			"<img id='img"+seatRow[i]+j+"' style='width:30; height:30;' src='/baobob/resources/images/phc/icon/theater_blank.png'>" +
+			seat += "<button type='button'  style='margin:1px 1px; height:35; width:35;' id='"+seatRow[i]+j+"' name='seat"+seatRow[i]+j+"' value='"+state[(i)*col-1+j]+"'>" +
+			"<img id='img"+seatRow[i]+j+"' style='width:35; height:35;' src='/baobob/resources/images/phc/icon/theater_blank.png'>" +
 			"</button>";
-			
-			
 		}
 		
 		seat += "<br>";
@@ -61,32 +59,44 @@ function getScheduleSeatInfo(col, row, state){
 	}
 }
 
-var adultCnt;
-var teenagerCnt;
+var adultCnt = 0;
+var teenagerCnt = 0;
+var allCnt;
 
 //일반 체크시 사람수
-function adultChk(cnt){
-	adultCnt = cnt;
-	personChk();
-	adultCnt = 0;
+function adultChk(theater_index, movie_index, theater_schedule_index, cnt){
+	adultCnt = cnt-0;
+	personChk(theater_index, movie_index, theater_schedule_index);
 }
 
 //청소년 체크시 사람수
-function teenagerChk(cnt){
-	teenagerCnt = cnt;
-	personChk();
-	teenagerCnt = 0;
+function teenagerChk(theater_index, movie_index, theater_schedule_index, cnt){
+	teenagerCnt = cnt-0;
+	personChk(theater_index, movie_index, theater_schedule_index);
 }
 
 //총 사람 수
-function persconChk(){
+function personChk(theater_index, movie_index, theater_schedule_index){
 	allCnt = teenagerCnt + adultCnt;
 	alert(allCnt);
+	if(allCnt > 6){
+		alert("7명 이상은 불가능합니다.");
+	}else{
+		$.ajax({
+			url: 'reserveSeatInfo',
+			type: 'GET',
+			data: {
+				allCnt, theater_index, movie_index, theater_schedule_index
+			},
+			
+			success: function(msg) {
+				$('#theaterSeat').html(msg);					
+			},				
+			error: function() {
+				alert('오류');
+			}	
+		});
+	}
 }
 
-/*seat += "<button type='button'  style='margin:1px 1px; height:30; width:30;' id='"+seatRow[i]+j+"' name='seat"+seatRow[i]+j+"' value='"+state[(i)*col-1+j]+"'>" +
-"<span style='postion:absolute;'>"+j+"</span>"+"<img id='img"+seatRow[i]+j+"' style='width:30; height:30;' src='/baobob/resources/images/phc/icon/theater_blank.png'>" +
-"</button>";*/
 
-/*"<input type='button'  style='margin:1px 1px; height:30; width:30; background-image: url('/baobob/resources/images/phc/icon/theater_blank.png')' id='"+seatRow[i]+j+"' " +
-"name='seat"+seatRow[i]+j+"' value='"+j+"'>"*/

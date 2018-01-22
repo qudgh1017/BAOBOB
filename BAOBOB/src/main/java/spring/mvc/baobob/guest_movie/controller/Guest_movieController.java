@@ -204,16 +204,28 @@ public class Guest_movieController {
 	}
 	
 	//예매-빠른예매 2번째페이지 - 좌석도 정보 불러오기
-	@RequestMapping("reserveSeatInfo")
-	public @ResponseBody MovieResViewVO reserveSeatInfo(HttpServletRequest req, Model model) {
-		log.debug("====== Guest_movieController/reserveSeatInfo ======");
+	@RequestMapping("seatInfo")
+	public @ResponseBody MovieResViewVO seatInfo(HttpServletRequest req, Model model) {
+		log.debug("====== Guest_movieController/seatInfo ======");
 
 		//좌석도 정보
 		MovieResViewVO seatInfo = null;
-		seatInfo = gmservice.hostMovieResView(req, model);
+		seatInfo = gmservice.movieResView(req, model);
 		//ResponseBody로 자바 객체를 송신해준다. 
 		
 		return seatInfo;
+	}
+	
+	//예매-빠른예매 2번째페이지 - 좌석 선택
+	@RequestMapping("reserveSeatInfo")
+	public String reserveSeatInfo(HttpServletRequest req, Model model) {
+		log.debug("====== Guest_movieController/reserveSeatInfo ======");
+ 
+		int allCnt = Integer.parseInt(req.getParameter("allCnt"));
+		model.addAttribute("allCnt", allCnt);
+		gmservice.seatSelect(req, model);
+		
+		return "/guest/guest_movie/reservation/reserveSeatInfo";
 	}
 	
 	//예매-상영시간표

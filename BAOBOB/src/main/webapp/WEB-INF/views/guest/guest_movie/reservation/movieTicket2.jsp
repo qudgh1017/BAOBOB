@@ -58,7 +58,7 @@
 					<div class="btn-group" data-toggle="buttons" style="display:inline-block;">
 						<div style="width:50px; display:inline-block;">일반</div>
 						<c:forEach var="num" begin="0" end="8" step="1">
-							<label onclick="adultChk('${num}')" class="btn" style="height:30px; width:30px; border:1px solid black; font-weight:bold">
+							<label onclick="adultChk('${schedule.theater_index}', '${schedule.movie_index}', '${schedule.theater_schedule_index}','${num}')" class="btn" style="height:30px; width:30px; border:1px solid black; font-weight:bold">
 							    <input type="radio" name="adult" autocomplete="off" value="${num}">
 								${num}
 						 	</label>
@@ -68,7 +68,7 @@
 				 	<div class="btn-group" data-toggle="buttons" style="display:inline-block;">
 					 	<div style="width:50px; display:inline-block;">청소년</div>
 					 	<c:forEach var="num" begin="0" end="8" step="1">
-							<label onclick="teenagerChk('${num}')" class="btn" style="height:30px; width:30px; border:1px solid black; font-weight:bold">
+							<label onclick="teenagerChk('${schedule.theater_index}', '${schedule.movie_index}', '${schedule.theater_schedule_index}', '${num}')" class="btn" style="height:30px; width:30px; border:1px solid black; font-weight:bold">
 							    <input type="radio" name="teenager" autocomplete="off" value="${num}">
 								${num}
 						 	</label>
