@@ -15,10 +15,10 @@
 				<c:if test="${vo.member_step != 8}">
 					<a href="MovieLog">무비 로그</a>
 				</c:if>
-				<a href="#!">예매 내역</a>
+				<a href="moviePaidList">예매 내역</a>
 				<a href="#!" class="active">RESTAURANT</a>
 				<c:if test="${vo.member_step != 8}">
-					<a href="#!">레스토랑 로그</a>
+					<a href="restaurantLog">레스토랑 로그</a>
 				</c:if>
 				<a href="#!">레스토랑 예약</a>
 				<a href="#!" class="active">고객 센터</a>

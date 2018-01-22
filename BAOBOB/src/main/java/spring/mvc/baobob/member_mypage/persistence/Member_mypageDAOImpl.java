@@ -9,7 +9,9 @@ import org.springframework.stereotype.Repository;
 
 import spring.mvc.baobob.vo.BoardVO;
 import spring.mvc.baobob.vo.Member;
+import spring.mvc.baobob.vo.MovieHistoryVO;
 import spring.mvc.baobob.vo.MovieVO;
+import spring.mvc.baobob.vo.RestaurantLogVO;
 
 @Repository
 public class Member_mypageDAOImpl implements Member_mypageDAO{
@@ -354,7 +356,7 @@ public class Member_mypageDAOImpl implements Member_mypageDAO{
 	
 /*----------------------------------------------------------------------------*/
 	
-	//movie_state에 따른 영화갯수
+	//wishList 갯수
 	@Override
 	public int wishListCnt(String strId) {
 		int cnt = 0;
@@ -367,7 +369,7 @@ public class Member_mypageDAOImpl implements Member_mypageDAO{
 	
 /*----------------------------------------------------------------------------*/
 	
-	//movie_state에 따른 영화리스트
+	//wishList 리스트
 	public ArrayList<MovieVO> getWishListMovies(Map<String,Object> map){
 		ArrayList<MovieVO> movies = null;
 		
@@ -375,6 +377,131 @@ public class Member_mypageDAOImpl implements Member_mypageDAO{
 		movies = dao.getWishListMovies(map);
 		
 		return movies;
+	}
+	
+/*----------------------------------------------------------------------------*/
+
+	//내가본 영화 갯수	
+	public int movieClearCnt(String strId) {
+		int cnt = 0;
+		
+		Member_mypageDAO dao = sqlSession.getMapper(Member_mypageDAO.class);
+		cnt = dao.movieClearCnt(strId);
+		
+		return cnt;
+	}
+	
+/*----------------------------------------------------------------------------*/
+	
+	//내가 본 영화 리스트	
+	public ArrayList<MovieHistoryVO> getMovieClear(Map<String,Object> map){
+		ArrayList<MovieHistoryVO> movies = null;
+		
+		Member_mypageDAO dao = sqlSession.getMapper(Member_mypageDAO.class);
+		movies = dao.getMovieClear(map);
+		
+		return movies;
+	}
+	
+/*----------------------------------------------------------------------------*/
+	
+	//무비 다이어리 글갯수 구하기
+	public int getMovieDiaryCnt(String strId) {
+		int cnt = 0;
+		
+		Member_mypageDAO dao = sqlSession.getMapper(Member_mypageDAO.class);
+		cnt = dao.getMovieDiaryCnt(strId);
+		
+		return cnt;
+		
+	}
+	
+/*----------------------------------------------------------------------------*/
+	
+	//무비다이어리 목록 조회
+	public ArrayList<BoardVO> getMovieDiaryList(Map<String, Object> map){
+		ArrayList<BoardVO> dtos = null;
+		
+		Member_mypageDAO dao = sqlSession.getMapper(Member_mypageDAO.class);
+		dtos = dao.getMovieDiaryList(map);
+		
+		return dtos;
+	}
+	
+/*----------------------------------------------------------------------------*/
+	
+	//무비다이어리 작성
+	public int insertMovieDiary(BoardVO dto) {
+		int cnt = 0;
+		
+		Member_mypageDAO dao = sqlSession.getMapper(Member_mypageDAO.class);
+		
+		cnt = dao.insertMovieDiary(dto);
+		
+		return cnt;
+	}
+	
+/*----------------------------------------------------------------------------*/
+	
+	//무비다이어리 삭제
+	public int deleteMovieDiary(int num) {
+		int cnt = 0;
+		
+		Member_mypageDAO dao = sqlSession.getMapper(Member_mypageDAO.class);
+		
+		cnt = dao.deleteMovieDiary(num);
+				
+		return cnt;
+	}
+	
+/*----------------------------------------------------------------------------*/
+	
+	//위시리스트 삭제
+	public int delMovieWishList(int num) {
+		int cnt = 0;
+		
+		Member_mypageDAO dao = sqlSession.getMapper(Member_mypageDAO.class);
+		
+		cnt = dao.delMovieWishList(num);
+				
+		return cnt;
+	}
+	
+/*----------------------------------------------------------------------------*/
+	
+	//예매내역 삭제
+	public int moviePaidDelPro(int num) {
+		int cnt = 0;
+		
+		Member_mypageDAO dao = sqlSession.getMapper(Member_mypageDAO.class);
+		
+		cnt = dao.moviePaidDelPro(num);
+				
+		return cnt;
+	}
+	
+/*----------------------------------------------------------------------------*/
+	
+	//내가 이용한 식당 글갯수 구하기
+	public int restaurantLogCnt(String strId) {
+		int cnt = 0;
+		
+		Member_mypageDAO dao = sqlSession.getMapper(Member_mypageDAO.class);
+		cnt = dao.restaurantLogCnt(strId);
+		
+		return cnt;
+	}
+	
+/*----------------------------------------------------------------------------*/
+	
+	//내가 이용한 식당 목록 조회
+	public ArrayList<RestaurantLogVO> restaurantLogList(Map<String, Object> map){
+		ArrayList<RestaurantLogVO> dtos = null;
+		
+		Member_mypageDAO dao = sqlSession.getMapper(Member_mypageDAO.class);
+		dtos = dao.restaurantLogList(map);
+		
+		return dtos;
 	}
 	
 	

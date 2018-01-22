@@ -14,6 +14,7 @@ import spring.mvc.baobob.vo.MovieVO;
 import spring.mvc.baobob.vo.TheaterVO;
 import spring.mvc.baobob.vo.Theater_scheduleVO;
 import spring.mvc.baobob.vo.Theater_seatVO;
+import spring.mvc.baobob.vo.WordVO;
 import spring.mvc.baobob.vo.hostTChartVO;
 
 @Repository
@@ -134,11 +135,11 @@ public class Host_movieDAOImpl implements Host_movieDAO {
 
 	// 상영관 리스트
 	@Override
-	public ArrayList<TheaterVO> getTheaterList(Map<String, Integer> map) {
+	public ArrayList<TheaterVO> getTheaterList() {
 		ArrayList<TheaterVO> vos = null;
 		
 		Host_movieDAO dao = sqlSession.getMapper(Host_movieDAO.class);
-		vos = dao.getTheaterList(map);
+		vos = dao.getTheaterList();
 		
 		return vos;
 	}
@@ -496,7 +497,55 @@ public class Host_movieDAOImpl implements Host_movieDAO {
 	}
 
 
+	////////////////////////
+	///////////////////////
+	// 워드 클라우드
 	
+	// 워드클라우드 모델을 가져옴
+		@Override
+		public List<WordVO> getWordCloudModel() {
+			Host_movieDAO dao = sqlSession.getMapper(Host_movieDAO.class);
+			return dao.getWordCloudModel();
+		}
+
+		// 워드클라우드 단어가 존재하는지 확인
+		@Override
+		public int checkWordCloud(Map<String, Object> map) { //String word
+			Host_movieDAO dao = sqlSession.getMapper(Host_movieDAO.class);
+			return dao.checkWordCloud(map);
+		}
+
+		// 워드클라우드 단어 추가
+		@Override
+		public int addWordCloud(WordVO vo) {
+			Host_movieDAO dao = sqlSession.getMapper(Host_movieDAO.class);
+			return dao.addWordCloud(vo);
+		}
+
+		// 워드클라우드 단어 카운트 업데이트
+		@Override
+		public int updateWordCloud(WordVO vo) {
+			Host_movieDAO dao = sqlSession.getMapper(Host_movieDAO.class);
+			return dao.updateWordCloud(vo);
+		}
+
+		// 워드클라우드 검색
+		@Override
+		public List<WordVO> searchWordcloud(Map<String, Object> map) {
+			Host_movieDAO dao = sqlSession.getMapper(Host_movieDAO.class);
+			return dao.searchWordcloud(map);
+		}
+		
+		// 워드클라우드 검색
+		@Override
+		public List<WordVO> searchWordcloud2(Map<String, Object> map) {
+			Host_movieDAO dao = sqlSession.getMapper(Host_movieDAO.class);
+			return dao.searchWordcloud2(map);
+		}
+	
+	
+	///////////////////////
+	///////////////////////
 
 	
 }

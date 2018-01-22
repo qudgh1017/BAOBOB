@@ -25,6 +25,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import spring.mvc.baobob.host_movie.persistence.Host_movieDAO;
 import spring.mvc.baobob.host_movie.persistence.Host_movieDAOImpl;
+import spring.mvc.baobob.twitterKoreanParser.KoreanParser;
 import spring.mvc.baobob.vo.HostMovieChartVO;
 import spring.mvc.baobob.vo.Member;
 import spring.mvc.baobob.vo.MovieResViewVO;
@@ -32,6 +33,7 @@ import spring.mvc.baobob.vo.MovieVO;
 import spring.mvc.baobob.vo.TheaterVO;
 import spring.mvc.baobob.vo.Theater_scheduleVO;
 import spring.mvc.baobob.vo.Theater_seatVO;
+import spring.mvc.baobob.vo.WordVO;
 import spring.mvc.baobob.vo.hostTChartVO;
 
 @Service
@@ -327,89 +329,19 @@ public class Host_movieServiceImpl implements Host_movieService{
 	// 상영관 리스트
 	@Override
 	public void hostTheaterList(HttpServletRequest req, Model model) {
-		int pageSize = 10;		//한 페이지당 출력할 게시글 갯수
-		int pageBlock = 3;		//한 블럭당 페이지 갯수
-		
 		int cnt = 0;			// 게시글 갯수
-		int start = 0;			// 현재 페이지 게시글 시작 번호
-		int end = 0;			// 현재 페이지 게시글 마지막 번호
-		int number = 0;			// 출력할 게시글 번호
-		String pageNum = null;	// 페이지 번호
-		int currentPage = 0;	// 현재 페이지
-		
-		int pageCount = 0;		// 페이지 갯수
-		int startPage = 0;		// 시작페이지
-		int endPage = 0;		// 마지막 페이지
 		
 		// 글갯수 구하기
 		cnt = dao.getTheaterCnt();
 		
-		pageNum = req.getParameter("pageNum");
-		
-		if(pageNum == null) {
-			pageNum = "1"; //첫페이지를 1페이지로 설정
-		}
-		
-		currentPage = Integer.parseInt(pageNum);// 현재페이지
-		System.out.println("currentPage : "+ currentPage);
-		
-		// pageCnt = 12 / 5 + 1; //나머지 2건이 1페이지로 할당되므로 3페이지
-		pageCount = (cnt / pageSize) + (cnt % pageSize > 0 ? 1 : 0);// 페이지 갯수
-		System.out.println("pageCount : "+ pageCount);
-		
-		// 1 = (1-1) * 5 + 1
-		// 6 = (2-1) * 5 + 1
-		start = (currentPage - 1) * pageSize + 1;// 현재 페이지 게시글 시작 번호
-	
-		// 5 = (1 + 5 - 1)
-		end = start + pageSize -1;//현재 페이지 게시글 마지막 번호
-		
-		System.out.println("start : " + start);
-		System.out.println("end : " + end);
-		
-		if(end > cnt) end = cnt;
-		
-		//  = 25 - (5-1) * 5;
-		number = cnt - (currentPage - 1) * pageSize;// 출력할 게시글 번호
-		
-		System.out.println("number : " + number);
 		System.out.println("cnt : " + cnt);
-		System.out.println("currentPage : " + currentPage);
-		System.out.println("pageSize : " + pageSize);
-		
 		if(cnt > 0) {
 			// 게시글 목록 조회
-			Map<String, Integer> map = new HashMap<String, Integer>();
-			map.put("start", start);
-			map.put("end", end);
-			ArrayList<TheaterVO> vos = dao.getTheaterList(map);
+			ArrayList<TheaterVO> vos = dao.getTheaterList();
 			model.addAttribute("vos", vos); //큰바구니 : 게시글목록 cf)작은바구니 : 게시글1건
 		}
-		
-		startPage = (currentPage / pageBlock) * pageBlock + 1; // 4 = (5/3)*3+1;
-		if(currentPage % pageBlock == 0) startPage -= pageBlock; // (5%3) == 0
-		System.out.println("startPage : " + startPage);
-		
-		endPage = startPage + pageBlock - 1; // 6 = 4 + 3 - 1;
-		if(endPage > pageCount) endPage = pageCount;
-		System.out.println("endPage : " + endPage);
-		
 		model.addAttribute("cnt", cnt);// 글갯수
-		model.addAttribute("number", number);// 글번호
-		model.addAttribute("pageNum", pageNum);// 페이지번호
-		
-		if(cnt > 0) {
-			model.addAttribute("startPage", startPage); // 시작페이지
-			model.addAttribute("endPage", endPage);// 마지막 페이지
-			model.addAttribute("pageBlock", pageBlock);// 출력할 페이지 갯수
-			model.addAttribute("pageCount", pageCount);// 페이지 갯수
-			model.addAttribute("currentPage", currentPage);// 현재 페이지
-			
-		}
-		
 		System.out.println("hostMovieList 정상 종료");
-		
-		
 	}
 	
 	// 상영관 상세
@@ -540,14 +472,16 @@ public class Host_movieServiceImpl implements Host_movieService{
 		// 모든 상영관 정보
 		ArrayList<TheaterVO> theaterVOS = dao.getTheaterAllList();
 		
+		// 모든 영화 정보
+		ArrayList<MovieVO> movieVOS = dao.getMovieList();
+		
 		model.addAttribute("vos1", vos1);
 		model.addAttribute("vos2", vos2);
 		model.addAttribute("vos3", vos3);
 		model.addAttribute("vos4", vos4);
 		model.addAttribute("vos5", vos5);
-
-
-
+		
+		model.addAttribute("movieVOS", movieVOS);
 		model.addAttribute("theaterVOS", theaterVOS);
 
 		
@@ -618,7 +552,8 @@ public class Host_movieServiceImpl implements Host_movieService{
 			// 모든 상영관 정보
 			ArrayList<TheaterVO> theaterVOS = dao.getTheaterAllList();
 			
-			
+			// 모든 영화 정보
+			ArrayList<MovieVO> movieVOS = dao.getMovieList();
 			
 			model.addAttribute("date", selDate);
 			model.addAttribute("theater_index", theater_index);
@@ -627,6 +562,8 @@ public class Host_movieServiceImpl implements Host_movieService{
 			model.addAttribute("vos3", vos3);
 			model.addAttribute("vos4", vos4);
 			model.addAttribute("vos5", vos5);
+			
+			model.addAttribute("movieVOS", movieVOS);
 			model.addAttribute("theaterVOS", theaterVOS);
 
 		} catch (ParseException e) {
@@ -1075,95 +1012,188 @@ public class Host_movieServiceImpl implements Host_movieService{
 	////////////////////////////////////////////
 	// 워드 클라우드
 	
-//	// 워드클라우드 재검색 요청
-//	@Override
-//	public String wordcloudRefresh(HttpServletRequest req, Model model) {
-//		String strDate = req.getParameter("strDate");
-//		String endDate = req.getParameter("endDate");
-//		String[] wordOps = req.getParameter("wordOps").split(",");
-//		String printMsg = "";
-//		String cow = req.getParameter("countOfWords");
-//		if(cow == null)cow = "30";
-//		int countOfWords = Integer.parseInt(req.getParameter("countOfWords"));
-//		Map<String, Object> map = new HashMap<>();
-//
-//		printMsg = "strDate : " + strDate + ", endDate : " + endDate +", 요청단어수 : " + countOfWords;
-//
-//		int type = 0;
-//
-//		if(wordOps != null) {
-//			List<String> list = Arrays.asList(wordOps);
-//			if(list.contains("Noun") && list.contains("Verb") && list.contains("Hashtag")){
-//				type = 6;
-//				printMsg += ", | 명사, 동사, 해시태그 검색요청";
-//			} else if(list.contains("Noun") && list.contains("Verb")) {
-//				type = 4;
-//				printMsg += ", | 명사, 동사 검색요청";
-//			} else if(list.contains("Noun") && list.contains("Hashtag")) {
-//				type = 7;
-//				printMsg += ", | 명사, 해시태그 검색요청";
-//			} else if(list.contains("Hashtag") && list.contains("Verb")) {
-//				type = 5;
-//				printMsg += ", | 해시태그, 동사 검색요청";
-//			} else if(list.contains("Noun")) {
-//				type = 1;
-//				printMsg += ", | 명사 검색요청";
-//			} else if(list.contains("Verb")) {
-//				type = 2;
-//				printMsg += ", | 동사 검색요청";
-//			} else if(list.contains("Hashtag")) {
-//				type = 3;
-//				printMsg += ", | 해시태그 검색요청";
-//			}
-//		} else {
-//			type = 6;
-//			printMsg += ", | 명사, 동사, 해시태그 전체검색 요청";
-//		}
-//
-//		map.put("type", type);
-//		map.put("countOfWords", countOfWords);
-//
-//		List<WordDTO> wordList = null;
-//
-//		if(strDate != null && endDate != null){
-//			if(!strDate.equals("")) {
-//				strDate = strDate + " 00:00:01.000000";
-//				endDate = endDate + " 23:59:59.000000";
-//				Timestamp stp = Timestamp.valueOf(strDate);
-//				Timestamp etp = Timestamp.valueOf(endDate);
-//				map.put("strDate", stp);
-//				map.put("endDate", etp);
-//				wordList = dao.searchWordcloud2(map);
-//			} else {
-//				wordList = dao.searchWordcloud(map);
-//			}
-//		} else {
-//			wordList = dao.searchWordcloud(map);
-//		}
-//
-//		System.out.println(printMsg);
-//
-//		String resultMsg = "<ul>";
-//		System.out.println(wordList);
-//		for(WordDTO dto : wordList) {
-//			if(dto.getPart_of_speech().equals("Hashtag")){
-//				resultMsg += "<li><a href='/moyeo/two/wordCloudSearchByTag?search_keyword=" + dto.getWord().replaceAll("#", "") + "' >" + dto.getWord() + "</a></li>";
-//			} else {
-//				resultMsg += "<li><a href='/moyeo/two/wordCloudSearch?search_keyword=" + dto.getWord() + "' >" + dto.getWord() + "</a></li>";
-//			}
-//		}
-//		if(wordList.isEmpty())resultMsg += "<li><a href='#' target='_blank'>단어가 없습니다.</a></li>";
-//		resultMsg += "</ul>";
-//
-//		System.out.println(resultMsg);
-//
-//		//		model.addAttribute("wordList", wordList);
-//		//		model.addAttribute("listSize", wordList.size());
-//
-//		return resultMsg;
-//	}
-//
-//
+	// 워드클라우드 리스트
+	private static List<WordVO> wordVos;
+	
+	// 단어 형태소 분석을 처리하는 메서드 (영화 리뷰등록시 같이 적용)
+	@Override
+	public void wordAnalyzer(HttpServletRequest req, Model model) {
+		int movie_index = Integer.parseInt(req.getParameter("movie_index"));
+		StringBuilder sb = new StringBuilder(req.getParameter("review_content"));
+		wordExtractAndAnalyze(sb.toString(), movie_index);
+	}
+
+	// 형태소 분석된 결과를 데이터베이스에 저장하는 프로세스
+	@Override
+	public void wordExtractAndAnalyze(String text, int movie_index) {
+		System.out.println("WordCloud analyze");
+		new Runnable() {
+			public void run() {
+
+				List<WordVO> wordMap = KoreanParser.getWordsMap(text);
+				if(wordMap.isEmpty())return;
+				Timestamp time = new Timestamp(System.currentTimeMillis());
+				for(WordVO dto : wordMap) {
+					
+					// 기존에 있는 단어일 경우 카운트 업데이트
+					Map<String, Object> map = new HashMap<String, Object>();
+					map.put("word", dto.getWord());
+					map.put("movie_index", movie_index);
+					if(dao.checkWordCloud(map) == 1) {
+						dto.setUpdate_date(time);
+						dto.setMovie_index(movie_index);
+						dao.updateWordCloud(dto);
+						// 기존에 없는 단어일 경우 단어와 카운트 추가	
+					} else {
+						dto.setUpdate_date(time);
+						dto.setReg_date(time);
+						dto.setMovie_index(movie_index);
+						dao.addWordCloud(dto);
+					}
+				}
+				// 워드 클라우드 모델을 refresh 해줌
+				setWordList();
+				System.out.println("WordCloud 분석 종료");
+			}
+		}.run();
+	}
+
+	// 워드클라우드 단어를 가져옴
+	public synchronized void setWordList() {
+		System.out.println("Word Cloud word set request");
+		wordVos = dao.getWordCloudModel();
+	}
+	
+	
+	
+	// 워드클라우드 재검색 요청
+	@Override
+	public String wordcloudRefresh(HttpServletRequest req, Model model) {
+		String strDate = req.getParameter("strDate");
+		String endDate = req.getParameter("endDate");
+		String[] wordOps = req.getParameter("wordOps").split(",");
+		String printMsg = "";
+		String cow = req.getParameter("countOfWords");
+		if(cow == null)cow = "30";
+		int countOfWords = Integer.parseInt(req.getParameter("countOfWords"));
+		
+		Map<String, Object> map = new HashMap<>();
+
+		printMsg = "strDate : " + strDate + ", endDate : " + endDate +", 요청단어수 : " + countOfWords;
+
+		int type = 0;
+
+		if(wordOps != null) {
+			List<String> list = Arrays.asList(wordOps);
+			if(list.contains("Noun") && list.contains("Verb") && list.contains("Hashtag")){
+				type = 6;
+				printMsg += ", | 명사, 동사, 해시태그 검색요청";
+			} else if(list.contains("Noun") && list.contains("Verb")) {
+				type = 4;
+				printMsg += ", | 명사, 동사 검색요청";
+			} else if(list.contains("Noun") && list.contains("Hashtag")) {
+				type = 7;
+				printMsg += ", | 명사, 해시태그 검색요청";
+			} else if(list.contains("Hashtag") && list.contains("Verb")) {
+				type = 5;
+				printMsg += ", | 해시태그, 동사 검색요청";
+			} else if(list.contains("Noun")) {
+				type = 1;
+				printMsg += ", | 명사 검색요청";
+			} else if(list.contains("Verb")) {
+				type = 2;
+				printMsg += ", | 동사 검색요청";
+			} else if(list.contains("Hashtag")) {
+				type = 3;
+				printMsg += ", | 해시태그 검색요청";
+			}
+		} else {
+			type = 6;
+			printMsg += ", | 명사, 동사, 해시태그 전체검색 요청";
+		}
+
+		map.put("type", type);
+		map.put("countOfWords", countOfWords);
+
+		List<WordVO> wordList = null;
+
+		if(strDate != null && endDate != null){
+			if(!strDate.equals("")) {
+				strDate = strDate + " 00:00:01.000000";
+				endDate = endDate + " 23:59:59.000000";
+				Timestamp stp = Timestamp.valueOf(strDate);
+				Timestamp etp = Timestamp.valueOf(endDate);
+				map.put("strDate", stp);
+				map.put("endDate", etp);
+				wordList = dao.searchWordcloud2(map);
+			} else {
+				wordList = dao.searchWordcloud(map);
+			}
+		} else {
+			wordList = dao.searchWordcloud(map);
+		}
+
+		System.out.println(printMsg);
+
+		String resultMsg = "<ul>";
+		System.out.println(wordList);
+		for(WordVO vo : wordList) {
+			if(vo.getType_of_speech().equals("Hashtag")){
+				resultMsg += "<li><a href='/moyeo/two/wordCloudSearchByTag?search_keyword=" + vo.getWord().replaceAll("#", "") + "' >" + vo.getWord() + "</a></li>";
+			} else {
+				resultMsg += "<li><a href='/moyeo/two/wordCloudSearch?search_keyword=" + vo.getWord() + "' >" + vo.getWord() + "</a></li>";
+			}
+		}
+		if(wordList.isEmpty())resultMsg += "<li><a href='#' target='_blank'>단어가 없습니다.</a></li>";
+		resultMsg += "</ul>";
+
+		System.out.println(resultMsg);
+
+		model.addAttribute("wordList", wordList);
+		model.addAttribute("listSize", wordList.size());
+		model.addAttribute("resultMsg", resultMsg);
+		
+		return resultMsg;
+	}
+
+	// 영화 리뷰 워드 클라우드
+	@Override
+	public String movieWordcloud(HttpServletRequest req, Model model) {
+		int movie_index = Integer.parseInt(req.getParameter("movie_index"));
+		int countOfWords = 50;
+		Map<String, Object> map = new HashMap<>();
+		int type = 6;
+
+		map.put("type", type);
+		map.put("countOfWords", countOfWords);
+		map.put("movie_index", movie_index);
+		
+		List<WordVO> wordList = null;
+		wordList = dao.searchWordcloud(map);
+
+		String resultMsg = "<ul>";
+		System.out.println(wordList);
+		for(WordVO vo : wordList) {
+			if(vo.getType_of_speech().equals("Hashtag")){
+				resultMsg += "<li><a href='/moyeo/two/wordCloudSearchByTag?search_keyword=" + vo.getWord().replaceAll("#", "") + "' >" + vo.getWord() + "</a></li>";
+			} else {
+				System.out.println("vo.getCount : " + vo.getCount());
+				resultMsg += "<li><a style='height:"+vo.getCount()+5+"px' href='/moyeo/two/wordCloudSearch?search_keyword=" + vo.getWord() + "' >" + vo.getWord() + "</a></li>";
+			}
+		}
+		if(wordList.isEmpty())resultMsg += "<li><a href='#' target='_blank'>단어가 없습니다.</a></li>";
+		resultMsg += "</ul>";
+
+		System.out.println(resultMsg);
+
+		model.addAttribute("wordList", wordList);
+		model.addAttribute("listSize", wordList.size());
+		model.addAttribute("resultMsg", resultMsg);
+		
+		return resultMsg;
+	}
+
+
 
 		
 	////////////////////////////////////////

@@ -339,10 +339,11 @@ public class Member_mypageController {
 	
 /*----------------------------- 무비 로그 ----------------------------------------*/	
 	
-	//무비로그 위시리스트
+	//무비로그
 	@RequestMapping("MovieLog")
 	public String MovieLog(HttpServletRequest req, Model model) {
 		service.memberCard(req, model);
+		service.movieWishList(req, model);
 		
 		return "guest/member_myPage/memMovie/member_myPage_MovieLog";
 	}
@@ -355,26 +356,95 @@ public class Member_mypageController {
 		
 		return "guest/member_myPage/memMovie/member_myPage_WishList";
 	}
+	
+	//무비로그 위시리스트 삭제
+	@RequestMapping("delWishList")
+	public String delWishList(HttpServletRequest req, Model model) {
 		
+		service.delMovieWishList(req, model);
+		
+		return "guest/member_myPage/memMovie/member_myPage_delWishListPro";
+	}
+		
+	//무비로그 내가본 영화
+	@RequestMapping("movieClear")
+	public String movieClear(HttpServletRequest req, Model model) {
+		
+		service.movieClear(req, model);
+		
+		return "guest/member_myPage/memMovie/member_myPage_movieClear";
+	}
 	
+	//무비로그 무비다이어리
+	@RequestMapping("movieDiaryWriteForm")
+	public String movieDiaryWriteForm(HttpServletRequest req, Model model) {
+		
+		if(req.getSession().getAttribute("memId") != null) {
+			service.movieDiaryList(req,model);
+		}
+		
+		//service.movieClear(req, model);
+		
+		return "guest/member_myPage/memMovie/member_myPage_movieDiaryWriteForm";
+	}
 	
+	//무비로그 무비다이어리 페이징
+	@RequestMapping("movieDiaryPage")
+	public String movieDiaryPage(HttpServletRequest req, Model model) {
+		
+		service.movieDiaryList(req,model);
+		
+		return "guest/member_myPage/memMovie/member_myPage_movieDiaryPage";
+	}
 	
+	//무비다이어리 글쓰기 처리
+	@RequestMapping("movieDiaryPro")
+	public String movieDiaryPro(HttpServletRequest req, Model model) {
+		
+		service.movieDiaryPro(req,model);
+		
+		return "guest/member_myPage/memMovie/member_myPage_movieDiaryPro";
+	}
 	
+	//무비다이어리 글삭제처리
+	@RequestMapping("movieDiaryDel")
+	public String movieDiaryDel(HttpServletRequest req, Model model) {
+		
+		service.movieDiaryDelPro(req,model);
+		
+		return "guest/member_myPage/memMovie/member_myPage_movieDiaryDelPro";
+	}
 	
+/*----------------------------- 예매 내역 ----------------------------------------*/
 	
+	//예매내역 리스트
+	@RequestMapping("moviePaidList")
+	public String moviePaidList(HttpServletRequest req, Model model) {
+		
+		service.memberCard(req, model);
+		service.moviePaidList(req,model);
+		
+		return "guest/member_myPage/memMovie/member_myPage_moviePaidList";
+	}
 	
+	//예매내역 취소처리
+	@RequestMapping("moviePaidDelPro")
+	public String moviePaidDelPro(HttpServletRequest req, Model model) {
+		
+		service.moviePaidDelPro(req, model);
+		
+		return "guest/member_myPage/memMovie/member_myPage_moviePaidDelPro";
+	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	//레스토랑 로그
+	@RequestMapping("restaurantLog")
+	public String restaurantLog(HttpServletRequest req, Model model) {
+		
+		service.memberCard(req, model);
+		service.restaurantLog(req, model);
+		
+		return "guest/member_myPage/memRestaurant/member_myPage_restaurantLog";
+	}
 	
 	
 	

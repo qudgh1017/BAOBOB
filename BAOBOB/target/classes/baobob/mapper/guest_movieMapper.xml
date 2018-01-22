@@ -162,7 +162,7 @@
 		ON (theater_schedule_tbl.movie_index = movie_tbl.movie_index)
 		WHERE movie_tbl.movie_index = #{movie_index}
 		AND TO_CHAR(theater_schedule_tbl.schedule_startdate,'YYMMDD') = TO_CHAR(SYSDATE+#{plusDay},'YYMMDD')
-		ORDER BY theater_tbl.theater_index ASC, theater_schedule_tbl.schedule_startdate ASC
+		ORDER BY theater_schedule_tbl.schedule_startdate ASC, theater_tbl.theater_index ASC
 	</select>
 	
 	<!-- 상영관 갯수 -->
@@ -178,6 +178,66 @@
 		AND theater_schedule_index = -1
 		AND seat_state IN(3,4,5)
 	</select>
+	
+	<!-- 스케줄 정보 -->
+	<select id="getSchedule" resultType="spring.mvc.baobob.vo.Theater_scheduleVO">
+		SELECT *
+		FROM theater_schedule_tbl
+		WHERE theater_schedule_index = #{theater_schedule_index}
+	</select>
+	
+	<!-- 상영관 상세 theaterDetail -->
+	<select id="theaterDetail" resultType="spring.mvc.baobob.vo.TheaterVO">
+		SELECT * FROM theater_tbl WHERE theater_index=#{theater_index}
+	</select>
+	
+	<!-- 상영관 상세 좌석 정보 theaterSeatDetail -->
+	<select id="theaterSeatDetail" resultType="spring.mvc.baobob.vo.Theater_seatVO">
+		SELECT * FROM theater_seat_tbl WHERE theater_index=#{theater_index} AND theater_schedule_index=#{theater_schedule_index}
+	</select>
+	
+	<!-- 선택된 한개의 좌석정보 -->
+	<select id="seatInfo" resultType="spring.mvc.baobob.vo.Theater_seatVO">
+		SELECT * FROM theater_seat_tbl WHERE seat_index = #{seat_index}
+	</select>
 
-
+	<!-- 메인 - 영화 가장 많이 본 순위 -->
+	<select id="mainMovieRank" resultType="String">
+		<![CDATA[
+		SELECT title
+		FROM (
+		    SELECT count, title, rownum as num
+		    FROM(
+		        SELECT *
+		        FROM (
+		            SELECT COUNT(ts.movie_index) count, mt.movie_title title
+		            FROM movie_history_tbl  mh, theater_schedule_tbl ts, movie_tbl mt
+		            WHERE mh.theater_schedule_index = ts.theater_schedule_index
+		                AND mt.movie_index = ts.movie_index
+		            GROUP BY mt.movie_title
+		        ) ORDER BY count DESC, title
+		))
+		WHERE num >= 1 AND num <= 7
+		]]>
+	</select>
+	
+	<!-- 메인 - 상영 중인 영화 -->
+	<select id="mainMovieTheaterCnt" resultType="int">
+		SELECT COUNT(DISTINCT movie_index)
+    	FROM theater_schedule_tbl
+	</select>
+	
+	<!-- 메인 - 상영 중인 영화 -->
+	<select id="mainMovieTheater" resultType="String">
+		<![CDATA[
+		SELECT poster
+		FROM ( SELECT poster, rownum as num
+			   FROM ( SELECT DISTINCT ts.movie_index, mt.movie_poster poster
+			    	  FROM theater_schedule_tbl ts, movie_tbl mt
+			    	  WHERE mt.movie_index = ts.movie_index
+			    	  ORDER BY ts.movie_index DESC)
+			   )
+		WHERE num >= #{start} AND num <= #{end}	
+		]]>
+	</select>
 </mapper>

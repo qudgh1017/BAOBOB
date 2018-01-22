@@ -11,7 +11,8 @@
 <title>My Page</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script type="text/javascript">
-	
+
+//위시리스트 페이징 처리를 위한 AJAX
 function wishPage(page){
 	var object = new Object();
 	var jsonData = JSON.stringify(object);
@@ -50,7 +51,6 @@ function wishPage(page){
 	
 	<tr id="result">
 		<td>
-		<!-- 포스터 선택 -->
 		<div class="container">
 			<div class="row">
 				<c:if test="${cnt>0}">
@@ -67,8 +67,9 @@ function wishPage(page){
 									<c:if test="${movie.movie_age==19}"><img src="${projectRes}/images/ybh/청소년 관람불가.png" style="width:15px; height:15px;"></c:if>
 								</span><br>
 								<span style="font-weight:bold; color:gray; font-size:12px">
-									20${movie.movie_rel_date} 개봉
-								</span><br>
+									20${movie.movie_rel_date} 개봉 &emsp;&emsp;
+									<input type="button" onclick="window.location='delWishList?num=${movie.movie_index}'" value="삭제">
+								</span>
 							</div>
 							<br>
 						</div>
@@ -85,15 +86,16 @@ function wishPage(page){
 				</c:if>
 			</div>
 		</div>		
-			
+		
+		<!-- 페이징 컨트롤 -->	
 		<div class="container" style="margin-top:50px">
 			<div class="row">
 				<div class="col-md-12" align="center">
 					<c:if test="${cnt > 0}">
 						<!-- 처음[◀◀] / 이전블록[◀] 특수문자:ㅁ + 한자키 -->
 						<c:if test="${startPage > pageBlock}">
-							<a id="wishListPageStart" href="wishList">[◀◀]</a>
-							<a id="wishListPagePrev" href="#!">[◀]</a>
+							<a id="wishListPageStart" href="wishList">&laquo;</a>
+							<a id="wishListPagePrev" href="#!">&lsaquo;</a>
 						</c:if>
 						
 						<c:forEach var="i" begin="${startPage}" end="${endPage}">
@@ -107,8 +109,8 @@ function wishPage(page){
 						
 						<!-- 다음블록 [▶] / 끝[▶▶] -->
 						<c:if test="${pageCount > endPage}">
-							<a id="wishListPageNext" href="wishList?movie_state=${movie_state}&pageNum=${startPage + pageBlock}">[▶]</a>
-							<a id="wishListPageEnd" href="wishList?movie_state=${movie_state}&pageNum=${pageCount}">[▶▶]</a> <!-- 마지막페이지로 -->
+							<a id="wishListPageNext" href="wishList?pageNum=${startPage + pageBlock}">&rsaquo;</a>
+							<a id="wishListPageEnd" href="wishList?pageNum=${pageCount}">&raquo;</a> 
 						</c:if>
 					</c:if>
 				</div>
