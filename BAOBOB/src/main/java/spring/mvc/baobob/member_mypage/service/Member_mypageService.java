@@ -43,8 +43,8 @@ public interface Member_mypageService {
 	//회원탈퇴 처리페이지
 	public void memPDelPro(HttpServletRequest req, Model model);
 	
-	
-	
+	//무비로그-위시리스트
+	public void movieWishList(HttpServletRequest req, Model model);
 	
 	
 	

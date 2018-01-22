@@ -48,6 +48,8 @@
 				<ul class="sidenav-second-level collapse" id="collapseComponents">
 					<li><a href="hostRestaurantList">매장 목록</a></li>
 					<li><a href="hostRestaurantAddForm">매장 추가</a></li>
+					<li><a href="hostAllMenuList">매장별 메뉴 보기</a></li>
+					<li><a href="hostAllEmployeeList">매장별 직원 보기</a></li>
 					<li><a href="#">결산</a></li>
 				</ul>
 			</li>
@@ -82,7 +84,7 @@
 				</ul>
 			</li>
 			<li class="nav-item" data-toggle="tooltip" data-placement="right">
-				<a class="nav-link" href="#">
+				<a class="nav-link" href="hostRestaurantAccount">
 					<i class="fa fa-fw fa-area-chart"></i> 
 					<span class="nav-link-text">결산</span>
 				</a>

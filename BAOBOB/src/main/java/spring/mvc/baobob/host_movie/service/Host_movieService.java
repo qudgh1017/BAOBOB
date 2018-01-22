@@ -89,4 +89,12 @@ public interface Host_movieService {
 
 	// 관람객 성별 매출
 	public void movieSexCountChart(HttpServletRequest req, Model model);
+	
+	////////////////////////////////
+	////////////////////////////////
+	// 워드 클라우드
+	// 워드클라우드 재검색 요청
+//		public String wordcloudRefresh(HttpServletRequest req, Model model);
+	////////////////////////////////
+	////////////////////////////////
 }

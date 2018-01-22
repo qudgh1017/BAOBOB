@@ -13,7 +13,7 @@
 				</c:if>
 				<a href="#!" class="active">MOVIE</a>
 				<c:if test="${vo.member_step != 8}">
-					<a href="MovieWish">무비 로그</a>
+					<a href="MovieLog">무비 로그</a>
 				</c:if>
 				<a href="#!">예매 내역</a>
 				<a href="#!" class="active">RESTAURANT</a>

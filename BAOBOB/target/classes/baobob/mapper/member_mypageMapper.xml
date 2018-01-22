@@ -163,21 +163,46 @@
 		VALUES(board_tbl_SEQ.NEXTVAL,#{member_id},#{board_pwd},03,#{board_subject},#{board_content},#{board_img},0,#{board_ref},#{board_ref_step},#{board_ref_level},#{board_reg_date},#{board_ip})
 	</insert>
 
-	
-	
-
-
-
-
-
 <!-- ************************************* 분실물문의 END ************************************ -->	
 <!-- ************************************************************************************** -->	
 
+<!-- ************************************************************************************** -->	
+<!-- ************************************* 무비로그 START ************************************ -->	
 
-
-
-
-
+	<!-- movie_state에 따른 영화갯수 -->
+	<select id="wishListCnt" resultType="int">
+		SELECT COUNT(*) FROM member_wishList WHERE member_id = #{strId}
+	</select>
+	
+	<!-- movie_state에 따른 영화리스트 -->
+	<select id="getWishListMovies" resultType="spring.mvc.baobob.vo.MovieVO">
+		<![CDATA[
+			SELECT * 
+			FROM (SELECT w.member_id, w.movie_index,
+			             m.movie_title, m.movie_content, m.movie_janre, m.movie_age, 
+			             m.movie_rel_date, m.movie_director, m.movie_star, m.movie_country, m.movie_runTime, 
+			             m.movie_poster, m.movie_trailer, m.movie_state, rownum rNum 
+			       FROM (SELECT * 
+			             FROM member_wishList 
+			             ORDER BY movie_index DESC) w
+			       JOIN movie_tbl m
+			       ON m.movie_index = w.movie_index
+			       WHERE member_id = #{strId}
+			     ) 
+			WHERE  rNum >= #{start} AND rNum <= #{end}
+		 ]]>
+	</select>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+<!-- ************************************** 무비로그 END ************************************* -->	
+<!-- ************************************************************************************** -->
 
 
 

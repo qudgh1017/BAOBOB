@@ -35,11 +35,11 @@ public class Host_movieDAOImpl implements Host_movieDAO {
 	
 	// 영화 전체 목록 조회(개봉일 순)
 	@Override
-	public ArrayList<MovieVO> getMovieList(Map<String, Integer> map) {
+	public ArrayList<MovieVO> getMovieList() {
 		ArrayList<MovieVO> vos = null;
 		
 		Host_movieDAO dao = sqlSession.getMapper(Host_movieDAO.class);
-		vos = dao.getMovieList(map);
+		vos = dao.getMovieList();
 		
 		System.out.println("vos : " + vos);
 		
