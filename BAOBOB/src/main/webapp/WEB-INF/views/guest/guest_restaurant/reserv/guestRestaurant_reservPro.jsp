@@ -7,6 +7,7 @@
 	<c:if test="${cnt == 0}">
 		<script type="text/javascript">
 			alert("삽입 실패");
+			예약에 실패하셨습니다.
 		</script>
 	</c:if>
 	

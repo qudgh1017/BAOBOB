@@ -57,25 +57,138 @@ public class Guest_restaurantServiceImpl implements Guest_restaurantService{
 	//==========================================================================
 	//============================== 3. 레스토랑 예약 ==============================
 	//==========================================================================
-	//레스토랑 테이블 확인
+	//레스토랑 테이블 확인 //host의 restaurantView참고
 	@Override
 	public void restaurant_tableList(HttpServletRequest req, Model model) {
 		log.debug("===== Service/restaurant_tableList() =====");
 
-		RestaurantVO dto = new RestaurantVO();
-		dto = dao.reserv_tableList(Integer.parseInt(req.getParameter("index")));
+		String date = "20" + req.getParameter("date");
+		model.addAttribute("date", req.getParameter("date"));
 
-		TableVO dto2 = new TableVO();
-		dto2 = dao.getColRow(Integer.parseInt(req.getParameter("index")));
+		String time = req.getParameter("time");
+		String startTime = "";
+		String[] end;
+		String endTime = "";
 
-		int col = dto2.getTable_col() + 1;
-		int row = dto2.getTable_row() + 1;
+		//시간이 존재한다면..
+		if ((time != null && time.equals("")) || (time != null && time.length() != 0)) {
+			time = req.getParameter("time") + ":00";
+			model.addAttribute("time", req.getParameter("time"));
+
+			startTime = date + " " + time;
+			end = time.split(":");
+			
+			if (end[1].equals("00")) {
+				end[1] = "30";
+			} else if (end[1].equals("30")) {
+				end[0] = String.valueOf((Integer.parseInt(end[0]) + 1));
+				end[1] = "00";
+			}
+			
+			endTime = end[0] + ":" + end[1] + ":00";
+			endTime = date + " " + endTime;
+			
+			System.out.println("startTime : " + startTime);
+			System.out.println("endTime : " + endTime);
+			
+			Restaurant_scheduleVO schedule_dto = new Restaurant_scheduleVO();
+			schedule_dto.setSchedule_startTime(Timestamp.valueOf(startTime));
+			schedule_dto.setSchedule_endTime(Timestamp.valueOf(endTime));
+			schedule_dto.setRestaurant_index(Integer.parseInt(req.getParameter("index")));
+
+			//스케쥴 인덱스 조회
+			Integer schedule_index = dao.getScheduleIndex(schedule_dto);
+			
+			RestaurantVO restaurant_dto = new RestaurantVO();
+			//dao.viewRestaurant()
+			restaurant_dto = dao.reserv_tableList(Integer.parseInt(req.getParameter("index")));
+		
+			TableVO table_dto = new TableVO();
+			table_dto = dao.getColRow(Integer.parseInt(req.getParameter("index")));
+
+			System.out.println("index : " + Integer.parseInt(req.getParameter("index")));
+			
+			int col = table_dto.getTable_col() + 1;
+			int row = table_dto.getTable_row() + 1;
+
+			String info = "";
+			int index = 0;
+
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("restaurant_index", req.getParameter("index"));
+			map.put("restaurant_table_index", index);
+			map.put("restaurant_schedule_index", schedule_index);
+
+			for (int i = 0; i < row; i++) {
+				for (int j = 0; j < col; j++) {
+					map.replace("restaurant_table_index", index);
+
+					info += dao.getState(map);
+
+					if (!(i + 1 == row && j + 1 == col)) {
+						info += ',';
+						index++;
+					}
+				}
+			}
+			
+			model.addAttribute("dto", restaurant_dto);
+			model.addAttribute("info", info);
+			model.addAttribute("col", col);
+			model.addAttribute("row", row);
+			
+		} else {
+			RestaurantVO restaurant_dto = new RestaurantVO();
+			restaurant_dto = dao.reserv_tableList(Integer.parseInt(req.getParameter("index")));
+			
+			TableVO table_dto = new TableVO();
+			table_dto = dao.getColRow(Integer.parseInt(req.getParameter("index")));
+
+			System.out.println("index : " + Integer.parseInt(req.getParameter("index")));
+
+			int col = table_dto.getTable_col() + 1;
+			int row = table_dto.getTable_row() + 1;
+
+			String info = "";
+			int index = 0;
+			
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("restaurant_index", req.getParameter("index"));
+			map.put("restaurant_table_index", index);
+
+			for (int i = 0; i < row; i++) {
+				for (int j = 0; j < col; j++) {
+					map.replace("restaurant_table_index", index);
+
+					info += dao.getState(map);
+
+					if (!(i + 1 == row && j + 1 == col)) {
+						info += ',';
+						index++;
+					}
+				}
+			}
+			model.addAttribute("dto", restaurant_dto);
+			model.addAttribute("info", info);
+			model.addAttribute("col", col);
+			model.addAttribute("row", row);
+		}
+
+		
+		/*RestaurantVO restaurant_dto = new RestaurantVO();
+		restaurant_dto = dao.reserv_tableList(Integer.parseInt(req.getParameter("index")));
+
+		TableVO table_dto = new TableVO();
+		table_dto = dao.getColRow(Integer.parseInt(req.getParameter("index")));
+
+		int col = table_dto.getTable_col() + 1;
+		int row = table_dto.getTable_row() + 1;
 
 		String info = "";
 		int index = 0;
 
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("restaurant_index", Integer.parseInt(req.getParameter("index")));
+		map.put("restaurant_index", req.getParameter("index"));
 		map.put("restaurant_table_index", index);
 
 		for (int i = 0; i < row; i++) {
@@ -91,7 +204,7 @@ public class Guest_restaurantServiceImpl implements Guest_restaurantService{
 			}
 		}
 
-		model.addAttribute("dto", dto);
+		model.addAttribute("dto", restaurant_dto);
 		model.addAttribute("info", info);
 		model.addAttribute("col", col);
 		model.addAttribute("row", row);
@@ -102,7 +215,7 @@ public class Guest_restaurantServiceImpl implements Guest_restaurantService{
 		if (req.getParameter("time") != "") {
 			String time = req.getParameter("time");
 			model.addAttribute("time", time);
-		}
+		}*/
 	}
 
 	//레스토랑 예약처리
@@ -115,14 +228,15 @@ public class Guest_restaurantServiceImpl implements Guest_restaurantService{
 		int row=Integer.parseInt(req.getParameter("row"));
 		int col=Integer.parseInt(req.getParameter("col"));
 		String member_id = (String) req.getSession().getAttribute("memId");
-		System.out.println("=====member_id : " + member_id +"=====");
 		String info = req.getParameter("info");
 		
+		//예약 시작 시간 예약 종료 시간 계산 부분(ex:12시 예약이면 30분을 더하여 종료시간으로 지정)
 		String date = "20" + req.getParameter("date");
 		String time = req.getParameter("time") + ":00";
 		String startTime = date + " " + time;
 		String[] end = time.split(":");
-		
+		System.out.println("=====member_id : " + member_id +"=====");
+
 		if(end[1].equals("00")) {
 			end[1]="30";
 		} else if(end[1].equals("30")) {
@@ -133,44 +247,59 @@ public class Guest_restaurantServiceImpl implements Guest_restaurantService{
 		String endTime = end[0] + ":" + end[1] + ":00";
 		endTime = date + " " + endTime;
 		
-		System.out.println("startTime : " + startTime);
-		System.out.println("endTime : " + endTime);
+		RestaurantVO restaurant_dto = new RestaurantVO();
+		restaurant_dto.setRestaurant_index(Integer.parseInt(req.getParameter("index")));
 		
-		RestaurantVO dto = new RestaurantVO();
-		dto.setRestaurant_index(Integer.parseInt(req.getParameter("index")));
+		Restaurant_scheduleVO schedule_dto = new Restaurant_scheduleVO();
+		schedule_dto.setSchedule_startTime(Timestamp.valueOf(startTime));
+		schedule_dto.setSchedule_endTime(Timestamp.valueOf(endTime));
+		schedule_dto.setRestaurant_index(Integer.parseInt(req.getParameter("index")));
+	
+		System.out.println("시작시간" + schedule_dto.getSchedule_startTime());
+		System.out.println("종료시간" + schedule_dto.getSchedule_endTime());
+		System.out.println("레스토랑 인덱스 " + schedule_dto.getRestaurant_index());
 		
-		Restaurant_scheduleVO dto3 = new Restaurant_scheduleVO();
-		
-		dto3.setSchedule_startDate(Timestamp.valueOf(startTime));
-		dto3.setSchedule_startTime(Timestamp.valueOf(startTime));
-		dto3.setSchedule_endTime(Timestamp.valueOf(endTime));
-		
-		TableVO dto2 = new TableVO();
+		//스케쥴인덱스 조회
+		Integer schedule_index = dao.getScheduleIndex(schedule_dto);
+		System.out.println("스케쥴 인덱스가 있는가?" + schedule_index);
+		if (schedule_index != null) {
+			schedule_dto.setRestaurant_schedule_index(schedule_index);
+		}
+
+		TableVO table_dto = new TableVO();
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("dto", dto);
-		map.put("dto2", dto2);
-		map.put("dto3", dto3);
+		map.put("dto", restaurant_dto);
+		map.put("dto2", table_dto);
+		map.put("dto3", schedule_dto);
 		map.put("member_id", member_id);
 		
-		cnt = dao.addReserv(map);
+		//스케쥴이 없으면..
+		if(schedule_index == null) {
+			cnt = dao.addReserv(map);
+		}
+		
+		//예약 위에 또 예약할
+		if(cnt == 0) {
+			cnt = dao.resetTable2(schedule_dto);
+		}
 		
 		if(cnt!=0) {
 			String[] state = info.split(",");
 			
-			for(int i=0; i<row; i++) {
-				for(int j=0; j<col; j++) {
-					dto2.setIndex(index);
-					dto2.setState(state[index]);
-					dto2.setTable_row(i);
-					dto2.setTable_col(j);
+			for (int i = 0; i < row; i++) {
+				for(int j = 0; j <col; j++) {
+					table_dto.setRestaurant_table_index(index);
+					table_dto.setState(state[index]);
+					table_dto.setTable_row(i);
+					table_dto.setTable_col(j);
 					
-					map.replace("dto2", dto2);
+					map.replace("dto2", table_dto);
 					
 					cnt = dao.modTable2(map);
-					dao.AddHistory(map);
-					dao.AddRHistory(map);
+					//dao.AddHistory(map);
+					//dao.AddRHistory(map);
 					
-					if(cnt!=0) {
+					if(cnt != 0) {
 						index++;
 					}
 				}

@@ -171,39 +171,29 @@ function spaceDivChange() {
 
 // 배열판의 선택한 버튼 설정
 function spaceBtnChange(location) {
-	if (typeImg != '') { // 아이콘 선택했을 경우, 선택한 버튼의 설정 변경
-		// 선택한 버튼의 이미지 src 변경
-		var imgId = 'img' + location; // 선택한 버튼의 id
-		var spaceImg = document.getElementById(imgId); // 선택한 버튼의 img
-		spaceImg.src = '/baobob/resources/images/chg/' + typeImg;
+	//선택한 버튼의 value변경 (DB에 아이콘 index 넣기 위한값)
+	var btnId = 'btn' + location;
+	var spaceBtn = document.getElementById(btnId);
 
-		// 선택한 버튼의 value 변경(DB에 아이콘index 넣기 위한 값)
-		var btnId = 'btn' + location;
-		var spaceBtn = document.getElementById(btnId);
-		spaceBtn.value = typeNum;
-	} else {
-		alert('아이콘을 선택해주세요.');
+	if(spaceBtn.value==1){
+		if (typeImg != '') { // 아이콘 선택했을 경우, 선택한 버튼의 설정 변경
+			// 선택한 버튼의 이미지 src 변경
+			var imgId = 'img' + location; // 선택한 버튼의 id
+			var spaceImg = document.getElementById(imgId); // 선택한 버튼의 img
+			spaceImg.src = '/baobob/resources/images/chg/' + typeImg;
+
+			// 선택한 버튼의 value 변경(DB에 아이콘index 넣기 위한 값)
+			//var btnId = 'btn' + location;
+			//var spaceBtn = document.getElementById(btnId);
+			
+			spaceBtn.value = typeNum;
+		} else {
+			alert('아이콘을 선택해주세요.');
+		}
+	}else{
+		alert('빈 테이블을 선택해 주세요.');
 	}
-}
-
-// 매장 추가(정보 설정 AJAX)
-function spaceTypeChange() {
-	var item = document.querySelectorAll('.p_spaceBtn'); // 배열판의 버튼들
-
-	// 매장 정보
-	var x = document.getElementById('widthX').value; // col
-	var y = document.getElementById('heightY').value; // row
-	var name = document.getElementById('name').value; // name
-	var tel = document.getElementById('tel').value; // tel
-
-	// 배열판 버튼들의 아이콘 index 배열
-	var array = new Array();
-	item.forEach(function(space) {
-		array.push(space.value);
-	});
-	var info = array.join(',');
-
-	window.location = 'hostRestaurantAddPro?info=' + info + '&col=' + x + '&row=' + y + '&name=' + name + '&tel=' + tel;
+	
 }
 
 //예약확인(정보 설정 AJAX)
@@ -220,9 +210,9 @@ function spaceTypeChange2(index) {
 		array.push(space.value);
 	});
 	var info = array.join(',');
-	
 	var date = document.getElementById('datepicker').value;
 	var time = document.getElementById('timepicker').value;
+	
 	window.location = 'guestReservAddPro?info=' + info + '&col=' + x + '&row=' + y + '&index=' + index + '&date=' + date + '&time=' + time;
 }
 
@@ -244,10 +234,10 @@ function spaceBody(info, col, row) {
 			spaceType(arr[index]);
 
 			space += '<button class="p_spaceBtn p_btn" ' + 'value="' + 
-					arr[index] + '" ' + 'id="' + btnId + '" ' + 
-					'onclick="spaceBtnChange(&#39;' + location + '&#39;)">' + 
-					'<img class="p_img space_img" ' + 'id="' + imgId + '" ' + 
-					'src="/baobob/resources/images/chg/' + typeImg + '">' + '</button>';
+						arr[index] + '" ' + 'id="' + btnId + '" ' + 
+						'onclick="spaceBtnChange(&#39;' + location + '&#39;)">' + 
+						'<img class="p_img space_img" ' + 'id="' + imgId + '" ' + 
+						'src="/baobob/resources/images/chg/' + typeImg + '">' + '</button>';
 		}
 		space += '</div>';
 	}
@@ -260,16 +250,16 @@ function spaceBody(info, col, row) {
 function hostReservList() {
 	var date = document.getElementById('datepicker').value;
 
-	window.location = 'hostReservList?date=' + date + '&index='+1;
+	window.location = 'hostReservList?date=' + date + '&index=1';
 
 }
 
 // 선택한 식당, 날짜, 시간에 예약이 가능한 테이블 조회
 function guestReserv_chkTable() {
 //	alert("guestReserv_chkTable");
-
 	var date = document.getElementById('datepicker').value;
 	var time = document.getElementById('timepicker').value;
+	
 	if (document.getElementById('datepicker').value == "") {
 		alert('날짜를 골라주세요!');
 		return false;
@@ -277,6 +267,6 @@ function guestReserv_chkTable() {
 		alert('시간을 골라주세요!');
 		return false;
 	} else {
-		window.location = 'guestReserv_chkTable?date=' + date + '&time=' + time + '&index='+ 1;
+		window.location = 'guestReserv_chkTable?date=' + date + '&time=' + time + '&index=1';
 	}
 }

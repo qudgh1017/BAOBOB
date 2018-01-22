@@ -5,6 +5,7 @@ import java.util.Map;
 
 import spring.mvc.baobob.vo.MenuVO;
 import spring.mvc.baobob.vo.RestaurantVO;
+import spring.mvc.baobob.vo.Restaurant_scheduleVO;
 import spring.mvc.baobob.vo.ReviewVO;
 import spring.mvc.baobob.vo.TableVO;
 
@@ -25,15 +26,24 @@ public interface Guest_restaurantDAO {
 	//3.매장 내 테이블 정보 조회를 위한 좌석 수 조회
 	public TableVO getColRow(int index);
 	//매장 내 테이블 정보 조회를 위한 테이블 상태 조회
-	public String getState(Map<String, Object> map);
+	public int getState(Map<String, Object> map);
 	//예약 추가
 	public int addReserv(Map<String, Object> map);
-	//선택 날짜 예약 조회
+	
+	
+	//추가-예약한 좌석 확인을 위한 스케줄 인덱스 조회
+	public Integer getScheduleIndex(Restaurant_scheduleVO dto);
+	//추가-예약전 초기화(예약 위에 또 예약하는 경우)
+	public int resetTable2(Restaurant_scheduleVO dto);
+	//추가-선택 날짜 예약 조회
 	public int modTable2(Map<String, Object> map);
 	//예약 내역 추가
 	public int AddHistory(Map<String, Object> map);
 	//레스토랑 예약 내역 추가 
 	public int AddRHistory(Map<String, Object> map);
+	// 예약한 좌석 확인을 위한 스케줄 인덱스 조회
+
+	
 	//==========================================================================
 	//============================== 4. 레스토랑 리뷰 ==============================
 	//==========================================================================

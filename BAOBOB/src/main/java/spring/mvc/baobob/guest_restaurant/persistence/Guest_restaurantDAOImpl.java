@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 
 import spring.mvc.baobob.vo.MenuVO;
 import spring.mvc.baobob.vo.RestaurantVO;
+import spring.mvc.baobob.vo.Restaurant_scheduleVO;
 import spring.mvc.baobob.vo.ReviewVO;
 import spring.mvc.baobob.vo.TableVO;
 
@@ -75,22 +76,44 @@ public class Guest_restaurantDAOImpl implements Guest_restaurantDAO{
 	
 	//매장 내 테이블 정보 조회를 위한 테이블 상태 조회
 	@Override
-	public String getState(Map<String, Object> map) {
+	public int getState(Map<String, Object> map) {
 		log.debug("===== DAO/getState() =====");
 
 		Guest_restaurantDAO dao = sqlSession.getMapper(Guest_restaurantDAO.class);
+		int cnt = dao.getState(map);
+		System.out.println("getState(cnt) : " + cnt);
 		
-		return dao.getState(map);
+		return cnt;
 	}
 	
 	// 식당[1] 예약 추가
 	@Override
 	public int addReserv(Map<String, Object> map) {
-		log.debug("===== DAO/modTable2() =====");
+		log.debug("===== DAO/addReserv() =====");
 		
 		Guest_restaurantDAO dao = sqlSession.getMapper(Guest_restaurantDAO.class);
 		
 		return dao.addReserv(map);
+	}
+	
+	// 스케줄 인덱스 조회
+	@Override
+	public Integer getScheduleIndex(Restaurant_scheduleVO dto) {
+		log.debug("===== DAO/getScheduleIndex() =====");
+		
+		Guest_restaurantDAO dao = sqlSession.getMapper(Guest_restaurantDAO.class);
+		
+		return dao.getScheduleIndex(dto);
+	}
+
+	// 예약 전 초기화(예약 위에 또 예약하는 경우)
+	@Override
+	public int resetTable2(Restaurant_scheduleVO dto) {
+		log.debug("===== DAO/resetTable2() =====");
+		
+		Guest_restaurantDAO dao = sqlSession.getMapper(Guest_restaurantDAO.class);
+		
+		return dao.resetTable2(dto);
 	}
 	
 	// 식당[1] 선택 날짜 예약 조회
@@ -287,6 +310,7 @@ public class Guest_restaurantDAOImpl implements Guest_restaurantDAO{
 		}
 		return cnt;
 	}
+
 
 	
 }
