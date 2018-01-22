@@ -510,23 +510,23 @@ public class Host_movieDAOImpl implements Host_movieDAO {
 
 		// 워드클라우드 단어가 존재하는지 확인
 		@Override
-		public int checkWordCloud(String word) {
+		public int checkWordCloud(Map<String, Object> map) { //String word
 			Host_movieDAO dao = sqlSession.getMapper(Host_movieDAO.class);
-			return dao.checkWordCloud(word);
+			return dao.checkWordCloud(map);
 		}
 
 		// 워드클라우드 단어 추가
 		@Override
-		public int addWordCloud(WordVO dto) {
+		public int addWordCloud(WordVO vo) {
 			Host_movieDAO dao = sqlSession.getMapper(Host_movieDAO.class);
-			return dao.addWordCloud(dto);
+			return dao.addWordCloud(vo);
 		}
 
 		// 워드클라우드 단어 카운트 업데이트
 		@Override
-		public int updateWordCloud(WordVO dto) {
+		public int updateWordCloud(WordVO vo) {
 			Host_movieDAO dao = sqlSession.getMapper(Host_movieDAO.class);
-			return dao.updateWordCloud(dto);
+			return dao.updateWordCloud(vo);
 		}
 
 		// 워드클라우드 검색

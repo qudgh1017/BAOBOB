@@ -155,16 +155,16 @@ public interface Host_movieDAO {
 	//////////////////////
 	/////////////////////
 	// 워드클라우드 단어가 이미 존재하는지 확인
-	public int checkWordCloud(String word);
+	public int checkWordCloud(Map<String, Object> map);
 	
 	// 워드클라우드 단어 모델을 가져옴
 	public List<WordVO> getWordCloudModel();
 	
 	// 분석된 워드 클라우드 단어를 추가
-	public int addWordCloud(WordVO dto);
+	public int addWordCloud(WordVO vo);
 	
 	// 분석된 워드 클라우드 단어수 업데이트
-	public int updateWordCloud(WordVO dto);
+	public int updateWordCloud(WordVO vo);
 	
 	// 워드카운트 검색
 	public List<WordVO> searchWordcloud(Map<String, Object> map);

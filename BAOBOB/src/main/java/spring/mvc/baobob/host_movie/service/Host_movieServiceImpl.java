@@ -1080,29 +1080,17 @@ public class Host_movieServiceImpl implements Host_movieService{
 	// 워드클라우드 리스트
 		private static List<WordVO> wordVos;
 	
-	// 단어 형태소 분석을 처리하는 메서드
+	// 단어 형태소 분석을 처리하는 메서드 (영화 리뷰등록시 같이 적용)
 		@Override
-		public void wordAnalyzer(String title, String content, String tag) {
-			StringBuilder sb = new StringBuilder(title);
-			if(content != null) {
-				if(!content.equals("")){
-					sb.append(" " + content);
-				}
-			}
-			if(tag != null) {
-				String[] tags = tag.split(",");
-				for(String ta : tags) {
-					ta = " #"+ta.replaceAll(" ", "");
-					sb.append(ta);
-				}
-				System.out.println("sb : " + sb.toString());
-			}
-			wordExtractAndAnalyze(sb.toString());
+		public void wordAnalyzer(HttpServletRequest req, Model model) {
+			int movie_index = Integer.parseInt(req.getParameter("movie_index"));
+			StringBuilder sb = new StringBuilder(req.getParameter("review_content"));
+			wordExtractAndAnalyze(sb.toString(), movie_index);
 		}
 
 		// 형태소 분석된 결과를 데이터베이스에 저장하는 프로세스
 		@Override
-		public void wordExtractAndAnalyze(String text) {
+		public void wordExtractAndAnalyze(String text, int movie_index) {
 			System.out.println("WordCloud analyze");
 			new Runnable() {
 				public void run() {
@@ -1111,15 +1099,20 @@ public class Host_movieServiceImpl implements Host_movieService{
 					if(wordMap.isEmpty())return;
 					Timestamp time = new Timestamp(System.currentTimeMillis());
 					for(WordVO dto : wordMap) {
-
+						
 						// 기존에 있는 단어일 경우 카운트 업데이트
-						if(dao.checkWordCloud(dto.getWord()) == 1) {
+						Map<String, Object> map = new HashMap<String, Object>();
+						map.put("word", dto.getWord());
+						map.put("movie_index", movie_index);
+						if(dao.checkWordCloud(map) == 1) {
 							dto.setUpdate_date(time);
+							dto.setMovie_index(movie_index);
 							dao.updateWordCloud(dto);
 							// 기존에 없는 단어일 경우 단어와 카운트 추가	
 						} else {
 							dto.setUpdate_date(time);
 							dto.setReg_date(time);
+							dto.setMovie_index(movie_index);
 							dao.addWordCloud(dto);
 						}
 					}
@@ -1148,6 +1141,7 @@ public class Host_movieServiceImpl implements Host_movieService{
 		String cow = req.getParameter("countOfWords");
 		if(cow == null)cow = "30";
 		int countOfWords = Integer.parseInt(req.getParameter("countOfWords"));
+		
 		Map<String, Object> map = new HashMap<>();
 
 		printMsg = "strDate : " + strDate + ", endDate : " + endDate +", 요청단어수 : " + countOfWords;
@@ -1220,9 +1214,45 @@ public class Host_movieServiceImpl implements Host_movieService{
 
 		System.out.println(resultMsg);
 
-		//		model.addAttribute("wordList", wordList);
-		//		model.addAttribute("listSize", wordList.size());
+		model.addAttribute("wordList", wordList);
+		model.addAttribute("listSize", wordList.size());
+		model.addAttribute("resultMsg", resultMsg);
+		
+		return resultMsg;
+	}
 
+	@Override
+	public String movieWordcloud(HttpServletRequest req, Model model) {
+		int movie_index = Integer.parseInt(req.getParameter("movie_index"));
+		int countOfWords = 30;
+		Map<String, Object> map = new HashMap<>();
+		int type = 6;
+
+		map.put("type", type);
+		map.put("countOfWords", countOfWords);
+		map.put("movie_index", movie_index);
+		
+		List<WordVO> wordList = null;
+		wordList = dao.searchWordcloud(map);
+
+		String resultMsg = "<ul>";
+		System.out.println(wordList);
+		for(WordVO vo : wordList) {
+			if(vo.getType_of_speech().equals("Hashtag")){
+				resultMsg += "<li><a href='/moyeo/two/wordCloudSearchByTag?search_keyword=" + vo.getWord().replaceAll("#", "") + "' >" + vo.getWord() + "</a></li>";
+			} else {
+				resultMsg += "<li><a href='/moyeo/two/wordCloudSearch?search_keyword=" + vo.getWord() + "' >" + vo.getWord() + "</a></li>";
+			}
+		}
+		if(wordList.isEmpty())resultMsg += "<li><a href='#' target='_blank'>단어가 없습니다.</a></li>";
+		resultMsg += "</ul>";
+
+		System.out.println(resultMsg);
+
+		model.addAttribute("wordList", wordList);
+		model.addAttribute("listSize", wordList.size());
+		model.addAttribute("resultMsg", resultMsg);
+		
 		return resultMsg;
 	}
 

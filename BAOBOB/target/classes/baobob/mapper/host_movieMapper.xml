@@ -323,16 +323,16 @@
 	</select>
 	
 	<!-- 워드 클라우드 단어를 확인 -->
-	<select id="checkWordCloud" parameterType="String" resultType="int">
+	<select id="checkWordCloud" resultType="int">
 		SELECT COUNT(*)
 		  FROM wordcloud_list
-		 WHERE word = #{word}
+		 WHERE word = #{word} AND movie_index = #{movie_index}
 	</select>
 	
 	<!-- 워드 클라우드 단어를 삽입 시킴 -->
 	<insert id="addWordCloud" parameterType="spring.mvc.baobob.vo.WordVO">
-		INSERT INTO wordcloud_list (word, count, type_of_speech, update_date, reg_date) 
-							VALUES (#{word}, #{count}, #{type_of_speech}, #{update_date}, #{reg_date})
+		INSERT INTO wordcloud_list (word, count, type_of_speech, update_date, reg_date, movie_index) 
+							VALUES (#{word}, #{count}, #{type_of_speech}, #{update_date}, #{reg_date}, #{movie_index})
 	</insert>
 	
 	<!-- 워드 클라우드 단어를 업데이트 시킴 -->
@@ -340,14 +340,14 @@
 		UPDATE wordcloud_list
 		   SET count = count + #{count},
 		       update_date = #{update_date}
-		 WHERE word = #{word}   
+		 WHERE word = #{word} AND movie_index = #{movie_index}
 	</update>
 	
 	<!-- 워드클라우드 단어 검색 -->
 	<select id="searchWordcloud" parameterType="Map" resultType="spring.mvc.baobob.vo.WordVO">
 		SELECT *
 	      FROM (
-				SELECT word, count, type_of_speech, update_date, reg_date, rownum as rn
+				SELECT word, count, type_of_speech, update_date, reg_date, movie_index, rownum as rn
 				  FROM (
 				  		SELECT *
                           FROM wordcloud_list
@@ -376,7 +376,7 @@
                   	type_of_speech = 'Noun' OR type_of_speech = 'ProperNoun' OR type_of_speech = 'Verb' OR type_of_speech = 'Hashtag'
                   </if>
          		)
-    	 WHERE rn BETWEEN 1 AND #{countOfWords} 
+    	 WHERE rn BETWEEN 1 AND #{countOfWords} AND movie_index = #{movie_index}
 	</select>
 	
 	<!-- 워드클라우드 단어 검색 (날짜포함)-->

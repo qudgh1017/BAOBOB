@@ -8,6 +8,15 @@ public class WordVO {
 	private String type_of_speech;
 	private Timestamp update_date;
 	private Timestamp reg_date;
+	private int movie_index;
+
+	public int getMovie_index() {
+		return movie_index;
+	}
+
+	public void setMovie_index(int movie_index) {
+		this.movie_index = movie_index;
+	}
 
 	public String getWord() {
 		return word;
