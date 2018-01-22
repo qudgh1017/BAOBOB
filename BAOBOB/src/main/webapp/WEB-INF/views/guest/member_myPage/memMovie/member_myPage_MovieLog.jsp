@@ -11,26 +11,68 @@
 <title>My Page</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script type="text/javascript">
-	/* 위시리스트 */
-	$(document).ready(function() {
-		$('#wishList').on('click', function() {   
-			var object = new Object();
-			var jsonData = JSON.stringify(object);
-			$.ajax({
-				//GET방식의 URL
-				url : '${pageContext.request.contextPath}/wishList',
-				type : 'GET',
-				success : function(msg) {
-					/* alert("success"); */  
-					/* alert(msg); */  
-					$('#result').html(msg);  
-				},
-				error : function() {
-					alert("error");
-				}
-			});
-		});		
-	});
+//위시리스트
+$(document).ready(function() {
+	$('#wishList').on('click', function() {   
+		var object = new Object();
+		var jsonData = JSON.stringify(object);
+		$.ajax({
+			//GET방식의 URL
+			url : '${pageContext.request.contextPath}/wishList',
+			type : 'GET',
+			success : function(msg) {
+				/* alert("success"); */  
+				/* alert(msg); */  
+				$('#result').html(msg);  
+			},
+			error : function() {
+				alert("error");
+			}
+		});
+	});		
+});
+
+//내가 본 영화
+$(document).ready(function() {
+	$('#movieClear').on('click', function() {   
+		var object = new Object();
+		var jsonData = JSON.stringify(object);
+		$.ajax({
+			//GET방식의 URL
+			url : '${pageContext.request.contextPath}/movieClear',
+			type : 'GET',
+			success : function(msg) {
+				/* alert("success"); */  
+				/* alert(msg); */  
+				$('#result').html(msg);  
+			},
+			error : function() {
+				alert("error");
+			}
+		});
+	});		
+});
+
+//무비 다이어리
+$(document).ready(function() {
+	$('#movieDiaryWriteForm').on('click', function() {   
+		var object = new Object();
+		var jsonData = JSON.stringify(object);
+		$.ajax({
+			//GET방식의 URL
+			url : '${pageContext.request.contextPath}/movieDiaryWriteForm',
+			type : 'GET',
+			success : function(msg) {
+				/* alert("success"); */  
+				/* alert(msg); */  
+				$('#result').html(msg);  
+			},
+			error : function() {
+				alert("error");
+			}
+		});
+	});		
+});
 	
 </script>
 
@@ -65,15 +107,15 @@
 			<%@ include file="../../common/sideMenu.jsp" %>	
 			
 			<!-- 알맹이td -->
-			<td style="padding:0rem 10rem; margin:0px;width:100%;height:100%;">
+			<td style="padding:0rem 10rem; margin:0px;width:100%;height:100%; text-align:center;">
 				<table id="mainBody">
 					<caption style="margin-bottom:0px!important">무비 로그</caption>
 					<thead>
 				    <tr>
 				    	<th>
 				    		<input type="button" id="wishList" class="button" value="위시리스트">
-				    		<input type="button" id="#!" class="button" value="내가 본 영화 ">
-				    		<input type="button" id="#!" class="button" value="무비다이어리">
+				    		<input type="button" id="movieClear" class="button" value="내가 본 영화 ">
+				    		<input type="button" id="movieDiaryWriteForm" class="button" value="무비다이어리">
 				    	</th>
 				    </tr>
 				    

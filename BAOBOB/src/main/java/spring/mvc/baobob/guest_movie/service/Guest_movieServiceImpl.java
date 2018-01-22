@@ -25,6 +25,36 @@ public class Guest_movieServiceImpl implements Guest_movieService{
 	@Autowired
 	Guest_movieDAO gmdao;
 
+	//영화 메인
+	@Override
+	public void movieMain(HttpServletRequest req, Model model) {
+		ArrayList<String> rankList = gmdao.mainMovieRank();
+		model.addAttribute("rank", rankList);
+		
+		int movieCnt = gmdao.mainMovieTheaterCnt();
+		if(movieCnt > 0) {
+			String pageNum = req.getParameter("pageNum");
+			if(pageNum == null) {pageNum = "1";}
+			int current = Integer.parseInt(pageNum);
+			
+			int postSize = 5;
+			int start = (current - 1) * postSize + 1;
+			int end = start + postSize - 1;
+			if(end > movieCnt) { end = movieCnt; }
+			
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("start", start);
+			map.put("end",  end);
+			ArrayList<String> movieList = gmdao.mainMovieTheater(map);
+			model.addAttribute("start", start);
+			model.addAttribute("end", end);
+			model.addAttribute("movieList", movieList);
+			model.addAttribute("pageNum", pageNum);
+			model.addAttribute("movieCnt", movieCnt);
+			model.addAttribute("postSize", postSize);
+		}
+	}
+	
 	//영화리스트
 	@Override
 	public void movieList(HttpServletRequest req, Model model) {
@@ -628,9 +658,9 @@ public class Guest_movieServiceImpl implements Guest_movieService{
 		System.out.println("state : " + state);
 		System.out.println("=========================");
 		
-//		model.addAttribute("vo", vo);
-//		model.addAttribute("seat_vos", seat_vos);
-//		model.addAttribute("state", state);
+//			model.addAttribute("vo", vo);
+//			model.addAttribute("seat_vos", seat_vos);
+//			model.addAttribute("state", state);
 		
 		return seatInfo;
 	}

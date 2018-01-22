@@ -169,12 +169,12 @@
 <!-- ************************************************************************************** -->	
 <!-- ************************************* 무비로그 START ************************************ -->	
 
-	<!-- movie_state에 따른 영화갯수 -->
+	<!-- wishList 갯수 -->
 	<select id="wishListCnt" resultType="int">
 		SELECT COUNT(*) FROM member_wishList WHERE member_id = #{strId}
 	</select>
 	
-	<!-- movie_state에 따른 영화리스트 -->
+	<!-- wishList 리스트 -->
 	<select id="getWishListMovies" resultType="spring.mvc.baobob.vo.MovieVO">
 		<![CDATA[
 			SELECT * 
@@ -193,38 +193,109 @@
 		 ]]>
 	</select>
 	
+	<!-- 내가본 영화 갯수 -->
+	<select id="movieClearCnt" resultType="int">
+		SELECT COUNT(*) 
+		FROM history_tbl h JOIN movie_history_tbl m
+		ON h.history_index = m.history_index
+		WHERE member_id = #{strId}
+	</select>
 	
+	<!-- 내가 본 영화 리스트 -->
+	<select id="getMovieClear" resultType="spring.mvc.baobob.vo.MovieHistoryVO">
+		<![CDATA[
+			SELECT *
+			FROM( SELECT mh.history_index, h.member_id, m.movie_index, h.history_date,
+			         m.movie_title, m.movie_content, m.movie_janre, m.movie_age, 
+			         m.movie_rel_date, m.movie_director, m.movie_star, m.movie_country, m.movie_runTime, 
+			         m.movie_poster, m.movie_trailer, m.movie_state, rownum rNum 
+			        FROM history_tbl h 
+			        JOIN movie_history_tbl mh
+			        ON h.history_index = mh.history_index
+			        JOIN theater_schedule_tbl s
+			        ON s.theater_schedule_index = mh.theater_schedule_index
+			        JOIN movie_tbl m
+			        ON m.movie_index = s.movie_index
+			        WHERE h.member_id = #{strId}
+			    )
+			WHERE  rNum >= #{start} AND rNum <= #{end}
+		 ]]>
+	</select>
 	
+	<!-- 무비 다이어리 글갯수 구하기 -->
+	<select id="getMovieDiaryCnt" resultType="int">
+		SELECT COUNT(*) 
+		FROM board_tbl 
+		WHERE board_type = 05
+		AND member_id=#{strId}
+	</select>
 	
+	<!-- 무비다이어리 목록 조회 -->
+	<select id="getMovieDiaryList" resultType="spring.mvc.baobob.vo.BoardVO">
+		<![CDATA[
+		SELECT * 
+		FROM ( SELECT board_index,member_id, board_pwd, board_type, board_subject, 
+						board_content, board_img, board_readCnt, board_ref, board_ref_step, 
+                		board_ref_level, board_reg_date, board_ip, rownum rNum
+      		   FROM ( SELECT * FROM board_tbl WHERE board_type = 05 AND member_id=#{strId}
+              		ORDER BY board_ref DESC, board_ref_step ASC )
+            ) 
+		WHERE rNum >= #{start} AND rNum <= #{end}
+		]]>
+	</select>
 	
+	<!-- 무비다이어리 작성 -->
+	<insert id="insertMovieDiary" parameterType="spring.mvc.baobob.vo.BoardVO">
+		INSERT INTO board_tbl (board_index,member_id, board_pwd, board_type, board_subject, board_content, board_img, board_readCnt, board_ref, board_ref_step, board_ref_level, board_reg_date, board_ip) 
+		VALUES(board_tbl_SEQ.NEXTVAL,#{member_id},#{member_id},05,#{board_subject},#{board_content},'board_img 01',0,board_tbl_SEQ.currval,0,0,#{board_reg_date},#{board_ip})
+	</insert>
 	
+	<!-- 무비다이어리 삭제 처리 -->
+	<delete id="deleteMovieDiary" parameterType="int">
+		DELETE FROM board_tbl WHERE board_index = #{num}
+	</delete>
 	
+	<!-- 위시리스트 삭제 처리 -->
+	<delete id="delMovieWishList" parameterType="int">
+		DELETE FROM member_wishList WHERE movie_index = #{num}
+	</delete>
 	
 	
 <!-- ************************************** 무비로그 END ************************************* -->	
 <!-- ************************************************************************************** -->
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+	<!-- 예매내역 삭제 처리 -->
+	<delete id="moviePaidDelPro" parameterType="int">
+		DELETE FROM movie_history_tbl WHERE history_index = #{num}
+	</delete>
+	
+<!-- ************************************************************************************** -->	
+<!-- ************************************* 식당로그 START ************************************ -->	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+<!-- ************************************** 식당로그 END ************************************* -->	
+<!-- ************************************************************************************** -->
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 </mapper>
