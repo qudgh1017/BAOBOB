@@ -5,7 +5,9 @@ import java.util.Map;
 
 import spring.mvc.baobob.vo.MovieVO;
 import spring.mvc.baobob.vo.ReviewVO;
+import spring.mvc.baobob.vo.TheaterVO;
 import spring.mvc.baobob.vo.Theater_scheduleVO;
+import spring.mvc.baobob.vo.Theater_seatVO;
 
 public  interface Guest_movieDAO {
 
@@ -66,6 +68,18 @@ public  interface Guest_movieDAO {
 	//각 상영관 마다 총좌석 갯수구하기
 	public int theaterSeats(int theater_index);
 	
+	//스케줄 정보
+	public Theater_scheduleVO getSchedule(int theater_schedule_index);
+	
+	// 상영관 상세
+	public TheaterVO theaterDetail(int theater_index);
+	
+	// 상영관 상세 좌석 정보
+	public ArrayList<Theater_seatVO> theaterSeatDetail(Map<String,Integer> map);
+	
+	//선택된 한개 좌석의 정보
+	public Theater_seatVO seatInfo(int seat_index);
+	
 	//메인 - 영화 순위
 	public ArrayList<String> mainMovieRank();
 	
@@ -74,4 +88,5 @@ public  interface Guest_movieDAO {
 	
 	//메인 - 상영 중인 영화
 	public ArrayList<String> mainMovieTheater(Map<String, Object> map);
+	
 }

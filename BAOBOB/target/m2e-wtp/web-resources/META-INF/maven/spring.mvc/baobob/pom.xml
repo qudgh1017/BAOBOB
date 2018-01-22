@@ -195,6 +195,15 @@
          </dependency>
 		<!-- JSONArray JSONObject 사용위함 -->
 		
+		
+		<!-- wordcloud -->
+		 <dependency>
+		    <groupId>com.twitter.penguin</groupId>
+		    <artifactId>korean-text</artifactId>
+		    <version>4.4</version>
+		 </dependency>
+		
+		
 		<!-- Test -->
 		<dependency>
 			<groupId>junit</groupId>

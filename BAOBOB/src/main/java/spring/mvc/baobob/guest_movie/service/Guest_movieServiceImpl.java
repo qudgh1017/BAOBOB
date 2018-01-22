@@ -12,9 +12,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
 import spring.mvc.baobob.guest_movie.persistence.Guest_movieDAO;
+import spring.mvc.baobob.vo.MovieResViewVO;
 import spring.mvc.baobob.vo.MovieVO;
 import spring.mvc.baobob.vo.ReviewVO;
+import spring.mvc.baobob.vo.TheaterVO;
 import spring.mvc.baobob.vo.Theater_scheduleVO;
+import spring.mvc.baobob.vo.Theater_seatVO;
 
 @Service
 public class Guest_movieServiceImpl implements Guest_movieService{
@@ -550,11 +553,20 @@ public class Guest_movieServiceImpl implements Guest_movieService{
 		cnt = gmdao.getMovieCnt();
 		
 		if(cnt > 0) {
+			//상영관 갯수
+			int theaterCnt = gmdao.theaterCnt();
+			int[] theaterSeats = new int[theaterCnt+1];
+			
+			//각 상영관 마다의 총좌석 갯수 구하기
+			for(int i=1; i<=theaterCnt; i++) {
+				theaterSeats[i] = gmdao.theaterSeats(i);
+			}
+			model.addAttribute("theaterSeats", theaterSeats);
+			
 			//게시글 목록 조회
 			ArrayList<MovieVO> movies = null;
 			// movie_state에 따른 영화 리스트 구하기
 			movies = gmdao.getAllReserveMovies();
-			
 			model.addAttribute("movies", movies); 
 		}
 		
@@ -577,25 +589,162 @@ public class Guest_movieServiceImpl implements Guest_movieService{
 		cnt = gmdao.getDateCnt(map);
 		
 		if(cnt > 0) {
-			//상영관 갯수
-			int theaterCnt = gmdao.theaterCnt();
-			int[] theaterSeats = new int[theaterCnt+1];
-			
-			//각 상영관 마다의 총좌석 갯수 구하기
-			for(int i=1; i<=theaterCnt; i++) {
-				theaterSeats[i] = gmdao.theaterSeats(i);
-			}
-			model.addAttribute("theaterSeats", theaterSeats);
 			
 			//영화별 되는 날짜, 상영관 정보 담을 곳
 			ArrayList<Theater_scheduleVO> schedules = null;
 			schedules = gmdao.getAllReserveSchedules(map);
-			
 			model.addAttribute("schedules", schedules); 
 		}
 		
 		model.addAttribute("cnt", cnt);//전체 영화갯수
 	}
+
+	//영화 정보들(예매에서 Ajax로 받을 값들)
+	@Override
+	public void reserveMovieResult(HttpServletRequest req, Model model) {
+		
+		//#movieInfo로 갈 정보
+		int movie_index = Integer.parseInt(req.getParameter("movie_index"));
+		MovieVO movie = gmdao.getMovie(movie_index);
+		model.addAttribute("movie", movie);
+	}
+
+	//스케줄 정보들(예매에서 Ajax로 받을 값들)
+	@Override
+	public void reserveScheduleResult(HttpServletRequest req, Model model) {
+
+		//#scheduleInfo로 갈정보
+		int theater_schedule_index = Integer.parseInt(req.getParameter("theater_schedule_index"));
+		Theater_scheduleVO schedule = gmdao.getSchedule(theater_schedule_index);
+		model.addAttribute("schedule", schedule);
+	}
+
+	//좌석도 보여주기
+	@Override
+	public MovieResViewVO movieResView(HttpServletRequest req, Model model) {
+		// 좌석도 정보를 가질 바구니 생성
+		MovieResViewVO seatInfo = new MovieResViewVO();
+		
+		TheaterVO theater = null;
+		ArrayList<Theater_seatVO> seats = null;
+		
+		int theater_index = Integer.parseInt(req.getParameter("theater_index"));
+		int theater_schedule_index = Integer.parseInt(req.getParameter("theater_schedule_index"));
+		
+		//좌석 상태 정보를 담을 바구니
+		ArrayList<Integer> state = new ArrayList<Integer>();
+		
+		//극장정보 가져오기
+		theater = gmdao.theaterDetail(theater_index);
+		System.out.println("theater_col " + theater.getTheater_col());
+		System.out.println("theater_row " + theater.getTheater_row());
+
+		//해당 스케줄 상영관(theater_schedule_index)의 좌석 상태 가져오기
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		map.put("theater_index", theater_index);
+		map.put("theater_schedule_index", theater_schedule_index);
+		seats = gmdao.theaterSeatDetail(map);
+		
+		//좌석상태만 넘겨주기
+		for(Theater_seatVO seat : seats) {
+			state.add(seat.getSeat_state());
+		}
+		//좌석 정보에 극장의 row, col의 크기, 좌석상태들을 넘겨준다.
+		seatInfo.setTotalRow(theater.getTheater_row());
+		seatInfo.setTotalCol(theater.getTheater_col());
+		seatInfo.setState(state);
+		
+		System.out.println("=========================");
+		System.out.println("state : " + state);
+		System.out.println("=========================");
+		
+//			model.addAttribute("vo", vo);
+//			model.addAttribute("seat_vos", seat_vos);
+//			model.addAttribute("state", state);
+		
+		return seatInfo;
+	}
+
+	//좌석도 선택
+	@Override
+	public void seatSelect(HttpServletRequest req, Model model) {
+		// 좌석도 정보를 가질 바구니 생성
+		MovieResViewVO seatInfo = new MovieResViewVO();
+		
+		TheaterVO theater = null;
+		ArrayList<Theater_seatVO> seats = null;
+		
+		int theater_index = Integer.parseInt(req.getParameter("theater_index"));
+		int theater_schedule_index = Integer.parseInt(req.getParameter("theater_schedule_index"));
+		
+		//좌석 상태 정보를 담을 바구니
+		ArrayList<Integer> state = new ArrayList<Integer>();
+		//좌석 index정보를 담을 바구니
+		ArrayList<Integer> seat_index = new ArrayList<Integer>();;
+		
+		//극장정보 가져오기
+		theater = gmdao.theaterDetail(theater_index);
+		System.out.println("theater_col " + theater.getTheater_col());
+		System.out.println("theater_row " + theater.getTheater_row());
+
+		//해당 스케줄 상영관(theater_schedule_index)의 좌석 상태 가져오기
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		map.put("theater_index", theater_index);
+		map.put("theater_schedule_index", theater_schedule_index);
+		seats = gmdao.theaterSeatDetail(map);
+		
+		//좌석상태만 넘겨주기
+		for(Theater_seatVO seat : seats) {
+			state.add(seat.getSeat_state());
+			seat_index.add(seat.getSeat_index());
+		}
+		//좌석 정보에 극장의 row, col의 크기, 좌석상태들을 넘겨준다.
+		seatInfo.setTotalRow(theater.getTheater_row());
+		seatInfo.setTotalCol(theater.getTheater_col());
+		seatInfo.setState(state);
+		seatInfo.setSeat_index(seat_index);
+		
+		System.out.println("=========================");
+		System.out.println("state : " + state);
+		System.out.println("=========================");
+		
+		model.addAttribute("seatInfo", seatInfo);
+		
+	}
+
+	//nextDealButton에 담을 seatInfos
+	@Override
+	public void seatInfos(HttpServletRequest req, Model model) {
+		int adultCnt = Integer.parseInt(req.getParameter("adultCnt"));
+		int teenagerCnt = Integer.parseInt(req.getParameter("teenagerCnt"));
+		String[] str_seat_index_arr = req.getParameterValues("seat_index_arr");
+		int size = str_seat_index_arr.length;
+		//한개 좌석의 정보
+		Theater_seatVO seat = new Theater_seatVO();
+		//선택된 여러개의 좌석 정보
+		ArrayList<Theater_seatVO> seats = new ArrayList<Theater_seatVO>();
+				
+		int[] seat_index_arr = new int[size];
+		
+		for(int i=0; i<size; i++) {
+			seat_index_arr[i] = Integer.parseInt(str_seat_index_arr[i]);
+			
+			//한개 좌석의 정보 바구니에 담기
+			seat = gmdao.seatInfo(seat_index_arr[i]);
+			//좌석의 정보들 ArrayList에 담기
+			seats.add(seat);
+		}
+		
+		int theater_schedule_index = seat.getTheater_schedule_index();
+		
+		model.addAttribute("seats", seats);
+		model.addAttribute("adultCnt", adultCnt);
+		model.addAttribute("teenagerCnt", teenagerCnt);
+		model.addAttribute("theater_schedule_index", theater_schedule_index);
+		
+	}
+	
+	
 
 	
 	

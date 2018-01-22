@@ -6,6 +6,7 @@ public class MovieResViewVO {
 	private int totalCol;
 	private int totalRow;
 	private ArrayList<Integer> state;
+	private ArrayList<Integer> seat_index;
 	
 	public int getTotalCol() {
 		return totalCol;
@@ -24,6 +25,12 @@ public class MovieResViewVO {
 	}
 	public void setState(ArrayList<Integer> state) {
 		this.state = state;
+	}
+	public ArrayList<Integer> getSeat_index() {
+		return seat_index;
+	}
+	public void setSeat_index(ArrayList<Integer> seat_index) {
+		this.seat_index = seat_index;
 	}
 	
 	
