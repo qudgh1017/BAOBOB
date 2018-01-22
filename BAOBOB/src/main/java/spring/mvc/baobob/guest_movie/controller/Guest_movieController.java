@@ -151,7 +151,7 @@ public class Guest_movieController {
 		log.debug("====== Guest_movieController/movieReviewPro ======");
 		
 		gmservice.movieReviewPro(req, model);
-		hmservice.movieWordcloud(req, model);
+		hmservice.wordAnalyzer(req, model);
 		
 		return "/guest/guest_movie/movie/movieReviewPro";
 	}

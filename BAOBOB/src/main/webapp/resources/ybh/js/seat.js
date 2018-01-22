@@ -58,6 +58,10 @@ function getScheduleSeatInfo(col, row, state){
 		}
 	}
 }
+function personInitial(){
+	document.all.adult.value = 0;
+	document.all.teenager.value = 0;
+}
 
 var adultCnt = 0;
 var teenagerCnt = 0;
@@ -73,6 +77,7 @@ function adultChk(theater_index, movie_index, theater_schedule_index, cnt){
 	adultCnt = cnt-0;
 	personChk(theater_index, movie_index, theater_schedule_index);
 	
+	//일반 사람수 체크시 초기화
 	totalChecked = 0;
 	seatInfo = "";
 	i = 0;
@@ -84,6 +89,7 @@ function teenagerChk(theater_index, movie_index, theater_schedule_index, cnt){
 	teenagerCnt = cnt-0;
 	personChk(theater_index, movie_index, theater_schedule_index);
 	
+	//청소년 사람수 체크시 초기화
 	totalChecked = 0;
 	seatInfo = "";
 	i = 0;
@@ -116,8 +122,6 @@ function personChk(theater_index, movie_index, theater_schedule_index){
 }
 
 
-
-/*var total_seat_index[] = new array();*/
 function CountChecked(field) {
 	//maxChecked = allCnt;
 	var size = maxChecked;

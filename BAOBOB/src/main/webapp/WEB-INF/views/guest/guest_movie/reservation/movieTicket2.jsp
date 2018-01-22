@@ -19,7 +19,7 @@
 <script type="text/javascript" src="${projectRes}ybh/js/seat.js"></script>
 
 <!-- onload="guestTheaterSeat('${schedule.theater_index}', '${schedule.movie_index}', '${schedule.theater_schedule_index}')" -->
-<body>
+<body onload="personInitial();">
 	
 	<!-- CSS,JavaScript 참조 -->
 	<%@ include file="/WEB-INF/views/guest/common/head.jsp" %>
@@ -63,7 +63,7 @@
 						<div style="width:50px; display:inline-block;">일반</div>
 						<c:forEach var="num" begin="0" end="8" step="1">
 							<label onclick="adultChk('${schedule.theater_index}', '${schedule.movie_index}', '${schedule.theater_schedule_index}','${num}')" class="btn" style="height:30px; width:30px; border:1px solid black; font-weight:bold">
-							    <input type="radio" name="adult" autocomplete="off" value="${num}">
+							    <input type="radio" id="adult"+${num} name="adult" autocomplete="off" value="${num}">
 								${num}
 						 	</label>
 					 	</c:forEach>
@@ -73,7 +73,7 @@
 					 	<div style="width:50px; display:inline-block;">청소년</div>
 					 	<c:forEach var="num" begin="0" end="8" step="1">
 							<label onclick="teenagerChk('${schedule.theater_index}', '${schedule.movie_index}', '${schedule.theater_schedule_index}', '${num}')" class="btn" style="height:30px; width:30px; border:1px solid black; font-weight:bold">
-							    <input type="radio" name="teenager" autocomplete="off" value="${num}">
+							    <input type="radio" id="teenager"+${num} name="teenager" autocomplete="off" value="${num}">
 								${num}
 						 	</label>
 					 	</c:forEach>
@@ -98,6 +98,7 @@
 				<div class="col-md-10" align="center" style="height:500px; color:black; font-weight:bold; border:1px solid white; background-color:#EEEEEE">
 					<!-- 뿌리는 곳 -->
 					<div id="theaterSeat">
+						인원을 체크해주세요.
 					</div>
 				</div>
 				<div class="col-md-1"></div>
