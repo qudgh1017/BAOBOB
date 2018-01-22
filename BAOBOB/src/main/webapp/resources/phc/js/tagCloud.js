@@ -10,9 +10,9 @@ window.onload = function() {
 		});*/
 		TagCanvas.Start('myCanvas','tags', {
 			 textFont: 'Impact,"Arial Black",sans-serif',
-			 textColour: '#FA5A5C',
+			 textColour: '#990000',
 			 outlineColour: '#FA5A5C',
-			 textHeight: 25,
+//			 textHeight: 25,
 			 reverse: true,
 			 depth: 0.5,
 			 maxSpeed: 0.10

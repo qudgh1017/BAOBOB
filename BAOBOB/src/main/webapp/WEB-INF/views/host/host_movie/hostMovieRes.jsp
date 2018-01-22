@@ -117,7 +117,11 @@
 						<c:forEach var="vo1" items="${vos1}">
 							<li class="single-event" data-start="<fmt:formatDate type="both" pattern="HH:mm" value="${vo1.schedule_startTime}" />" data-end="<fmt:formatDate type="both" pattern="HH:mm" value="${vo1.schedule_endTime}" />" data-event="event-3">
 							<a href="#0" onclick="hostMovieResView(${vo1.theater_index}, ${vo1.movie_index}, ${vo1.theater_schedule_index})">
-								<em class="event-name">${vo1.theater_index}관 ${vo1.movie_index}번 영화</em>
+								<em class="event-name">${vo1.theater_index}관<br>
+								<c:forEach var="movieVO" items="${movieVOS}">
+									<c:if test="${vo1.movie_index == movieVO.movie_index}">${movieVO.movie_title}</c:if>
+								</c:forEach>
+								</em>
 							</a>
 							</li>
 						</c:forEach>
@@ -131,7 +135,11 @@
 							<c:forEach var="vo2" items="${vos2}">
 							<li class="single-event" data-start="<fmt:formatDate type="both" pattern="HH:mm" value="${vo2.schedule_startTime}" />" data-end="<fmt:formatDate type="both" pattern="HH:mm" value="${vo2.schedule_endTime}" />" data-content="hostMovieResDetail?theater_index=${vo2.theater_index}&movie_index=${vo2.movie_index}&theater_schedule_index=${vo2.theater_schedule_index}" data-event="event-2">
 							<a href="#0" onclick="hostMovieResView(${vo2.theater_index}, ${vo2.movie_index}, ${vo2.theater_schedule_index})">
-								<em class="event-name">${vo2.theater_index}관 ${vo2.movie_index}번 영화</em>
+								<em class="event-name">${vo2.theater_index}관<br>
+								<c:forEach var="movieVO" items="${movieVOS}">
+									<c:if test="${vo2.movie_index == movieVO.movie_index}">${movieVO.movie_title}</c:if>
+								</c:forEach>
+								</em>
 							</a>
 							</li>
 							</c:forEach>
@@ -145,7 +153,11 @@
 							<c:forEach var="vo3" items="${vos3}">
 							<li class="single-event" data-start="<fmt:formatDate type="both" pattern="HH:mm" value="${vo3.schedule_startTime}" />" data-end="<fmt:formatDate type="both" pattern="HH:mm" value="${vo3.schedule_endTime}" />" data-content="hostMovieResDetail?theater_index=${vo3.theater_index}&movie_index=${vo3.movie_index}&theater_schedule_index=${vo3.theater_schedule_index}" data-event="event-1">
 							<a href="#0" onclick="hostMovieResView(${vo3.theater_index}, ${vo3.movie_index}, ${vo3.theater_schedule_index})">
-								<em class="event-name">${vo3.theater_index}관 ${vo3.movie_index}번 영화</em>
+								<em class="event-name">${vo3.theater_index}관 <br>
+								<c:forEach var="movieVO" items="${movieVOS}">
+									<c:if test="${vo3.movie_index == movieVO.movie_index}">${movieVO.movie_title}</c:if>
+								</c:forEach>
+								</em>
 							</a>
 							</li>
 							</c:forEach>
@@ -159,7 +171,11 @@
 							<c:forEach var="vo4" items="${vos4}">
 							<li class="single-event" data-start="<fmt:formatDate type="both" pattern="HH:mm" value="${vo4.schedule_startTime}" />" data-end="<fmt:formatDate type="both" pattern="HH:mm" value="${vo4.schedule_endTime}" />" data-event="event-3">
 							<a href="#0" onclick="hostMovieResView(${vo4.theater_index}, ${vo4.movie_index}, ${vo4.theater_schedule_index})">
-								<em class="event-name">${vo4.theater_index}관 ${vo4.movie_index}번 영화</em>
+								<em class="event-name">${vo4.theater_index}관 <br>
+								<c:forEach var="movieVO" items="${movieVOS}">
+									<c:if test="${vo4.movie_index == movieVO.movie_index}">${movieVO.movie_title}</c:if>
+								</c:forEach>
+								</em>
 							</a>
 							</li>
 							</c:forEach>
@@ -173,7 +189,11 @@
 							<c:forEach var="vo5" items="${vos5}">
 							<li class="single-event" data-start="<fmt:formatDate type="both" pattern="HH:mm" value="${vo5.schedule_startTime}" />" data-end="<fmt:formatDate type="both" pattern="HH:mm" value="${vo5.schedule_endTime}" />" data-event="event-2">
 							<a href="#0" onclick="hostMovieResView(${vo5.theater_index}, ${vo5.movie_index}, ${vo5.theater_schedule_index})">
-								<em class="event-name">${vo5.theater_index}관 ${vo5.movie_index}번 영화</em>
+								<em class="event-name">${vo5.theater_index}관 <br>
+								<c:forEach var="movieVO" items="${movieVOS}">
+									<c:if test="${vo5.movie_index == movieVO.movie_index}">${movieVO.movie_title}</c:if>
+								</c:forEach>
+								</em>
 								
 							</a>
 							</li>

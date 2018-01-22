@@ -11,17 +11,17 @@
 	<div>
 		<div style="float:left; width:500">
 			<div>
-				<canvas width="300" height=250" style="width:100%" id="myCanvas"> <!-- 	<p>Moyeo word cloud</p> -->
+				<canvas width="500" height=350" style="width:100%" id="myCanvas"> <!-- 	<p>Moyeo word cloud</p> -->
 				</canvas>
 			</div>
 			<div id="tags" style="float:left;">
 				<ul>
 					<c:forEach var="wordDto" items="${wordList}">
 						<c:if test="${wordDto.type_of_speech == 'Hashtag'}">
-							<li><a href="#">${wordDto.word}</a></li>
+							<li><a style="height:${wordDto.count+5}px;" href="#">${wordDto.word}</a></li>
 						</c:if>
 						<c:if test="${wordDto.type_of_speech != 'Hashtag'}">
-							<li><a href="#">${wordDto.word}</a></li>
+							<li><a style="font-size:${wordDto.count+5}px;" href="#">${wordDto.word}</a></li>
 						</c:if>
 					</c:forEach>
 				</ul>

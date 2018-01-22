@@ -362,6 +362,7 @@ public class Host_movieController {
 		return "main/wordcloud";
 	}
 	
+	// 리뷰 워드클라우드 가져오기
 	@RequestMapping(value="movieWordcloud", produces = "application/json; charset=utf8")
 	public String movieWordcloud(HttpServletRequest req, Model model) {
 		System.out.println("movieWordcloud");
