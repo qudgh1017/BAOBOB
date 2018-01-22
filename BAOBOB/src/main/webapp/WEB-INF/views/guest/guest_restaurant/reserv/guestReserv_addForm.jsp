@@ -42,6 +42,8 @@ $(function() {
 </head>
 
 <body class="bg-dark" onload="spaceBody('${info}', '${col}', '${row}');">
+	<input type="hidden" value="${restaurant_index}" id="restaurant_index">
+	
 	<div class="container-fluid">
 		<div class="card card-login mx-auto mt-5">
 			<div class="card-header">
@@ -75,7 +77,7 @@ $(function() {
 					</div>
 				</div>
 				<input class="btn btn-primary btn-block" style="background-color: #343a40; color: white;"
-						type="button" value="확인" onclick="guestReserv_chkTable();"/>
+						type="button" value="확인" onclick="guestReserv_chkTable(restaurant_index);"/>
 				
 				<div class="container-fluid" style="margin-top: 15px; padding-left:0px; padding-right:0px;" >
 					<!-- 테이블/날짜/시간선택 -> 확인 없으면 -->
@@ -104,7 +106,7 @@ $(function() {
 									
 								</div>
 								<div class="card-footer small text-muted">
-									<button class="btn btn-primary btn-block" type="button" value="1" onclick="spaceTypeChange2('1');">예약 접수</button>
+									<button class="btn btn-primary btn-block" type="button" value="1" onclick="spaceTypeChange2();">예약 접수</button>
 									<button class="btn btn-primary btn-block" type="reset" onclick="window.history.go(-2);">취소</button>
 								</div>
 							</div>

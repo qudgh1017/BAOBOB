@@ -197,12 +197,15 @@ function spaceBtnChange(location) {
 }
 
 //예약확인(정보 설정 AJAX)
-function spaceTypeChange2(index) {
+function spaceTypeChange2() {
 	var item = document.querySelectorAll('.p_spaceBtn'); // 배열판의 버튼들
 	
 	// 매장 정보
 	var x = document.getElementById('widthX').value; // col
 	var y = document.getElementById('heightY').value; // row
+	
+	//
+	var restaurant_index = document.getElementById('restaurant_index').value;
 	
 	// 배열판 버튼들의 아이콘 index 배열
 	var array = new Array();
@@ -213,7 +216,7 @@ function spaceTypeChange2(index) {
 	var date = document.getElementById('datepicker').value;
 	var time = document.getElementById('timepicker').value;
 	
-	window.location = 'guestReservAddPro?info=' + info + '&col=' + x + '&row=' + y + '&index=' + index + '&date=' + date + '&time=' + time;
+	window.location = 'guestReservAddPro?info=' + info + '&col=' + x + '&row=' + y + '&restaurant_index=' + restaurant_index + '&date=' + date + '&time=' + time;
 }
 
 // 설정한 배열판이 있을 경우
@@ -246,20 +249,13 @@ function spaceBody(info, col, row) {
 	typeImg = '';
 }
 
-// 선택된 날짜에 있는 예약 조회
-function hostReservList() {
-	var date = document.getElementById('datepicker').value;
-
-	window.location = 'hostReservList?date=' + date + '&index=1';
-
-}
 
 // 선택한 식당, 날짜, 시간에 예약이 가능한 테이블 조회
 function guestReserv_chkTable() {
 //	alert("guestReserv_chkTable");
 	var date = document.getElementById('datepicker').value;
 	var time = document.getElementById('timepicker').value;
-	
+	var restaurant_index = document.getElementById('restaurant_index').value;
 	if (document.getElementById('datepicker').value == "") {
 		alert('날짜를 골라주세요!');
 		return false;
@@ -267,6 +263,6 @@ function guestReserv_chkTable() {
 		alert('시간을 골라주세요!');
 		return false;
 	} else {
-		window.location = 'guestReserv_chkTable?date=' + date + '&time=' + time + '&index=1';
+		window.location = 'guestReserv_chkTable?date=' + date + '&time=' + time + '&restaurant_index=' + restaurant_index;
 	}
 }
