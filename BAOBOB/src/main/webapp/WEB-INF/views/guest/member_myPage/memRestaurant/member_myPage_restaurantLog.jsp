@@ -30,14 +30,13 @@
 			<td style="padding:0rem 10rem; margin:0px;width:100%;height:100%;">
 			<!-- 알맹이td -->
 			<table id="mainBody">
-				<caption>예매 내역</caption>
+				<caption>내가 이용한 레스토랑</caption>
 			    <thead>
 				    <tr>
-				    	<th style="width:10%">번호<br>( 예매일 )</th>
-				    	<th style="width:15%">포스터</th>
-				        <th style="width:30%">제목</th>
-				        <th style="width:10%">감독</th>
-				        <th style="width:15%">개봉일</th>
+				    	<th style="width:10%">번호<br>( 결제일 )</th>
+				        <th style="width:30%">레스토랑 명</th>
+				        <th style="width:10%">전화번호</th>
+				        <th style="width:15%">예약일</th>
 				    </tr>
 			    </thead>
 			    
@@ -53,21 +52,14 @@
 					    		<br>
 					    		<fmt:formatDate type="both" pattern="yyyy-MM-dd HH:mm" value="${dto.history_date}" />
 					    	</th>
-					    	<th>
-					    		<img src="${projectRes}images/phc/${dto.movie_poster}" 
-					    			style="width:180px; height:150px;">
-					    	</th>
 					        <th style="text-align:center;">
-					        	${dto.movie_title}
-					        	<c:if test="${dto.movie_age==0}"><img src="${projectRes}/images/ybh/전체관람가.png" style="width:15px; height:15px;"></c:if>
-								<c:if test="${dto.movie_age==12}"><img src="${projectRes}/images/ybh/12세 관람가.png" style="width:15px; height:15px;"></c:if>
-								<c:if test="${dto.movie_age==15}"><img src="${projectRes}/images/ybh/15세 관람가.png" style="width:15px; height:15px;"></c:if>
-								<c:if test="${dto.movie_age==19}"><img src="${projectRes}/images/ybh/청소년 관람불가.png" style="width:15px; height:15px;"></c:if>
+					        	${dto.restaurant_name}
 					        </th>
-					        <th style="text-align:center;">${dto.movie_director}</th>
+					        <th style="text-align:center;">
+					        	${dto.restaurant_tel}
+					        </th>
 							<td>
-								${dto.movie_rel_date}<br><br>
-								<input type="button" class="button" onclick="window.location='moviePaidDelPro?num=${dto.history_index}'"value="예매 취소">
+								${dto.schedule_starttime} ~ ${dto.schedule_endtime} 
 							</td>
 					    </tr>
 					    </tbody>

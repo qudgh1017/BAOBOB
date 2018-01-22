@@ -436,8 +436,15 @@ public class Member_mypageController {
 		return "guest/member_myPage/memMovie/member_myPage_moviePaidDelPro";
 	}
 	
-	
-	
+	//레스토랑 로그
+	@RequestMapping("restaurantLog")
+	public String restaurantLog(HttpServletRequest req, Model model) {
+		
+		service.memberCard(req, model);
+		service.restaurantLog(req, model);
+		
+		return "guest/member_myPage/memRestaurant/member_myPage_restaurantLog";
+	}
 	
 	
 	

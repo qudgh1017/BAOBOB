@@ -11,6 +11,7 @@ import spring.mvc.baobob.vo.BoardVO;
 import spring.mvc.baobob.vo.Member;
 import spring.mvc.baobob.vo.MovieHistoryVO;
 import spring.mvc.baobob.vo.MovieVO;
+import spring.mvc.baobob.vo.RestaurantLogVO;
 
 @Repository
 public class Member_mypageDAOImpl implements Member_mypageDAO{
@@ -479,10 +480,29 @@ public class Member_mypageDAOImpl implements Member_mypageDAO{
 		return cnt;
 	}
 	
+/*----------------------------------------------------------------------------*/
 	
+	//내가 이용한 식당 글갯수 구하기
+	public int restaurantLogCnt(String strId) {
+		int cnt = 0;
+		
+		Member_mypageDAO dao = sqlSession.getMapper(Member_mypageDAO.class);
+		cnt = dao.restaurantLogCnt(strId);
+		
+		return cnt;
+	}
 	
+/*----------------------------------------------------------------------------*/
 	
-	
+	//내가 이용한 식당 목록 조회
+	public ArrayList<RestaurantLogVO> restaurantLogList(Map<String, Object> map){
+		ArrayList<RestaurantLogVO> dtos = null;
+		
+		Member_mypageDAO dao = sqlSession.getMapper(Member_mypageDAO.class);
+		dtos = dao.restaurantLogList(map);
+		
+		return dtos;
+	}
 	
 	
 	

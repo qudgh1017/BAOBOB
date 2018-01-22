@@ -7,6 +7,7 @@ import spring.mvc.baobob.vo.BoardVO;
 import spring.mvc.baobob.vo.Member;
 import spring.mvc.baobob.vo.MovieHistoryVO;
 import spring.mvc.baobob.vo.MovieVO;
+import spring.mvc.baobob.vo.RestaurantLogVO;
 
 public interface Member_mypageDAO {
 	
@@ -99,5 +100,11 @@ public interface Member_mypageDAO {
 	
 	//예매내역 삭제
 	public int moviePaidDelPro(int num);
+	
+	//내가 이용한 식당 글갯수 구하기
+	public int restaurantLogCnt(String strId);	
+	
+	//내가 이용한 식당 목록 조회
+	public ArrayList<RestaurantLogVO> restaurantLogList(Map<String, Object> map);
 
 }
