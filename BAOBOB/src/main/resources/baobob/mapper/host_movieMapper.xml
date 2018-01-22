@@ -304,4 +304,127 @@
 	        ON h.history_index = mh.history_index
 	     GROUP BY ROLLUP(m.member_sex)
 	</select>
+	
+	
+	<!-- 워드클라우드 -->
+	
+	
+	<!-- 워드 클라우드 단어를 가져옴 -->
+	<select id="getWordCloudModel" resultType="spring.mvc.baobob.vo.WordVO">
+		SELECT *
+	      FROM (
+				SELECT word, count, type_of_speech, update_date, reg_date, rownum as rn
+				  FROM (SELECT *
+                          FROM wordcloud_list
+                 		 ORDER BY count DESC, update_date DESC, reg_date DESC
+                        )				 
+         		)
+    	 WHERE rn BETWEEN 1 AND 30 
+	</select>
+	
+	<!-- 워드 클라우드 단어를 확인 -->
+	<select id="checkWordCloud" parameterType="String" resultType="int">
+		SELECT COUNT(*)
+		  FROM wordcloud_list
+		 WHERE word = #{word}
+	</select>
+	
+	<!-- 워드 클라우드 단어를 삽입 시킴 -->
+	<insert id="addWordCloud" parameterType="spring.mvc.baobob.vo.WordVO">
+		INSERT INTO wordcloud_list (word, count, type_of_speech, update_date, reg_date) 
+							VALUES (#{word}, #{count}, #{type_of_speech}, #{update_date}, #{reg_date})
+	</insert>
+	
+	<!-- 워드 클라우드 단어를 업데이트 시킴 -->
+	<update id="updateWordCloud" parameterType="spring.mvc.baobob.vo.WordVO">
+		UPDATE wordcloud_list
+		   SET count = count + #{count},
+		       update_date = #{update_date}
+		 WHERE word = #{word}   
+	</update>
+	
+	<!-- 워드클라우드 단어 검색 -->
+	<select id="searchWordcloud" parameterType="Map" resultType="spring.mvc.baobob.vo.WordVO">
+		SELECT *
+	      FROM (
+				SELECT word, count, type_of_speech, update_date, reg_date, rownum as rn
+				  FROM (
+				  		SELECT *
+                          FROM wordcloud_list
+                 		 ORDER BY count DESC
+                        )
+                  WHERE 
+                  <if test="type == 1">
+                  	type_of_speech = 'Noun' OR type_of_speech = 'ProperNoun'
+                  </if>
+                  <if test="type == 2">
+                  	type_of_speech = 'Verb'
+                  </if>
+                  <if test="type == 3">
+                  	type_of_speech = 'Hashtag'
+                  </if>
+                  <if test="type == 4">
+                  	type_of_speech = 'Noun' OR type_of_speech = 'ProperNoun' OR type_of_speech = 'Verb'
+                  </if>
+                  <if test="type == 5">
+                  	type_of_speech = 'Verb' OR type_of_speech = 'Hashtag'
+                  </if>
+                  <if test="type == 6">
+                  	type_of_speech = 'Noun' OR type_of_speech = 'ProperNoun' OR type_of_speech = 'Hashtag'
+                  </if>
+                  <if test="type == 7">
+                  	type_of_speech = 'Noun' OR type_of_speech = 'ProperNoun' OR type_of_speech = 'Verb' OR type_of_speech = 'Hashtag'
+                  </if>
+         		)
+    	 WHERE rn BETWEEN 1 AND #{countOfWords} 
+	</select>
+	
+	<!-- 워드클라우드 단어 검색 (날짜포함)-->
+	<select id="searchWordcloud2" parameterType="Map" resultType="spring.mvc.baobob.vo.WordVO">
+		SELECT *
+	      FROM (
+				SELECT word, count, type_of_speech, update_date, reg_date, rownum as rn
+				  FROM (
+				  		SELECT *
+                          FROM wordcloud_list
+                          WHERE update_date BETWEEN #{strDate} AND #{endDate}
+                 		 ORDER BY count DESC
+                        )
+                  
+                  WHERE 
+                  <if test="type == 1">
+                  	type_of_speech = 'Noun' OR type_of_speech = 'ProperNoun'
+                  </if>
+                  <if test="type == 2">
+                  	type_of_speech = 'Verb'
+                  </if>
+                  <if test="type == 3">
+                  	type_of_speech = 'Hashtag'
+                  </if>
+                  <if test="type == 4">
+                  	type_of_speech = 'Noun' OR type_of_speech = 'ProperNoun' OR type_of_speech = 'Verb'
+                  </if>
+                  <if test="type == 5">
+                  	type_of_speech = 'Verb' OR type_of_speech = 'Hashtag'
+                  </if>
+                  <if test="type == 6">
+                  	type_of_speech = 'Noun' OR type_of_speech = 'ProperNoun' OR type_of_speech = 'Hashtag'
+                  </if>
+                  <if test="type == 7">
+                  	type_of_speech = 'Noun' OR type_of_speech = 'ProperNoun' OR type_of_speech = 'Verb' OR type_of_speech = 'Hashtag'
+                  </if>
+                  
+         		)
+    	 WHERE rn BETWEEN 1 AND #{countOfWords} 
+	</select>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 </mapper>

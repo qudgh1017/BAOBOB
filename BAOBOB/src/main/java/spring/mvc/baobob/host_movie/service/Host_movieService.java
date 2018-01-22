@@ -93,8 +93,15 @@ public interface Host_movieService {
 	////////////////////////////////
 	////////////////////////////////
 	// 워드 클라우드
+	
+	// 단어 형태소 분석을 처리하는 메서드
+		public void wordAnalyzer(String title, String content, String tag);
+		
+		// 단어 형태소 분석 후 DB 저장
+		public void wordExtractAndAnalyze(String text);
+	
 	// 워드클라우드 재검색 요청
-//		public String wordcloudRefresh(HttpServletRequest req, Model model);
+	public String wordcloudRefresh(HttpServletRequest req, Model model);
 	////////////////////////////////
 	////////////////////////////////
 }

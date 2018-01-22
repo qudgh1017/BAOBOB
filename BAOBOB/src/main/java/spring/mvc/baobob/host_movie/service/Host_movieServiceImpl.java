@@ -25,6 +25,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import spring.mvc.baobob.host_movie.persistence.Host_movieDAO;
 import spring.mvc.baobob.host_movie.persistence.Host_movieDAOImpl;
+import spring.mvc.baobob.twitterKoreanParser.KoreanParser;
 import spring.mvc.baobob.vo.HostMovieChartVO;
 import spring.mvc.baobob.vo.Member;
 import spring.mvc.baobob.vo.MovieResViewVO;
@@ -32,6 +33,7 @@ import spring.mvc.baobob.vo.MovieVO;
 import spring.mvc.baobob.vo.TheaterVO;
 import spring.mvc.baobob.vo.Theater_scheduleVO;
 import spring.mvc.baobob.vo.Theater_seatVO;
+import spring.mvc.baobob.vo.WordVO;
 import spring.mvc.baobob.vo.hostTChartVO;
 
 @Service
@@ -1075,95 +1077,156 @@ public class Host_movieServiceImpl implements Host_movieService{
 	////////////////////////////////////////////
 	// 워드 클라우드
 	
-//	// 워드클라우드 재검색 요청
-//	@Override
-//	public String wordcloudRefresh(HttpServletRequest req, Model model) {
-//		String strDate = req.getParameter("strDate");
-//		String endDate = req.getParameter("endDate");
-//		String[] wordOps = req.getParameter("wordOps").split(",");
-//		String printMsg = "";
-//		String cow = req.getParameter("countOfWords");
-//		if(cow == null)cow = "30";
-//		int countOfWords = Integer.parseInt(req.getParameter("countOfWords"));
-//		Map<String, Object> map = new HashMap<>();
-//
-//		printMsg = "strDate : " + strDate + ", endDate : " + endDate +", 요청단어수 : " + countOfWords;
-//
-//		int type = 0;
-//
-//		if(wordOps != null) {
-//			List<String> list = Arrays.asList(wordOps);
-//			if(list.contains("Noun") && list.contains("Verb") && list.contains("Hashtag")){
-//				type = 6;
-//				printMsg += ", | 명사, 동사, 해시태그 검색요청";
-//			} else if(list.contains("Noun") && list.contains("Verb")) {
-//				type = 4;
-//				printMsg += ", | 명사, 동사 검색요청";
-//			} else if(list.contains("Noun") && list.contains("Hashtag")) {
-//				type = 7;
-//				printMsg += ", | 명사, 해시태그 검색요청";
-//			} else if(list.contains("Hashtag") && list.contains("Verb")) {
-//				type = 5;
-//				printMsg += ", | 해시태그, 동사 검색요청";
-//			} else if(list.contains("Noun")) {
-//				type = 1;
-//				printMsg += ", | 명사 검색요청";
-//			} else if(list.contains("Verb")) {
-//				type = 2;
-//				printMsg += ", | 동사 검색요청";
-//			} else if(list.contains("Hashtag")) {
-//				type = 3;
-//				printMsg += ", | 해시태그 검색요청";
-//			}
-//		} else {
-//			type = 6;
-//			printMsg += ", | 명사, 동사, 해시태그 전체검색 요청";
-//		}
-//
-//		map.put("type", type);
-//		map.put("countOfWords", countOfWords);
-//
-//		List<WordDTO> wordList = null;
-//
-//		if(strDate != null && endDate != null){
-//			if(!strDate.equals("")) {
-//				strDate = strDate + " 00:00:01.000000";
-//				endDate = endDate + " 23:59:59.000000";
-//				Timestamp stp = Timestamp.valueOf(strDate);
-//				Timestamp etp = Timestamp.valueOf(endDate);
-//				map.put("strDate", stp);
-//				map.put("endDate", etp);
-//				wordList = dao.searchWordcloud2(map);
-//			} else {
-//				wordList = dao.searchWordcloud(map);
-//			}
-//		} else {
-//			wordList = dao.searchWordcloud(map);
-//		}
-//
-//		System.out.println(printMsg);
-//
-//		String resultMsg = "<ul>";
-//		System.out.println(wordList);
-//		for(WordDTO dto : wordList) {
-//			if(dto.getPart_of_speech().equals("Hashtag")){
-//				resultMsg += "<li><a href='/moyeo/two/wordCloudSearchByTag?search_keyword=" + dto.getWord().replaceAll("#", "") + "' >" + dto.getWord() + "</a></li>";
-//			} else {
-//				resultMsg += "<li><a href='/moyeo/two/wordCloudSearch?search_keyword=" + dto.getWord() + "' >" + dto.getWord() + "</a></li>";
-//			}
-//		}
-//		if(wordList.isEmpty())resultMsg += "<li><a href='#' target='_blank'>단어가 없습니다.</a></li>";
-//		resultMsg += "</ul>";
-//
-//		System.out.println(resultMsg);
-//
-//		//		model.addAttribute("wordList", wordList);
-//		//		model.addAttribute("listSize", wordList.size());
-//
-//		return resultMsg;
-//	}
-//
-//
+	// 워드클라우드 리스트
+		private static List<WordVO> wordVos;
+	
+	// 단어 형태소 분석을 처리하는 메서드
+		@Override
+		public void wordAnalyzer(String title, String content, String tag) {
+			StringBuilder sb = new StringBuilder(title);
+			if(content != null) {
+				if(!content.equals("")){
+					sb.append(" " + content);
+				}
+			}
+			if(tag != null) {
+				String[] tags = tag.split(",");
+				for(String ta : tags) {
+					ta = " #"+ta.replaceAll(" ", "");
+					sb.append(ta);
+				}
+				System.out.println("sb : " + sb.toString());
+			}
+			wordExtractAndAnalyze(sb.toString());
+		}
+
+		// 형태소 분석된 결과를 데이터베이스에 저장하는 프로세스
+		@Override
+		public void wordExtractAndAnalyze(String text) {
+			System.out.println("WordCloud analyze");
+			new Runnable() {
+				public void run() {
+
+					List<WordVO> wordMap = KoreanParser.getWordsMap(text);
+					if(wordMap.isEmpty())return;
+					Timestamp time = new Timestamp(System.currentTimeMillis());
+					for(WordVO dto : wordMap) {
+
+						// 기존에 있는 단어일 경우 카운트 업데이트
+						if(dao.checkWordCloud(dto.getWord()) == 1) {
+							dto.setUpdate_date(time);
+							dao.updateWordCloud(dto);
+							// 기존에 없는 단어일 경우 단어와 카운트 추가	
+						} else {
+							dto.setUpdate_date(time);
+							dto.setReg_date(time);
+							dao.addWordCloud(dto);
+						}
+					}
+					// 워드 클라우드 모델을 refresh 해줌
+					setWordList();
+					System.out.println("WordCloud 분석 종료");
+				}
+			}.run();
+		}
+
+		// 워드클라우드 단어를 가져옴
+		public synchronized void setWordList() {
+			System.out.println("Word Cloud word set request");
+			wordVos = dao.getWordCloudModel();
+		}
+	
+	
+	
+	// 워드클라우드 재검색 요청
+	@Override
+	public String wordcloudRefresh(HttpServletRequest req, Model model) {
+		String strDate = req.getParameter("strDate");
+		String endDate = req.getParameter("endDate");
+		String[] wordOps = req.getParameter("wordOps").split(",");
+		String printMsg = "";
+		String cow = req.getParameter("countOfWords");
+		if(cow == null)cow = "30";
+		int countOfWords = Integer.parseInt(req.getParameter("countOfWords"));
+		Map<String, Object> map = new HashMap<>();
+
+		printMsg = "strDate : " + strDate + ", endDate : " + endDate +", 요청단어수 : " + countOfWords;
+
+		int type = 0;
+
+		if(wordOps != null) {
+			List<String> list = Arrays.asList(wordOps);
+			if(list.contains("Noun") && list.contains("Verb") && list.contains("Hashtag")){
+				type = 6;
+				printMsg += ", | 명사, 동사, 해시태그 검색요청";
+			} else if(list.contains("Noun") && list.contains("Verb")) {
+				type = 4;
+				printMsg += ", | 명사, 동사 검색요청";
+			} else if(list.contains("Noun") && list.contains("Hashtag")) {
+				type = 7;
+				printMsg += ", | 명사, 해시태그 검색요청";
+			} else if(list.contains("Hashtag") && list.contains("Verb")) {
+				type = 5;
+				printMsg += ", | 해시태그, 동사 검색요청";
+			} else if(list.contains("Noun")) {
+				type = 1;
+				printMsg += ", | 명사 검색요청";
+			} else if(list.contains("Verb")) {
+				type = 2;
+				printMsg += ", | 동사 검색요청";
+			} else if(list.contains("Hashtag")) {
+				type = 3;
+				printMsg += ", | 해시태그 검색요청";
+			}
+		} else {
+			type = 6;
+			printMsg += ", | 명사, 동사, 해시태그 전체검색 요청";
+		}
+
+		map.put("type", type);
+		map.put("countOfWords", countOfWords);
+
+		List<WordVO> wordList = null;
+
+		if(strDate != null && endDate != null){
+			if(!strDate.equals("")) {
+				strDate = strDate + " 00:00:01.000000";
+				endDate = endDate + " 23:59:59.000000";
+				Timestamp stp = Timestamp.valueOf(strDate);
+				Timestamp etp = Timestamp.valueOf(endDate);
+				map.put("strDate", stp);
+				map.put("endDate", etp);
+				wordList = dao.searchWordcloud2(map);
+			} else {
+				wordList = dao.searchWordcloud(map);
+			}
+		} else {
+			wordList = dao.searchWordcloud(map);
+		}
+
+		System.out.println(printMsg);
+
+		String resultMsg = "<ul>";
+		System.out.println(wordList);
+		for(WordVO vo : wordList) {
+			if(vo.getType_of_speech().equals("Hashtag")){
+				resultMsg += "<li><a href='/moyeo/two/wordCloudSearchByTag?search_keyword=" + vo.getWord().replaceAll("#", "") + "' >" + vo.getWord() + "</a></li>";
+			} else {
+				resultMsg += "<li><a href='/moyeo/two/wordCloudSearch?search_keyword=" + vo.getWord() + "' >" + vo.getWord() + "</a></li>";
+			}
+		}
+		if(wordList.isEmpty())resultMsg += "<li><a href='#' target='_blank'>단어가 없습니다.</a></li>";
+		resultMsg += "</ul>";
+
+		System.out.println(resultMsg);
+
+		//		model.addAttribute("wordList", wordList);
+		//		model.addAttribute("listSize", wordList.size());
+
+		return resultMsg;
+	}
+
+
 
 		
 	////////////////////////////////////////

@@ -12,6 +12,7 @@ import spring.mvc.baobob.vo.MovieVO;
 import spring.mvc.baobob.vo.TheaterVO;
 import spring.mvc.baobob.vo.Theater_scheduleVO;
 import spring.mvc.baobob.vo.Theater_seatVO;
+import spring.mvc.baobob.vo.WordVO;
 import spring.mvc.baobob.vo.hostTChartVO;
 
 public interface Host_movieDAO {
@@ -147,5 +148,28 @@ public interface Host_movieDAO {
 	// 관람객 성별 수
 	@MapKey("kind")
 	public List<HostMovieChartVO> movieSexCountChart();
+	
+	////////////////////////
+	///////////////////////
+	// 워드 클라우드
+	//////////////////////
+	/////////////////////
+	// 워드클라우드 단어가 이미 존재하는지 확인
+	public int checkWordCloud(String word);
+	
+	// 워드클라우드 단어 모델을 가져옴
+	public List<WordVO> getWordCloudModel();
+	
+	// 분석된 워드 클라우드 단어를 추가
+	public int addWordCloud(WordVO dto);
+	
+	// 분석된 워드 클라우드 단어수 업데이트
+	public int updateWordCloud(WordVO dto);
+	
+	// 워드카운트 검색
+	public List<WordVO> searchWordcloud(Map<String, Object> map);
+	
+	// 워드카운트 검색
+	public List<WordVO> searchWordcloud2(Map<String, Object> map);
 	
 }

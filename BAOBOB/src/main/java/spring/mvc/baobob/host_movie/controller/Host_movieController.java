@@ -331,15 +331,24 @@ public class Host_movieController {
 	
 	////////////////////////////////////
 	//////////////////////////////////
-//	// 워드 클라우드
-//	@RequestMapping(value="refreshWordcloud", produces = "application/json; charset=utf8")
-//	public String refreshWordcloud(Model model, HttpServletRequest req) {
-//		
-//		System.out.println("워드클라우드 재검색 요청");
-////		String viewPage = service.wordcloudRefresh(model);
-//		
-//		return "main/wordcloud";
-//	}
+	// 워드 클라우드
+	@RequestMapping(value="wordcloud", produces = "application/json; charset=utf8")
+	public String wordcloud(Model model, HttpServletRequest req) {
+		
+		System.out.println("워드클라우드");
+		
+		return "main/wordcloud";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="refreshWordcloud", produces = "application/json; charset=utf8")
+	public String refreshWordcloud(Model model, HttpServletRequest req) {
+		
+		System.out.println("워드클라우드 재검색 요청");
+		String viewPage = service.wordcloudRefresh(req, model);
+		
+		return viewPage;
+	}
 	
 	
 	
