@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import spring.mvc.baobob.guest_movie.service.Guest_movieService;
+import spring.mvc.baobob.host_movie.service.Host_movieServiceImpl;
 import spring.mvc.baobob.vo.MovieResViewVO;
 import spring.mvc.baobob.vo.Theater_seatVO;
 
@@ -22,6 +23,9 @@ public class Guest_movieController {
 	
 	@Autowired
 	Guest_movieService gmservice;
+	
+	@Autowired
+	Host_movieServiceImpl hmservice;
 	
 	// 영화관 메인화면
 	@RequestMapping("guest_movie")
