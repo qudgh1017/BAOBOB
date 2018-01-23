@@ -58,42 +58,8 @@ function guest_review_delete(pageNum, review_index, restaurant_index){
  * 
  */
 
-var delChk = "번 메뉴를 삭제하시겠습니까?";
-var delChk2 = "님의 직원 정보를 삭제하시겠습니까?";
-var delChk3 = "의 정보를 삭제하시겠습니까?\n삭제한 정보는 다시 되돌릴 수 없습니다.";
 var addChk = " 님을 직원으로 등록하시겠습니까?";
 var numChk = "이 입력란은 숫자만 입력 가능합니다.";
-
-// 메뉴 & 직원 삭제 확인
-function delCheck(index, chk) {
-	if (chk == 'menu') {
-		var del = confirm(index + delChk);	// confirm - 대화상자(alert와는 다르게 참 거짓을 리턴함)
-		if (del) {
-			window.location = 'hostMenuDel?index=' + index;
-		}
-	} else if (chk == 'employee') {
-		var del = confirm(index + delChk2);
-		if (del) {
-			window.location = 'hostEmployeeDel?id=' + index;
-		}
-	} else {
-		var del = confirm(chk + delChk3);
-		if (del) {
-			window.location = 'hostRestaurantDel?index=' + index;
-		}
-	}
-}
-
-// 직원 등록 확인
-function addCheck(index) {
-	var add = confirm(index + addChk);
-
-	if (add) {
-		return;
-	} else {
-		return false;
-	}
-}
 
 // 숫자만 입력 받기
 function onlyNumber(event) {
@@ -121,6 +87,7 @@ function removeChar(event) {
 
 var typeNum = '0'; // 선택한 버튼 번호
 var typeImg = ''; // 선택한 버튼 이미지
+var cnt=0;	//인원수 
 
 // type에 따라 버튼 이미지 설정
 function spaceType(type) {
@@ -174,7 +141,9 @@ function spaceBtnChange(location) {
 	//선택한 버튼의 value변경 (DB에 아이콘 index 넣기 위한값)
 	var btnId = 'btn' + location;
 	var spaceBtn = document.getElementById(btnId);
-
+	var tableCnt = document.getElementById('tableCnt').value;//인원 추가 설정 수
+	
+	
 	if(spaceBtn.value==1){
 		if (typeImg != '') { // 아이콘 선택했을 경우, 선택한 버튼의 설정 변경
 			// 선택한 버튼의 이미지 src 변경
@@ -203,22 +172,27 @@ function spaceTypeChange2() {
 	// 매장 정보
 	var x = document.getElementById('widthX').value; // col
 	var y = document.getElementById('heightY').value; // row
-	
+	var tableCnt = document.getElementById('tableCnt').value;//선택한 테이블 수량을 가져온다.
 	//
 	var restaurant_index = document.getElementById('restaurant_index').value;
 	
-	// 배열판 버튼들의 아이콘 index 배열
-	var array = new Array();
-	item.forEach(function(space) {
-		array.push(space.value);
-	});
-	var info = array.join(',');
-	var date = document.getElementById('datepicker').value;
-	var time = document.getElementById('timepicker').value;
-	
-	window.location = 'guestReservAddPro?info=' + info + '&col=' + x + '&row=' + y + '&restaurant_index=' + restaurant_index + '&date=' + date + '&time=' + time;
+	if(cnt <= tableCnt){
+		alert('식당 : ' + restaurant_index);
+		
+		
+		// 배열판 버튼들의 아이콘 index 배열
+		var array = new Array();
+		item.forEach(function(space) {
+			array.push(space.value);
+		});
+		var info = array.join(',');
+		var date = document.getElementById('datepicker').value;
+		var time = document.getElementById('timepicker').value;
+		
+		window.location = 'guestReservAddPro?info=' + info + '&col=' + x + '&row=' + y + '&restaurant_index='+ restaurant_index + '&date=' + date + '&time=' + time;
+		
+	}
 }
-
 // 설정한 배열판이 있을 경우
 function spaceBody(info, col, row) {
 	var arr = info.split(',');
@@ -252,10 +226,10 @@ function spaceBody(info, col, row) {
 
 // 선택한 식당, 날짜, 시간에 예약이 가능한 테이블 조회
 function guestReserv_chkTable() {
-//	alert("guestReserv_chkTable");
 	var date = document.getElementById('datepicker').value;
 	var time = document.getElementById('timepicker').value;
 	var restaurant_index = document.getElementById('restaurant_index').value;
+	alert('식당 : ' + restaurant_index);
 	if (document.getElementById('datepicker').value == "") {
 		alert('날짜를 골라주세요!');
 		return false;
@@ -263,6 +237,6 @@ function guestReserv_chkTable() {
 		alert('시간을 골라주세요!');
 		return false;
 	} else {
-		window.location = 'guestReserv_chkTable?date=' + date + '&time=' + time + '&restaurant_index=' + restaurant_index;
+		window.location = 'guestReserv_chkTable?date=' + date + '&time=' + time + '&restaurant_index='+restaurant_index;
 	}
 }

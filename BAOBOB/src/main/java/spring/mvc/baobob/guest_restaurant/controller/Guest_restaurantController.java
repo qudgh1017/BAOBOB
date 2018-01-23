@@ -55,7 +55,7 @@ public class Guest_restaurantController {
 	//1. 레스토랑 정보
 	@RequestMapping("guestRestaurant_info")
 	public String guestRestaurant_info(HttpServletRequest req, Model model) {
-		//log.debug("===== Guest_restaurantController/guestRestaurantMain() =====");
+		log.debug("===== Guest_restaurantController/guestRestaurantMain() =====");
 
 		
 		return "guest/guest_restaurant/info/guestRestaurant_info";
@@ -82,9 +82,10 @@ public class Guest_restaurantController {
 	@RequestMapping("guestReserv_addForm")
 	public String guestReserv_addForm(HttpServletRequest req, Model model) {
 		log.debug("===== Guest_restaurantController/guestReserv_addForm() =====");
-		System.out.println("===== guestReserv_addForm 1 =====");
-		//로그인
-		//return "main/mainSignIn";
+		
+		int restaurant_index = Integer.parseInt(req.getParameter("restaurant_index"));
+		model.addAttribute("restaurant_index", restaurant_index);
+		System.out.println("restaurant_index: " + restaurant_index);
 		return "guest/guest_restaurant/reserv/guestReserv_addForm";
 	}
 	

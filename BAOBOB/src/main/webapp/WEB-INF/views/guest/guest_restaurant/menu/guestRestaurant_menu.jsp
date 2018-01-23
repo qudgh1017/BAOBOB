@@ -5,11 +5,6 @@
     
 <html>
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-	
 	<title>Baobob_Restaurant</title>
     
     <style type="text/css">
@@ -41,10 +36,11 @@
 </head>
 <body>
 
-	<!--======= Header 시작 =======-->
-	<%@ include file="../../common/head.jsp" %>
-	<!-- Baobob-Navigation -->
-	<%@ include file="../../common/navigation.jsp" %>
+<!--======= Header 시작 =======-->
+	<%@ include file="/WEB-INF/views/guest/common/head.jsp" %>
+	<!-- Baobob Navigation -->
+	<%@ include file="/WEB-INF/views/guest/common/navigation.jsp" %>
+	
 	<!-- 레스토랑 메뉴 -->
 	<%@ include file="/WEB-INF/views/guest/guest_restaurant/restaurantMenu.jsp" %>
 	
@@ -76,7 +72,7 @@
 					<div class="col-md-offset-1"></div>
 					<div class="col-md-10">
 						<br>
-						<h3 align=left;>한식이요</h3>
+						<h3 align=left;>바압</h3>
 						<hr style="border:2px solid black;">
 					</div>
 					<div class="col-md-offset-1"></div>
@@ -87,7 +83,7 @@
 					<div class="col-md-offset-1"></div>
 					<div class="col-md-10">
 						<br>
-						<h3 align=left;>양식이요</h3>
+						<h3 align=left;>BOUTBACK</h3>
 						<hr style="border:2px solid black;">
 					</div>
 					<div class="col-md-offset-1"></div>
@@ -129,55 +125,9 @@
 			</div>
 		</div>
 	</section>
-	<!--======= Footer =======-->
-	<footer class="footer text-center">
-		<div class="container">
-			<div class="row">
-				<div class="col-md-4 mb-5 mb-lg-0">
-				  <h4 class="text-uppercase mb-4">Location</h4>
-				  <p class="lead mb-0">2215 John Daniel Drive
-				    <br>Clark, MO 65243</p>
-				</div>
-				<div class="col-md-4 mb-5 mb-lg-0">
-				  <h4 class="text-uppercase mb-4">Around the Web</h4>
-				  <ul class="list-inline mb-0">
-				    <li class="list-inline-item">
-				      <a class="btn btn-outline-light btn-social text-center rounded-circle" href="#">
-				        <i class="fa fa-fw fa-facebook"></i>
-				      </a>
-				    </li>
-				    <li class="list-inline-item">
-				      <a class="btn btn-outline-light btn-social text-center rounded-circle" href="#">
-				        <i class="fa fa-fw fa-google-plus"></i>
-				      </a>
-				    </li>
-				    <li class="list-inline-item">
-				      <a class="btn btn-outline-light btn-social text-center rounded-circle" href="#">
-				        <i class="fa fa-fw fa-twitter"></i>
-				      </a>
-				    </li>
-				    <li class="list-inline-item">
-				      <a class="btn btn-outline-light btn-social text-center rounded-circle" href="#">
-				        <i class="fa fa-fw fa-linkedin"></i>
-				      </a>
-				    </li>
-				    <li class="list-inline-item">
-				      <a class="btn btn-outline-light btn-social text-center rounded-circle" href="#">
-				        <i class="fa fa-fw fa-dribbble"></i>
-				      </a>
-				    </li>
-				  </ul>
-				</div>
-				<div class="col-md-4">
-					<h4 class="text-uppercase mb-4">About Freelancer</h4>
-					<p class="lead mb-0">Freelance is a free to use, open source Bootstrap theme created by
-					  <a href="http://startbootstrap.com">Start Bootstrap</a>.</p>
-				</div>
-			</div>
-		</div> 
-	</footer> 
+	
 	<!-- Footer -->
-	<%@ include file="../../common/footerCopyright.jsp" %>
-	<!--======= Footer 시작=======-->
+	<%@ include file="/WEB-INF/views/guest/guest_movie/movie_footer.jsp" %> 
+	<!-- Footer -->
 </body>
 </html>

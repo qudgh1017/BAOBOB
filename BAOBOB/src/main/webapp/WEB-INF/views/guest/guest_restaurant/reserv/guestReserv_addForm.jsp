@@ -48,7 +48,15 @@ $(function() {
 		<div class="card card-login mx-auto mt-5">
 			<div class="card-header">
 				<i class="fa fa-fw fa-home"></i>
-				레스토랑 이름
+				<c:if test="${restaurant_index==1}">
+				どきどき(Dokidoki)
+				</c:if>
+				<c:if test="${restaurant_index==2}">
+				바압
+				</c:if>
+				<c:if test="${restaurant_index==3}">
+				BOUTBACK
+				</c:if>
 			</div>
 			<div class="card-body">
 				<div class="row">
@@ -57,6 +65,7 @@ $(function() {
 							<i class="fa fa-fw fa-user-circle"></i>
 							<label for="exampleInputEmail1">테이블 수</label> 
 							<input class="form-control" name="table" type="text" placeholder="table">
+							
 						</div>
 					</div>
 					<div class="col-md-4">
@@ -77,7 +86,7 @@ $(function() {
 					</div>
 				</div>
 				<input class="btn btn-primary btn-block" style="background-color: #343a40; color: white;"
-						type="button" value="확인" onclick="guestReserv_chkTable(restaurant_index);"/>
+						type="button" value="확인" onclick="guestReserv_chkTable();"/>
 				
 				<div class="container-fluid" style="margin-top: 15px; padding-left:0px; padding-right:0px;" >
 					<!-- 테이블/날짜/시간선택 -> 확인 없으면 -->
