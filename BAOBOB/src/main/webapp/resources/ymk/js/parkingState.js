@@ -1,12 +1,13 @@
 /**
  * Host Parking State
  */
+
+//커서 올라간 구역의 번호 띄우기
 var moveNumView;
 document.getElementById('spaceDiv').addEventListener('mousemove', function(e) {
 	e.preventDefault();
 
 	var idx = e.target.getAttribute('data-index');
-	console.log(idx);
 	if(idx != null) {
 		var moveNum = document.getElementById('moveNum');
 		moveNumView = moveNum;
@@ -23,6 +24,7 @@ document.getElementById('spaceDiv').addEventListener('mousemove', function(e) {
 	}
 });
 
+//처음 화면 그리기
 var column = '';
 var stateTypeImg = '';
 function parkingStatus(col, row, states) {
@@ -63,6 +65,7 @@ function parkingStatus(col, row, states) {
 	column = col;
 }
 
+//구역 이미지 표시
 function spaceStateType(type) {
 	switch(type) {
 	case '0': stateTypeImg = 'icon_false.png'; break;
@@ -71,22 +74,15 @@ function spaceStateType(type) {
 	}
 }
 
+//배열판 클릭 시 클릭된 곳의 좌표
 var clientX = '';
 var clientY = '';
 document.getElementById('spaceDiv').addEventListener('mousedown',function(e) {
-/*	console.log('offsetX: ' + (e.offsetX == undefined ? e.layerX : e.offsetX));
-	console.log('offsetY: ' + (e.offsetY == undefined ? e.layerY : e.offsetY));
-	console.log('screenX: ' + e.screenX);
-	console.log('screenY : ' + e.screenY);
-	console.log('clientX : ' + e.clientX);
-	console.log('clientY : ' + e.clientY);
-	console.log('pageX : ' + e.pageX);
-	console.log('pageY : ' + e.pageY);
-*/   
     clientX = e.clientY;
     clientY = e.clientX;
 });
 
+//선택한 구역 정보 Ajax
 var stateViewId = '';
 function spaceState(location) {
 	var arr = location.split('-');
@@ -111,6 +107,7 @@ function spaceState_callback() {
 			var data = httpRequest.responseText;
 			var result = document.getElementById('result');
 			
+			//구역 정보 띄울 위치 지정, 보이기.
 			result.style.top = clientX < 580 ? clientX + 20 : clientX -430;
 			result.style.left = clientY < 780 ? clientY + 20 : clientY -500;
 			result.style.display = 'block';
@@ -130,6 +127,7 @@ function reset() {
 	stateViewId.style.background = 'lightgray';
 }
 
+//구역 위치 이름
 var spaceName = '';
 function rowName(idx) {
 	var xy = Math.floor(idx / column);

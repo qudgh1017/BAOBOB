@@ -3,6 +3,7 @@ package spring.mvc.baobob.guest_parking.persistence;
 import java.sql.Timestamp;
 import java.util.Map;
 
+import spring.mvc.baobob.vo.Member;
 import spring.mvc.baobob.vo.ParkingHistory;
 
 public interface Guest_parkingDAO {
@@ -36,4 +37,10 @@ public interface Guest_parkingDAO {
 	
 	//해당 주차 정보
 	public ParkingHistory getParkingHistory(String key);
+	
+	//회원 아이디
+	public String keyMemberIdSelect(String key);
+	
+	//결제 시 포인트 적립
+	public int memberPointUpdate(Member m);
 }

@@ -3,6 +3,7 @@ package spring.mvc.baobob.guest_movie.persistence;
 import java.util.ArrayList;
 import java.util.Map;
 
+import spring.mvc.baobob.vo.Member;
 import spring.mvc.baobob.vo.MovieVO;
 import spring.mvc.baobob.vo.ReviewVO;
 import spring.mvc.baobob.vo.TheaterVO;
@@ -89,4 +90,6 @@ public  interface Guest_movieDAO {
 	//메인 - 상영 중인 영화
 	public ArrayList<String> mainMovieTheater(Map<String, Object> map);
 	
+	//member 정보
+	public Member getMemberInfo(String member_id);
 }
