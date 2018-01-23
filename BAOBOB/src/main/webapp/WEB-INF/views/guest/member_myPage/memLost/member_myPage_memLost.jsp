@@ -53,7 +53,6 @@
 					    	<th style="text-align:center;">
 					    		${number}<br>
 					    		<c:set var="number" value="${number-1}"/>
-								<%-- (${dto.num } / ${dto.ref} / ${dto.ref_step} / ${dto.ref_level}) --%>
 					    	</th>
 					    	<th>
 					    		<img src="${projectRes}images/lgt/lost/${dto.board_img}" style="width:100px; height:70px;">

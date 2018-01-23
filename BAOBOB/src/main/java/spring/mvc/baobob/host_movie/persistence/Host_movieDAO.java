@@ -149,11 +149,7 @@ public interface Host_movieDAO {
 	@MapKey("kind")
 	public List<HostMovieChartVO> movieSexCountChart();
 	
-	////////////////////////
-	///////////////////////
 	// 워드 클라우드
-	//////////////////////
-	/////////////////////
 	// 워드클라우드 단어가 이미 존재하는지 확인
 	public int checkWordCloud(Map<String, Object> map);
 	
@@ -168,8 +164,4 @@ public interface Host_movieDAO {
 	
 	// 워드카운트 검색
 	public List<WordVO> searchWordcloud(Map<String, Object> map);
-	
-	// 워드카운트 검색
-	public List<WordVO> searchWordcloud2(Map<String, Object> map);
-	
 }

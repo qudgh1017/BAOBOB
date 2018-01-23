@@ -116,20 +116,19 @@
 				bar : {groupWidth : '50%'},
 				legend : {position : 'bottom'}};
 		function drawChartFirst(){
-			var data = google.visualization.arrayToDataTable([
-															 ['Element', '장르'],
-															 ['가족', ${janre1}],
-															 ['공포/호러', ${janre2}],
-															 ['드라마', ${janre3}],
-															 ['SF', ${janre4}],
-															 ['멜로/로맨스', ${janre5}],
-															 ['코미디', ${janre6}],
-															 ['애니메이션', ${janre7}],
-															 ['액션', ${janre8}],
-															 ['스릴러', ${janre9}],
-															 ['미스터리', ${janre10}]
-															 ]);
-			
+			var data = google.visualization.arrayToDataTable([['Element', '장르'],
+														 ['가족', ${janre1}],
+														 ['공포/호러', ${janre2}],
+														 ['드라마', ${janre3}],
+														 ['SF', ${janre4}],
+														 ['멜로/로맨스', ${janre5}],
+														 ['코미디', ${janre6}],
+														 ['애니메이션', ${janre7}],
+														 ['액션', ${janre8}],
+														 ['스릴러', ${janre9}],
+														 ['미스터리', ${janre10}],
+														 ]);
+		
 			var firstChart = new google.visualization.ColumnChart(document.getElementById('movieJanreChart'));
 			firstChart.draw(data, firstChart_options);
 		}
@@ -158,7 +157,7 @@
 														 ['스릴러', ${janre19}],
 														 ['미스터리', ${janre20}]
 														 ]);
-			
+		
 			var movieJanreCountChart = new google.visualization.PieChart(document.getElementById('movieJanreCountChart'));
 			movieJanreCountChart.draw(data, movieJanreCountChart_options);
 		}
@@ -174,13 +173,13 @@
 				legend : {position : 'bottom'}};
 		function movieAgeChart(){
 			var data = google.visualization.arrayToDataTable([
-														 ['Element', '제한연령'],
-														 ['전체', ${age1}],
-														 ['만12세', ${age2}],
-														 ['만15세', ${age3}],
-														 ['만19세', ${age4}]
-														 ]);
-			
+															 ['Element', '제한연령'],
+															 ['전체', ${age1}],
+															 ['만12세', ${age2}],
+															 ['만15세', ${age3}],
+															 ['만19세', ${age4}]
+															 ]);
+		
 			var movieAgeChart = new google.visualization.ColumnChart(document.getElementById('movieAgeChart'));
 			movieAgeChart.draw(data, movieAgeChart_options);
 		}
@@ -196,10 +195,10 @@
 				legend : {position : 'bottom'}};
 		function movieSexCountChart(){
 			var data = google.visualization.arrayToDataTable([
-															 ['Element', '성별'],
-															 ['남자', ${sex1}],
-															 ['여자', ${sex2}]
-															 ]);
+														 ['Element', '성별'],
+														 ['남자', ${sex1}],
+														 ['여자', ${sex2}]
+														 ]);
 			
 			var movieSexCountChart = new google.visualization.PieChart(document.getElementById('movieSexCountChart'));
 			movieSexCountChart.draw(data, movieSexCountChart_options);

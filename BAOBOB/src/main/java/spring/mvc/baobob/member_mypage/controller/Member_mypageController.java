@@ -446,7 +446,14 @@ public class Member_mypageController {
 		return "guest/member_myPage/memRestaurant/member_myPage_restaurantLog";
 	}
 	
-	
+	@RequestMapping("visit")
+	public String visit(HttpServletRequest req, Model model) {
+		
+		service.memberCard(req, model);
+		service.visitList(req, model);
+		
+		return "guest/member_myPage/service/member_myPage_visit";
+	}
 	
 	
 	
