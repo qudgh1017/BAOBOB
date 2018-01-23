@@ -128,8 +128,8 @@
 			  FROM theater_tbl 
 			 WHERE NOT theater_index IN(SELECT theater_index 
 			 							  FROM theater_schedule_tbl 
-										 WHERE (schedule_startTime > to_char(to_date(#{schedule_start}, 'YY-MM-DD-HH24-MI')-3/24, 'YY-MM-DD-HH24-MI') 
-										   AND (to_char(to_date(#{schedule_start}, 'YY-MM-DD-HH24-MI')+180/24/60, 'YY-MM-DD-HH24-MI') >	schedule_endTime)))
+										 WHERE (schedule_startTime > to_char(to_date(#{schedule_start}, 'YY-MM-DD-HH24-MI')-181/24/60, 'YY-MM-DD-HH24-MI') 
+										   AND (to_char(to_date(#{schedule_start}, 'YY-MM-DD-HH24-MI')+3/24, 'YY-MM-DD-HH24-MI') >	schedule_startTime)))
 		]]>
 	</select>
 	
@@ -140,8 +140,8 @@
 			  FROM theater_tbl 
 			 WHERE NOT theater_index IN(SELECT theater_index 
 			 							  FROM theater_schedule_tbl 
-										 WHERE (schedule_startTime > to_char(to_date(#{schedule_start}, 'YY-MM-DD-HH24-MI')-3/24, 'YY-MM-DD-HH24-MI') 
-										   AND (to_char(to_date(#{schedule_start}, 'YY-MM-DD-HH24-MI')+180/24/60, 'YY-MM-DD-HH24-MI') >	schedule_endTime)))
+										 WHERE (schedule_startTime > to_char(to_date(#{schedule_start}, 'YY-MM-DD-HH24-MI')-181/24/60, 'YY-MM-DD-HH24-MI') 
+										   AND (to_char(to_date(#{schedule_start}, 'YY-MM-DD-HH24-MI')+3/24, 'YY-MM-DD-HH24-MI') >	schedule_startTime)))
 		]]>
 	</select>
 	
@@ -173,7 +173,7 @@
 		SELECT count(*) 
 		  FROM theater_schedule_tbl 
 		 WHERE (schedule_startTime > to_char(to_date(#{schedule_startTime}, 'YY-MM-DD-HH24-MI')-3/24, 'YY-MM-DD-HH24-MI') 
-		   AND (to_char(to_date(#{schedule_startTime}, 'YY-MM-DD-HH24-MI')+4/24, 'YY-MM-DD-HH24-MI') >	schedule_endTime))
+		   AND (to_char(to_date(#{schedule_startTime}, 'YY-MM-DD-HH24-MI')+3/24, 'YY-MM-DD-HH24-MI') >	schedule_startTime))
 		   AND theater_schedule_index IN (select theater_schedule_index FROM theater_schedule_tbl WHERE NOT theater_schedule_index = #{theater_schedule_index})
 		   AND theater_index = #{theater_index}
 	   ]]>
