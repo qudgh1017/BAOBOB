@@ -23,7 +23,6 @@
 		 		  		   ORDER BY movie_index DESC
 		 		  	    ) 
 		 		)  
-		  WHERE rNum >= #{start} AND rNum <= #{end} 
 		]]>
 	</select>
 	

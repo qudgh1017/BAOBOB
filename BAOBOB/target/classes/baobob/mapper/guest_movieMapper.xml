@@ -162,7 +162,7 @@
 		ON (theater_schedule_tbl.movie_index = movie_tbl.movie_index)
 		WHERE movie_tbl.movie_index = #{movie_index}
 		AND TO_CHAR(theater_schedule_tbl.schedule_startdate,'YYMMDD') = TO_CHAR(SYSDATE+#{plusDay},'YYMMDD')
-		ORDER BY theater_tbl.theater_index ASC, theater_schedule_tbl.schedule_startdate ASC
+		ORDER BY theater_schedule_tbl.schedule_startdate ASC, theater_tbl.theater_index ASC
 	</select>
 	
 	<!-- 상영관 갯수 -->
@@ -178,6 +178,22 @@
 		AND theater_schedule_index = -1
 		AND seat_state IN(3,4,5)
 	</select>
-
+	
+	<!-- 스케줄 정보 -->
+	<select id="getSchedule" resultType="spring.mvc.baobob.vo.Theater_scheduleVO">
+		SELECT *
+		FROM theater_schedule_tbl
+		WHERE theater_schedule_index = #{theater_schedule_index}
+	</select>
+	
+	<!-- 상영관 상세 theaterDetail -->
+	<select id="theaterDetail" resultType="spring.mvc.baobob.vo.TheaterVO">
+		SELECT * FROM theater_tbl WHERE theater_index=#{theater_index}
+	</select>
+	
+	<!-- 상영관 상세 좌석 정보 theaterSeatDetail -->
+	<select id="theaterSeatDetail" resultType="spring.mvc.baobob.vo.Theater_seatVO">
+		SELECT * FROM theater_seat_tbl WHERE theater_index=#{theater_index} AND theater_schedule_index=#{theater_schedule_index}
+	</select>
 
 </mapper>

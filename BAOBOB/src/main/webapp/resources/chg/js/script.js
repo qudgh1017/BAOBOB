@@ -70,6 +70,7 @@ function removeChar(event) {
 
 var typeNum = '0'; // 선택한 버튼 번호
 var typeImg = ''; // 선택한 버튼 이미지
+var count = 0;	// 입력한 테이블 숫자
 
 // type에 따라 버튼 이미지 설정
 function spaceType(type) {
@@ -140,16 +141,25 @@ function spaceBtnChange2(location) {
 	// 선택한 버튼의 value 변경(DB에 아이콘index 넣기 위한 값)
 	var btnId = 'btn' + location;
 	var spaceBtn = document.getElementById(btnId);
+	var table_count = document.getElementById('count').value / 4;
 	
 	if(spaceBtn.value == 1){
 		if (typeImg != '') { // 아이콘 선택했을 경우, 선택한 버튼의 설정 변경
-			// 선택한 버튼의 이미지 src 변경
-			var imgId = 'img' + location; // 선택한 버튼의 id
-			var spaceImg = document.getElementById(imgId); // 선택한 버튼의 img
-			spaceImg.src = '/baobob/resources/images/chg/' + typeImg;
-			
-			
-			spaceBtn.value = typeNum;
+			count++;
+			alert('count : ' + count + ' table_count : ' + table_count);
+			if(table_count < 1) {
+				table_count = 1;
+			}
+			if(count <= table_count){
+				// 선택한 버튼의 이미지 src 변경
+				var imgId = 'img' + location; // 선택한 버튼의 id
+				var spaceImg = document.getElementById(imgId); // 선택한 버튼의 img
+				spaceImg.src = '/baobob/resources/images/chg/' + typeImg;
+				
+				spaceBtn.value = typeNum;
+			} else {
+				alert('입력하신 테이블 수를 초과했습니다.');
+			}
 		} else {
 			alert('아이콘을 선택해주세요.');
 		}
@@ -182,6 +192,16 @@ function spaceTypeChange() {
 function spaceTypeChange2(index) {
 	var item = document.querySelectorAll('.p_spaceBtn'); // 배열판의 버튼들
 	
+	// 입력한 테이블 수
+	var table_count = document.getElementById('count').value / 4;
+	
+	if(count < table_count) {
+		alert('입력하신 숫자만큼 테이블을 선택해주세요');
+		return false;
+	} else {
+		count = 0;
+	}
+	
 	// 매장 정보
 	var x = document.getElementById('widthX').value; // col
 	var y = document.getElementById('heightY').value; // row
@@ -191,7 +211,9 @@ function spaceTypeChange2(index) {
 	item.forEach(function(space) {
 		array.push(space.value);
 	});
+	
 	var info = array.join(',');
+	
 	if (document.getElementById('name') && document.getElementById('tel')) {
 		var name = document.getElementById('name').value; // name
 		var tel = document.getElementById('tel').value; // tel
@@ -212,8 +234,6 @@ function spaceBody(info, col, row) {
 		space += '<div class="p_div">';
 		for (var x = 0; x < col; x += 1) {
 			var index = x + (y * col);
-			console.log(index + '번째 : ' + arr[index] + '/{' + x + ',' + y + '}');
-
 			var location = x + '-' + y;
 			var imgId = 'img' + location;
 			var btnId = 'btn' + location;
@@ -268,34 +288,25 @@ function hostReservList() {
 	var date = document.getElementById('datepicker').value;
 
 	window.location = 'hostReservList?date=' + date + '&index=1';
-
 }
 
 // 선택한 식당, 날짜, 시간에 예약이 가능한 테이블 조회
 function checkPosRestaurant(step) {
 	var date = document.getElementById('datepicker').value;
 	var time = document.getElementById('timepicker').value;
-
-	if (document.getElementById('datepicker').value == "") {
+	var table_count = document.getElementById('count').value;
+	
+	if (date == "") {
 		alert('날짜를 골라주세요!');
 		return false;
-	} else if (document.getElementById('timepicker').value == "") {
+	} else if (time == "") {
 		alert('시간을 골라주세요!');
 		return false;
-	} else {
-		window.location = 'checkPosRestaurant?date=' + date + '&time=' + time + '&index=' + step.toString().substring(1, 2);
-	}
-}
-
-// 선택한 식당, 날짜, 시간에 예약이 가능한 테이블 조회
-function checkPosRestaurant2() {
-	var date = document.getElementById('datepicker').value;
-
-	if (document.getElementById('datepicker').value == "") {
-		alert('날짜를 골라주세요!');
+	} else if (table_count == "") {
+		alert('테이블 수를 입력해주세요!');
 		return false;
 	} else {
-		window.location = 'checkPosRestaurant2?date=' + date + '&time=' + '&index=1';
+		window.location = 'checkPosRestaurant?date=' + date + '&count=' + table_count + '&time=' + time + '&index=' + step.toString().substring(1, 2);
 	}
 }
 
@@ -309,5 +320,55 @@ function reservView(step) {
 		return false;
 	}
 	
-	window.location = "reservView?date=" + date + "&index=" + step.toString().substring(1, 2);
+	window.location = 'reservView?date=' + date + '&index=' + step.toString().substring(1, 2);
+}
+
+// 주문 삭제 처리
+function orderDel() {
+	var restaurant_schedule_index = document
+			.getElementById("restaurant_schedule_index").value; // 예약 번호
+	var table_Num = document.getElementById("table_index").value; // 주문할 테이블 번호
+	var menu_Num = document.getElementById("menu_index").value; // 메뉴 번호
+	var menu_Count = document.getElementById("menu_count").value; // 메뉴 수량
+
+	if (table_Num == "") {
+		alert("주문할 테이블 번호를 입력하세요");
+		document.getElementById("table_index").focus();
+		return false;
+	} else if (menu_Num == "") {
+		alert("메뉴 번호를 입력하세요");
+		document.getElementById("menu_index").focus();
+		return false;
+	} else if (menu_Count == "") {
+		alert("메뉴 수량을 입력하세요");
+		document.getElementById("menu_count").focus();
+		return false;
+	}
+
+	window.location = 'hostOrderDel?restaurant_schedule_index=' + restaurant_schedule_index + '&table_Num=' + table_Num + 
+					'&menu_Num=' + menu_Num + '&menu_Count=' + menu_Count;
+}
+
+// 결제 처리
+function payment() {
+	var restaurant_schedule_index = document
+			.getElementById("restaurant_schedule_index").value; // 예약 번호
+	var table_Num = document.getElementById("table_number").value; // 결제할 테이블 번호
+	var member_id = document.getElementById("member_id").value;	// 결제할 아이디
+	var payValue = document.getElementById("payValue" + table_Num).value; // 결제할 금액
+	var point = document.getElementById("point").value;
+	
+	if (table_Num == "") {
+		alert("결제할 테이블 번호를 입력하세요");
+		document.getElementById("table_number").focus();
+		return false;
+	} else if (member_id == "") {
+		alert("결제할 아이디를 입력하세요");
+		document.getElementById("member_id").focus();
+		return false;
+	} else if(point == "") {
+		point = 0;
+	}
+	
+	window.location = 'hostPayment?restaurant_schedule_index=' + restaurant_schedule_index + '&table_Num=' + table_Num + '&member_id=' + member_id + '&payValue=' + payValue + '&point=' + point;
 }

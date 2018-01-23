@@ -64,7 +64,7 @@
 	<!-- 식당 총 관리자 - 식당 내 테이블 추가 처리 -->
 	<insert id="modTable" parameterType="Map">
 		INSERT INTO restaurant_table_tbl(restaurant_index, restaurant_table_index, table_row, table_col, table_state) 
-		VALUES(#{dto.restaurant_index}, #{dto2.restaurant_table_index}, #{dto2.table_row}, #{dto2.table_col}, #{dto2.state})
+		VALUES(#{restaurant_dto.restaurant_index}, #{table_dto.restaurant_table_index}, #{table_dto.table_row}, #{table_dto.table_col}, #{table_dto.state})
 	</insert>
 
 	<!-- 식당 총 관리자 - 매장 삭제 처리 -->
@@ -178,7 +178,7 @@
 	<!-- 예약 추가 처리 -->
 	<insert id="addReserv" parameterType="Map">
 		INSERT INTO restaurant_schedule_tbl(restaurant_index, restaurant_schedule_index, schedule_startTime, schedule_endTime) 
-		VALUES(#{dto.restaurant_index}, restaurant_schedule_tbl_SEQ.nextval, #{dto3.schedule_startTime}, #{dto3.schedule_endTime})
+		VALUES(#{restaurant_dto.restaurant_index}, restaurant_schedule_tbl_SEQ.nextval, #{schedule_dto.schedule_startTime}, #{schedule_dto.schedule_endTime})
 	</insert>
 
 	<!-- 식당 총 관리자 - 매장 내 테이블 수정 처리 전 테이블 초기화 -->
@@ -190,11 +190,11 @@
 	<!-- 날짜에 해당하는 테이블 예약 -->
 	<insert id="modTable2" parameterType="Map">
 		INSERT INTO restaurant_table_tbl(restaurant_index, restaurant_table_index, table_row, table_col, table_state, restaurant_schedule_index) 
-		<if test="dto3.restaurant_schedule_index == 0">
-		VALUES(#{dto.restaurant_index}, #{dto2.restaurant_table_index}, #{dto2.table_row}, #{dto2.table_col}, #{dto2.state}, restaurant_schedule_tbl_SEQ.CURRVAL)
+		<if test="schedule_dto.restaurant_schedule_index == 0">
+		VALUES(#{restaurant_dto.restaurant_index}, #{table_dto.restaurant_table_index}, #{table_dto.table_row}, #{table_dto.table_col}, #{table_dto.state}, restaurant_schedule_tbl_SEQ.CURRVAL)
 		</if>
-		<if test="dto3.restaurant_schedule_index != 0">
-		VALUES(#{dto.restaurant_index}, #{dto2.restaurant_table_index}, #{dto2.table_row}, #{dto2.table_col}, #{dto2.state}, #{dto3.restaurant_schedule_index})
+		<if test="schedule_dto.restaurant_schedule_index != 0">
+		VALUES(#{restaurant_dto.restaurant_index}, #{table_dto.restaurant_table_index}, #{table_dto.table_row}, #{table_dto.table_col}, #{table_dto.state}, #{schedule_dto.restaurant_schedule_index})
 		</if>
 	</insert>
 
@@ -206,7 +206,7 @@
 		AND restaurant_index = #{restaurant_index}
 	</select>
 
-	<!-- 스케줄 인덱스 조회 -->
+	<!-- restaurant_schedule_index 조회 -->
 	<select id="getScheduleIndex" resultType="Integer">
 		SELECT restaurant_schedule_index FROM restaurant_schedule_tbl 
 		WHERE schedule_starttime = #{schedule_startTime} AND schedule_endtime = #{schedule_endTime} AND restaurant_index = #{restaurant_index}
@@ -219,13 +219,36 @@
 	
 	<!-- 시작 시간, 종료 시간 체크 -->
 	<select id="getTime" resultType="spring.mvc.baobob.vo.Restaurant_scheduleVO">
-		SELECT schedule_startTime, schedule_endTime FROM restaurant_schedule_tbl WHERE restaurant_index = #{restaurant_index} AND restaurant_schedule_index = #{restaurant_schedule_index}
+		SELECT schedule_startTime, schedule_endTime 
+		FROM restaurant_schedule_tbl 
+		WHERE restaurant_index = #{restaurant_index} 
+		AND restaurant_schedule_index = #{restaurant_schedule_index}
 	</select>
 	
 	<!-- 주문 내역 추가(판매 내역) -->
 	<insert id="addFoodHistory" parameterType="Map">
-		INSERT INTO restaurant_food_history_tbl(restaurant_schedule_index, restaurant_menu_index) VALUES(#{restaurant_schedule_index}, #{restaurant_menu_index})
+		INSERT INTO restaurant_food_history_tbl(restaurant_schedule_index, restaurant_menu_index, restaurant_index, restaurant_menu_count, restaurant_table_index) 
+		VALUES(#{restaurant_schedule_index}, #{restaurant_menu_index}, #{restaurant_index}, #{restaurant_menu_count}, #{restaurant_table_index})
 	</insert>
+	
+	<!-- 주문 내역 추가/일부 주문 취소 -->
+	<update id="modFoodHistory" parameterType="Map">
+		UPDATE restaurant_food_history_tbl 
+		SET restaurant_menu_count = #{restaurant_menu_count}
+		WHERE restaurant_menu_index = #{restaurant_menu_index} 
+		AND restaurant_schedule_index = #{restaurant_schedule_index} 
+		AND restaurant_index = #{restaurant_index}
+		AND restaurant_table_index = #{restaurant_table_index}
+	</update>
+	
+	<!-- 주문 취소 처리 -->
+	<delete id="delFoodHistory" parameterType="Map">
+		DELETE FROM restaurant_food_history_tbl 
+		WHERE restaurant_menu_index = #{restaurant_menu_index} 
+		AND restaurant_schedule_index = #{restaurant_schedule_index} 
+		AND restaurant_index = #{restaurant_index}
+		AND restaurant_table_index = #{restaurant_table_index}
+	</delete>
 	
 	<!-- 식당별 결산 -->
 	<select id="getAccount" resultType="Integer">
@@ -233,4 +256,67 @@
 		FROM restaurant_menu_tbl m, restaurant_food_history_tbl f 
 		WHERE m.restaurant_menu_index = f.restaurant_menu_index
 	</select>
+
+	<!-- 회원 정보 상세 조회 -->
+	<select id="confirmId" resultType="Integer">
+		SELECT member_step FROM member_tbl
+		WHERE member_id = #{id}
+	</select>
+	
+	<!-- 이미 주문한 메뉴인지 확인 -->
+	<select id="getMenuCount" resultType="Integer">
+		SELECT restaurant_menu_count 
+		FROM restaurant_food_history_tbl 
+		WHERE restaurant_schedule_index = #{restaurant_schedule_index} 
+		AND restaurant_index = #{restaurant_index} 
+		AND restaurant_menu_index = #{restaurant_menu_index} 
+		AND restaurant_table_index = #{restaurant_table_index}
+	</select>
+
+	<!-- 주문한 가격 계산 -->
+	<select id="getBill" resultType="Integer">
+		SELECT SUM((m.restaurant_menu_price * f.restaurant_menu_count))
+		  FROM restaurant_food_history_tbl f
+			 , restaurant_menu_tbl m
+		 WHERE f.restaurant_menu_index = m.restaurant_menu_index
+		   AND f.restaurant_index = #{restaurant_index}
+		   AND f.restaurant_schedule_index = #{restaurant_schedule_index}
+		   AND f.restaurant_table_index = #{restaurant_table_index}
+	</select>
+	
+	<!--'사용중'인 테이블 '사용가능'으로 상태 변경 -->
+	<update id="modState" parameterType="Map">
+		UPDATE restaurant_table_tbl
+		   SET table_state = 1
+		 WHERE restaurant_index = #{restaurant_index}
+		   AND restaurant_schedule_index = #{restaurant_schedule_index}
+		   AND restaurant_table_index = #{restaurant_table_index}
+	</update>
+	
+	<!-- 이용 내역 추가 처리 -->
+	<insert id="addHistory" parameterType="String">
+		INSERT INTO history_tbl(history_index, history_date, member_id) 
+		VALUES(history_tbl_SEQ.NEXTVAL, sysdate, #{id})
+	</insert>
+	
+	<!-- 식당 이용 내역 추가 처리 -->
+	<insert id="addRestaurantHistory" parameterType="Map">
+		INSERT INTO restaurant_history_tbl(history_index, restaurant_schedule_index, restaurant_table_index, discount, member_use_point, payvalue) 
+		VALUES(history_tbl_SEQ.CURRVAL, #{restaurant_schedule_index}, #{restaurant_table_index}, #{discount}, #{member_use_point}, #{payValue})
+	</insert>
+
+	<!-- 사용 가능한 포인트 조회 -->
+	<select id="getPoint" resultType="int">
+		SELECT member_point FROM member_tbl WHERE member_id = #{id}
+	</select>
+	
+	<!-- 사용한 포인트, 새로 적립된 포인트 계산 -->
+	<update id="modMemberPoint" parameterType="Map">
+		UPDATE member_tbl
+		   SET member_point = #{member_point}
+		     , member_cumpoint = (SELECT member_cumpoint 
+		     						FROM member_tbl 
+		     					   WHERE member_id = #{member_id}) + #{member_Cumpoint}
+		 WHERE member_id = #{member_id}
+	</update>
 </mapper>

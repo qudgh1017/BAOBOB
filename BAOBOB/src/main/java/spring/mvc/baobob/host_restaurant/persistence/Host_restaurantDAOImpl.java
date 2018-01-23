@@ -22,10 +22,9 @@ public class Host_restaurantDAOImpl implements Host_restaurantDAO {
 	@Autowired
 	private SqlSession sqlSession;
 
-	// 식당 총 관리자 - 매장 수
+	// 매장 수 조회
 	@Override
 	public int getRestaurantCnt() {
-		// TODO Auto-generated method stub
 		log.debug("dao.getRestaurantCnt()");
 
 		Host_restaurantDAO dao = sqlSession.getMapper(Host_restaurantDAO.class);
@@ -33,10 +32,9 @@ public class Host_restaurantDAOImpl implements Host_restaurantDAO {
 		return dao.getRestaurantCnt();
 	}
 
-	// 식당 총 관리자 - 각 매장 정보
+	// 모든 매장 정보
 	@Override
 	public ArrayList<RestaurantVO> getRestaurantList() {
-		// TODO Auto-generated method stub
 		log.debug("dao.getRestaurantList()");
 
 		Host_restaurantDAO dao = sqlSession.getMapper(Host_restaurantDAO.class);
@@ -44,10 +42,9 @@ public class Host_restaurantDAOImpl implements Host_restaurantDAO {
 		return dao.getRestaurantList();
 	}
 
-	// 식당 총 관리자 - 매장 추가 처리
+	// 매장 추가 처리
 	@Override
 	public int addRestaurant(RestaurantVO dto) {
-		// TODO Auto-generated method stub
 		log.debug("dao.addRestaurant()");
 
 		Host_restaurantDAO dao = sqlSession.getMapper(Host_restaurantDAO.class);
@@ -55,10 +52,9 @@ public class Host_restaurantDAOImpl implements Host_restaurantDAO {
 		return dao.addRestaurant(dto);
 	}
 
-	// 식당 총 관리자 - 매장 내 테이블 추가 처리
+	// 매장 내 테이블 추가 처리
 	@Override
 	public int addTable(TableVO dto) {
-		// TODO Auto-generated method stub
 		log.debug("dao.addTable()");
 
 		Host_restaurantDAO dao = sqlSession.getMapper(Host_restaurantDAO.class);
@@ -66,10 +62,9 @@ public class Host_restaurantDAOImpl implements Host_restaurantDAO {
 		return dao.addTable(dto);
 	}
 
-	// 식당 총 관리자 - 수정할 매장 정보 조회 / 수정할 정보 입력
+	// 매장 정보 조회
 	@Override
 	public RestaurantVO viewRestaurant(int restaurant_index) {
-		// TODO Auto-generated method stub
 		log.debug("dao.viewRestaurant()");
 
 		Host_restaurantDAO dao = sqlSession.getMapper(Host_restaurantDAO.class);
@@ -77,10 +72,9 @@ public class Host_restaurantDAOImpl implements Host_restaurantDAO {
 		return dao.viewRestaurant(restaurant_index);
 	}
 
-	// 식당 총 관리자 - 매장 내 테이블 정보 조회를 위한 좌석 수 조회
+	// 매장을 구성하는 타일의 행열 조회 (예:5*5)
 	@Override
 	public TableVO getColRow(int restaurant_index) {
-		// TODO Auto-generated method stub
 		log.debug("dao.getRowCol()");
 
 		Host_restaurantDAO dao = sqlSession.getMapper(Host_restaurantDAO.class);
@@ -88,10 +82,10 @@ public class Host_restaurantDAOImpl implements Host_restaurantDAO {
 		return dao.getColRow(restaurant_index);
 	}
 
-	// 식당 총 관리자 - 매장 내 테이블 정보 조회를 위한 테이블 상태 조회
+	// 타일 하나하나의 상태 조회
 	@Override
 	public int getState(Map<String, Object> map) {
-		// TODO Auto-generated method stub
+
 		log.debug("dao.getState()");
 
 		Host_restaurantDAO dao = sqlSession.getMapper(Host_restaurantDAO.class);
@@ -99,10 +93,10 @@ public class Host_restaurantDAOImpl implements Host_restaurantDAO {
 		return dao.getState(map);
 	}
 
-	// 식당 총 관리자 - 매장 수정 처리
+	// 매장 수정 처리
 	@Override
 	public int modRestaurant(RestaurantVO dto) {
-		// TODO Auto-generated method stub
+
 		log.debug("dao.modRestaurant()");
 
 		Host_restaurantDAO dao = sqlSession.getMapper(Host_restaurantDAO.class);
@@ -110,10 +104,10 @@ public class Host_restaurantDAOImpl implements Host_restaurantDAO {
 		return dao.modRestaurant(dto);
 	}
 
-	// 식당 총 관리자 - 매장 내 테이블 수정 처리 전 테이블 초기화
+	// 매장 내 테이블 정보 초기화
 	@Override
 	public int resetTable(RestaurantVO dto) {
-		// TODO Auto-generated method stub
+
 		log.debug("dao.resetTable()");
 
 		Host_restaurantDAO dao = sqlSession.getMapper(Host_restaurantDAO.class);
@@ -121,10 +115,9 @@ public class Host_restaurantDAOImpl implements Host_restaurantDAO {
 		return dao.resetTable(dto);
 	}
 
-	// 식당 총 관리자 - 매장 내 테이블 수정 처리
+	// 매장 내 테이블 수정 처리
 	@Override
 	public int modTable(Map<String, Object> map) {
-		// TODO Auto-generated method stub
 		log.debug("dao.modTable()");
 
 		Host_restaurantDAO dao = sqlSession.getMapper(Host_restaurantDAO.class);
@@ -132,10 +125,9 @@ public class Host_restaurantDAOImpl implements Host_restaurantDAO {
 		return dao.modTable(map);
 	}
 
-	// 식당 총 관리자 - 매장 삭제 처리
+	// 매장 삭제 처리
 	@Override
 	public int delRestaurant(RestaurantVO dto) {
-		// TODO Auto-generated method stub
 		log.debug("dao.delRestaurant()");
 
 		Host_restaurantDAO dao = sqlSession.getMapper(Host_restaurantDAO.class);
@@ -148,7 +140,6 @@ public class Host_restaurantDAOImpl implements Host_restaurantDAO {
 	// 메뉴 개수 조회
 	@Override
 	public int getMenuCnt(int restaurant_index) {
-		// TODO Auto-generated method stub
 		log.debug("dao.getMenuCnt()");
 
 		Host_restaurantDAO dao = sqlSession.getMapper(Host_restaurantDAO.class);
@@ -159,7 +150,6 @@ public class Host_restaurantDAOImpl implements Host_restaurantDAO {
 	// 각 메뉴 정보 조회
 	@Override
 	public ArrayList<MenuVO> getMenuList(int restaurant_index) {
-		// TODO Auto-generated method stub
 		log.debug("dao.getMenuList()");
 
 		Host_restaurantDAO dao = sqlSession.getMapper(Host_restaurantDAO.class);
@@ -170,7 +160,6 @@ public class Host_restaurantDAOImpl implements Host_restaurantDAO {
 	// 메뉴 추가 처리
 	@Override
 	public int addMenu(MenuVO dto) {
-		// TODO Auto-generated method stub
 		log.debug("dao.addMenu()");
 
 		Host_restaurantDAO dao = sqlSession.getMapper(Host_restaurantDAO.class);
@@ -181,7 +170,6 @@ public class Host_restaurantDAOImpl implements Host_restaurantDAO {
 	// 메뉴 수정 처리
 	@Override
 	public int modMenu(MenuVO dto) {
-		// TODO Auto-generated method stub
 		log.debug("dao.modMenu()");
 
 		Host_restaurantDAO dao = sqlSession.getMapper(Host_restaurantDAO.class);
@@ -192,7 +180,6 @@ public class Host_restaurantDAOImpl implements Host_restaurantDAO {
 	// 메뉴 정보 상세조회
 	@Override
 	public MenuVO viewMenu(MenuVO dto) {
-		// TODO Auto-generated method stub
 		log.debug("dao.viewMenu()");
 
 		Host_restaurantDAO dao = sqlSession.getMapper(Host_restaurantDAO.class);
@@ -203,7 +190,7 @@ public class Host_restaurantDAOImpl implements Host_restaurantDAO {
 	// 메뉴 삭제 처리
 	@Override
 	public int delMenu(MenuVO dto) {
-		// TODO Auto-generated method stub
+
 		log.debug("dao.delMenu()");
 
 		Host_restaurantDAO dao = sqlSession.getMapper(Host_restaurantDAO.class);
@@ -214,7 +201,7 @@ public class Host_restaurantDAOImpl implements Host_restaurantDAO {
 	// 직원 수 조회
 	@Override
 	public int getEmployeeCnt(int member_step) {
-		// TODO Auto-generated method stub
+
 		log.debug("dao.getEmployeeCnt()");
 
 		Host_restaurantDAO dao = sqlSession.getMapper(Host_restaurantDAO.class);
@@ -225,7 +212,6 @@ public class Host_restaurantDAOImpl implements Host_restaurantDAO {
 	// 각 직원 정보 조회
 	@Override
 	public ArrayList<EmployeeVO> getEmployeeList(int member_step) {
-		// TODO Auto-generated method stub
 		log.debug("dao.getEmployeeList()");
 
 		Host_restaurantDAO dao = sqlSession.getMapper(Host_restaurantDAO.class);
@@ -236,7 +222,7 @@ public class Host_restaurantDAOImpl implements Host_restaurantDAO {
 	// 전체 회원 수 조회(직원 제외)
 	@Override
 	public int getMemberCnt() {
-		// TODO Auto-generated method stub
+
 		log.debug("dao.getMemberCnt()");
 
 		Host_restaurantDAO dao = sqlSession.getMapper(Host_restaurantDAO.class);
@@ -247,7 +233,7 @@ public class Host_restaurantDAOImpl implements Host_restaurantDAO {
 	// 각 회원 정보 조회(직원 제외)
 	@Override
 	public ArrayList<Member> getMemberList() {
-		// TODO Auto-generated method stub
+
 		log.debug("dao.getEmployeeList()");
 
 		Host_restaurantDAO dao = sqlSession.getMapper(Host_restaurantDAO.class);
@@ -258,7 +244,6 @@ public class Host_restaurantDAOImpl implements Host_restaurantDAO {
 	// 직원으로 등록할 회원 정보 조회
 	@Override
 	public Member viewMember(String id) {
-		// TODO Auto-generated method stub
 		log.debug("dao.viewMember()");
 
 		Host_restaurantDAO dao = sqlSession.getMapper(Host_restaurantDAO.class);
@@ -266,10 +251,10 @@ public class Host_restaurantDAOImpl implements Host_restaurantDAO {
 		return dao.viewMember(id);
 	}
 
-	// 직원 등록 처리(member_step 변경)
+	// 직원 등록/삭제 처리(member_step 변경)
 	@Override
 	public int updateStep(Map<String, Object> map) {
-		// TODO Auto-generated method stub
+
 		log.debug("dao.updateStep()");
 
 		Host_restaurantDAO dao = sqlSession.getMapper(Host_restaurantDAO.class);
@@ -280,7 +265,7 @@ public class Host_restaurantDAOImpl implements Host_restaurantDAO {
 	// 직원 등록 처리
 	@Override
 	public int addEmployee(Map<String, Object> map) {
-		// TODO Auto-generated method stub
+
 		log.debug("dao.addEmployee()");
 
 		Host_restaurantDAO dao = sqlSession.getMapper(Host_restaurantDAO.class);
@@ -291,7 +276,6 @@ public class Host_restaurantDAOImpl implements Host_restaurantDAO {
 	// 직원 정보 조회
 	@Override
 	public EmployeeVO viewEmployee(String id) {
-		// TODO Auto-generated method stub
 		log.debug("dao.viewMember()");
 
 		Host_restaurantDAO dao = sqlSession.getMapper(Host_restaurantDAO.class);
@@ -302,7 +286,7 @@ public class Host_restaurantDAOImpl implements Host_restaurantDAO {
 	// 직원 정보 삭제 처리(member_step 계산)
 	@Override
 	public int getCumPoint(String id) {
-		// TODO Auto-generated method stub
+
 		log.debug("dao.getCumPoint()");
 
 		Host_restaurantDAO dao = sqlSession.getMapper(Host_restaurantDAO.class);
@@ -313,7 +297,7 @@ public class Host_restaurantDAOImpl implements Host_restaurantDAO {
 	// 직원 정보 삭제
 	@Override
 	public int delEmployee(Map<String, Object> map) {
-		// TODO Auto-generated method stub
+
 		log.debug("dao.delEmployee()");
 
 		Host_restaurantDAO dao = sqlSession.getMapper(Host_restaurantDAO.class);
@@ -324,7 +308,6 @@ public class Host_restaurantDAOImpl implements Host_restaurantDAO {
 	// 예약 추가
 	@Override
 	public int addReserv(Map<String, Object> map) {
-		// TODO Auto-generated method stub
 		log.debug("dao.addReserv()");
 
 		Host_restaurantDAO dao = sqlSession.getMapper(Host_restaurantDAO.class);
@@ -335,7 +318,7 @@ public class Host_restaurantDAOImpl implements Host_restaurantDAO {
 	// 예약 전 초기화(예약 위에 또 예약하는 경우)
 	@Override
 	public int resetTable2(Restaurant_scheduleVO dto) {
-		// TODO Auto-generated method stub
+
 		log.debug("dao.resetTable2()");
 
 		Host_restaurantDAO dao = sqlSession.getMapper(Host_restaurantDAO.class);
@@ -346,7 +329,7 @@ public class Host_restaurantDAOImpl implements Host_restaurantDAO {
 	// 선택 날짜 예약 조회
 	@Override
 	public int modTable2(Map<String, Object> map) {
-		// TODO Auto-generated method stub
+
 		log.debug("dao.modTable2()");
 
 		Host_restaurantDAO dao = sqlSession.getMapper(Host_restaurantDAO.class);
@@ -357,7 +340,6 @@ public class Host_restaurantDAOImpl implements Host_restaurantDAO {
 	// 날짜별 예약 조회
 	@Override
 	public ArrayList<Restaurant_scheduleVO> getReservList(Map<String, Object> map) {
-		// TODO Auto-generated method stub
 		log.debug("dao.getReservList()");
 
 		Host_restaurantDAO dao = sqlSession.getMapper(Host_restaurantDAO.class);
@@ -368,7 +350,7 @@ public class Host_restaurantDAOImpl implements Host_restaurantDAO {
 	// 스케줄 인덱스 조회
 	@Override
 	public Integer getScheduleIndex(Restaurant_scheduleVO dto) {
-		// TODO Auto-generated method stub
+
 		log.debug("dao.getScheduleIndex()");
 
 		Host_restaurantDAO dao = sqlSession.getMapper(Host_restaurantDAO.class);
@@ -379,7 +361,7 @@ public class Host_restaurantDAOImpl implements Host_restaurantDAO {
 	// 식당 개수, 식당 인덱스 체크
 	@Override
 	public int[] getRestaurantIndex() {
-		// TODO Auto-generated method stub
+
 		log.debug("dao.getRestaurantIndex()");
 
 		Host_restaurantDAO dao = sqlSession.getMapper(Host_restaurantDAO.class);
@@ -390,7 +372,6 @@ public class Host_restaurantDAOImpl implements Host_restaurantDAO {
 	// 시작 시간, 종료 시간 체크
 	@Override
 	public Restaurant_scheduleVO getTime(Restaurant_scheduleVO dto) {
-		// TODO Auto-generated method stub
 		log.debug("dao.getTime()");
 
 		Host_restaurantDAO dao = sqlSession.getMapper(Host_restaurantDAO.class);
@@ -398,10 +379,9 @@ public class Host_restaurantDAOImpl implements Host_restaurantDAO {
 		return dao.getTime(dto);
 	}
 
-	// 주문 내역 추가(판매 내역)
+	// 주문 추가 처리
 	@Override
 	public int addFoodHistory(Map<String, Object> map) {
-		// TODO Auto-generated method stub
 		log.debug("dao.addFoodHistory()");
 
 		Host_restaurantDAO dao = sqlSession.getMapper(Host_restaurantDAO.class);
@@ -412,11 +392,110 @@ public class Host_restaurantDAOImpl implements Host_restaurantDAO {
 	// 식당별 결산
 	@Override
 	public Integer getAccount(int restaurant_index) {
-		// TODO Auto-generated method stub
 		log.debug("dao.account()");
 
 		Host_restaurantDAO dao = sqlSession.getMapper(Host_restaurantDAO.class);
 
 		return dao.getAccount(restaurant_index);
+	}
+
+	// 회원 아이디가 있는지, 있다면 스텝이 몇인지 조회
+	@Override
+	public Integer confirmId(String id) {
+		log.debug("dao.confirmId()");
+
+		Host_restaurantDAO dao = sqlSession.getMapper(Host_restaurantDAO.class);
+
+		return dao.confirmId(id);
+	}
+
+	// 이용 내역 추가 처리
+	@Override
+	public int addHistory(String id) {
+		log.debug("dao.addHistory()");
+
+		Host_restaurantDAO dao = sqlSession.getMapper(Host_restaurantDAO.class);
+
+		return dao.addHistory(id);
+	}
+
+	// 이미 주문한 메뉴인지 확인
+	@Override
+	public Integer getMenuCount(Map<String, Object> map) {
+		log.debug("dao.getMenuCount()");
+
+		Host_restaurantDAO dao = sqlSession.getMapper(Host_restaurantDAO.class);
+
+		return dao.getMenuCount(map);
+	}
+
+	// 주문한 메뉴인 경우 수량 누적
+	@Override
+	public Integer modFoodHistory(Map<String, Object> map) {
+		log.debug("dao.modFoodHistory()");
+
+		Host_restaurantDAO dao = sqlSession.getMapper(Host_restaurantDAO.class);
+
+		return dao.modFoodHistory(map);
+	}
+
+	// 주문 취소 처리
+	@Override
+	public Integer delFoodHistory(Map<String, Object> map) {
+		log.debug("dao.delFoodHistory()");
+
+		Host_restaurantDAO dao = sqlSession.getMapper(Host_restaurantDAO.class);
+
+		return dao.delFoodHistory(map);
+	}
+
+	// 주문 가격 계산(테이블별 결산)
+	@Override
+	public Integer getBill(Map<String, Object> map) {
+		log.debug("dao.getBill()");
+
+		Host_restaurantDAO dao = sqlSession.getMapper(Host_restaurantDAO.class);
+
+		return dao.getBill(map);
+	}
+
+	// '사용중'인 테이블 '사용가능'으로 상태 변경
+	@Override
+	public int modState(Map<String, Object> map) {
+		log.debug("dao.modState()");
+
+		Host_restaurantDAO dao = sqlSession.getMapper(Host_restaurantDAO.class);
+
+		return dao.modState(map);
+	}
+
+	// 레스토랑 히스토리 테이블에 이용 내역 추가
+	@Override
+	public int addRestaurantHistory(Map<String, Object> map) {
+		log.debug("dao.addRestaurantHistory()");
+
+		Host_restaurantDAO dao = sqlSession.getMapper(Host_restaurantDAO.class);
+
+		return dao.addRestaurantHistory(map);
+	}
+
+	// 회원 포인트 조회
+	@Override
+	public int getPoint(String id) {
+		log.debug("dao.getPoint()");
+
+		Host_restaurantDAO dao = sqlSession.getMapper(Host_restaurantDAO.class);
+
+		return dao.getPoint(id);
+	}
+
+	// 회원 포인트 수정
+	@Override
+	public int modMemberPoint(Map<String, Object> map) {
+		log.debug("dao.modMemberPoint()");
+
+		Host_restaurantDAO dao = sqlSession.getMapper(Host_restaurantDAO.class);
+
+		return dao.modMemberPoint(map);
 	}
 }

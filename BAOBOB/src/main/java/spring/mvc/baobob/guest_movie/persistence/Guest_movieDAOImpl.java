@@ -7,10 +7,13 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import spring.mvc.baobob.host_movie.persistence.Host_movieDAO;
 import spring.mvc.baobob.vo.Member;
 import spring.mvc.baobob.vo.MovieVO;
 import spring.mvc.baobob.vo.ReviewVO;
+import spring.mvc.baobob.vo.TheaterVO;
 import spring.mvc.baobob.vo.Theater_scheduleVO;
+import spring.mvc.baobob.vo.Theater_seatVO;
 
 @Repository
 public class Guest_movieDAOImpl implements Guest_movieDAO{
@@ -106,23 +109,6 @@ public class Guest_movieDAOImpl implements Guest_movieDAO{
 		return cnt;
 	}
 	
-	//review_index 불러오기
-	/*@Override
-	public String getReviewIndex(Map<String,Object> map) {
-		String review_index = null;
-		
-		Guest_movieDAO gmdao = sqlSession.getMapper(Guest_movieDAO.class);
-		//review_index = gmdao.getReviewIndex(map);
-		
-		if(gmdao.getReviewIndex(map)==null) {
-			review_index="0";
-		}else {
-			review_index = gmdao.getReviewIndex(map);
-		}
-		
-		return review_index;
-	}*/
-
 	//review 추가
 	@Override
 	public int insertReview(ReviewVO review) {
@@ -243,6 +229,38 @@ public class Guest_movieDAOImpl implements Guest_movieDAO{
 		return cnt;
 	}
 
+	//스케줄 정보
+	@Override
+	public Theater_scheduleVO getSchedule(int theater_schedule_index) {
+		Theater_scheduleVO schedule = null;
+		
+		Guest_movieDAO gmdao = sqlSession.getMapper(Guest_movieDAO.class);
+		schedule = gmdao.getSchedule(theater_schedule_index);
+		
+		return schedule;
+	}
+
+	// 상영관 상세
+	@Override
+	public TheaterVO theaterDetail(int theater_index) {
+		TheaterVO theater = null;
+		
+		Guest_movieDAO gmdao = sqlSession.getMapper(Guest_movieDAO.class);
+		theater = gmdao.theaterDetail(theater_index);
+		
+		return theater;
+	}
+	
+	// 상영관 상세 좌석 정보
+	@Override
+	public ArrayList<Theater_seatVO> theaterSeatDetail(Map<String,Integer> map) {
+		ArrayList<Theater_seatVO> seats = null;
+		
+		Guest_movieDAO gmdao = sqlSession.getMapper(Guest_movieDAO.class);
+		seats = gmdao.theaterSeatDetail(map);
+		
+		return seats;
+	}
 	
 
 

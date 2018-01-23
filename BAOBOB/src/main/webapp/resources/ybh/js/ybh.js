@@ -95,38 +95,92 @@ function common(){
 	}else{
 		$.ajaxSettings.traditional = true;//배열 형태로 서버쪽 전송을 위한 설정
 	
-			$.ajax({
-				url: 'dateResult',
-				type: 'GET',
-				data: {
-					movie, plusDay
-				},
-				
-				success: function(msg) {
-					$('#resultSchedule').html(msg);					
-				},				
-				error: function() {
-					alert('오류');
-				}	
-				
-			});
+		$.ajax({
+			url: 'dateResult',
+			type: 'GET',
+			data: {
+				movie, plusDay
+			},
+			
+			success: function(msg) {
+				$('#resultSchedule').html(msg);					
+			},				
+			error: function() {
+				alert('오류');
+			}	
+			
+		});
 	}
 }
 //영화버튼 클릭했을때
 function clickMovie(movie_index){
 	movie = movie_index;
 	common();
+	
+	//영화정보 보여주기위해
+	$.ajax({
+		url: 'reserveMovieInfo',
+		type: 'GET',
+		data: {
+			movie_index
+		},
+		
+		success: function(msg) {
+			$('#movieInfo').html(msg);					
+		},				
+		error: function() {
+			alert('오류');
+		}	
+		
+	});
+	
 }
 	
 //날짜 클릭 했을때
 function clickDate(num){
 	plusDay = num;
-	/*var now = new Date();
-	//선택한 날짜
-	var clickDate = new Date(Date.parse(now) + num * 1000 * 60 * 60 * 24);
-	//
-	click = clickDate;*/
 	common();
+}
+
+//스케줄 클릭 했을때
+function clickSchedule(theater_schedule_index, movie_index){
+	
+	//예매창에 스케줄정보 보여주기위해
+	$.ajax({
+		url: 'reserveScheduleInfo',
+		type: 'GET',
+		data: {
+			theater_schedule_index
+		},
+		
+		success: function(msg) {
+			$('#scheduleInfo').html(msg);					
+		},				
+		error: function() {
+			alert('오류');
+		}	
+	});
+	
+	//다음페이지로 넘어가기 위해 정보 넘겨주는 역할
+	$.ajax({
+		url: 'nextSeatButton',
+		type: 'GET',
+		data: {
+			theater_schedule_index, movie_index
+		},
+		
+		success: function(msg) {
+			$('#nextSeatButton').html(msg);					
+		},				
+		error: function() {
+			alert('오류');
+		}	
+	});
+}
+
+//다음페이지 선택했을 때 좌석페이지로 넘어가게
+function ToSeat(movie_index, theater_schedule_index){
+	window.location.href="movieTicket2?movie_index="+movie_index+"&theater_schedule_index="+theater_schedule_index;
 }
 
 

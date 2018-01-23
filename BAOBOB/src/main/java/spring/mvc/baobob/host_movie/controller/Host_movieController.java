@@ -21,6 +21,8 @@ public class Host_movieController {
 	
 	@Autowired
 	Host_totalServiceImpl serviceT = new Host_totalServiceImpl();
+	
+	
 	// 관리자 영화
 	@RequestMapping(value="hostMovie")
 	public String hostMovie(HttpServletRequest req, Model model) {
@@ -320,9 +322,28 @@ public class Host_movieController {
 		serviceT.movieChart(req, model); // 장르별 매출
 		service.movieJanreCountChart(req, model); // 장르별 관람객 수
 		service.movieAgeChart(req, model); // 제한연령별 매출
-		service.movieSexCountChart(req, model); // 관람객 성별 수
+		service.movieSexCountChart(req, model); // 관람객 성별 매출
 		
 		
 		return "host/host_movie/hostMovieSettlement";
 	}
+	
+	
+	////////////////////////////////////
+	//////////////////////////////////
+//	// 워드 클라우드
+//	@RequestMapping(value="refreshWordcloud", produces = "application/json; charset=utf8")
+//	public String refreshWordcloud(Model model, HttpServletRequest req) {
+//		
+//		System.out.println("워드클라우드 재검색 요청");
+////		String viewPage = service.wordcloudRefresh(model);
+//		
+//		return "main/wordcloud";
+//	}
+	
+	
+	
+	/////////////////////////////////////
+	//////////////////////////////////
+	
 }
