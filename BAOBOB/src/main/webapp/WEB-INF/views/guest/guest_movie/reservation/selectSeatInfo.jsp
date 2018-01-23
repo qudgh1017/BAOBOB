@@ -5,5 +5,10 @@
 <!-- CSS,JavaScript 참조 -->
 <%@ include file="/WEB-INF/views/guest/common/head.jsp" %>
 
+<% 
+	String[] seatRow = {"A","B","C","D","E","F","G","H","I","J","k","L",
+	                    "M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"};
+	request.setAttribute("seatRow",seatRow);
+%>
 
-${seat_index}
+${seatRow[seat.seat_row-1]}${seat.seat_col}

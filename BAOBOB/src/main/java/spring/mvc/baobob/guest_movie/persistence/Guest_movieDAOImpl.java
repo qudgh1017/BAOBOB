@@ -295,7 +295,16 @@ public class Guest_movieDAOImpl implements Guest_movieDAO{
 		return list;
 	}
 	
-	
+	//¸â¹öÁ¤º¸
+	@Override
+	public Member getMemberInfo(String member_id) {
+		Member member = null;
+		
+		Guest_movieDAO gmdao = sqlSession.getMapper(Guest_movieDAO.class);
+		member = gmdao.getMemberInfo(member_id);
+		
+		return member;
+	}
 
 	
 }
