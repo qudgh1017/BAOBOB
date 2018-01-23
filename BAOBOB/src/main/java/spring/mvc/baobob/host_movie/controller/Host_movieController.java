@@ -329,51 +329,14 @@ public class Host_movieController {
 	}
 	
 	
-	////////////////////////////////////
-	//////////////////////////////////
-	// 워드 클라우드
-	
-	// 워드 클라우드에 추가하기
-	@RequestMapping(value="addWordcloud")
-	public String addWordcloud(HttpServletRequest req, Model model) {
-		System.out.println("addWordcloud");
-		
-		service.wordAnalyzer(req, model);
-		
-		return "";
-	}
-	
-	
-	@RequestMapping(value="wordcloud", produces = "application/json; charset=utf8")
-	public String wordcloud(Model model, HttpServletRequest req) {
-		
-		System.out.println("워드클라우드");
-		
-		return "main/wordcloud";
-	}
-	
-	
-	@RequestMapping(value="refreshWordcloud", produces = "application/json; charset=utf8")
-	public String refreshWordcloud(Model model, HttpServletRequest req) {
-		
-		System.out.println("워드클라우드 재검색 요청");
-		service.wordcloudRefresh(req, model);
-		
-		return "main/wordcloud";
-	}
-	
-	// 리뷰 워드클라우드 가져오기
+	// 영화상세 리뷰 워드클라우드 가져오기
 	@RequestMapping(value="movieWordcloud", produces = "application/json; charset=utf8")
 	public String movieWordcloud(HttpServletRequest req, Model model) {
 		System.out.println("movieWordcloud");
 		
 		service.movieWordcloud(req, model);
 		
-		return "main/movieWordcloud";
+		return "guest/guest_movie/movie/movieWordcloud";
 	}
-	
-	
-	/////////////////////////////////////
-	//////////////////////////////////
 	
 }

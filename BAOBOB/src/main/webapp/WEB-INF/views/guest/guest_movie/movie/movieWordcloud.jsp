@@ -16,13 +16,8 @@
 			</div>
 			<div id="tags" style="float:left;">
 				<ul>
-					<c:forEach var="wordDto" items="${wordList}">
-						<c:if test="${wordDto.type_of_speech == 'Hashtag'}">
-							<li><a style="height:${wordDto.count+5}px;" href="#">${wordDto.word}</a></li>
-						</c:if>
-						<c:if test="${wordDto.type_of_speech != 'Hashtag'}">
-							<li><a style="font-size:${wordDto.count+5}px;" href="#">${wordDto.word}</a></li>
-						</c:if>
+					<c:forEach var="wordVO" items="${wordList}">
+							<li><a style="font-size:${wordVO.count+5}px;" href="#">${wordVO.word}</a></li>
 					</c:forEach>
 				</ul>
 			</div>
