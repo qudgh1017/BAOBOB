@@ -28,7 +28,7 @@
 	
 	<!-- 영화 추가 처리 hostMovieAddPro -->
 	<insert id="hostMovieAddPro" parameterType="spring.mvc.baobob.vo.MovieVO">
-		INSERT INTO movie_tbl (movie_index, movie_title, movie_content, movie_janre, movie_age, movie_rel_date, movie_director, movie_star, movie_country, movie_runTime, movie_poster, movie_trailer, movie_state) 
+		INSERT INTO movie_tbl (movie_index, movie_title, movie_content, movie_janre, movie_age, movie_rel_date, movie_director, movie_star, movie_country, movie_runTime, movie_poster, movie_trailer, movie_state, movie_count) 
 		VALUES (movie_tbl_SEQ.NEXTVAL, #{movie_title}, #{movie_content}, #{movie_janre}, #{movie_age}, #{movie_rel_date}, #{movie_director}, #{movie_star}, #{movie_country}, #{movie_runTime}, #{movie_poster}, #{movie_trailer}, #{movie_state}, 0)
 	</insert>
 
@@ -98,7 +98,7 @@
 	
 	<!-- 상영관 좌석 수정 처리 modify_theater_seat -->
 	<update id="modify_theater_seat" parameterType="java.util.Map">
-		UPDATE theater_seat_tbl SET seat_state=#{state}, seat_price=#{price} WHERE theater_index=#{theater_index} AND seat_row=#{row} AND seat_col=#{col}
+		UPDATE theater_seat_tbl SET seat_state=#{state}, seat_price=#{price} WHERE theater_index=#{theater_index} AND seat_row=#{row} AND seat_col=#{col} AND theater_schedule_index = -1
 	</update>
 	
 	<!-- 상영관 삭제 처리 -->
