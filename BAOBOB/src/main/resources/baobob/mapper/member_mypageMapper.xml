@@ -206,6 +206,7 @@
 		<![CDATA[
 			SELECT *
 			FROM( SELECT mh.history_index, h.member_id, m.movie_index, h.history_date,
+					 s.schedule_starttime, s.schedule_endtime,
 			         m.movie_title, m.movie_content, m.movie_janre, m.movie_age, 
 			         m.movie_rel_date, m.movie_director, m.movie_star, m.movie_country, m.movie_runTime, 
 			         m.movie_poster, m.movie_trailer, m.movie_state, rownum rNum 
@@ -272,25 +273,77 @@
 <!-- ************************************************************************************** -->	
 <!-- ************************************* 식당로그 START ************************************ -->	
 	
+	<!-- 내가 이용한 식당 갯수 구하기 -->
+	<select id="restaurantLogCnt" resultType="int">
+		SELECT COUNT(*)
+		FROM restaurant_tbl r JOIN restaurant_schedule_tbl rs
+		ON r.restaurant_index = rs.restaurant_index
+		JOIN restaurant_history_tbl rh
+		ON rs.restaurant_schedule_index = rh.restaurant_schedule_index
+		JOIN history_tbl h
+		ON h.history_index = rh.history_index
+		WHERE h.member_id=#{strId}
+	</select>
 	
-	
-	
-	
-	
-	
-	
+	<!-- 내가 이용한 식당 목록 조회 -->
+	<select id="restaurantLogList" resultType="spring.mvc.baobob.vo.RestaurantLogVO">
+		<![CDATA[
+		SELECT *
+		FROM( SELECT r.restaurant_index, r.restaurant_tel, r.restaurant_name,
+		             rs.restaurant_schedule_index, rs.schedule_starttime,rs.schedule_endtime,
+		             rh.restaurant_table_index,
+		             h.history_index, h.history_date, h.member_id, rownum rNum 
+		        FROM restaurant_tbl r JOIN restaurant_schedule_tbl rs
+		        ON r.restaurant_index = rs.restaurant_index
+		        JOIN restaurant_history_tbl rh
+		        ON rs.restaurant_schedule_index = rh.restaurant_schedule_index
+		        JOIN history_tbl h
+		        ON h.history_index = rh.history_index
+		        WHERE h.member_id=#{strId}
+		    )
+		WHERE rNum >= #{start} AND rNum <= #{end}
+		]]>
+	</select>
 	
 <!-- ************************************** 식당로그 END ************************************* -->	
 <!-- ************************************************************************************** -->
 	
+	<!-- 주차장 이용내역 갯수 -->
+	<select id="parkHistoryCnt" resultType="int">
+		SELECT COUNT(*)
+		FROM park_history_tbl p JOIN history_tbl h
+		ON h.history_index = p.history_index
+		WHERE h.member_id=#{strId}
+	</select>
 	
+	<!-- 주차장 이용내역 목록 조회 -->
+	<select id="parkHistoryList" resultType="spring.mvc.baobob.vo.ParkingHistory">
+		<![CDATA[
+			SELECT *
+			FROM ( SELECT p.p_history_index, p.p_history_in, p.p_history_out, p.p_history_price,
+			              p.p_history_space, p.p_history_date,
+			              h.history_index, h.history_date, h.member_id, rownum rNum 
+			        FROM park_history_tbl p JOIN history_tbl h
+			        ON h.history_index = p.history_index
+			        WHERE member_id=#{strId}
+			     )
+			WHERE rNum >= #{start} AND rNum <= #{end}
+		 ]]>
+	</select>
 	
+	<!-- 개인별 히스토리 목록 수 조회 -->
+	<select id="getHistoryListCnt" resultType="int">
+		SELECT COUNT(*) 
+		FROM history_tbl
+		WHERE member_id = #{strId}
+	</select>
 	
-	
-	
-	
-	
-	
+	<!-- 개인별 히스토리 목록 조회 -->
+	<select id="getHistoryList" resultType="spring.mvc.baobob.vo.HistoryVO">
+		SELECT * 
+		FROM history_tbl
+		WHERE member_id = #{strId}
+	</select>
 	
 	
 	

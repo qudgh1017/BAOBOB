@@ -47,6 +47,9 @@
 						<option value="5">멜로/로맨스</option>
 						<option value="6">코미디</option>
 						<option value="7">애니메이션</option>
+						<option value="8">액션</option>
+						<option value="9">스릴러</option>
+						<option value="10">미스터리</option>
 					</select>
 				</td>
 			</tr>

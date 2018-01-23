@@ -188,8 +188,8 @@ public class Host_totalServiceImpl implements Host_totalService{
 		int movieSale = dao.getMovieSale(); 
 		model.addAttribute("movieSale",movieSale);
 		
-		
 		Map<String , Object> map = new HashMap<String,Object>();
+		String[] janre = {"1","2","3","4","5","6","7","8","9","10"};
 
 		//상품종류별 구매수
 		//mapper에서 불러온 kind와 sum가 다건이기때문에 vo형태의 List형으로 받아준다.
@@ -199,6 +199,19 @@ public class Host_totalServiceImpl implements Host_totalService{
 		//(map의 key값이 String이기때문에 int형인 kind를 String으로 형변환 해준다.
 		for (hostTChartVO i : voList) {
 			map.put(Integer.toString(i.getKind()) , i.getSum());
+		}
+		
+		//키값이 없을때 0으로 초기화 
+		for(String s : janre) {
+			int chk = 0;
+			for(Entry<String, Object> m : map.entrySet()) {
+				if(s.equals(m.getKey())) {
+					chk=1;
+				}
+			}
+			if(chk==0) {
+				map.put(s, 0);
+			}
 		}
 		
 		model.addAttribute("movieChart",map);

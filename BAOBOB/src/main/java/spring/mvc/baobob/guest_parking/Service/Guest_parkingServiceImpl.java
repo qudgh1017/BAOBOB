@@ -33,6 +33,7 @@ public class Guest_parkingServiceImpl implements Guest_parkingService {
 	public void guestParkingInPro(HttpServletRequest req, Model model) {
 		String member_id = (String) req.getSession().getAttribute("memId");
 
+		//랜덤키 만들기
 		StringBuffer sb = new StringBuffer();
 		Random r = new Random();
 		for (int i = 0; i < 6; i += 1) {
@@ -47,7 +48,8 @@ public class Guest_parkingServiceImpl implements Guest_parkingService {
 		String key = sb.toString();
 
 		int cnt = 0;
-		if (member_id == null) { // 비회원일 경우 회원 목록에 비회원 추가
+		// 비회원일 경우 회원 목록에 비회원 추가
+		if (member_id == null) { 
 			member_id = key;
 			Member m = new Member();
 			m.setMember_id(member_id);
@@ -106,7 +108,7 @@ public class Guest_parkingServiceImpl implements Guest_parkingService {
 	// 퇴장 처리
 	@Override
 	public void guestParkingPay(HttpServletRequest req, Model model) {
-		String key = req.getParameter("key");
+		String key = req.getParameter("key").trim();
 
 		// 고객의 입차 시간
 		Timestamp inTime = dao.getParkingInTime(key);
@@ -152,6 +154,18 @@ public class Guest_parkingServiceImpl implements Guest_parkingService {
 		model.addAttribute("time", userTime/60 + "시간 " + userTime%60 + "분");
 		model.addAttribute("mTime", (pf.getP_fee_movie_time() * movie) / 60);
 		model.addAttribute("rTime", (pf.getP_fee_rest_time() * rest) / 60);
+		
+		//결제 금액의 10% 포인트 적립
+		int point = (int) (price * 0.1);
+		String id = dao.keyMemberIdSelect(key);
+		if(id != null) {
+			System.out.println("********************ID : " + id);
+			Member m = new Member();
+			m.setMember_id(id);
+			m.setMember_point(point);;
+			dao.memberPointUpdate(m);
+			model.addAttribute("point", point);
+		}
 	}
 
 	// 주차 내역 출력

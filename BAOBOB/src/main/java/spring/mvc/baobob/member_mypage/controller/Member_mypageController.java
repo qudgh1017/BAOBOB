@@ -436,10 +436,24 @@ public class Member_mypageController {
 		return "guest/member_myPage/memMovie/member_myPage_moviePaidDelPro";
 	}
 	
+	//레스토랑 로그
+	@RequestMapping("restaurantLog")
+	public String restaurantLog(HttpServletRequest req, Model model) {
+		
+		service.memberCard(req, model);
+		service.restaurantLog(req, model);
+		
+		return "guest/member_myPage/memRestaurant/member_myPage_restaurantLog";
+	}
 	
-	
-	
-	
+	@RequestMapping("visit")
+	public String visit(HttpServletRequest req, Model model) {
+		
+		service.memberCard(req, model);
+		service.visitList(req, model);
+		
+		return "guest/member_myPage/service/member_myPage_visit";
+	}
 	
 	
 	
