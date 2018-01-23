@@ -129,6 +129,7 @@ public class Guest_restaurantController {
 		//log.debug("===== Guest_restaurantController/guestRestaurantMain() =====");
 		String member_id = (String) req.getSession().getAttribute("member_id");
 		System.out.println("¸®ºä ¸®½ºÆ® member_id : " + member_id);
+		
 		service.reviewList(req, model);
 		
 		return "guest/guest_restaurant/review/guestRestaurant_review";

@@ -1,5 +1,5 @@
 //리뷰 별점 설정
-function showme(id) {
+/*function showme(id) {
     document.getElementById('result').innerHTML = 'My vote : '+id.value;
     var r = ["0","0","0","0","0"];
     var s='';
@@ -32,7 +32,7 @@ function calc() {
     document.getElementById('bar').style.width=s.toString()+'%';
     document.getElementById('sta').innerHTML=s.toString()+'%';
   }
-
+*/
 //리뷰 수정
 function guest_review_modify(pageNum, review_index, restaurant_index){
 	alert("review_index : " + review_index);
@@ -46,6 +46,86 @@ function guest_review_delete(pageNum, review_index, restaurant_index){
 
 	//var count = document.guest_cart.count[countCnt].value;
 	window.location="Restaurant_reviewDeleteForm?pageNum="+pageNum+"&review_index="+review_index+"&restaurant_index="+restaurant_index;
+}
+
+
+//리뷰 별점
+var locked = 0;
+
+function show(star){
+	if(locked)  return;
+	var i;
+	var image;
+	var el;
+	var e=document.getElementById('startext');
+	var stateMsg;
+	
+	for(i =1; i<= star; i++){
+		image = 'image' + i;
+		el =document.getElementById(image);
+		el.src="/baobob/resources/images/mhj/choice/icon_starOn.gif";
+	}
+	
+	switch(star){
+	case 1:
+		stateMsg = "불만족스러워요";
+		/* alert('1'); */
+		break;
+	case 2:
+		stateMsg = "별로에요";
+		/* alert('2'); */
+		break;
+	case 3:
+		stateMsg = "그러저럭";
+		/* alert('3'); */
+		break;
+	case 4:
+		stateMsg = "기대해도 좋아요";
+		/* alert('4'); */
+		break;
+	case 5:
+		stateMsg = "정말 좋아요! 추천!!";
+		/* alert('5'); */
+		break;
+	default :
+		stateMsg = "";
+	}	
+	e.innerHTML = stateMsg;	
+}
+
+function noshow(star){
+	if(locked) return;
+
+	var i;
+	var image;
+	var el;
+	
+	for (i = 1; i <= star; i++){
+		image = 'image' + i;
+		el = document.getElementById(image);
+		el.src="/baobob/resources/images/mhj/choice/icon_starOff.gif";
+	}
+}
+	
+function lock(star){
+	show(star);
+	locked=1;
+	/* alert("locked : " + locked); */
+}
+
+function mark(star){
+	
+	lock(star);
+	alert('star : ' + star);
+	var space = '';
+	var spaceDiv = document.getElementById('spaceDiv'); // 출력 위치
+
+	space = '<input type="hidden" ' + 'value="' + star + '" ' + 'name="star"' + '/>';
+	alert(space);
+	spaceDiv.innerHTML = space;
+
+	/*document.reviewForm.star.value=star;
+	alert('document.reviewForm.star.value : ' + document.reviewForm.star.value);*/
 }
 
 
