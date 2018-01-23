@@ -59,7 +59,9 @@
 					        	${dto.restaurant_tel}
 					        </th>
 							<td>
-								${dto.schedule_starttime} ~ ${dto.schedule_endtime} 
+								<fmt:formatDate type="both" pattern="yyyy-MM-dd HH:mm" value="${dto.schedule_starttime}" />
+								~
+								<fmt:formatDate type="both" pattern="yyyy-MM-dd HH:mm" value="${dto.schedule_endtime}" />
 							</td>
 					    </tr>
 					    </tbody>

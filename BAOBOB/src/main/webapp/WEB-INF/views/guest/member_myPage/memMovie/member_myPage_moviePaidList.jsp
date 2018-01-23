@@ -37,7 +37,7 @@
 				    	<th style="width:15%">포스터</th>
 				        <th style="width:30%">제목</th>
 				        <th style="width:10%">감독</th>
-				        <th style="width:15%">개봉일</th>
+				        <th style="width:15%">예매시간</th>
 				    </tr>
 			    </thead>
 			    
@@ -66,8 +66,24 @@
 					        </th>
 					        <th style="text-align:center;">${dto.movie_director}</th>
 							<td>
-								${dto.movie_rel_date}<br><br>
-								<input type="button" class="button" onclick="window.location='moviePaidDelPro?num=${dto.history_index}'"value="예매 취소">
+								<fmt:formatDate type="both" pattern="yy.MM.dd HH:mm" value="${dto.schedule_startTime}" />
+								~
+								<fmt:formatDate type="both" pattern="yy.MM.dd HH:mm" value="${dto.schedule_endTime}" />
+								<br><br>
+								
+								<!-- 날짜비교를 위한 선언,if문의 jstl -->
+								<jsp:useBean id="now" class="java.util.Date" />
+								<fmt:formatDate value="${dto.history_date}" var="hisDate" pattern="yyyy-MM-dd" />
+								<fmt:formatDate value="${now}" var="sysDate" pattern="yyyy-MM-dd" />
+								
+								<c:if test="${hisDate > sysDate}">
+									<input type="button" class="button" onclick="window.location='moviePaidDelPro?num=${dto.history_index}'"value="예매 취소">
+								</c:if>
+								
+								<c:if test="${hisDate < sysDate}">
+									<input type="button" class="button" onclick="#!"value="결제 완료">
+								</c:if>
+								
 							</td>
 					    </tr>
 					    </tbody>

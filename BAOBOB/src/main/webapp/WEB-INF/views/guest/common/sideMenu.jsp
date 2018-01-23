@@ -9,7 +9,7 @@
 				<c:if test="${vo.member_step != 8}">
 					<a href="#!" class="active">SERVICE</a>
 					<a href="#!">포인트/쿠폰</a>
-					<a href="#!">방문 내역</a>
+					<a href="visit">방문 내역</a>
 				</c:if>
 				<a href="#!" class="active">MOVIE</a>
 				<c:if test="${vo.member_step != 8}">

@@ -69,5 +69,7 @@ public interface Member_mypageService {
 	
 	//내가 이용한 레스토랑
 	public void restaurantLog(HttpServletRequest req, Model model);
-
+	
+	//방문내역
+	public void visitList(HttpServletRequest req, Model model);
 }

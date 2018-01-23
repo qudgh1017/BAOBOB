@@ -8,9 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import spring.mvc.baobob.vo.BoardVO;
+import spring.mvc.baobob.vo.HistoryVO;
 import spring.mvc.baobob.vo.Member;
 import spring.mvc.baobob.vo.MovieHistoryVO;
 import spring.mvc.baobob.vo.MovieVO;
+import spring.mvc.baobob.vo.ParkingHistory;
 import spring.mvc.baobob.vo.RestaurantLogVO;
 
 @Repository
@@ -504,15 +506,53 @@ public class Member_mypageDAOImpl implements Member_mypageDAO{
 		return dtos;
 	}
 	
+/*----------------------------------------------------------------------------*/
 	
+	//주차장 내역 갯수 구하기
+	public int parkHistoryCnt(String strId) {
+		int cnt = 0;
+		
+		Member_mypageDAO dao = sqlSession.getMapper(Member_mypageDAO.class);
+		cnt = dao.parkHistoryCnt(strId);
+		
+		return cnt;
+	}
 	
+/*----------------------------------------------------------------------------*/
 	
+	//주차장 내역 목록 조회
+	public ArrayList<ParkingHistory> parkHistoryList(Map<String, Object> map){
+		ArrayList<ParkingHistory> dtos = null;
+		
+		Member_mypageDAO dao = sqlSession.getMapper(Member_mypageDAO.class);
+		dtos = dao.parkHistoryList(map);
+		
+		return dtos;
+	}
 	
+/*----------------------------------------------------------------------------*/
 	
+	//개인별 히스토리 목록 수 조회
+	public int getHistoryListCnt(String strId) {
+		int cnt = 0;
+		
+		Member_mypageDAO dao = sqlSession.getMapper(Member_mypageDAO.class);
+		cnt = dao.getHistoryListCnt(strId);
+		
+		return cnt;
+	}
 	
+/*----------------------------------------------------------------------------*/
 	
-	
-	
+	//개인별 히스토리 목록 조회
+	public ArrayList<HistoryVO> getHistoryList(Map<String, Object> map){
+		ArrayList<HistoryVO> dtos = null;
+		
+		Member_mypageDAO dao = sqlSession.getMapper(Member_mypageDAO.class);
+		dtos = dao.getHistoryList(map);
+		
+		return dtos;
+	}
 	
 	
 	
