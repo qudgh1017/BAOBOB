@@ -248,4 +248,60 @@
 		WHERE member_id = #{member_id} 
 	</select>
 	
+	<!-- 1. 결제 테이블 추가 -->
+	<insert id="insertHistory" parameterType="String">
+		INSERT INTO history_tbl 
+		VALUES(history_tbl_seq.nextval, sysdate, #{member_id})
+	</insert>
+	
+	<!-- 2. 영화 결제테이블 추가 -->
+	<insert id="insertMovieHistory" parameterType="java.util.Map">
+		INSERT INTO movie_history_tbl 
+		VALUES(history_tbl_seq.currval, #{theater_schedule_index}, #{movie_history_price})
+	</insert>
+	
+	<!-- 3. 좌석 테이블의 seat_state 변경 -->
+	<update id="updateSeatState" parameterType="int">
+		UPDATE theater_seat_tbl SET seat_state=6 
+		WHERE seat_index = #{seat_index}
+	</update>
+	
+	<!-- 4. 스케줄테이블의 emtpy_seat 감소(결제한 만큼) -->
+	<update id="updateEmptySeat" parameterType="java.util.Map">
+		UPDATE theater_schedule_tbl SET schedule_empty_seat = schedule_empty_seat-#{totalCnt} 
+		WHERE theater_schedule_index = #{theater_schedule_index}
+	</update>
+	
+	<!-- 5. Update movie_tbl  movie_count + totalCnt해주기(영화관람객수 증가) -->
+	<update id="updateMovieCount" parameterType="java.util.Map">
+		UPDATE movie_tbl SET movie_count = movie_count + #{totalCnt} 
+		WHERE movie_index = #{movie_index}
+	</update>
+	
+	<!-- 6. Update member_tbl member_point, member_cumpoint (결제시 증가) -->
+	<update id="updateIncreasePoint" parameterType="java.util.Map">
+		UPDATE member_tbl 
+		SET member_point=member_point+(#{movie_history_price_10perc}), 
+			member_cumPoint=member_cumPoint+(#{movie_history_price_10perc}) 
+		WHERE member_id = #{member_id}
+	</update>
+	
+	<!-- 7. Update member_tbl member_point (포인트 사용했을시 감소) -->
+	<update id="updateDecreasePoint" parameterType="java.util.Map">
+		UPDATE member_tbl SET member_point=member_point-#{member_point} 
+		WHERE member_id = #{member_id}
+	</update>
+	
+	<!-- 8. SELECT member_tble에서 member_cumPoint확인 -->
+	<select id="getMemberCumPoint" resultType="int">
+		SELECT member_cumPoint FROM member_tbl 
+		WHERE member_id= #{member_id}
+	</select>
+	
+	<!-- 9. UPDATE member_step(Service에서 if조건으로 조건 만족시 실행) -->
+	<update id="updateMemberStep" parameterType="java.util.Map">
+		UPDATE member_tbl SET member_step = #{member_step} 
+		WHERE member_id= #{member_id}
+	</update>
+	
 </mapper>

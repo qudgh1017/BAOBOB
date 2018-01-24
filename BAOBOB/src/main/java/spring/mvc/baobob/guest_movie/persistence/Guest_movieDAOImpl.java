@@ -305,6 +305,105 @@ public class Guest_movieDAOImpl implements Guest_movieDAO{
 		
 		return member;
 	}
+//결제------------
+	//1. Insert history_tbl
+	@Override
+	public int insertHistory(String member_id) {
+		int cnt = 0;
+		
+		Guest_movieDAO gmdao = sqlSession.getMapper(Guest_movieDAO.class);
+		cnt = gmdao.insertHistory(member_id);
+		
+		return cnt;
+	}
+	
+	//2. Insert movie_history_tbl
+	@Override
+	public int insertMovieHistory(Map<String, Object> map) {
+		int cnt = 0;
+		
+		Guest_movieDAO gmdao = sqlSession.getMapper(Guest_movieDAO.class);
+		cnt = gmdao.insertMovieHistory(map);
+		
+		return cnt;
+	}
 
+	//3. Update theater_seat_tbl 해당 seat_index의 seat_state=6 변경(좌석 상태 예약석으로 변경)
+	@Override
+	public int updateSeatState(int seat_index) {
+		int cnt = 0;
+		
+		Guest_movieDAO gmdao = sqlSession.getMapper(Guest_movieDAO.class);
+		cnt = gmdao.updateSeatState(seat_index);
+		
+		return cnt;
+	}
+
+	//4. Update theater_schedule_tbl schedule_empty_seat= -totalCnt해주기(빈자리수 감소)
+	@Override
+	public int updateEmptySeat(Map<String, Object> map) {
+		int cnt = 0;
+		
+		Guest_movieDAO gmdao = sqlSession.getMapper(Guest_movieDAO.class);
+		cnt = gmdao.updateEmptySeat(map);
+		
+		return cnt;
+	}
+
+	//5. Update movie_tbl  movie_count + totalCnt해주기(영화관람객수 증가)
+	@Override
+	public int updateMovieCount(Map<String, Object> map) {
+		int cnt = 0;
+		
+		Guest_movieDAO gmdao = sqlSession.getMapper(Guest_movieDAO.class);
+		cnt = gmdao.updateMovieCount(map);
+		
+		return cnt;
+	}
+
+	//6. Update member_tbl member_point, member_cumpoint (결제시 증가)
+	@Override
+	public int updateIncreasePoint(Map<String, Object> map) {
+		int cnt = 0;
+		
+		Guest_movieDAO gmdao = sqlSession.getMapper(Guest_movieDAO.class);
+		cnt = gmdao.updateIncreasePoint(map);
+		
+		return cnt;
+	}
+
+	//7. Update member_tbl member_point (포인트 사용했을시 감소)
+	@Override
+	public int updateDecreasePoint(Map<String, Object> map) {
+		int cnt = 0;
+		
+		Guest_movieDAO gmdao = sqlSession.getMapper(Guest_movieDAO.class);
+		cnt = gmdao.updateDecreasePoint(map);
+		
+		return cnt;
+	}
+
+	//8. SELECT member_tble에서 member_cumPoint확인
+	@Override
+	public int getMemberCumPoint(String member_id) {
+		int member_cumPoint = 0;
+		
+		Guest_movieDAO gmdao = sqlSession.getMapper(Guest_movieDAO.class);
+		member_cumPoint = gmdao.getMemberCumPoint(member_id);
+		
+		return member_cumPoint;
+	}
+
+	//9. UPDATE member_step 8번 확인해서 if문으로 체크해서 등업!!
+	@Override
+	public int updateMemberStep(Map<String, Object> map) {
+		int cnt = 0;
+		
+		Guest_movieDAO gmdao = sqlSession.getMapper(Guest_movieDAO.class);
+		cnt = gmdao.updateMemberStep(map);
+		
+		return cnt;
+	}
+// 결제끝
 	
 }

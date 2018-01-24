@@ -42,8 +42,8 @@
 			    </thead>
 			    
 			    <!-- 게시글이 있으면 -->
-				<c:if test="${cnt > 0 }">
-					<c:forEach var="dto" items="${dtos}">
+				<c:if test="${memQuestionCnt > 0 }">
+					<c:forEach var="dto" items="${QuestionDtos}">
 						<!-- 게시글 -->
 						<%-- <c:if test="${dto.board_type eq 2}"> --%>
 					    <tbody>
@@ -91,7 +91,7 @@
 			    </c:if>
 			    
 			    <!-- 게시글이 없으면 -->
-				<c:if test="${cnt == 0 }">
+				<c:if test="${memQuestionCnt == 0 }">
 					<tr>
 						<td colspan="6" align="center">
 							No contents...
@@ -102,7 +102,7 @@
 				
 			<!-- 페이징 컨트롤 -->
 			<div class="pagination">
-				<c:if test="${cnt > 0 }">
+				<c:if test="${memQuestionCnt > 0 }">
 					<c:if test="${startPage > pageBlock }">
 						<a href="memQuestion">&laquo;</a>.
 						<a href="memQuestion?pageNum=${startPage - pageBlock}">&lsaquo;</a>

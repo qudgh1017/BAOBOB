@@ -52,7 +52,7 @@
 		</c:if>
 		<c:if test="${seatInfo.state[(row)*seatInfo.totalCol-1+col]==6}">
 			<label class="btn btn" style="margin:1px 1px; height:35; width:35; background-image: url('${projectRes}/images/phc/icon/theater_comp.png');">
- 				<input type="checkbox" style="width:10; height:10;" name="seat_index" autocomplete="off" value="${seatInfo.seat_index[(row)*seatInfo.totalCol-1+col]}">${col}
+ 				<input type="checkbox" style="width:10; height:10;" name="seat_index" disalbed autocomplete="off" value="${seatInfo.seat_index[(row)*seatInfo.totalCol-1+col]}">${col}
 			</label>
 		</c:if>
 	</c:forEach>

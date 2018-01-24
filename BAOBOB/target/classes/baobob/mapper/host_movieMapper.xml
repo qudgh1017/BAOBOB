@@ -28,7 +28,7 @@
 	
 	<!-- 영화 추가 처리 hostMovieAddPro -->
 	<insert id="hostMovieAddPro" parameterType="spring.mvc.baobob.vo.MovieVO">
-		INSERT INTO movie_tbl (movie_index, movie_title, movie_content, movie_janre, movie_age, movie_rel_date, movie_director, movie_star, movie_country, movie_runTime, movie_poster, movie_trailer, movie_state) 
+		INSERT INTO movie_tbl (movie_index, movie_title, movie_content, movie_janre, movie_age, movie_rel_date, movie_director, movie_star, movie_country, movie_runTime, movie_poster, movie_trailer, movie_state, movie_count) 
 		VALUES (movie_tbl_SEQ.NEXTVAL, #{movie_title}, #{movie_content}, #{movie_janre}, #{movie_age}, #{movie_rel_date}, #{movie_director}, #{movie_star}, #{movie_country}, #{movie_runTime}, #{movie_poster}, #{movie_trailer}, #{movie_state}, 0)
 	</insert>
 
@@ -98,7 +98,7 @@
 	
 	<!-- 상영관 좌석 수정 처리 modify_theater_seat -->
 	<update id="modify_theater_seat" parameterType="java.util.Map">
-		UPDATE theater_seat_tbl SET seat_state=#{state}, seat_price=#{price} WHERE theater_index=#{theater_index} AND seat_row=#{row} AND seat_col=#{col}
+		UPDATE theater_seat_tbl SET seat_state=#{state}, seat_price=#{price} WHERE theater_index=#{theater_index} AND seat_row=#{row} AND seat_col=#{col} AND theater_schedule_index = -1
 	</update>
 	
 	<!-- 상영관 삭제 처리 -->
@@ -128,8 +128,8 @@
 			  FROM theater_tbl 
 			 WHERE NOT theater_index IN(SELECT theater_index 
 			 							  FROM theater_schedule_tbl 
-										 WHERE (schedule_startTime > to_char(to_date(#{schedule_start}, 'YY-MM-DD-HH24-MI')-3/24, 'YY-MM-DD-HH24-MI') 
-										   AND (to_char(to_date(#{schedule_start}, 'YY-MM-DD-HH24-MI')+180/24/60, 'YY-MM-DD-HH24-MI') >	schedule_endTime)))
+										 WHERE (schedule_startTime > to_char(to_date(#{schedule_start}, 'YY-MM-DD-HH24-MI')-181/24/60, 'YY-MM-DD-HH24-MI') 
+										   AND (to_char(to_date(#{schedule_start}, 'YY-MM-DD-HH24-MI')+3/24, 'YY-MM-DD-HH24-MI') >	schedule_startTime)))
 		]]>
 	</select>
 	
@@ -140,8 +140,8 @@
 			  FROM theater_tbl 
 			 WHERE NOT theater_index IN(SELECT theater_index 
 			 							  FROM theater_schedule_tbl 
-										 WHERE (schedule_startTime > to_char(to_date(#{schedule_start}, 'YY-MM-DD-HH24-MI')-3/24, 'YY-MM-DD-HH24-MI') 
-										   AND (to_char(to_date(#{schedule_start}, 'YY-MM-DD-HH24-MI')+180/24/60, 'YY-MM-DD-HH24-MI') >	schedule_endTime)))
+										 WHERE (schedule_startTime > to_char(to_date(#{schedule_start}, 'YY-MM-DD-HH24-MI')-181/24/60, 'YY-MM-DD-HH24-MI') 
+										   AND (to_char(to_date(#{schedule_start}, 'YY-MM-DD-HH24-MI')+3/24, 'YY-MM-DD-HH24-MI') >	schedule_startTime)))
 		]]>
 	</select>
 	
@@ -173,7 +173,7 @@
 		SELECT count(*) 
 		  FROM theater_schedule_tbl 
 		 WHERE (schedule_startTime > to_char(to_date(#{schedule_startTime}, 'YY-MM-DD-HH24-MI')-3/24, 'YY-MM-DD-HH24-MI') 
-		   AND (to_char(to_date(#{schedule_startTime}, 'YY-MM-DD-HH24-MI')+4/24, 'YY-MM-DD-HH24-MI') >	schedule_endTime))
+		   AND (to_char(to_date(#{schedule_startTime}, 'YY-MM-DD-HH24-MI')+3/24, 'YY-MM-DD-HH24-MI') >	schedule_startTime))
 		   AND theater_schedule_index IN (select theater_schedule_index FROM theater_schedule_tbl WHERE NOT theater_schedule_index = #{theater_schedule_index})
 		   AND theater_index = #{theater_index}
 	   ]]>
