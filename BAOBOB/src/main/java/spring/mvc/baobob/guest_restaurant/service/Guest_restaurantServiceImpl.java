@@ -290,8 +290,6 @@ public class Guest_restaurantServiceImpl implements Guest_restaurantService{
 	
 	
 	
-	
-	
 	//==========================================================================
 	//============================== 4. ·¹½ºÅä¶û ¸®ºä ==============================
 	//==========================================================================
@@ -388,7 +386,7 @@ public class Guest_restaurantServiceImpl implements Guest_restaurantService{
 	@Override
 	public void reviewWrite(HttpServletRequest req, Model model) {
 		int restaurant_index = Integer.parseInt(req.getParameter("restaurant_index"));
-		String review_grade = req.getParameter("review_grade");
+		String review_grade = req.getParameter("star");
 		String review_content = req.getParameter("review_content");
 		String member_id = (String) req.getSession().getAttribute("memId");
 		//String member_id = "member_id 1";
@@ -418,7 +416,6 @@ public class Guest_restaurantServiceImpl implements Guest_restaurantService{
 		System.out.println("restaurant_index : "+ restaurant_index);
 		System.out.println("insertCnt : "+ insertCnt);
 		System.out.println("insertCnt2 : "+ insertCnt2);
-
 	}
 
 	

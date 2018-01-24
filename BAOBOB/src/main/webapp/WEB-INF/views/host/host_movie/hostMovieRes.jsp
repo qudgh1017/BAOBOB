@@ -50,22 +50,26 @@
 		<div id="content">
 			<center><h3><b>예매 목록</b></h3></center>
 			<hr style="border:3px solid black;">
-<!-- 			<input style="background-color:#343a40; color:white; border:1px solid black; width:200px; height:40px; margin-left:177px; margin-bottom:15px;" type="button" name="hostMovieAddForm" onclick="window.location='hostScheduleAddForm'" value="스케줄 추가하기"/> -->
-			<div style="height:40px;">
-				<input style="background-color:#343a40; color:white; border:1px solid black; float:right; width:200px; height:40px;  margin-bottom:15px;" type="button" onclick="return hostResSearch();" value="조회하기"/>
-				<select id="theater_index" name="theater_index" style="float:right;">
-					<option value="">상영관 선택</option>
-					<c:forEach var="theaterVO" items="${theaterVOS}">
-							<c:if test="${theaterVO.theater_index == theater_index}">
-								<option value="${theaterVO.theater_index}" selected>${theaterVO.theater_index}관</option>
-							</c:if>
-							<c:if test="${theaterVO.theater_index != theater_index}">
-								<option value="${theaterVO.theater_index}" >${theaterVO.theater_index}관</option>
-							</c:if>
-					</c:forEach>
-				</select>
-				<input type="text" style="float:right;" name="date" id="datepicker" class="datepicker" placeholder="날짜선택" value="${date}"/>
+			<div class="row">
+				<div style="height:40px;" class="col-lg-1"></div>
+				<div style="height:40px;" class="col-lg-10">
+					<input style="background-color:#343a40; color:white; border:1px solid black; float:right; width:200px; height:40px;  margin-bottom:15px;" type="button" onclick="return hostResSearch();" value="조회하기"/>
+					<select id="theater_index" name="theater_index" style="float:right;">
+						<option value="">상영관 선택</option>
+						<c:forEach var="theaterVO" items="${theaterVOS}">
+								<c:if test="${theaterVO.theater_index == theater_index}">
+									<option value="${theaterVO.theater_index}" selected>${theaterVO.theater_index}관</option>
+								</c:if>
+								<c:if test="${theaterVO.theater_index != theater_index}">
+									<option value="${theaterVO.theater_index}" >${theaterVO.theater_index}관</option>
+								</c:if>
+						</c:forEach>
+					</select>
+					<input type="text" style="float:right;" name="date" id="datepicker" class="datepicker" placeholder="날짜선택" value="${date}"/>
+				</div>
+				<div style="height:40px;" class="col-lg-1"></div>
 			</div>
+			
 			
 			<div class="cd-schedule loading">
 			<div class="timeline">
