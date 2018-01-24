@@ -103,7 +103,8 @@ function common(){
 			},
 			
 			success: function(msg) {
-				$('#resultSchedule').html(msg);					
+				$('#resultSchedule').html(msg);	
+				
 			},				
 			error: function() {
 				alert('오류');
@@ -183,8 +184,84 @@ function ToSeat(movie_index, theater_schedule_index){
 	window.location.href="movieTicket2?movie_index="+movie_index+"&theater_schedule_index="+theater_schedule_index;
 }
 
+//사용할 포인트 입력시(onchange)이며 ajax로 할인내역, 총할인가격, 실 계산가격 값 변경  
+function point(member_point, field, totalSalePrice, movie_history_price){
+	
+	//member_point가 사용가능한 member_point
+	//point는 사용할 point
+	var point = field.value-0;
+	
+	if(member_point>=point){
+		alert("사용가능합니다.");
+		
+		//point 값만 넘기기
+		$.ajax({
+			url : "pointUse?point=" + point,
+			type : 'GET',
+			contentType : "application/x-www-form-urlencoded; charset=UTF-8",
+			success : function(pointSalePrice) { //pointSalePrice는 결국 사용할 값
+				// 뿌려줄 장소
+				var id_point = document.getElementById("point");
+				var id_totalSalePrice = document.getElementById("totalSalePrice");
+				var id_movie_history_price = document.getElementById("movie_history_price");
+				
+				var pointText = "";
+				var pointText = "-" + pointSalePrice+"원";
+				var totalSalePriceText = totalSalePrice-0 + pointSalePrice;//총 할인가격
+				var movie_history_priceText = movie_history_price-0 - pointSalePrice;//실 계산 가격
+				
+				//값 뿌리기
+				id_point.innerHTML = pointText;
+				id_totalSalePrice.innerHTML = "-" + totalSalePriceText + "원";
+				id_movie_history_price.innerHTML = movie_history_priceText + "원";
+				
+			},
+			error : function() {
+				alert('error');
+			}
+		})
+	}else{//사용하고자 하는 point가 더 적을때
+		alert("포인트가 부족합니다.");
+	}
+}
 
+var card_num_msg="카드 번호를 입력해주세요";
+var card_pwd_msg="카드 비밀번호를 입력해주세요";
+var card_month_msg="카드 moth를 입력해주세요";
+var card_year_msg="카드 year를 입력해주세요";
 
+//카드 입력창 값 유무 확인
+function cardInfoChk() {
+	if(!document.reservationMovieForm.card_num1.value){
+		alert(card_num_msg);
+		document.all.card_num1.focus();
+		return false;
+	} else if(!document.reservationMovieForm.card_num2.value) {
+		alert(card_num_msg);
+		document.reservationMovieForm.card_num2.focus();
+		return false;
+	} else if(!document.reservationMovieForm.card_num3.value){
+		alert(card_num_msg);
+		document.reservationMovieForm.card_num3.focus();
+		return false;
+	} else if(!document.reservationMovieForm.card_num4.value) {
+		alert(card_num_msg);
+		document.reservationMovieForm.card_num4.focus();
+		return false;
+	} else if(!document.reservationMovieForm.card_pwd.value) {
+		alert(card_pwd_msg);
+		document.reservationMovieForm.card_pwd.focus();
+		return false;
+	} else if(!document.reservationMovieForm.card_month.value){
+		alert(card_month_msg);
+		document.reservationMovieForm.card_month.focus();
+		return false;
+	} else if(!document.reservationMovieForm.card_year.value) {
+		alert(card_year_msg);
+		document.reservationMovieForm.card_year.focus();
+		return false;
+	}
+}
   
 
 

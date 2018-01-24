@@ -254,8 +254,7 @@ public class Guest_movieController {
 	public String selectSeatInfo(HttpServletRequest req, Model model) {
 		log.debug("====== Guest_movieController/selectSeatInfo ======");
  
-		int seat_index = Integer.parseInt(req.getParameter("seat_index"));
-		model.addAttribute("seat_index", seat_index);
+		gmservice.seatInfo(req, model);
 		
 		return "/guest/guest_movie/reservation/selectSeatInfo";
 	}
@@ -280,6 +279,28 @@ public class Guest_movieController {
 		return "/guest/guest_movie/reservation/movieTicket3";
 	}
 	
+	//예매-빠른예매 3번째페이지 - 포인트 사용 값 바꿔주기
+	@RequestMapping("pointUse")
+	public @ResponseBody int pointUse(HttpServletRequest req, Model model) {
+		log.debug("====== Guest_movieController/pointUse ======");
+
+		//사용가능한 포인트
+		int pointSalePrice = Integer.parseInt(req.getParameter("point"));
+		//ResponseBody로 자바 객체를 송신해준다. 
+		
+		return pointSalePrice;
+	}
+	
+	//예매 최종 처리하는 곳
+	@RequestMapping("reservationMoviePro")
+	public String reservationMoviePro(HttpServletRequest req, Model model) {
+		log.debug("====== Guest_movieController/reservationMoviePro ======");
+
+		gmservice.reservationPro(req, model);
+		
+		return "/guest/guest_movie/reservation/reservationMoviePro";
+	}
+	
 	//예매-상영시간표
 	@RequestMapping("movieSchedule")
 	public String movieSchedule(HttpServletRequest req, Model model) {
@@ -296,27 +317,4 @@ public class Guest_movieController {
 		return "/guest/guest_movie/theater/theaters";
 	}
 	
-	//이벤트-멤버쉽
-	@RequestMapping("eventMembership")
-	public String eventMembership(HttpServletRequest req, Model model) {
-		log.debug("====== Guest_movieController/eventMembership ======");
-
-		return "/guest/guest_movie/event/eventMembership";
-	}
-	
-	//이벤트-할인/제휴
-	@RequestMapping("eventSale")
-	public String eventSale(HttpServletRequest req, Model model) {
-		log.debug("====== Guest_movieController/eventSale ======");
-
-		return "/guest/guest_movie/event/eventSale";
-	}
-	
-	//이벤트-무대인사
-	@RequestMapping("eventPreview")
-	public String eventPreview(HttpServletRequest req, Model model) {
-		log.debug("====== Guest_movieController/eventPreview ======");
-
-		return "/guest/guest_movie/event/eventPreview";
-	}
 }

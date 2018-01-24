@@ -43,7 +43,36 @@
 							${vo.movie_director}
 						</td>
 						<td>
-							${vo.movie_janre}
+							<c:if test="${vo.movie_janre==1}">
+								가족
+							</c:if>
+							<c:if test="${vo.movie_janre==2}">
+								공포/호러
+							</c:if>
+							<c:if test="${vo.movie_janre==3}">
+								드라마
+							</c:if>
+							<c:if test="${vo.movie_janre==4}">
+								SF
+							</c:if>
+							<c:if test="${vo.movie_janre==5}">
+								멜로/로맨스
+							</c:if>
+							<c:if test="${vo.movie_janre==6}">
+								코미디
+							</c:if>
+							<c:if test="${vo.movie_janre==7}">
+								애니메이션
+							</c:if>
+							<c:if test="${vo.movie_janre==8}">
+								액션
+							</c:if>
+							<c:if test="${vo.movie_janre==9}">
+								스릴러
+							</c:if>
+							<c:if test="${vo.movie_janre==10}">
+								미스터리
+							</c:if>
 						</td>
 						<td>
 							${vo.movie_rel_date}

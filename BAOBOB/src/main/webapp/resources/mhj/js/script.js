@@ -58,8 +58,14 @@ function guest_review_delete(pageNum, review_index, restaurant_index){
  * 
  */
 
+var delChk = "번 메뉴를 삭제하시겠습니까?";
+var delChk2 = "님의 직원 정보를 삭제하시겠습니까?";
+var delChk3 = "의 정보를 삭제하시겠습니까?\n삭제한 정보는 다시 되돌릴 수 없습니다.";
 var addChk = " 님을 직원으로 등록하시겠습니까?";
 var numChk = "이 입력란은 숫자만 입력 가능합니다.";
+
+
+
 
 // 숫자만 입력 받기
 function onlyNumber(event) {
@@ -141,7 +147,7 @@ function spaceBtnChange(location) {
 	//선택한 버튼의 value변경 (DB에 아이콘 index 넣기 위한값)
 	var btnId = 'btn' + location;
 	var spaceBtn = document.getElementById(btnId);
-	var tableCnt = document.getElementById('tableCnt').value;//인원 추가 설정 수
+	var tableCnt = document.getElementById('tableCnt').value;
 	
 	
 	if(spaceBtn.value==1){
@@ -175,24 +181,20 @@ function spaceTypeChange2() {
 	var tableCnt = document.getElementById('tableCnt').value;//선택한 테이블 수량을 가져온다.
 	//
 	var restaurant_index = document.getElementById('restaurant_index').value;
+	alert('식당 : ' + restaurant_index);
+
+	// 배열판 버튼들의 아이콘 index 배열
+	var array = new Array();
+	item.forEach(function(space) {
+		array.push(space.value);
+	});
+	var info = array.join(',');
+	var date = document.getElementById('datepicker').value;
+	var time = document.getElementById('timepicker').value;
 	
-	if(cnt <= tableCnt){
-		alert('식당 : ' + restaurant_index);
-		
-		
-		// 배열판 버튼들의 아이콘 index 배열
-		var array = new Array();
-		item.forEach(function(space) {
-			array.push(space.value);
-		});
-		var info = array.join(',');
-		var date = document.getElementById('datepicker').value;
-		var time = document.getElementById('timepicker').value;
-		
-		window.location = 'guestReservAddPro?info=' + info + '&col=' + x + '&row=' + y + '&restaurant_index='+ restaurant_index + '&date=' + date + '&time=' + time;
-		
-	}
+	window.location = 'guestReservAddPro?info=' + info + '&col=' + x + '&row=' + y + '&restaurant_index='+ restaurant_index + '&date=' + date + '&time=' + time;
 }
+
 // 설정한 배열판이 있을 경우
 function spaceBody(info, col, row) {
 	var arr = info.split(',');

@@ -240,4 +240,12 @@
 		WHERE num >= #{start} AND num <= #{end}	
 		]]>
 	</select>
+	
+	<!-- 멤버 정보 -->
+	<select id="getMemberInfo" resultType="spring.mvc.baobob.vo.Member">
+		SELECT *
+		FROM member_tbl
+		WHERE member_id = #{member_id} 
+	</select>
+	
 </mapper>
