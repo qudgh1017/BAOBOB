@@ -22,13 +22,13 @@
 	<c:if test="${cnt== 1 }">
 		<script type="text/javascript">
 			alert("스케줄 등록 성공!");
-			window.location="hostSchedule";
+			window.location="hostScheduleAddForm";
 		</script>
 	</c:if>
 	<c:if test="${cnt!= 1 }">
 		<script type="text/javascript">
 			alert("스케줄 등록 실패");
-			window.history.back(-2);
+			window.location="hostScheduleAddForm";
 		</script>
 	</c:if>
 	<br>
