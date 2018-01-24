@@ -30,7 +30,7 @@
 		<ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
 			<li class="nav-item" data-toggle="tooltip" data-placement="right" title="영화 관리">
 				<a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#movieManage" data-parent="#exampleAccordion"> 
-					<i class="fa fa-fw fa-dashboard"></i> 
+					<i class="fa fa-fw fa-file-movie-o"></i> 
 					<span class="nav-link-text">영화 관리</span>
 				</a>
 				<ul class="sidenav-second-level collapse" id="movieManage">
@@ -40,7 +40,7 @@
 			</li>
 			<li class="nav-item" data-toggle="tooltip" data-placement="right" title="상영관 관리">
 				<a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#theaterManage" data-parent="#exampleAccordion"> 
-					<i class="fa fa-fw fa-area-chart"></i> 
+					<i class="fa fa-fw fa-list"></i> 
 					<span class="nav-link-text">상영관 관리</span>
 				</a>
 				<ul class="sidenav-second-level collapse" id="theaterManage">
@@ -50,7 +50,7 @@
 			</li>
 			<li class="nav-item" data-toggle="tooltip" data-placement="right" title="스케줄 관리">
 				<a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#scheduleManage" data-parent="#exampleAccordion"> 
-					<i class="fa fa-fw fa-table"></i> 
+					<i class="fa fa-fw fa-clock-o"></i> 
 					<span class="nav-link-text">스케줄 관리</span>
 				</a>
 				<ul class="sidenav-second-level collapse" id="scheduleManage">
@@ -60,7 +60,7 @@
 			</li>
 			<li class="nav-item" data-toggle="tooltip" data-placement="right" title="직원 관리">
 				<a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents" data-parent="#exampleAccordion"> 
-					<i class="fa fa-fw fa-wrench"></i> 
+					<i class="fa fa-fw fa-user-md"></i> 
 					<span class="nav-link-text">직원 관리</span>
 				</a>
 				<ul class="sidenav-second-level collapse" id="collapseComponents">
@@ -70,13 +70,13 @@
 			</li>
 			<li class="nav-item" data-toggle="tooltip" data-placement="right" title="예매 관리">
 				<a class="nav-link" href="hostMovieRes"> 
-					<i class="fa fa-fw fa-file"></i> 
+					<i class="fa fa-fw fa-table"></i> 
 					<span class="nav-link-text">예매 관리</span>
 				</a>
 			</li>
 			<li class="nav-item" data-toggle="tooltip" data-placement="right" title="결산">
 				<a class="nav-link" href="hostMovieSettlement"> 
-					<i class="fa fa-fw fa-file"></i> 
+					<i class="fa fa-fw fa-area-chart"></i> 
 					<span class="nav-link-text">결산</span>
 				</a>
 			</li>

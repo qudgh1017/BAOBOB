@@ -1,29 +1,19 @@
 window.onload = function() {
 	try {
-		/*TagCanvas.Start('myCanvas','tags',{
-			textColour: '#ff0000',
-			outlineColour: '#ff00ff',
-			textHeight: 25,
-			reverse: true,
-			depth: 0.5,
-			maxSpeed: 0.08
-		});*/
 		TagCanvas.Start('myCanvas','tags', {
 			 textFont: 'Impact,"Arial Black",sans-serif',
 			 textColour: '#990000',
 			 outlineColour: '#FA5A5C',
-//			 textHeight: 25,
+			 textHeight: 25,
 			 reverse: true,
 			 depth: 0.5,
 			 maxSpeed: 0.10
 			});
 	} catch(e) {
-		// something went wrong, hide the canvas container
+		// 문제가 생기면 숨긴다.
 		document.getElementById('myCanvasContainer').style.display = 'none';
 	}
 };
-
-
 
 function refrechWord() {
 	try {
@@ -35,38 +25,8 @@ function refrechWord() {
 			 depth: 0.5,
 			 maxSpeed: 0.10
 			});
-		/*TagCanvas.Start('myCanvas','tags',{
-			textColour: '#ff0000',
-			outlineColour: '#ff00ff',
-			reverse: true,
-			depth: 0.5,
-			maxSpeed: 0.08
-		});*/
-	/*	TagCanvas.Start('myCanvas','tags', {
-			 textFont: 'Impact,"Arial Black",sans-serif',
-			 textColour: null,
-			 textHeight: 25,
-			 reverse: true,
-			 depth: 0.5,
-			 maxSpeed: 0.08
-			});*/
-		/*TagCanvas.Start('myCanvas','tags', {
-//			 shape: 'vcylinder',
-//			shape: "DblHelix",
-			shape: "sphere",
-//			shape: "hcylinder",
-			 textFont: null,
-			 textColour: null,
-			 weight: true,
-			});*/
-	/*	TagCanvas.Start('myCanvas','tags', {
-			 textFont: 'Impact,"Arial Black",sans-serif',
-			 textColour: null,
-			 textHeight: 25,
-			  more options 
-			});*/
 	} catch(e) {
-		// something went wrong, hide the canvas container
+		// 문제가 생기면 숨긴다.
 		document.getElementById('myCanvasContainer').style.display = 'none';
 	}
 }

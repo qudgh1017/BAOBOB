@@ -779,16 +779,17 @@ public class Host_movieServiceImpl implements Host_movieService{
 	@Override
 	public void movieJanreCountChart(HttpServletRequest req, Model model) {
 		Map<String , Object> map = new HashMap<String,Object>();
-		String[] janre = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10"};
+		String[] janre = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10"}; 
 		//mapper에서 불러온 kind와 value가 다건이기때문에 vo형태의 List형으로 받아준다.
 		List<HostMovieChartVO> voList = dao.getMovieCountChart(); 
 		
-		//vo데이터타입 i 에 List데이터들을 한건씩 빼와서 map에 담아준다.
-		//(map의 key값이 String이기때문에 int형인 kind를 String으로 형변환 해준다.
+		//vo데이터타입 i 에 List데이터들을 한건씩 빼와서 map에 담는다.
+		//(map의 key값이 String이기때문에 int형인 kind를 String으로 형변환 한다.
 		for (HostMovieChartVO i : voList) {
 			map.put(i.getKind() , i.getValue());
 		}
 		
+		// 키 값에 없는 장르의 value는 0으로 초기화 준다.
 		for (String s : janre) {
 			int chk = 0;
 			for(Entry<String, Object> m : map.entrySet()) {
@@ -822,6 +823,7 @@ public class Host_movieServiceImpl implements Host_movieService{
 			map.put(Integer.toString(i.getKind()) , i.getSum());
 		}
 		
+		// 키 값에 없는 제한연령의 value는 0으로 초기화 준다.
 		for (String s : age) {
 			int chk = 0;
 			for(Entry<String, Object> m : map.entrySet()) {
@@ -856,6 +858,7 @@ public class Host_movieServiceImpl implements Host_movieService{
 			map.put(i.getKind() , i.getValue());
 		}
 		
+		// 키 값에 없는 성별의 value는 0으로 초기화 준다.
 		for (String s : sex) {
 			int chk = 0;
 			for(Entry<String, Object> m : map.entrySet()) {

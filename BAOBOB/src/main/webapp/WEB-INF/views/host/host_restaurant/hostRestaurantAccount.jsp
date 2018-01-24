@@ -7,9 +7,48 @@
 <title>Insert title here</title>
 <link href="${restaurant_css}" rel="stylesheet" type="text/css">
 <script src="${restaurant_js}" charset=UTF-8></script>
+<script src="${projectRes}adminBootstrap/vendor/jquery/jquery.min.js"></script>
+
+<!-- 구글챠트 -->
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script>google.charts.load('current', {packages:['corechart']});</script>
+
+<script type="text/javascript" src="//www.google.com/jsapi"></script>
+
+<script type="text/javascript">
+	// 로딩 완료시 함수 실행하여 차트 생성
+	google.charts.setOnLoadCallback(menuChart);
+	var chart_options = {
+			title : '메뉴별 매출', 
+			width : 500, 
+			height : 400, 
+			bar : {groupWidth : '30%'},
+			legend : {position : 'bottom'}
+	};
+	function menuChart(){
+		var keys = '${keys}';
+		var key = keys.split(',');
+		
+		var values = '${values}';
+		var value = values.split(',');
+		
+		var data = new google.visualization.DataTable();
+        data.addColumn('string', '메뉴');
+        data.addColumn('number', '판매액');
+
+        for (var i = 0; i < ${count}; i++) {
+        	value[i] = value[i] * 1;
+        	var dataRow = [key[i], value[i]];
+            data.addRow(dataRow);
+        }
+
+        var menuChart = new google.visualization.ColumnChart(document.getElementById('menuChart'));
+		menuChart.draw(data, chart_options);
+	}
+</script>
 </head>
 <body class="fixed-nav sticky-footer bg-dark">
-
+	
 	<!-- Navigation -->
 	<%@ include file="_navigation.jsp" %>
 	
@@ -22,7 +61,7 @@
 					</div>
 					<div class="card-body">
 						<div class="table-responsive">
-							<table class="table table-bordered" id="dataTable">
+							<table class="table table-bordered">
 								<thead>
 									<tr>
 										<th style="width: 600px; text-align: center;">결산</th>
@@ -31,7 +70,10 @@
 								<tbody>
 									<tr>
 										<td style="text-align: center; vertical-align: middle;">
-											${account}
+											<div style="display: -webkit-box;" align="center">
+												<div id="menuChart" style="width: 100%; height: 500px;"></div>
+											</div>
+											${total}
 										</td>
 									</tr>
 								</tbody>

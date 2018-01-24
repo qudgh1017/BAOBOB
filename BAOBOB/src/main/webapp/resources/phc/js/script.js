@@ -25,14 +25,10 @@ function getSeatInfo(col, row, state){
 	var seat = "<input type='button' style='background-color:lightgray; width:"+col*35+"px; height:30px;' value='SCREEN'> <br><br>";
 	for(var i = 0; i<row; i++){
 		for(var j = 1; j<=col; j++){
-			
-			
 			seat += "<button class='t_spaceBtn' type='button' style='margin:1px 1px; height:35; width:35;' id='"+seatRow[i]+j+"' name='seat"+seatRow[i]+j+"' value='"+state[(i)*col-1+j]+"'>" +
 						"<img id='img"+seatRow[i]+j+"' style='width:35; height:35;' src='/baobob/resources/images/phc/icon/theater_blank.png' onclick=\"seatChange('"+seatRow[i]+j+"')\" >" +
 					"</button>";
-			
 		}
-		
 		seat += "<br>";
 	}
 	var theaterSeat = document.getElementById("theaterSeat");
@@ -50,10 +46,8 @@ function getSeatInfo(col, row, state){
 			case '1': stateImg = 'theater_in.png'; break;
 			case '0': stateImg = 'theater_blank.png'; break;
 			}
-			
 			var spaceImg = document.getElementById("img"+seatRow[i]+j);
 			spaceImg.src = "/baobob/resources/images/phc/icon/" + stateImg;
-			
 		}
 	}
 }
@@ -76,7 +70,6 @@ function seatSet(){
 	
 	var row = document.hostTheaterAddForm.theater_row.value;
 	var col = document.hostTheaterAddForm.theater_col.value;
-//		alert("행 : " + row + "칸 , 열 : " + col + "칸" );
 	var seat = "<input type='button' style='background-color:lightgray; width:"+col*35+"px; height:30px;' value='SCREEN'> <br><br>";
 	
 	for(var i = 0; i<row; i++){
@@ -87,7 +80,6 @@ function seatSet(){
 		}
 		seat += "<br>";
 	}
-	
 	var theaterSet = document.getElementById("theaterSet");
 	theaterSet.innerHTML = seat;
 	
@@ -102,12 +94,9 @@ function seatChange(seat){
 		var spaceImg = document.getElementById("img"+seat); //선택한 버튼의 img
 		spaceImg.src = "/baobob/resources/images/phc/icon/" + typeImg;
 		document.getElementById(seat).value=typeNum;
-		
-
 	} else {
 		alert('아이콘을 선택해주세요.');
 	}
-	
 }
 
 // 상영관 생성 DB
@@ -117,12 +106,10 @@ function hostTheaterAdd(){
 		document.getElementById("chkConfirm").focus();
 		return false;
 	}
-	
 	var item = document.querySelectorAll('.t_spaceBtn'); //배열판의 버튼들
 	var theater_index = document.getElementById('theater_index').value;
 	var col = document.getElementById('col').value;
 	var row = document.getElementById('row').value;
-
 	var array = new Array();
 	item.forEach(function(space) {
 		array.push(space.value);
@@ -169,8 +156,6 @@ function checkPosTheater(){
 		alert("시간을 선택해주세요");
 		return false;
 	}
-	
-	
 	var date = document.getElementById("datepicker").value;
 	var time = document.getElementById("timepicker").value;
 	
@@ -195,7 +180,7 @@ function hostScheduleSearch(){
 	
 }
 
-//
+//선택한 날짜와 상영관에 해당하는 정보를 get방식으로 호출
 function hostResSearch(){
 	var date = document.getElementById("datepicker").value;
 	var theater_index = document.getElementById("theater_index").value;
@@ -207,16 +192,13 @@ function hostResSearch(){
 		alert("상영관을 선택하세요");
 		return false;
 	}
-	
 	window.location="hostResSearch?date="+date+"&theater_index="+theater_index;
 }
 
 // 스케줄 삭제
 function chkDeleteSchedule(theater_schedule_index){
-	
     if (confirm("스케줄을 삭제하시겠습니까?")!=0) {
          window.location="hostScheduleDelPro?theater_schedule_index="+theater_schedule_index;
-    } else {
     }
 }
 
@@ -251,21 +233,17 @@ function getScheduleSeatInfo(col, row, state){
 	var seat = "<input type='button' style='color:white; background-color:lightgray; background:rgba(0, 0, 0, 0.6); width:"+col*45+"px; height:25px;'  value='SCREEN'> <br><br>";
 	for(var i = 0; i<row; i++){
 		for(var j = 1; j<=col; j++){
-			
-			
 			seat += "<button type='button'  style='margin:1px 1px; height:45; width:45;' id='"+seatRow[i]+j+"' name='seat"+seatRow[i]+j+"' value='"+state[(i)*col-1+j]+"'>" +
 						"<img id='img"+seatRow[i]+j+"' style='width:45; height:45;' src='/baobob/resources/images/phc/icon/theater_blank.png'>" +
 					"</button>";
-			
 		}
-		
 		seat += "<br>";
 	}
 	var theaterSeat = document.getElementById("theaterSeat");
 	theaterSeat.innerHTML = seat;
 	
-	for(var i = 0; i<row; i++){
-		for(var j = 1; j<=col; j++){
+	for(var i = 0; i<row; i++){ // 행 갯수만큼 돌림
+		for(var j = 1; j<=col; j++){ // 열 갯수만큼 돌림
 			var stateImg = '';
 			
 			switch(document.getElementById(seatRow[i]+j).value) {
@@ -283,4 +261,10 @@ function getScheduleSeatInfo(col, row, state){
 			
 		}
 	}
+}
+
+
+// 스케줄 추가 폼
+function hostScheduleAddForm(){
+	window.open('hostScheduleAddForm', 'BAOBOB', 'width=750, height=570, menubar=no, status=no, toolbar=no, titlebar=no');
 }

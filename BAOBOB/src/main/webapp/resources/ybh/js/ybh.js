@@ -158,6 +158,14 @@ function clickDate(num){
 	plusDay = num;
 	common();
 }
+/*
+function schedule(movie_index, num){
+	window.location.href="movieTicket";
+	document.all.movie_index.value = movie_index;
+	document.all.date.value = num;
+	clickMovie(movie_index);
+	clickDate(num);
+}*/
 
 //스케줄 클릭 했을때
 function clickSchedule(theater_schedule_index, movie_index){
