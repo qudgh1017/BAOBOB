@@ -15,7 +15,8 @@
 	<%@ include file="/WEB-INF/views/guest/common/navigation.jsp" %>
 	<!-- main_menu -->
 	<%@ include file="/WEB-INF/views/guest/guest_movie/movie_menu.jsp" %>
-	
+
+<!-- 예매 - 상영시간표 -->	
 	<section>
 		<div class="container">
 			상영시간표

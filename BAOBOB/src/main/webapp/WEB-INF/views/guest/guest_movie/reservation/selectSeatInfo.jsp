@@ -10,5 +10,5 @@
 	                    "M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"};
 	request.setAttribute("seatRow",seatRow);
 %>
-
+<!-- 좌석정보(A1 B3 이런거) -->
 ${seatRow[seat.seat_row-1]}${seat.seat_col}
