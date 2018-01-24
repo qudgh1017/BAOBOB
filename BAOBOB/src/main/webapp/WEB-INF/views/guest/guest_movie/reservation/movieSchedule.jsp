@@ -24,7 +24,19 @@
 		</div>
 	</section>
 	<br>
-	<br>
+	<section style="padding-top:0px;">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-1"></div>
+				<div class="col-md-10" align="left">
+					<br>
+					<h3 align=left;>빠른 예매</h3>
+					<hr style="border:2px solid black;">
+				</div>
+				<div class="col-md-1"></div>
+			</div>
+		</div>
+	</section>	
 	<br>
 	<br>
 	<br>

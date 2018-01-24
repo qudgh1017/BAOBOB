@@ -98,6 +98,30 @@ function teenagerChk(theater_index, movie_index, theater_schedule_index, cnt){
 	seat_index_arr = new Array();
 }
 
+
+$(document).ready(function(){
+	updateSeat();
+});
+
+//좌석도 뿌리는 ajax
+function updateSeat(theater_index, movie_index, theater_schedule_index){
+	$.ajax({
+		url: 'reserveSeatInfo',
+		type: 'GET',
+		data: {
+			allCnt, theater_index, movie_index, theater_schedule_index
+		},
+		
+		success: function(msg) {
+			$('#theaterSeat').html(msg);					
+		},				
+		error: function() {
+			alert('오류');
+		}	
+	});
+	setTimeout("updateSeat(theater_index, movie_index, theater_schedule_index)",2000);//1초 단위로 갱신처리
+}
+
 //총 사람 수
 function personChk(theater_index, movie_index, theater_schedule_index){
 	allCnt = teenagerCnt + adultCnt;
@@ -106,22 +130,11 @@ function personChk(theater_index, movie_index, theater_schedule_index){
 	if(allCnt > 6){
 		alert("7명 이상은 불가능합니다.");
 	}else{
-		$.ajax({
-			url: 'reserveSeatInfo',
-			type: 'GET',
-			data: {
-				allCnt, theater_index, movie_index, theater_schedule_index
-			},
-			
-			success: function(msg) {
-				$('#theaterSeat').html(msg);					
-			},				
-			error: function() {
-				alert('오류');
-			}	
-		});
+		//좌석도 뿌리기
+		updateSeat(theater_index, movie_index, theater_schedule_index);
 	}
 }
+
 
 
 function CountChecked(field) {
@@ -196,6 +209,7 @@ function CountChecked(field) {
 		
     }
 }
+
 
 function nextDealButton(adultCnt, teenagerCnt, seat_index_arr){
 	
