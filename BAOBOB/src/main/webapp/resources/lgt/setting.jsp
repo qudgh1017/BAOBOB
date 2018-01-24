@@ -13,6 +13,10 @@
 <!-- 아이콘 -->
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
+<!-- BAOBOB 아이콘 -->
+<link rel="icon" href="${projectRes}images/lgt/lost/The-Baobab-Tree-4.jpg" type="image/x-icon" />
+<title>BAOBOB</title>
+
 <!-- 외부 javascript -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="${projectRes}lgt/js/script.js"></script>

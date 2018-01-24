@@ -35,9 +35,85 @@
 	 WHERE restaurant_index=#{restaurant_index}
 	</select>
 
+
+
+	<!-- ========================================================================== -->
+	<!-- ============================== 3. 레스토랑 예약 ============================== -->
+	<!-- ========================================================================== -->
+	<!-- ===== 매장 정보 조회 ===== -->
+	<select id="reserv_tableList" resultType="spring.mvc.baobob.vo.RestaurantVO">
+		SELECT * FROM restaurant_tbl WHERE restaurant_index = #{restaurant_index}
+	</select>
+	
+	<!-- ===== 매장 내 테이블 정보 조회를 위한 좌석수(행,열) 조회 ===== -->	
+	<select id="getColRow" resultType="spring.mvc.baobob.vo.TableVO">
+		SELECT MAX(table_row) table_row, MAX(table_col) table_col 
+		FROM restaurant_table_tbl 
+		WHERE restaurant_index = #{restaurant_index} AND restaurant_schedule_index IS null
+	</select>
+	
+	<!-- ===== 레스토랑 테이블 정보 조회 ===== -->
+	<select id="getState" resultType="int">
+		SELECT table_state 
+		FROM restaurant_table_tbl 
+		WHERE restaurant_index = #{restaurant_index} AND restaurant_table_index = #{restaurant_table_index}
+		<if test="restaurant_schedule_index == null">
+			AND restaurant_schedule_index IS null
+		</if>
+		<if test="restaurant_schedule_index != null">
+			AND restaurant_schedule_index = #{restaurant_schedule_index}
+		</if>
+	</select>
+	
+	
+	<!-- 식당[1] 예약 처리 -->
+	<insert id="addReserv" parameterType="Map">
+		INSERT INTO restaurant_schedule_tbl(restaurant_index, restaurant_schedule_index, schedule_startTime, schedule_endTime)
+		VALUES(#{dto.restaurant_index}, restaurant_schedule_tbl_SEQ.nextval, #{dto3.schedule_startTime}, #{dto3.schedule_endTime})
+	</insert>
+	
+	<!--추가 : 식당 총 관리자 - 매장 내 테이블 수정 처리 전 테이블 초기화 -->
+	<delete id="resetTable2" parameterType="spring.mvc.baobob.vo.Restaurant_scheduleVO">
+	DELETE FROM restaurant_table_tbl
+	WHERE restaurant_index = #{restaurant_index} AND restaurant_schedule_index=#{restaurant_schedule_index}
+	</delete>	
+	
+	<!--추가 : 식당[1] 날짜에 해당하는 테이블 예약 -->
+	<insert id="modTable2" parameterType="Map">
+		INSERT INTO restaurant_table_tbl(restaurant_index, restaurant_table_index, table_row, table_col, table_state, restaurant_schedule_index)
+		<if test="dto3.restaurant_schedule_index==0">
+			VALUES(#{dto.restaurant_index}, #{dto2.restaurant_table_index}, #{dto2.table_row}, #{dto2.table_col}, #{dto2.state}, restaurant_schedule_tbl_SEQ.CURRVAL)
+		</if>
+		<if test="dto3.restaurant_schedule_index!=0">
+			VALUES(#{dto.restaurant_index}, #{dto2.restaurant_table_index}, #{dto2.table_row}, #{dto2.table_col}, #{dto2.state}, restaurant_schedule_tbl_SEQ.CURRVAL)
+		</if>
+	</insert>
+
+
+	<!-- 스케쥴 인텍스 조회 : (예약)스케쥴이 있는지 확인 -->
+	<select id="getScheduleIndex" resultType="Integer">
+		SELECT	restaurant_schedule_index  
+		FROM	restaurant_schedule_tbl 
+		WHERE	schedule_starttime=#{schedule_startTime} AND schedule_endtime=#{schedule_endTime} AND restaurant_index=#{restaurant_index}
+	</select>
+
+	<!-- 예약 내역 추가 history_table -->
+	<!-- <insert id="AddHistory" parameterType="Map">
+		INSERT INTO history_tbl(history_index, history_date, member_id)
+		VALUES(history_tbl_SEQ.NEXTVAL, sysdate, #{member_id})
+	</insert> -->
+	
+	<!-- 레스토랑 예약 내역 추가 restaurant_history_tbl -->
+	<!-- <insert id="AddRHistory" parameterType="Map">
+		INSERT INTO restaurant_history_tbl(history_index, restaurant_schedule_index, restaurant_table_index)
+		VALUES(history_tbl_SEQ.CURRVAL, restaurant_schedule_tbl_SEQ.CURRVAL, #{dto2.index})
+	</insert> -->
 	
 	
 	
+	<!-- ========================================================================== -->
+	<!-- ============================== 4. 레스토랑 리뷰 ============================== -->
+	<!-- ========================================================================== -->
 	<!-- ===== 4-1. 리뷰 개수 ===== -->
 	<select id="getReviewCnt" resultType="int">
 	SELECT COUNT(*) FROM  restaurant_review_tbl WHERE restaurant_index=#{restaurant_index}
@@ -83,21 +159,10 @@
 							   WHERE rt.review_index=#{review_index}); -->
 	</insert>
 	
-	<!--===== ID 체크 ===== -->
-	<select id="idCheck" resultType="int">
-	SELECT COUNT(*) FROM review_tbl WHERE member_id=#{member_id}
-	</select>
-	
-	<!--===== Password 체크 =====-->
-	<select id="pwdCheck" resultType="int">
-	SELECT COUNT(*) from member_tbl WHERE member_id=#{member_id} AND member_pwd=#{member_pwd}
-	</select>
-	
 	<!--===== 4-3-2. 리뷰 수정 (값 불러오기) =====-->
 	<select id="getReviewInfo" resultType="spring.mvc.baobob.vo.ReviewVO">
 	SELECT * FROM review_tbl WHERE member_id=#{member_id} and review_index=#{review_index}
 	</select>
-	
 	
 	<!--===== 4-3-3. 리뷰 수정 (값 불러오기) =====-->
 	<update id="updateReviewPro" parameterType="spring.mvc.baobob.vo.ReviewVO">
@@ -110,10 +175,24 @@
 	DELETE FROM restaurant_review_tbl
 	WHERE review_index=#{review_index}
 	</delete>
+	
 	<!--===== 4-4-2. 리뷰 삭제 ===== -->
 	<delete id="delete_ReviewPro" parameterType="java.util.Map">
 	DELETE FROM review_tbl
 	WHERE member_id=#{member_id} AND review_index=#{review_index}
 	</delete>
 	
+	<!-- ========================================================================== -->
+	<!-- ============================= Id/Password 체크 ============================= -->
+	<!-- ========================================================================== -->
+	
+	<!--===== ID 체크 ===== -->
+	<select id="idCheck" resultType="int">
+	SELECT COUNT(*) FROM review_tbl WHERE member_id=#{member_id}
+	</select>
+	
+	<!--===== Password 체크 =====-->
+	<select id="pwdCheck" resultType="int">
+	SELECT COUNT(*) from member_tbl WHERE member_id=#{member_id} AND member_pwd=#{member_pwd}
+	</select>
 </mapper>

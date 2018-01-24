@@ -1,12 +1,16 @@
 package spring.mvc.baobob.host_restaurant.persistence;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
+
+import org.apache.ibatis.annotations.MapKey;
 
 import spring.mvc.baobob.vo.EmployeeVO;
 import spring.mvc.baobob.vo.Member;
 import spring.mvc.baobob.vo.MenuVO;
 import spring.mvc.baobob.vo.RestaurantVO;
+import spring.mvc.baobob.vo.Restaurant_ChartVO;
 import spring.mvc.baobob.vo.Restaurant_scheduleVO;
 import spring.mvc.baobob.vo.TableVO;
 
@@ -119,9 +123,6 @@ public interface Host_restaurantDAO {
 	// 주문 추가 처리
 	public int addFoodHistory(Map<String, Object> map);
 
-	// 식당별 결산
-	public Integer getAccount(int restaurant_index);
-
 	// 회원 아이디가 있는지, 있다면 스텝이 몇인지 조회
 	public Integer confirmId(String id);
 
@@ -151,4 +152,11 @@ public interface Host_restaurantDAO {
 
 	// 회원 포인트 수정
 	public int modMemberPoint(Map<String, Object> map);
+	
+	// 결산 차트
+	@MapKey("kind")
+	public List<Restaurant_ChartVO> getMenuCountChart();
+
+	// 모든 메뉴 이름 조회
+	public String[] getMenuName(int restaurant_index);
 }

@@ -343,18 +343,7 @@ public class Host_restaurantController {
 		return "host/host_restaurant/hostOrderDel";
 	}
 
-	// 매장별 결산
-	@RequestMapping(value = "/hostRestaurantAccount")
-	public String hostRestaurantAccount(HttpServletRequest req, Model model) {
-		log.debug("hostRestaurantAccount()");
-
-		// 매장별 결산
-		service.account(req, model);
-
-		return "host/host_restaurant/hostRestaurantAccount";
-	}
-
-	// 매장별 결산
+	// 테이블별 결산
 	@RequestMapping(value = "/hostPayment")
 	public String hostPayment(HttpServletRequest req, Model model) {
 		log.debug("hostPayment()");
@@ -363,5 +352,15 @@ public class Host_restaurantController {
 		service.payment(req, model);
 		
 		return "host/host_restaurant/hostPayment";
+	}
+
+	// 매장별 결산
+	@RequestMapping(value = "/hostRestaurantAccount")
+	public String hostRestaurantAccount(HttpServletRequest req, Model model) {
+		log.debug("hostRestaurantAccount()");
+
+		service.accountChart(req, model); // 제한연령별 매출
+
+		return "host/host_restaurant/hostRestaurantAccount";
 	}
 }

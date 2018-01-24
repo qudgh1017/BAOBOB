@@ -8,12 +8,12 @@ import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -25,6 +25,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import spring.mvc.baobob.host_movie.persistence.Host_movieDAO;
 import spring.mvc.baobob.host_movie.persistence.Host_movieDAOImpl;
+import spring.mvc.baobob.twitterKoreanParser.KoreanParser;
 import spring.mvc.baobob.vo.HostMovieChartVO;
 import spring.mvc.baobob.vo.Member;
 import spring.mvc.baobob.vo.MovieResViewVO;
@@ -32,6 +33,7 @@ import spring.mvc.baobob.vo.MovieVO;
 import spring.mvc.baobob.vo.TheaterVO;
 import spring.mvc.baobob.vo.Theater_scheduleVO;
 import spring.mvc.baobob.vo.Theater_seatVO;
+import spring.mvc.baobob.vo.WordVO;
 import spring.mvc.baobob.vo.hostTChartVO;
 
 @Service
@@ -43,113 +45,36 @@ public class Host_movieServiceImpl implements Host_movieService{
 	// 영화 목록
 	@Override
 	public void hostMovieList(HttpServletRequest req, Model model) {
-//		int pageSize = 10;		//한 페이지당 출력할 게시글 갯수
-//		int pageBlock = 3;		//한 블럭당 페이지 갯수
-//		
-		int cnt = 0;			// 게시글 갯수
-//		int start = 0;			// 현재 페이지 게시글 시작 번호
-//		int end = 0;			// 현재 페이지 게시글 마지막 번호
-//		int number = 0;			// 출력할 게시글 번호
-//		String pageNum = null;	// 페이지 번호
-//		int currentPage = 0;	// 현재 페이지
-//		
-//		int pageCount = 0;		// 페이지 갯수
-//		int startPage = 0;		// 시작페이지
-//		int endPage = 0;		// 마지막 페이지
-//		
-//		// 글갯수 구하기
-		cnt = dao.getMovieCnt();
-		
-//		pageNum = req.getParameter("pageNum");
-		
-//		if(pageNum == null) {
-//			pageNum = "1"; //첫페이지를 1페이지로 설정
-//		}
-		
-//		currentPage = Integer.parseInt(pageNum);// 현재페이지
-//		System.out.println("currentPage : "+ currentPage);
-		
-		// pageCnt = 12 / 5 + 1; //나머지 2건이 1페이지로 할당되므로 3페이지
-//		pageCount = (cnt / pageSize) + (cnt % pageSize > 0 ? 1 : 0);// 페이지 갯수
-//		System.out.println("pageCount : "+ pageCount);
-		
-		// 1 = (1-1) * 5 + 1
-		// 6 = (2-1) * 5 + 1
-//		start = (currentPage - 1) * pageSize + 1;// 현재 페이지 게시글 시작 번호
-	
-		// 5 = (1 + 5 - 1)
-//		end = start + pageSize -1;//현재 페이지 게시글 마지막 번호
-		
-//		System.out.println("start : " + start);
-//		System.out.println("end : " + end);
-		
-//		if(end > cnt) end = cnt;
-		
-		//  = 25 - (5-1) * 5;
-//		number = cnt - (currentPage - 1) * pageSize;// 출력할 게시글 번호
-		
-//		System.out.println("number : " + number);
-//		System.out.println("cnt : " + cnt);
-//		System.out.println("currentPage : " + currentPage);
-//		System.out.println("pageSize : " + pageSize);
-		
+		int cnt = 0;			// 영화 갯수
+		cnt = dao.getMovieCnt(); // 영화 갯수 구하기
 		if(cnt > 0) {
-			// 게시글 목록 조회
-//			Map<String, Integer> map = new HashMap<String, Integer>();
-//			map.put("start", start);
-//			map.put("end", end);
-			ArrayList<MovieVO> vos = dao.getMovieList();
-			model.addAttribute("vos", vos); //큰바구니 : 게시글목록 cf)작은바구니 : 게시글1건
+			ArrayList<MovieVO> vos = dao.getMovieList(); // 영화 목록 조회
+			model.addAttribute("vos", vos);
 			model.addAttribute("cnt", cnt);
 		}
-		
-//		startPage = (currentPage / pageBlock) * pageBlock + 1; // 4 = (5/3)*3+1;
-//		if(currentPage % pageBlock == 0) startPage -= pageBlock; // (5%3) == 0
-//		System.out.println("startPage : " + startPage);
-//		
-//		endPage = startPage + pageBlock - 1; // 6 = 4 + 3 - 1;
-//		if(endPage > pageCount) endPage = pageCount;
-//		System.out.println("endPage : " + endPage);
-		
-		model.addAttribute("cnt", cnt);// 글갯수
-//		model.addAttribute("number", number);// 글번호
-//		model.addAttribute("pageNum", pageNum);// 페이지번호
-		
-//		if(cnt > 0) {
-//			model.addAttribute("startPage", startPage); // 시작페이지
-//			model.addAttribute("endPage", endPage);// 마지막 페이지
-//			model.addAttribute("pageBlock", pageBlock);// 출력할 페이지 갯수
-//			model.addAttribute("pageCount", pageCount);// 페이지 갯수
-//			model.addAttribute("currentPage", currentPage);// 현재 페이지
-			
-//		}
-		
-		System.out.println("hostMovieList 정상 종료");
-		
+		model.addAttribute("cnt", cnt);
 	}
 	
 	//영화 추가 처리
 	@Override
 	public void hostMovieAddPro(MultipartHttpServletRequest req, Model model) {
-		MultipartFile file = req.getFile("movie_poster");
-		
-		String saveDir = req.getSession().getServletContext().getRealPath("/resources/images/phc/");
-		
-		String realDir = "C:\\Dev\\workspace_baobob\\BAOBOB\\BAOBOB\\src\\main\\webapp\\resources\\images\\phc\\";
+		MultipartFile file = req.getFile("movie_poster"); // hostMovieAddForm.jsp의 <input type="file"> 형태를 가져옴
+		String saveDir = req.getSession().getServletContext().getRealPath("/resources/images/phc/"); // 임시 저장할 경로
+		String realDir = "C:\\Dev\\workspace_baobob\\BAOBOB\\BAOBOB\\src\\main\\webapp\\resources\\images\\phc\\"; // 저장할 경로
 		
 		try {
-			file.transferTo(new File(saveDir+file.getOriginalFilename()));
+			file.transferTo(new File(saveDir+file.getOriginalFilename())); // 업로드 한 파일 데이터를 지정한 경로 파일에 저장한다.
 			
-			FileInputStream fis = new FileInputStream(saveDir + file.getOriginalFilename());
-			FileOutputStream fos = new FileOutputStream(realDir + file.getOriginalFilename());
+			FileInputStream fis = new FileInputStream(saveDir + file.getOriginalFilename()); // 읽어올 파일경로 설정
+			FileOutputStream fos = new FileOutputStream(realDir + file.getOriginalFilename()); // 쓸 파일 경로
 			
 			int data = 0;
 			
-			while((data = fis.read()) != -1) {
+			while((data = fis.read()) != -1) { // 임시 저장 경로에 저장한 파일을 read해서 저장할 파일 경로에 write
 				fos.write(data);
 			}
-			fis.close();
-			fos.close();
+			fis.close(); // FileInputStream 종료
+			fos.close(); // FileOutputStream 종료
 			
 			String movie_title = req.getParameter("movie_title");
 			String movie_content = req.getParameter("movie_content");
@@ -180,14 +105,13 @@ public class Host_movieServiceImpl implements Host_movieService{
 			vo.setMovie_trailer(movie_trailer);
 			vo.setMovie_state(movie_state);
 			
-			int cnt = dao.hostMovieAddPro(vo);
+			int cnt = dao.hostMovieAddPro(vo); // 영화 추가 처리
 			
 			model.addAttribute("cnt", cnt);
 			
 		} catch(IOException e) {
 			e.printStackTrace();
 		}
-		
 	}
 
 	// 영화 삭제
@@ -195,7 +119,7 @@ public class Host_movieServiceImpl implements Host_movieService{
 	public void hostMovieDel(HttpServletRequest req, Model model) {
 		int movie_index = Integer.parseInt(req.getParameter("movie_index"));
 		
-		int cnt = dao.hostMovieDel(movie_index);
+		int cnt = dao.hostMovieDel(movie_index); // movie_index로 영화정보를 삭제
 		
 		model.addAttribute("cnt", cnt);
 	}
@@ -205,9 +129,9 @@ public class Host_movieServiceImpl implements Host_movieService{
 	public void hostMovieDetail(HttpServletRequest req, Model model) {
 		int movie_index = Integer.parseInt(req.getParameter("movie_index"));
 		
-		MovieVO vo = dao.hostMovieDetail(movie_index);
+		MovieVO vo = dao.hostMovieDetail(movie_index); // movie_index에 해당하는 영화 상세 정보를 MovieVO에 담음
 		
-		if(vo!=null) {
+		if(vo!=null) {						// 담은 정보가 null이 아니면
 			model.addAttribute("vo", vo);
 		}
 		
@@ -217,9 +141,8 @@ public class Host_movieServiceImpl implements Host_movieService{
 	@Override
 	public void hostMovieModPro(MultipartHttpServletRequest req, Model model) {
 		String movie_poster = null;
-		System.out.println("movie_poster : " + req.getFile("movie_poster").getOriginalFilename());
 		try {
-			if(req.getFile("movie_poster").getOriginalFilename()!="") {
+			if(req.getFile("movie_poster").getOriginalFilename()!="") { // 포스터를 수정한다면
 				MultipartFile file = req.getFile("movie_poster");
 				String saveDir = req.getSession().getServletContext().getRealPath("/resources/images/phc/");
 				String realDir = "C:\\Dev\\workspace_baobob\\BAOBOB\\BAOBOB\\src\\main\\webapp\\resources\\images\\phc\\";
@@ -235,8 +158,8 @@ public class Host_movieServiceImpl implements Host_movieService{
 				fis.close();
 				fos.close();
 				movie_poster = file.getOriginalFilename();
-			} else {
-				movie_poster = req.getParameter("movie_posterDefault");
+			} else { // 포스터를 수정하지 않다면
+				movie_poster = req.getParameter("movie_posterDefault"); // 원래의 포스터 정보 가져옴
 			}
 			
 			int movie_index = Integer.parseInt(req.getParameter("movie_index"));
@@ -269,7 +192,7 @@ public class Host_movieServiceImpl implements Host_movieService{
 			vo.setMovie_trailer(movie_trailer);
 			vo.setMovie_state(movie_state);
 			
-			int cnt = dao.hostMovieModPro(vo);
+			int cnt = dao.hostMovieModPro(vo); // 영화 정보 수정 처리
 			
 			model.addAttribute("cnt", cnt);
 			
@@ -283,133 +206,56 @@ public class Host_movieServiceImpl implements Host_movieService{
 	// 상영관 추가 처리
 	@Override
 	public void hostTheaterAddPro(HttpServletRequest req, Model model) {
-		int theater_index = Integer.parseInt(req.getParameter("theater_index"));
-		int theater_col = Integer.parseInt(req.getParameter("col"));
-		int theater_row = Integer.parseInt(req.getParameter("row"));
-		String status = req.getParameter("state");
-		String[] state = status.split(",");
+		int theater_index = Integer.parseInt(req.getParameter("theater_index")); // n관
+		int theater_col = Integer.parseInt(req.getParameter("col")); // 상영관 전체 열
+		int theater_row = Integer.parseInt(req.getParameter("row")); // 상영관 전체 행
+		String status = req.getParameter("state"); // 전체 좌석 상태
+		String[] state = status.split(","); // 전체 좌석별 좌석 상태
 		
-		
-		
-		
-		int indexChkCnt = dao.theater_index_check(theater_index);
-		if(indexChkCnt == 0) {
+		int indexChkCnt = dao.theater_index_check(theater_index); // 추가하려는 상영관이 중복되는지 체크
+		if(indexChkCnt == 0) { // 추가하려는 상영관이 중복이 아니라면 상영관을 새로 추가
 			Map<String, Object> map = new HashMap<String, Object>();
-			map.put("theater_index", theater_index);
-			map.put("theater_col", theater_col);
-			map.put("theater_row", theater_row);
-			int insertCnt = dao.insert_theater(map);
-			if(insertCnt == 1) {
-				map.put("state", 0);
-				map.put("col", 0);
-				map.put("row", 0);
-				map.put("price", 0);
-				for(int row = 1; row<=theater_row; row++) {
-					for(int col = 1; col<=theater_col; col++) {
-						map.replace("state", Integer.parseInt(state[(row-1)*theater_col-1+col]));
-						map.replace("col", col);
-						map.replace("row", row);
-						if(Integer.parseInt(state[(row-1)*theater_col-1+col])==3)  //(row-1)*theater_col-1+col
+			map.put("theater_index", theater_index); // 상영관 n관
+			map.put("theater_col", theater_col); // 상영관 전체 열
+			map.put("theater_row", theater_row); // 상영관 전체 행
+			int insertCnt = dao.insert_theater(map); // 상영관 추가 처리
+			if(insertCnt == 1) { // 상영관 추가를 성공하면
+				map.put("state", 0); // 좌석상태 초기 선언
+				map.put("col", 0); // 열 초기 선언
+				map.put("row", 0); // 행 초기 선언
+				map.put("price", 0); // 좌석별 가격 초기 선언
+				
+				for(int row = 1; row<=theater_row; row++) { // 1부터 전체 행까지 for문 적용
+					for(int col = 1; col<=theater_col; col++) { // 1부터 전체 열까지 for문 적용
+						map.replace("state", Integer.parseInt(state[(row-1)*theater_col-1+col])); // 행과 열에 해당하는 좌석 상태 설정
+						map.replace("col", col); // 열
+						map.replace("row", row); // 행
+						if(Integer.parseInt(state[(row-1)*theater_col-1+col])==3)  // 좌석상태가 일반석 9000원
 							map.replace("price", 9000);
-						else if(Integer.parseInt(state[(row-1)*theater_col-1+col])==4)
+						else if(Integer.parseInt(state[(row-1)*theater_col-1+col])==4) // 좌석상태가 프리미엄석 11000원
 							map.replace("price", 11000);
-						else map.replace("price", 0);
+						else if(Integer.parseInt(state[(row-1)*theater_col-1+col])==5) // 좌석 상태가 커플석 15000원
+							map.replace("price", 15000);
+						else map.replace("price", 0); // 나머지는 0원으로 설정
 							
-						dao.insert_theater_seat(map);
+						dao.insert_theater_seat(map); // 행과 열에 해당하는 state와 가격을 INSERT
 					}
 				}
-				model.addAttribute("cnt", 1);
+				model.addAttribute("cnt", 1); // 좌석 등록 후
 			}
 		}
-		
 	}
 	
 	// 상영관 리스트
 	@Override
 	public void hostTheaterList(HttpServletRequest req, Model model) {
-		int pageSize = 10;		//한 페이지당 출력할 게시글 갯수
-		int pageBlock = 3;		//한 블럭당 페이지 갯수
-		
-		int cnt = 0;			// 게시글 갯수
-		int start = 0;			// 현재 페이지 게시글 시작 번호
-		int end = 0;			// 현재 페이지 게시글 마지막 번호
-		int number = 0;			// 출력할 게시글 번호
-		String pageNum = null;	// 페이지 번호
-		int currentPage = 0;	// 현재 페이지
-		
-		int pageCount = 0;		// 페이지 갯수
-		int startPage = 0;		// 시작페이지
-		int endPage = 0;		// 마지막 페이지
-		
-		// 글갯수 구하기
-		cnt = dao.getTheaterCnt();
-		
-		pageNum = req.getParameter("pageNum");
-		
-		if(pageNum == null) {
-			pageNum = "1"; //첫페이지를 1페이지로 설정
-		}
-		
-		currentPage = Integer.parseInt(pageNum);// 현재페이지
-		System.out.println("currentPage : "+ currentPage);
-		
-		// pageCnt = 12 / 5 + 1; //나머지 2건이 1페이지로 할당되므로 3페이지
-		pageCount = (cnt / pageSize) + (cnt % pageSize > 0 ? 1 : 0);// 페이지 갯수
-		System.out.println("pageCount : "+ pageCount);
-		
-		// 1 = (1-1) * 5 + 1
-		// 6 = (2-1) * 5 + 1
-		start = (currentPage - 1) * pageSize + 1;// 현재 페이지 게시글 시작 번호
-	
-		// 5 = (1 + 5 - 1)
-		end = start + pageSize -1;//현재 페이지 게시글 마지막 번호
-		
-		System.out.println("start : " + start);
-		System.out.println("end : " + end);
-		
-		if(end > cnt) end = cnt;
-		
-		//  = 25 - (5-1) * 5;
-		number = cnt - (currentPage - 1) * pageSize;// 출력할 게시글 번호
-		
-		System.out.println("number : " + number);
-		System.out.println("cnt : " + cnt);
-		System.out.println("currentPage : " + currentPage);
-		System.out.println("pageSize : " + pageSize);
-		
+		int cnt = 0; // 상영관 수
+		cnt = dao.getTheaterCnt(); // 상영관 수 구하기
 		if(cnt > 0) {
-			// 게시글 목록 조회
-			Map<String, Integer> map = new HashMap<String, Integer>();
-			map.put("start", start);
-			map.put("end", end);
-			ArrayList<TheaterVO> vos = dao.getTheaterList(map);
-			model.addAttribute("vos", vos); //큰바구니 : 게시글목록 cf)작은바구니 : 게시글1건
+			ArrayList<TheaterVO> vos = dao.getTheaterList(); // 상영관 목록 조회
+			model.addAttribute("vos", vos);
 		}
-		
-		startPage = (currentPage / pageBlock) * pageBlock + 1; // 4 = (5/3)*3+1;
-		if(currentPage % pageBlock == 0) startPage -= pageBlock; // (5%3) == 0
-		System.out.println("startPage : " + startPage);
-		
-		endPage = startPage + pageBlock - 1; // 6 = 4 + 3 - 1;
-		if(endPage > pageCount) endPage = pageCount;
-		System.out.println("endPage : " + endPage);
-		
-		model.addAttribute("cnt", cnt);// 글갯수
-		model.addAttribute("number", number);// 글번호
-		model.addAttribute("pageNum", pageNum);// 페이지번호
-		
-		if(cnt > 0) {
-			model.addAttribute("startPage", startPage); // 시작페이지
-			model.addAttribute("endPage", endPage);// 마지막 페이지
-			model.addAttribute("pageBlock", pageBlock);// 출력할 페이지 갯수
-			model.addAttribute("pageCount", pageCount);// 페이지 갯수
-			model.addAttribute("currentPage", currentPage);// 현재 페이지
-			
-		}
-		
-		System.out.println("hostMovieList 정상 종료");
-		
-		
+		model.addAttribute("cnt", cnt);
 	}
 	
 	// 상영관 상세
@@ -418,19 +264,15 @@ public class Host_movieServiceImpl implements Host_movieService{
 		TheaterVO vo = null;
 		ArrayList<Theater_seatVO> seat_vos = null;
 		
-		int theater_index = Integer.parseInt(req.getParameter("theater_index"));
-		ArrayList<Integer> state = new ArrayList<Integer>();
+		int theater_index = Integer.parseInt(req.getParameter("theater_index")); // 상영관 index
+		ArrayList<Integer> state = new ArrayList<Integer>(); // 전체 좌석 상태
 		
-		vo = dao.hostTheaterDetail(theater_index);
-		seat_vos = dao.hostTheaterSeatDetail(theater_index);
-		for(Theater_seatVO seat_vo : seat_vos) {
+		vo = dao.hostTheaterDetail(theater_index); // 상영관 index에 해당하는 상영관 정보를 TheaterVO에 담음
+		seat_vos = dao.hostTheaterSeatDetail(theater_index); // 상영관 index에 해당하는 좌석정보를 ArrayList<Theater_seatVO>에 담음
+		for(Theater_seatVO seat_vo : seat_vos) { // 배열로 받아온 seat 정보를  전체 좌석 상테에 저장
 			state.add(seat_vo.getSeat_state());
 		}
-		
-		System.out.println("=========================");
-		System.out.println("state : " + state);
-		System.out.println("=========================");
-		
+
 		model.addAttribute("vo", vo);
 		model.addAttribute("seat_vos", seat_vos);
 		model.addAttribute("state", state);
@@ -439,32 +281,35 @@ public class Host_movieServiceImpl implements Host_movieService{
 	// 상영관 수정 처리
 	@Override
 	public void hostTheaterModPro(HttpServletRequest req, Model model) {
-		int theater_index = Integer.parseInt(req.getParameter("theater_index"));
-		int theater_col = Integer.parseInt(req.getParameter("col"));
-		int theater_row = Integer.parseInt(req.getParameter("row"));
-		String status = req.getParameter("state");
-		String[] state = status.split(",");
+		int theater_index = Integer.parseInt(req.getParameter("theater_index")); // 상영관 index (n관)
+		int theater_col = Integer.parseInt(req.getParameter("col")); // 상영관 전체 열
+		int theater_row = Integer.parseInt(req.getParameter("row")); // 상영관 전체 행
+		String status = req.getParameter("state"); // 전체 좌석 상태
+		String[] state = status.split(","); // 전체 좌석별 좌석 상태
 		
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("theater_index", theater_index);
-		map.put("theater_col", theater_col);
-		map.put("theater_row", theater_row);
-		map.put("state", 0);
-		map.put("col", 0);
-		map.put("row", 0);
-		map.put("price", 0);
-		for(int row = 1; row<=theater_row; row++) {
-			for(int col = 1; col<=theater_col; col++) {
-				map.replace("state", Integer.parseInt(state[(row-1)*theater_col-1+col]));
-				map.replace("col", col);
-				map.replace("row", row);
-				if(Integer.parseInt(state[(row-1)*theater_col-1+col])==3)  //(row-1)*theater_col-1+col
+		map.put("theater_index", theater_index); // n관
+		map.put("theater_col", theater_col); // 상영관 전체 열
+		map.put("theater_row", theater_row); // 상영관 전체 행
+		map.put("state", 0); // 좌석 상태
+		map.put("col", 0); // 열
+		map.put("row", 0); // 행
+		map.put("price", 0); // 좌석 가격 
+		for(int row = 1; row<=theater_row; row++) { // 1부터 전체 행까지 for문 적용
+			for(int col = 1; col<=theater_col; col++) { // 1부터 전체 열까지 for문 적용
+				map.replace("state", Integer.parseInt(state[(row-1)*theater_col-1+col])); // 행과 열에 해당하는 좌석 상태 설정
+				map.replace("col", col); // 열
+				map.replace("row", row); // 행
+				if(Integer.parseInt(state[(row-1)*theater_col-1+col])==3)  //일반석이면 9000원
 					map.replace("price", 9000);
-				else if(Integer.parseInt(state[(row-1)*theater_col-1+col])==4)
+				else if(Integer.parseInt(state[(row-1)*theater_col-1+col])==4) // 프리미엄석이면 11000원
 					map.replace("price", 11000);
-				else map.replace("price", 0);
+				else if(Integer.parseInt(state[(row-1)*theater_col-1+col])==5) // 커플석이면 15000원
+					map.replace("price", 15000);
+				else map.replace("price", 0); // 나머지 0원
 					
-				int cnt = dao.modify_theater_seat(map);
+				int cnt = dao.modify_theater_seat(map); // 좌석 정보 UPDATE
+				
 				if(cnt >= 1)
 					model.addAttribute("cnt", 1);
 			}
@@ -475,13 +320,12 @@ public class Host_movieServiceImpl implements Host_movieService{
 	// 상영관 삭제 처리
 	@Override
 	public void hostTheaterDel(HttpServletRequest req, Model model) {
-		int theater_index = Integer.parseInt(req.getParameter("theater_index"));
+		int theater_index = Integer.parseInt(req.getParameter("theater_index")); // 삭제할 상영관 index
 		
-		int deleteCnt = dao.hostTheaterSeatDel(theater_index); 
-		System.out.println("deleteCnt:" + deleteCnt);
+		int deleteCnt = dao.hostTheaterSeatDel(theater_index);  // theater_index에 Forign key가 걸려있는 자식 테이블인 seat테이블을 먼저 삭제 처리
 		
-		if(deleteCnt >= 1) {
-			int cnt = dao.hostTheaterDel(theater_index);
+		if(deleteCnt >= 1) { // 상영관에 해당하는 좌석 정보를 삭제 성공하면
+			int cnt = dao.hostTheaterDel(theater_index); // 상영관 정보 삭제
 			model.addAttribute("cnt", cnt);
 		}
 		
@@ -490,32 +334,28 @@ public class Host_movieServiceImpl implements Host_movieService{
 	// 스케줄 조회
 	@Override
 	public void hostScheduleList(HttpServletRequest req, Model model) {
-		SimpleDateFormat date = new SimpleDateFormat ( "yy-MM-dd", Locale.KOREA );
-		Date sysdate = new Date();
-		String today = date.format ( sysdate ); 
+		SimpleDateFormat date = new SimpleDateFormat ( "yy-MM-dd", Locale.KOREA ); // 날짜를 yy-MM-dd형태로 변환하는 simpleDateFormat 선언
+		Date sysdate = new Date(); // 현재 시간
+		String today = date.format ( sysdate ); // Date형태로 선언한 현재시간을 문자열 yy-MM-dd 형태로 변환  
 		
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("theater_index", 1);
-		map.put("startDate", today+"-00:00");
-		map.put("endDate", today+"-23:59");
-		
-		// 선택날짜 스케줄 조회
-		ArrayList<Theater_scheduleVO> vos1 = dao.hostScheduleList(map);
-		
+		map.put("theater_index", 1); // 처음 조회시 상영관 1을 조회하기위한 설정
+		map.put("startDate", today+"-00:00"); // yy-MM-dd-00:00으로 설정
+		map.put("endDate", today+"-23:59"); // yy-MM-dd-23:59으로 설정
+		ArrayList<Theater_scheduleVO> vos1 = dao.hostScheduleList(map); // 선택날짜 스케줄 조회
 		model.addAttribute("day0", today);
 
-		
 		// 1일 후 스케줄 조회
-		sysdate.setDate(sysdate.getDate()+1);
-		today = date.format ( sysdate ); //1일 후
-		map.replace("startDate", today+"-00:00");
-		map.replace("endDate", today+"-23:59");
+		sysdate.setDate(sysdate.getDate()+1); // 현재날짜 + 1일
+		today = date.format ( sysdate ); //+1일 한 날짜를 문자열 yy-MM-dd형으로 변환
+		map.replace("startDate", today+"-00:00"); // yy-MM-dd-00:00으로 설정
+		map.replace("endDate", today+"-23:59"); // yy-MM-dd-23:59으로 설정
 		model.addAttribute("day1", today);
-		ArrayList<Theater_scheduleVO> vos2 = dao.hostScheduleList(map);
+		ArrayList<Theater_scheduleVO> vos2 = dao.hostScheduleList(map); // 선택날짜 스케줄 조회
 
 		// 2일 후 스케줄 조회
 		sysdate.setDate(sysdate.getDate()+1);
-		today = date.format ( sysdate ); //1일 후
+		today = date.format ( sysdate ); //+1일
 		map.replace("startDate", today+"-00:00");
 		map.replace("endDate", today+"-23:59");
 		model.addAttribute("day2", today);
@@ -523,7 +363,7 @@ public class Host_movieServiceImpl implements Host_movieService{
 		
 		// 3일 후 스케줄 조회
 		sysdate.setDate(sysdate.getDate()+1);
-		today = date.format ( sysdate ); //1일 후
+		today = date.format ( sysdate ); //+1일
 		map.replace("startDate", today+"-00:00");
 		map.replace("endDate", today+"-23:59");
 		model.addAttribute("day3", today);
@@ -531,23 +371,23 @@ public class Host_movieServiceImpl implements Host_movieService{
 		
 		// 4일 후 스케줄 조회
 		sysdate.setDate(sysdate.getDate()+1);
-		today = date.format ( sysdate ); //1일 후
+		today = date.format ( sysdate ); //+1일
 		map.replace("startDate", today+"-00:00");
 		map.replace("endDate", today+"-23:59");
 		model.addAttribute("day4", today);
 		ArrayList<Theater_scheduleVO> vos5 = dao.hostScheduleList(map);
 		
-		// 모든 상영관 정보
-		ArrayList<TheaterVO> theaterVOS = dao.getTheaterAllList();
+		ArrayList<TheaterVO> theaterVOS = dao.getTheaterAllList(); // 모든 상영관 정보
+		
+		ArrayList<MovieVO> movieVOS = dao.getMovieList(); // 모든 영화 정보
 		
 		model.addAttribute("vos1", vos1);
 		model.addAttribute("vos2", vos2);
 		model.addAttribute("vos3", vos3);
 		model.addAttribute("vos4", vos4);
 		model.addAttribute("vos5", vos5);
-
-
-
+		
+		model.addAttribute("movieVOS", movieVOS);
 		model.addAttribute("theaterVOS", theaterVOS);
 
 		
@@ -556,69 +396,57 @@ public class Host_movieServiceImpl implements Host_movieService{
 	// 스케줄 검색 목록 조회
 	@Override
 	public void hostScheduleSearch(HttpServletRequest req, Model model) {
-		String selDate = req.getParameter("date");
-		int theater_index = Integer.parseInt(req.getParameter("theater_index"));
-		SimpleDateFormat dateForm = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		SimpleDateFormat dateForm2 = new SimpleDateFormat("yy-MM-dd");
+		String selDate = req.getParameter("date"); // 선택한 날짜
+		int theater_index = Integer.parseInt(req.getParameter("theater_index")); // 선택한 상영관
+		SimpleDateFormat dateForm = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); // yyyy-MM-dd HH:mm:ss 형태로 변환하는 SimpleDateFormat 설정
+		SimpleDateFormat dateForm2 = new SimpleDateFormat("yy-MM-dd"); //yyyy-MM-dd 형태로 변환하는 SimpleDateFormat 설정
 		try {
-			Date sysdate = dateForm.parse("20"+selDate+" 00:00:00");
-			System.out.println("selectDate = " + sysdate);
+			Date sysdate = dateForm.parse("20"+selDate+" 00:00:00"); // 문자열 yy-MM-dd을 Date형태 20yy-MM-dd 00:00:00으로 변환하여 변수에 담음
 			
-			String date = dateForm2.format(sysdate);
-			
-			System.out.println("111111111111111111111111111111111");
-			System.out.println("selectDate = " + selDate);
+			String date = dateForm2.format(sysdate); // Date형태를 문자열 yy-MM-dd형으로 변환
 			
 			Map<String, Object> map = new HashMap<String, Object>();
-			map.put("theater_index", theater_index);
-			map.put("startDate", date+"-00:00");
-			map.put("endDate", date+"-23:59");
-			
-			// 선택 날짜 스케줄 조회
-			ArrayList<Theater_scheduleVO> vos1 = dao.hostScheduleList(map);
-			
+			map.put("theater_index", theater_index); // 선택한 상영관
+			map.put("startDate", date+"-00:00"); // 선택한 날짜의 yy-MM-dd-00:00
+			map.put("endDate", date+"-23:59"); // 선택한 날짜의 yy-MM-dd-23:59
+			ArrayList<Theater_scheduleVO> vos1 = dao.hostScheduleList(map); // 선택 날짜 스케줄 조회
 			model.addAttribute("day0", date);
 			
 			// 1일 후 스케줄 조회
-			sysdate.setDate(sysdate.getDate()+1);
-			date = dateForm2.format ( sysdate ); //1일 후
-			map.replace("startDate", date+"-00:00");
-			map.replace("endDate", date+"-23:59");
+			sysdate.setDate(sysdate.getDate()+1); // 선택한 날짜 +1일
+			date = dateForm2.format ( sysdate ); // yy-MM-dd 형태로 변환
+			map.replace("startDate", date+"-00:00"); // +1일 날짜의 yy-MM-dd-00:00
+			map.replace("endDate", date+"-23:59"); // +1일 날짜의 yy-MM-dd- 23:59
 			model.addAttribute("day1", date);
-
-			ArrayList<Theater_scheduleVO> vos2 = dao.hostScheduleList(map);
+			ArrayList<Theater_scheduleVO> vos2 = dao.hostScheduleList(map);  // +1일 날짜 스케줄 조회
 			
 			// 2일 후 스케줄 조회
-			sysdate.setDate(sysdate.getDate()+1);
-			date = dateForm2.format ( sysdate ); //1일 후
-			map.replace("startDate", date+"-00:00");
-			map.replace("endDate", date+"-23:59");
+			sysdate.setDate(sysdate.getDate()+1); // 선택한 날짜 +1일 +1일
+			date = dateForm2.format ( sysdate ); // yy-MM-dd 형태로 변환
+			map.replace("startDate", date+"-00:00"); // +1+1일 날짜의 yy-MM-dd-00:00
+			map.replace("endDate", date+"-23:59"); // +1+1일 날짜의 yy-MM-dd- 23:59
 			model.addAttribute("day2", date);
-
-			ArrayList<Theater_scheduleVO> vos3 = dao.hostScheduleList(map);
+			ArrayList<Theater_scheduleVO> vos3 = dao.hostScheduleList(map); // +1일 +1일 날짜 스케줄 조회
 						
 			// 3일 후 스케줄 조회
-			sysdate.setDate(sysdate.getDate()+1);
-			date = dateForm2.format ( sysdate ); //1일 후
-			map.replace("startDate", date+"-00:00");
-			map.replace("endDate", date+"-23:59");
+			sysdate.setDate(sysdate.getDate()+1); // 선택한 날짜 +1일 +1일 +1일
+			date = dateForm2.format ( sysdate ); // yy-MM-dd 형태로 변환
+			map.replace("startDate", date+"-00:00"); // +1+1+1일 날짜의 yy-MM-dd-00:00
+			map.replace("endDate", date+"-23:59"); // +1+1+1일 날짜의 yy-MM-dd- 23:59
 			model.addAttribute("day3", date);
-
-			ArrayList<Theater_scheduleVO> vos4 = dao.hostScheduleList(map);
+			ArrayList<Theater_scheduleVO> vos4 = dao.hostScheduleList(map); // +1일 +1일 +1일 날짜 스케줄 조회
 			
 			// 4일 후 스케줄 조회
-			sysdate.setDate(sysdate.getDate()+1);
-			date = dateForm2.format ( sysdate ); //1일 후
-			map.replace("startDate", date+"-00:00");
-			map.replace("endDate", date+"-23:59");
+			sysdate.setDate(sysdate.getDate()+1); // 선택한 날짜 +1일 +1일 +1일 +1일
+			date = dateForm2.format ( sysdate ); // yy-MM-dd 형태로 변환
+			map.replace("startDate", date+"-00:00"); // +1+1일 날짜의 yy-MM-dd-00:00
+			map.replace("endDate", date+"-23:59"); // +1+1일 날짜의 yy-MM-dd- 23:59
 			model.addAttribute("day4", date);
-
-			ArrayList<Theater_scheduleVO> vos5 = dao.hostScheduleList(map);
+			ArrayList<Theater_scheduleVO> vos5 = dao.hostScheduleList(map); // +1일 +1일 +1일 +1일 날짜 스케줄 조회
 			
-			// 모든 상영관 정보
-			ArrayList<TheaterVO> theaterVOS = dao.getTheaterAllList();
+			ArrayList<TheaterVO> theaterVOS = dao.getTheaterAllList(); // 모든 상영관 정보
 			
-			
+			ArrayList<MovieVO> movieVOS = dao.getMovieList(); // 모든 영화 정보
 			
 			model.addAttribute("date", selDate);
 			model.addAttribute("theater_index", theater_index);
@@ -627,6 +455,8 @@ public class Host_movieServiceImpl implements Host_movieService{
 			model.addAttribute("vos3", vos3);
 			model.addAttribute("vos4", vos4);
 			model.addAttribute("vos5", vos5);
+			
+			model.addAttribute("movieVOS", movieVOS);
 			model.addAttribute("theaterVOS", theaterVOS);
 
 		} catch (ParseException e) {
@@ -638,11 +468,9 @@ public class Host_movieServiceImpl implements Host_movieService{
 	// 상영관 추가 폼 영화 정보와 상영관 정보 가져오기
 	@Override
 	public void hostScheduleAddForm(HttpServletRequest req, Model model) {
-		// 상영중인 영화 정보
-		ArrayList<MovieVO> movieVOS = dao.getMovieING();
+		ArrayList<MovieVO> movieVOS = dao.getMovieING(); // 상영중인 영화 정보
 		
-		// 모든 상영관 정보
-		ArrayList<TheaterVO> theaterVOS = dao.getTheaterAllList();
+		ArrayList<TheaterVO> theaterVOS = dao.getTheaterAllList(); // 모든 상영관 정보
 		
 		model.addAttribute("movieVOS", movieVOS);
 		model.addAttribute("theaterVOS", theaterVOS);
@@ -651,24 +479,21 @@ public class Host_movieServiceImpl implements Host_movieService{
 	// 상영가능한 상영관 조회
 	@Override
 	public void checkPosTheater(HttpServletRequest req, Model model) {
-		String schedule_startDate = req.getParameter("schedule_startDate");
-		String schedule_startTime = req.getParameter("schedule_startTime");
+		String schedule_startDate = req.getParameter("schedule_startDate"); // 선택한 날짜
+		String schedule_startTime = req.getParameter("schedule_startTime"); // 선택한 시간
 		
 		ArrayList<TheaterVO> theaterVOS = null;
 		
-		String schedule_start = schedule_startDate +"-"+ schedule_startTime;
+		String schedule_start = schedule_startDate +"-"+ schedule_startTime; // 선택한 날짜와 시간
 		
-		// 상영 가능한 상영관
-		int cnt = dao.checkPosTheaterCnt(schedule_start);
-		System.out.println("cnt : " + cnt);
-		if(cnt == 0) {
-			theaterVOS = dao.getTheaterAllList();
-		} else {
-			theaterVOS = dao.checkPosTheater(schedule_start);
+		int cnt = dao.checkPosTheaterCnt(schedule_start); // 상영 가능한 상영관
+		if(cnt == 0) { // 선택시간에 모든 상영관이 스케줄이 없다면
+			theaterVOS = dao.getTheaterAllList(); // 모든 상영관 정보를 가져옴
+		} else { // 선택한 시간에 1개이상의 상영관이 스케줄이 있다면
+			theaterVOS = dao.checkPosTheater(schedule_start); //선택한 시간대에 상영 가능한 상영관을 가져옴
 		}
 		
-		// 상영중인 영화 정보
-		ArrayList<MovieVO> movieVOS = dao.getMovieING();
+		ArrayList<MovieVO> movieVOS = dao.getMovieING(); // 상영중인 영화 정보
 		
 		model.addAttribute("confirm", 1);
 		model.addAttribute("movieVOS", movieVOS);
@@ -678,107 +503,85 @@ public class Host_movieServiceImpl implements Host_movieService{
 	// 스케줄 추가 처리
 	@Override
 	public void hostScheduleAddPro(HttpServletRequest req, Model model) {
-		String schedule_startDate = req.getParameter("schedule_startDate");
-		String schedule_startTime = req.getParameter("schedule_startTime");
-		int movie_index = Integer.parseInt(req.getParameter("movie_index"));
-		int theater_index = Integer.parseInt(req.getParameter("theater_index"));
-		int schedule_MDNstate = 1;
+		String schedule_startDate = req.getParameter("schedule_startDate"); // 스케줄 시작 날짜
+		String schedule_startTime = req.getParameter("schedule_startTime"); // 스케줄 시작 시간
+		int movie_index = Integer.parseInt(req.getParameter("movie_index")); // 영화
+		int theater_index = Integer.parseInt(req.getParameter("theater_index")); // 상영관
+		int schedule_MDNstate = 1; // 조조, 일반, 심야 state
 		
 		int time = Integer.parseInt(schedule_startTime.split(":")[0]);
-		if(22<=time && time<=23 || 00<=time && time<=03) { //22<=time && time<=23 || 00<=time && time<=03
-			schedule_MDNstate = 2;
-		} else if(04<=time && time<=10) { // 04<=time && time<=10
-			schedule_MDNstate = 0;
+		if(22<=time && time<=23 || 00<=time && time<=03) { // 스케줄 시간이 심야시간이면
+			schedule_MDNstate = 2; // state = 심야
+		} else if(04<=time && time<=10) { // 스케줄 시간이 조조 시간이면
+			schedule_MDNstate = 0; // state = 조조
 		}
 		
-		String schedule_start = schedule_startDate +"-"+ schedule_startTime;
-		System.out.println("schedule_start = " +schedule_start);
-		System.out.println("movie_index = " +movie_index);
-		System.out.println("theater_index = " +theater_index);
-		System.out.println("schedule_MDNstate = " +schedule_MDNstate);
+		String schedule_start = schedule_startDate +"-"+ schedule_startTime; // 스케줄 시작 날짜와 시간
 		
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("schedule_start", schedule_start);
-		map.put("movie_index", movie_index);
-		map.put("theater_index", theater_index);
-		map.put("schedule_MDNstate", schedule_MDNstate);
-		int cnt = dao.hostScheduleAddPro(map);
+		map.put("schedule_start", schedule_start); // 스케줄 시작 날짜와 시간
+		map.put("movie_index", movie_index); // 영화
+		map.put("theater_index", theater_index); // 상영관
+		map.put("schedule_MDNstate", schedule_MDNstate); // 조조, 일반, 심야 state
+		int cnt = dao.hostScheduleAddPro(map); // 스케줄 추가 처리
 		
-		// 스케줄에 상영관 인덱스로 스케줄 좌석 테이블에 복사 붙여넣기
-		// 상영관의 총 행과 총 열을 가져옴
-		TheaterVO theaterVO = dao.hostTheaterDetail(theater_index);
+		TheaterVO theaterVO = dao.hostTheaterDetail(theater_index); // 상영관의 총 행과 총 열을 가져옴
 		
 		// 가져온 총 행과 총 열을 가지고 2중 for문을 돌려서 2차배열에 좌석state 저장
 		int totalCol = theaterVO.getTheater_col(); // 총 열
 		int totalRow = theaterVO.getTheater_row(); // 총 행
-		System.out.println("totalCol : " + totalCol);
-		System.out.println("totalRow : " + totalRow);
-		
-		int[][] seatState = new int[totalRow][totalCol];
-		int[][] seatPrice = new int[totalRow][totalCol];
+		int[][] seatState = new int[totalRow][totalCol]; // 좌석별 상태 2차배열 크기를 총 열과 총 행으로 설정
+		int[][] seatPrice = new int[totalRow][totalCol]; // 좌석별 가격 2차배열 크기를 총 열과 총 행으로 설정
 
 		Map<String, Integer> map2 = new HashMap<String, Integer>();
-		map2.put("theater_index", theater_index);
-		map2.put("row", 0);
-		map2.put("col", 0);
+		map2.put("theater_index", theater_index); // 상영관
+		map2.put("row", 0); // 행 초기 설정
+		map2.put("col", 0); // 열 초기 설정
 		
-		int empty_seat = 0;
-		for(int row = 1; row<=totalRow; row++) {
-			for(int col = 1; col<=totalCol; col++) {
-				System.out.println("row : " + row);
-				System.out.println("col : " + col);
-				map2.replace("row", row);
-				map2.replace("col", col);
-				seatState[row-1][col-1] = dao.getTheaterSeatState(map2);
-				seatPrice[row-1][col-1] = dao.getTheaterSeatPrice(map2);
+		int empty_seat = 0; // 일반석, 프리미엄석, 커플석의 빈좌석 초기 설정
+		for(int row = 1; row<=totalRow; row++) { // 1부터 전체 행까지 for문 적용
+			for(int col = 1; col<=totalCol; col++) { // 1부터 전체 열까지 for문 적용
+				map2.replace("row", row); // 행 설정
+				map2.replace("col", col); // 열 설정
+				seatState[row-1][col-1] = dao.getTheaterSeatState(map2); //상영관index, 행과 열에 해당하는 좌석 state를 가져옴 
+				seatPrice[row-1][col-1] = dao.getTheaterSeatPrice(map2); //상영관index, 행과 열에 해당하는 좌석 가격정보를 가져옴 
 				
-				if(seatState[row-1][col-1] == 3 || seatState[row-1][col-1] == 4 || seatState[row-1][col-1] == 5) {
-					empty_seat += 1;
+				if(seatState[row-1][col-1] == 3 || seatState[row-1][col-1] == 4 || seatState[row-1][col-1] == 5) { // 좌석state가 일반, 프리미엄, 커플석이면
+					empty_seat += 1; // 빈좌석 +1
 				}
 			}
 		}
-		// 빈좌석 업데이트하기
-		dao.updateEmpty_seat(empty_seat);
-		System.out.println("===============================================");
-		System.out.println("seatState : " + seatState);
+		dao.updateEmpty_seat(empty_seat); // 빈좌석 업데이트
 		
 		// 2중 for문을 이용하여 스케줄 시트 테이블에 insert
-		map2.put("seatState", 0);
-		map2.put("seatPrice", 0);
-		for(int row = 1; row<=totalRow; row++) {
-			for(int col = 1; col<=totalCol; col++) {
-				map2.replace("row", row);
-				map2.replace("col", col);
-				map2.replace("seatState", seatState[row-1][col-1]);
-				map2.replace("seatPrice", seatPrice[row-1][col-1]);
-				System.out.println("seatPrice : " + seatPrice[row-1][col-1]);
-				dao.TheaterScheduleSeatAddPro(map2);
-				
+		map2.put("seatState", 0); // 좌석상태 초기설정
+		map2.put("seatPrice", 0); // 좌석 가격 초기설정
+		for(int row = 1; row<=totalRow; row++) { // 1부터 전체 행까지 for문 적용
+			for(int col = 1; col<=totalCol; col++) { // 1부터 전체 열까지 for문 적용
+				map2.replace("row", row); // 행 설정
+				map2.replace("col", col); // 열 설정
+				map2.replace("seatState", seatState[row-1][col-1]); // 행과 열에 해당하는 좌석 정보를 설정
+				map2.replace("seatPrice", seatPrice[row-1][col-1]); // 행과 열에 해당하는 좌석 가격 설정
+				dao.TheaterScheduleSeatAddPro(map2); // 좌석 테이블에 해당 상영관index로 좌석 정보 추가 처리
 			}
 		}
-				
-						
-		
 		model.addAttribute("cnt", cnt);
-		
 	}
 
 	// 스케줄 상세 정보 가져오기
 	@Override
 	public void hostScheduleDetail(HttpServletRequest req, Model model) {
-		int theater_index = Integer.parseInt(req.getParameter("theater_index"));
-		int movie_index = Integer.parseInt(req.getParameter("movie_index"));
-		int theater_schedule_index = Integer.parseInt(req.getParameter("theater_schedule_index"));
+		int theater_index = Integer.parseInt(req.getParameter("theater_index")); // 상영관
+		int movie_index = Integer.parseInt(req.getParameter("movie_index")); // 영화
+		int theater_schedule_index = Integer.parseInt(req.getParameter("theater_schedule_index")); // 스케줄
 		
-		TheaterVO theaterVO = dao.hostTheaterDetail(theater_index);
-		MovieVO movieVO = dao.hostMovieDetail(movie_index);
-		Theater_scheduleVO scheduleVO = dao.hostScheduleDetail(theater_schedule_index);
+		TheaterVO theaterVO = dao.hostTheaterDetail(theater_index); // 상영관 상세 정보 가져오기
+		MovieVO movieVO = dao.hostMovieDetail(movie_index); // 영화 상세 정보 가져오기
+		Theater_scheduleVO scheduleVO = dao.hostScheduleDetail(theater_schedule_index); // 스케줄 상세 정보 가져오기
 		
-		// 상영중인 영화 정보
-		ArrayList<MovieVO> movieVOS = dao.getMovieING();
+		ArrayList<MovieVO> movieVOS = dao.getMovieING(); // 상영중인 영화 정보
 		
-		// 모든 상영관 정보
-		ArrayList<TheaterVO> theaterVOS = dao.getTheaterAllList();
+		ArrayList<TheaterVO> theaterVOS = dao.getTheaterAllList(); // 모든 상영관 정보
 		
 		model.addAttribute("theaterVO", theaterVO);
 		model.addAttribute("movieVO", movieVO);
@@ -790,87 +593,72 @@ public class Host_movieServiceImpl implements Host_movieService{
 	// 스케줄 수정 처리
 	@Override
 	public void hostScheduleModPro(HttpServletRequest req, Model model) {
-		String startDate = req.getParameter("startDate");
-		String startTime = req.getParameter("startTime");
-		int theater_index = Integer.parseInt(req.getParameter("theater_index"));
-		int movie_index = Integer.parseInt(req.getParameter("movie_index"));
-		int theater_schedule_index = Integer.parseInt(req.getParameter("theater_schedule_index"));
+		String startDate = req.getParameter("startDate"); // ~으로 바꿀 스케줄 날짜
+		String startTime = req.getParameter("startTime"); // ~으로 바꿀 스케줄 시간
+		int theater_index = Integer.parseInt(req.getParameter("theater_index")); // 상영관
+		int movie_index = Integer.parseInt(req.getParameter("movie_index")); // 영화
+		int theater_schedule_index = Integer.parseInt(req.getParameter("theater_schedule_index")); // 스케줄
 		
-		String schedule_startTime = startDate+"-"+startTime;
+		String schedule_startTime = startDate+"-"+startTime; // ~으로 바꿀 스케줄 날짜와 시간
 		
 		int cnt = 0;
-		// 수정하려는 시간에 다른 스케줄이 있는지 확인
+		
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("schedule_startTime", schedule_startTime);
-		map.put("theater_schedule_index", theater_schedule_index);
-		map.put("theater_index", theater_index);
-		int sche_chkCnt = dao.chkCnt(map); // 1이상이면 수정못함, 0이면 수정 가능
+		map.put("schedule_startTime", schedule_startTime); // ~으로 바꿀 스케줄 날짜와 시간
+		map.put("theater_schedule_index", theater_schedule_index); // 스케줄
+		map.put("theater_index", theater_index); // 상영관
+		int sche_chkCnt = dao.chkCnt(map); // 수정하려는 시간에 다른 스케줄이 있는지 확인
 		
-		System.out.println("=============================");
-		System.out.println("=============================");
-		System.out.println("sche_chkCnt : " + sche_chkCnt);
-		System.out.println("=============================");
-		System.out.println("=============================");
-		
-		if(sche_chkCnt == 0) { // 수정가능
-			map.put("movie_index", movie_index);
+		if(sche_chkCnt == 0) { // 선택한 시간으로 스케줄 수정이 가능 하면
+			map.put("movie_index", movie_index); // 영화
 			
-			int schedule_MDNstate = 1;
+			int schedule_MDNstate = 1; // 조조 일반 심야 state
 			
-			int time = Integer.parseInt(startTime.split(":")[0]);
-			if(22<=time && time<=23 || 00<=time && time<=03) { //22<=time && time<=23 || 00<=time && time<=03
-				schedule_MDNstate = 2;
-			} else if(04<=time && time<=10) { // 04<=time && time<=10
-				schedule_MDNstate = 0;
+			int time = Integer.parseInt(startTime.split(":")[0]); // 시작시간 시:분에서 시 정보만 담음
+			if(22<=time && time<=23 || 00<=time && time<=03) { // 스케줄 시간이 심야시간이면
+				schedule_MDNstate = 2; // state = 심야
+			} else if(04<=time && time<=10) { // 스케줄 시간이 조조시간이면
+				schedule_MDNstate = 0; // state = 조조
 			}
 			map.put("schedule_MDNstate", schedule_MDNstate);
 			
-			cnt = dao.updateSchedule(map);//기존 정보 수정
+			cnt = dao.updateSchedule(map);//스케줄 수정 처리
 		}
-		
-		System.out.println("=============================");
-		System.out.println("cnt : " + cnt);
-		System.out.println("=============================");
-		
 		model.addAttribute("cnt", cnt);
 	}
 
 	// 스케줄 삭제 처리
 	@Override
 	public void hostScheduleDelPro(HttpServletRequest req, Model model) {
-		int theater_schedule_index = Integer.parseInt(req.getParameter("theater_schedule_index"));
+		int theater_schedule_index = Integer.parseInt(req.getParameter("theater_schedule_index")); // 삭제할 스케줄
+		int cnt = dao.hostScheduleDelPro(theater_schedule_index); // 스케줄 삭제처리
 		
-		int cnt = dao.hostScheduleDelPro(theater_schedule_index);
-		
-		model.addAttribute("cnt", cnt);
+		model.addAttribute("cnt", cnt); 
 	}
 	
 	// 직원 목록
 	@Override
 	public void hostMovieEmp(HttpServletRequest req, Model model) {
-		int cnt = dao.hostMovieEmpCnt();
+		int cnt = dao.hostMovieEmpCnt(); // 직원 수 확인하기
 		
 		if(cnt > 0) { // 직원 목록이 존재하면
-			ArrayList<Member> vos = dao.hostMovieEmpList();
+			ArrayList<Member> vos = dao.hostMovieEmpList(); // 직원 목록을 ArrayList<Member>에 담음
 			model.addAttribute("vos", vos);
-			
 		}
 		model.addAttribute("cnt", cnt);
-		
 	}
 	
 	// 직원 고용 아이디 확인
 	@Override
 	public void hostMovieEmpChkMemberId(HttpServletRequest req, Model model) {
-		String member_id = req.getParameter("member_id");
+		String member_id = req.getParameter("member_id"); // 고용할 아이디
 		
-		int idCnt = dao.hostMovieEmpChkMemberId(member_id);
+		int idCnt = dao.hostMovieEmpChkMemberId(member_id); // 고용할 아이디에 해당하는 정보가 있는지 확인 
 		
-		if(idCnt != 0) {
+		if(idCnt != 0) { // 고용할 아이디 정보가 있다면
 			Member vo = dao.hostMovieEmpInfo(member_id); 	// 아이디로 고용할 직원 정보 가져오기
 			model.addAttribute("vo", vo);
 		}
-		
 		model.addAttribute("member_id", member_id);
 		model.addAttribute("idCnt", idCnt);
 	}
@@ -878,17 +666,17 @@ public class Host_movieServiceImpl implements Host_movieService{
 	// 직원 고용 처리
 	@Override
 	public void hostMovieEmpAddPro(HttpServletRequest req, Model model) {
-		String member_id = req.getParameter("member_id");
-		String employee_jumin2 = req.getParameter("employee_jumin2");
+		String member_id = req.getParameter("member_id"); // 고용할 직원 아이디
+		String employee_jumin2 = req.getParameter("employee_jumin2"); // 고용할 직원 주민등록번호 뒷자리
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("member_id", member_id);
 		map.put("employee_jumin2", employee_jumin2);
 		
-		int cnt = dao.memberChangeState(member_id);
+		int cnt = dao.memberChangeState(member_id); // 고용할 직원 아이디의 state를 영화 직원으로 변경
 		
-		if(cnt == 1) {
-			int insertCnt = dao.insertEmp(map);
+		if(cnt == 1) { // 고용할 직원 아이디의 state를 영화 직원으로 변경 성공시
+			int insertCnt = dao.insertEmp(map); // 직원목록에 추가 처리
 			if(insertCnt==1) {
 				cnt = 1;
 			}else {
@@ -896,68 +684,59 @@ public class Host_movieServiceImpl implements Host_movieService{
 			}
 		}
 		model.addAttribute("cnt", cnt);
-		
 	}
 
-	// 직원 하고
+	// 직원 해고
 	@Override
 	public void hostMovieEmpDel(HttpServletRequest req, Model model) {
-		String member_id = req.getParameter("member_id");
+		String member_id = req.getParameter("member_id"); // 해고할 직원 아이디
 		
-		// 회원으로 돌아가기 전 종합포인트 등급 확인
-		int point = dao.getMemberPoint(member_id);
+		int point = dao.getMemberPoint(member_id); // 회원으로 돌아가기 전 종합포인트 등급 확인
+		int member_step = 9; // member step 초기 설정
 		
-		int member_step = 9;
-		
-		if(point <= 15000 ) {
+		if(point <= 15000 ) { // 일반회원으로 설정
 			member_step = 9;
-		}else if(point <= 30000) {
+		}else if(point <= 30000) { // VIP회원으로 설정
 			member_step = 10;
-		}else if(point <= 45000) {
+		}else if(point <= 45000) { // VVIP회원으로 설정
 			member_step = 11;
-		}else {
+		}else { //SVIP 회원으로 설정
 			member_step = 12;
 		}
 		
-		int cnt = dao.hostMovieEmpDel(member_id); // 직원 목록에서 삭제
+		int cnt = dao.hostMovieEmpDel(member_id); // 직원 목록에서 삭제 처리
 		
-		if(cnt > 0) {
+		if(cnt > 0) { // 직원 목록에서 삭제 처리 성공하면
 			Member vo = new Member();
 			vo.setMember_id(member_id);
 			vo.setMember_step(member_step);
 			
-			cnt = dao.updateMemberStep(vo);
+			cnt = dao.updateMemberStep(vo); // 해고한 직원 아이디의 step을 변경
 		}
-		
 		model.addAttribute("cnt", cnt);
-		
 	}
 
 	// 예매 상세
 	@Override
 	public void hostTheaterScheduleDetail(HttpServletRequest req, Model model) {
+		TheaterVO vo = null; // 상영관 상세
+		ArrayList<Theater_seatVO> seat_vos = null; // 좌석 상세
 		
-		TheaterVO vo = null;
-		ArrayList<Theater_seatVO> seat_vos = null;
+		int theater_index = Integer.parseInt(req.getParameter("theater_index")); // 선택한 상영관
+		int theater_schedule_index = Integer.parseInt(req.getParameter("theater_schedule_index")); // 선택한 스케줄
 		
-		int theater_index = Integer.parseInt(req.getParameter("theater_index"));
-		int theater_schedule_index = Integer.parseInt(req.getParameter("theater_schedule_index"));
+		ArrayList<Integer> state = new ArrayList<Integer>(); // 좌석 상태
 		
-		ArrayList<Integer> state = new ArrayList<Integer>();
-		
-		vo = dao.hostTheaterDetail(theater_index);
+		vo = dao.hostTheaterDetail(theater_index); // 상영관 상세 정보를 담음
 		
 		Map<String, Integer> map = new HashMap<String, Integer>();
-		map.put("theater_index", theater_index);
-		map.put("theater_schedule_index", theater_schedule_index);
-		seat_vos = dao.hostTheaterScheduleSeatDetail(map);
-		for(Theater_seatVO seat_vo : seat_vos) {
+		map.put("theater_index", theater_index); // 상영관
+		map.put("theater_schedule_index", theater_schedule_index); // 스케줄
+		seat_vos = dao.hostTheaterScheduleSeatDetail(map); // 스케줄에 해당하는 좌석 상세 정보를 가져옴
+		
+		for(Theater_seatVO seat_vo : seat_vos) {  // 좌석 상세정보에서 좌석상태를 state에 배열형태로 담음
 			state.add(seat_vo.getSeat_state());
 		}
-		
-		System.out.println("=========================");
-		System.out.println("state : " + state);
-		System.out.println("=========================");
 		
 		model.addAttribute("vo", vo);
 		model.addAttribute("seat_vos", seat_vos);
@@ -968,41 +747,30 @@ public class Host_movieServiceImpl implements Host_movieService{
 	// 예매 상세
 	@Override
 	public MovieResViewVO hostMovieResView(HttpServletRequest req, Model model) {
-		MovieResViewVO viewVO = new MovieResViewVO();
+		MovieResViewVO viewVO = new MovieResViewVO(); // 리턴할 예매정보
 		
-		TheaterVO vo = null;
-		ArrayList<Theater_seatVO> seat_vos = null;
+		TheaterVO vo = null; // 상영관 상세
+		ArrayList<Theater_seatVO> seat_vos = null; // 좌석 상세
 		
-		int theater_index = Integer.parseInt(req.getParameter("theater_index"));
-		int theater_schedule_index = Integer.parseInt(req.getParameter("theater_schedule_index"));
+		int theater_index = Integer.parseInt(req.getParameter("theater_index")); // 선택한 상영관
+		int theater_schedule_index = Integer.parseInt(req.getParameter("theater_schedule_index")); // 선택한 스케줄
 		
-		ArrayList<Integer> state = new ArrayList<Integer>();
+		ArrayList<Integer> state = new ArrayList<Integer>(); // 좌석 상태
 		
-		vo = dao.hostTheaterDetail(theater_index);
-		System.out.println("theater_col " + vo.getTheater_col());
-		System.out.println("theater_row " + vo.getTheater_row());
-
+		vo = dao.hostTheaterDetail(theater_index); // 상영관 상세 정보를 담음
 		
 		Map<String, Integer> map = new HashMap<String, Integer>();
-		map.put("theater_index", theater_index);
-		map.put("theater_schedule_index", theater_schedule_index);
-		seat_vos = dao.hostTheaterScheduleSeatDetail(map);
-		for(Theater_seatVO seat_vo : seat_vos) {
+		map.put("theater_index", theater_index); // 상영관
+		map.put("theater_schedule_index", theater_schedule_index); // 스케줄
+		seat_vos = dao.hostTheaterScheduleSeatDetail(map); // 스케줄에 해당하는 좌석 상세 정보를 가져옴
+		
+		for(Theater_seatVO seat_vo : seat_vos) { // 좌석 상세정보에서 좌석상태를 state에 배열형태로 담음
 			state.add(seat_vo.getSeat_state());
 		}
 		
-		viewVO.setTotalRow(vo.getTheater_row());
-		viewVO.setTotalCol(vo.getTheater_col());
-		viewVO.setState(state);
-		
-		System.out.println("=========================");
-		System.out.println("state : " + state);
-		System.out.println("=========================");
-		
-//		model.addAttribute("vo", vo);
-//		model.addAttribute("seat_vos", seat_vos);
-//		model.addAttribute("state", state);
-		
+		viewVO.setTotalRow(vo.getTheater_row()); // 전체 행
+		viewVO.setTotalCol(vo.getTheater_col()); // 전체 열
+		viewVO.setState(state); // 좌석 상태(배열 형태)
 		
 		return viewVO;
 	}
@@ -1011,7 +779,7 @@ public class Host_movieServiceImpl implements Host_movieService{
 	@Override
 	public void movieJanreCountChart(HttpServletRequest req, Model model) {
 		Map<String , Object> map = new HashMap<String,Object>();
-
+		String[] janre = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10"};
 		//mapper에서 불러온 kind와 value가 다건이기때문에 vo형태의 List형으로 받아준다.
 		List<HostMovieChartVO> voList = dao.getMovieCountChart(); 
 		
@@ -1019,6 +787,18 @@ public class Host_movieServiceImpl implements Host_movieService{
 		//(map의 key값이 String이기때문에 int형인 kind를 String으로 형변환 해준다.
 		for (HostMovieChartVO i : voList) {
 			map.put(i.getKind() , i.getValue());
+		}
+		
+		for (String s : janre) {
+			int chk = 0;
+			for(Entry<String, Object> m : map.entrySet()) {
+				if(s.equals(m.getKey())) {
+					chk = 1;
+				}
+			}
+			if(chk == 0) {
+				map.put(s, 0);
+			}
 		}
 		
 		model.addAttribute("movieJanreCountChart",map);
@@ -1032,7 +812,7 @@ public class Host_movieServiceImpl implements Host_movieService{
 	@Override
 	public void movieAgeChart(HttpServletRequest req, Model model) {
 		Map<String , Object> map = new HashMap<String,Object>();
-
+		String[] age = {"0", "12", "15", "19"};
 		//mapper에서 불러온 kind와 sum가 다건이기때문에 vo형태의 List형으로 받아준다.
 		List<hostTChartVO> voList = dao.movieAgeChart(); 
 		
@@ -1041,6 +821,19 @@ public class Host_movieServiceImpl implements Host_movieService{
 		for (hostTChartVO i : voList) {
 			map.put(Integer.toString(i.getKind()) , i.getSum());
 		}
+		
+		for (String s : age) {
+			int chk = 0;
+			for(Entry<String, Object> m : map.entrySet()) {
+				if(s.equals(m.getKey())) {
+					chk = 1;
+				}
+			}
+			if(chk == 0) {
+				map.put(s, 0);
+			}
+		}
+		
 		
 		model.addAttribute("movieAgeChart",map);
 		
@@ -1053,7 +846,7 @@ public class Host_movieServiceImpl implements Host_movieService{
 	@Override
 	public void movieSexCountChart(HttpServletRequest req, Model model) {
 		Map<String , Object> map = new HashMap<String,Object>();
-
+		String[] sex = {"남", "여"};
 		//mapper에서 불러온 kind와 value가 다건이기때문에 vo형태의 List형으로 받아준다.
 		List<HostMovieChartVO> voList = dao.movieSexCountChart(); 
 		
@@ -1061,6 +854,18 @@ public class Host_movieServiceImpl implements Host_movieService{
 		//(map의 key값이 String이기때문에 int형인 kind를 String으로 형변환 해준다.
 		for (HostMovieChartVO i : voList) {
 			map.put(i.getKind() , i.getValue());
+		}
+		
+		for (String s : sex) {
+			int chk = 0;
+			for(Entry<String, Object> m : map.entrySet()) {
+				if(s.equals(m.getKey())) {
+					chk = 1;
+				}
+			}
+			if(chk == 0) {
+				map.put(s, 0);
+			}
 		}
 		
 		model.addAttribute("movieSexCountChart",map);
@@ -1071,107 +876,76 @@ public class Host_movieServiceImpl implements Host_movieService{
 	}
 
 	
-	/////////////////////////////////////////////
-	////////////////////////////////////////////
 	// 워드 클라우드
+	// 워드클라우드 리스트
+	private static List<WordVO> wordVos;
 	
-//	// 워드클라우드 재검색 요청
-//	@Override
-//	public String wordcloudRefresh(HttpServletRequest req, Model model) {
-//		String strDate = req.getParameter("strDate");
-//		String endDate = req.getParameter("endDate");
-//		String[] wordOps = req.getParameter("wordOps").split(",");
-//		String printMsg = "";
-//		String cow = req.getParameter("countOfWords");
-//		if(cow == null)cow = "30";
-//		int countOfWords = Integer.parseInt(req.getParameter("countOfWords"));
-//		Map<String, Object> map = new HashMap<>();
-//
-//		printMsg = "strDate : " + strDate + ", endDate : " + endDate +", 요청단어수 : " + countOfWords;
-//
-//		int type = 0;
-//
-//		if(wordOps != null) {
-//			List<String> list = Arrays.asList(wordOps);
-//			if(list.contains("Noun") && list.contains("Verb") && list.contains("Hashtag")){
-//				type = 6;
-//				printMsg += ", | 명사, 동사, 해시태그 검색요청";
-//			} else if(list.contains("Noun") && list.contains("Verb")) {
-//				type = 4;
-//				printMsg += ", | 명사, 동사 검색요청";
-//			} else if(list.contains("Noun") && list.contains("Hashtag")) {
-//				type = 7;
-//				printMsg += ", | 명사, 해시태그 검색요청";
-//			} else if(list.contains("Hashtag") && list.contains("Verb")) {
-//				type = 5;
-//				printMsg += ", | 해시태그, 동사 검색요청";
-//			} else if(list.contains("Noun")) {
-//				type = 1;
-//				printMsg += ", | 명사 검색요청";
-//			} else if(list.contains("Verb")) {
-//				type = 2;
-//				printMsg += ", | 동사 검색요청";
-//			} else if(list.contains("Hashtag")) {
-//				type = 3;
-//				printMsg += ", | 해시태그 검색요청";
-//			}
-//		} else {
-//			type = 6;
-//			printMsg += ", | 명사, 동사, 해시태그 전체검색 요청";
-//		}
-//
-//		map.put("type", type);
-//		map.put("countOfWords", countOfWords);
-//
-//		List<WordDTO> wordList = null;
-//
-//		if(strDate != null && endDate != null){
-//			if(!strDate.equals("")) {
-//				strDate = strDate + " 00:00:01.000000";
-//				endDate = endDate + " 23:59:59.000000";
-//				Timestamp stp = Timestamp.valueOf(strDate);
-//				Timestamp etp = Timestamp.valueOf(endDate);
-//				map.put("strDate", stp);
-//				map.put("endDate", etp);
-//				wordList = dao.searchWordcloud2(map);
-//			} else {
-//				wordList = dao.searchWordcloud(map);
-//			}
-//		} else {
-//			wordList = dao.searchWordcloud(map);
-//		}
-//
-//		System.out.println(printMsg);
-//
-//		String resultMsg = "<ul>";
-//		System.out.println(wordList);
-//		for(WordDTO dto : wordList) {
-//			if(dto.getPart_of_speech().equals("Hashtag")){
-//				resultMsg += "<li><a href='/moyeo/two/wordCloudSearchByTag?search_keyword=" + dto.getWord().replaceAll("#", "") + "' >" + dto.getWord() + "</a></li>";
-//			} else {
-//				resultMsg += "<li><a href='/moyeo/two/wordCloudSearch?search_keyword=" + dto.getWord() + "' >" + dto.getWord() + "</a></li>";
-//			}
-//		}
-//		if(wordList.isEmpty())resultMsg += "<li><a href='#' target='_blank'>단어가 없습니다.</a></li>";
-//		resultMsg += "</ul>";
-//
-//		System.out.println(resultMsg);
-//
-//		//		model.addAttribute("wordList", wordList);
-//		//		model.addAttribute("listSize", wordList.size());
-//
-//		return resultMsg;
-//	}
-//
-//
+	// 단어 형태소 분석을 처리하는 메서드 (영화 리뷰등록시 같이 적용)
+	@Override
+	public void wordAnalyzer(HttpServletRequest req, Model model) {
+		int movie_index = Integer.parseInt(req.getParameter("movie_index"));
+		StringBuilder sb = new StringBuilder(req.getParameter("review_content"));
+		wordExtractAndAnalyze(sb.toString(), movie_index);
+	}
 
+	// 형태소 분석된 결과를 데이터베이스에 저장하는 프로세스
+	@Override
+	public void wordExtractAndAnalyze(String text, int movie_index) {
+		System.out.println("WordCloud analyze");
+		new Runnable() {
+			public void run() {
+
+				List<WordVO> wordMap = KoreanParser.getWordsMap(text);
+				if(wordMap.isEmpty())return;
+				Timestamp time = new Timestamp(System.currentTimeMillis());
+				for(WordVO dto : wordMap) {
+					
+					// 기존에 있는 단어일 경우 카운트 업데이트
+					Map<String, Object> map = new HashMap<String, Object>();
+					map.put("word", dto.getWord());
+					map.put("movie_index", movie_index);
+					if(dao.checkWordCloud(map) == 1) {
+						dto.setUpdate_date(time);
+						dto.setMovie_index(movie_index);
+						dao.updateWordCloud(dto);
+						// 기존에 없는 단어일 경우 단어와 카운트 추가	
+					} else {
+						dto.setUpdate_date(time);
+						dto.setReg_date(time);
+						dto.setMovie_index(movie_index);
+						dao.addWordCloud(dto);
+					}
+				}
+				// 워드 클라우드 모델을 refresh 해줌
+				setWordList();
+				System.out.println("WordCloud 분석 종료");
+			}
+		}.run();
+	}
+
+	// 워드클라우드 단어를 가져옴
+	public synchronized void setWordList() {
+		System.out.println("Word Cloud word set request");
+		wordVos = dao.getWordCloudModel();
+	}
+	
+	// 영화 리뷰 워드 클라우드
+	@Override
+	public void movieWordcloud(HttpServletRequest req, Model model) {
+		int movie_index = Integer.parseInt(req.getParameter("movie_index")); // get방식으로 영화index를 가져옴
+		int countOfWords = 50; // 최대 50개의 워드클라우드 단어를 가져옴
+
+		Map<String, Object> map = new HashMap<>();
+		map.put("countOfWords", countOfWords);
+		map.put("movie_index", movie_index);
 		
-	////////////////////////////////////////
-	///////////////////////////////////////
+		List<WordVO> wordList = null;
+		wordList = dao.searchWordcloud(map);
 
-	
+		model.addAttribute("wordList", wordList);
+		model.addAttribute("listSize", wordList.size());
+	}
 
-	
 	
 }
 

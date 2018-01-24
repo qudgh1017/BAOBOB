@@ -1,6 +1,7 @@
 package spring.mvc.baobob.host_restaurant.persistence;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
@@ -12,6 +13,7 @@ import spring.mvc.baobob.vo.EmployeeVO;
 import spring.mvc.baobob.vo.Member;
 import spring.mvc.baobob.vo.MenuVO;
 import spring.mvc.baobob.vo.RestaurantVO;
+import spring.mvc.baobob.vo.Restaurant_ChartVO;
 import spring.mvc.baobob.vo.Restaurant_scheduleVO;
 import spring.mvc.baobob.vo.TableVO;
 
@@ -389,16 +391,6 @@ public class Host_restaurantDAOImpl implements Host_restaurantDAO {
 		return dao.addFoodHistory(map);
 	}
 
-	// 식당별 결산
-	@Override
-	public Integer getAccount(int restaurant_index) {
-		log.debug("dao.account()");
-
-		Host_restaurantDAO dao = sqlSession.getMapper(Host_restaurantDAO.class);
-
-		return dao.getAccount(restaurant_index);
-	}
-
 	// 회원 아이디가 있는지, 있다면 스텝이 몇인지 조회
 	@Override
 	public Integer confirmId(String id) {
@@ -497,5 +489,25 @@ public class Host_restaurantDAOImpl implements Host_restaurantDAO {
 		Host_restaurantDAO dao = sqlSession.getMapper(Host_restaurantDAO.class);
 
 		return dao.modMemberPoint(map);
+	}
+
+	// 결산 차트
+	@Override
+	public List<Restaurant_ChartVO> getMenuCountChart() {
+		log.debug("dao.getMenuCountChart()");
+
+		Host_restaurantDAO dao = sqlSession.getMapper(Host_restaurantDAO.class);
+
+		return dao.getMenuCountChart();
+	}
+
+	// 모든 메뉴 이름 조회
+	@Override
+	public String[] getMenuName(int restaurant_index) {
+		log.debug("dao.getMenuName()");
+
+		Host_restaurantDAO dao = sqlSession.getMapper(Host_restaurantDAO.class);
+
+		return dao.getMenuName(restaurant_index);
 	}
 }

@@ -8,6 +8,9 @@ import spring.mvc.baobob.vo.MovieResViewVO;
 
 public interface Guest_movieService {
 
+	//영화 메인
+	public void movieMain(HttpServletRequest req, Model model);
+	
 	//영화리스트
 	public void movieList(HttpServletRequest req, Model model);
 	
@@ -47,4 +50,9 @@ public interface Guest_movieService {
 	//좌석도 선택
 	public void seatSelect(HttpServletRequest req, Model model);
 	
+	//선택된 좌석들의 정보들
+	public void seatInfos(HttpServletRequest req, Model model);
+	
+	//선택된 좌석들의 정보들
+	public void seatInfos2(HttpServletRequest req, Model model);
 }

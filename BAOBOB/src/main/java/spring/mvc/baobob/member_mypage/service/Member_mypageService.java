@@ -46,8 +46,30 @@ public interface Member_mypageService {
 	//무비로그-위시리스트
 	public void movieWishList(HttpServletRequest req, Model model);
 	
+	//무비로그-위시리스트
+	public void movieClear(HttpServletRequest req, Model model);
 	
+	//무비로그-무비다이어리
+	public void movieDiaryList(HttpServletRequest req, Model model);
 	
+	//무비로그-무비다이어리 글쓰기 처리
+	public void movieDiaryPro(HttpServletRequest req, Model model);
 	
-
+	//무비로그-무비다이어리 글삭제처리
+	public void movieDiaryDelPro(HttpServletRequest req, Model model);
+	
+	//무비로그-위시리스트 삭제처리
+	public void delMovieWishList(HttpServletRequest req, Model model);
+	
+	//예매내역
+	public void moviePaidList(HttpServletRequest req, Model model);
+	
+	//예매내역 취소처리
+	public void moviePaidDelPro(HttpServletRequest req, Model model);
+	
+	//내가 이용한 레스토랑
+	public void restaurantLog(HttpServletRequest req, Model model);
+	
+	//방문내역
+	public void visitList(HttpServletRequest req, Model model);
 }

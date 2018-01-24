@@ -30,7 +30,13 @@
 	    	</tr>
 	    	<tr>
 	    		<td rowspan=2>
-					<img class="mybaobob" src="${projectRes}images/lgt/profile/${vo.member_img}">
+	    			<c:if test="${vo.member_img == null}">
+	    				<img class="mybaobob" src="${projectRes}images/lgt/profile/default_img.png">
+	    			</c:if>
+	    			
+	    			<c:if test="${vo.member_img != null}">
+						<img class="mybaobob" src="${projectRes}images/lgt/profile/${vo.member_img}">
+	    			</c:if>
 	    		</td>
 		    	<th class="middlefont">POINT</th>
 		    	<th class="middlefont">TOTAL POINT</th>

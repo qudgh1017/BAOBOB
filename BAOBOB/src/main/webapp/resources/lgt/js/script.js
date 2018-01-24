@@ -289,6 +289,18 @@ function writeCheck(){
 	}
 }
 
+function writeCheck2(){
+	if(!document.writeform.subject.value){
+		document.writeform.subject.focus();
+		alert(msg_subject);
+		return false;	
+	}else if(!document.writeform.content.value){
+		document.writeform.content.focus();
+		alert(msg_content);
+		return false;
+	}
+}
+
 //host
 //=============================================================================
 

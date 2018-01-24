@@ -10,8 +10,12 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.TreeMap;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -27,6 +31,7 @@ import spring.mvc.baobob.vo.EmployeeVO;
 import spring.mvc.baobob.vo.Member;
 import spring.mvc.baobob.vo.MenuVO;
 import spring.mvc.baobob.vo.RestaurantVO;
+import spring.mvc.baobob.vo.Restaurant_ChartVO;
 import spring.mvc.baobob.vo.Restaurant_scheduleVO;
 import spring.mvc.baobob.vo.TableVO;
 
@@ -941,7 +946,7 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 
 		// 식당 관리자의 memberStep에서 뒷자리를 구한다.(뒷자리가 restaurant_index와 같음)
 		int restaurant_index = Integer.parseInt(req.getParameter("index").substring(1, 2));
-
+		
 		// 예약 정보 저장
 		Restaurant_scheduleVO schedule_dto = new Restaurant_scheduleVO();
 		schedule_dto.setSchedule_startTime(Timestamp.valueOf(req.getParameter("startTime")));
@@ -957,7 +962,7 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 
 		// 테이블 정보 저장
 		TableVO table_dto = new TableVO();
-		
+
 		// 매장을 구성하는 타일의 행열 조회 (예:5*5)
 		table_dto = dao.getColRow(restaurant_index);
 
@@ -967,7 +972,6 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 
 		String info = "";
 		int restaurant_table_index = 0;
-
 		// 여러 정보를 저장하기 위해 맵 이용
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("restaurant_index", restaurant_index);
@@ -1014,7 +1018,7 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 			String time = req.getParameter("time");
 			model.addAttribute("time", time);
 		}
-
+		
 		// 테이블 정보 리턴
 		return table_dto;
 	}
@@ -1249,22 +1253,6 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 		model.addAttribute("cnt", cnt);
 	}
 
-	// 식당별 결산
-	@Override
-	public void account(HttpServletRequest req, Model model) {
-		log.debug("service.account()");
-
-		// 식당 관리자의 memberStep에서 뒷자리를 구한다.(뒷자리가 restaurant_index와 같음)
-		int restaurant_index = Integer
-				.parseInt((String.valueOf(req.getSession().getAttribute("memStep")).substring(1, 2)));
-		
-		// 식당별 결산
-		int account = dao.getAccount(restaurant_index);
-
-		// 결과 저장
-		model.addAttribute("account", account);
-	}
-
 	// 테이블별 결산(결제 처리)
 	@Override
 	public void payment(HttpServletRequest req, Model model) {
@@ -1428,7 +1416,7 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 	// 예약 삭제
 	@Override
 	public void scheduleDel(HttpServletRequest req, Model model) {
-		log.debug("service.payment()");
+		log.debug("service.scheduleDel()");
 		
 		int cnt = 0;
 		
@@ -1478,5 +1466,81 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 			
 			cnt = dao.resetTable2(dto);
 		}
+	}
+	
+	// 결산 차트
+	@Override
+	public void accountChart(HttpServletRequest req, Model model) {
+		log.debug("service.accountChart()");
+
+		// 식당 관리자의 memberStep에서 뒷자리를 구한다.(뒷자리가 restaurant_index와 같음)
+		int restaurant_index = Integer
+				.parseInt((String.valueOf(req.getSession().getAttribute("memStep")).substring(1, 2)));
+		
+		// 모든 메뉴의 이름 조회
+		String[] menu = dao.getMenuName(restaurant_index);
+
+		// 판매된적있는 메뉴의 이름과 판매액 조회
+		Map<String , Object> map = new HashMap<String,Object>();
+		
+		// mapper에서 불러온 kind와 value가 다건이기때문에 vo형태의 List형으로 받아준다.
+		List<Restaurant_ChartVO> menuList = dao.getMenuCountChart();
+		
+		// List 데이터를 한 건씩 map에 담는다.
+		for(Restaurant_ChartVO dto : menuList) {
+			map.put(dto.getKind(), dto.getValue());
+		}
+		
+		// 판매된적이 있는지 없는지 확인
+		for(String s : menu) {
+			int cnt = 0;
+			
+			// 판매된적이 있는 메뉴는 건너뛰고,
+			for(Entry<String, Object> m : map.entrySet()) {
+				if(s.equals(m.getKey())) {
+					cnt = 1;
+				}
+			}
+			
+			// 판매된 적이 없는 메뉴는 판매액(value)에 0을 넣어준다.
+			if(cnt == 0) {
+				map.put(s, 0);
+			}
+		}
+
+		// 가나다 순으로 정렬하기 위해 트리맵 이용
+		TreeMap<String, Object> tm = new TreeMap<String, Object>(map);
+		
+		// 키값 오름차순 정렬(기본)
+		Iterator<String> iteratorKey = tm.keySet().iterator();
+		
+		String key = "";	// 키
+		String keys = "";	// 키의 조합
+		String value = "";	// 값
+		String values = ""; // 값의 조합
+		int cnt = 0;	// 처음인지 확인
+		
+		while (iteratorKey.hasNext()) {
+			key = iteratorKey.next();
+			value = String.valueOf(tm.get(key));
+			// 처음이면 콤마를 붙이지 않음
+			if(cnt == 0) {
+				keys = keys + key;
+				values = values + tm.get(key);
+				cnt = 1;
+			}
+			// 처음이 아니면 콤마를 앞에
+			else {
+				keys = keys + "," + key;
+				values = values + "," + tm.get(key);
+			}
+		}
+		
+		// 결과를 저장한다.
+		model.addAttribute("keys", keys);
+		model.addAttribute("values", values);
+		model.addAttribute("count", menu.length);
+		model.addAttribute("chart", map);
+		model.addAttribute("total", "합계 : " + tm.get("합계"));
 	}
 }

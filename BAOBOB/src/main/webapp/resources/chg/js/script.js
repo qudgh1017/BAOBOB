@@ -146,7 +146,6 @@ function spaceBtnChange2(location) {
 	if(spaceBtn.value == 1){
 		if (typeImg != '') { // 아이콘 선택했을 경우, 선택한 버튼의 설정 변경
 			count++;
-			alert('count : ' + count + ' table_count : ' + table_count);
 			if(table_count < 1) {
 				table_count = 1;
 			}
@@ -228,7 +227,6 @@ function spaceTypeChange2(index) {
 // 설정한 배열판이 있을 경우(매장)
 function spaceBody(info, col, row) {
 	var arr = info.split(',');
-
 	var space = '';
 	for (var y = 0; y < row; y += 1) {
 		space += '<div class="p_div">';

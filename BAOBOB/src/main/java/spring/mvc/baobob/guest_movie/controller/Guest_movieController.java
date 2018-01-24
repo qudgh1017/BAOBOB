@@ -1,5 +1,7 @@
 package spring.mvc.baobob.guest_movie.controller;
 
+import java.util.ArrayList;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
@@ -10,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import spring.mvc.baobob.guest_movie.service.Guest_movieService;
+import spring.mvc.baobob.host_movie.service.Host_movieServiceImpl;
 import spring.mvc.baobob.vo.MovieResViewVO;
+import spring.mvc.baobob.vo.Theater_seatVO;
 
 @Controller
 public class Guest_movieController {
@@ -20,12 +24,25 @@ public class Guest_movieController {
 	@Autowired
 	Guest_movieService gmservice;
 	
+	@Autowired
+	Host_movieServiceImpl hmservice;
+	
 	// 영화관 메인화면
 	@RequestMapping("guest_movie")
 	public String guest_movie(HttpServletRequest req, Model model) {
 		log.debug("====== Guest_movieController/guest_movie ======");
 		
+		gmservice.movieMain(req, model);
+		
 		return "/guest/guest_movie/movie_main";
+	}
+	
+	//영화관 메인 Ajax
+	@RequestMapping("gMovieMainRankUpdate")
+	public String gMovieMainRankUpdate(HttpServletRequest req, Model model) {
+		log.debug("====== Guest_movieController/gMovieMainRankUpdate ======");
+		gmservice.movieMain(req, model);
+		return "guest/guest_movie/movie_main_rank";
 	}
 	
 	// 로그인이 필요한 서비스 일때
@@ -133,7 +150,11 @@ public class Guest_movieController {
 	public String movieReviewPro(HttpServletRequest req, Model model) {
 		log.debug("====== Guest_movieController/movieReviewPro ======");
 		
+		int pro = Integer.parseInt(req.getParameter("pro"));
 		gmservice.movieReviewPro(req, model);
+		if(pro == 1) {
+			hmservice.wordAnalyzer(req, model);
+		}
 		
 		return "/guest/guest_movie/movie/movieReviewPro";
 	}
@@ -226,6 +247,37 @@ public class Guest_movieController {
 		gmservice.seatSelect(req, model);
 		
 		return "/guest/guest_movie/reservation/reserveSeatInfo";
+	}
+	
+	//예매-빠른예매 2번째페이지 - 선택한 좌석 정보
+	@RequestMapping("selectSeatInfo")
+	public String selectSeatInfo(HttpServletRequest req, Model model) {
+		log.debug("====== Guest_movieController/selectSeatInfo ======");
+ 
+		int seat_index = Integer.parseInt(req.getParameter("seat_index"));
+		model.addAttribute("seat_index", seat_index);
+		
+		return "/guest/guest_movie/reservation/selectSeatInfo";
+	}
+	
+	//예매-빠른예매 2번째페이지 - nextDealButton 생성!
+	@RequestMapping("nextDealButton")
+	public String nextDealButton(HttpServletRequest req, Model model) {
+		log.debug("====== Guest_movieController/nextDealButton ======");
+		
+		gmservice.seatInfos(req, model);
+		
+		return "/guest/guest_movie/reservation/nextDealButton";
+	}
+	
+	//예매-빠른예매 2번째페이지 - 결제창
+	@RequestMapping("movieTicket3")
+	public String movieTicket3(HttpServletRequest req, Model model) {
+		log.debug("====== Guest_movieController/movieTicket3 ======");
+		
+		gmservice.seatInfos2(req, model);
+		
+		return "/guest/guest_movie/reservation/movieTicket3";
 	}
 	
 	//예매-상영시간표

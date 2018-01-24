@@ -261,11 +261,40 @@ public class Guest_movieDAOImpl implements Guest_movieDAO{
 		
 		return seats;
 	}
+
+	//선택된 한개의 좌석 정보
+	@Override
+	public Theater_seatVO seatInfo(int seat_index) {
+		Theater_seatVO seat = null;
+		
+		Guest_movieDAO gmdao = sqlSession.getMapper(Guest_movieDAO.class);
+		seat = gmdao.seatInfo(seat_index);
+		
+		return seat;
+	}
+
+	//메인 - 영화 순위
+	public ArrayList<String> mainMovieRank(){
+		Guest_movieDAO mapper = sqlSession.getMapper(Guest_movieDAO.class);
+		ArrayList<String> list = mapper.mainMovieRank();
+		return list;
+	}
+
+	//메인 - 상영 중인 영화 갯수
+	public int mainMovieTheaterCnt() {
+		Guest_movieDAO mapper = sqlSession.getMapper(Guest_movieDAO.class);
+		int cnt = mapper.mainMovieTheaterCnt();
+		return cnt;
+	}
 	
-
-
+	//메인 - 예매 영화
+	@Override
+	public ArrayList<String> mainMovieTheater(Map<String, Object> map) {
+		Guest_movieDAO mapper = sqlSession.getMapper(Guest_movieDAO.class);
+		ArrayList<String> list = mapper.mainMovieTheater(map);
+		return list;
+	}
 	
-
 	
 
 	

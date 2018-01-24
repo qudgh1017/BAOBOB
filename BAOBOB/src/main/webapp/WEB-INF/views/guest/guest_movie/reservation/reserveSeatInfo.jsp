@@ -12,11 +12,12 @@ ${allCnt}
 	request.setAttribute("seatRow",seatRow);
 %>
 
+
 <!-- 좌석도  -->
 <input type="button" style="color:white; background-color:lightgray; background:rgba(0, 0, 0, 0.6); width:${seatInfo.totalCol*45}px; height:25px;"  value="SCREEN"> <br><br>
 
 <c:forEach var="row" begin="0" end="${seatInfo.totalRow-1}" step="1">
-	<div class="btn-group" data-toggle="buttons">
+	<!-- <div> --><!--  class="btn-group" data-toggle="buttons" -->
 	${seatRow[row]}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	<c:forEach var="col" begin="1" end="${seatInfo.totalCol}" step="1">
 		<c:if test="${seatInfo.state[(row)*seatInfo.totalCol-1+col]==0}">
@@ -36,25 +37,25 @@ ${allCnt}
 		</c:if>
 		<c:if test="${seatInfo.state[(row)*seatInfo.totalCol-1+col]==3}">
 			<label class="btn btn" style="margin:1px 1px; height:35; width:35; border:2px solid green;">
-			   <span style="width:30; height:30;"><input type="checkbox" name="seat_index" autocomplete="off" value="${seatInfo.seat_index[(row)*seatInfo.totalCol-1+col]}">${col}</span>
+			   <span style="width:30; height:30;"><input type="checkbox" onclick="CountChecked(this)" name="seat_index" autocomplete="off" value="${seatInfo.seat_index[(row)*seatInfo.totalCol-1+col]}">${col}</span>
 			</label>
 		</c:if>
 		<c:if test="${seatInfo.state[(row)*seatInfo.totalCol-1+col]==4}">
 			<label class="btn btn" style="margin:1px 1px; height:35; width:35; border:2px solid red;">
-				<span style=" width:30; height:30;"><input type="checkbox" name="seat_index" autocomplete="off" value="${seatInfo.seat_index[(row)*seatInfo.totalCol-1+col]}">${col}</span>
+				<span style=" width:30; height:30;"><input type="checkbox" id="seat_index" onclick="CountChecked(this)" name="seat_index" autocomplete="off" value="${seatInfo.seat_index[(row)*seatInfo.totalCol-1+col]}">${col}</span>
 			</label>
 		</c:if>
 		<c:if test="${seatInfo.state[(row)*seatInfo.totalCol-1+col]==5}">
 			<label class="btn btn" style="margin:1px 1px; height:35; width:35; border:2px solid pink;">
-				<span style=" width:30; height:30;"><input type="checkbox" name="seat_index" autocomplete="off" value="${seatInfo.seat_index[(row)*seatInfo.totalCol-1+col]}">${col}</span>
+				<input type="checkbox" id="seat_index" onclick="CountChecked(this)" name="seat_index" autocomplete="off" value="${seatInfo.seat_index[(row)*seatInfo.totalCol-1+col]}">${col}
 			</label>
 		</c:if>
 		<c:if test="${seatInfo.state[(row)*seatInfo.totalCol-1+col]==6}">
 			<label class="btn btn" style="margin:1px 1px; height:35; width:35; background-image: url('${projectRes}/images/phc/icon/theater_comp.png');">
- 				<span style=" width:30; height:30;"><input type="checkbox" name="seat_index" autocomplete="off" value="${seatInfo.seat_index[(row)*seatInfo.totalCol-1+col]}">${col}</span>
+ 				<span style=" width:30; height:30;"><input type="checkbox" id="seat_index" name="seat_index" autocomplete="off" value="${seatInfo.seat_index[(row)*seatInfo.totalCol-1+col]}">${col}</span>
 			</label>
 		</c:if>
 	</c:forEach>
-	</div>
+	<!-- </div> -->
 	<br>
 </c:forEach>
