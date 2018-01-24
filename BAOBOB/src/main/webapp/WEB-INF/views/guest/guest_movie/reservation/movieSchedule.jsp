@@ -20,40 +20,9 @@
 	<section>
 		<div class="container">
 			상영시간표
+			<a onclick="schedule(4,1)">dddd</a>
 		</div>
 	</section>
-	<br>
-	<br>
-	<br>
-	
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<div id="contact">contact</div>
-	<br>
 	<br>
 	<br>
 	<br>
