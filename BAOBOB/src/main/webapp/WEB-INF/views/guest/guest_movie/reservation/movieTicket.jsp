@@ -97,8 +97,9 @@
 							</div>
 						</c:if>
 					</div>
-					
 				</div>
+				
+				<!-- 날짜 선택 -->
 				<div class="col-md-2" align="center" style="height:600px; color:black; font-weight:bold; border:1px solid white; background-color:#EEEEEE">
 					<div style="overflow:auto; width:100%; height:100%; background-color:#EEEEEE">
 						<div id="resultDate" class="reserveTab" align="center" style="height:30px;">
@@ -130,6 +131,8 @@
 						</div>
 					</div>
 				</div>
+				
+				<!-- 스케줄 -->
 				<div class="col-md-5" align="center" style="height:600px; color:black; font-weight:bold; border:1px solid white; background-color:#EEEEEE">
 					<div style="overflow:auto; width:100%; height:100%; background-color:#EEEEEE">
 						<img src="${projectRes}/images/ybh/sun.png" style="width:20px; height:20px;">조조 &nbsp;&nbsp;&nbsp;&nbsp;<img src="${projectRes}/images/ybh/moon.png" style="width:20px; height:20px;">심야

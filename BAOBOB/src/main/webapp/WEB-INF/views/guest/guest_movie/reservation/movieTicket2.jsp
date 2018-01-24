@@ -30,7 +30,13 @@
 	
 	<!-- 나중에 값을 넘길때 배열형식 저장할 공간 -->
 	<input type="hidden" name="seat_index_arr"  value="">
-	
+	<!-- <input type="text" name="adultCnt" value="">
+	<input type="text" name="teenagerCnt" value=""> -->
+	<!-- <input type="text" name="totalChecked" value="">
+	<input type="text" name="maxChecked" value="">
+	 
+	<div onload="nextDealButton()">
+	</div> -->
 	
 	<section style="padding-top:0px;">
 		<div class="container">
@@ -59,25 +65,21 @@
 				<!-- 인원수 선택 -->
 				<div class="col-md-5" align="left" style="height:100px; color:black; font-weight:bold; border:1px solid white; background-color:#DDDDDD">
 					<br>
-					<div class="btn-group" data-toggle="buttons" style="display:inline-block;">
-						<div style="width:50px; display:inline-block;">일반</div>
-						<c:forEach var="num" begin="0" end="8" step="1">
-							<label onclick="adultChk('${schedule.theater_index}', '${schedule.movie_index}', '${schedule.theater_schedule_index}','${num}')" class="btn" style="height:30px; width:30px; border:1px solid black; font-weight:bold">
-							    <input type="radio" id="adult"+${num} name="adult" autocomplete="off" value="${num}">
-								${num}
-						 	</label>
-					 	</c:forEach>
-				 	</div>	
+					<div style="width:50px; display:inline-block;">일반</div>
+					<c:forEach var="num" begin="0" end="8" step="1">
+						<label onclick="adultChk('${schedule.theater_index}', '${schedule.movie_index}', '${schedule.theater_schedule_index}','${num}')" class="btn" style="height:30px; width:30px; border:1px solid black; font-weight:bold">
+						    <input type="radio" style="width:10px; height:10px;" name="adult" autocomplete="off" value="${num}">
+							${num}
+					 	</label>
+				 	</c:forEach>
 				 	<br>
-				 	<div class="btn-group" data-toggle="buttons" style="display:inline-block;">
-					 	<div style="width:50px; display:inline-block;">청소년</div>
-					 	<c:forEach var="num" begin="0" end="8" step="1">
-							<label onclick="teenagerChk('${schedule.theater_index}', '${schedule.movie_index}', '${schedule.theater_schedule_index}', '${num}')" class="btn" style="height:30px; width:30px; border:1px solid black; font-weight:bold">
-							    <input type="radio" id="teenager"+${num} name="teenager" autocomplete="off" value="${num}">
-								${num}
-						 	</label>
-					 	</c:forEach>
-					 </div>	
+				 	<div style="width:50px; display:inline-block;">청소년</div>
+				 	<c:forEach var="num" begin="0" end="8" step="1">
+						<label onclick="teenagerChk('${schedule.theater_index}', '${schedule.movie_index}', '${schedule.theater_schedule_index}', '${num}')" class="btn" style="height:30px; width:30px; border:1px solid black; font-weight:bold">
+						    <input type="radio" style="width:10px; height:10px;" name="teenager" autocomplete="off" value="${num}">
+							${num}
+					 	</label>
+				 	</c:forEach>
 				</div>	
 				
 				<!-- 좌석현황/ 영화상영시간 -->	
@@ -95,10 +97,34 @@
 			<!-- 좌석도 보여줄 곳 -->
 			<div class="row">
 				<div class="col-md-1"></div>
-				<div class="col-md-10" align="center" style="height:500px; color:black; font-weight:bold; border:1px solid white; background-color:#EEEEEE">
-					<!-- 뿌리는 곳 -->
+				<div class="col-md-8" align="center" style="height:500px; color:black; font-weight:bold; border:1px solid white; background-color:#EEEEEE">
+					<!-- 좌석선택 뿌리는 곳 -->
 					<div id="theaterSeat">
 						인원을 체크해주세요.
+					</div>
+				</div>
+				<div class="col-md-2" align="center" style="height:500px; color:black; font-weight:bold; border:1px solid white; background-color:#EEEEEE">
+					<div style="width:100%; height:150px; padding:0px;">
+					
+					</div>
+					<!-- 좌석 정보 -->
+					<div align="left" style="width:100%; height:350px; padding:0px; font-size:15px;">
+						<label class="btn btn" style="margin:1px 1px; height:35; width:35; border:2px solid green;">
+							<input type="checkbox" style="width:0; height:0;" disabled>
+						</label>&nbsp;&nbsp;Standard Zone
+						<br><br>
+						<label class="btn btn" style="margin:1px 1px; height:35; width:35; border:2px solid red;">
+							<input type="checkbox" style="width:0; height:0;" disabled>
+						</label>&nbsp;&nbsp;Prime Zone
+						<br><br>
+						<label class="btn btn" style="margin:1px 1px; height:35; width:35; border:2px solid pink;">
+							<input type="checkbox" style="width:0; height:0;" disabled>
+						</label>&nbsp;&nbsp;SWEET BOX
+						<br><br>
+						<label class="btn btn" style="margin:1px 1px; height:35; width:35; background-image: url('${projectRes}/images/phc/icon/theater_comp.png'); background-size:33px">
+			 				<input type="checkbox" style="width:0; height:0;" disabled>
+						</label>&nbsp;&nbsp;Reserved
+						<br><br>
 					</div>
 				</div>
 				<div class="col-md-1"></div>
@@ -128,8 +154,8 @@
 				</div>
 			</div>
 			<!-- 좌석선택 아이콘 -->
-			<div class="col-md-3" align="center" style="border: solid 1px gray; color:gray; font-weight:bold;">
-				<div id="nextDealButton">
+			<div class="col-md-3" align="center" style="border: solid 1px gray; color:gray; font-weight:bold;" >
+				<div id="nextDealButton" >
 					<br><br>
 					<center style="color:gray">
 						좌석을 선택하셔야 <br>

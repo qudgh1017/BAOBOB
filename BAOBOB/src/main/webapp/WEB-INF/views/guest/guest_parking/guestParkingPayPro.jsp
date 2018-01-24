@@ -125,10 +125,21 @@
 			        </ul>
 			        
 					<hr>
-					<ul class="clearfix">
-						<li class="itemL">주차 요금</li>
-						<li class="itemR"><fmt:formatNumber value="${ph.p_history_price}" type="number"/> 원</li>
-					</ul>
+			        <ul>
+			        	<li>
+							<ul class="clearfix">
+								<li class="itemL">주차 요금</li>
+								<li class="itemR"><b><fmt:formatNumber value="${ph.p_history_price}" type="number"/> 원</b></li>
+							</ul>
+			        	</li>
+			        	<li>
+							<ul class="clearfix">
+								<li class="itemL">포인트 적립</li>
+								<li class="itemR">${point}</li>
+							</ul>
+			        	</li>
+			        </ul>
+					
 			    </div>
 			  </div>
 			</div>

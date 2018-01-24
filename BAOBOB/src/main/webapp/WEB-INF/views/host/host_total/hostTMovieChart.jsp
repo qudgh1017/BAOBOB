@@ -52,16 +52,16 @@
 		function drawChartFirst(){
 			var data = google.visualization.arrayToDataTable([
 			  ['Element', '장르별'],
-              ['janre1', ${janre1}],
-		      ['janre2', ${janre2}],
-			  ['janre3', ${janre3}],
-			  ['janre4', ${janre4}],
-			  ['janre5', ${janre5}],
-			  ['janre6', ${janre6}],
-			  ['janre7', ${janre7}],
-			  ['janre8', ${janre8}],
-			  ['janre9', ${janre9}],
-			  ['janre10', ${janre10}]
+              ['가족', ${janre1}],
+		      ['공포/호러', ${janre2}],
+			  ['드라마', ${janre3}],
+			  ['SF', ${janre4}],
+			  ['멜로/로맨스', ${janre5}],
+			  ['코미디', ${janre6}],
+			  ['애니메이션', ${janre7}],
+			  ['액션', ${janre8}],
+			  ['스릴러', ${janre9}],
+			  ['미스터리', ${janre10}]
 			]);
 			
 			var firstChart = new google.visualization.ColumnChart(document.getElementById('movieChart'));

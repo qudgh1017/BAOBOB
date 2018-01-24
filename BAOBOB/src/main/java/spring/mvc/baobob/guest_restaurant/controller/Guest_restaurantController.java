@@ -94,10 +94,10 @@ public class Guest_restaurantController {
 	public String guestReserv_chkTable(HttpServletRequest req, Model model) {
 		log.debug("===== Guest_restaurantController/guestReserv_chkTable() =====");
 		System.out.println("===== guestReserv_addForm 2 =====");
-
+		int tableCnt = Integer.parseInt(req.getParameter("tableCnt"));
 		service.restaurant_tableList(req, model);
 		model.addAttribute("confirm", 1);
-		
+		model.addAttribute("tableCnt", tableCnt);
 		return "guest/guest_restaurant/reserv/guestReserv_addForm";
 	}
 	
@@ -129,6 +129,7 @@ public class Guest_restaurantController {
 		//log.debug("===== Guest_restaurantController/guestRestaurantMain() =====");
 		String member_id = (String) req.getSession().getAttribute("member_id");
 		System.out.println("¸®ºä ¸®½ºÆ® member_id : " + member_id);
+		
 		service.reviewList(req, model);
 		
 		return "guest/guest_restaurant/review/guestRestaurant_review";

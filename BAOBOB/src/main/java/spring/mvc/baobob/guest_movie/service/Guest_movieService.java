@@ -50,9 +50,15 @@ public interface Guest_movieService {
 	//좌석도 선택
 	public void seatSelect(HttpServletRequest req, Model model);
 	
+	//1 좌석 정보
+	public void seatInfo(HttpServletRequest req, Model model);
+	
 	//선택된 좌석들의 정보들
 	public void seatInfos(HttpServletRequest req, Model model);
 	
-	//선택된 좌석들의 정보들
+	//선택된 좌석들의 정보를 3번째 결제창으로
 	public void seatInfos2(HttpServletRequest req, Model model);
+	
+	//예매 최종처리
+	public void reservationPro(HttpServletRequest req, Model model);
 }

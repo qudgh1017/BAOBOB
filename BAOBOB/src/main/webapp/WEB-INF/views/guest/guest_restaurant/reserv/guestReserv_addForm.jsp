@@ -64,8 +64,8 @@ $(function() {
 						<div class="form-group">
 							<i class="fa fa-fw fa-user-circle"></i>
 							<label for="exampleInputEmail1">테이블 수</label> 
-							<input class="form-control" name="table" type="text" placeholder="table">
-							
+							<input class="form-control" type="text" style="display: inline-block; text-align: center;" 
+									name="tableCnt" id="tableCnt" placeholder="인원 설정" value="${tableCnt}" required>
 						</div>
 					</div>
 					<div class="col-md-4">

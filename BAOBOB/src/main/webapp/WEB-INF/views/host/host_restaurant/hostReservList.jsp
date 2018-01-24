@@ -22,14 +22,6 @@
 
 <!-- 실시간 예약 현황 조회 -->
 <script type="text/javascript">
-	$(document).ready(function (){
-		// restaurantView(date, startTime, endTime, index);
-	});
-
-	function restaurantView_(date, startTime, endTime, index){
-		alert("ㅇㅅㅇ");
-		restaurantView(date, startTime, endTime, index);
-	}
 	function restaurantView(date, startTime, endTime, index) {
 		$.ajax({
 			url : "restaurantView?date=" + date + "&startTime=" + startTime + "&endTime=" + endTime + "&index=" + index,
@@ -42,7 +34,6 @@
 				alert('error');
 			}
 		});
-		setTimeout("restaurantView(" + date + ',' + startTime + ',' + endTime + ',' + index + ")", 3000);
 	}
 </script>
 <!-- 실시간 예약 현황 조회 -->
@@ -143,7 +134,7 @@
 														data-start="<fmt:formatDate type="both" pattern="HH:mm" value="${dto.schedule_startTime}" />"
 														data-end="<fmt:formatDate type="both" pattern="HH:mm" value="${dto.schedule_endTime}" />"
 														data-content="hostOrderAddForm?restaurant_schedule_index=${dto.restaurant_schedule_index}" data-event="event-${status.index + 1}">
-														<a href="" onclick="restaurantView_('${date}', '${dto.schedule_startTime}', '${dto.schedule_endTime}', ${sessionScope.memStep});"><em class="event-name" style="display: none;">예약 정보</em></a>
+														<a href="" onclick="restaurantView('${date}', '${dto.schedule_startTime}', '${dto.schedule_endTime}', ${sessionScope.memStep});"><em class="event-name" style="display: none;">예약 정보</em></a>
 													</li>
 												</c:forEach>
 											</ul>

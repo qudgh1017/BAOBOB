@@ -67,6 +67,17 @@ public class Host_parkingController {
 		return "host/host_parking/hostParkingState";
 	}
 	
+	//실시간 주차 현황 ajax
+	@RequestMapping("hostParkingStateAjax")
+	public String hostParkingStateAjax(HttpServletRequest req, Model model) {
+		log.debug("hostParkingStateAjax()");
+		
+		service.getParkingSpaceState(req, model);
+		
+		return "host/host_parking/hostParkingStateAjax";
+	}
+	
+	//실시간 주차 현황 구역 정보 ajax
 	@RequestMapping("hostParkingSpaceState")
 	public String hostParkingSpaceState(HttpServletRequest req, Model model) {
 		log.debug("hostParkingSpaceState()");

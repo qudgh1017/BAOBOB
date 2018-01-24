@@ -88,4 +88,20 @@
 		WHERE p_history_space = #{key}
 	</select>
 	
+	<!--  결제시 회원 포인트 적립 -->
+	<update id="memberPointUpdate" parameterType="spring.mvc.baobob.vo.Member">
+		UPDATE member_tbl
+		SET
+			member_point = member_point + #{member_point},
+			member_cumPoint = member_cumPoint + #{member_point}
+		WHERE member_id = #{member_id}
+	</update>
+	
+	<select id="keyMemberIdSelect" resultType="String">
+		SELECT member_id
+		FROM history_tbl ht, park_history_tbl ph
+		WHERE ht.history_index = ph.history_index
+			AND ph.p_history_space = #{key}
+			AND member_id != #{key}
+	</select>
 </mapper>

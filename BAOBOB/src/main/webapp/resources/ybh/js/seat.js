@@ -59,10 +59,10 @@ function getScheduleSeatInfo(col, row, state){
 	}
 }
 function personInitial(){
-	alert("dd");
 	$('input:radio[name=adult]:input[value=0]').attr("checked", true);
+	$('label:input:radio[name=adult]:input[value=0]').attr("class", active);
+	
 	$('input:radio[name=teenager]:input[value=0]').attr("checked", true);
-
 }
 
 var adultCnt = 0;
@@ -98,6 +98,30 @@ function teenagerChk(theater_index, movie_index, theater_schedule_index, cnt){
 	seat_index_arr = new Array();
 }
 
+
+$(document).ready(function(){
+	updateSeat();
+});
+
+//좌석도 뿌리는 ajax
+function updateSeat(theater_index, movie_index, theater_schedule_index){
+	$.ajax({
+		url: 'reserveSeatInfo',
+		type: 'GET',
+		data: {
+			allCnt, theater_index, movie_index, theater_schedule_index
+		},
+		
+		success: function(msg) {
+			$('#theaterSeat').html(msg);					
+		},				
+		error: function() {
+			alert('오류');
+		}	
+	});
+	setTimeout("updateSeat(theater_index, movie_index, theater_schedule_index)",2000);//1초 단위로 갱신처리
+}
+
 //총 사람 수
 function personChk(theater_index, movie_index, theater_schedule_index){
 	allCnt = teenagerCnt + adultCnt;
@@ -106,35 +130,25 @@ function personChk(theater_index, movie_index, theater_schedule_index){
 	if(allCnt > 6){
 		alert("7명 이상은 불가능합니다.");
 	}else{
-		$.ajax({
-			url: 'reserveSeatInfo',
-			type: 'GET',
-			data: {
-				allCnt, theater_index, movie_index, theater_schedule_index
-			},
-			
-			success: function(msg) {
-				$('#theaterSeat').html(msg);					
-			},				
-			error: function() {
-				alert('오류');
-			}	
-		});
+		//좌석도 뿌리기
+		updateSeat(theater_index, movie_index, theater_schedule_index);
 	}
 }
+
 
 
 function CountChecked(field) {
 	//maxChecked = allCnt;
 	var size = maxChecked;
-	alert("maxChecked:"+maxChecked);
+	alert("maxChecked---->"+maxChecked);
 	
 	if (field.checked){ //체크 했을때
     	totalChecked += 1;
-    	alert("totalChecked"+totalChecked);
+    	alert("totalChecked----->"+totalChecked);
     }else{//체크 취소할때
     	totalChecked -= 1;
     	alert("totalChecked"+totalChecked);
+    	alert("여기타니?");
     }
 
     if (totalChecked > maxChecked) { //체크된게 선택가능한 maxChecked보다 큰경우
@@ -142,6 +156,8 @@ function CountChecked(field) {
         field.checked = false;
         totalChecked -= 1;
     }else{// 작거나 같은 경우
+    	
+		
     	seat_index = field.value;
     	alert("seat_index:"+seat_index);
     	
@@ -153,14 +169,19 @@ function CountChecked(field) {
 				seat_index
 			},
 			
-			success: function(msg) {
+			success: function(msg) {//한회씩 돌아가면서 정보 입력
 				if(totalChecked == 1){
-					seatInfo += "좌석정보:"
+					seatInfo += "<br><div style='font-size:13px; font-weight:bold;'>인원&nbsp;일반:"+adultCnt+"명, 청소년:"+teenagerCnt+"명<br><br>좌석번호&nbsp;";
 				}
 				seatInfo += msg;
 				if(totalChecked != maxChecked){
 					seatInfo += ", "
 				}
+				
+				if(totalChecked == maxChecked){
+					seatInfo+="</div>"
+				}
+				
 				$('#seatInfo').html(seatInfo);	
 				
 			},				
@@ -175,32 +196,44 @@ function CountChecked(field) {
 		
 		//화면에 값 저장해서 movieTicket3() 호출시 다시 저장해주기
 		document.all.seat_index_arr.value = seat_index_arr;
+		/*document.all.adultCnt.value = adultCnt;
+		document.all.teenagerCnt.value = teenagerCnt;*/
+		/*var adultCount = adultCnt-0;
+		var teenagerCount = teenagerCnt-0;*/
 		
-	   	if(totalChecked == maxChecked){
-	   		alert("adultCnt:"+adultCnt+"\n teenagerCnt:"+teenagerCnt);
-	   		
-	   		$.ajaxSettings.traditional = true;//배열 형태로 서버쪽 전송을 위한 설정
-	        
-			$.ajax({
-				url: 'nextDealButton',
-				type: 'GET',
-				data: {
-					adultCnt, teenagerCnt, seat_index_arr
-				},
-				
-				success: function(msg) {
-					$('#nextDealButton').html(msg);					
-				},				
-				error: function() {
-					alert('오류');
-				}			
-			});	
-	   	}
+		//이거 없애면 사람수 체크가 된다...
+		if(totalChecked == maxChecked){
+			alert("같은경우");
+			nextDealButton(adultCnt, teenagerCnt, seat_index_arr);
+		}
+		
     }
 }
-function ResetCount(){
-	totalChecked=0;
+
+
+function nextDealButton(adultCnt, teenagerCnt, seat_index_arr){
+	
+	alert("adultCnt:"+adultCnt+"\n teenagerCnt:"+teenagerCnt);
+	
+	$.ajaxSettings.traditional = true;//배열 형태로 서버쪽 전송을 위한 설정
+	
+	$.ajax({
+		url: 'nextDealButton',
+		type: 'GET',
+		data: {
+			adultCnt, teenagerCnt, seat_index_arr
+		},
+		
+		success: function(msg) {
+			$('#nextDealButton').html(msg);					
+		},				
+		error: function() {
+			alert('오류');
+		}			
+	});
+	
 }
+
 
 //좌석페이지에서 다음페이지 선택했을 때 결제페이지로 넘어가게
 function movieTicket3(adultCnt, teenagerCnt, theater_schedule_index){

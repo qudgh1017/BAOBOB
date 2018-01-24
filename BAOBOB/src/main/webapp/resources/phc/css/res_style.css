@@ -28,6 +28,9 @@ Primary style
 Main Components 
 
 -------------------------------- */
+a:hover {
+	text-decoration:none;
+}
 
 .cd-schedule {
   position: relative;
