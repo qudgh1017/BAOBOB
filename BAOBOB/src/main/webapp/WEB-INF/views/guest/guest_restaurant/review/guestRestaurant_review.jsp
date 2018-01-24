@@ -81,41 +81,80 @@
 /*======= 별점 종료 =======*/
 </style>
 <script src="${restaurant_js}"></script>
+<!-- 
 <script type="text/javascript">
-function showme(id) {
-    document.getElementById('result').innerHTML = 'My vote : '+id.value;
-    var r = ["0","0","0","0","0"];
-    var s='';
-    
-    alert('showme r : ' + r);
-    alert('showme id.value' + id.value);
-    for(var i=0;i<5;i++) {
-		if(id.value==(i+1).toString()) {
-			var x = parseInt(r[i])+1;
-		    r[i]=x.toString();
-		}
-		if(i==4) {s+=r[i];} else {s+=r[i]+',';}
-			alert('showme s : ' + s);
-		}
-    	document.getElementById('res').value=s;
-  }
-  
-//리뷰 별점 확인
-function calc() {
-    var x=document.getElementById('res').value.split(',');
-    var r=0;
-    var t=0;
-    alert("calc x : " + x);
+var locked = 0;
 
-    for(var i=0;i<5;i++) {
-      t+=parseInt(x[i]);
-      r+=(parseInt(x[i])*(i+1));
-    }
-    var s=parseInt((r/t)*20);
-    document.getElementById('bar').style.width=s.toString()+'%';
-    document.getElementById('sta').innerHTML=s.toString()+'%';
-  }
-</script>
+function show(star){
+	if(locked)  return;
+	var i;
+	var image;
+	var el;
+	var e=document.getElementById('startext');
+	var stateMsg;
+	
+	for(i =1; i<= star; i++){
+		image = 'image' + i;
+		el =document.getElementById(image);
+		el.src="/baobob/resources/images/mhj/choice/icon_starOn.gif";
+	}
+	
+	switch(star){
+	case 1:
+		stateMsg = "불만족스러워요";
+		/* alert('1'); */
+		break;
+	case 2:
+		stateMsg = "별로에요";
+		/* alert('2'); */
+		break;
+	case 3:
+		stateMsg = "그러저럭";
+		/* alert('3'); */
+		break;
+	case 4:
+		stateMsg = "기대해도 좋아요";
+		/* alert('4'); */
+		break;
+	case 5:
+		stateMsg = "정말 좋아요! 추천!!";
+		/* alert('5'); */
+		break;
+	default :
+		stateMsg = "";
+	}	
+	e.innerHTML = stateMsg;	
+}
+
+function noshow(star){
+	if(locked) return;
+
+	var i;
+	var image;
+	var el;
+	
+	for (i = 1; i <= star; i++){
+		image = 'image' + i;
+		el = document.getElementById(image);
+		el.src="/baobob/resources/images/mhj/choice/icon_starOff.gif";
+	}
+}
+	
+function lock(star){
+	show(star);
+	locked=1;
+	/* alert("locked : " + locked); */
+}
+
+function mark(star){
+	lock(star);
+	alert('star : ' + star);
+
+	document.reviewForm.star.value=star;
+}
+
+
+</script> -->
 <title>레스토랑 메뉴</title>
 </head>
 <body>
@@ -174,18 +213,20 @@ function calc() {
 								<th>별점</th> 
 								<td>
 									<!-- 별점 시작 -->
-									<input type="hidden" value="0,0,0,0,0" id="res" />
-									<div id="divRateCnt">
-										<div id="divStarsCnt"></div>
-										<input type="radio" name="rating" id="star5" value="5" onchange="showme(this);"><label for="star5"></label>
-										<input type="radio" name="rating" id="star4" value="4" onchange="showme(this);"><label for="star4"></label>
-										<input type="radio" name="rating" id="star3" value="3" onchange="showme(this);"><label for="star3"></label>
-										<input type="radio" name="rating" id="star2" value="2" onchange="showme(this);"><label for="star2"></label>
-										<input type="radio" name="rating" id="star1" value="1" onchange="showme(this);"><label for="star1"></label>
+									<div id="rating" align="center">
+										<span>
+											<img id="image1" onmouseover="show(1);" onclick="mark(1);" onmouseout="noshow(1);" src="/baobob/resources/images/mhj/choice/icon_starOff.gif">
+											<img id="image2" onmouseover="show(2);" onclick="mark(2);" onmouseout="noshow(2);" src="/baobob/resources/images/mhj/choice/icon_starOff.gif">
+											<img id="image3" onmouseover="show(3);" onclick="mark(3);" onmouseout="noshow(3);" src="/baobob/resources/images/mhj/choice/icon_starOff.gif">
+											<img id="image4" onmouseover="show(4);" onclick="mark(4);" onmouseout="noshow(4);" src="/baobob/resources/images/mhj/choice/icon_starOff.gif">
+											<img id="image5" onmouseover="show(5);" onclick="mark(5);" onmouseout="noshow(5);" src="/baobob/resources/images/mhj/choice/icon_starOff.gif">
+										</span>
+										<br><span id="startext"></span>
 									</div>
-									<span id="result"></span>
+									<div id="spaceDiv"> 
+									</div>
 									<!-- 별점 종료 -->
-									<input class="input" type="grade" value="" name="review_grade" style="width:50px" required/>
+									<!-- <input class="input" type="grade" value="" name="review_grade" style="width:50px" required/> -->
 								</td>
 							</tr>
 							
@@ -246,11 +287,53 @@ function calc() {
 											</tr>
 											<tr>
 												<th><h6>평점</h6></th> 
-												<td>
-													<div style="width:130px;height:26px;background:url(http://s4.postimg.org/wi683zp2h/stars.png) 0 0 repeat-x;position:relative;">
-														<div id="bar" style="width:130px;height:26px;background:url(http://s4.postimg.org/wi683zp2h/stars.png) 0 -26px repeat-x;position:absolute;top:0;left:0;width:0%;"></div>
-													</div>
-													${dto.review_grade}
+												<td>${dto.review_grade}
+													<c:if test="${dto.review_grade==1}">
+													<span>
+														<img id="image1" src="/baobob/resources/images/mhj/choice/icon_starOn.gif">
+														<img id="image2" src="/baobob/resources/images/mhj/choice/icon_starOff.gif">
+														<img id="image3" src="/baobob/resources/images/mhj/choice/icon_starOff.gif">
+														<img id="image4" src="/baobob/resources/images/mhj/choice/icon_starOff.gif">
+														<img id="image5" src="/baobob/resources/images/mhj/choice/icon_starOff.gif">
+													</span>
+										
+													</c:if>
+													<c:if test="${dto.review_grade==2}">
+														<span>
+															<img id="image1" src="/baobob/resources/images/mhj/choice/icon_starOn.gif">
+															<img id="image2" src="/baobob/resources/images/mhj/choice/icon_starOn.gif">
+															<img id="image3" src="/baobob/resources/images/mhj/choice/icon_starOff.gif">
+															<img id="image4" src="/baobob/resources/images/mhj/choice/icon_starOff.gif">
+															<img id="image5" src="/baobob/resources/images/mhj/choice/icon_starOff.gif">
+														</span>
+													</c:if>
+													<c:if test="${dto.review_grade==3}">
+														<span>
+															<img id="image1" src="/baobob/resources/images/mhj/choice/icon_starOn.gif">
+															<img id="image2" src="/baobob/resources/images/mhj/choice/icon_starOn.gif">
+															<img id="image3" src="/baobob/resources/images/mhj/choice/icon_starOn.gif">
+															<img id="image4" src="/baobob/resources/images/mhj/choice/icon_starOff.gif">
+															<img id="image5" src="/baobob/resources/images/mhj/choice/icon_starOff.gif">
+														</span>
+													</c:if>
+													<c:if test="${dto.review_grade==4}">
+														<span>
+															<img id="image1" src="/baobob/resources/images/mhj/choice/icon_starOn.gif">
+															<img id="image2" src="/baobob/resources/images/mhj/choice/icon_starOn.gif">
+															<img id="image3" src="/baobob/resources/images/mhj/choice/icon_starOn.gif">
+															<img id="image4" src="/baobob/resources/images/mhj/choice/icon_starOn.gif">
+															<img id="image5" src="/baobob/resources/images/mhj/choice/icon_starOff.gif">
+														</span>
+													</c:if>
+													<c:if test="${dto.review_grade==5}">
+														<span>
+															<img id="image1" src="/baobob/resources/images/mhj/choice/icon_starOn.gif">
+															<img id="image2" src="/baobob/resources/images/mhj/choice/icon_starOn.gif">
+															<img id="image3" src="/baobob/resources/images/mhj/choice/icon_starOn.gif">
+															<img id="image4" src="/baobob/resources/images/mhj/choice/icon_starOn.gif">
+															<img id="image5" src="/baobob/resources/images/mhj/choice/icon_starOn.gif">
+														</span>
+													</c:if>
 												</td>
 											</tr>
 											<tr>

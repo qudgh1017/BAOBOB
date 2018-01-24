@@ -1,5 +1,5 @@
 //리뷰 별점 설정
-function showme(id) {
+/*function showme(id) {
     document.getElementById('result').innerHTML = 'My vote : '+id.value;
     var r = ["0","0","0","0","0"];
     var s='';
@@ -32,7 +32,7 @@ function calc() {
     document.getElementById('bar').style.width=s.toString()+'%';
     document.getElementById('sta').innerHTML=s.toString()+'%';
   }
-
+*/
 //리뷰 수정
 function guest_review_modify(pageNum, review_index, restaurant_index){
 	alert("review_index : " + review_index);
@@ -46,6 +46,86 @@ function guest_review_delete(pageNum, review_index, restaurant_index){
 
 	//var count = document.guest_cart.count[countCnt].value;
 	window.location="Restaurant_reviewDeleteForm?pageNum="+pageNum+"&review_index="+review_index+"&restaurant_index="+restaurant_index;
+}
+
+
+//리뷰 별점
+var locked = 0;
+
+function show(star){
+	if(locked)  return;
+	var i;
+	var image;
+	var el;
+	var e=document.getElementById('startext');
+	var stateMsg;
+	
+	for(i =1; i<= star; i++){
+		image = 'image' + i;
+		el =document.getElementById(image);
+		el.src="/baobob/resources/images/mhj/choice/icon_starOn.gif";
+	}
+	
+	switch(star){
+	case 1:
+		stateMsg = "불만족스러워요";
+		/* alert('1'); */
+		break;
+	case 2:
+		stateMsg = "별로에요";
+		/* alert('2'); */
+		break;
+	case 3:
+		stateMsg = "그러저럭";
+		/* alert('3'); */
+		break;
+	case 4:
+		stateMsg = "기대해도 좋아요";
+		/* alert('4'); */
+		break;
+	case 5:
+		stateMsg = "정말 좋아요! 추천!!";
+		/* alert('5'); */
+		break;
+	default :
+		stateMsg = "";
+	}	
+	e.innerHTML = stateMsg;	
+}
+
+function noshow(star){
+	if(locked) return;
+
+	var i;
+	var image;
+	var el;
+	
+	for (i = 1; i <= star; i++){
+		image = 'image' + i;
+		el = document.getElementById(image);
+		el.src="/baobob/resources/images/mhj/choice/icon_starOff.gif";
+	}
+}
+	
+function lock(star){
+	show(star);
+	locked=1;
+	/* alert("locked : " + locked); */
+}
+
+function mark(star){
+	
+	lock(star);
+	alert('star : ' + star);
+	var space = '';
+	var spaceDiv = document.getElementById('spaceDiv'); // 출력 위치
+
+	space = '<input type="hidden" ' + 'value="' + star + '" ' + 'name="star"' + '/>';
+	alert(space);
+	spaceDiv.innerHTML = space;
+
+	/*document.reviewForm.star.value=star;
+	alert('document.reviewForm.star.value : ' + document.reviewForm.star.value);*/
 }
 
 
@@ -93,7 +173,7 @@ function removeChar(event) {
 
 var typeNum = '0'; // 선택한 버튼 번호
 var typeImg = ''; // 선택한 버튼 이미지
-var cnt=0;	//인원수 
+var tableCheckedcnt=0;	//인원수 
 
 // type에 따라 버튼 이미지 설정
 function spaceType(type) {
@@ -142,27 +222,32 @@ function spaceDivChange() {
 	}
 }
 
-// 배열판의 선택한 버튼 설정
+// 배열판의 선택한 버튼 설정	//
 function spaceBtnChange(location) {
 	//선택한 버튼의 value변경 (DB에 아이콘 index 넣기 위한값)
 	var btnId = 'btn' + location;
 	var spaceBtn = document.getElementById(btnId);
-	var tableCnt = document.getElementById('tableCnt').value;
 	
+	var tableCnt = document.getElementById('tableCnt').value;//선택한 테이블 수량을 가져온다.
 	
 	if(spaceBtn.value==1){
 		if (typeImg != '') { // 아이콘 선택했을 경우, 선택한 버튼의 설정 변경
-			// 선택한 버튼의 이미지 src 변경
-			var imgId = 'img' + location; // 선택한 버튼의 id
-			var spaceImg = document.getElementById(imgId); // 선택한 버튼의 img
-			spaceImg.src = '/baobob/resources/images/chg/' + typeImg;
-
-			// 선택한 버튼의 value 변경(DB에 아이콘index 넣기 위한 값)
-			//var btnId = 'btn' + location;
-			//var spaceBtn = document.getElementById(btnId);
-			
-			spaceBtn.value = typeNum;
-		} else {
+			tableCheckedcnt++;
+			if(tableCheckedcnt <= tableCnt){
+				// 선택한 버튼의 이미지 src 변경
+				var imgId = 'img' + location; // 선택한 버튼의 id
+				var spaceImg = document.getElementById(imgId); // 선택한 버튼의 img
+				spaceImg.src = '/baobob/resources/images/chg/' + typeImg;
+	
+				// 선택한 버튼의 value 변경(DB에 아이콘index 넣기 위한 값)
+				//var btnId = 'btn' + location;
+				//var spaceBtn = document.getElementById(btnId);
+				
+				spaceBtn.value = typeNum;
+			} else {
+				alert('설정 수량보다 많습니다.');
+			}
+		}else{
 			alert('아이콘을 선택해주세요.');
 		}
 	}else{
@@ -171,24 +256,31 @@ function spaceBtnChange(location) {
 	
 }
 
-//예약확인(정보 설정 AJAX)
+//예약확인(정보 설정 AJAX) 설정한 수보다 적게 선택한 경우
 function spaceTypeChange2() {
 	var item = document.querySelectorAll('.p_spaceBtn'); // 배열판의 버튼들
-	
+
 	// 매장 정보
 	var x = document.getElementById('widthX').value; // col
 	var y = document.getElementById('heightY').value; // row
-	var tableCnt = document.getElementById('tableCnt').value;//선택한 테이블 수량을 가져온다.
-	//
+	var tableCnt = document.getElementById('tableCnt');
 	var restaurant_index = document.getElementById('restaurant_index').value;
-	alert('식당 : ' + restaurant_index);
+	
 
+	if(tableCheckedcnt < tableCnt){
+		alert('좌석을 더 선택 하십시오');
+		return false;
+	}else{
+		tableCheckcnt=0;
+	}
+	
 	// 배열판 버튼들의 아이콘 index 배열
 	var array = new Array();
 	item.forEach(function(space) {
 		array.push(space.value);
 	});
 	var info = array.join(',');
+	
 	var date = document.getElementById('datepicker').value;
 	var time = document.getElementById('timepicker').value;
 	
@@ -228,17 +320,21 @@ function spaceBody(info, col, row) {
 
 // 선택한 식당, 날짜, 시간에 예약이 가능한 테이블 조회
 function guestReserv_chkTable() {
+	var tableCnt = document.getElementById('tableCnt').value;
 	var date = document.getElementById('datepicker').value;
 	var time = document.getElementById('timepicker').value;
 	var restaurant_index = document.getElementById('restaurant_index').value;
-	alert('식당 : ' + restaurant_index);
-	if (document.getElementById('datepicker').value == "") {
+
+	if (document.getElementById('tableCnt').value==""){
+		alert('인원을 설정해주세요(4인 1테이블)');
+		return false;
+	} else if (document.getElementById('datepicker').value == "") {
 		alert('날짜를 골라주세요!');
 		return false;
 	} else if (document.getElementById('timepicker').value == "") {
 		alert('시간을 골라주세요!');
 		return false;
 	} else {
-		window.location = 'guestReserv_chkTable?date=' + date + '&time=' + time + '&restaurant_index='+restaurant_index;
+		window.location = 'guestReserv_chkTable?date=' + date + '&tableCnt=' + tableCnt + '&time=' + time + '&restaurant_index='+restaurant_index;
 	}
 }
