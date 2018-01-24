@@ -36,6 +36,8 @@
 		}
 		
 		
+			
+		
 /*======= 별점 시작 =======*/
 
 #divRateCnt {
@@ -210,7 +212,7 @@ function mark(star){
 						<input type="hidden" value="${restaurant_index}" name="restaurant_index">
 						<table class="table table-bordered" border="1">
 							<tr>
-								<th>별점</th> 
+								<th style="text-align:center;">별점</th> 
 								<td>
 									<!-- 별점 시작 -->
 									<div id="rating" align="center">
@@ -231,7 +233,7 @@ function mark(star){
 							</tr>
 							
 							<tr>
-								<th>글 내용</th> 
+								<th style="text-align:center;">글 내용</th> 
 								<td>
 									<textArea class="input" rows="10" cols="40" name="review_content" required></textArea>
 								</td>
@@ -272,18 +274,18 @@ function mark(star){
 										<table class="table table-bordered" border="1">
 											<input type="hidden" value="${dto.review_index}" name="review_index">
 											<tr>
-												<th style="width:40px"><h6>Id</h6></th> 
-												<td style="width:200px">
+												<th style="width:40px; text-align:center;"><span>Id</span></th> 
+												<td style="width:200px;">
 													${dto.member_id}
 												</td>
-												<td rowspan="4" style="width:20px">
+												<td rowspan="4" style="width:20px; text-align:center; vertical-align:middle;">
 													<input class="button" type="button" value="변경" onclick="guest_review_modify(${pageNum}, ${dto.review_index}, ${restaurant_index});"> 
-													<input class="button" type="button" value="삭제" onclick="guest_review_delete(${pageNum}, ${dto.review_index}, ${restaurant_index});"> 
+													<br/><input class="button" type="button" value="삭제" onclick="guest_review_delete(${pageNum}, ${dto.review_index}, ${restaurant_index});"> 
 												</td>
 											</th>
 											</tr>
 											<tr>
-												<th><h6>평점</h6></th> 
+												<th style="text-align:center;"><span>평점</span></th> 
 												<td>${dto.review_grade}
 													<c:if test="${dto.review_grade==1}">
 													<span>
@@ -334,13 +336,13 @@ function mark(star){
 												</td>
 											</tr>
 											<tr>
-												<th><h6>내용</h6></th> 
+												<th style="text-align:center;"><span>내용</span></th> 
 												<td>
 													${dto.review_content}
 												</td>
 											</tr>
 											<tr>
-												<th><h6>날짜</h6></th> 
+												<th style="text-align:center;"><span>날짜</span></th> 
 												<td>
 													<fmt:formatDate type="both" pattern="yyyy/MM:dd HH:mm" value="${dto.review_reg_date}"/>
 												</td>
@@ -355,9 +357,9 @@ function mark(star){
 							메뉴가 없서요.
 							</c:if>
 										<!-- 페이지 컨트롤 -->
-							<table style="width:950px" text-align="center">
-							restaurant_index : ${restaurant_index}
-								<th align="center">
+							<table style="width=100%; text-align:center;">
+								<tr style="text-align:center;">
+									<th>
 									<c:if test="${cnt>0}">
 										<!-- 처음[◀◀] / 이전블록[◀] 특수문자 : ㅁ한자키 -->
 										<c:if test="${startPage>pageBlock}">
@@ -379,7 +381,8 @@ function mark(star){
 											<a href="guestRestaurant_review?restaurant_index=${restaurant_index}&pageNum=${pageCount}">[▶▶]</a>
 										</c:if>
 									</c:if>
-								</th>
+									</th>
+								</tr>
 							</table>
 						</div>
 						<div class="col-md-2"></div>
