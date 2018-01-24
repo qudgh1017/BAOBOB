@@ -1,17 +1,33 @@
 var review_insert = "리뷰가 등록되었습니다.";
 var review_modify = "리뷰가 수정되었습니다.";
 var review_delete = "리뷰가 삭제되었습니다.";
+var reservation_success = "예매를 성공했습니다. \n마이페이지에서 예매창을 확인해주세요.";
 
 
 var review_insert_error = "리뷰등록에 실패하였습니다. 다시 작성해주세요.";
 var review_modify_error = "리뷰수정에 실패하였습니다. 다시 작성해주세요.";
 var review_delete_error = "리뷰삭제에 실패하였습니다. 다시 작성해주세요.";
+var reservation_error = "예매에 실패하였습니다. \n다시 시도해주세요."
 
 //sub창 띄었을때
 function subAlert(msg){
 	alert(msg);
 	window.close();
 	opener.location.reload();
+	return false;
+}
+
+//예매 성공시
+function reservationSuccess(msg){
+	alert(msg);
+	window.location.href="guest_movie";
+	return false;
+}
+
+//예매 실패시
+function reservationError(msg){
+	alert(msg);
+	window.location.href="movieTicket";
 	return false;
 }
 
