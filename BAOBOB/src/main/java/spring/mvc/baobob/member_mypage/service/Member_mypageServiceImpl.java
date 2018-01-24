@@ -85,7 +85,7 @@ public class Member_mypageServiceImpl implements Member_mypageService{
 			
 			//게시글 목록 조회
 			ArrayList<BoardVO> dtos = dao.getArticleList(map);
-			model.addAttribute("dtos", dtos);
+			model.addAttribute("QuestionDtos", dtos);
 			
 		}
 		
@@ -97,7 +97,7 @@ public class Member_mypageServiceImpl implements Member_mypageService{
 		endPage = startPage + pageBlock - 1;
 		if(endPage > pageCount) endPage = pageCount;
 		
-		model.addAttribute("cnt", cnt); //글갯수
+		model.addAttribute("memQuestionCnt", cnt); //글갯수
 		model.addAttribute("number", number); //글번호
 		model.addAttribute("pageNum", pageNum); //페이지 번호
 		
@@ -384,7 +384,7 @@ public class Member_mypageServiceImpl implements Member_mypageService{
 			
 			//게시글 목록 조회
 			ArrayList<BoardVO> dtos = dao.getArticleLList(map);
-			model.addAttribute("dtos", dtos);
+			model.addAttribute("lostDtos", dtos);
 			
 		}
 		
@@ -396,7 +396,7 @@ public class Member_mypageServiceImpl implements Member_mypageService{
 		endPage = startPage + pageBlock - 1;
 		if(endPage > pageCount) endPage = pageCount;
 		
-		model.addAttribute("cnt", cnt); //글갯수
+		model.addAttribute("lostCnt", cnt); //글갯수
 		model.addAttribute("number", number); //글번호
 		model.addAttribute("pageNum", pageNum); //페이지 번호
 		

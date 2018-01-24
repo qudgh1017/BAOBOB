@@ -30,13 +30,13 @@
 			<td style="padding:0rem 10rem; margin:0px;width:100%;height:100%;">
 			<!-- 알맹이td -->
 			<table id="mainBody">
-				<caption>BAO밥 로그</caption>
+				<caption>BAO밥 예약내역</caption>
 			    <thead>
 				    <tr>
-				    	<th style="width:20%">결제일</th>
 				        <th style="width:20%">레스토랑 명</th>
 				        <th style="width:20%">전화번호</th>
-				        <th style="width:20%">이용일</th>
+				        <th style="width:30%">예약일</th>
+				        <th style="width:10%">예약취소 신청</th>
 				    </tr>
 			    </thead>
 			    
@@ -52,16 +52,10 @@
 					<fmt:formatDate value="${now}" var="sysDate" pattern="yyyy-MM-dd" />
 						
 						<!-- 이용시간이 지났으면 예약내역이 아닌 이용시간으로 출력 -->
-						<c:if test="${sysDate > endtime}">
+						<c:if test="${sysDate < endtime}">
 						<c:set var="bookCnt" value="1" />
 							    <tbody>
 							    <tr>
-							    	<th style="text-align:center;">
-							    		<%-- ${number}
-							    		<c:set var="number" value="${number-1}"/>
-							    		<br> --%>
-							    		<fmt:formatDate type="both" pattern="yyyy-MM-dd HH:mm" value="${dto.history_date}" />
-							    	</th>
 							        <th style="text-align:center;">
 							        	${dto.restaurant_name}
 							        </th>
@@ -72,6 +66,11 @@
 										<fmt:formatDate type="both" pattern="yyyy-MM-dd HH:mm" value="${dto.schedule_starttime}" />
 										~
 										<fmt:formatDate type="both" pattern="yyyy-MM-dd HH:mm" value="${dto.schedule_endtime}" />
+									</td>
+									<td>
+										<input type="button" class="button" 
+											onclick="#!" value="예약 취소">
+											<%-- onclick="window.location='memRBookDel?num=${dto.history_index}'" value="예약 취소"> --%>
 									</td>
 							    </tr>
 							    </tbody>
@@ -94,8 +93,8 @@
 			<div class="pagination">
 				<c:if test="${cnt > 0 }">
 					<c:if test="${startPage > pageBlock }">
-						<a href="restaurantLog">&laquo;</a>.
-						<a href="restaurantLog?pageNum=${startPage - pageBlock}">&lsaquo;</a>
+						<a href="memRBookList">&laquo;</a>.
+						<a href="memRBookList?pageNum=${startPage - pageBlock}">&lsaquo;</a>
 					</c:if>
 					
 					<c:forEach var="i" begin="${startPage}" end="${endPage}">
@@ -105,14 +104,14 @@
 						</c:if>
 						
 						<c:if test="${i != currentPage}">
-							<a href="restaurantLog?pageNum=${i}">[${i}]</a>
+							<a href="memRBookList?pageNum=${i}">[${i}]</a>
 						</c:if>
 						
 					</c:forEach>
 					
 					<c:if test="${pageCount > endPage }">
-						<a href="restaurantLog?pageNum=${startPage + pageBlock}">&rsaquo;</a>
-						<a href="restaurantLog?pageNum=${pageCount}">&raquo;</a>
+						<a href="memRBookList?pageNum=${startPage + pageBlock}">&rsaquo;</a>
+						<a href="memRBookList?pageNum=${pageCount}">&raquo;</a>
 					</c:if>
 				</c:if>			  
 			</div>
