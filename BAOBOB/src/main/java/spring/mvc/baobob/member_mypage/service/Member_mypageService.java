@@ -46,9 +46,6 @@ public interface Member_mypageService {
 	//무비로그-위시리스트
 	public void movieWishList(HttpServletRequest req, Model model);
 	
-	//무비로그-위시리스트
-	public void movieClear(HttpServletRequest req, Model model);
-	
 	//무비로그-무비다이어리
 	public void movieDiaryList(HttpServletRequest req, Model model);
 	
@@ -57,6 +54,10 @@ public interface Member_mypageService {
 	
 	//무비로그-무비다이어리 글삭제처리
 	public void movieDiaryDelPro(HttpServletRequest req, Model model);
+	
+	//위시리스트 추가
+	public void addWishList(HttpServletRequest req, Model model);
+
 	
 	//무비로그-위시리스트 삭제처리
 	public void delMovieWishList(HttpServletRequest req, Model model);

@@ -46,7 +46,6 @@
 			    <!-- 게시글이 있으면 -->
 				<c:if test="${lostCnt > 0 }">
 					<c:forEach var="dto" items="${lostDtos}">
-						<!-- 게시글 -->
 						<c:if test="${dto.board_type eq 3}">
 					    <tbody>
 					    <tr>
@@ -101,6 +100,12 @@
 							No contents...
 						</td>
 					</tr>
+					<tr>
+				    	<td colspan="7" style="border-bottom: none; text-align:right;">
+				    		<input type="button" class="button" value="문의하기" style="width:auto;"
+									onclick="window.location='memLWriteForm'">
+				    	</td>
+				    </tr>
 				</c:if>
 			</table>
 				
