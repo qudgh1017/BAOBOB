@@ -1,5 +1,6 @@
 package spring.mvc.baobob.android.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -11,14 +12,18 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import spring.mvc.baobob.android.persistence.AndroidDAO;
 import spring.mvc.baobob.member_mypage.persistence.Member_mypageDAO;
 import spring.mvc.baobob.persistence.MainDAO;
+import spring.mvc.baobob.vo.BoardVO;
 import spring.mvc.baobob.vo.Member;
 
 @Controller
 public class AndroidController {
 	private Logger log = Logger.getLogger(this.getClass());
 
+	@Autowired
+	AndroidDAO dao;
 	@Autowired
 	MainDAO mainDao;
 	@Autowired
@@ -59,16 +64,20 @@ public class AndroidController {
 		Member m = myDdao.getMemberInfo(id);
 		
 		//예약 건수
+		int movie = dao.getUseMovieCnt(id);
+		int rest = dao.getUseRestaurantCnt(id);
+		int park = dao.getUseParkingCnt(id);
 		
-		
-		//예약 목록
+		//문의 목록
+		ArrayList<BoardVO> list = dao.getBoardList(id); 
 		
 		Map<String, Object> map = new HashMap<>();
 		map.put("data1", m.getMember_name());
-		map.put("data2", 0);
-		map.put("data3", 0);
-		map.put("data4", 0);
+		map.put("data2", movie);
+		map.put("data3", rest);
+		map.put("data4", park);
 		map.put("member", m);
+		map.put("boardList",  list);
 		return map;
 	}
 	
