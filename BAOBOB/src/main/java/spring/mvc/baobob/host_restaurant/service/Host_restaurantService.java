@@ -94,6 +94,9 @@ public interface Host_restaurantService {
 	// 예약 삭제
 	public void scheduleDel(HttpServletRequest req, Model model);
 
-	// 결산 차트
+	// 메뉴별 차트
 	public void accountChart(HttpServletRequest req, Model model);
+
+	// 성별 차트
+	public void accountChart2(HttpServletRequest req, Model model);
 }

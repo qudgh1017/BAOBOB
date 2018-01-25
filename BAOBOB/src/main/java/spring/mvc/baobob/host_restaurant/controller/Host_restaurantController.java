@@ -354,12 +354,13 @@ public class Host_restaurantController {
 		return "host/host_restaurant/hostPayment";
 	}
 
-	// 매장별 결산
+	// 결산
 	@RequestMapping(value = "/hostRestaurantAccount")
 	public String hostRestaurantAccount(HttpServletRequest req, Model model) {
 		log.debug("hostRestaurantAccount()");
 
-		service.accountChart(req, model); // 제한연령별 매출
+		service.accountChart(req, model); // 메뉴별 차트, 금월 매출
+		service.accountChart2(req, model); // 성별 차트
 
 		return "host/host_restaurant/hostRestaurantAccount";
 	}

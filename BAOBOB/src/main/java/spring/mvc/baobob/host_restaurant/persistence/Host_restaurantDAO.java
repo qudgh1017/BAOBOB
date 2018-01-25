@@ -153,10 +153,13 @@ public interface Host_restaurantDAO {
 	// 회원 포인트 수정
 	public int modMemberPoint(Map<String, Object> map);
 	
-	// 결산 차트
+	// 메뉴별 매출
 	@MapKey("kind")
 	public List<Restaurant_ChartVO> getMenuCountChart();
 
 	// 모든 메뉴 이름 조회
 	public String[] getMenuName(int restaurant_index);
+
+	// 성별 매출
+	public Object getSexChart();
 }

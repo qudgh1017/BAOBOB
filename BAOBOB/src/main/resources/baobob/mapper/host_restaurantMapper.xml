@@ -344,4 +344,9 @@
 		 WHERE restaurant_index = #{restaurant_index} 
 		 ORDER BY restaurant_menu_index DESC
 	</select>
+	
+	<!-- 성별 결산 -->
+	<select id="getSexChart" resultType="hashmap">
+		SELECT NVL(m.)
+	</select>
 </mapper>

@@ -1,6 +1,7 @@
 package spring.mvc.baobob.host_restaurant.persistence;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -509,5 +510,34 @@ public class Host_restaurantDAOImpl implements Host_restaurantDAO {
 		Host_restaurantDAO dao = sqlSession.getMapper(Host_restaurantDAO.class);
 
 		return dao.getMenuName(restaurant_index);
+	}
+
+	// 성별 매출
+	@Override
+	@SuppressWarnings("unchecked")
+	public Object getSexChart() {
+		log.debug("dao.getSexChart()");
+		
+		Host_restaurantDAO dao = sqlSession.getMapper(Host_restaurantDAO.class);
+		
+		Map<String, Integer> m = null;
+
+		m = new HashMap<String, Integer>();
+		m.put("total", 0);
+		m.put("남", 0);
+		m.put("여", 0);
+
+		for (int i = 0; i < m.size(); i++) {
+			List<Member> list = (List<Member>)dao.getSexChart();
+			String str = String.valueOf(list.get(i));
+			String str2[] = str.split(",");
+			String str3[] = str2[0].split("=");
+			String str4[] = str2[1].split("=");
+			String str5[] = str4[1].split("}");
+
+			m.put(str5[0], Integer.parseInt(str3[1]));
+		}
+
+		return m;
 	}
 }

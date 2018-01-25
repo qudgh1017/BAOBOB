@@ -1468,7 +1468,7 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 		}
 	}
 	
-	// 결산 차트
+	// 메뉴별 차트
 	@Override
 	public void accountChart(HttpServletRequest req, Model model) {
 		log.debug("service.accountChart()");
@@ -1541,6 +1541,21 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 		model.addAttribute("values", values);
 		model.addAttribute("count", menu.length);
 		model.addAttribute("chart", map);
-		model.addAttribute("total", "합계 : " + tm.get("합계"));
+		model.addAttribute("total", tm.get("합계"));
+	}
+
+	// 성별 차트
+	@Override
+	public void accountChart2(HttpServletRequest req, Model model) {
+		log.debug("service.accountChart2()");
+
+		// 식당 관리자의 memberStep에서 뒷자리를 구한다.(뒷자리가 restaurant_index와 같음)
+		int restaurant_index = Integer
+				.parseInt((String.valueOf(req.getSession().getAttribute("memStep")).substring(1, 2)));
+
+		Map<String, Integer> map = (Map<String, Integer>) dao.getSexChart();
+
+		// 성별 차트
+		model.addAttribute("chart2", map);
 	}
 }

@@ -143,6 +143,10 @@ function spaceBtnChange2(location) {
 	var spaceBtn = document.getElementById(btnId);
 	var table_count = document.getElementById('count').value / 4;
 	
+	if((document.getElementById('count').value % 4) > 0) {
+		table_count++;
+	}
+	
 	if(spaceBtn.value == 1){
 		if (typeImg != '') { // 아이콘 선택했을 경우, 선택한 버튼의 설정 변경
 			count++;
