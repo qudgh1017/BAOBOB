@@ -375,10 +375,11 @@ public class Guest_restaurantServiceImpl implements Guest_restaurantService{
 		
 		if (cnt > 0) {
 			model.addAttribute("startPage", startPage); // 시작페이지
-			model.addAttribute("endPage", endPage); // 마지막페이지
+			model.addAttribute("endPage", endPage); 	// 마지막페이지
 			model.addAttribute("pageBlock", pageBlock); // 출력할 페이지 개수
 			model.addAttribute("pageCount", pageCount); // 페이지 갯수
 			model.addAttribute("currentPage", currentPage);// 현재 페이지
+		
 		}
 	}
 	

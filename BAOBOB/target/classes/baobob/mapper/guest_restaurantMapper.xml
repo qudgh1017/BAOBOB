@@ -121,6 +121,7 @@
 	
 	<!-- ===== 4-2. 리뷰 리스트 ===== -->
 	<select id="getReviewList" resultType="spring.mvc.baobob.vo.ReviewVO">
+	<![CDATA[
 		SELECT  restaurant_index,
 	            review_index,
 	            review_grade,
@@ -132,13 +133,16 @@
 	                    review_grade,
 	                    review_content,   
 	                    member_id,
-	                    review_reg_date 
+	                    review_reg_date, 
+	                    rownum rNum
 	              FROM  review_tbl rt
 	              JOIN  restaurant_review_tbl rrt
 	                ON  rt.review_index=rrt.review_index
+           		 WHERE  restaurant_index=#{restaurant_index}
 	            ORDER BY review_reg_date  desc
 	            )
-		 WHERE restaurant_index=#{restaurant_index}
+ 		 WHERE rNum>=#{start} AND rNum<=#{end}
+ 	]]>
 	</select>
 	
 	<!--===== 4-2-1. 리뷰 추가(Review_tbl) =====-->
