@@ -330,11 +330,11 @@ public class Guest_movieDAOImpl implements Guest_movieDAO{
 
 	//3. Update theater_seat_tbl 해당 seat_index의 seat_state=6 변경(좌석 상태 예약석으로 변경)
 	@Override
-	public int updateSeatState(int seat_index) {
+	public int updateSeatState(Map<String,Object> map) {
 		int cnt = 0;
 		
 		Guest_movieDAO gmdao = sqlSession.getMapper(Guest_movieDAO.class);
-		cnt = gmdao.updateSeatState(seat_index);
+		cnt = gmdao.updateSeatState(map);
 		
 		return cnt;
 	}

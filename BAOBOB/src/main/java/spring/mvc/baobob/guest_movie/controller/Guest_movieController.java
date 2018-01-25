@@ -68,6 +68,8 @@ public class Guest_movieController {
 	public String movieFinder(HttpServletRequest req, Model model) {
 		log.debug("====== Guest_movieController/movieFinder ======");
 		
+		gmservice.movieList(req, model);
+		
 		return "/guest/guest_movie/movie/movieFinder";
 	}
 	
