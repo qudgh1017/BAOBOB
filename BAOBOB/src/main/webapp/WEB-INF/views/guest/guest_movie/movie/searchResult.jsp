@@ -62,89 +62,82 @@ $('.page').click(function() {
 </script> -->
 
 페이지 처리 필요..!!
+<!-- CSS,JavaScript 참조 -->
+<%@ include file="/WEB-INF/views/guest/common/head.jsp" %>
 
-
-<div class="container">
-	<div class="row">
-
-		<div class="col-md-offset-1"></div>
-		<div class="col-md-10" align="center">
-			<div align="center">
-				<image src="${projectRes}images/ybh/search_results.gif">
-				<hr style="border: 2px solid black;">
-				<h5>
-					아래의 선택조건에 해당하는 영화가 총
-					<%-- ${cnt} --%>
-					건 검색되었습니다.
-				</h5>
-			</div>
-			<div align="left">
-			<!-- 페이지 이동을 위해 -->
-			<input type="hidden" id="keyword" name="keyword" value="${keyword}">
-			<input type="hidden" id="select" name="select"  value="${sel}">
-			<input type="hidden" id="movie_janre" name="movie_janre" value="${movie_janre}">
-			<input type="hidden" id="movie_country" name="movie_country" value="${movie_country}">
-			<input type="hidden" id="movie_age" name="movie_age" value="${movie_age}">			
-						
-				${sel}: ${keyword} <br>
-				<c:forEach var="janre" items="${movie_janre}">
-					영화장르 : ${janre} <br>
-				</c:forEach>
-				제작국가 : ${movie_country} <br> 연령 : ${movie_age} <br> <br>
-				<br>
-			</div>
-		</div>
-		<div class="col-md-offset-1"></div>
-
-		<c:if test="${cnt>0}">
-			<!-- <tr> -->
-			<c:forEach var="movie" items="${movies}">
-				<div class="col-md-3" style="margin: 10px auto">
-					<a onclick="hdTrailerPlaying(${movie.movie_index});"><img
-						src="${projectRes}images/phc/${movie.movie_poster}"></a>
-					<%-- <a href="hdTrailerPlaying?movie_index=${movie.movie_index}"><img src="${projectRes}images/phc/${movie.movie_poster}"></a> --%>
-				</div>
-			</c:forEach>
-			<!-- </tr> -->
-		</c:if>
-
-		<!-- 게시글이 없으면 -->
-		<c:if test="${cnt == 0}">
-			<div class="col-md-12" align="center">등록된 영화가 없습니다.</div>
-		</c:if>
+<div class="col-md-12" align="center">
+	<div align="center">
+		<image src="${projectRes}images/ybh/search_results.gif">
+		<hr style="border: 2px solid black;">
+		<h5>
+			아래의 선택조건에 해당하는 영화가 총
+			<%-- ${cnt} --%>
+			건 검색되었습니다.
+		</h5>
+	</div>
+	<div align="left">
+	<!-- 페이지 이동을 위해 -->
+	<input type="hidden" id="keyword" name="keyword" value="${keyword}">
+	<input type="hidden" id="select" name="select"  value="${sel}">
+	<input type="hidden" id="movie_janre" name="movie_janre" value="${movie_janre}">
+	<input type="hidden" id="movie_country" name="movie_country" value="${movie_country}">
+	<input type="hidden" id="movie_age" name="movie_age" value="${movie_age}">			
+				
+		${sel}: ${keyword} <br>
+		<c:forEach var="janre" items="${movie_janre}">
+			영화장르 : ${janre} <br>
+		</c:forEach>
+		제작국가 : ${movie_country} <br> 연령 : ${movie_age} <br> <br>
+		<br>
 	</div>
 </div>
 
-<div class="container" style="margin-top: 50px">
-		<div class="row">
-			<div class="col-md-12" align="center">
-				<c:if test="${cnt > 0}">
-					<!-- 처음[◀◀] / 이전블록[◀] 특수문자:ㅁ + 한자키 -->
-					<c:if test="${startPage > pageBlock}">
-						<a href="searchResult">[◀◀]</a>
-						<a href="searchResult - pageBlock}">[◀]</a>
-					</c:if>
-	
-					<c:forEach var="i" begin="${startPage}" end="${endPage}">
-						<c:if test="${i == currentPage}">
-							<span><b>[${i}]</b></span>
-						</c:if>
-						<c:if test="${i != currentPage}">
-							<a class="page" href="searchResult?pageNum=${i}">[${i}]</a>
-						</c:if>
-					</c:forEach>
-	
-					<!-- 다음블록 [▶] / 끝[▶▶] -->
-					<c:if test="${pageCount > endPage}">
-						<a class="page" href="searchResult?pageNum=${startPage + pageBlock}">[▶]</a>
-						<a class="page" href="searchResult?pageNum=${pageCount}">[▶▶]</a>
-						<!-- 마지막페이지로 -->
-					</c:if>
-	
-				</c:if>
-			</div>
+<c:if test="${cnt>0}">
+	<!-- <tr> -->
+	<c:forEach var="movie" items="${movies}">
+		<div class="col-md-3" style="margin: 10px auto">
+			<a onclick="hdTrailerPlaying(${movie.movie_index});"><img
+				src="${projectRes}images/phc/${movie.movie_poster}"></a>
+			<%-- <a href="hdTrailerPlaying?movie_index=${movie.movie_index}"><img src="${projectRes}images/phc/${movie.movie_poster}"></a> --%>
 		</div>
-	</div>
+	</c:forEach>
+	<!-- </tr> -->
+</c:if>
+
+<!-- 게시글이 없으면 -->
+<c:if test="${cnt == 0}">
+	<div class="col-md-12" align="center">등록된 영화가 없습니다.</div>
+</c:if>
+</div>
+
+
+<div class="col-md-12" align="center">
+	<c:if test="${cnt > 0}">
+		<!-- 처음[◀◀] / 이전블록[◀] 특수문자:ㅁ + 한자키 -->
+		<c:if test="${startPage > pageBlock}">
+			<a href="searchResult">[◀◀]</a>
+			<a href="searchResult - pageBlock}">[◀]</a>
+		</c:if>
+
+		<c:forEach var="i" begin="${startPage}" end="${endPage}">
+			<c:if test="${i == currentPage}">
+				<span><b>[${i}]</b></span>
+			</c:if>
+			<c:if test="${i != currentPage}">
+				<a class="page" href="searchResult?pageNum=${i}">[${i}]</a>
+			</c:if>
+		</c:forEach>
+
+		<!-- 다음블록 [▶] / 끝[▶▶] -->
+		<c:if test="${pageCount > endPage}">
+			<a class="page" href="searchResult?pageNum=${startPage + pageBlock}">[▶]</a>
+			<a class="page" href="searchResult?pageNum=${pageCount}">[▶▶]</a>
+			<!-- 마지막페이지로 -->
+		</c:if>
+
+	</c:if>
+</div>
+	
 
 
 

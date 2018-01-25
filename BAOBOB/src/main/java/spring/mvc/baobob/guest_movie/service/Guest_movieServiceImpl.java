@@ -265,27 +265,34 @@ public class Guest_movieServiceImpl implements Guest_movieService{
 		String keyword = req.getParameter("keyword");
 		String sel = req.getParameter("sel");
 		
-		String[] str_movie_janre = req.getParameterValues("movie_janre");
-		String[] str_movie_age = req.getParameterValues("movie_age");
-		String[] movie_country = req.getParameterValues("movie_country");
+		String[] str_movie_janre_arr = req.getParameterValues("movie_janre");
+		String[] str_movie_age_arr = req.getParameterValues("movie_age");
+		String[] movie_country_arr = req.getParameterValues("movie_country");
+		String str_movie_country="";
 		
-		int[] movie_janre = new int[str_movie_janre.length];
+		System.out.println("movie_country배열!!!!!!--->" + movie_country_arr);
+		
+		for(int i=0; i<movie_country_arr.length; i++) {
+			str_movie_country += movie_country_arr[i];
+		}
+		
+		int[] movie_janre = new int[str_movie_janre_arr.length];
 
 		for(int i =0; i<movie_janre.length; i++){
-			movie_janre[i]=Integer.parseInt(str_movie_janre[i]);
+			movie_janre[i]=Integer.parseInt(str_movie_janre_arr[i]);
 		};
 		
-		int[] movie_age = new int[str_movie_age.length];
+		int[] movie_age = new int[str_movie_age_arr.length];
 
 		for(int i =0; i<movie_age.length; i++){
-			movie_age[i]=Integer.parseInt(str_movie_age[i]);
+			movie_age[i]=Integer.parseInt(str_movie_age_arr[i]);
 		};
 		
 		model.addAttribute("keyword", keyword);
 		model.addAttribute("sel", sel);
 		model.addAttribute("movie_janre", movie_janre);
 		model.addAttribute("movie_age", movie_age);
-		model.addAttribute("movie_country", movie_country);
+		model.addAttribute("movie_country", movie_country_arr);
 		
 		int pageSize = 8; 		// 한 페이지당 출력할 글 갯수
 		int pageBlock = 3;		// 한 블럭당 페이지 갯수
@@ -839,12 +846,19 @@ public class Guest_movieServiceImpl implements Guest_movieService{
 			cnt = 0;
 		}
 		
+		Map <String,Object> map2 = new HashMap<String,Object>();
+		map2.put("member_id", member_id);
+		map2.put("seat_index", 0);
+		
 		//3. Update theater_seat_tbl 해당 seat_index의 seat_state=6 변경(좌석 상태 예약석으로 변경)
 		for(int i=0; i<size; i++) {
-			seat_index_arr[i] = Integer.parseInt(str_seat_index_arr[i]);
-			updateSeatCnt = gmdao.updateSeatState(seat_index_arr[i]);
-			if(updateSeatCnt == 0) { //0일때만 보내줌
-				model.addAttribute("updateSeatCnt",updateSeatCnt);
+			if(seat_index_arr[i]!=-1) {
+				seat_index_arr[i] = Integer.parseInt(str_seat_index_arr[i]);
+				map2.replace("seat_index", seat_index_arr[i]); //값 바꿔줌
+				updateSeatCnt = gmdao.updateSeatState(map2);
+				if(updateSeatCnt == 0) { //0일때만 보내줌
+					model.addAttribute("updateSeatCnt",updateSeatCnt);
+				}
 			}
 		}
 		
