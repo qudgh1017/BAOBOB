@@ -16,9 +16,9 @@
 <!-- 좌석도  -->
 <input type="button" style="color:white; background-color:lightgray; background:rgba(0, 0, 0, 0.6); width:${seatInfo.totalCol*45}px; height:25px;"  value="SCREEN"> <br><br>
 
+<!-- 좌석도 이중포문으로 행렬 뿌려주기(좌석상태) -->
 <c:forEach var="row" begin="0" end="${seatInfo.totalRow-1}" step="1">
-	<!-- <div> --><!--  class="btn-group" data-toggle="buttons" -->
-	${seatRow[row]}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	${seatRow[row]}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	
 	<c:forEach var="col" begin="1" end="${seatInfo.totalCol}" step="1">
 		<c:if test="${seatInfo.state[(row)*seatInfo.totalCol-1+col]==0}">
 			<label class="btn btn" style="margin:1px 1px; height:35; width:35; border:0;">
@@ -56,6 +56,5 @@
 			</label>
 		</c:if>
 	</c:forEach>
-	<!-- </div> -->
 	<br>
 </c:forEach>

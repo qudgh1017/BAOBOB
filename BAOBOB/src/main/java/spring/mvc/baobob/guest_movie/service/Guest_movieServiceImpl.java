@@ -740,44 +740,11 @@ public class Guest_movieServiceImpl implements Guest_movieService{
 //		model.addAttribute("seat",seat);
 //		
 	}
-
-	//nextDealButton에 담을 seatInfos
-	@Override
-	public void seatInfos(HttpServletRequest req, Model model) {
-		int adultCnt = Integer.parseInt(req.getParameter("adultCnt"));
-		int teenagerCnt = Integer.parseInt(req.getParameter("teenagerCnt"));
-		String[] str_seat_index_arr = req.getParameterValues("seat_index_arr");
-		int size = str_seat_index_arr.length;
-		//한개 좌석의 정보
-		Theater_seatVO seat = new Theater_seatVO();
-		//선택된 여러개의 좌석 정보
-		ArrayList<Theater_seatVO> seats = new ArrayList<Theater_seatVO>();
-				
-		int[] seat_index_arr = new int[size];
-		
-		for(int i=0; i<size; i++) {
-			seat_index_arr[i] = Integer.parseInt(str_seat_index_arr[i]);
-			
-			if(seat_index_arr[i]!=-1) {
-				//한개 좌석의 정보 바구니에 담기
-				seat = gmdao.seatInfo(seat_index_arr[i]);
-				//좌석의 정보들 ArrayList에 담기
-				seats.add(seat);
-			}
-		}
-		
-		int theater_schedule_index = seat.getTheater_schedule_index();
-		
-		model.addAttribute("seats", seats);
-		model.addAttribute("adultCnt", adultCnt);
-		model.addAttribute("teenagerCnt", teenagerCnt);
-		model.addAttribute("theater_schedule_index", theater_schedule_index);
-		
-	}
+	
 	
 	//결제창으로 넘어가는 부분
 	@Override
-	public void seatInfos2(HttpServletRequest req, Model model) {
+	public void seatInfos(HttpServletRequest req, Model model) {
 		int adultCnt = Integer.parseInt(req.getParameter("adultCnt"));
 		int teenagerCnt = Integer.parseInt(req.getParameter("teenagerCnt"));
 		String str_seat_index_info = req.getParameter("seat_index_arr");

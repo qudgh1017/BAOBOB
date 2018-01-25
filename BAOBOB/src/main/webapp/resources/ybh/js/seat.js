@@ -118,8 +118,6 @@ function CountChecked(field) {
     }else{// 작거나 같은 경우
     	
 //    	alert("startAjax2 start");
-//    	// 좌석 뿌리기
-//    	ajaxSeats();
     	if (document.getElementById(fv).style.backgroundColor!="black"){ //좌석 체크 했을때
     		
 //    		alert("체크했엉");
@@ -148,7 +146,7 @@ function CountChecked(field) {
         	for(var x = 0; x<j; x++){
         		if(seat_checked_arr[x]==field.value){
 //        			delete seat_checked_arr[x]; // 값 삭제하겠다.
-        			seat_checked_arr[x]=-1;
+        			seat_checked_arr[x]=-1; //체크 취소하는 경우에 -1을 넣어줌 
 //        			alert("삭제해쪙");
         		}
         	}
