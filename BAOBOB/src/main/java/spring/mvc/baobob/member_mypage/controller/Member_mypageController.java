@@ -360,6 +360,16 @@ public class Member_mypageController {
 		return "guest/member_myPage/memMovie/member_myPage_WishList";
 	}
 	
+	//위시리스트 추가
+	@RequestMapping("addWishList")
+	public String addWishList(HttpServletRequest req, Model model) {
+		
+		service.addWishList(req, model);
+		
+		return "guest/member_myPage/memMovie/member_myPage_addWishListPro";
+	}
+
+	
 	//무비로그 위시리스트 삭제
 	@RequestMapping("delWishList")
 	public String delWishList(HttpServletRequest req, Model model) {

@@ -25,6 +25,7 @@ import spring.mvc.baobob.vo.MovieHistoryVO;
 import spring.mvc.baobob.vo.MovieVO;
 import spring.mvc.baobob.vo.ParkingHistory;
 import spring.mvc.baobob.vo.RestaurantLogVO;
+import spring.mvc.baobob.vo.WishListVO;
 
 @Service
 public class Member_mypageServiceImpl implements Member_mypageService{
@@ -797,6 +798,23 @@ public class Member_mypageServiceImpl implements Member_mypageService{
 		
 	}
 	
+/*----------------------------------------------------------------------------*/
+	
+	//위시리스트 추가
+	public void addWishList(HttpServletRequest req, Model model) {
+		WishListVO dto = new WishListVO();
+		
+		//2.화면으로부터 입력받은 내용을 작은바구니(DTO)에 담는다.
+		dto.setMember_id((String)req.getSession().getAttribute("memId"));
+		dto.setMovie_index(Integer.parseInt(req.getParameter("movie_index")));
+		
+		int cnt = dao.addWishList(dto);
+		
+		//6.jsp에 넘길 값을 셋팅한다.(setAttribute)
+		model.addAttribute("cnt", cnt);
+		
+	}
+
 /*----------------------------------------------------------------------------*/
 		
 	//무비로그-위시리스트 삭제처리

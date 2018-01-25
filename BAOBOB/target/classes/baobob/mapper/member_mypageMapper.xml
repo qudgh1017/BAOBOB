@@ -256,6 +256,13 @@
 		DELETE FROM board_tbl WHERE board_index = #{num}
 	</delete>
 	
+	<!-- 위시리스트 추가 -->
+	<insert id="addWishList" parameterType="spring.mvc.baobob.vo.WishListVO">
+		INSERT INTO member_wishList_tbl (member_id, movie_index) 
+		VALUES (#{member_id}, #{movie_index})
+	</insert>
+	
+	
 	<!-- 위시리스트 삭제 처리 -->
 	<delete id="delMovieWishList" parameterType="int">
 		DELETE FROM member_wishList WHERE movie_index = #{num}

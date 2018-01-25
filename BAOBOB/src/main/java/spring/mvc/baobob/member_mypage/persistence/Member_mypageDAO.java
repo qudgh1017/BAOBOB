@@ -10,6 +10,7 @@ import spring.mvc.baobob.vo.MovieHistoryVO;
 import spring.mvc.baobob.vo.MovieVO;
 import spring.mvc.baobob.vo.ParkingHistory;
 import spring.mvc.baobob.vo.RestaurantLogVO;
+import spring.mvc.baobob.vo.WishListVO;
 
 public interface Member_mypageDAO {
 	
@@ -97,6 +98,9 @@ public interface Member_mypageDAO {
 	//무비다이어리 삭제
 	public int deleteMovieDiary(int num);
 	
+	//위시리스트 추가
+	public int addWishList(WishListVO dto);
+
 	//위시리스트 삭제
 	public int delMovieWishList(int num);
 	
