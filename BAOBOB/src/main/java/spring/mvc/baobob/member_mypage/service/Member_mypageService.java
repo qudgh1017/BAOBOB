@@ -46,9 +46,6 @@ public interface Member_mypageService {
 	//무비로그-위시리스트
 	public void movieWishList(HttpServletRequest req, Model model);
 	
-	//무비로그-위시리스트
-	public void movieClear(HttpServletRequest req, Model model);
-	
 	//무비로그-무비다이어리
 	public void movieDiaryList(HttpServletRequest req, Model model);
 	
