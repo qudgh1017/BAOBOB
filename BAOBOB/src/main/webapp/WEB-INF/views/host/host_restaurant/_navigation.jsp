@@ -23,7 +23,7 @@
 			BAOBOB - 식당 관리
 		</c:if>
 		<c:if test="${sessionScope.memStep == 51 || sessionScope.memStep == 61}">
-			한식당 관리
+			바오밥 관리
 		</c:if>
 		<c:if test="${sessionScope.memStep == 52 || sessionScope.memStep == 62}">
 			도키도키 (ときどき) 관리

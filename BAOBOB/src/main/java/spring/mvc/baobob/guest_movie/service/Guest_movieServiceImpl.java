@@ -1,7 +1,6 @@
 package spring.mvc.baobob.guest_movie.service;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -12,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
 import spring.mvc.baobob.guest_movie.persistence.Guest_movieDAO;
+import spring.mvc.baobob.vo.Member;
 import spring.mvc.baobob.vo.MovieResViewVO;
 import spring.mvc.baobob.vo.MovieVO;
 import spring.mvc.baobob.vo.ReviewVO;
@@ -400,18 +400,10 @@ public class Guest_movieServiceImpl implements Guest_movieService{
 		start = ((currentPage-1) * pageSize) + 1; // 현재 페이지에  DB에서 뽑아올 시작번호
 		
 		end = start + pageSize - 1;// 현재 페이지에 DB에서 뽑아올 끝번호
-		//end = currentPage * pageSize;
-		
-		/*System.out.println("start: " + start);
-		System.out.println("end: " + end);*/
 		
 		if(end > cnt) end = cnt;
 		
 		number = cnt - (currentPage - 1) * pageSize; // 출력할 글번호(삭제해도 글번호 나열되게).. 최신글 (큰페이지)가 1p 
-		/*System.out.println("number: " + number);
-		System.out.println("cnt: " + cnt);
-		System.out.println("currentPage: " + currentPage);
-		System.out.println("pageSize: " + pageSize);*/
 
 		if(cnt > 0) {
 			//게시글 목록 조회
@@ -711,6 +703,18 @@ public class Guest_movieServiceImpl implements Guest_movieService{
 		model.addAttribute("seatInfo", seatInfo);
 		
 	}
+	
+	//한 좌석 정보
+	@Override
+	public void seatInfo(HttpServletRequest req, Model model) {
+		int seat_index = Integer.parseInt(req.getParameter("seat_index"));
+		Theater_seatVO seat = new Theater_seatVO();
+		
+		seat = gmdao.seatInfo(seat_index);
+		
+		model.addAttribute("seat",seat);
+		
+	}
 
 	//nextDealButton에 담을 seatInfos
 	@Override
@@ -744,12 +748,14 @@ public class Guest_movieServiceImpl implements Guest_movieService{
 		
 	}
 	
+	//결제창으로 넘어가는 부분
 	@Override
 	public void seatInfos2(HttpServletRequest req, Model model) {
 		int adultCnt = Integer.parseInt(req.getParameter("adultCnt"));
 		int teenagerCnt = Integer.parseInt(req.getParameter("teenagerCnt"));
 		String str_seat_index_info = req.getParameter("seat_index_arr");
 		String[] str_seat_index_arr = str_seat_index_info.split(",");
+		String member_id = (String) req.getSession().getAttribute("memId");
 		
 		int size = str_seat_index_arr.length;
 		//한개 좌석의 정보
@@ -767,15 +773,144 @@ public class Guest_movieServiceImpl implements Guest_movieService{
 			//좌석의 정보들 ArrayList에 담기
 			seats.add(seat);
 		}
-		
 		int theater_schedule_index = seat.getTheater_schedule_index();
 		
+		//id관련된 멤버 정보 가져오기(포인트 등)
+		Member member = new Member();
+		member = gmdao.getMemberInfo(member_id);
+		
+		//스케줄 정보 가져오기
+		Theater_scheduleVO schedule = gmdao.getSchedule(theater_schedule_index);
+		int movie_index = schedule.getMovie_index();
+		
+		//영화 정보 가져오기
+		MovieVO movie = gmdao.getMovie(movie_index);
+		
+		model.addAttribute("str_seat_index_info", str_seat_index_info);//seat_index string형으로 합쳐있는것
+		model.addAttribute("schedule", schedule);
+		model.addAttribute("movie", movie);
+		model.addAttribute("member", member);
 		model.addAttribute("seats", seats);
 		model.addAttribute("adultCnt", adultCnt);
 		model.addAttribute("teenagerCnt", teenagerCnt);
 		model.addAttribute("theater_schedule_index", theater_schedule_index);
 		
 	}
+
+	//예매최종처리
+	@Override
+	public void reservationPro(HttpServletRequest req, Model model) {
+		
+		String str_seat_index_info = req.getParameter("str_seat_index_info");
+		int theater_schedule_index = Integer.parseInt(req.getParameter("theater_schedule_index"));
+		int totalCnt = Integer.parseInt(req.getParameter("totalCnt"));
+		int movie_index = Integer.parseInt(req.getParameter("movie_index"));
+		int movie_history_price = Integer.parseInt(req.getParameter("movie_history_price"));
+		int member_point = Integer.parseInt(req.getParameter("member_point"));
+		String member_id = (String) req.getSession().getAttribute("memId");
+		
+		System.out.println(str_seat_index_info + theater_schedule_index + totalCnt + movie_index + movie_history_price + member_point);
+		
+		String[] str_seat_index_arr = str_seat_index_info.split(",");
+		
+		int size = str_seat_index_arr.length;
+		int[] seat_index_arr = new int[size];
+		
+		int cnt = 0; //insert용 cnt
+		int updateSeatCnt = 0; //for문 돌리는 seat_state
+		int updateCnt = 0; // update용 cnt
+		int updatePoint = 0; // member_point 썼을때
+		int updateStepCnt = 0; //등업용
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("theater_schedule_index", theater_schedule_index);
+		map.put("totalCnt", totalCnt);
+		map.put("movie_index", movie_index);
+		map.put("movie_history_price", movie_history_price);
+		map.put("member_point", member_point);
+		map.put("member_id", member_id);
+		map.put("movie_history_price_10perc", movie_history_price*0.1);
+		
+		//1. Insert history_tbl
+		if(gmdao.insertHistory(member_id)>=1) {
+			//2. Insert movie_history_tbl
+			if(gmdao.insertMovieHistory(map)>=1) {
+				 cnt = 1;
+			}else {
+				cnt = 0;
+			}
+		}else {
+			cnt = 0;
+		}
+		
+		//3. Update theater_seat_tbl 해당 seat_index의 seat_state=6 변경(좌석 상태 예약석으로 변경)
+		for(int i=0; i<size; i++) {
+			seat_index_arr[i] = Integer.parseInt(str_seat_index_arr[i]);
+			updateSeatCnt = gmdao.updateSeatState(seat_index_arr[i]);
+			if(updateSeatCnt == 0) { //0일때만 보내줌
+				model.addAttribute("updateSeatCnt",updateSeatCnt);
+			}
+		}
+		
+		//4. Update theater_schedule_tbl schedule_empty_seat= -totalCnt해주기(빈자리수 감소)
+		if(gmdao.updateEmptySeat(map)>=1) {
+			
+			//5. Update movie_tbl  movie_count + totalCnt해주기(영화관람객수 증가)
+			if(gmdao.updateMovieCount(map)>=1) {
+				
+				
+				//6. Update member_tbl member_point, member_cumpoint (결제시 증가)
+				if(gmdao.updateIncreasePoint(map)>=1) {
+					updateCnt = 1;
+				}else {
+					updateCnt = 0;
+				}
+			}else {
+				updateCnt = 0;
+			}
+		}else {
+			updateCnt = 0;
+		}
+		
+		System.out.println("member_point----->"+member_point);
+		//7. Update member_tbl member_point (포인트 사용했을시 감소)
+		if(member_point>0) { //포인트 썼을때
+			if(gmdao.updateDecreasePoint(map)>=1) {
+				updatePoint = 1;
+			}else {
+				updatePoint = 0;
+			}
+		}else { //포인트 안 썼을때
+			updatePoint = 1; //6번까지 성공했으므로 성공
+		}
+		
+		//8. SELECT member_tble에서 member_cumPoint확인
+		int member_cumPoint = gmdao.getMemberCumPoint(member_id);
+		System.out.println("member_cumPoint------>"+member_cumPoint);
+		int member_step = 9;
+		//9. UPDATE member_step 8번 확인해서 if문으로 체크해서 등업!!
+		if(member_cumPoint<=15000) {
+			member_step = 9;
+		}else if(member_cumPoint<=30000){
+			member_step = 10;
+		}else if(member_cumPoint<=45000) {
+			member_step = 11;
+		}else {
+			member_step = 12;
+		}
+		map.put("member_step", member_step);
+		
+		updateStepCnt = gmdao.updateMemberStep(map);
+		
+		model.addAttribute("cnt",cnt);
+		model.addAttribute("updateCnt",updateCnt);
+		model.addAttribute("updatePoint", updatePoint);
+		model.addAttribute("updateStepCnt",updateStepCnt);
+		
+		
+	}
+
+	
 
 	
 	

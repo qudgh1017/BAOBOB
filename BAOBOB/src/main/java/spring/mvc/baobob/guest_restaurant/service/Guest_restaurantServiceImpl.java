@@ -290,8 +290,6 @@ public class Guest_restaurantServiceImpl implements Guest_restaurantService{
 	
 	
 	
-	
-	
 	//==========================================================================
 	//============================== 4. 레스토랑 리뷰 ==============================
 	//==========================================================================
@@ -377,10 +375,11 @@ public class Guest_restaurantServiceImpl implements Guest_restaurantService{
 		
 		if (cnt > 0) {
 			model.addAttribute("startPage", startPage); // 시작페이지
-			model.addAttribute("endPage", endPage); // 마지막페이지
+			model.addAttribute("endPage", endPage); 	// 마지막페이지
 			model.addAttribute("pageBlock", pageBlock); // 출력할 페이지 개수
 			model.addAttribute("pageCount", pageCount); // 페이지 갯수
 			model.addAttribute("currentPage", currentPage);// 현재 페이지
+		
 		}
 	}
 	
@@ -388,7 +387,7 @@ public class Guest_restaurantServiceImpl implements Guest_restaurantService{
 	@Override
 	public void reviewWrite(HttpServletRequest req, Model model) {
 		int restaurant_index = Integer.parseInt(req.getParameter("restaurant_index"));
-		String review_grade = req.getParameter("review_grade");
+		String review_grade = req.getParameter("star");
 		String review_content = req.getParameter("review_content");
 		String member_id = (String) req.getSession().getAttribute("memId");
 		//String member_id = "member_id 1";
@@ -418,7 +417,6 @@ public class Guest_restaurantServiceImpl implements Guest_restaurantService{
 		System.out.println("restaurant_index : "+ restaurant_index);
 		System.out.println("insertCnt : "+ insertCnt);
 		System.out.println("insertCnt2 : "+ insertCnt2);
-
 	}
 
 	

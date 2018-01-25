@@ -13,6 +13,42 @@
 				
 				<h4 class="text-capitalize" style="text-align:left">
 					고객님은<c:choose>
+							<c:when test="${vo.member_step eq 1}">
+								종합 관리자
+							</c:when>
+							<c:when test="${vo.member_step eq 2}">
+								BAOBOX 관리자
+							</c:when>
+							<c:when test="${vo.member_step eq 3}">
+								BAOBOX 직원
+							</c:when>
+							<c:when test="${vo.member_step eq 4}">
+								YUMMY 총관리자
+							</c:when>
+							<c:when test="${vo.member_step eq 51}">
+								바압 관리자
+							</c:when>
+							<c:when test="${vo.member_step eq 52}">
+								Dokidoki 관리자
+							</c:when>
+							<c:when test="${vo.member_step eq 53}">
+								BOUTBACK 관리자
+							</c:when>
+							<c:when test="${vo.member_step eq 61}">
+								바압 직원
+							</c:when>
+							<c:when test="${vo.member_step eq 62}">
+								Dokidoki 직원
+							</c:when>
+							<c:when test="${vo.member_step eq 63}">
+								BOUTBACK 직원
+							</c:when>
+							<c:when test="${vo.member_step eq 7}">
+								주차장 관리자
+							</c:when>
+							<c:when test="${vo.member_step eq 8}">
+								비회원
+							</c:when>
 							<c:when test="${vo.member_step eq 9}">
 								일반회원
 							</c:when>

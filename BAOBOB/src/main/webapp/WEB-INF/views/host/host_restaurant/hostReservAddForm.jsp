@@ -45,12 +45,17 @@ $(function() {
 								<table class="table table-bordered" id="dataTable">
 									<thead>
 										<tr>
+											<th style="text-align: center;"><i class="fa fa-fw fa-user-circle"></i>인원 수</th>
 											<th style="text-align: center;"><i class="fa fa-fw fa-table"></i>날짜 선택</th>
 											<th style="text-align: center;"><i class="fa fa-fw fa-clock-o"></i>시간 선택</th>
 										</tr>
 									</thead>
 									<tbody>
 										<tr>
+											<td style="text-align: center;">
+												<input class="form-control" type="text" style="display: inline-block; width: 165px; text-align: center;" name="count" id="count" 
+													placeholder="인원 수" value="${count}" />
+											</td>
 											<td style="text-align: center;">
 												<input class="form-control" type="text" style="display: inline-block; width: 165px; text-align: center;" name="datepicker" id="datepicker" 
 													class="datepicker" placeholder="날짜 선택" value="${date}" />
@@ -61,7 +66,7 @@ $(function() {
 											</td>
 										</tr>
 										<tr>
-											<td colspan="2" style="text-align: center;">
+											<td colspan="3" style="text-align: center;">
 												<input style="background-color: #343a40; color: white; border: 1px solid black; width: 200px; height: 40px;" 
 														type="button" value="확인" onclick="checkPosRestaurant(${sessionScope.memStep})" />
 											</td>
@@ -69,7 +74,7 @@ $(function() {
 									</tbody>
 									<c:if test="${confirm==1}">
 										<tr>
-											<td colspan="2" style="text-align: center;">
+											<td colspan="3" style="text-align: center;">
 												<div class="container-fluid row">
 													<div class="col-lg-9">
 														<div class="card mb-3" align="center">
@@ -81,9 +86,9 @@ $(function() {
 													</div>
 													<div class="col-lg-3">
 														<div class="card mb-3">
-															<div class="card-header"><b>예약</b></div>
+															<div class="card-header"><b>예약 정보</b></div>
 															<div class="card-body">
-																<input class="form-control" id="widthX" type="number" style="display: none;" min="1" max="100" value="${col}" onload="spaceDivChange();" onchange="spaceDivChange();" required><br>
+																<input class="form-control" id="widthX" type="number" style="display: none;" min="1" max="100" value="${col}" onload="spaceDivChange();" onchange="spaceDivChange();" required>
 																<input class="form-control" id="heightY" type="number" style="display: none;" min="1" max="100" value="${row}" onload="spaceDivChange();" onchange="spaceDivChange();" required>
 																
 																<button class="m_btn" onclick="spaceType('3')"><img class="p_img" src="${restaurant_images}table_use.jpg"></button>

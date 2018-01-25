@@ -6,33 +6,33 @@
 <mapper namespace="spring.mvc.baobob.guest_restaurant.persistence.Guest_restaurantDAO">
 	<!--===== 2. 레스토랑별 메뉴 갯수 =====  -->
 	<select id="getArticleCnt_menu" resultType="int">
-	SELECT COUNT(*) FROM restaurant_menu_tbl WHERE restaurant_index=#{restaurant_index}
+		SELECT COUNT(*) FROM restaurant_menu_tbl WHERE restaurant_index=#{restaurant_index}
 	</select>	
 	
 	<!--===== 2. 메뉴 정보 =====  -->
 	<select id="getArticle_menu" resultType="spring.mvc.baobob.vo.MenuVO">
-	SELECT restaurant_index,
-	  	   restaurant_tel,
-		   restaurant_name,
-		   restaurant_menu_index,
-		   restaurant_menu_name,
-		   restaurant_menu_img,
-		   restaurant_menu_content,
-		   restaurant_menu_price 
-	  FROM (SELECT  rt.restaurant_index restaurant_index,
-	  				rt.restaurant_tel restaurant_tel,
-	  				rt.restaurant_name restaurant_name,
-	 			  	rmt.restaurant_menu_index restaurant_menu_index,
-	 			  	restaurant_menu_name,
-	 			  	restaurant_menu_img,
-	 			  	restaurant_menu_content,
-	 			  	restaurant_menu_price
-	 			  	 		
-	  		  FROM restaurant_menu_tbl rmt
-	  		  JOIN restaurant_tbl rt
-	  		    ON rt.restaurant_index = rmt.restaurant_index
-	  		 ORDER By restaurant_menu_index) 
-	 WHERE restaurant_index=#{restaurant_index}
+		SELECT restaurant_index,
+		  	   restaurant_tel,
+			   restaurant_name,
+			   restaurant_menu_index,
+			   restaurant_menu_name,
+			   restaurant_menu_img,
+			   restaurant_menu_content,
+			   restaurant_menu_price 
+		  FROM (SELECT  rt.restaurant_index restaurant_index,
+		  				rt.restaurant_tel restaurant_tel,
+		  				rt.restaurant_name restaurant_name,
+		 			  	rmt.restaurant_menu_index restaurant_menu_index,
+		 			  	restaurant_menu_name,
+		 			  	restaurant_menu_img,
+		 			  	restaurant_menu_content,
+		 			  	restaurant_menu_price
+		 			  	 		
+		  		  FROM restaurant_menu_tbl rmt
+		  		  JOIN restaurant_tbl rt
+		  		    ON rt.restaurant_index = rmt.restaurant_index
+		  		 ORDER By restaurant_menu_index) 
+		 WHERE restaurant_index=#{restaurant_index}
 	</select>
 
 
@@ -74,8 +74,8 @@
 	
 	<!--추가 : 식당 총 관리자 - 매장 내 테이블 수정 처리 전 테이블 초기화 -->
 	<delete id="resetTable2" parameterType="spring.mvc.baobob.vo.Restaurant_scheduleVO">
-	DELETE FROM restaurant_table_tbl
-	WHERE restaurant_index = #{restaurant_index} AND restaurant_schedule_index=#{restaurant_schedule_index}
+		DELETE FROM restaurant_table_tbl
+		WHERE restaurant_index = #{restaurant_index} AND restaurant_schedule_index=#{restaurant_schedule_index}
 	</delete>	
 	
 	<!--추가 : 식당[1] 날짜에 해당하는 테이블 예약 -->
@@ -116,41 +116,45 @@
 	<!-- ========================================================================== -->
 	<!-- ===== 4-1. 리뷰 개수 ===== -->
 	<select id="getReviewCnt" resultType="int">
-	SELECT COUNT(*) FROM  restaurant_review_tbl WHERE restaurant_index=#{restaurant_index}
+		SELECT COUNT(*) FROM  restaurant_review_tbl WHERE restaurant_index=#{restaurant_index}
 	</select>
 	
 	<!-- ===== 4-2. 리뷰 리스트 ===== -->
 	<select id="getReviewList" resultType="spring.mvc.baobob.vo.ReviewVO">
-	SELECT  restaurant_index,
-            review_index,
-            review_grade,
-            review_content,   
-            member_id,
-            review_reg_date  
-	  FROM (SELECT  rrt.restaurant_index restaurant_index,
-                    rt.review_index review_index,
-                    review_grade,
-                    review_content,   
-                    member_id,
-                    review_reg_date 
-              FROM  review_tbl rt
-              JOIN  restaurant_review_tbl rrt
-                ON  rt.review_index=rrt.review_index
-            ORDER BY review_reg_date  desc
-            )
-	 WHERE restaurant_index=#{restaurant_index}
+	<![CDATA[
+		SELECT  restaurant_index,
+	            review_index,
+	            review_grade,
+	            review_content,   
+	            member_id,
+	            review_reg_date  
+		  FROM (SELECT  rrt.restaurant_index restaurant_index,
+	                    rt.review_index review_index,
+	                    review_grade,
+	                    review_content,   
+	                    member_id,
+	                    review_reg_date, 
+	                    rownum rNum
+	              FROM  review_tbl rt
+	              JOIN  restaurant_review_tbl rrt
+	                ON  rt.review_index=rrt.review_index
+           		 WHERE  restaurant_index=#{restaurant_index}
+	            ORDER BY review_reg_date  desc
+	            )
+ 		 WHERE rNum>=#{start} AND rNum<=#{end}
+ 	]]>
 	</select>
 	
 	<!--===== 4-2-1. 리뷰 추가(Review_tbl) =====-->
 	<insert id="insertReviewPro" parameterType="spring.mvc.baobob.vo.ReviewVO">
-	INSERT INTO review_tbl(review_index, review_grade, review_content, member_id, review_state, review_reg_date ) 
-	VALUES (review_tbl_SEQ.nextval, #{review_grade}, #{review_content}, #{member_id}, 2, sysdate)
+		INSERT INTO review_tbl(review_index, review_grade, review_content, member_id, review_state, review_reg_date ) 
+		VALUES (review_tbl_SEQ.nextval, #{review_grade}, #{review_content}, #{member_id}, 2, sysdate)
 	</insert><!-- review_state : 2 = 레스토랑  -->
 	
 	<!--===== 4-2-2. 리뷰 추가(Restaurant_review_tbl) =====-->
 	<insert id="insertRestaurant_review_Pro" parameterType="java.util.Map">
-	INSERT INTO restaurant_review_tbl(review_index, restaurant_index) 
-	VALUES((SELECT MAX(review_index) FROM review_tbl), #{restaurant_index})
+		INSERT INTO restaurant_review_tbl(review_index, restaurant_index) 
+		VALUES((SELECT MAX(review_index) FROM review_tbl), #{restaurant_index})
 	<!-- INSERT INTO restaurant_review_tbl(review_index, restaurant_index) 
 	VALUES(#{review_index}, (SELECT restaurant_index
 							    FROM restaurant_review_tbl rrt
@@ -161,25 +165,25 @@
 	
 	<!--===== 4-3-2. 리뷰 수정 (값 불러오기) =====-->
 	<select id="getReviewInfo" resultType="spring.mvc.baobob.vo.ReviewVO">
-	SELECT * FROM review_tbl WHERE member_id=#{member_id} and review_index=#{review_index}
+		SELECT * FROM review_tbl WHERE member_id=#{member_id} and review_index=#{review_index}
 	</select>
 	
 	<!--===== 4-3-3. 리뷰 수정 (값 불러오기) =====-->
 	<update id="updateReviewPro" parameterType="spring.mvc.baobob.vo.ReviewVO">
-	UPDATE review_tbl SET review_grade=#{review_grade}, review_content=#{review_content}
-	WHERE member_id=#{member_id} AND review_index=#{review_index}
+		UPDATE review_tbl SET review_grade=#{review_grade}, review_content=#{review_content}
+		WHERE member_id=#{member_id} AND review_index=#{review_index}
 	</update>
 	
 	<!--===== 4-1. 레스토랑 리뷰 삭제 ===== -->
 	<delete id="delete_RestaurantReviewPro" parameterType="java.util.Map">
-	DELETE FROM restaurant_review_tbl
-	WHERE review_index=#{review_index}
+		DELETE FROM restaurant_review_tbl
+		WHERE review_index=#{review_index}
 	</delete>
 	
 	<!--===== 4-4-2. 리뷰 삭제 ===== -->
 	<delete id="delete_ReviewPro" parameterType="java.util.Map">
-	DELETE FROM review_tbl
-	WHERE member_id=#{member_id} AND review_index=#{review_index}
+		DELETE FROM review_tbl
+		WHERE member_id=#{member_id} AND review_index=#{review_index}
 	</delete>
 	
 	<!-- ========================================================================== -->
@@ -188,11 +192,11 @@
 	
 	<!--===== ID 체크 ===== -->
 	<select id="idCheck" resultType="int">
-	SELECT COUNT(*) FROM review_tbl WHERE member_id=#{member_id}
+		SELECT COUNT(*) FROM review_tbl WHERE member_id=#{member_id}
 	</select>
 	
 	<!--===== Password 체크 =====-->
 	<select id="pwdCheck" resultType="int">
-	SELECT COUNT(*) from member_tbl WHERE member_id=#{member_id} AND member_pwd=#{member_pwd}
+		SELECT COUNT(*) from member_tbl WHERE member_id=#{member_id} AND member_pwd=#{member_pwd}
 	</select>
 </mapper>

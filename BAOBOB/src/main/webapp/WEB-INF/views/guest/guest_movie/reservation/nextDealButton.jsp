@@ -10,7 +10,7 @@
 <script type="text/javascript" src="${projectRes}ybh/js/seat.js"></script>
 
 
-<!-- 예매선택된 스케줄정보 -->
+<!-- 예매선택된 인원/좌석 정보 -->
 <div style="font-size:13px; font-weight:bold;">
 	<br>
 	<a onclick="movieTicket3('${adultCnt}', '${teenagerCnt}', '${theater_schedule_index}')">
