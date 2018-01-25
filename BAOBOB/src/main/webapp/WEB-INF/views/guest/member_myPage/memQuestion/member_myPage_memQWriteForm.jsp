@@ -28,10 +28,10 @@
 			<form action="memQWritePro" method="post" name="writeform" onsubmit="return writeCheck();">
 				<!-- contentForm에서 get방식으로 저장한 num과 ref삼총사를  hidden으로 가지고 있는다. -->
 				<!-- 현재페이지에서는 쓸모없지만 submit으로 넘어가는 writePro에서 쓰려고 넘기고 넘기는 과정이다. -->	
-				<%-- <input type="hidden" name="num" value="${num}">
+				<input type="hidden" name="num" value="${num}">
 				<input type="hidden" name="ref" value="${ref}">
 				<input type="hidden" name="ref_step" value="${ref_step}">
-				<input type="hidden" name="ref_level" value="${ref_level}"> --%>
+				<input type="hidden" name="ref_level" value="${ref_level}">
 				
 				<table id="mainBody" style="width:800px; margin:auto;">
 					<caption>Write Content</caption>

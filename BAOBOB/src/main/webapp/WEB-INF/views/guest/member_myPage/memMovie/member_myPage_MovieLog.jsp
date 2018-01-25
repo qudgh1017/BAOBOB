@@ -91,7 +91,7 @@ $(document).ready(function() {
 					<caption style="margin-bottom:0px!important">무비 로그</caption>
 					<thead>
 				    <tr>
-				    	<th>
+				    	<th style="border-bottom:none">
 				    		<input type="button" id="wishList" class="button" value="위시리스트">
 				    		<input type="button" id="movieDiaryWriteForm" class="button" value="무비다이어리">
 				    	</th>
