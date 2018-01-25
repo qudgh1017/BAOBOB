@@ -67,16 +67,16 @@
 					<br>
 					<div style="width:50px; display:inline-block;">일반</div>
 					<c:forEach var="num" begin="0" end="8" step="1">
-						<label onclick="adultChk('${schedule.theater_index}', '${schedule.movie_index}', '${schedule.theater_schedule_index}','${num}')" class="btn" style="height:30px; width:30px; border:1px solid black; font-weight:bold">
-						    <input type="radio" style="width:10px; height:10px;" name="adult" autocomplete="off" value="${num}">
+						<label id="adult${num}" onclick="adultChk('${schedule.theater_index}', '${schedule.movie_index}', '${schedule.theater_schedule_index}','${num}')" class="btn" style="height:30px; width:30px; border:1px solid black; font-weight:bold">
+<%-- 						    <input id="adult${num}" type="radio" style="width:0px; height:0px;" name="adult" autocomplete="off" value="${num}"> --%>
 							${num}
 					 	</label>
 				 	</c:forEach>
 				 	<br>
 				 	<div style="width:50px; display:inline-block;">청소년</div>
 				 	<c:forEach var="num" begin="0" end="8" step="1">
-						<label onclick="teenagerChk('${schedule.theater_index}', '${schedule.movie_index}', '${schedule.theater_schedule_index}', '${num}')" class="btn" style="height:30px; width:30px; border:1px solid black; font-weight:bold">
-						    <input type="radio" style="width:10px; height:10px;" name="teenager" autocomplete="off" value="${num}">
+						<label id="teenager${num}" onclick="teenagerChk('${schedule.theater_index}', '${schedule.movie_index}', '${schedule.theater_schedule_index}', '${num}')" class="btn" style="height:30px; width:30px; border:1px solid black; font-weight:bold">
+<%-- 						    <input id="teenager${num}" type="radio" style="width:0px; height:0px;" name="teenager" autocomplete="off" value="${num}"> --%>
 							${num}
 					 	</label>
 				 	</c:forEach>

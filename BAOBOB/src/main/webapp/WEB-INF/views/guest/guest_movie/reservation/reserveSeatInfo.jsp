@@ -22,37 +22,37 @@
 	<c:forEach var="col" begin="1" end="${seatInfo.totalCol}" step="1">
 		<c:if test="${seatInfo.state[(row)*seatInfo.totalCol-1+col]==0}">
 			<label class="btn btn" style="margin:1px 1px; height:35; width:35; border:0;">
-			   <input type="checkbox" name="seat_index" style="width:10; height:10;" disabled autocomplete="off">
+			   <input id="${seatInfo.seat_index[(row)*seatInfo.totalCol-1+col]}" type="checkbox" name="seat_index" style="width:0; height:0;" disabled autocomplete="off">
 			</label>
 		</c:if>
 		<c:if test="${seatInfo.state[(row)*seatInfo.totalCol-1+col]==1}">
 			<label class="btn btn" style="margin:1px 1px; height:35; width:35; background-image: url('${projectRes}/images/phc/icon/theater_in.png');">
-			   <input type="checkbox" name="seat_index" style="width:10; height:10;" disabled autocomplete="off">
+			   <input id="${seatInfo.seat_index[(row)*seatInfo.totalCol-1+col]}" type="checkbox" name="seat_index" style="width:0; height:0;" disabled autocomplete="off">
 			</label>
 		</c:if>
 		<c:if test="${seatInfo.state[(row)*seatInfo.totalCol-1+col]==2}">
-			<label class="btn btn" style="margin:1px 1px; height:35; width:35; background-image: url('${projectRes}/images/phc/icon/theater_out.png');">
-			   <input type="checkbox" name="seat_index" style="width:10; height:10;" disabled autocomplete="off">
+			<label  class="btn btn" style="margin:1px 1px; height:35; width:35; background-image: url('${projectRes}/images/phc/icon/theater_out.png');">
+			   <input id="${seatInfo.seat_index[(row)*seatInfo.totalCol-1+col]}" type="checkbox" name="seat_index" style="width:0; height:0;" disabled autocomplete="off">
 			</label>
 		</c:if>
 		<c:if test="${seatInfo.state[(row)*seatInfo.totalCol-1+col]==3}">
-			<label class="btn btn" style="margin:1px 1px; height:35; width:35; border:2px solid green;">
-			   <input type="checkbox" style="width:10; height:10;" onclick="CountChecked(this)" name="seat_index" autocomplete="off" value="${seatInfo.seat_index[(row)*seatInfo.totalCol-1+col]}">${col}
+			<label id="${seatInfo.seat_index[(row)*seatInfo.totalCol-1+col]}" class="btn btn" style="margin:1px 1px; height:35; width:35; border:2px solid green;">
+			   <button type="button" style="width:0; height:0;" onclick="CountChecked(this)" name="seat_index" autocomplete="off" value="${seatInfo.seat_index[(row)*seatInfo.totalCol-1+col]}">${col}</button>
 			</label>
 		</c:if>
 		<c:if test="${seatInfo.state[(row)*seatInfo.totalCol-1+col]==4}">
-			<label class="btn btn" style="margin:1px 1px; height:35; width:35; border:2px solid red;">
-				<input type="checkbox" style="width:10; height:10;" onclick="CountChecked(this)" name="seat_index" autocomplete="off" value="${seatInfo.seat_index[(row)*seatInfo.totalCol-1+col]}">${col}
+			<label id="${seatInfo.seat_index[(row)*seatInfo.totalCol-1+col]}" class="btn btn" style="margin:1px 1px; height:35; width:35; border:2px solid red;">
+				<button type="button" style="width:0; height:0;" onclick="CountChecked(this)" name="seat_index" autocomplete="off" value="${seatInfo.seat_index[(row)*seatInfo.totalCol-1+col]}">${col}</button>
 			</label>
 		</c:if>
 		<c:if test="${seatInfo.state[(row)*seatInfo.totalCol-1+col]==5}">
-			<label class="btn btn" style="margin:1px 1px; height:35; width:35; border:2px solid pink;">
-				<input type="checkbox" style="width:10; height:10;" onclick="CountChecked(this)" name="seat_index" autocomplete="off" value="${seatInfo.seat_index[(row)*seatInfo.totalCol-1+col]}">${col}
+			<label id="${seatInfo.seat_index[(row)*seatInfo.totalCol-1+col]}" class="btn btn" style="margin:1px 1px; height:35; width:35; border:2px solid pink;">
+				<input type="button" style="width:0; height:0;" onclick="CountChecked(this)" name="seat_index" autocomplete="off" value="${seatInfo.seat_index[(row)*seatInfo.totalCol-1+col]}">${col}</button>
 			</label>
 		</c:if>
 		<c:if test="${seatInfo.state[(row)*seatInfo.totalCol-1+col]==6}">
 			<label class="btn btn" style="margin:1px 1px; height:35; width:35; background-image: url('${projectRes}/images/phc/icon/theater_comp.png');">
- 				<input type="checkbox" style="width:10; height:10;" name="seat_index" disalbed autocomplete="off" value="${seatInfo.seat_index[(row)*seatInfo.totalCol-1+col]}">${col}
+ 				<input id="${seatInfo.seat_index[(row)*seatInfo.totalCol-1+col]}" type="checkbox" style="width:0; height:0;" name="seat_index" disalbed autocomplete="off" value="${seatInfo.seat_index[(row)*seatInfo.totalCol-1+col]}">${col}
 			</label>
 		</c:if>
 	</c:forEach>
