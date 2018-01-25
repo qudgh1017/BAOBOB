@@ -33,7 +33,7 @@
 			error : function() {
 				alert('error');
 			}
-		})
+		});
 	}
 </script>
 <!-- 실시간 예약 현황 조회 -->
