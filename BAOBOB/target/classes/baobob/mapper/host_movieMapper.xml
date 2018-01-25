@@ -358,5 +358,18 @@
     	 WHERE rn BETWEEN 1 AND #{countOfWords}
 	</select>
 	
+	<!-- 직원 고용하기 전 모든 회원 정보 가져오기 -->
+	<select id="getMemberList" resultType="spring.mvc.baobob.vo.Member">
+		SELECT *
+		  FROM member_tbl
+		 WHERE member_step IN(9,10,11,12)
+	</select>
+	
+	<!-- 직원고용하기 전 회원이 1명이라도 존재하는지 체크 -->
+	<select id="getMemberCnt" resultType="int">
+		SELECT count(*)
+		  FROM member_tbl
+		 WHERE member_step IN(9,10,11,12)
+	</select>
 	
 </mapper>

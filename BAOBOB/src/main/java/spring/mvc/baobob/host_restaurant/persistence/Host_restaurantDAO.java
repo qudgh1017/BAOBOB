@@ -155,11 +155,17 @@ public interface Host_restaurantDAO {
 	
 	// 메뉴별 매출
 	@MapKey("kind")
-	public List<Restaurant_ChartVO> getMenuCountChart();
+	public List<Restaurant_ChartVO> getMenuCountChart(int restaurant_index);
 
 	// 모든 메뉴 이름 조회
 	public String[] getMenuName(int restaurant_index);
 
 	// 성별 매출
-	public Object getSexChart();
+	public Object getSexChart(int restaurant_index);
+
+	// 메뉴 추가 전 메뉴 인덱스 계산
+	public Integer getMenuIndex(int restaurant_index);
+
+	// 성별 차트 내용
+	List<Member> getSexChartContent(int restaurant_index);
 }

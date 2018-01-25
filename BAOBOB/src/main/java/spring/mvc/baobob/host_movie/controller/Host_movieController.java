@@ -239,6 +239,8 @@ public class Host_movieController {
 	public String hostMovieEmpAddForm(HttpServletRequest req, Model model) {
 		System.out.println("hostMovieEmpAddForm");
 		
+		service.getMemberList(req, model);
+		
 		return "host/host_movie/hostMovieEmpAddForm";
 	}
 	
@@ -248,6 +250,7 @@ public class Host_movieController {
 		System.out.println("hostMovieEmpChkMemberId");
 		
 		service.hostMovieEmpChkMemberId(req, model);
+		service.getMemberList(req, model);
 		
 		return "host/host_movie/hostMovieEmpAddForm";
 	}

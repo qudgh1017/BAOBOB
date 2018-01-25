@@ -160,6 +160,24 @@ public class Host_restaurantDAOImpl implements Host_restaurantDAO {
 		return dao.getMenuList(restaurant_index);
 	}
 
+	// 메뉴 추가 전 메뉴 인덱스 계산
+	@Override
+	public Integer getMenuIndex(int restaurant_index) {
+		log.debug("dao.getMenuIndex()");
+
+		Host_restaurantDAO dao = sqlSession.getMapper(Host_restaurantDAO.class);
+
+		Integer restaurant_menu_index = dao.getMenuIndex(restaurant_index);
+		
+		if(restaurant_menu_index == null) {
+			restaurant_menu_index = 1;
+		} else {
+			restaurant_menu_index++;
+		}
+				
+		return restaurant_menu_index;
+	}
+
 	// 메뉴 추가 처리
 	@Override
 	public int addMenu(MenuVO dto) {
@@ -492,16 +510,6 @@ public class Host_restaurantDAOImpl implements Host_restaurantDAO {
 		return dao.modMemberPoint(map);
 	}
 
-	// 결산 차트
-	@Override
-	public List<Restaurant_ChartVO> getMenuCountChart() {
-		log.debug("dao.getMenuCountChart()");
-
-		Host_restaurantDAO dao = sqlSession.getMapper(Host_restaurantDAO.class);
-
-		return dao.getMenuCountChart();
-	}
-
 	// 모든 메뉴 이름 조회
 	@Override
 	public String[] getMenuName(int restaurant_index) {
@@ -512,13 +520,20 @@ public class Host_restaurantDAOImpl implements Host_restaurantDAO {
 		return dao.getMenuName(restaurant_index);
 	}
 
+	// 결산 차트
+	@Override
+	public List<Restaurant_ChartVO> getMenuCountChart(int restaurant_index) {
+		log.debug("dao.getMenuCountChart()");
+
+		Host_restaurantDAO dao = sqlSession.getMapper(Host_restaurantDAO.class);
+
+		return dao.getMenuCountChart(restaurant_index);
+	}
+
 	// 성별 매출
 	@Override
-	@SuppressWarnings("unchecked")
-	public Object getSexChart() {
+	public Object getSexChart(int restaurant_index) {
 		log.debug("dao.getSexChart()");
-		
-		Host_restaurantDAO dao = sqlSession.getMapper(Host_restaurantDAO.class);
 		
 		Map<String, Integer> m = null;
 
@@ -527,17 +542,33 @@ public class Host_restaurantDAOImpl implements Host_restaurantDAO {
 		m.put("남", 0);
 		m.put("여", 0);
 
+		List<Member> list = new ArrayList();
+		
 		for (int i = 0; i < m.size(); i++) {
-			List<Member> list = (List<Member>)dao.getSexChart();
+			list = getSexChartContent(restaurant_index);
 			String str = String.valueOf(list.get(i));
+			
+			System.out.println("str : " + str);
+			
 			String str2[] = str.split(",");
 			String str3[] = str2[0].split("=");
 			String str4[] = str2[1].split("=");
 			String str5[] = str4[1].split("}");
 
-			m.put(str5[0], Integer.parseInt(str3[1]));
+			m.put(str3[1], Integer.parseInt(str5[0]));
 		}
 
 		return m;
 	}
+	
+	// 성별 차트 내용
+	@Override
+	public List<Member> getSexChartContent(int restaurant_index) {
+		log.debug("dao.getSexChartContent()");
+
+		Host_restaurantDAO dao = sqlSession.getMapper(Host_restaurantDAO.class);
+
+		return dao.getSexChartContent(restaurant_index);
+	}
+
 }

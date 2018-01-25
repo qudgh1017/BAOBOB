@@ -34,6 +34,7 @@ import spring.mvc.baobob.vo.RestaurantVO;
 import spring.mvc.baobob.vo.Restaurant_ChartVO;
 import spring.mvc.baobob.vo.Restaurant_scheduleVO;
 import spring.mvc.baobob.vo.TableVO;
+import spring.mvc.baobob.vo.hostTChartVO;
 
 @Service
 public class Host_restaurantServiceImpl implements Host_restaurantService {
@@ -127,11 +128,14 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 	public void restaurantView(HttpServletRequest req, Model model) {
 		log.debug("service.restaurantView()");
 
-		// 예약할 테이블 숫자
-		int count = Integer.parseInt(req.getParameter("count"));
+		String str = req.getParameter("count");
 		
-		// 예약할 테이블 숫자 저장
-		model.addAttribute("count", count);
+		// 예약할 테이블 숫자
+		if ((str != null && str.equals("")) || (str != null && str.length() != 0)) {
+			Integer count = Integer.parseInt(str);
+			// 예약할 테이블 숫자 저장
+			model.addAttribute("count", count);
+		}
 		
 		// 예약할 날짜와 시간
 		String date = "20" + req.getParameter("date");
@@ -505,6 +509,12 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 			dto.setRestaurant_menu_name(menuName);
 			dto.setRestaurant_menu_content(menuContent);
 			dto.setRestaurant_menu_price(menuPrice);
+			
+			// 메뉴 추가 전 메뉴인덱스 계산
+			Integer restaurant_menu_index = dao.getMenuIndex(restaurant_index);
+			if(restaurant_menu_index != null) {
+				dto.setRestaurant_menu_index(restaurant_menu_index);
+			}
 			
 			// 메뉴 추가 처리
 			int cnt = dao.addMenu(dto);
@@ -1484,7 +1494,7 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 		Map<String , Object> map = new HashMap<String,Object>();
 		
 		// mapper에서 불러온 kind와 value가 다건이기때문에 vo형태의 List형으로 받아준다.
-		List<Restaurant_ChartVO> menuList = dao.getMenuCountChart();
+		List<Restaurant_ChartVO> menuList = dao.getMenuCountChart(restaurant_index);
 		
 		// List 데이터를 한 건씩 map에 담는다.
 		for(Restaurant_ChartVO dto : menuList) {
@@ -1526,13 +1536,13 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 			// 처음이면 콤마를 붙이지 않음
 			if(cnt == 0) {
 				keys = keys + key;
-				values = values + tm.get(key);
+				values = values + value;
 				cnt = 1;
 			}
 			// 처음이 아니면 콤마를 앞에
 			else {
 				keys = keys + "," + key;
-				values = values + "," + tm.get(key);
+				values = values + "," + value;
 			}
 		}
 		
@@ -1546,6 +1556,7 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 
 	// 성별 차트
 	@Override
+	@SuppressWarnings("unchecked")
 	public void accountChart2(HttpServletRequest req, Model model) {
 		log.debug("service.accountChart2()");
 
@@ -1553,9 +1564,9 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 		int restaurant_index = Integer
 				.parseInt((String.valueOf(req.getSession().getAttribute("memStep")).substring(1, 2)));
 
-		Map<String, Integer> map = (Map<String, Integer>) dao.getSexChart();
+		Map<String, Integer> map = (Map<String, Integer>) dao.getSexChart(restaurant_index);
 
 		// 성별 차트
-		model.addAttribute("chart2", map);
+		model.addAttribute("sexChart", map);
 	}
 }
