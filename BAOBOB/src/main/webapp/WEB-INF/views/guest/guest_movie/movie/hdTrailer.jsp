@@ -25,13 +25,13 @@ function hdTrailerPlaying(movie_index){
 <section>
 	<div class="container">
 		<div class="row">
-			<div class="col-md-offset-1"></div>
-				<div class="col-md-10" align="left">
-					<br>
-					<h3 align=left;>트레일러</h3>
-					<hr style="border:2px solid black;">
-				</div>
-			<div class="col-md-offset-1"></div>
+			
+			<div class="col-md-12" align="left">
+				<br>
+				<h3 align=left;>트레일러</h3>
+				<hr style="border:2px solid black;">
+			</div>
+			
 		</div><br><br>
 		
 		<!-- 트레일러 포스터 선택 -->
@@ -692,7 +692,7 @@ a:hover {
 });
 //# sourceURL=pen.js
 </script>
-</body></html> --> -->
+</body></html> --> 
 			</div>
 		</div>		
 			

@@ -67,16 +67,16 @@
 					<br>
 					<div style="width:50px; display:inline-block;">일반</div>
 					<c:forEach var="num" begin="0" end="8" step="1">
-						<label onclick="adultChk('${schedule.theater_index}', '${schedule.movie_index}', '${schedule.theater_schedule_index}','${num}')" class="btn" style="height:30px; width:30px; border:1px solid black; font-weight:bold">
-						    <input type="radio" style="width:10px; height:10px;" name="adult" autocomplete="off" value="${num}">
+						<label id="adult${num}" onclick="adultChk('${schedule.theater_index}', '${schedule.movie_index}', '${schedule.theater_schedule_index}','${num}')" class="btn" style="height:30px; width:30px; border:1px solid black; font-weight:bold">
+<%-- 						    <input id="adult${num}" type="radio" style="width:0px; height:0px;" name="adult" autocomplete="off" value="${num}"> --%>
 							${num}
 					 	</label>
 				 	</c:forEach>
 				 	<br>
 				 	<div style="width:50px; display:inline-block;">청소년</div>
 				 	<c:forEach var="num" begin="0" end="8" step="1">
-						<label onclick="teenagerChk('${schedule.theater_index}', '${schedule.movie_index}', '${schedule.theater_schedule_index}', '${num}')" class="btn" style="height:30px; width:30px; border:1px solid black; font-weight:bold">
-						    <input type="radio" style="width:10px; height:10px;" name="teenager" autocomplete="off" value="${num}">
+						<label id="teenager${num}" onclick="teenagerChk('${schedule.theater_index}', '${schedule.movie_index}', '${schedule.theater_schedule_index}', '${num}')" class="btn" style="height:30px; width:30px; border:1px solid black; font-weight:bold">
+<%-- 						    <input id="teenager${num}" type="radio" style="width:0px; height:0px;" name="teenager" autocomplete="off" value="${num}"> --%>
 							${num}
 					 	</label>
 				 	</c:forEach>
@@ -156,13 +156,17 @@
 			<!-- 좌석선택 아이콘 -->
 			<div class="col-md-3" align="center" style="border: solid 1px gray; color:gray; font-weight:bold;" >
 				<div id="nextDealButton" >
-					<br><br>
-					<center style="color:gray">
-						좌석을 선택하셔야 <br>
-						다음페이지로 이동 가능합니다.
-					</center>
-				</div>
 				
+				
+					<!-- 예매선택된 인원/좌석 정보 -->
+					<div style="font-size:13px; font-weight:bold;">
+						<br>
+							<a onclick="movieTicket3('${schedule.theater_schedule_index}')"> 
+							<img src="${projectRes}/images/ybh/post.png" style="height:80px">
+						</a>
+						<br>결제
+					</div>
+				</div>
 			</div>
 		</div>
 	</section>
