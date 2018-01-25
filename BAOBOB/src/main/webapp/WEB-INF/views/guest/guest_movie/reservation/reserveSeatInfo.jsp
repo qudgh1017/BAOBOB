@@ -37,17 +37,17 @@
 		</c:if>
 		<c:if test="${seatInfo.state[(row)*seatInfo.totalCol-1+col]==3}">
 			<label id="${seatInfo.seat_index[(row)*seatInfo.totalCol-1+col]}" class="btn btn" style="margin:1px 1px; height:35; width:35; border:2px solid green;">
-			   <button type="button" style="width:0; height:0;" onclick="CountChecked(this)" name="seat_index" autocomplete="off" value="${seatInfo.seat_index[(row)*seatInfo.totalCol-1+col]}">${col}</button>
+			   <button id="btn${seatInfo.seat_index[(row)*seatInfo.totalCol-1+col]}" type="button" style="width:0; height:0;" onclick="CountChecked(this)" name="seat_index" autocomplete="off" value="${seatInfo.seat_index[(row)*seatInfo.totalCol-1+col]}">${col}</button>
 			</label>
 		</c:if>
 		<c:if test="${seatInfo.state[(row)*seatInfo.totalCol-1+col]==4}">
 			<label id="${seatInfo.seat_index[(row)*seatInfo.totalCol-1+col]}" class="btn btn" style="margin:1px 1px; height:35; width:35; border:2px solid red;">
-				<button type="button" style="width:0; height:0;" onclick="CountChecked(this)" name="seat_index" autocomplete="off" value="${seatInfo.seat_index[(row)*seatInfo.totalCol-1+col]}">${col}</button>
+				<button id="btn${seatInfo.seat_index[(row)*seatInfo.totalCol-1+col]}" type="button" style="width:0; height:0;" onclick="CountChecked(this)" name="seat_index" autocomplete="off" value="${seatInfo.seat_index[(row)*seatInfo.totalCol-1+col]}">${col}</button>
 			</label>
 		</c:if>
 		<c:if test="${seatInfo.state[(row)*seatInfo.totalCol-1+col]==5}">
 			<label id="${seatInfo.seat_index[(row)*seatInfo.totalCol-1+col]}" class="btn btn" style="margin:1px 1px; height:35; width:35; border:2px solid pink;">
-				<input type="button" style="width:0; height:0;" onclick="CountChecked(this)" name="seat_index" autocomplete="off" value="${seatInfo.seat_index[(row)*seatInfo.totalCol-1+col]}">${col}</button>
+				<button id="btn${seatInfo.seat_index[(row)*seatInfo.totalCol-1+col]}" type="button" style="width:0; height:0;" onclick="CountChecked(this)" name="seat_index" autocomplete="off" value="${seatInfo.seat_index[(row)*seatInfo.totalCol-1+col]}">${col}</button>
 			</label>
 		</c:if>
 		<c:if test="${seatInfo.state[(row)*seatInfo.totalCol-1+col]==6}">
