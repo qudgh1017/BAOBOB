@@ -17,7 +17,7 @@
 	function AddComma(total) {
 		total = Number(total).toLocaleString('en')
 		
-		document.getElementById('totalView').innerHTML = "합계 : " + total + "원";
+		document.getElementById('totalView').innerHTML = "판매액 : " + total + "원";
 	}
 
 	// 로딩 완료시 함수 실행하여 차트 생성
@@ -54,29 +54,22 @@
 	google.charts.setOnLoadCallback(drawChart);
 	var chart_options2 = {
 		title : '성별 비율',
-	 	width : 500,
-	 	height : 400,
-	 	bar : {
-	 		groupWidth : '30%'
-	 	}
-	 	, series: {
-			0: { color: '#a561bd' },
-			1: { color: '#c784de' },
-	 	}
-	 }
-	 function drawChart(){
+		width : 500,
+		height : 400
+	}
+	function drawChart(){
 	 	var data = google.visualization.arrayToDataTable([
  		['Element', '성별'],
- 		['남성', ${Man}],
- 		['여성', ${Woman}],
+ 		['남', ${sexChart['남']}],
+ 		['여', ${sexChart['여']}]
 	 	]);
-	 	var chart = new google.visualization.PieChart(document.getElementById('sexChart'));
-	 	chart.draw(data, chart_options2);
-	 }
+		var sexChart = new google.visualization.PieChart(document.getElementById('sexChart'));
+		sexChart.draw(data, chart_options2);
+	}
+	
 </script>
 </head>
 <body class="fixed-nav sticky-footer bg-dark" onload="AddComma(${total})">
-	
 	<!-- Navigation -->
 	<%@ include file="_navigation.jsp" %>
 	

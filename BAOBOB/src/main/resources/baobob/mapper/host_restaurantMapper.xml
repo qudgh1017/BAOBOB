@@ -87,13 +87,20 @@
 		SELECT * 
 		  FROM restaurant_menu_tbl 
 		 WHERE restaurant_index = #{restaurant_index} 
-		 ORDER BY restaurant_menu_index DESC
+		 ORDER BY restaurant_menu_index ASC
+	</select>
+	
+	<!-- 메뉴 추가 전 메뉴 인덱스 계산 -->
+	<select id="getMenuIndex" resultType="Integer">
+		SELECT MAX(restaurant_menu_index)
+		  FROM restaurant_menu_tbl
+		 WHERE restaurant_index = #{restaurant_index}
 	</select>
 
 	<!-- 메뉴 추가 처리 -->
 	<insert id="addMenu" parameterType="spring.mvc.baobob.vo.MenuVO">
 		INSERT INTO restaurant_menu_tbl(restaurant_index, restaurant_menu_index, restaurant_menu_name, restaurant_menu_img, restaurant_menu_content, restaurant_menu_price) 
-		VALUES(#{restaurant_index}, restaurant_menu_tbl_SEQ.nextval, #{restaurant_menu_name}, #{restaurant_menu_img}, #{restaurant_menu_content}, #{restaurant_menu_price})
+		VALUES(#{restaurant_index}, #{restaurant_menu_index}, #{restaurant_menu_name}, #{restaurant_menu_img}, #{restaurant_menu_content}, #{restaurant_menu_price})
 	</insert>
 
 	<!-- 수정할 메뉴 정보 보기 -->
@@ -110,6 +117,7 @@
 		   SET restaurant_menu_name = #{restaurant_menu_name}, restaurant_menu_img = #{restaurant_menu_img}
 		     , restaurant_menu_content = #{restaurant_menu_content}, restaurant_menu_price = #{restaurant_menu_price} 
 		 WHERE restaurant_menu_index = #{restaurant_menu_index}
+		   AND restaurant_index = #{restaurant_index}
 	</update>
 
 	<!-- 메뉴 수정 처리 -->
@@ -283,6 +291,7 @@
 			 , restaurant_menu_tbl m
 		 WHERE f.restaurant_menu_index = m.restaurant_menu_index
 		   AND f.restaurant_index = #{restaurant_index}
+		   AND f.restaurant_index = m.restaurant_index
 		   AND f.restaurant_schedule_index = #{restaurant_schedule_index}
 		   AND f.restaurant_table_index = #{restaurant_table_index}
 	</select>
@@ -322,20 +331,6 @@
 		     					   WHERE member_id = #{member_id}) + #{member_Cumpoint}
 		 WHERE member_id = #{member_id}
 	</update>
-	
-	<!-- 결산 차트 -->
-	<resultMap type="spring.mvc.baobob.vo.Restaurant_ChartVO" id="MenuCountChart">
-		<id property="kind"	column="kind" />
-		<result property="value" column="value" />
-	</resultMap>
-	
-	<select id="getMenuCountChart" resultMap="MenuCountChart">
-		SELECT NVL(m.restaurant_menu_name, '합계') AS kind
-			 , SUM(m.restaurant_menu_price * h.restaurant_menu_count) AS value 
-		  FROM restaurant_menu_tbl m, restaurant_food_history_tbl h
-		 WHERE m.restaurant_menu_index = h.restaurant_menu_index
-		 GROUP BY ROLLUP(restaurant_menu_name)
-	</select>
 
 	<!-- 각 메뉴 정보 조회 -->
 	<select id="getMenuName" resultType="String">
@@ -345,8 +340,39 @@
 		 ORDER BY restaurant_menu_index DESC
 	</select>
 	
+	<!-- 메뉴별 차트 -->
+	<resultMap type="spring.mvc.baobob.vo.Restaurant_ChartVO" id="MenuCountChart">
+		<id property="kind"	column="kind" />
+		<result property="value" column="value" />
+	</resultMap>
+	
+	<select id="getMenuCountChart" resultMap="MenuCountChart">
+		SELECT NVL(menu.restaurant_menu_name, '합계') AS kind
+		     , SUM(menu.restaurant_menu_price * food.restaurant_menu_count) AS value 
+		  FROM restaurant_menu_tbl menu
+		     , restaurant_food_history_tbl food 
+		 WHERE menu.restaurant_menu_index = food.restaurant_menu_index
+		   AND food.restaurant_index = #{restaurant_index}
+		   AND menu.restaurant_index = food.restaurant_index
+		 GROUP BY ROLLUP(menu.restaurant_menu_name)
+	</select>
+	
 	<!-- 성별 결산 -->
-	<select id="getSexChart" resultType="hashmap">
-		SELECT NVL(m.)
+	<select id="getSexChartContent" resultType="hashmap">
+		SELECT NVL(mem.member_sex, 'total') AS kind
+			 , SUM(menu.restaurant_menu_price * food.restaurant_menu_count) AS value 
+		  FROM member_tbl mem
+		     , restaurant_menu_tbl menu
+		     , restaurant_food_history_tbl food
+		     , history_tbl his
+		     , restaurant_history_tbl reshis
+		 WHERE menu.restaurant_menu_index = food.restaurant_menu_index
+		   AND food.restaurant_index = #{restaurant_index}
+		   AND menu.restaurant_index = food.restaurant_index
+		   AND mem.member_id = his.member_id
+		   AND his.history_index = reshis.history_index
+		   AND reshis.restaurant_schedule_index = food.restaurant_schedule_index
+		   AND reshis.restaurant_table_index = food.restaurant_table_index
+		 GROUP BY ROLLUP(mem.member_sex)
 	</select>
 </mapper>
