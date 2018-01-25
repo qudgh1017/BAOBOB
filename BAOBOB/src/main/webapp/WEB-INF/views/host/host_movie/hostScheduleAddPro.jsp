@@ -21,13 +21,13 @@
 	<br>
 	<c:if test="${cnt== 1 }">
 		<script type="text/javascript">
-			alert("스케줄 등록 성공!");
+			alert("스케줄이 등록되었습니다.");
 			window.location="hostScheduleAddForm";
 		</script>
 	</c:if>
 	<c:if test="${cnt!= 1 }">
 		<script type="text/javascript">
-			alert("스케줄 등록 실패");
+			alert("스케줄 등록에 실패했습니다. 다시 시도해주세요.");
 			window.location="hostScheduleAddForm";
 		</script>
 	</c:if>

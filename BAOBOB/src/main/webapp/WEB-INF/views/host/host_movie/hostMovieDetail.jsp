@@ -46,6 +46,9 @@
 						<option value="5">멜로/로맨스</option>
 						<option value="6">코미디</option>
 						<option value="7">애니메이션</option>
+						<option value="8">액션</option>
+						<option value="9">스릴러</option>
+						<option value="10">미스터리</option>
 					</select>
 					</c:if>
 					<c:if test="${vo.movie_janre==2}">
@@ -58,6 +61,9 @@
 						<option value="5">멜로/로맨스</option>
 						<option value="6">코미디</option>
 						<option value="7">애니메이션</option>
+						<option value="8">액션</option>
+						<option value="9">스릴러</option>
+						<option value="10">미스터리</option>
 					</select>
 					</c:if>
 					<c:if test="${vo.movie_janre==3}">
@@ -70,6 +76,9 @@
 						<option value="5">멜로/로맨스</option>
 						<option value="6">코미디</option>
 						<option value="7">애니메이션</option>
+						<option value="8">액션</option>
+						<option value="9">스릴러</option>
+						<option value="10">미스터리</option>
 					</select>
 					</c:if>
 					<c:if test="${vo.movie_janre==4}">
@@ -82,6 +91,9 @@
 						<option value="5">멜로/로맨스</option>
 						<option value="6">코미디</option>
 						<option value="7">애니메이션</option>
+						<option value="8">액션</option>
+						<option value="9">스릴러</option>
+						<option value="10">미스터리</option>
 					</select>
 					</c:if>
 					<c:if test="${vo.movie_janre==5}">
@@ -94,6 +106,9 @@
 						<option value="5" selected>멜로/로맨스</option>
 						<option value="6">코미디</option>
 						<option value="7">애니메이션</option>
+						<option value="8">액션</option>
+						<option value="9">스릴러</option>
+						<option value="10">미스터리</option>
 					</select>
 					</c:if>
 					<c:if test="${vo.movie_janre==6}">
@@ -106,6 +121,9 @@
 						<option value="5">멜로/로맨스</option>
 						<option value="6" selected>코미디</option>
 						<option value="7">애니메이션</option>
+						<option value="8">액션</option>
+						<option value="9">스릴러</option>
+						<option value="10">미스터리</option>
 					</select>
 					</c:if>
 					<c:if test="${vo.movie_janre==7}">
@@ -118,6 +136,54 @@
 						<option value="5">멜로/로맨스</option>
 						<option value="6">코미디</option>
 						<option value="7" selected>애니메이션</option>
+						<option value="8">액션</option>
+						<option value="9">스릴러</option>
+						<option value="10">미스터리</option>
+					</select>
+					</c:if>
+					<c:if test="${vo.movie_janre==8}">
+					<select name="movie_janre">
+						<option value="">장르 선택</option>
+						<option value="1">가족</option>
+						<option value="2">공포/호러</option>
+						<option value="3">드라마</option>
+						<option value="4">SF</option>
+						<option value="5">멜로/로맨스</option>
+						<option value="6">코미디</option>
+						<option value="7">애니메이션</option>
+						<option value="8" selected>액션</option>
+						<option value="9">스릴러</option>
+						<option value="10">미스터리</option>
+					</select>
+					</c:if>
+					<c:if test="${vo.movie_janre==9}">
+					<select name="movie_janre">
+						<option value="">장르 선택</option>
+						<option value="1">가족</option>
+						<option value="2">공포/호러</option>
+						<option value="3">드라마</option>
+						<option value="4">SF</option>
+						<option value="5">멜로/로맨스</option>
+						<option value="6">코미디</option>
+						<option value="7">애니메이션</option>
+						<option value="8">액션</option>
+						<option value="9" selected>스릴러</option>
+						<option value="10">미스터리</option>
+					</select>
+					</c:if>
+					<c:if test="${vo.movie_janre==10}">
+					<select name="movie_janre">
+						<option value="">장르 선택</option>
+						<option value="1">가족</option>
+						<option value="2">공포/호러</option>
+						<option value="3">드라마</option>
+						<option value="4">SF</option>
+						<option value="5">멜로/로맨스</option>
+						<option value="6">코미디</option>
+						<option value="7">애니메이션</option>
+						<option value="8">액션</option>
+						<option value="9">스릴러</option>
+						<option value="10" selected>미스터리</option>
 					</select>
 					</c:if>
 				</td>

@@ -92,37 +92,6 @@
 				</div>
 			</div>
 		</div>
-	
-	
-<%-- 	<center><h3><b>${vo.theater_index}관</b></h3></center> --%>
-<!-- 	<hr style="border:3px solid black;"> -->
-<!-- 	<br> -->
-<!-- 	<br> -->
-<!-- 	<br> -->
-
-<!-- 		<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0" align="center" style="border:1px solid black;"> -->
-<!-- 			<tr> -->
-<%-- 				<td colspan="2"><input type="number" name="movie_index" style="width:40px;" placeholder="n관" value="${vo.theater_index}"/>관</td> --%>
-<!-- 			</tr> -->
-<!-- 			<tr> -->
-<!-- 				<td colspan="2"> -->
-<!-- 					<div id="theaterSeat" align="center"> -->
-					
-<!-- 					</div> -->
-<!-- 					<br> -->
-<!-- 					<div align="center"> -->
-<%-- 						<button type="button" onclick="spaceType('0')"><img src="${projectRes}images/phc/icon/theater_blank.png"></button> --%>
-<%-- 						<button type="button" onclick="spaceType('1')"><img src="${projectRes}images/phc/icon/theater_in.png"></button> --%>
-<%-- 						<button type="button" onclick="spaceType('2')"><img src="${projectRes}images/phc/icon/theater_out.png"></button> --%>
-<%-- 						<button type="button" onclick="spaceType('3')"><img src="${projectRes}images/phc/icon/theater_green.png"></button> --%>
-<%-- 						<button type="button" onclick="spaceType('4')"><img src="${projectRes}images/phc/icon/theater_red.png"></button> --%>
-<%-- 						<button type="button" onclick="spaceType('5')"><img src="${projectRes}images/phc/icon/theater_pink.png"></button> --%>
-<!-- 					</div> -->
-					
-<%-- 					<input style="background-color:#343a40; color:white; border:1px solid black; width:200px; height:40px; margin-left:177px; margin-bottom:15px;" type="button" value="상영관 수정하기" onclick="hostTheaterMod(${vo.theater_index}, ${vo.theater_col}, ${vo.theater_row});"/> --%>
-<!-- 				</td> -->
-<!-- 			</tr> -->
-<!-- 		</table> -->
 	</form>
 	</div>
 	
