@@ -78,6 +78,7 @@ public class AndroidController {
 		map.put("data4", park);
 		map.put("member", m);
 		map.put("boardList",  list);
+	
 		return map;
 	}
 	
