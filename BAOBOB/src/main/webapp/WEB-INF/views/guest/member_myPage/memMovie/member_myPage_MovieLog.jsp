@@ -32,27 +32,6 @@ $(document).ready(function() {
 	});		
 });
 
-//내가 본 영화
-$(document).ready(function() {
-	$('#movieClear').on('click', function() {   
-		var object = new Object();
-		var jsonData = JSON.stringify(object);
-		$.ajax({
-			//GET방식의 URL
-			url : '${pageContext.request.contextPath}/movieClear',
-			type : 'GET',
-			success : function(msg) {
-				/* alert("success"); */  
-				/* alert(msg); */  
-				$('#result').html(msg);  
-			},
-			error : function() {
-				alert("error");
-			}
-		});
-	});		
-});
-
 //무비 다이어리
 $(document).ready(function() {
 	$('#movieDiaryWriteForm').on('click', function() {   
@@ -112,9 +91,8 @@ $(document).ready(function() {
 					<caption style="margin-bottom:0px!important">무비 로그</caption>
 					<thead>
 				    <tr>
-				    	<th>
+				    	<th style="border-bottom:none">
 				    		<input type="button" id="wishList" class="button" value="위시리스트">
-				    		<input type="button" id="movieClear" class="button" value="내가 본 영화 ">
 				    		<input type="button" id="movieDiaryWriteForm" class="button" value="무비다이어리">
 				    	</th>
 				    </tr>

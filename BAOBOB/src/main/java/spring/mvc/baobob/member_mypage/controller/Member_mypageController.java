@@ -360,6 +360,16 @@ public class Member_mypageController {
 		return "guest/member_myPage/memMovie/member_myPage_WishList";
 	}
 	
+	//위시리스트 추가
+	@RequestMapping("addWishList")
+	public String addWishList(HttpServletRequest req, Model model) {
+		
+		service.addWishList(req, model);
+		
+		return "guest/member_myPage/memMovie/member_myPage_addWishListPro";
+	}
+
+	
 	//무비로그 위시리스트 삭제
 	@RequestMapping("delWishList")
 	public String delWishList(HttpServletRequest req, Model model) {
@@ -369,15 +379,6 @@ public class Member_mypageController {
 		return "guest/member_myPage/memMovie/member_myPage_delWishListPro";
 	}
 		
-	//무비로그 내가본 영화
-	@RequestMapping("movieClear")
-	public String movieClear(HttpServletRequest req, Model model) {
-		
-		service.movieClear(req, model);
-		
-		return "guest/member_myPage/memMovie/member_myPage_movieClear";
-	}
-	
 	//무비로그 무비다이어리
 	@RequestMapping("movieDiaryWriteForm")
 	public String movieDiaryWriteForm(HttpServletRequest req, Model model) {

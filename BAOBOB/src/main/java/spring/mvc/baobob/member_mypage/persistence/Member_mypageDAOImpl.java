@@ -14,6 +14,7 @@ import spring.mvc.baobob.vo.MovieHistoryVO;
 import spring.mvc.baobob.vo.MovieVO;
 import spring.mvc.baobob.vo.ParkingHistory;
 import spring.mvc.baobob.vo.RestaurantLogVO;
+import spring.mvc.baobob.vo.WishListVO;
 
 @Repository
 public class Member_mypageDAOImpl implements Member_mypageDAO{
@@ -456,6 +457,18 @@ public class Member_mypageDAOImpl implements Member_mypageDAO{
 		return cnt;
 	}
 	
+/*----------------------------------------------------------------------------*/
+	
+	//위시리스트 추가
+	public int addWishList(WishListVO dto) {
+		int cnt = 0;
+		
+		Member_mypageDAO dao = sqlSession.getMapper(Member_mypageDAO.class);
+		cnt = dao.addWishList(dto);
+		
+		return cnt;
+	}
+
 /*----------------------------------------------------------------------------*/
 	
 	//위시리스트 삭제

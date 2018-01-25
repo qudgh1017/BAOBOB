@@ -45,12 +45,13 @@ function wishPage(page){
 </head>
 <body>
 <table id="mainBody">
+	<thead>
 	<tr>
 		<th style="font-size:30px">위시리스트</th>
 	</tr>
 	
 	<tr id="result">
-		<td>
+		<th>
 		<div class="container">
 			<div class="row">
 				<c:if test="${cnt>0}">
@@ -116,8 +117,9 @@ function wishPage(page){
 				</div>
 			</div>
 		</div>
-		</td>
+		</th>
 	</tr>
+	</thead>
 </table>
 
 
