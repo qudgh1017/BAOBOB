@@ -35,14 +35,14 @@ function calc() {
 */
 //리뷰 수정
 function guest_review_modify(pageNum, review_index, restaurant_index){
-	alert("review_index : " + review_index);
+	/*alert("review_index : " + review_index);*/
 	//var count = document.guest_cart.count[countCnt].value;
 	window.location="Restaurant_reviewModifyForm?pageNum="+pageNum+"&review_index="+review_index+"&restaurant_index="+restaurant_index;
 }
 
 //리뷰 삭제
 function guest_review_delete(pageNum, review_index, restaurant_index){
-	alert("review_index" + review_index, restaurant_index);
+	/*alert("review_index" + review_index, restaurant_index);*/
 
 	//var count = document.guest_cart.count[countCnt].value;
 	window.location="Restaurant_reviewDeleteForm?pageNum="+pageNum+"&review_index="+review_index+"&restaurant_index="+restaurant_index;
@@ -116,12 +116,12 @@ function lock(star){
 function mark(star){
 	
 	lock(star);
-	alert('star : ' + star);
+	/*alert('star : ' + star);*/
 	var space = '';
 	var spaceDiv = document.getElementById('spaceDiv'); // 출력 위치
 
 	space = '<input type="hidden" ' + 'value="' + star + '" ' + 'name="star"' + '/>';
-	alert(space);
+	/*alert(space);*/
 	spaceDiv.innerHTML = space;
 
 	/*document.reviewForm.star.value=star;
@@ -228,7 +228,11 @@ function spaceBtnChange(location) {
 	var btnId = 'btn' + location;
 	var spaceBtn = document.getElementById(btnId);
 	
-	var tableCnt = document.getElementById('tableCnt').value;//선택한 테이블 수량을 가져온다.
+	var tableCnt = document.getElementById('tableCnt').value/4;//선택한 테이블 수량을 가져온다.
+	
+	if (document.getElementById('tableCnt').value%4 > 0) {
+		tableCnt++;
+	}
 	
 	if(spaceBtn.value==1){
 		if (typeImg != '') { // 아이콘 선택했을 경우, 선택한 버튼의 설정 변경
