@@ -82,81 +82,16 @@
 	
 /*======= 별점 종료 =======*/
 </style>
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 <script src="${restaurant_js}"></script>
-<!-- 
 <script type="text/javascript">
-var locked = 0;
-
-function show(star){
-	if(locked)  return;
-	var i;
-	var image;
-	var el;
-	var e=document.getElementById('startext');
-	var stateMsg;
-	
-	for(i =1; i<= star; i++){
-		image = 'image' + i;
-		el =document.getElementById(image);
-		el.src="/baobob/resources/images/mhj/choice/icon_starOn.gif";
-	}
-	
-	switch(star){
-	case 1:
-		stateMsg = "불만족스러워요";
-		/* alert('1'); */
-		break;
-	case 2:
-		stateMsg = "별로에요";
-		/* alert('2'); */
-		break;
-	case 3:
-		stateMsg = "그러저럭";
-		/* alert('3'); */
-		break;
-	case 4:
-		stateMsg = "기대해도 좋아요";
-		/* alert('4'); */
-		break;
-	case 5:
-		stateMsg = "정말 좋아요! 추천!!";
-		/* alert('5'); */
-		break;
-	default :
-		stateMsg = "";
-	}	
-	e.innerHTML = stateMsg;	
-}
-
-function noshow(star){
-	if(locked) return;
-
-	var i;
-	var image;
-	var el;
-	
-	for (i = 1; i <= star; i++){
-		image = 'image' + i;
-		el = document.getElementById(image);
-		el.src="/baobob/resources/images/mhj/choice/icon_starOff.gif";
-	}
-}
-	
-function lock(star){
-	show(star);
-	locked=1;
-	/* alert("locked : " + locked); */
-}
-
-function mark(star){
-	lock(star);
-	alert('star : ' + star);
-
-	document.reviewForm.star.value=star;
-}
-
-
-</script> -->
+$(document).ready(function(){
+    $("#myBtn").click(function(){
+        $("#myModal").modal();
+    });
+});
+</script>
 <title>레스토랑 메뉴</title>
 </head>
 <body>
@@ -281,6 +216,50 @@ function mark(star){
 												<td rowspan="4" style="width:20px; text-align:center; vertical-align:middle;">
 													<input class="button" type="button" value="변경" onclick="guest_review_modify(${pageNum}, ${dto.review_index}, ${restaurant_index});"> 
 													<br/><input class="button" type="button" value="삭제" onclick="guest_review_delete(${pageNum}, ${dto.review_index}, ${restaurant_index});"> 
+												
+													<!-- 모달!!!! -->
+													<!-- Button trigger modal -->
+													<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+													여기를 클릭하시면 모달 윈도우가 실행됩니다.  
+													</button>
+													<!-- 
+													data-target="#myModal" : 버튼 클릭 시 일치하는 id값이 적용된 모달을 띄운다.
+													id값을 #을 붙여서 연결을 해주는 것 (id="myModal"이 작동한다.)
+													data-toggle="modal" : 버튼 또는 링크를 토글할 때 모달기능을 수행하겠다는 의미
+													-->
+													<hr>
+													<a href="#myModal" data-toggle="modal">
+													  여기를 클릭하시면 모달 윈도우가 실행됩니다. 
+													</a>
+													<!-- a 태그에는 href="#myModal"써도 되고 data-target="#myModal"써도 되고 둘 다 써도 된다. -->
+													<!-- Modal(팝업창 같은것) -->
+													<div class="modal fade" id="myModal" tabindex="-1" role="dialog" 
+													                        aria-labelledby="myModalLabel" aria-hidden="true">
+														<div class="modal-dialog"><!-- class="modal-dialog"에 modal-lg추가하면 큰모달,  modal-sm추가하면 작은모달, 아무것도 안쓰면 중간크기의 모달이 만들어진다. -->
+															<div class="modal-content">
+																<div class="modal-header">
+															    	<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+															    	<h4 class="modal-title" id="myModalLabel">모달 제목 </h4>
+															    </div>
+															    <!-- 모달창 영역에 버튼태그의 data-dismiss 속성을 적용하면 모달을 닫게하는 기능을 적용하겠다라는 의미 
+															      	 class="modal fade"에서 fade없으면 부드럽게 창이 뜨지 않는다.
+															    -->
+													      
+															    <div class="modal-body">
+															    	<p>여기는 내용이 들어 가는 곳 </p>
+															    </div>
+															    <div class="modal-footer">
+															    	<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+															        <button type="button" class="btn btn-primary">삭제</button>
+													     		</div>
+													     	<!-- data-dismiss="modal" : 모달을 닫는 기능을 갖고있다. -->
+													    	</div> <!-- 모달 콘텐츠 -->
+														</div> <!-- 모달 다이얼로그 -->
+													</div> <!-- 모달 전체 윈도우 -->
+												</div>
+													<!-- 모달!!!! -->
+
+												
 												</td>
 											</th>
 											</tr>

@@ -63,7 +63,7 @@ $(function() {
 					<div class="col-md-4">
 						<div class="form-group">
 							<i class="fa fa-fw fa-user-circle"></i>
-							<label for="exampleInputEmail1">테이블 수</label> 
+							<label for="exampleInputEmail1">인원 수</label> 
 							<input class="form-control" type="text" style="display: inline-block; text-align: center;" 
 									name="tableCnt" id="tableCnt" placeholder="인원 설정" value="${tableCnt}" required>
 						</div>
@@ -115,7 +115,7 @@ $(function() {
 									
 								</div>
 								<div class="card-footer small text-muted">
-									<button class="btn btn-primary btn-block" type="button" value="1" onclick="spaceTypeChange2();">예약 접수</button>
+									<button class="btn btn-primary btn-block" type="button" value="1" onclick="spaceTypeChange2();">예약 요청</button>
 									<button class="btn btn-primary btn-block" type="reset" onclick="window.history.go(-2);">취소</button>
 								</div>
 							</div>
