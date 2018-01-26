@@ -65,13 +65,13 @@
 				</a>
 				<ul class="sidenav-second-level collapse" id="collapseComponents">
 					<li><a href="hostMovieEmp">직원 목록</a></li>
-					<li><a href="hostMovieEmpAddForm">직원 채용</a></li>
+					<li><a href="hostMovieEmpAddForm">직원 고용</a></li>
 				</ul>
 			</li>
 			<li class="nav-item" data-toggle="tooltip" data-placement="right" title="예매 관리">
 				<a class="nav-link" href="hostMovieRes"> 
 					<i class="fa fa-fw fa-table"></i> 
-					<span class="nav-link-text">예매 관리</span>
+					<span class="nav-link-text">예매 현황</span>
 				</a>
 			</li>
 			<li class="nav-item" data-toggle="tooltip" data-placement="right" title="결산">

@@ -261,8 +261,8 @@
 	</insert>
 	
 	<!-- 3. 좌석 테이블의 seat_state 변경 -->
-	<update id="updateSeatState" parameterType="int">
-		UPDATE theater_seat_tbl SET seat_state=6 
+	<update id="updateSeatState" parameterType="java.util.Map">
+		UPDATE theater_seat_tbl SET seat_state=6, member_id=#{member_id} 
 		WHERE seat_index = #{seat_index}
 	</update>
 	

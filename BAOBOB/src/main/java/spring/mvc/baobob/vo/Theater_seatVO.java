@@ -8,6 +8,16 @@ public class Theater_seatVO {
 	private int seat_state;
 	private int seat_price;
 	private int theater_schedule_index;
+	private String member_id;
+	
+
+	public String getMember_id() {
+		return member_id;
+	}
+
+	public void setMember_id(String member_id) {
+		this.member_id = member_id;
+	}
 
 	public int getSeat_index() {
 		return seat_index;

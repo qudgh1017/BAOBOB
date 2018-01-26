@@ -16,12 +16,13 @@
 		<center><h3><b>영화 목록</b></h3></center>
 		<hr style="border:3px solid black;">
 		<input style="background-color:#343a40; color:white; border:1px solid black; width:200px; height:40px; margin-left:177px; margin-bottom:15px;" type="button" name="hostMovieAddForm" onclick="window.location='hostMovieAddForm'" value="영화 등록하기"/>
-		<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0" style="width:800px; border:1px solid black;" align="center">
+		<table class="table table-bordered" id="dataTable" cellspacing="0" style="border:1px solid black;" align="center">
 			<thead>
 			<tr>
-				<th style="width:15%;"> 영화번호</th>
+				<th style="width:10%;"> NO. </th>
+<!-- 				<th style="width:15%;"> 포스터 </th> -->
 				<th style="width:25%;"> 영화 제목 </th>
-				<th style="width:10%;"> 감독 </th>
+				<th style="width:15%;"> 감독 </th>
 				<th style="width:15%;"> 장르 </th>
 				<th style="width:15%;"> 개봉일 </th>
 				<th style="width:10%;"> 상영여부 </th>
@@ -78,7 +79,9 @@
 							${vo.movie_rel_date}
 						</td>
 						<td>
-							${vo.movie_state}
+							<c:if test="${vo.movie_state==0}">상영예정</c:if>
+							<c:if test="${vo.movie_state==1}">상영중</c:if>
+							<c:if test="${vo.movie_state==2}">상영종료</c:if>
 						</td>
 						<td>
 							<input type="button" onclick="window.location='hostMovieDel?movie_index=${vo.movie_index}'" value="삭제"/>

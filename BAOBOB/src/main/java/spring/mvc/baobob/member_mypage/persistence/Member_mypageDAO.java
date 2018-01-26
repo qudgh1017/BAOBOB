@@ -10,6 +10,7 @@ import spring.mvc.baobob.vo.MovieHistoryVO;
 import spring.mvc.baobob.vo.MovieVO;
 import spring.mvc.baobob.vo.ParkingHistory;
 import spring.mvc.baobob.vo.RestaurantLogVO;
+import spring.mvc.baobob.vo.Theater_seatVO;
 import spring.mvc.baobob.vo.WishListVO;
 
 public interface Member_mypageDAO {
@@ -85,6 +86,9 @@ public interface Member_mypageDAO {
 		
 	//내가 본 영화 리스트	
 	public ArrayList<MovieHistoryVO> getMovieClear(Map<String,Object> map);
+	
+	//예약한 상영과,좌석 불러오기
+	public ArrayList<Theater_seatVO> getMovieSeat(Map<String,Object> map);
 		
 	//무비 다이어리 글갯수 구하기
 	public int getMovieDiaryCnt(String strId);	

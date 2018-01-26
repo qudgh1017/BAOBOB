@@ -4,7 +4,7 @@ window.onload = function() {
 			 textFont: 'Impact,"Arial Black",sans-serif',
 			 textColour: '#990000',
 			 outlineColour: '#FA5A5C',
-			 textHeight: 25,
+			 textHeight: 20,
 			 reverse: true,
 			 depth: 0.5,
 			 maxSpeed: 0.10
@@ -20,7 +20,7 @@ function refrechWord() {
 		TagCanvas.Start('myCanvas','tags', {
 			 textFont: 'Impact,"Arial Black",sans-serif',
 			 textColour: null,
-			 textHeight: 25,
+			 textHeight: 20,
 			 reverse: true,
 			 depth: 0.5,
 			 maxSpeed: 0.10

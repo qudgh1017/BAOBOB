@@ -16,7 +16,7 @@
 		<center><h3><b>직원 목록</b></h3></center>
 		<hr style="border:3px solid black;">
 		<input style="background-color:#343a40; color:white; border:1px solid black; width:200px; height:40px; margin-left:177px; margin-bottom:15px;" type="button" name="hostMovieEmpAddForm" onclick="window.location='hostMovieEmpAddForm'" value="직원 고용하기"/>
-		<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0" style="width:800px; border:1px solid black;" align="center">
+		<table class="table table-bordered" id="dataTable" cellspacing="0" style="border:1px solid black;" align="center">
 			<thead>
 			<tr>
 				<th style="width:30%;"> 이름 </th>
@@ -26,7 +26,7 @@
 			</tr>
 			</thead>
 			
-			<!-- 게시글이 있으면 -->
+			<!-- 직원목록이 있으면 -->
 			<c:if test="${cnt>0}">
 				<c:forEach var="vo" items="${vos}">
 					<tr>
@@ -55,8 +55,6 @@
 			</c:if>
 		</table>
 	</div>
-	<br>
-	<br>
 	</div>
 	
 	<!-- Footer -->
