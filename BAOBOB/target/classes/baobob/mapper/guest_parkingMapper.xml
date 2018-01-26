@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="spring.mvc.baobob.guest_parking.persistence.Guest_parkingDAO">
+
+	<!-- 주차장 입장 -1) history 내역 존재 확인-->
+	<select id="historyDateCheck" resultType="String">
+		SELECT history_index
+		FROM history_tbl
+		WHERE TO_CHAR(history_date, 'Y') = TO_CHAR(SYSTIMESTAMP, 'Y')
+            AND TO_CHAR(history_date, 'MM') = TO_CHAR(SYSTIMESTAMP, 'MM')
+            AND TO_CHAR(history_date, 'DY') = TO_CHAR(SYSTIMESTAMP, 'DY')
+            AND member_id = #{member_id}
+	</select>
+
+	<!-- 주차장 입장 -2) HISTORY 기록 -->
+	<insert id="historyInsert" parameterType="String">
+		INSERT INTO history_tbl 
+			(history_index ,history_date, member_id) 
+		VALUES 
+			(history_tbl_SEQ.NEXTVAL, SYSTIMESTAMP, #{member_id})
+	</insert>
+	
+	<!-- 주차장 입장 -2) 주차 기록 -->
+	<insert id="parkInHistoryInsert" parameterType="java.util.Map">
+		INSERT INTO park_history_tbl 
+			(p_history_index, history_index, p_history_in, p_history_out, p_history_price, p_history_space, p_history_date) 
+		VALUES (park_history_tbl_SEQ.NEXTVAL, #{history_index}, SYSTIMESTAMP, NULL, 0, #{key}, SYSTIMESTAMP)
+	</insert>
+
+	<!-- 퇴장 번호 확인 -->
+	<select id="parkingOutKeyCheck" resultType="int">
+		SELECT COUNT(*) 
+		FROM park_history_tbl
+		WHERE p_history_space = #{key}
+	</select>
+	
+	<!-- 카드 등록된 회원인지 확인 (자동 결제) -->
+	<select id="parkingOutMemberCheck" resultType="int">
+		SELECT COUNT(*)
+		FROM park_history_tbl ph, history_tbl ht, card_tbl ct
+		WHERE  ph.history_index = ht.history_index
+            AND ht.member_id = ct.member_id
+            AND ht.member_id != #{key}
+            AND p_history_space = #{key}
+	</select>
+	
+	<!-- 입차 시간 -->
+	<select id="getParkingInTime" resultType="java.sql.Timestamp">
+		SELECT p_history_in
+		FROM park_history_tbl
+		WHERE p_history_space = #{key}
+	</select>
+	
+	<!-- 영화 건수 -->
+	<select id="getMovieHistoryCount" resultType="int">
+		SELECT COUNT(*)
+		FROM park_history_tbl ph, history_tbl ht, movie_history_tbl mh
+		WHERE  ph.history_index = ht.history_index
+		    AND ht.history_index = mh.history_index
+		    AND p_history_space = #{key}
+	</select>
+	
+	<!-- 식당 건수 -->
+	<select id="getRestaurantHistoryCount" resultType="int">
+		SELECT COUNT(*)
+		FROM park_history_tbl ph, history_tbl ht, restaurant_history_tbl rh
+		WHERE  ph.history_index = ht.history_index
+		    AND ht.history_index = rh.history_index
+		    AND p_history_space = #{key}	
+	</select>
+	
+	<!-- 퇴장 -->
+	<update id="parkingHistoryUpdate" parameterType="java.util.Map">
+		UPDATE park_history_tbl  
+		SET
+			p_history_out = SYSTIMESTAMP,
+			p_history_price = #{p_history_price}
+		WHERE p_history_space = #{key}
+	</update>
+	
+	<!-- 해당 주차 정보 -->
+	<select id="getParkingHistory" resultType="spring.mvc.baobob.vo.ParkingHistory">
+		SELECT *
+		FROM park_history_tbl
+		WHERE p_history_space = #{key}
+	</select>
+	
+	<!--  결제시 회원 포인트 적립 -->
+	<update id="memberPointUpdate" parameterType="spring.mvc.baobob.vo.Member">
+		UPDATE member_tbl
+		SET
+			member_point = member_point + #{member_point},
+			member_cumPoint = member_cumPoint + #{member_point}
+		WHERE member_id = #{member_id}
+	</update>
+	
+	<select id="keyMemberIdSelect" resultType="String">
+		SELECT member_id
+		FROM history_tbl ht, park_history_tbl ph
+		WHERE ht.history_index = ph.history_index
+			AND ph.p_history_space = #{key}
+			AND member_id != #{key}
+	</select>
+</mapper>
