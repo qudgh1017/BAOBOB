@@ -64,7 +64,7 @@
 	
 	<!-- 상영관 좌석별 상태 insert_theater_seat -->
 	<insert id="insert_theater_seat" parameterType="java.util.Map">
-		INSERT INTO theater_seat_tbl values(theater_seat_tbl_seq.nextval, #{theater_index}, #{row}, #{col}, #{state}, #{price}, -1)
+		INSERT INTO theater_seat_tbl values(theater_seat_tbl_seq.nextval, #{theater_index}, #{row}, #{col}, #{state}, #{price}, -1, null)
 	</insert>
 	
 	<!-- 상영관 존재 여부 getTheaterCnt -->
@@ -255,7 +255,7 @@
 	
 	<!-- 스케줄에 해당하는 좌석 생성 -->
 	<insert id="TheaterScheduleSeatAddPro" parameterType="java.util.Map">
-		INSERT INTO theater_seat_tbl VALUES(theater_seat_tbl_SEQ.nextval, #{theater_index}, #{row}, #{col}, #{seatState}, #{seatPrice}, (SELECT MAX(theater_schedule_index) FROM theater_schedule_tbl))
+		INSERT INTO theater_seat_tbl VALUES(theater_seat_tbl_SEQ.nextval, #{theater_index}, #{row}, #{col}, #{seatState}, #{seatPrice}, (SELECT MAX(theater_schedule_index) FROM theater_schedule_tbl), null)
 	</insert>
 	
 	<!-- 스케줄에 해당하는 좌석 정보 가져오기 -->
@@ -263,9 +263,9 @@
 		SELECT * FROM theater_seat_tbl WHERE theater_index=#{theater_index} AND theater_schedule_index=#{theater_schedule_index}
 	</select>
 	
-	<!-- 영화 스케줄에 빈좌석 업데이트하기 -->
+	<!-- 영화 스케줄에 빈좌석과 총 좌석 업데이트하기 -->
 	<update id="updateEmpty_seat" parameterType="int">
-		UPDATE theater_schedule_tbl SET schedule_empty_seat = #{empty_seat} WHERE theater_schedule_index = (SELECT MAX(theater_schedule_index) FROM theater_schedule_tbl)
+		UPDATE theater_schedule_tbl SET schedule_empty_seat = #{empty_seat}, schedule_seat = #{empty_seat} WHERE theater_schedule_index = (SELECT MAX(theater_schedule_index) FROM theater_schedule_tbl)
 	</update>
 	
 	<!-- 결산 - 영화 장르별 관람객 수 -->
