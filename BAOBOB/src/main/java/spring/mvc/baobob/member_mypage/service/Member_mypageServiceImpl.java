@@ -810,12 +810,23 @@ public class Member_mypageServiceImpl implements Member_mypageService{
 			
 			String[] seatRow = {"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"};
 			for(MovieHistoryVO mVO : movieDtos) {
-				String[] seat = new String[100];
+				
+				String[] seat;
+				int seatSize = 0;
+				for(Theater_seatVO sVO : seatDtos) {
+					if(mVO.getTheater_schedule_index()==sVO.getTheater_schedule_index()) {
+						seatSize++;
+					}
+				}
+				
+				seat = new String[seatSize];
+				
 				int i=0;
 				for(Theater_seatVO sVO : seatDtos) {
 					if(mVO.getTheater_schedule_index()==sVO.getTheater_schedule_index()) {
+						
 						String seatInfo = seatRow[sVO.getSeat_row()-1]+sVO.getSeat_col();
-						seat[i++] += seatInfo;
+						seat[i++] = seatInfo;
 					}
 				}
 				mVO.setSeat(Arrays.toString(seat));
