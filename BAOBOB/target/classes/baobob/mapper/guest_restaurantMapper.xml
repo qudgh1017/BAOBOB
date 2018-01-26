@@ -98,16 +98,16 @@
 	</select>
 
 	<!-- 예약 내역 추가 history_table -->
-	<!-- <insert id="AddHistory" parameterType="Map">
+	<insert id="AddHistory" parameterType="Map">
 		INSERT INTO history_tbl(history_index, history_date, member_id)
 		VALUES(history_tbl_SEQ.NEXTVAL, sysdate, #{member_id})
-	</insert> -->
+	</insert> 
 	
 	<!-- 레스토랑 예약 내역 추가 restaurant_history_tbl -->
-	<!-- <insert id="AddRHistory" parameterType="Map">
-		INSERT INTO restaurant_history_tbl(history_index, restaurant_schedule_index, restaurant_table_index)
-		VALUES(history_tbl_SEQ.CURRVAL, restaurant_schedule_tbl_SEQ.CURRVAL, #{dto2.index})
-	</insert> -->
+	<insert id="AddRHistory" parameterType="Map">
+		INSERT INTO restaurant_history_tbl(history_index, restaurant_schedule_index, restaurant_table_index, discount, member_use_point, payvalue, restaurant_history_state)
+		VALUES(history_tbl_SEQ.CURRVAL, restaurant_schedule_tbl_SEQ.CURRVAL, #{dto2.restaurant_table_index}, 0, 0, 0, 0)
+	</insert> 
 	
 	
 	

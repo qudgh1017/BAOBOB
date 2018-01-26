@@ -113,6 +113,24 @@
 					</td>
 				</tr>
 				<tr>
+					<td><hr><hr><hr></td>
+				</tr>
+				<tr>
+					<td style="text-align: center;">
+						<span><b style="font-size: 18px;">[예약 취소]</b></span>
+					</td>
+				</tr>
+				<tr>
+					<td style="text-align: center;">
+						<input class="form-control" id="table_num" name="table_num" type="text" placeholder="테이블 번호">
+					</td>
+				</tr>
+				<tr>
+					<td style="text-align: center;">
+						<input class="btn btn-primary" onclick="reservDel()" style="background-color: #343a40; margin-top: 15px; color: white; border: 1px solid #343a40;" type="button" value="예약 취소" />
+					</td>
+				</tr>
+				<tr>
 					<td><hr></td>
 				</tr>
 			</table>

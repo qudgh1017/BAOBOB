@@ -134,9 +134,13 @@
 			p_fee_exc_price = #{p_fee_exc_price}, 
 			p_fee_exc_time = #{p_fee_exc_time}, 
 			p_fee_base_price = #{p_fee_base_price}, 
+<<<<<<< HEAD
 			p_fee_base_time = #{p_fee_base_time},
 			p_fee_movie_time = #{p_fee_movie_time},
 			p_fee_rest_time = #{p_fee_rest_time}
+=======
+			p_fee_base_time = #{p_fee_base_time}
+>>>>>>> branch 'master' of https://github.com/gjrjrem/BAOBOB.git
 	</update>
 	
 	<!-- 주차 내역 총 개수 -->

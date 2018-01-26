@@ -600,4 +600,85 @@ public class Host_restaurantDAOImpl implements Host_restaurantDAO {
 
 		return dao.getHistoryState(map);
 	}
+
+
+	// 결제 시 결제 완료 시점으로 히스토리 수정
+	@Override
+	public int modHistory(Map<String, Object> map) {
+		log.debug("dao.modHistory()");
+
+		Host_restaurantDAO dao = sqlSession.getMapper(Host_restaurantDAO.class);
+
+		return dao.modHistory(map);
+	}
+
+	// 결제 시 레스토랑 히스토리 테이블의 내용 업데이트
+	@Override
+	public int modRestaurantHistory(Map<String, Object> map) {
+		log.debug("dao.modRestaurantHistory()");
+
+		Host_restaurantDAO dao = sqlSession.getMapper(Host_restaurantDAO.class);
+
+		return dao.modRestaurantHistory(map);
+	}
+
+	// '사용 중'인 테이블을 '사용 가능'으로 변경
+	@Override
+	public int modState(Map<String, Object> map) {
+		log.debug("dao.modState()");
+
+		Host_restaurantDAO dao = sqlSession.getMapper(Host_restaurantDAO.class);
+
+		return dao.modState(map);
+	}
+
+	// 삭제 전 히스토리 인덱스 조회
+	@Override
+	public int getHistoryIndex(Map<String, Object> map) {
+		log.debug("dao.getHistoryIndex()");
+
+		Host_restaurantDAO dao = sqlSession.getMapper(Host_restaurantDAO.class);
+
+		return dao.getHistoryIndex(map);
+	}
+
+	// 레스토랑 히스토리 테이블에 이용 내역 삭제
+	@Override
+	public int delRestaurantHistory(Map<String, Object> map) {
+		log.debug("dao.delRestaurantHistory()");
+
+		Host_restaurantDAO dao = sqlSession.getMapper(Host_restaurantDAO.class);
+
+		return dao.delRestaurantHistory(map);
+	}
+	
+	// 히스토리 테이블에 이용 내역 삭제
+	@Override
+	public int delHistory(Map<String, Object> map) {
+		log.debug("dao.delHistory()");
+
+		Host_restaurantDAO dao = sqlSession.getMapper(Host_restaurantDAO.class);
+
+		return dao.delHistory(map);
+	}
+
+	// 테이블 전체 삭제
+	@Override
+	public int delTable(Map<String, Object> map) {
+		log.debug("dao.delTable()");
+
+		Host_restaurantDAO dao = sqlSession.getMapper(Host_restaurantDAO.class);
+
+		return dao.delTable(map);
+	}
+
+	// 스케줄 삭제 처리
+	@Override
+	public int delSchedule(Map<String, Object> map) {
+		log.debug("dao.delSchedule()");
+
+		Host_restaurantDAO dao = sqlSession.getMapper(Host_restaurantDAO.class);
+
+		return dao.delSchedule(map);
+	}
 }

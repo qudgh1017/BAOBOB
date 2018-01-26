@@ -39,6 +39,7 @@
 		    AND	TO_CHAR(board_reg_date, 'DDD') >= TO_CHAR(SYSTIMESTAMP - 10, 'DDD')
 		]]>
 	</select>
+<<<<<<< HEAD
 	
 	<!-- 영화 예매 내역 -->
 	<select id="getMemberMovieTicketing" resultType="spring.mvc.baobob.vo.Android">
@@ -57,4 +58,6 @@
 		    ), movie_tbl mt
 		WHERE mt.movie_index = movie
 	</select>
+=======
+>>>>>>> branch 'master' of https://github.com/gjrjrem/BAOBOB.git
 </mapper>
