@@ -990,6 +990,8 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 		if(cnt != 0) {
 			String member_id = req.getParameter("member_id");
 
+			System.out.println("id : " + member_id);
+			
 			// 아이디 존재 유무 및 예약 가능 아이디인지 확인
 			Integer member_step = dao.confirmId(member_id);
 

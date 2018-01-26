@@ -27,7 +27,7 @@
 			<!-- 사이드 메뉴 -->
 			<%@ include file="../../common/sideMenu.jsp" %>	
 			
-			<td style="padding:0rem 10rem; margin:0px;width:100%;height:100%;">
+			<td style="padding:0rem 5rem; margin:0px;width:100%;height:100%;">
 			<!-- 알맹이td -->
 			<table id="mainBody">
 				<caption>BAO밥 예약내역</caption>
@@ -47,17 +47,17 @@
 				<c:if test="${cnt > 0 }">
 					<c:forEach var="dto" items="${dtos}">
 
-					<jsp:useBean id="now" class="java.util.Date" />
+					<%-- <jsp:useBean id="now" class="java.util.Date" />
 					<fmt:formatDate value="${dto.schedule_endtime}" var="endtime" pattern="yyyy-MM-dd" />
-					<fmt:formatDate value="${now}" var="sysDate" pattern="yyyy-MM-dd" />
+					<fmt:formatDate value="${now}" var="sysDate" pattern="yyyy-MM-dd" /> --%>
 						
 						<!-- 이용시간이 지났으면 예약내역이 아닌 이용시간으로 출력 -->
-						<c:if test="${sysDate < endtime}">
+						<c:if test="${dto.restaurant_history_state == 0}">
 						<c:set var="bookCnt" value="1" />
 							    <tbody>
 							    <tr>
 							        <th style="text-align:center;">
-							        	${dto.restaurant_name}
+							        	${dto.restaurant_name}<br>
 							        </th>
 							        <th style="text-align:center;">
 							        	${dto.restaurant_tel}

@@ -147,7 +147,7 @@
 						<ul>
 							<c:forEach var="vo2" items="${vos2}">
 							<li class="single-event" data-start="<fmt:formatDate type="both" pattern="HH:mm" value="${vo2.schedule_startTime}" />" data-end="<fmt:formatDate type="both" pattern="HH:mm" value="${vo2.schedule_endTime}" />" data-content="hostMovieResDetail?theater_index=${vo2.theater_index}&movie_index=${vo2.movie_index}&theater_schedule_index=${vo2.theater_schedule_index}" data-event="event-2">
-							<a href="#0" onclick="hostMovieResView(${vo2.theater_index}, ${vo2.movie_index}, ${vo2.theater_schedule_index})">
+							<a href="#0" onclick="hostMovieResSeat(${vo2.theater_index}, ${vo2.movie_index}, ${vo2.theater_schedule_index})">
 								<em class="event-name">${vo2.theater_index}관<br>
 								<c:forEach var="movieVO" items="${movieVOS}">
 									<c:if test="${vo2.movie_index == movieVO.movie_index}">${movieVO.movie_title}</c:if>
@@ -165,7 +165,7 @@
 						<ul>
 							<c:forEach var="vo3" items="${vos3}">
 							<li class="single-event" data-start="<fmt:formatDate type="both" pattern="HH:mm" value="${vo3.schedule_startTime}" />" data-end="<fmt:formatDate type="both" pattern="HH:mm" value="${vo3.schedule_endTime}" />" data-content="hostMovieResDetail?theater_index=${vo3.theater_index}&movie_index=${vo3.movie_index}&theater_schedule_index=${vo3.theater_schedule_index}" data-event="event-1">
-							<a href="#0" onclick="hostMovieResView(${vo3.theater_index}, ${vo3.movie_index}, ${vo3.theater_schedule_index})">
+							<a href="#0" onclick="hostMovieResSeat(${vo3.theater_index}, ${vo3.movie_index}, ${vo3.theater_schedule_index})">
 								<em class="event-name">${vo3.theater_index}관 <br>
 								<c:forEach var="movieVO" items="${movieVOS}">
 									<c:if test="${vo3.movie_index == movieVO.movie_index}">${movieVO.movie_title}</c:if>
@@ -183,7 +183,7 @@
 						<ul>
 							<c:forEach var="vo4" items="${vos4}">
 							<li class="single-event" data-start="<fmt:formatDate type="both" pattern="HH:mm" value="${vo4.schedule_startTime}" />" data-end="<fmt:formatDate type="both" pattern="HH:mm" value="${vo4.schedule_endTime}" />" data-event="event-3">
-							<a href="#0" onclick="hostMovieResView(${vo4.theater_index}, ${vo4.movie_index}, ${vo4.theater_schedule_index})">
+							<a href="#0" onclick="hostMovieResSeat(${vo4.theater_index}, ${vo4.movie_index}, ${vo4.theater_schedule_index})">
 								<em class="event-name">${vo4.theater_index}관 <br>
 								<c:forEach var="movieVO" items="${movieVOS}">
 									<c:if test="${vo4.movie_index == movieVO.movie_index}">${movieVO.movie_title}</c:if>
@@ -201,7 +201,7 @@
 						<ul>
 							<c:forEach var="vo5" items="${vos5}">
 							<li class="single-event" data-start="<fmt:formatDate type="both" pattern="HH:mm" value="${vo5.schedule_startTime}" />" data-end="<fmt:formatDate type="both" pattern="HH:mm" value="${vo5.schedule_endTime}" />" data-event="event-2">
-							<a href="#0" onclick="hostMovieResView(${vo5.theater_index}, ${vo5.movie_index}, ${vo5.theater_schedule_index})">
+							<a href="#0" onclick="hostMovieResSeat(${vo5.theater_index}, ${vo5.movie_index}, ${vo5.theater_schedule_index})">
 								<em class="event-name">${vo5.theater_index}관 <br>
 								<c:forEach var="movieVO" items="${movieVOS}">
 									<c:if test="${vo5.movie_index == movieVO.movie_index}">${movieVO.movie_title}</c:if>
