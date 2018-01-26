@@ -27,7 +27,7 @@
 			<%@ include file="../../common/sideMenu.jsp" %>	
 			
 			<!-- 알맹이td -->
-			<td style="padding:0rem 10rem; margin:0px;width:100%;height:100%;">
+			<td style="padding:0rem 5rem; margin:0px;width:100%;height:100%;">
 			<table id="mainBody">
 				<caption>1 : 1 문의</caption>
 			    <thead>
