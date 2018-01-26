@@ -205,7 +205,7 @@
 	<select id="getMovieClear" resultType="spring.mvc.baobob.vo.MovieHistoryVO">
 		<![CDATA[
 			SELECT *
-			FROM( SELECT mh.history_index, h.member_id, m.movie_index, h.history_date,
+			FROM( SELECT mh.history_index, h.member_id, m.movie_index, h.history_date, s.theater_index,
 			         s.schedule_starttime, s.schedule_endtime, s.theater_schedule_index,
 			         m.movie_title, m.movie_content, m.movie_janre, m.movie_age, 
 			         m.movie_rel_date, m.movie_director, m.movie_star, m.movie_country, m.movie_runTime, 

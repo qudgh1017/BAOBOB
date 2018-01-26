@@ -68,6 +68,7 @@
 					        <th style="text-align:center;">${dto.movie_director}</th>
 							<th>
 								<!-- 상영관, 좌석 -->
+								${dto.theater_index}관 <br>
 								${dto.seat}
 							</th>
 							<th>
@@ -81,8 +82,7 @@
 								<!-- 상영시간전에는 예약취소버튼, 상영시간후에는 결제완료 노출 -->
 								<jsp:useBean id="now" class="java.util.Date" />
 								<fmt:formatDate value="${dto.schedule_endTime}" var="hisDate" pattern="yyyy-MM-dd" />
-								<fmt:formatDate value="${now}" var="sysDate" pattern="yyyy-MM-dd" />
-								
+								<fmt:formatDate value="${now}" var="sysDate" pattern="yyyy-MM-dd" /><br>
 								<c:if test="${hisDate > sysDate}">
 									<input type="button" class="button" onclick="window.location='moviePaidDelPro?num=${dto.history_index}'"value="예매 취소">
 								</c:if>
