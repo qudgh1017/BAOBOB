@@ -56,12 +56,11 @@
 			<li class="nav-item" data-toggle="tooltip" data-placement="right">
 				<a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents2" data-parent="#exampleAccordion"> 
 					<i class="fa fa-fw fa-table"></i>
-					<span class="nav-link-text">예약관리</span>
+					<span class="nav-link-text">예약 관리</span>
 				</a>
 				<ul class="sidenav-second-level collapse" id="collapseComponents2">
-					<li><a href="hostReservList">예약 목록</a></li>
+					<li><a href="hostReservList">예약 및 주문 현황</a></li>
 					<li><a href="hostReservAddForm">예약 추가</a></li>
-					<li><a href="hostReservDelForm">예약 취소</a></li>
 				</ul>
 			</li>
 			<li class="nav-item" data-toggle="tooltip" data-placement="right">

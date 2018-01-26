@@ -297,11 +297,14 @@ public class Host_restaurantController {
 	}
 
 	// 예약 삭제 처리
-	@RequestMapping(value = "/hostReservDelForm")
-	public String hostReservDelForm(HttpServletRequest req, Model model) {
-		log.debug("hostReservDelForm()");
+	@RequestMapping(value = "/hostReservDel")
+	public String hostReservDel(HttpServletRequest req, Model model) {
+		log.debug("hostReservDel()");
 
-		return "host/host_restaurant/hostReservDelForm";
+		// 예약 취소 처리
+		service.reservDel(req, model);
+		
+		return "host/host_restaurant/hostReservDel";
 	}
 
 	// 예약 조회 페이지

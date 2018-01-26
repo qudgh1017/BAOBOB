@@ -183,4 +183,22 @@ public interface Host_restaurantDAO {
 
 	// 결제 시 레스토랑 히스토리 테이블의 내용 업데이트
 	public int modRestaurantHistory(Map<String, Object> map);
+
+	// '사용 중'인 테이블을 '사용 가능'으로 변경
+	public int modState(Map<String, Object> map);
+
+	// 레스토랑 히스토리 테이블에 이용 내역 삭제
+	public int delRestaurantHistory(Map<String, Object> map);
+
+	// 히스토리 테이블에 이용 내역 삭제
+	public int delHistory(Map<String, Object> map);
+
+	// 삭제 전 히스토리 인덱스 조회
+	public int getHistoryIndex(Map<String, Object> map);
+
+	// 스케줄 삭제 처리
+	public int delSchedule(Map<String, Object> map);
+
+	// 테이블 전체 삭제
+	public int delTable(Map<String, Object> map);
 }

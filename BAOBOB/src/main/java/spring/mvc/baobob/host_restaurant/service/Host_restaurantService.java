@@ -93,13 +93,16 @@ public interface Host_restaurantService {
 
 	// 테이블별 결산(결제 처리)
 	public void payment(HttpServletRequest req, Model model);
-
+/*
 	// 예약 삭제
 	public void scheduleDel(HttpServletRequest req, Model model);
-
+*/
 	// 메뉴별 차트
 	public void accountChart(HttpServletRequest req, Model model);
 
 	// 성별 차트
 	public void accountChart2(HttpServletRequest req, Model model);
+
+	// 예약 취소 처리
+	public void reservDel(HttpServletRequest req, Model model);
 }

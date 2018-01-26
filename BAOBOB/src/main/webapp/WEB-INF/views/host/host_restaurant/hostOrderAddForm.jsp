@@ -127,7 +127,7 @@
 				</tr>
 				<tr>
 					<td style="text-align: center;">
-						<input class="btn btn-primary" onclick="reservDel()" style="background-color: #007bff; margin-top: 15px; color: white; border: 1px solid #007bff;" type="button" value="예약 취소" />
+						<input class="btn btn-primary" onclick="reservDel()" style="background-color: #343a40; margin-top: 15px; color: white; border: 1px solid #343a40;" type="button" value="예약 취소" />
 					</td>
 				</tr>
 				<tr>

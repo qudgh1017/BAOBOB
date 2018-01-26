@@ -431,4 +431,57 @@
 		   AND r.restaurant_schedule_index = #{restaurant_schedule_index}
 		   AND r.restaurant_table_index = #{restaurant_table_index}
 	</select>
+	
+	<!-- 히스토리 인덱스 조회 -->
+	<select id="getHistoryIndex" resultType="int">
+		SELECT history_index
+		  FROM restaurant_history_tbl
+		 WHERE restaurant_schedule_index = #{restaurant_schedule_index}
+		   AND restaurant_table_index = #{restaurant_table_index}
+		   AND discount = 0
+		   AND member_use_point = 0
+		   AND payvalue = 0
+		   AND restaurant_history_state = 0
+	</select>
+	
+	<!-- '사용 중'인 테이블을 '사용 가능'으로 변경 -->
+	<update id="modState" parameterType="Map">
+		UPDATE restaurant_table_tbl
+		   SET table_state = 1
+		 WHERE restaurant_index = #{restaurant_index}
+		   AND restaurant_schedule_index = #{restaurant_schedule_index}
+		   AND restaurant_table_index = #{restaurant_table_index}
+	</update>
+	
+	<!-- 레스토랑 히스토리 테이블에 이용 내역 삭제 -->
+	<delete id="delRestaurantHistory" parameterType="Map">
+		DELETE FROM restaurant_history_tbl
+		 WHERE history_index = #{history_index}
+		   AND restaurant_schedule_index = #{restaurant_schedule_index}
+		   AND restaurant_table_index = #{restaurant_table_index}
+		   AND discount = 0
+		   AND member_use_point = 0
+		   AND payvalue = 0
+		   AND restaurant_history_state = 0
+	</delete>
+	
+	<!-- 히스토리 테이블에 이용 내역 삭제 -->
+	<delete id="delHistory" parameterType="Map">
+		DELETE FROM history_tbl
+		 WHERE history_index = #{history_index}
+		   AND member_id = #{member_id}
+	</delete>
+	
+	<!-- 테이블 전체 삭제 -->
+	<delete id="delTable" parameterType="Map">
+		DELETE FROM restaurant_table_tbl
+		 WHERE restaurant_index = #{restaurant_index}
+		   AND restaurant_schedule_index = #{restaurant_schedule_index}
+	</delete>
+	
+	<!-- 스케줄 삭제 처리 -->
+	<delete id="delSchedule" parameterType="Map">
+		DELETE FROM restaurant_schedule_tbl
+		 WHERE restaurant_schedule_index = #{restaurant_schedule_index}
+	</delete>
 </mapper>

@@ -214,8 +214,6 @@ function spaceTypeChange2(index) {
 			alert('예약할 아이디를 입력하세요');
 			return false;
 		}
-		
-		alert(member_id);
 	}
 	
 	// 매장 정보
@@ -336,11 +334,6 @@ function reservView(step) {
 	window.location = 'reservView?date=' + date + '&index=' + step.toString().substring(1, 2);
 }
 
-// 예약 삭제 처리
-function reservDel() {
-	alert('고');
-}
-
 // 주문 삭제 처리
 function orderDel() {
 	var restaurant_schedule_index = document
@@ -399,4 +392,32 @@ function payment() {
 	}
 	
 	window.location = 'hostPayment?restaurant_schedule_index=' + restaurant_schedule_index + '&table_Num=' + table_Num + '&member_id=' + member_id + '&payValue=' + payValue + '&point=' + point;
+}
+
+// 예약 삭제 처리
+function reservDel() {
+	var restaurant_schedule_index = document.getElementById("restaurant_schedule_index").value; // 예약 번호
+	var table_Num = document.getElementById("table_num").value; // 결제할 테이블 번호
+
+	if (table_Num == "") {
+		alert("취소할 테이블 번호를 입력하세요.");
+		document.getElementById("table_num").focus();
+		return false;
+	}
+
+	var member_id = document.getElementById("member_id" + table_Num).value; // 예약 취소 할 아이디
+	var payValue = document.getElementById("payValue" + table_Num).value; // 결제 할 금액이 있는지 확인하기 위한 변수
+	var history_state = document.getElementById("history_state" + table_Num).value; // 결제를 했는지 확인하기 위한 변수
+
+	if (payValue != "0") {
+		alert("주문내역이 있어 취소하실 수 없습니다.");
+		return false;
+	} else if (history_state == "(결제 완료)") {
+		alert("이미 결제한 테이블입니다.");
+		return false;
+	}
+
+	alert(restaurant_schedule_index + ", " + table_Num + ", " + member_id);
+	
+	window.location = 'hostReservDel?restaurant_schedule_index=' + restaurant_schedule_index + '&table_Num=' + table_Num + '&member_id=' + member_id;
 }
