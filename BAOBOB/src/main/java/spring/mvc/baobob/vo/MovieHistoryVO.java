@@ -27,7 +27,7 @@ public class MovieHistoryVO {
 	private Timestamp schedule_endTime;
 	
 	private int theater_index;
-	private String[] seat;
+	private String seat;
 
 	
 	public int getTheater_schedule_index() {
@@ -46,11 +46,11 @@ public class MovieHistoryVO {
 		this.theater_index = theater_index;
 	}
 
-	public String[] getSeat() {
+	public String getSeat() {
 		return seat;
 	}
 
-	public void setSeat(String[] seat) {
+	public void setSeat(String seat) {
 		this.seat = seat;
 	}
 

@@ -8,6 +8,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -817,7 +818,7 @@ public class Member_mypageServiceImpl implements Member_mypageService{
 						seat[i++] += seatInfo;
 					}
 				}
-				mVO.setSeat(seat);
+				mVO.setSeat(Arrays.toString(seat));
 			}
 			
 			model.addAttribute("dtos", movieDtos);
