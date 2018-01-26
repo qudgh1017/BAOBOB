@@ -439,10 +439,10 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 	public void allAccountChart(HttpServletRequest req, Model model) {
 		log.debug("service.allAccountChart()");
 		
-		// 모든 메뉴의 이름 조회
+		// 모든 매장의 이름 조회
 		String[] restaurant = dao.getRestaurantName();
 
-		// 판매된적있는 메뉴의 이름과 판매액 조회
+		// 여러 정보를 저장하기 위해 맵 이용
 		Map<String , Object> map = new HashMap<String,Object>();
 		
 		// mapper에서 불러온 kind와 value가 다건이기때문에 vo형태의 List형으로 받아준다.
@@ -453,18 +453,18 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 			map.put(dto.getKind(), dto.getValue());
 		}
 		
-		// 판매된적이 있는지 없는지 확인
+		// 판매액이 있는지 확인
 		for(String s : restaurant) {
 			int cnt = 0;
 			
-			// 판매된적이 있는 메뉴는 건너뛰고,
+			// 판매액이 0이 아닌 매장은 건너뛰고,
 			for(Entry<String, Object> m : map.entrySet()) {
 				if(s.equals(m.getKey())) {
 					cnt = 1;
 				}
 			}
 			
-			// 판매된 적이 없는 메뉴는 판매액(value)에 0을 넣어준다.
+			// 판매액이 0인 매장은 0을 put해준다.
 			if(cnt == 0) {
 				map.put(s, 0);
 			}
@@ -926,6 +926,10 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 		schedule_dto.setSchedule_endTime(Timestamp.valueOf(endTime));
 		schedule_dto.setRestaurant_index(restaurant_index);
 
+		log.debug("startTime : " + startTime);
+		log.debug("endTime : " + endTime);
+		log.debug("restaurant_index : " + restaurant_index);
+		
 		// 스케줄 index 조회
 		Integer schedule_index = dao.getScheduleIndex(schedule_dto);
 
@@ -933,7 +937,7 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 		if (schedule_index != null) {
 			schedule_dto.setRestaurant_schedule_index(schedule_index);
 		}
-
+		
 		// 테이블 정보
 		TableVO table_dto = new TableVO();
 		
@@ -947,6 +951,9 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 		if (schedule_index == null) {
 			// 새로운 예약 추가
 			cnt = dao.addReserv(map);
+			schedule_index = dao.getScheduleIndex(schedule_dto);
+			schedule_dto.setRestaurant_schedule_index(schedule_index);
+			map.replace("schedule_dto", schedule_dto);
 		}
 
 		// 새로운 예약을 추가한게 아니라면(기존 예약이 있다면)
@@ -990,6 +997,8 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 			if(member_step != null && ((1 <= member_step && member_step <= 12) || (51 <= member_step && member_step <= 53) || (61 <= member_step && member_step <= 63))) {
 				// 히스토리에 이용 내역 추가
 				cnt = dao.addHistory(member_id);
+
+				log.debug("schedule_index : " + schedule_index);
 				
 				// 내역 추가에 성공했다면
 				if(cnt != 0) {
@@ -1484,13 +1493,13 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 		
 						// 화면에서 가져온 테이블 번호가 되면 이용 내역 테이블 내용 수정
 						if (table_cnt == table_Num) {
-							// 히스토리 테이블에 이용 내역 추가
-							//cnt = dao.modHistory(member_id);
+							// 레스토랑 히스토리 테이블에 이용 내역 추가
+							cnt = dao.modRestaurantHistory(map);
 							
 							// 추가에 성공했다면
 							if(cnt != 0) {
-								// 레스토랑 히스토리 테이블에 이용 내역 추가
-								//cnt = dao.modRestaurantHistory(map);
+								// 히스토리 테이블에 이용 내역 추가
+								cnt = dao.modHistory(map);
 
 								// 추가에 성공했다면
 								if(cnt != 0) {
@@ -1503,23 +1512,25 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 									
 									// 수정에 성공했다면
 									if(cnt != 0) {
-										// step 계산을 위한 누적 포인트 조회
-										int step = dao.getCumPoint(member_id);
-
-										// 누적 포인트에 따라 step이 달라짐
-										if (0 <= step && step <= 15000) {
-											step = 9;
-										} else if (15001 <= step && step <= 30000) {
-											step = 10;
-										} else if (30001 <= step && step <= 45000) {
-											step = 11;
-										} else if (45001 <= step) {
-											step = 12;
+										// 관리자들은 스텝이 변경 되면 안됨
+										if(member_step == 9 || member_step == 10 || member_step == 11 || member_step == 12) {
+											// step 계산을 위한 누적 포인트 조회
+											int step = dao.getCumPoint(member_id);
+											// 누적 포인트에 따라 step이 달라짐
+											if (0 <= step && step <= 15000) {
+												step = 9;
+											} else if (15001 <= step && step <= 30000) {
+												step = 10;
+											} else if (30001 <= step && step <= 45000) {
+												step = 11;
+											} else if (45001 <= step) {
+												step = 12;
+											}
+											map.put("member_step", step);
+											
+											// member_step 변경
+											cnt = dao.updateStep(map);
 										}
-										map.put("member_step", step);
-										
-										// member_step 변경
-										cnt = dao.updateStep(map);
 									}
 								}
 							}

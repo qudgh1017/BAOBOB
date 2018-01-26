@@ -205,8 +205,6 @@ function spaceTypeChange2(index) {
 		if(count < table_count) {
 			alert('입력하신 숫자만큼 테이블을 선택해주세요');
 			return false;
-		} else {
-			count = 0;
 		}
 		
 		// 예약할 아이디
@@ -237,6 +235,7 @@ function spaceTypeChange2(index) {
 	} else {
 		var date = document.getElementById('datepicker').value;
 		var time = document.getElementById('timepicker').value;
+		count = 0;
 		window.location = 'hostReservAddPro?info=' + info + '&col=' + x + '&row=' + y + '&index=' + index.toString().substring(1, 2) + '&date=' + date + '&time=' + time + '&member_id=' + member_id + '&table_index=' + table_index;
 	}
 }
@@ -333,6 +332,11 @@ function reservView(step) {
 	}
 	
 	window.location = 'reservView?date=' + date + '&index=' + step.toString().substring(1, 2);
+}
+
+// 예약 삭제 처리
+function reservDel() {
+	alert('고');
 }
 
 // 주문 삭제 처리

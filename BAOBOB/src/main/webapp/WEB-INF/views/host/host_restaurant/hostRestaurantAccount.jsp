@@ -24,7 +24,7 @@
 	google.charts.setOnLoadCallback(menuChart);
 	var chart_options = {
 			title : '메뉴별 매출', 
-			width : 500, 
+			width : 450, 
 			height : 400, 
 			bar : {groupWidth : '30%'},
 			legend : {position : 'bottom'}
@@ -54,8 +54,9 @@
 	google.charts.setOnLoadCallback(drawChart);
 	var chart_options2 = {
 		title : '성별 비율',
-		width : 500,
-		height : 400
+		width : 450,
+		height : 400,
+		legend : {position : 'bottom'}
 	}
 	function drawChart(){
 	 	var data = google.visualization.arrayToDataTable([
@@ -66,7 +67,6 @@
 		var sexChart = new google.visualization.PieChart(document.getElementById('sexChart'));
 		sexChart.draw(data, chart_options2);
 	}
-	
 </script>
 </head>
 <body class="fixed-nav sticky-footer bg-dark" onload="AddComma(${total})">

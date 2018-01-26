@@ -29,6 +29,9 @@ public interface Host_restaurantService {
 
 	// 식당 총 관리자 - 모든 직원 리스트
 	public void allEmployeeList(HttpServletRequest req, Model model);
+
+	// 식당 총 관리자 - 식당별 차트
+	public void allAccountChart(HttpServletRequest req, Model model);
 	
 	/////////////////////////////////////////////////////////////////////////////////////////
 	
@@ -99,7 +102,4 @@ public interface Host_restaurantService {
 
 	// 성별 차트
 	public void accountChart2(HttpServletRequest req, Model model);
-
-	// 식당별 차트
-	public void allAccountChart(HttpServletRequest req, Model model);
 }

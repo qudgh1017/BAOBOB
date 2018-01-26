@@ -271,7 +271,7 @@
 	<!-- 회원 정보 상세 조회 -->
 	<select id="confirmId" resultType="Integer">
 		SELECT member_step FROM member_tbl
-		WHERE member_id = #{id}
+		 WHERE member_id = #{id}
 	</select>
 	
 	<!-- 이미 주문한 메뉴인지 확인 -->
@@ -309,7 +309,7 @@
 		VALUES(history_tbl_SEQ.CURRVAL, #{schedule_dto.restaurant_schedule_index}, #{restaurant_table_index}, 0, 0, 0, 0)
 		</if>
 		<if test="schedule_dto.restaurant_schedule_index == null">
-		VALUES(history_tbl_SEQ.CURRVAL, restaurant_schedule_tbl_SEQ.CURRVAL, #{restaurant_table_index}, 0, 0, 0, 0)
+		VALUES(history_tbl_SEQ.CURRVAL, #{schedule_dto.restaurant_schedule_index}, #{restaurant_table_index}, 0, 0, 0, 0)
 		</if>
 	</insert>
 
@@ -321,9 +321,12 @@
 	<!-- 이용 내역 수정 처리 -->
 	<update id="modHistory" parameterType="Map">
 		UPDATE history_tbl
-		   SET history_date = sysdate
-		 WHERE member_id = #{member_id}
-		   AND history_index = #{history_index}
+			SET history_date = sysdate
+		  WHERE member_id = #{member_id}
+		    AND history_index = (SELECT history_index 
+			                       FROM restaurant_history_tbl
+			                      WHERE restaurant_schedule_index = #{restaurant_schedule_index}
+			                        AND restaurant_table_index = #{restaurant_table_index})
 	</update>
 	
 	<!-- 식당 이용 내역 추가 처리 -->
@@ -333,8 +336,7 @@
 		     , discount = #{discount}
 		     , member_use_point = #{member_use_point}
 		     , payValue = #{payValue}
-		     , 
-		 WHERE history_schedule_index = #{restaurant_schedule_index}
+		 WHERE restaurant_schedule_index = #{restaurant_schedule_index}
 		   AND restaurant_table_index = #{restaurant_table_index}
 	</update>
 	

@@ -296,6 +296,14 @@ public class Host_restaurantController {
 		return "host/host_restaurant/hostReservAddPro";
 	}
 
+	// 예약 삭제 처리
+	@RequestMapping(value = "/hostReservDelForm")
+	public String hostReservDelForm(HttpServletRequest req, Model model) {
+		log.debug("hostReservDelForm()");
+
+		return "host/host_restaurant/hostReservDelForm";
+	}
+
 	// 예약 조회 페이지
 	@RequestMapping(value = "/reservView")
 	public String hostScheduleSearch(HttpServletRequest req, Model model) {
