@@ -99,4 +99,7 @@ public interface Host_restaurantService {
 
 	// 성별 차트
 	public void accountChart2(HttpServletRequest req, Model model);
+
+	// 식당별 차트
+	public void allAccountChart(HttpServletRequest req, Model model);
 }

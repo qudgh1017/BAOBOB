@@ -105,6 +105,17 @@ public class Host_restaurantController {
 		return "host/host_restaurant/hostAllEmployeeList";
 	}
 
+	// 식당 총 관리자 - 식당별 차트
+	@RequestMapping(value = "/hostAllAccountChart")
+	public String hostAllAccountChart(HttpServletRequest req, Model model) {
+		log.debug("hostAllAccountChart()");
+
+		// 식당별 차트
+		service.allAccountChart(req, model);
+
+		return "host/host_restaurant/hostAllAccountChart";
+	}
+
 	/////////////////////////////////////////////////////////////////////////////////////////
 
 	// 식당별 메뉴 리스트

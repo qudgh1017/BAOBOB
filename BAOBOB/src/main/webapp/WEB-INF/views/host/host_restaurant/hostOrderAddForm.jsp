@@ -16,7 +16,7 @@
 				<tr>
 				<tr>
 					<td style="text-align: center;">
-						<span><b style="font-size: 18px;">[ 예약 테이블 ]</b></span>
+						<span><b style="font-size: 18px;">[ 테이블 ]</b></span>
 					</td>
 				</tr>
 				<c:if test="${use_table_cnt > 0}">
@@ -24,8 +24,10 @@
 						<tr>
 							<td style="text-align: center;">
 								<span>${dto}번 테이블</span><br>
-								<span style="font-size: 12px; color: gray">- ${bill[status.index]}원</span><br>
+								<span style="font-size: 12px; color: gray">${reserv_id[status.index]} - ${bill[status.index]}원<br>${history_state[status.index]}</span><br>
 								<input type="hidden" id="payValue${dto}" value="${bill[status.index]}">
+								<input type="hidden" id="member_id${dto}" value="${reserv_id[status.index]}">
+								<input type="hidden" id="history_state${dto}" value="${history_state[status.index]}">
 							</td>
 						</tr>
 					</c:forEach>
@@ -98,11 +100,6 @@
 				<tr>
 					<td style="text-align: center;">
 						<input class="form-control" id="table_number" name="table_number" type="text" placeholder="테이블 번호">
-					</td>
-				</tr>
-				<tr>
-					<td style="text-align: center;">
-						<input class="form-control" id="member_id" name="member_id" type="text" placeholder="결제 아이디">
 					</td>
 				</tr>
 				<tr>

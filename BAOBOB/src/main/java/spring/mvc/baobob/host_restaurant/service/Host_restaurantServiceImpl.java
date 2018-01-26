@@ -433,6 +433,78 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 			member_step++;
 		}
 	}
+
+	// 식당 총 관리자 - 식당별 차트
+	@Override
+	public void allAccountChart(HttpServletRequest req, Model model) {
+		log.debug("service.allAccountChart()");
+		
+		// 모든 메뉴의 이름 조회
+		String[] restaurant = dao.getRestaurantName();
+
+		// 판매된적있는 메뉴의 이름과 판매액 조회
+		Map<String , Object> map = new HashMap<String,Object>();
+		
+		// mapper에서 불러온 kind와 value가 다건이기때문에 vo형태의 List형으로 받아준다.
+		List<Restaurant_ChartVO> menuList = dao.getRestaurantChart();
+		
+		// List 데이터를 한 건씩 map에 담는다.
+		for(Restaurant_ChartVO dto : menuList) {
+			map.put(dto.getKind(), dto.getValue());
+		}
+		
+		// 판매된적이 있는지 없는지 확인
+		for(String s : restaurant) {
+			int cnt = 0;
+			
+			// 판매된적이 있는 메뉴는 건너뛰고,
+			for(Entry<String, Object> m : map.entrySet()) {
+				if(s.equals(m.getKey())) {
+					cnt = 1;
+				}
+			}
+			
+			// 판매된 적이 없는 메뉴는 판매액(value)에 0을 넣어준다.
+			if(cnt == 0) {
+				map.put(s, 0);
+			}
+		}
+
+		// 가나다 순으로 정렬하기 위해 트리맵 이용
+		TreeMap<String, Object> tm = new TreeMap<String, Object>(map);
+		
+		// 키값 오름차순 정렬(기본)
+		Iterator<String> iteratorKey = tm.keySet().iterator();
+		
+		String key = "";	// 키
+		String keys = "";	// 키의 조합
+		String value = "";	// 값
+		String values = ""; // 값의 조합
+		int cnt = 0;	// 처음인지 확인
+		
+		while (iteratorKey.hasNext()) {
+			key = iteratorKey.next();
+			value = String.valueOf(tm.get(key));
+			// 처음이면 콤마를 붙이지 않음
+			if(cnt == 0) {
+				keys = keys + key;
+				values = values + value;
+				cnt = 1;
+			}
+			// 처음이 아니면 콤마를 앞에
+			else {
+				keys = keys + "," + key;
+				values = values + "," + value;
+			}
+		}
+		
+		// 결과를 저장한다.
+		model.addAttribute("keys", keys);
+		model.addAttribute("values", values);
+		model.addAttribute("count", restaurant.length);
+		model.addAttribute("chart", map);
+		model.addAttribute("total", tm.get("합계"));
+	}
 	
 	/////////////////////////////////////////////////////////////////////////////////////////
 
@@ -906,7 +978,31 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 				}
 			}
 		}
+		
+		// 테이블 예약까지 성공했다면
+		if(cnt != 0) {
+			String member_id = req.getParameter("member_id");
 
+			// 아이디 존재 유무 및 예약 가능 아이디인지 확인
+			Integer member_step = dao.confirmId(member_id);
+
+			// 이용 가능한 멤버라면
+			if(member_step != null && ((1 <= member_step && member_step <= 12) || (51 <= member_step && member_step <= 53) || (61 <= member_step && member_step <= 63))) {
+				// 히스토리에 이용 내역 추가
+				cnt = dao.addHistory(member_id);
+				
+				// 내역 추가에 성공했다면
+				if(cnt != 0) {
+					int table_index = Integer.parseInt(req.getParameter("table_index"));
+					map.put("restaurant_table_index", table_index);
+					// 레스토랑 히스토리 테이블에 이용 내역 추가
+					cnt = dao.addRestaurantHistory(map);
+				}
+			} else {
+				cnt = 2;
+			}
+		}
+		
 		// 성공 여부 저장
 		model.addAttribute("cnt", cnt);
 	}
@@ -1075,6 +1171,8 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 
 		ArrayList<String> use_tables = new ArrayList<String>();
 		ArrayList<String> bill = new ArrayList<String>();
+		ArrayList<String> reserv_id = new ArrayList<String>();
+		ArrayList<String> history_state = new ArrayList<String>();
 
 		for (int i = 0; i < row; i++) {
 			for (int j = 0; j < col; j++) {
@@ -1103,6 +1201,21 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 					
 					// 사용중인 테이블 개수 증가
 					use_table_cnt++;
+					
+					// 예약한 아이디 조회
+					String id = dao.getReservId(map);
+					
+					// 히스토리 인덱스를 이용해 예약자 아이디 확인
+					reserv_id.add(id);
+					
+					// 결제한 테이블인지 확인
+					int h_state = dao.getHistoryState(map);
+					
+					if(h_state == 1) {
+						history_state.add("(결제 완료)");
+					} else {
+						history_state.add("");
+					}
 				}
 
 				// 테이블을 찾으면 count를 증가시킨다.(사용중인 테이블이 몇번 테이블인지 확인하기 위함)
@@ -1130,8 +1243,12 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 
 		// 사용 중인 테이블이 0개 이상일 때 화면 출력을 위해 저장
 		model.addAttribute("use_table_cnt", use_table_cnt);
+
+		// 사용 중인 테이블이 어떤 아이디로 예약된 자리인지 알기 위해 저장
+		model.addAttribute("reserv_id", reserv_id);
 		
-		System.out.println("use_table_cnt : " + use_table_cnt);
+		// 결제 여부를 알기 위해 저장
+		model.addAttribute("history_state", history_state);
 	}
 
 	// 테이블에 주문 추가(판매)
@@ -1365,15 +1482,15 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 							table_cnt++;
 						}
 		
-						// 화면에서 가져온 테이블 번호가 되면 이용 내역 테이블에 내용을 추가하고 '사용중'인 테이블을 '사용가능'상태로 바꾸고 반복을 끝낸다.
+						// 화면에서 가져온 테이블 번호가 되면 이용 내역 테이블 내용 수정
 						if (table_cnt == table_Num) {
 							// 히스토리 테이블에 이용 내역 추가
-							cnt = dao.addHistory(member_id);
+							//cnt = dao.modHistory(member_id);
 							
 							// 추가에 성공했다면
 							if(cnt != 0) {
 								// 레스토랑 히스토리 테이블에 이용 내역 추가
-								cnt = dao.addRestaurantHistory(map);
+								//cnt = dao.modRestaurantHistory(map);
 
 								// 추가에 성공했다면
 								if(cnt != 0) {

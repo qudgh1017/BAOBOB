@@ -296,15 +296,6 @@
 		   AND f.restaurant_table_index = #{restaurant_table_index}
 	</select>
 	
-	<!--'사용중'인 테이블 '사용가능'으로 상태 변경 -->
-	<update id="modState" parameterType="Map">
-		UPDATE restaurant_table_tbl
-		   SET table_state = 1
-		 WHERE restaurant_index = #{restaurant_index}
-		   AND restaurant_schedule_index = #{restaurant_schedule_index}
-		   AND restaurant_table_index = #{restaurant_table_index}
-	</update>
-	
 	<!-- 이용 내역 추가 처리 -->
 	<insert id="addHistory" parameterType="String">
 		INSERT INTO history_tbl(history_index, history_date, member_id) 
@@ -313,14 +304,39 @@
 	
 	<!-- 식당 이용 내역 추가 처리 -->
 	<insert id="addRestaurantHistory" parameterType="Map">
-		INSERT INTO restaurant_history_tbl(history_index, restaurant_schedule_index, restaurant_table_index, discount, member_use_point, payvalue) 
-		VALUES(history_tbl_SEQ.CURRVAL, #{restaurant_schedule_index}, #{restaurant_table_index}, #{discount}, #{member_use_point}, #{payValue})
+		INSERT INTO restaurant_history_tbl(history_index, restaurant_schedule_index, restaurant_table_index, discount, member_use_point, payvalue, restaurant_history_state) 
+		<if test="schedule_dto.restaurant_schedule_index != null">
+		VALUES(history_tbl_SEQ.CURRVAL, #{schedule_dto.restaurant_schedule_index}, #{restaurant_table_index}, 0, 0, 0, 0)
+		</if>
+		<if test="schedule_dto.restaurant_schedule_index == null">
+		VALUES(history_tbl_SEQ.CURRVAL, restaurant_schedule_tbl_SEQ.CURRVAL, #{restaurant_table_index}, 0, 0, 0, 0)
+		</if>
 	</insert>
 
 	<!-- 사용 가능한 포인트 조회 -->
 	<select id="getPoint" resultType="int">
 		SELECT member_point FROM member_tbl WHERE member_id = #{id}
 	</select>
+	
+	<!-- 이용 내역 수정 처리 -->
+	<update id="modHistory" parameterType="Map">
+		UPDATE history_tbl
+		   SET history_date = sysdate
+		 WHERE member_id = #{member_id}
+		   AND history_index = #{history_index}
+	</update>
+	
+	<!-- 식당 이용 내역 추가 처리 -->
+	<update id="modRestaurantHistory" parameterType="Map">
+		UPDATE restaurant_history_tbl 
+		   SET restaurant_history_state = 1
+		     , discount = #{discount}
+		     , member_use_point = #{member_use_point}
+		     , payValue = #{payValue}
+		     , 
+		 WHERE history_schedule_index = #{restaurant_schedule_index}
+		   AND restaurant_table_index = #{restaurant_table_index}
+	</update>
 	
 	<!-- 사용한 포인트, 새로 적립된 포인트 계산 -->
 	<update id="modMemberPoint" parameterType="Map">
@@ -357,6 +373,18 @@
 		 GROUP BY ROLLUP(menu.restaurant_menu_name)
 	</select>
 	
+	<select id="getRestaurantChart" resultMap="MenuCountChart">
+		SELECT NVL(res.restaurant_name, '합계') AS kind
+		     , SUM(menu.restaurant_menu_price * food.restaurant_menu_count) AS value 
+		  FROM restaurant_menu_tbl menu
+		     , restaurant_food_history_tbl food 
+		     , restaurant_tbl res
+		 WHERE menu.restaurant_menu_index = food.restaurant_menu_index
+		   AND food.restaurant_index = res.restaurant_index
+		   AND menu.restaurant_index = food.restaurant_index
+		 GROUP BY ROLLUP(res.restaurant_name)
+	</select>
+	
 	<!-- 성별 결산 -->
 	<select id="getSexChartContent" resultType="hashmap">
 		SELECT NVL(mem.member_sex, 'total') AS kind
@@ -374,5 +402,31 @@
 		   AND reshis.restaurant_schedule_index = food.restaurant_schedule_index
 		   AND reshis.restaurant_table_index = food.restaurant_table_index
 		 GROUP BY ROLLUP(mem.member_sex)
+	</select>
+
+	<!-- 모든 식당 이름 조회 -->
+	<select id="getRestaurantName" resultType="String">
+		SELECT restaurant_name 
+		  FROM restaurant_tbl
+	</select>
+	
+	<!-- 예약한 아이디 조회 -->
+	<select id="getReservId" resultType="String">
+		SELECT h.member_id 
+		  FROM history_tbl h
+		     , restaurant_history_tbl r
+		 WHERE h.history_index = r.history_index
+		   AND r.restaurant_schedule_index = #{restaurant_schedule_index}
+		   AND r.restaurant_table_index = #{restaurant_table_index}
+	</select>
+	
+	<!-- 결제한 테이블인지 확인 -->
+	<select id="getHistoryState" resultType="int">
+		SELECT r.RESTAURANT_HISTORY_STATE
+		  FROM history_tbl h
+		     , restaurant_history_tbl r
+		 WHERE h.history_index = r.history_index
+		   AND r.restaurant_schedule_index = #{restaurant_schedule_index}
+		   AND r.restaurant_table_index = #{restaurant_table_index}
 	</select>
 </mapper>

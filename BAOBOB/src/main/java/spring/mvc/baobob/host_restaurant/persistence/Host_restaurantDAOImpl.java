@@ -470,16 +470,6 @@ public class Host_restaurantDAOImpl implements Host_restaurantDAO {
 		return dao.getBill(map);
 	}
 
-	// '사용중'인 테이블 '사용가능'으로 상태 변경
-	@Override
-	public int modState(Map<String, Object> map) {
-		log.debug("dao.modState()");
-
-		Host_restaurantDAO dao = sqlSession.getMapper(Host_restaurantDAO.class);
-
-		return dao.modState(map);
-	}
-
 	// 레스토랑 히스토리 테이블에 이용 내역 추가
 	@Override
 	public int addRestaurantHistory(Map<String, Object> map) {
@@ -520,7 +510,7 @@ public class Host_restaurantDAOImpl implements Host_restaurantDAO {
 		return dao.getMenuName(restaurant_index);
 	}
 
-	// 결산 차트
+	// 메뉴별 차트
 	@Override
 	public List<Restaurant_ChartVO> getMenuCountChart(int restaurant_index) {
 		log.debug("dao.getMenuCountChart()");
@@ -530,7 +520,7 @@ public class Host_restaurantDAOImpl implements Host_restaurantDAO {
 		return dao.getMenuCountChart(restaurant_index);
 	}
 
-	// 성별 매출
+	// 성별 차트
 	@Override
 	public Object getSexChart(int restaurant_index) {
 		log.debug("dao.getSexChart()");
@@ -542,7 +532,7 @@ public class Host_restaurantDAOImpl implements Host_restaurantDAO {
 		m.put("남", 0);
 		m.put("여", 0);
 
-		List<Member> list = new ArrayList();
+		List<Member> list = new ArrayList<Member>();
 		
 		for (int i = 0; i < m.size(); i++) {
 			list = getSexChartContent(restaurant_index);
@@ -571,4 +561,43 @@ public class Host_restaurantDAOImpl implements Host_restaurantDAO {
 		return dao.getSexChartContent(restaurant_index);
 	}
 
+	// 모든 식당 이름 조회
+	@Override
+	public String[] getRestaurantName() {
+		log.debug("dao.getRestaurantName()");
+
+		Host_restaurantDAO dao = sqlSession.getMapper(Host_restaurantDAO.class);
+
+		return dao.getRestaurantName();
+	}
+
+	// 메뉴별 차트
+	@Override
+	public List<Restaurant_ChartVO> getRestaurantChart() {
+		log.debug("dao.getMenuCountChart()");
+
+		Host_restaurantDAO dao = sqlSession.getMapper(Host_restaurantDAO.class);
+
+		return dao.getRestaurantChart();
+	}
+	
+	// 예약한 아이디 조회
+	@Override
+	public String getReservId(Map<String, Object> map) {
+		log.debug("dao.getReservId()");
+
+		Host_restaurantDAO dao = sqlSession.getMapper(Host_restaurantDAO.class);
+
+		return dao.getReservId(map);
+	}
+
+	// 결제한 테이블인지 확인
+	@Override
+	public int getHistoryState(Map<String, Object> map) {
+		log.debug("dao.getHistoryState()");
+
+		Host_restaurantDAO dao = sqlSession.getMapper(Host_restaurantDAO.class);
+
+		return dao.getHistoryState(map);
+	}
 }
