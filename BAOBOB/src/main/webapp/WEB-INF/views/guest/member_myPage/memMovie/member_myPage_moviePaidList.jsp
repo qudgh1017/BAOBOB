@@ -84,7 +84,8 @@
 								<fmt:formatDate value="${dto.schedule_endTime}" var="hisDate" pattern="yyyy-MM-dd" />
 								<fmt:formatDate value="${now}" var="sysDate" pattern="yyyy-MM-dd" /><br>
 								<c:if test="${hisDate > sysDate}">
-									<input type="button" class="button" onclick="window.location='moviePaidDelPro?num=${dto.history_index}'"value="예매 취소">
+									<input type="button" class="button" 
+										onclick="window.location='moviePaidDelPro?num=${dto.history_index}'"value="예매 취소">
 								</c:if>
 								
 								<c:if test="${hisDate < sysDate}">

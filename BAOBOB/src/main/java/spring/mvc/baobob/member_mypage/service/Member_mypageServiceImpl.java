@@ -863,6 +863,31 @@ public class Member_mypageServiceImpl implements Member_mypageService{
 		
 	//抗概郴开 秒家贸府
 	public void moviePaidDelPro(HttpServletRequest req, Model model) {
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		int num = Integer.parseInt(req.getParameter("num"));
 		
 		int deleteCnt = dao.moviePaidDelPro(num);
