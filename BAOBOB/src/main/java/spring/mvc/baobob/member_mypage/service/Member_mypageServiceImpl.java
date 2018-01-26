@@ -809,10 +809,12 @@ public class Member_mypageServiceImpl implements Member_mypageService{
 			ArrayList<Theater_seatVO> seatDtos = dao.getMovieSeat(map);
 			
 			String[] seatRow = {"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"};
+			
 			for(MovieHistoryVO mVO : movieDtos) {
 				
 				String[] seat;
 				int seatSize = 0;
+				
 				for(Theater_seatVO sVO : seatDtos) {
 					if(mVO.getTheater_schedule_index()==sVO.getTheater_schedule_index()) {
 						seatSize++;
@@ -871,7 +873,7 @@ public class Member_mypageServiceImpl implements Member_mypageService{
 	
 	//내가 이용한 레스토랑
 	public void restaurantLog(HttpServletRequest req, Model model) {
-		int pageSize = 10;		// 한 페이지당 출력할 글 개수
+		int pageSize = 5;		// 한 페이지당 출력할 글 개수
 		int pageBlock = 3;		// 한 블럭당 페이지 갯수
 		
 		int cnt = 0;			// 글 갯수
@@ -886,8 +888,8 @@ public class Member_mypageServiceImpl implements Member_mypageService{
 		int endPage = 0;		// 마지막 페이지
 		
 		String strId = (String)req.getSession().getAttribute("memId");
-		
-		//글 갯수 구하기
+		System.out.println("세션: " + strId);
+		//식당 예매내역 갯수
 		cnt = dao.restaurantLogCnt(strId);
 		
 		pageNum = req.getParameter("pageNum");
@@ -937,6 +939,8 @@ public class Member_mypageServiceImpl implements Member_mypageService{
 		model.addAttribute("cnt", cnt); //글갯수
 		model.addAttribute("number", number); //글번호
 		model.addAttribute("pageNum", pageNum); //페이지 번호
+		System.out.println("예약갯수: " + cnt);
+		
 		
 		if(cnt > 0) {
 			model.addAttribute("startPage", startPage); //시작 페이지

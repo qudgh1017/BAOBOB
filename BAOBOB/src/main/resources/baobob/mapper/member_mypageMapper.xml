@@ -288,15 +288,15 @@
 	<!-- 식당 예약 갯수 구하기 -->
 	<select id="restaurantLogCnt" resultType="int">
 		SELECT COUNT(*)
-		FROM restaurant_tbl r 
+		FROM restaurant_tbl r
 		JOIN restaurant_schedule_tbl rs
 		ON r.restaurant_index = rs.restaurant_index
-		JOIN restaurant_table_tbl rt
-		ON rt.restaurant_schedule_index = rs.restaurant_schedule_index
 		JOIN restaurant_history_tbl rh
 		ON rs.restaurant_schedule_index = rh.restaurant_schedule_index
 		JOIN history_tbl h
-		ON h.history_index = rh.history_index
+		ON rh.history_index = h.history_index
+		JOIN member_tbl m
+		ON h.member_id = m.member_id
 		WHERE h.member_id=#{strId}
 	</select>
 	
@@ -304,19 +304,17 @@
 	<select id="restaurantLogList" resultType="spring.mvc.baobob.vo.RestaurantLogVO">
 		<![CDATA[
 		SELECT *
-		FROM( SELECT r.restaurant_index, r.restaurant_tel, r.restaurant_name,
-		             rs.restaurant_schedule_index, rs.schedule_starttime, rs.schedule_endtime,
-		             rt.restaurant_table_index, 
-		             h.history_index, h.history_date, h.member_id, rownum rNum 
-		        FROM restaurant_tbl r 
+		FROM( SELECT m.member_id, rs.restaurant_schedule_index, rs.schedule_starttime, rs.schedule_endtime,
+		             r.restaurant_name,r.restaurant_tel, rh.restaurant_history_state, h.history_date, rownum rNum
+		        FROM restaurant_tbl r
 		        JOIN restaurant_schedule_tbl rs
 		        ON r.restaurant_index = rs.restaurant_index
-		        JOIN restaurant_table_tbl rt
-		        ON rt.restaurant_schedule_index = rs.restaurant_schedule_index
 		        JOIN restaurant_history_tbl rh
 		        ON rs.restaurant_schedule_index = rh.restaurant_schedule_index
 		        JOIN history_tbl h
-		        ON h.history_index = rh.history_index
+		        ON rh.history_index = h.history_index
+		        JOIN member_tbl m
+		        ON h.member_id = m.member_id
 		        WHERE h.member_id=#{strId}
 		    )
 		WHERE rNum >= #{start} AND rNum <= #{end}

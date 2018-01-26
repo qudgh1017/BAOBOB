@@ -26,7 +26,7 @@
 			<!-- 사이드 메뉴 -->
 			<%@ include file="../../common/sideMenu.jsp" %>	
 			
-			<td style="padding:0px 400px; margin:0px;width:100%;height:100%;">
+			<td style="padding:0rem 5rem; margin:0px;width:100%;height:100%;">
 			<table id="mainBody">
 				<caption>포인트 안내</caption>
 			    <thead>

@@ -455,7 +455,7 @@ public class Member_mypageController {
 	public String memRBookList(HttpServletRequest req, Model model) {
 		
 		service.memberCard(req, model);
-		//service.restaurantLog(req, model);
+		service.restaurantLog(req, model);
 		
 		return "guest/member_myPage/memRestaurant/member_myPage_memRBookList";
 	}

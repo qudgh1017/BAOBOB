@@ -216,6 +216,8 @@ function spaceTypeChange2(index) {
 			alert('예약할 아이디를 입력하세요');
 			return false;
 		}
+		
+		alert(member_id);
 	}
 	
 	// 매장 정보

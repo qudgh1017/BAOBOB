@@ -27,7 +27,7 @@
 			<!-- 사이드 메뉴 -->
 			<%@ include file="../../common/sideMenu.jsp" %>	
 			
-			<td style="padding:0rem 10rem; margin:0px;width:100%;height:100%;">
+			<td style="padding:0rem 5rem; margin:0px;width:100%;height:100%;">
 			<!-- 알맹이td -->
 			<table id="mainBody">
 				<caption>분실물 문의</caption>
