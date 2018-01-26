@@ -139,7 +139,7 @@ public class Host_parkingServiceImpl implements Host_parkingService {
 		ArrayList<String> list = dao.getParkingStates(last_idx);
 		String states = "";
 		for (int i = 0; i < list.size(); i += 1) {
-			if(spaces[i].equals("0")) {
+			if(spaces[i].equals("0") || spaces[i].equals("9") || spaces[i].equals("8")) {
 				list.set(i, "2");
 			}
 			states += states.equals("") ? list.get(i) : "," + list.get(i);

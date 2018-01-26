@@ -16,6 +16,13 @@
 	</style>
 </head>
 <body>
+<c:if test="${memChk != null}">
+	<script type="text/javascript">
+		alert("회원 정보가 올바르지 않습니다.");
+		history.back();
+	</script>
+</c:if>
+<c:if test="${memChk == null}">
 	<%@ include file="../common/head.jsp" %>
 
 	<%@ include file="guestParkingHeader.jsp" %>
@@ -72,5 +79,6 @@
 			window.location = 'guestParkingMain';
 		}, 60000);
 	</script>
+</c:if>
 </body>
 </html>
