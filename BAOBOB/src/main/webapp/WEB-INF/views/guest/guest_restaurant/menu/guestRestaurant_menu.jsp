@@ -36,14 +36,16 @@
 		/*=====  메뉴 스타일  =====*/
 		/* 상위 div */
 		.area-meals {
-			width: 520px;
+			/* width: 520px; */
+			width:100%;
 		    margin-left: -20px;
 		    overflow: hidden;
+		    /* display:-webkit-box */
 		}
 		/* 상세 정보 포함하는 div */
 		.area-meals .box-meals {
 		    position: relative;
-		    word-break: normal;
+		    word-break: break-word;/* 글이 길어질 때 줄바꿈을 어떻게 할지 지정하는 속성 normal;말고 word-break:break-word or break-all*/
 		    float: left;
 		    width: 480px;
 		    min-height: 222px;
@@ -52,7 +54,6 @@
 		    border: 1px solid #bee1dd;
 		    margin-left: 20px;
 		    box-sizing: border-box;
-		    display: inline-block;
 		}
 		/* 이미지 스타일 */
 		.area-meals .box-meals .img_meals {
@@ -149,46 +150,43 @@
 			<div class="row">
 				<div class="col-md-offset-1"></div>
 				<div class="col-md-10">
+				
 					<!--====== Container 시작 ======-->
-					<!-- <div class="container"> -->
 
 					<h2>메뉴 갯수: ${cnt}</h2>
 					<hr style="border: 2px solid black;">
-					<br>
-
+				
 					<c:if test="${cnt>0}">
-						<%-- <c:forEach var="i" begin="1" end="${cnt}">
-							<c:forEach var="j" begin="1" end="2"> --%>
-							<div class="area-meals">
-							
-						<c:forEach var="dto" items="${dtos}" varStatus="status">
- 								<%-- <c:if test="${status.index % 2 == 0}">  --%>
-							<div class="box-meals clear_fix">
-								<p class="img_meals">
-									<img src="${restaurant_images}${dto.restaurant_menu_img}">
-								</p>
-	
-								<span>${dto.restaurant_menu_name}</span> <strong
-									class="txt-info type-1"> [
-									${dto.restaurant_menu_price}원]</strong>
-								<p class="txt-info type-2">${dto.restaurant_menu_content}</p>
-							</div>
-								<%-- </c:if> --%>
-							
-						</c:forEach>
+						<div class="area-meals">
+							<c:forEach var="dto" items="${dtos}" varStatus="status">
+								
+							 <div class="col-md-6">	
+							 <!-- <div style="width:40%;"> -->	
+									<%-- <c:if test="${status.index % 2 == 0}"> --%>
+										<div class="box-meals clear_fix" align="left">
+											<p class="img_meals">
+												<img style="width: 190px;" src="${restaurant_images}${dto.restaurant_menu_img}">
+											</p>
+				
+											<span>${dto.restaurant_menu_name}</span> <strong
+												class="txt-info type-1"> [
+												${dto.restaurant_menu_price}원]</strong>
+											<p class="txt-info type-2">${dto.restaurant_menu_content}</p>
+										</div>
+									<%-- </c:if> --%>
+								</div>		 
+								
+							</c:forEach>
 						</div>
-				<%-- </c:forEach>
-						</c:forEach> --%>
-				</c:if>
-
-				<c:if test="${cnt==0}">
-					메뉴가 없서요.
 					</c:if>
-				<!-- </div> -->
+		
+					<c:if test="${cnt==0}">
+						메뉴가 없서요.
+					</c:if>
 				<!--====== Container 종료 ======-->
 				</div>
 				<div class="col-md-offset-1"></div>
-			</div>
+			</div>	
 		</div>
 	</section>
 	
