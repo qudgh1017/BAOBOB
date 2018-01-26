@@ -156,12 +156,10 @@
 			<!-- 좌석선택 아이콘 -->
 			<div class="col-md-3" align="center" style="border: solid 1px gray; color:gray; font-weight:bold;" >
 				<div id="nextDealButton" >
-				
-				
 					<!-- 예매선택된 인원/좌석 정보 -->
 					<div style="font-size:13px; font-weight:bold;">
 						<br>
-							<a onclick="movieTicket3('${schedule.theater_schedule_index}')"> 
+						<a onclick="movieTicket3('${schedule.theater_schedule_index}')"> 
 							<img src="${projectRes}/images/ybh/post.png" style="height:80px">
 						</a>
 						<br>결제
