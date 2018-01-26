@@ -265,27 +265,34 @@ public class Guest_movieServiceImpl implements Guest_movieService{
 		String keyword = req.getParameter("keyword");
 		String sel = req.getParameter("sel");
 		
-		String[] str_movie_janre = req.getParameterValues("movie_janre");
-		String[] str_movie_age = req.getParameterValues("movie_age");
-		String[] movie_country = req.getParameterValues("movie_country");
+		String[] str_movie_janre_arr = req.getParameterValues("movie_janre");
+		String[] str_movie_age_arr = req.getParameterValues("movie_age");
+		String[] movie_country_arr = req.getParameterValues("movie_country");
+		String str_movie_country="";
 		
-		int[] movie_janre = new int[str_movie_janre.length];
+		System.out.println("movie_country배열!!!!!!--->" + movie_country_arr);
+		
+		for(int i=0; i<movie_country_arr.length; i++) {
+			str_movie_country += movie_country_arr[i];
+		}
+		
+		int[] movie_janre = new int[str_movie_janre_arr.length];
 
 		for(int i =0; i<movie_janre.length; i++){
-			movie_janre[i]=Integer.parseInt(str_movie_janre[i]);
+			movie_janre[i]=Integer.parseInt(str_movie_janre_arr[i]);
 		};
 		
-		int[] movie_age = new int[str_movie_age.length];
+		int[] movie_age = new int[str_movie_age_arr.length];
 
 		for(int i =0; i<movie_age.length; i++){
-			movie_age[i]=Integer.parseInt(str_movie_age[i]);
+			movie_age[i]=Integer.parseInt(str_movie_age_arr[i]);
 		};
 		
 		model.addAttribute("keyword", keyword);
 		model.addAttribute("sel", sel);
 		model.addAttribute("movie_janre", movie_janre);
 		model.addAttribute("movie_age", movie_age);
-		model.addAttribute("movie_country", movie_country);
+		model.addAttribute("movie_country", movie_country_arr);
 		
 		int pageSize = 8; 		// 한 페이지당 출력할 글 갯수
 		int pageBlock = 3;		// 한 블럭당 페이지 갯수
@@ -707,50 +714,44 @@ public class Guest_movieServiceImpl implements Guest_movieService{
 	//한 좌석 정보
 	@Override
 	public void seatInfo(HttpServletRequest req, Model model) {
-		int seat_index = Integer.parseInt(req.getParameter("seat_index"));
-		Theater_seatVO seat = new Theater_seatVO();
+	//	String str_seat_checked_arr = req.getParameter("seat_checked_arr");
+	//	System.out.println("seat_checked_arr (string) = " + str_seat_checked_arr);
+	//	System.out.println("자른거 : " + str_seat_checked_arr.split(","));
+		String[] str_seat_checked_arr = req.getParameterValues("seat_checked_arr");
+		System.out.println("seat_checked_arr = " + str_seat_checked_arr); //seat_checked_arr
+		int size = str_seat_checked_arr.length;
 		
-		seat = gmdao.seatInfo(seat_index);
-		
-		model.addAttribute("seat",seat);
-		
-	}
-
-	//nextDealButton에 담을 seatInfos
-	@Override
-	public void seatInfos(HttpServletRequest req, Model model) {
-		int adultCnt = Integer.parseInt(req.getParameter("adultCnt"));
-		int teenagerCnt = Integer.parseInt(req.getParameter("teenagerCnt"));
-		String[] str_seat_index_arr = req.getParameterValues("seat_index_arr");
-		int size = str_seat_index_arr.length;
 		//한개 좌석의 정보
 		Theater_seatVO seat = new Theater_seatVO();
 		//선택된 여러개의 좌석 정보
 		ArrayList<Theater_seatVO> seats = new ArrayList<Theater_seatVO>();
-				
-		int[] seat_index_arr = new int[size];
 		
+		int[] seat_index_arr = new int[size];
 		for(int i=0; i<size; i++) {
-			seat_index_arr[i] = Integer.parseInt(str_seat_index_arr[i]);
+			seat_index_arr[i] = Integer.parseInt(str_seat_checked_arr[i]);
 			
+			if(seat_index_arr[i]!=-1) {
 			//한개 좌석의 정보 바구니에 담기
 			seat = gmdao.seatInfo(seat_index_arr[i]);
 			//좌석의 정보들 ArrayList에 담기
 			seats.add(seat);
+			}
 		}
 		
-		int theater_schedule_index = seat.getTheater_schedule_index();
-		
 		model.addAttribute("seats", seats);
-		model.addAttribute("adultCnt", adultCnt);
-		model.addAttribute("teenagerCnt", teenagerCnt);
-		model.addAttribute("theater_schedule_index", theater_schedule_index);
-		
+//		int seat_index = Integer.parseInt(req.getParameter("seat_index"));
+//		Theater_seatVO seat = new Theater_seatVO();
+//		
+//		seat = gmdao.seatInfo(seat_index);
+//		
+//		model.addAttribute("seat",seat);
+//		
 	}
+	
 	
 	//결제창으로 넘어가는 부분
 	@Override
-	public void seatInfos2(HttpServletRequest req, Model model) {
+	public void seatInfos(HttpServletRequest req, Model model) {
 		int adultCnt = Integer.parseInt(req.getParameter("adultCnt"));
 		int teenagerCnt = Integer.parseInt(req.getParameter("teenagerCnt"));
 		String str_seat_index_info = req.getParameter("seat_index_arr");
@@ -768,10 +769,12 @@ public class Guest_movieServiceImpl implements Guest_movieService{
 		for(int i=0; i<size; i++) {
 			seat_index_arr[i] = Integer.parseInt(str_seat_index_arr[i]);
 			
-			//한개 좌석의 정보 바구니에 담기
-			seat = gmdao.seatInfo(seat_index_arr[i]);
-			//좌석의 정보들 ArrayList에 담기
-			seats.add(seat);
+			if(seat_index_arr[i]!=-1) {
+				//한개 좌석의 정보 바구니에 담기
+				seat = gmdao.seatInfo(seat_index_arr[i]);
+				//좌석의 정보들 ArrayList에 담기
+				seats.add(seat);
+			}
 		}
 		int theater_schedule_index = seat.getTheater_schedule_index();
 		
@@ -843,12 +846,19 @@ public class Guest_movieServiceImpl implements Guest_movieService{
 			cnt = 0;
 		}
 		
+		Map <String,Object> map2 = new HashMap<String,Object>();
+		map2.put("member_id", member_id);
+		map2.put("seat_index", 0);
+		
 		//3. Update theater_seat_tbl 해당 seat_index의 seat_state=6 변경(좌석 상태 예약석으로 변경)
 		for(int i=0; i<size; i++) {
-			seat_index_arr[i] = Integer.parseInt(str_seat_index_arr[i]);
-			updateSeatCnt = gmdao.updateSeatState(seat_index_arr[i]);
-			if(updateSeatCnt == 0) { //0일때만 보내줌
-				model.addAttribute("updateSeatCnt",updateSeatCnt);
+			if(seat_index_arr[i]!=-1) {
+				seat_index_arr[i] = Integer.parseInt(str_seat_index_arr[i]);
+				map2.replace("seat_index", seat_index_arr[i]); //값 바꿔줌
+				updateSeatCnt = gmdao.updateSeatState(map2);
+				if(updateSeatCnt == 0) { //0일때만 보내줌
+					model.addAttribute("updateSeatCnt",updateSeatCnt);
+				}
 			}
 		}
 		

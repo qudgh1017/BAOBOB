@@ -164,4 +164,10 @@ public interface Host_movieDAO {
 	
 	// 워드카운트 검색
 	public List<WordVO> searchWordcloud(Map<String, Object> map);
+	
+	// 직원 고용하기 전 모든 회원 정보 불러오기
+	public ArrayList<Member> getMemberList();
+	
+	// 직원고용하기 전 회원이 1명이라도 존재하는지 체크
+	public int getMemberCnt();
 }

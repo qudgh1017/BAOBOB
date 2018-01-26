@@ -57,7 +57,6 @@ public interface Member_mypageService {
 	
 	//위시리스트 추가
 	public void addWishList(HttpServletRequest req, Model model);
-
 	
 	//무비로그-위시리스트 삭제처리
 	public void delMovieWishList(HttpServletRequest req, Model model);

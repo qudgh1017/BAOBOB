@@ -101,7 +101,7 @@ public  interface Guest_movieDAO {
 	public int insertMovieHistory(Map<String,Object> map);
 	
 	//3. 좌석 테이블의 seat_state 변경
-	public int updateSeatState(int seat_index);
+	public int updateSeatState(Map<String,Object> map);
 	
 	//4. 스케줄테이블의 emtpy_seat 감소(결제한 만큼)
 	public int updateEmptySeat(Map<String,Object> map);

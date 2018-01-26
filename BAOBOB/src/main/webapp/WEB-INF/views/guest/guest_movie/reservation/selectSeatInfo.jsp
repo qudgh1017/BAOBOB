@@ -10,5 +10,8 @@
 	                    "M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"};
 	request.setAttribute("seatRow",seatRow);
 %>
+<!-- ajaxSeatInfo의 정보를 쌓아주는 msg -->
 <!-- 좌석정보(A1 B3 이런거) -->
-${seatRow[seat.seat_row-1]}${seat.seat_col}
+<c:forEach var="seat" items="${seats}">
+	${seatRow[seat.seat_row-1]}${seat.seat_col}
+</c:forEach>

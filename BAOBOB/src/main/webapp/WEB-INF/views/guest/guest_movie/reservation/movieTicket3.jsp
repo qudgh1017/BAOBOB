@@ -258,14 +258,12 @@
 					<div id="nextDealButton" >
 						<div style="font-size:13px; font-weight:bold;">
 							<br>
-							<button class="btn btn-danger">결제</button>
+							<button class="btn btn-danger" style="width:100px; height:80px; font-size:18px; font-weight:bold;">결  제</button>
 						</div>
 					</div>
 				</div>
 			</div>
 		</form>
 	</section>
-	
-
 </body>
 </html>

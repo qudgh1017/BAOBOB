@@ -20,11 +20,6 @@
 	
 	<section style="padding-top:50px;">
 		<div class="container">
-			<%-- <div class="row">
-				<div class="col-md-12" align="left">
-					<h3 style="color:white;"><span style="color:blue; font-size:17px; font-weight:bald">[HD]</span>${movie.movie_title}</h3>
-				</div>
-			</div> --%>
 			<div class="row">
 				<div class="col-md-10" align="center">
 					<div class="embed-responsive embed-responsive-16by9"> <!-- 해상도  -->

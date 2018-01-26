@@ -68,6 +68,8 @@ public class Guest_movieController {
 	public String movieFinder(HttpServletRequest req, Model model) {
 		log.debug("====== Guest_movieController/movieFinder ======");
 		
+		gmservice.movieList(req, model);
+		
 		return "/guest/guest_movie/movie/movieFinder";
 	}
 	
@@ -259,22 +261,13 @@ public class Guest_movieController {
 		return "/guest/guest_movie/reservation/selectSeatInfo";
 	}
 	
-	//예매-빠른예매 2번째페이지 - nextDealButton 생성!
-	@RequestMapping("nextDealButton")
-	public String nextDealButton(HttpServletRequest req, Model model) {
-		log.debug("====== Guest_movieController/nextDealButton ======");
-		
-		gmservice.seatInfos(req, model);
-		
-		return "/guest/guest_movie/reservation/nextDealButton";
-	}
 	
 	//예매-빠른예매 2번째페이지 - 결제창
 	@RequestMapping("movieTicket3")
 	public String movieTicket3(HttpServletRequest req, Model model) {
 		log.debug("====== Guest_movieController/movieTicket3 ======");
 		
-		gmservice.seatInfos2(req, model);
+		gmservice.seatInfos(req, model);
 		
 		return "/guest/guest_movie/reservation/movieTicket3";
 	}

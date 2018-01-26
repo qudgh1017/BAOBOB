@@ -81,7 +81,7 @@
              </c:if>
              
              <!-- 게시글이 없으면 -->
-            <c:if test="${cnt == 0 }">
+            <c:if test="${bookCnt == 0 }">
                <tr>
                   <td colspan="7" align="center">
                      BAO밥 이용내역이 존재하지 않습니다.

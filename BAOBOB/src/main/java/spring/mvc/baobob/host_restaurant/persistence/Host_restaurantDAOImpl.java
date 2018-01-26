@@ -160,6 +160,24 @@ public class Host_restaurantDAOImpl implements Host_restaurantDAO {
 		return dao.getMenuList(restaurant_index);
 	}
 
+	// 메뉴 추가 전 메뉴 인덱스 계산
+	@Override
+	public Integer getMenuIndex(int restaurant_index) {
+		log.debug("dao.getMenuIndex()");
+
+		Host_restaurantDAO dao = sqlSession.getMapper(Host_restaurantDAO.class);
+
+		Integer restaurant_menu_index = dao.getMenuIndex(restaurant_index);
+		
+		if(restaurant_menu_index == null) {
+			restaurant_menu_index = 1;
+		} else {
+			restaurant_menu_index++;
+		}
+				
+		return restaurant_menu_index;
+	}
+
 	// 메뉴 추가 처리
 	@Override
 	public int addMenu(MenuVO dto) {
@@ -452,16 +470,6 @@ public class Host_restaurantDAOImpl implements Host_restaurantDAO {
 		return dao.getBill(map);
 	}
 
-	// '사용중'인 테이블 '사용가능'으로 상태 변경
-	@Override
-	public int modState(Map<String, Object> map) {
-		log.debug("dao.modState()");
-
-		Host_restaurantDAO dao = sqlSession.getMapper(Host_restaurantDAO.class);
-
-		return dao.modState(map);
-	}
-
 	// 레스토랑 히스토리 테이블에 이용 내역 추가
 	@Override
 	public int addRestaurantHistory(Map<String, Object> map) {
@@ -492,16 +500,6 @@ public class Host_restaurantDAOImpl implements Host_restaurantDAO {
 		return dao.modMemberPoint(map);
 	}
 
-	// 결산 차트
-	@Override
-	public List<Restaurant_ChartVO> getMenuCountChart() {
-		log.debug("dao.getMenuCountChart()");
-
-		Host_restaurantDAO dao = sqlSession.getMapper(Host_restaurantDAO.class);
-
-		return dao.getMenuCountChart();
-	}
-
 	// 모든 메뉴 이름 조회
 	@Override
 	public String[] getMenuName(int restaurant_index) {
@@ -512,13 +510,20 @@ public class Host_restaurantDAOImpl implements Host_restaurantDAO {
 		return dao.getMenuName(restaurant_index);
 	}
 
-	// 성별 매출
+	// 메뉴별 차트
 	@Override
-	@SuppressWarnings("unchecked")
-	public Object getSexChart() {
-		log.debug("dao.getSexChart()");
-		
+	public List<Restaurant_ChartVO> getMenuCountChart(int restaurant_index) {
+		log.debug("dao.getMenuCountChart()");
+
 		Host_restaurantDAO dao = sqlSession.getMapper(Host_restaurantDAO.class);
+
+		return dao.getMenuCountChart(restaurant_index);
+	}
+
+	// 성별 차트
+	@Override
+	public Object getSexChart(int restaurant_index) {
+		log.debug("dao.getSexChart()");
 		
 		Map<String, Integer> m = null;
 
@@ -527,17 +532,72 @@ public class Host_restaurantDAOImpl implements Host_restaurantDAO {
 		m.put("남", 0);
 		m.put("여", 0);
 
+		List<Member> list = new ArrayList<Member>();
+		
 		for (int i = 0; i < m.size(); i++) {
-			List<Member> list = (List<Member>)dao.getSexChart();
+			list = getSexChartContent(restaurant_index);
 			String str = String.valueOf(list.get(i));
+			
+			System.out.println("str : " + str);
+			
 			String str2[] = str.split(",");
 			String str3[] = str2[0].split("=");
 			String str4[] = str2[1].split("=");
 			String str5[] = str4[1].split("}");
 
-			m.put(str5[0], Integer.parseInt(str3[1]));
+			m.put(str3[1], Integer.parseInt(str5[0]));
 		}
 
 		return m;
+	}
+	
+	// 성별 차트 내용
+	@Override
+	public List<Member> getSexChartContent(int restaurant_index) {
+		log.debug("dao.getSexChartContent()");
+
+		Host_restaurantDAO dao = sqlSession.getMapper(Host_restaurantDAO.class);
+
+		return dao.getSexChartContent(restaurant_index);
+	}
+
+	// 모든 식당 이름 조회
+	@Override
+	public String[] getRestaurantName() {
+		log.debug("dao.getRestaurantName()");
+
+		Host_restaurantDAO dao = sqlSession.getMapper(Host_restaurantDAO.class);
+
+		return dao.getRestaurantName();
+	}
+
+	// 메뉴별 차트
+	@Override
+	public List<Restaurant_ChartVO> getRestaurantChart() {
+		log.debug("dao.getMenuCountChart()");
+
+		Host_restaurantDAO dao = sqlSession.getMapper(Host_restaurantDAO.class);
+
+		return dao.getRestaurantChart();
+	}
+	
+	// 예약한 아이디 조회
+	@Override
+	public String getReservId(Map<String, Object> map) {
+		log.debug("dao.getReservId()");
+
+		Host_restaurantDAO dao = sqlSession.getMapper(Host_restaurantDAO.class);
+
+		return dao.getReservId(map);
+	}
+
+	// 결제한 테이블인지 확인
+	@Override
+	public int getHistoryState(Map<String, Object> map) {
+		log.debug("dao.getHistoryState()");
+
+		Host_restaurantDAO dao = sqlSession.getMapper(Host_restaurantDAO.class);
+
+		return dao.getHistoryState(map);
 	}
 }

@@ -20,18 +20,15 @@
 	<section style="padding-top:0px;">
 		<div class="container">
 			<div class="row">
-				<div class="col-md-offset-1"></div>
-				<div class="col-md-10" align="left">
+				<div class="col-md-12" align="left">
 					<br>
 					<h3 align=left;>영화 상세</h3>
 					<hr style="border:2px solid black;">
 				</div>
-				<div class="col-md-offset-1"></div>
 			</div><br><br>
 			
 			<!-- 영화정보 -->
 			<div class="row">
-				<div class="col-md-offset-1"></div>
 				<div class="col-md-3" align="left">
 					<img src="${projectRes}/images/phc/${movie.movie_poster}">
 				</div>
@@ -74,18 +71,17 @@
 					
 					</span>
 				</div>
-				<div class="col-md-offset-1"></div>
+				<div class="col-md-2"></div>
 			</div>
 			
 			<!-- 줄거리 -->
 			<div class="row" style="padding-top:50px;">
-				<div class="col-md-offset-1"></div>
 				<div class="col-md-10" align="left" style="height:250px;">
 					<span style="font-size:12px;">
 						${movie.movie_content}
 					</span>
 				</div>
-				<div class="col-md-offset-1"></div>
+				<div class="col-md-2"></div>
 			</div><br><br>
 			
 			<!-- 트레일러1-->

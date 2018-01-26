@@ -30,7 +30,17 @@
 	</script>
 	
 	<script type="text/javascript">
+// 	$(document).ready(function(){
+// 		hostMovieResView(1,6,4);
+// 	});
+	var timeout;
+
+	function hostMovieResSeat(theater_index, movie_index, theater_schedule_index){
+		window.clearTimeout(this.timeout);
+		hostMovieResView(theater_index, movie_index, theater_schedule_index);
+	}
 	function hostMovieResView(theater_index, movie_index, theater_schedule_index) {
+		
 		$.ajax({
 			url : "hostMovieResView?theater_index=" + theater_index + "&movie_index=" + movie_index + "&theater_schedule_index=" + theater_schedule_index,
 			type : 'GET',
@@ -39,9 +49,10 @@
 				getScheduleSeatInfo(vo.totalCol, vo.totalRow, vo.state);
 			},
 			error : function() {
-				alert('error');
+// 				alert('error');
 			}
-		})
+		});
+		this.timeout = setTimeout("hostMovieResView("+theater_index+","+movie_index+","+theater_schedule_index+")",4000);
 	}
 </script>
 	
@@ -108,8 +119,6 @@
 					<li><span style="font-weight:900;">22:30</span></li>
 					<li><span style="font-weight:900;">23:00</span></li>
 					<li><span style="font-weight:900;">23:30</span></li>
-
-					
 				</ul>
 			</div> <!-- .timeline -->
 		
@@ -120,7 +129,7 @@
 						<ul>
 						<c:forEach var="vo1" items="${vos1}">
 							<li class="single-event" data-start="<fmt:formatDate type="both" pattern="HH:mm" value="${vo1.schedule_startTime}" />" data-end="<fmt:formatDate type="both" pattern="HH:mm" value="${vo1.schedule_endTime}" />" data-event="event-3">
-							<a href="#0" onclick="hostMovieResView(${vo1.theater_index}, ${vo1.movie_index}, ${vo1.theater_schedule_index})">
+							<a href="#0" onclick="hostMovieResSeat(${vo1.theater_index}, ${vo1.movie_index}, ${vo1.theater_schedule_index})">
 								<em class="event-name">${vo1.theater_index}관<br>
 								<c:forEach var="movieVO" items="${movieVOS}">
 									<c:if test="${vo1.movie_index == movieVO.movie_index}">${movieVO.movie_title}</c:if>

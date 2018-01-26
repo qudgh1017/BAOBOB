@@ -949,6 +949,16 @@ public class Host_movieServiceImpl implements Host_movieService{
 		model.addAttribute("listSize", wordList.size());
 	}
 
-	
+	// 직원 고용하기 전 모든 회원 정보 불러오기
+	@Override
+	public void getMemberList(HttpServletRequest req, Model model) {
+		if(dao.getMemberCnt()>0) { // 직원고용하기 전 회원이 1명이라도 존재하는지 체크
+			ArrayList<Member> vos = dao.getMemberList(); // 직원 고용하기 전 모든 회원 정보 불러오기
+			model.addAttribute("vos", vos);
+			model.addAttribute("cnt", 1);
+		}else {
+			model.addAttribute("cnt", 0);
+		}
+	}
 }
 
