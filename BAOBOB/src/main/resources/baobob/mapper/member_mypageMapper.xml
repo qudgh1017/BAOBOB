@@ -206,7 +206,7 @@
 		<![CDATA[
 			SELECT *
 			FROM( SELECT mh.history_index, h.member_id, m.movie_index, h.history_date,
-					 s.schedule_starttime, s.schedule_endtime,
+			         s.schedule_starttime, s.schedule_endtime, s.theater_schedule_index,
 			         m.movie_title, m.movie_content, m.movie_janre, m.movie_age, 
 			         m.movie_rel_date, m.movie_director, m.movie_star, m.movie_country, m.movie_runTime, 
 			         m.movie_poster, m.movie_trailer, m.movie_state, rownum rNum 
@@ -217,12 +217,15 @@
 			        ON s.theater_schedule_index = mh.theater_schedule_index
 			        JOIN movie_tbl m
 			        ON m.movie_index = s.movie_index
-			        JOIN theater_seat_tbl ts
-     			    ON ts.theater_schedule_index = s.theater_schedule_index
 			        WHERE h.member_id = #{strId}
 			    )
 			WHERE  rNum >= #{start} AND rNum <= #{end}
 		 ]]>
+	</select>
+	
+	<!-- 예약한 상영관,좌석 불러오기 -->
+	<select id="getMovieSeat" resultType="spring.mvc.baobob.vo.Theater_seatVO">
+		SELECT * FROM theater_seat_tbl WHERE member_id=#{strId}
 	</select>
 	
 	<!-- 무비 다이어리 글갯수 구하기 -->

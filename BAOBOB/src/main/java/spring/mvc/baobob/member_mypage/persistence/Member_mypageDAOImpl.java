@@ -14,6 +14,7 @@ import spring.mvc.baobob.vo.MovieHistoryVO;
 import spring.mvc.baobob.vo.MovieVO;
 import spring.mvc.baobob.vo.ParkingHistory;
 import spring.mvc.baobob.vo.RestaurantLogVO;
+import spring.mvc.baobob.vo.Theater_seatVO;
 import spring.mvc.baobob.vo.WishListVO;
 
 @Repository
@@ -404,6 +405,15 @@ public class Member_mypageDAOImpl implements Member_mypageDAO{
 		movies = dao.getMovieClear(map);
 		
 		return movies;
+	}
+	
+/*----------------------------------------------------------------------------*/
+	
+	//예약한 상영과,좌석 불러오기
+	public ArrayList<Theater_seatVO> getMovieSeat(Map<String,Object> map){
+		Member_mypageDAO dao = sqlSession.getMapper(Member_mypageDAO.class);
+		
+		return dao.getMovieSeat(map);
 	}
 	
 /*----------------------------------------------------------------------------*/

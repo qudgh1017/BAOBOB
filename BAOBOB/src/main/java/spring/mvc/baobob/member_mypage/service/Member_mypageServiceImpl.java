@@ -1,5 +1,7 @@
 package spring.mvc.baobob.member_mypage.service;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.forwardedUrl;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -25,6 +27,7 @@ import spring.mvc.baobob.vo.MovieHistoryVO;
 import spring.mvc.baobob.vo.MovieVO;
 import spring.mvc.baobob.vo.ParkingHistory;
 import spring.mvc.baobob.vo.RestaurantLogVO;
+import spring.mvc.baobob.vo.Theater_seatVO;
 import spring.mvc.baobob.vo.WishListVO;
 
 @Service
@@ -798,10 +801,27 @@ public class Member_mypageServiceImpl implements Member_mypageService{
 			map.put("end", end);
 			map.put("strId", strId);
 			
-			//게시글 목록 조회
+			//영화정보VO
 			ArrayList<MovieHistoryVO> movieDtos = dao.getMovieClear(map);
-			model.addAttribute("dtos", movieDtos);
 			
+			//좌석정보VO
+			ArrayList<Theater_seatVO> seatDtos = dao.getMovieSeat(map);
+			
+			String[] seatRow = {"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"};
+			for(MovieHistoryVO mVO : movieDtos) {
+				String[] seat = new String[100];
+				int i=0;
+				for(Theater_seatVO sVO : seatDtos) {
+					if(mVO.getTheater_schedule_index()==sVO.getTheater_schedule_index()) {
+						String seatInfo = seatRow[sVO.getSeat_row()-1]+sVO.getSeat_col();
+						seat[i++] += seatInfo;
+					}
+				}
+				mVO.setSeat(seat);
+			}
+			
+			model.addAttribute("dtos", movieDtos);
+
 		}
 		
 		//4=(5/3)*3+1;
