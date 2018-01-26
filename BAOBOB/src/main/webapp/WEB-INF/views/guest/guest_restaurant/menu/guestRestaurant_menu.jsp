@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ include file="/resources/setting.jsp"%>
+<%@ include file="/resources/mhj/setting.jsp"%>
     
 <html>
 <head>
@@ -30,6 +30,62 @@
 			.head_screen{
 			    max-width: 540px;
 			}
+		}
+		
+		
+		/*=====  메뉴 스타일  =====*/
+		/* 상위 div */
+		.area-meals {
+			width: 520px;
+		    margin-left: -20px;
+		    overflow: hidden;
+		}
+		/* 상세 정보 포함하는 div */
+		.area-meals .box-meals {
+		    position: relative;
+		    word-break: normal;
+		    float: left;
+		    width: 480px;
+		    min-height: 222px;
+		    margin-top: 10px;
+		    padding: 20px 25px 20px 270px;
+		    border: 1px solid #bee1dd;
+		    margin-left: 20px;
+		    box-sizing: border-box;
+		    display: inline-block;
+		}
+		/* 이미지 스타일 */
+		.area-meals .box-meals .img_meals {
+		    position: absolute;
+		    top: 19px;
+		    left: 20px;
+		    width: 130px;
+		    height: 130px;
+		}
+		/* 메뉴이름 */
+		.area-meals .box-meals span {
+			font-weight:bold;
+		    margin-bottom: 5px;
+		    font-size: 16px;
+		    line-height: 20px;
+		    color: #000;
+		}
+		/* 내용 */
+		.area-meals .box-meals .txt-info.type-2 {
+		    margin-top: 3px;
+		    font-size: 13px;
+		    line-height: 18px;
+		    color: #000;
+		}
+		/* 가격 */
+		.area-meals .box-meals .txt-info.type-1 {
+		    margin-top: 10px;
+		    font-size: 12px;
+		    line-height: 18px;
+		    color: #e21b72;
+		}
+		.area-meals .box-meals .txt-info.type-1 strong {
+		    color: #e21b72;
 		}
     </style>
 <title>레스토랑 메뉴</title>
@@ -93,29 +149,39 @@
 			<div class="row">
 				<div class="col-md-offset-1"></div>
 				<div class="col-md-10">
-				<!--====== Container 시작 ======-->
-				<!-- <div class="container"> -->
-				
-					<h2>메뉴 갯수: ${cnt}</h2>					
-					<hr style="border:2px solid black;">
+					<!--====== Container 시작 ======-->
+					<!-- <div class="container"> -->
+
+					<h2>메뉴 갯수: ${cnt}</h2>
+					<hr style="border: 2px solid black;">
 					<br>
-					
+
 					<c:if test="${cnt>0}">
-						<c:forEach var="dto" items="${dtos}">
-							<%-- ${restaurant_index}<br>
-							${dto.restaurant_tel}<br>
-							${dto.restaurant_name}<br> --%>
-							번호 : ${dto.restaurant_menu_index}<br>
-							사진 : ${dto.restaurant_menu_img}<br>
-							이름 : ${dto.restaurant_menu_name}<br>
-							설명 : ${dto.restaurant_menu_content}<br>
-							가격 : ${dto.restaurant_menu_price}<br>
-							<br>
-							<br>
+						<%-- <c:forEach var="i" begin="1" end="${cnt}">
+							<c:forEach var="j" begin="1" end="2"> --%>
+							<div class="area-meals">
+							
+						<c:forEach var="dto" items="${dtos}" varStatus="status">
+ 								<%-- <c:if test="${status.index % 2 == 0}">  --%>
+							<div class="box-meals clear_fix">
+								<p class="img_meals">
+									<img src="${restaurant_images}${dto.restaurant_menu_img}">
+								</p>
+	
+								<span>${dto.restaurant_menu_name}</span> <strong
+									class="txt-info type-1"> [
+									${dto.restaurant_menu_price}원]</strong>
+								<p class="txt-info type-2">${dto.restaurant_menu_content}</p>
+							</div>
+								<%-- </c:if> --%>
+							
 						</c:forEach>
-					</c:if>
-					
-					<c:if test="${cnt==0}">
+						</div>
+				<%-- </c:forEach>
+						</c:forEach> --%>
+				</c:if>
+
+				<c:if test="${cnt==0}">
 					메뉴가 없서요.
 					</c:if>
 				<!-- </div> -->

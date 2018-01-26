@@ -170,7 +170,7 @@
 	
 	<!--===== 4-3-3. 리뷰 수정 (값 불러오기) =====-->
 	<update id="updateReviewPro" parameterType="spring.mvc.baobob.vo.ReviewVO">
-		UPDATE review_tbl SET review_grade=#{review_grade}, review_content=#{review_content}
+		UPDATE review_tbl SET review_content=#{review_content}
 		WHERE member_id=#{member_id} AND review_index=#{review_index}
 	</update>
 	
