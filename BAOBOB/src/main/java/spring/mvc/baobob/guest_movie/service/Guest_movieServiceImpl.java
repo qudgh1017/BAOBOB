@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 
 import spring.mvc.baobob.guest_movie.persistence.Guest_movieDAO;
 import spring.mvc.baobob.vo.Member;
+import spring.mvc.baobob.vo.MovieFinderVO;
 import spring.mvc.baobob.vo.MovieResViewVO;
 import spring.mvc.baobob.vo.MovieVO;
 import spring.mvc.baobob.vo.ReviewVO;
@@ -264,36 +265,55 @@ public class Guest_movieServiceImpl implements Guest_movieService{
 		//정보 받기
 		String keyword = req.getParameter("keyword");
 		String sel = req.getParameter("sel");
-		
+		System.out.println("keyword키워드!!!!!!!!!"+ keyword);
 		String[] str_movie_janre_arr = req.getParameterValues("movie_janre");
 		String[] str_movie_age_arr = req.getParameterValues("movie_age");
-		String[] movie_country_arr = req.getParameterValues("movie_country");
-		String str_movie_country="";
+		String[] movie_country = req.getParameterValues("movie_country");
 		
-		System.out.println("movie_country배열!!!!!!--->" + movie_country_arr);
+//		String str_movie_janre_info = "";
+//		String str_movie_age_info = "";
+//		String str_movie_country_info = "";
 		
-		for(int i=0; i<movie_country_arr.length; i++) {
-			str_movie_country += movie_country_arr[i];
-		}
-		
+		//장르 int형으로 바꿔주기
 		int[] movie_janre = new int[str_movie_janre_arr.length];
-
 		for(int i =0; i<movie_janre.length; i++){
 			movie_janre[i]=Integer.parseInt(str_movie_janre_arr[i]);
+//			if(str_movie_janre_arr[i]!="-1") {
+//				if(i == (movie_janre.length-1)) {
+//					str_movie_janre_info += str_movie_janre_arr[i];
+//				}else {
+//					str_movie_janre_info += str_movie_janre_arr[i] + ",";
+//				}
+//			}
 		};
-		
+		//나이 int형으로 바꿔주기
 		int[] movie_age = new int[str_movie_age_arr.length];
-
 		for(int i =0; i<movie_age.length; i++){
 			movie_age[i]=Integer.parseInt(str_movie_age_arr[i]);
+//			if(str_movie_age_arr[i]!="-1") {
+//				if(i == (str_movie_age_arr.length-1)) {
+//					str_movie_age_info += str_movie_age_arr[i];
+//				}else {
+//					str_movie_age_info += str_movie_age_arr[i] + ",";
+//				}
+//			}
 		};
+		//country_info만들기
+//		for(int i =0; i<movie_country.length; i++){
+//			if(movie_country[i]!="-1") {
+//				if(i == (movie_country.length-1)) {
+//					str_movie_country_info += movie_country[i];
+//				}else {
+//					str_movie_country_info += movie_country[i] + ",";
+//				}
+//			}
+//		};
 		
-		model.addAttribute("keyword", keyword);
-		model.addAttribute("sel", sel);
-		model.addAttribute("movie_janre", movie_janre);
-		model.addAttribute("movie_age", movie_age);
-		model.addAttribute("movie_country", movie_country_arr);
+//		model.addAttribute("str_movie_janre_info",str_movie_janre_info);
+//		model.addAttribute("str_movie_age_info",str_movie_age_info);
+//		model.addAttribute("str_movie_country_info",str_movie_country_info);
 		
+		//검색결과 리스트 관련 변수
 		int pageSize = 8; 		// 한 페이지당 출력할 글 갯수
 		int pageBlock = 3;		// 한 블럭당 페이지 갯수
 		
@@ -308,44 +328,36 @@ public class Guest_movieServiceImpl implements Guest_movieService{
 		int startPage = 0;		// 시작페이지
 		int endPage = 0;		// 마지막 페이지
 		
+		//검색 정보 보낼 곳
+		MovieFinderVO movieFinderInfo = new MovieFinderVO();
+		movieFinderInfo.setKeyword(keyword);
+		movieFinderInfo.setSel(sel);
+		movieFinderInfo.setMovie_janre(movie_janre);
+		movieFinderInfo.setMovie_age(movie_age);
+		movieFinderInfo.setMovie_country(movie_country);
+
 		// 영화 갯수 구하기
-		cnt = gmdao.getMovieCnt();
+		cnt = gmdao.movieFinderResultCnt(movieFinderInfo);
 		System.out.println("영화갯수: " + cnt);
 		 
 		pageNum = req.getParameter("pageNum");
-		
 		if(pageNum == null) { //페이지가 없으면 
 			pageNum = "1"; //첫페이지를 1페이지로 설정
 		}
-		
 		currentPage = Integer.parseInt(pageNum); // 현재페이지
-		
-		// pageCount = (12 / 5) + (1) // 나머지2건이 1페이지로 할당되므로 총 3페이지가 된다.
 		pageCount = (cnt / pageSize) + ((cnt % pageSize > 0) ? 1 : 0); // 페이지 갯수(나머지가 있으면=> 페이지 갯수+1)
-		
 		start = ((currentPage-1) * pageSize) + 1; // 현재 페이지에  DB에서 뽑아올 시작번호
-		
 		end = start + pageSize - 1;// 현재 페이지에 DB에서 뽑아올 끝번호
-		//end = currentPage * pageSize;
-		
-		/*System.out.println("start: " + start);
-		System.out.println("end: " + end);*/
-		
-		if(end > cnt) end = cnt;
-		
+		if(end > cnt) {
+			end = cnt;
+		}
 		number = cnt - (currentPage - 1) * pageSize; // 출력할 글번호(삭제해도 글번호 나열되게).. 최신글 (큰페이지)가 1p 
-		/*System.out.println("number: " + number);
-		System.out.println("cnt: " + cnt);
-		System.out.println("currentPage: " + currentPage);
-		System.out.println("pageSize: " + pageSize);*/
 
 		if(cnt > 0) {
-			//게시글 목록 조회
-			Map<String,Object> map = new HashMap<String,Object>();
-			map.put("start", start);
-			map.put("end", end);
-			
-			ArrayList<MovieVO> movies = gmdao.getAllMovies(map);
+			movieFinderInfo.setStart(start);
+			movieFinderInfo.setEnd(end);
+			//검색결과 받을 곳
+			ArrayList<MovieVO> movies = gmdao.movieFinderResult(movieFinderInfo);
 			model.addAttribute("movies", movies); //큰 바구니 : 게시글 목록   cf)작은바구니: 게시글 1건
 		}
 		
@@ -358,8 +370,10 @@ public class Guest_movieServiceImpl implements Guest_movieService{
 		model.addAttribute("cnt", cnt);			// 글갯수
 		model.addAttribute("number", number);		// 글번호
 		model.addAttribute("pageNum", pageNum);	// 페이지번호
+		model.addAttribute("movieFinder", movieFinderInfo);// 검색조건
 		
 		if(cnt > 0) {
+			//검색 조건
 			model.addAttribute("startPage", startPage); // 시작페이지
 			model.addAttribute("endPage", endPage);// 마지막페이지
 			model.addAttribute("pageBlock", pageBlock);// 출력할 페이지 갯수
@@ -386,7 +400,6 @@ public class Guest_movieServiceImpl implements Guest_movieService{
 		int startPage = 0;		// 시작페이지
 		int endPage = 0;		// 마지막 페이지
 		
-		//grade불러오기
 		
 		// 해당 영화 리뷰 갯수 구하기
 		int movie_index = Integer.parseInt(req.getParameter("movie_index"));
@@ -403,13 +416,10 @@ public class Guest_movieServiceImpl implements Guest_movieService{
 		
 		// pageCount = (12 / 5) + (1) // 나머지2건이 1페이지로 할당되므로 총 3페이지가 된다.
 		pageCount = (cnt / pageSize) + ((cnt % pageSize > 0) ? 1 : 0); // 페이지 갯수(나머지가 있으면=> 페이지 갯수+1)
-		
 		start = ((currentPage-1) * pageSize) + 1; // 현재 페이지에  DB에서 뽑아올 시작번호
-		
 		end = start + pageSize - 1;// 현재 페이지에 DB에서 뽑아올 끝번호
 		
 		if(end > cnt) end = cnt;
-		
 		number = cnt - (currentPage - 1) * pageSize; // 출력할 글번호(삭제해도 글번호 나열되게).. 최신글 (큰페이지)가 1p 
 
 		if(cnt > 0) {

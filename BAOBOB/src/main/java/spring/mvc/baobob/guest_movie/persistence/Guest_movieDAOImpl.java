@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import spring.mvc.baobob.host_movie.persistence.Host_movieDAO;
 import spring.mvc.baobob.vo.Member;
+import spring.mvc.baobob.vo.MovieFinderVO;
 import spring.mvc.baobob.vo.MovieVO;
 import spring.mvc.baobob.vo.ReviewVO;
 import spring.mvc.baobob.vo.TheaterVO;
@@ -405,5 +406,28 @@ public class Guest_movieDAOImpl implements Guest_movieDAO{
 		return cnt;
 	}
 // 결제끝
+
+	//무비파인더 검색 결과 갯수
+	@Override
+	public int movieFinderResultCnt(MovieFinderVO movieFinderInfo) {
+		int cnt = 0;
+		
+		Guest_movieDAO gmdao = sqlSession.getMapper(Guest_movieDAO.class);
+		cnt = gmdao.movieFinderResultCnt(movieFinderInfo);
+		
+		return cnt;
+	}
+	
+	//무비파인더 검색 결과
+	@Override
+	public ArrayList<MovieVO> movieFinderResult(MovieFinderVO movieFinderInfo) {
+		ArrayList<MovieVO> movies;
+		
+		Guest_movieDAO gmdao = sqlSession.getMapper(Guest_movieDAO.class);
+		movies = gmdao.movieFinderResult(movieFinderInfo);
+		
+		return movies;
+	}
+
 	
 }

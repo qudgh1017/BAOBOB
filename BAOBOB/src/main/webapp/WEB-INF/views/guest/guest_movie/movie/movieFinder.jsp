@@ -114,7 +114,6 @@ $(window).load(function(){
 										<input type="checkbox" name="movie_age" value="12">12세 관람가 &nbsp;&nbsp;
 										<input type="checkbox" name="movie_age" value="15">15세 관람가&nbsp;&nbsp;
 										<input type="checkbox" name="movie_age" value="19">청소년 관람불가 &nbsp;
-										
 									</td>
 								</tr>
 								
@@ -123,8 +122,6 @@ $(window).load(function(){
 									<td colspan="2" align="center">
 										<button id="search_btn" class="btn btn-danger">검색</button>
 										<input class="btn btn-info" type="reset" value="초기화">
-										
-										<!-- <input class="btn btn-danger" type="submit" value="검색"> -->
 									</td>
 								</tr>
 							</table>
@@ -132,8 +129,6 @@ $(window).load(function(){
 					</div>
 				</div>
 				<div class="col-md-1"></div>
-				
-				
 			</div><br><br>
 		</div>
 		
@@ -145,20 +140,11 @@ $(window).load(function(){
 					<h3 align=left; style="display:inline-block; margin-right:800px">
 						무비차트
 					</h3>
-					<!-- <a class="state" href="movieChart?movie_state=1"> -->
-					<%-- 	<c:if test="${movie_state==1}"><span style="font-weight:bold; color:red;">무비차트</span></c:if>
-						<c:if test="${movie_state!=1}">무비차트</c:if>
-						
-					</a>&nbsp;&nbsp;
-					<a class="state" href="movieChart?movie_state=0">
-						<c:if test="${movie_state==0}"><span style="font-weight:bold; color:red;">상영예정작</span></c:if>
-						<c:if test="${movie_state!=0}">상영예정작</c:if>
-					</a> --%>
 					<hr style="border:2px solid black;">
 					<br><br>
 				</div>
 			
-		
+				
 				<!-- 포스터 선택 -->
 				<c:if test="${cnt>0}">
 					<c:forEach var="movie" items="${movies}">
@@ -198,8 +184,6 @@ $(window).load(function(){
 						등록된 영화가 없습니다.
 					</div>
 				</c:if>
-				
-			
 		
 				<div class="col-md-12" align="center">
 					<c:if test="${cnt > 0}">
@@ -226,6 +210,34 @@ $(window).load(function(){
 					
 					</c:if>
 				</div>
+			</div>
+			
+			<!-- AJAX searchResult 페이징 처리 -->
+			<div class="col-md-12" align="center">
+				<c:if test="${cnt > 0}">
+					<!-- 처음[◀◀] / 이전블록[◀] 특수문자:ㅁ + 한자키 -->
+					<c:if test="${startPage > pageBlock}">
+						<a onclick="searchResultPage(1);" href="#!">[◀◀]</a>
+						<a href="searchResult?pageNum=${startPage - pageBlock}&keyword=${movieFinder.keyword}&sel=${movieFinder.sel}&movie_janre=${movieFinder.movie_janre}&movie_country=${movieFinder.movie_country}&movie_age=${movieFinder.movie_age}">[◀]</a>
+					</c:if>
+			
+					<c:forEach var="i" begin="${startPage}" end="${endPage}">
+						<%-- <c:if test="${i == currentPage}">
+							<span><b>[${i}]</b></span>
+						</c:if> --%>
+						<%-- <c:if test="${i != currentPage}"> --%>
+							<a onclick="searchResultPage(${i});" href="#!">[${i}]</a>
+						<%-- </c:if> --%>
+					</c:forEach>
+			
+					<!-- 다음블록 [▶] / 끝[▶▶] -->
+					<c:if test="${pageCount > endPage}">
+						<a class="page" href="searchResult?pageNum=${startPage + pageBlock}&keyword=${movieFinder.keyword}&sel=${movieFinder.sel}&movie_janre=${movieFinder.movie_janre}&movie_country=${movieFinder.movie_country}&movie_age=${movieFinder.movie_age}">[▶]</a>
+						<a class="page" href="searchResult?pageNum=${pageCount}&keyword=${movieFinder.keyword}&sel=${movieFinder.sel}&movie_janre=${movieFinder.movie_janre}&movie_country=${movieFinder.movie_country}&movie_age=${movieFinder.movie_age}">[▶▶]</a>
+						<!-- 마지막페이지로 -->
+					</c:if>
+			
+				</c:if>
 			</div>
 		</div>
 	</section>

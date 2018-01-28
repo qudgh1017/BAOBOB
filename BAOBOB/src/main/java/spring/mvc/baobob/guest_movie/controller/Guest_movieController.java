@@ -78,7 +78,14 @@ public class Guest_movieController {
 	public String searchResult(HttpServletRequest req, Model model) {
 		log.debug("====== Guest_movieController/searchResult ======");
 		
+		
 		gmservice.searchResult(req, model);
+//		if(req.getParameter("pageNum")==null) {
+//			gmservice.searchResult(req, model);
+//		}else {
+//			System.out.println("¿©±â¿Í!!!!!!!!!!========================");
+//		}
+		
 		
 		return "/guest/guest_movie/movie/searchResult";
 	}

@@ -304,4 +304,131 @@
 		WHERE member_id= #{member_id}
 	</update>
 	
+	<!-- 무비파인더 검색결과 갯수 -->
+	<select id="movieFinderResultCnt" parameterType="spring.mvc.baobob.vo.MovieFinderVO" resultType="int">
+		SELECT COUNT(*)
+		FROM movie_tbl
+		WHERE 
+		
+		<if test="!keyword.equals('')">
+			<choose>
+				<when test="sel.equals('movie_title')">
+					movie_title LIKE '%'||#{keyword}||'%'
+				</when>
+				<when test="sel.equals('movie_star')">
+					movie_star LIKE '%'||#{keyword}||'%'
+				</when>
+				<when test="sel.equals('movie_director')">
+					movie_director LIKE '%'||#{keyword}||'%'
+				</when>
+				<when test="sel.equals('all')">
+					movie_title LIKE '%'||#{keyword}||'%' 
+					OR movie_star LIKE '%'||#{keyword}||'%' 
+					OR movie_director LIKE '%'||#{keyword}||'%' 
+					OR movie_content LIKE '%'||#{keyword}||'%' 
+				</when>
+			</choose>
+			AND movie_janre IN
+			<foreach item="movie_janre" collection="movie_janre" open="(" separator="," close=")">
+				#{movie_janre}
+			</foreach>
+			
+			AND movie_age IN
+			<foreach item="movie_age" collection="movie_age" open="(" separator="," close=")">
+				#{movie_age}
+			</foreach>
+			
+			AND movie_country IN
+			<foreach item="movie_country" collection="movie_country" open="(" separator="," close=")">
+				#{movie_country}
+			</foreach>
+		</if>
+		
+		<if test="keyword.equals('')">
+			movie_janre IN
+			<foreach item="movie_janre" collection="movie_janre" open="(" separator="," close=")">
+				#{movie_janre}
+			</foreach>
+			
+			AND movie_age IN
+			<foreach item="movie_age" collection="movie_age" open="(" separator="," close=")">
+				#{movie_age}
+			</foreach>
+			
+			AND movie_country IN
+			<foreach item="movie_country" collection="movie_country" open="(" separator="," close=")">
+				#{movie_country}
+			</foreach>
+		</if>
+	</select>
+	
+	<!-- 무비파인더 검색결과 -->
+	<!-- collection은 vo안에 array의 이름 -->
+	<select id="movieFinderResult" parameterType="spring.mvc.baobob.vo.MovieFinderVO" resultType="spring.mvc.baobob.vo.MovieVO">
+		
+			SELECT * 
+			FROM (SELECT movie_index, movie_title, movie_content, movie_janre,
+						 movie_age, movie_rel_date, movie_director, movie_star, 
+						 movie_country, movie_runtime, movie_poster, movie_trailer,
+						 movie_state, movie_count, rownum rNum 
+					FROM ( 
+							SELECT * FROM movie_tbl 
+							WHERE 
+							<if test="!keyword.equals('')">
+								<choose>
+									<when test="sel.equals('movie_title')">
+										movie_title LIKE '%'||#{keyword}||'%'
+									</when>
+									<when test="sel.equals('movie_star')">
+										movie_star LIKE '%'||#{keyword}||'%'
+									</when>
+									<when test="sel.equals('movie_director')">
+										movie_director LIKE '%'||#{keyword}||'%'
+									</when>
+									<when test="sel.equals('all')">
+										movie_title LIKE '%'||#{keyword}||'%' 
+										OR movie_star LIKE '%'||#{keyword}||'%' 
+										OR movie_director LIKE '%'||#{keyword}||'%' 
+										OR movie_content LIKE '%'||#{keyword}||'%' 
+									</when>
+								</choose>
+								AND movie_janre IN
+								<foreach item="movie_janre" collection="movie_janre" open="(" separator="," close=")">
+									#{movie_janre}
+								</foreach>
+								
+								AND movie_age IN
+								<foreach item="movie_age" collection="movie_age" open="(" separator="," close=")">
+									#{movie_age}
+								</foreach>
+								
+								AND movie_country IN
+								<foreach item="movie_country" collection="movie_country" open="(" separator="," close=")">
+									#{movie_country}
+								</foreach>
+							</if>
+							<if test="keyword.equals('')">
+								movie_janre IN
+								<foreach item="movie_janre" collection="movie_janre" open="(" separator="," close=")">
+									#{movie_janre}
+								</foreach>
+								
+								AND movie_age IN
+								<foreach item="movie_age" collection="movie_age" open="(" separator="," close=")">
+									#{movie_age}
+								</foreach>
+								
+								AND movie_country IN
+								<foreach item="movie_country" collection="movie_country" open="(" separator="," close=")">
+									#{movie_country}
+								</foreach>
+							</if>
+							ORDER BY movie_rel_date DESC, movie_index ASC 
+						 ) 
+				 ) 
+		<![CDATA[		 
+			 WHERE  rNum >= #{start} AND rNum <= #{end}
+		 ]]>	
+	</select>
+	
 </mapper>

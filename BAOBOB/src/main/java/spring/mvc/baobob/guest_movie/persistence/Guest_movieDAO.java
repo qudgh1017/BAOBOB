@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Map;
 
 import spring.mvc.baobob.vo.Member;
+import spring.mvc.baobob.vo.MovieFinderVO;
 import spring.mvc.baobob.vo.MovieVO;
 import spring.mvc.baobob.vo.ReviewVO;
 import spring.mvc.baobob.vo.TheaterVO;
@@ -122,5 +123,10 @@ public  interface Guest_movieDAO {
 	public int updateMemberStep(Map<String,Object> map);
 //결제 끝--------------
 	
+	//무비파인더 결과 갯수
+	public int movieFinderResultCnt(MovieFinderVO movieFinderInfo);
+	
+	//무비파인더 결과
+	public ArrayList<MovieVO> movieFinderResult(MovieFinderVO movieFinderInfo);
 	
 }
