@@ -69,7 +69,7 @@
 							<th>
 								<!-- 상영관, 좌석 -->
 								${dto.theater_index}관 <br>
-								${dto.seat}
+								${dto.seat}<br>
 							</th>
 							<th>
 								<!-- 상영시간 -->
@@ -85,7 +85,8 @@
 								<fmt:formatDate value="${now}" var="sysDate" pattern="yyyy-MM-dd" /><br>
 								<c:if test="${hisDate > sysDate}">
 									<input type="button" class="button" 
-										onclick="window.location='moviePaidDelPro?num=${dto.history_index}'"value="예매 취소">
+										onclick="window.location='moviePaidDelPro?schedule_index=${dto.theater_schedule_index}&history_index=${dto.history_index}'"
+											value="예매 취소">
 								</c:if>
 								
 								<c:if test="${hisDate < sysDate}">

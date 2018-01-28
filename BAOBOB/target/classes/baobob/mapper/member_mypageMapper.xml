@@ -281,19 +281,60 @@
 <!-- ************************************************************************************** -->	
 <!-- ************************************ 영화예매 취소 START *********************************** -->	
 	
+	<!-- 예매좌석 정보 가져오기 -->
+	<select id="getSeatInfo" resultType="spring.mvc.baobob.vo.Theater_seatVO">
+		SELECT *
+		FROM theater_seat_tbl
+		WHERE member_id = #{memId}
+		AND theater_schedule_index = #{schedule_index}
+	</select>
 	
+	<!-- 예매좌석 취소 - 예매좌석 state 돌려놓기 -->
+	<update id="updateSeatState" parameterType="int">
+		UPDATE theater_seat_tbl 
+		SET seat_state = (SELECT seat_state 
+		                   FROM theater_seat_tbl
+		                   WHERE theater_index = (SELECT theater_index
+		                                           FROM theater_seat_tbl
+		                                           WHERE seat_index = #{seat_index})
+		                   AND theater_schedule_index = -1
+		                   AND seat_row = (SELECT seat_row
+		                                    FROM theater_seat_tbl
+		                                    WHERE seat_index = #{seat_index})
+		                   AND seat_col = (SELECT seat_col
+		                                    FROM theater_seat_tbl
+		                                    WHERE seat_index = #{seat_index})
+		                  ), member_id = null
+		WHERE seat_index = #{seat_index}
+	</update>
 	
+	<!-- 예매좌석 취소 - 스케쥴에 빈좌석 돌려놓기 -->
+	<update id="updateEmptySeat" parameterType="int">
+		UPDATE theater_schedule_tbl
+		SET schedule_empty_seat = schedule_empty_seat + 1
+		WHERE theater_schedule_index = (SELECT theater_schedule_index
+		                                FROM theater_seat_tbl
+		                                WHERE seat_index = #{seat_index})
+	</update>
 	
+	<!-- 예매좌석 취소 - movie_count 돌려놀기 -->
+	<update id="updateMovieCount" parameterType="Map">
+		UPDATE movie_tbl
+		SET movie_count = movie_count - #{movieCount}
+		WHERE movie_index = (SELECT movie_index
+		                     FROM theater_schedule_tbl
+		                     WHERE theater_schedule_index = #{schedule_index})
+	</update>
 	
-	
-	
-	
-	<!-- 예매내역 삭제 처리 -->
+	<!-- 예매내역 삭제(movie_history_tbl) -->
 	<delete id="moviePaidDelPro" parameterType="int">
 		DELETE FROM movie_history_tbl WHERE history_index = #{num}
 	</delete>
 	
-	
+	<!-- 예매내역 삭제(history_tbl) -->
+	<delete id="historyDelPro" parameterType="int">
+		DELETE FROM history_tbl WHERE history_index = #{num}
+	</delete>
 	
 	
 	

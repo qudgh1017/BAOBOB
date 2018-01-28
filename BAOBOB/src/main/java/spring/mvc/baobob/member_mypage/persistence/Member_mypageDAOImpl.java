@@ -577,6 +577,87 @@ public class Member_mypageDAOImpl implements Member_mypageDAO{
 		return dtos;
 	}
 	
+/*----------------------------------------------------------------------------*/
+	
+	//예매좌석 정보 가져오기
+	public ArrayList<Theater_seatVO> getSeatInfo(Map<String, Object> map){
+		
+		Member_mypageDAO dao = sqlSession.getMapper(Member_mypageDAO.class);
+		
+		return dao.getSeatInfo(map);
+	}
+	
+/*----------------------------------------------------------------------------*/
+	
+	//예매좌석 취소 - 예매좌석 state 돌려놓기
+	public int updateSeatState(int seat_index) {
+		
+		Member_mypageDAO dao = sqlSession.getMapper(Member_mypageDAO.class);
+		
+		return dao.updateSeatState(seat_index);
+	}
+	
+/*----------------------------------------------------------------------------*/
+	
+	//예매좌석 취소 - 스케쥴에 빈좌석 돌려놓기
+	public int updateEmptySeat(int seat_index) {
+		
+		Member_mypageDAO dao = sqlSession.getMapper(Member_mypageDAO.class);
+		
+		return dao.updateEmptySeat(seat_index);
+	}
+	
+/*----------------------------------------------------------------------------*/
+	
+	//예매좌석 취소 - movie_count 돌려놀기
+	public int updateMovieCount(Map<String, Object> map) {
+		
+		Member_mypageDAO dao = sqlSession.getMapper(Member_mypageDAO.class);
+		
+		return dao.updateMovieCount(map);
+	}
+	
+/*----------------------------------------------------------------------------*/
+	
+	//예매내역 삭제(history_tbl)
+	public int historyDelPro(int history_index) {
+		
+		Member_mypageDAO dao = sqlSession.getMapper(Member_mypageDAO.class);
+		
+		return dao.historyDelPro(history_index);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 }

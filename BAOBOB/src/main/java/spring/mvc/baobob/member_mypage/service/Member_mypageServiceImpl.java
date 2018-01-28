@@ -835,6 +835,7 @@ public class Member_mypageServiceImpl implements Member_mypageService{
 			}
 			
 			model.addAttribute("dtos", movieDtos);
+			model.addAttribute("seatDtos",seatDtos);
 
 		}
 		
@@ -863,35 +864,41 @@ public class Member_mypageServiceImpl implements Member_mypageService{
 		
 	//예매내역 취소처리
 	public void moviePaidDelPro(HttpServletRequest req, Model model) {
+		int schedule_index = Integer.parseInt(req.getParameter("schedule_index"));
+		String memId = (String) req.getSession().getAttribute("memId");
+		int history_index = Integer.parseInt(req.getParameter("history_index"));
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("schedule_index", schedule_index);
+		map.put("memId", memId);
 		
 		
+		ArrayList<Theater_seatVO> seatDtos = dao.getSeatInfo(map);
+		
+		int cnt=0;
+		int movieCount = 0; 
+		
+		for(Theater_seatVO vo : seatDtos) {
+			if(dao.updateSeatState(vo.getSeat_index()) != 0) {
+				dao.updateEmptySeat(vo.getSeat_index());
+				movieCount++;	
+				cnt = 1;
+			}
+		}
+		
+		if(cnt == 1) {
+			map.put("movieCount", movieCount);
+			
+			//예매 취소할 history_index의 값을 받아와서 theater_schedule_tbl의 movie_index를 이용하여 movie_tbl의 count를 예매수만큼 감소
+			if(dao.updateMovieCount(map) != 0) {
+				if(dao.moviePaidDelPro(history_index) != 0) {
+					int deleteCnt = dao.historyDelPro(history_index);
+					model.addAttribute("deleteCnt", deleteCnt);
+				}
+			}
+		}
 		
 		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		int num = Integer.parseInt(req.getParameter("num"));
-		
-		int deleteCnt = dao.moviePaidDelPro(num);
-		model.addAttribute("deleteCnt", deleteCnt);
 	}
 	
 /*----------------------------------------------------------------------------*/
