@@ -4,7 +4,7 @@ public class TableVO {
 	private int table_col;
 	private int table_row;
 	private String state;
-	private int index;
+	private int restaurant_table_index;
 
 	public int getTable_col() {
 		return table_col;
@@ -24,10 +24,10 @@ public class TableVO {
 	public void setState(String state) {
 		this.state = state;
 	}
-	public int getIndex() {
-		return index;
+	public int getRestaurant_table_index() {
+		return restaurant_table_index;
 	}
-	public void setIndex(int index) {
-		this.index = index;
+	public void setRestaurant_table_index(int restaurant_table_index) {
+		this.restaurant_table_index = restaurant_table_index;
 	}
 }

@@ -9,6 +9,8 @@
 <body>
 	<!-- CSS,JavaScript 참조 -->
 	<%@ include file="/WEB-INF/views/guest/common/head.jsp" %>
+	
+	<!-- 로그인 sub로 띄울 창 -->
 	<section style="padding:10">
 		<div class="container" align="center">
 			<div>
@@ -19,10 +21,7 @@
 				<button class="btn btn-primary" onclick="mainSignIn();">확인</button>
 				<button class="btn btn-black" onclick="cancel()">취소</button>
 			</div>
-			
 		</div>
 	</section>
-	
-	
 </body>
 </html>

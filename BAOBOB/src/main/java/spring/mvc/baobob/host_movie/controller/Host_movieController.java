@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import spring.mvc.baobob.host_movie.service.Host_movieServiceImpl;
+import spring.mvc.baobob.host_total.service.Host_totalServiceImpl;
 import spring.mvc.baobob.vo.MovieResViewVO;
 
 
@@ -17,6 +18,10 @@ import spring.mvc.baobob.vo.MovieResViewVO;
 public class Host_movieController {
 	@Autowired
 	Host_movieServiceImpl service = new Host_movieServiceImpl();
+	
+	@Autowired
+	Host_totalServiceImpl serviceT = new Host_totalServiceImpl();
+	
 	
 	// 관리자 영화
 	@RequestMapping(value="hostMovie")
@@ -234,6 +239,8 @@ public class Host_movieController {
 	public String hostMovieEmpAddForm(HttpServletRequest req, Model model) {
 		System.out.println("hostMovieEmpAddForm");
 		
+		service.getMemberList(req, model);
+		
 		return "host/host_movie/hostMovieEmpAddForm";
 	}
 	
@@ -243,6 +250,7 @@ public class Host_movieController {
 		System.out.println("hostMovieEmpChkMemberId");
 		
 		service.hostMovieEmpChkMemberId(req, model);
+		service.getMemberList(req, model);
 		
 		return "host/host_movie/hostMovieEmpAddForm";
 	}
@@ -308,4 +316,30 @@ public class Host_movieController {
 		
 		return vo;
 	}
+	
+	// 예매 결산
+	@RequestMapping(value="hostMovieSettlement")
+	public String hostMovieSettlement(HttpServletRequest req, Model model) {
+		System.out.println("hostMovieSettlement");
+		
+		serviceT.movieChart(req, model); // 장르별 매출
+		service.movieJanreCountChart(req, model); // 장르별 관람객 수
+		service.movieAgeChart(req, model); // 제한연령별 매출
+		service.movieSexCountChart(req, model); // 관람객 성별 매출
+		
+		
+		return "host/host_movie/hostMovieSettlement";
+	}
+	
+	
+	// 영화상세 리뷰 워드클라우드 가져오기
+	@RequestMapping(value="movieWordcloud", produces = "application/json; charset=utf8")
+	public String movieWordcloud(HttpServletRequest req, Model model) {
+		System.out.println("movieWordcloud");
+		
+		service.movieWordcloud(req, model);
+		
+		return "guest/guest_movie/movie/movieWordcloud";
+	}
+	
 }

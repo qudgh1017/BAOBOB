@@ -37,16 +37,6 @@
 		WHERE p_history_space = #{key}
 	</select>
 	
-	<!-- 카드 등록된 회원인지 확인 (자동 결제) -->
-	<select id="parkingOutMemberCheck" resultType="int">
-		SELECT COUNT(*)
-		FROM park_history_tbl ph, history_tbl ht, card_tbl ct
-		WHERE  ph.history_index = ht.history_index
-            AND ht.member_id = ct.member_id
-            AND ht.member_id != #{key}
-            AND p_history_space = #{key}
-	</select>
-	
 	<!-- 입차 시간 -->
 	<select id="getParkingInTime" resultType="java.sql.Timestamp">
 		SELECT p_history_in
@@ -88,4 +78,20 @@
 		WHERE p_history_space = #{key}
 	</select>
 	
+	<!--  결제시 회원 포인트 적립 -->
+	<update id="memberPointUpdate" parameterType="spring.mvc.baobob.vo.Member">
+		UPDATE member_tbl
+		SET
+			member_point = member_point + #{member_point},
+			member_cumPoint = member_cumPoint + #{member_point}
+		WHERE member_id = #{member_id}
+	</update>
+	
+	<select id="keyMemberIdSelect" resultType="String">
+		SELECT member_id
+		FROM history_tbl ht, park_history_tbl ph
+		WHERE ht.history_index = ph.history_index
+			AND ph.p_history_space = #{key}
+			AND member_id != #{key}
+	</select>
 </mapper>

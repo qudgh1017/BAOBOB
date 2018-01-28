@@ -1,11 +1,14 @@
 package spring.mvc.baobob.member_mypage.service;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.forwardedUrl;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,7 +22,14 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import spring.mvc.baobob.member_mypage.persistence.Member_mypageDAO;
 import spring.mvc.baobob.vo.BoardVO;
+import spring.mvc.baobob.vo.HistoryVO;
 import spring.mvc.baobob.vo.Member;
+import spring.mvc.baobob.vo.MovieHistoryVO;
+import spring.mvc.baobob.vo.MovieVO;
+import spring.mvc.baobob.vo.ParkingHistory;
+import spring.mvc.baobob.vo.RestaurantLogVO;
+import spring.mvc.baobob.vo.Theater_seatVO;
+import spring.mvc.baobob.vo.WishListVO;
 
 @Service
 public class Member_mypageServiceImpl implements Member_mypageService{
@@ -80,7 +90,7 @@ public class Member_mypageServiceImpl implements Member_mypageService{
 			
 			//게시글 목록 조회
 			ArrayList<BoardVO> dtos = dao.getArticleList(map);
-			model.addAttribute("dtos", dtos);
+			model.addAttribute("QuestionDtos", dtos);
 			
 		}
 		
@@ -92,7 +102,7 @@ public class Member_mypageServiceImpl implements Member_mypageService{
 		endPage = startPage + pageBlock - 1;
 		if(endPage > pageCount) endPage = pageCount;
 		
-		model.addAttribute("cnt", cnt); //글갯수
+		model.addAttribute("memQuestionCnt", cnt); //글갯수
 		model.addAttribute("number", number); //글번호
 		model.addAttribute("pageNum", pageNum); //페이지 번호
 		
@@ -330,7 +340,6 @@ public class Member_mypageServiceImpl implements Member_mypageService{
 	
 	//분실물 문의 리스트
 	public void memLostList(HttpServletRequest req, Model model) {
-		
 		int pageSize = 10;		// 한 페이지당 출력할 글 개수
 		int pageBlock = 3;		// 한 블럭당 페이지 갯수
 		
@@ -380,7 +389,7 @@ public class Member_mypageServiceImpl implements Member_mypageService{
 			
 			//게시글 목록 조회
 			ArrayList<BoardVO> dtos = dao.getArticleLList(map);
-			model.addAttribute("dtos", dtos);
+			model.addAttribute("lostDtos", dtos);
 			
 		}
 		
@@ -392,7 +401,7 @@ public class Member_mypageServiceImpl implements Member_mypageService{
 		endPage = startPage + pageBlock - 1;
 		if(endPage > pageCount) endPage = pageCount;
 		
-		model.addAttribute("cnt", cnt); //글갯수
+		model.addAttribute("lostCnt", cnt); //글갯수
 		model.addAttribute("number", number); //글번호
 		model.addAttribute("pageNum", pageNum); //페이지 번호
 		
@@ -513,7 +522,557 @@ public class Member_mypageServiceImpl implements Member_mypageService{
 		model.addAttribute("deleteCnt", deleteCnt);
 	}
 	
+/*----------------------------------------------------------------------------*/
+	
+	//무비로그-위시리스트
+	public void movieWishList(HttpServletRequest req, Model model) {
+		
+		int pageSize = 4;		// 한 페이지당 출력할 글 개수
+		int pageBlock = 3;		// 한 블럭당 페이지 갯수
+		
+		int cnt = 0;			// 글 갯수
+		int start = 0;			// 현재 페이지의 글 시작번호
+		int end = 0;			// 현재 페이지의 글 마지막번호
+		int number = 0;			// 출력할 글번호
+		String pageNum = null;	// 페이지 번호
+		int currentPage = 0;	// 현재 페이지
+		
+		int pageCount = 0;		// 페이지 갯수
+		int startPage = 0;		// 시작 페이지
+		int endPage = 0;		// 마지막 페이지
+		
+		String strId = (String)req.getSession().getAttribute("memId");
+
+		//글 갯수 구하기
+		cnt = dao.wishListCnt(strId);
+		
+		pageNum = req.getParameter("pageNum");
+		
+		if(pageNum == null) {
+			pageNum = "1";	//첫페이지를 1페이지로 설정
+		}
+		
+		currentPage = Integer.parseInt(pageNum); //현재 페이지
+		
+		//페이지 갯수 (pageSize가 5이고 전체 글갯수가 12면 2개가 남는데 그 2개도 페이지를 할당해 줘야한다.)
+		//pageCnt = 12 / 5 + 1; ... 나머지 2건이 1페이지로 할당되므로 3페이지(2페이지+1페이지)
+		pageCount = (cnt / pageSize) + ((cnt % pageSize > 0) ? 1 : 0); 
+		
+		//현재 페이지 시작번호
+		start = (currentPage - 1) * pageSize + 1; 
+		
+		//현재 페이지 끝번호
+		end = start + pageSize - 1;
+		
+		if(end > cnt) end = cnt;
+		
+		//1=21-(5(현제페이지)-1)*5
+		number = cnt - (currentPage -1) * pageSize; //출력할 글번호..최신글(큰페이지)가 1페이지 출력할 글번호
+		
+		if(cnt > 0) {
+			
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("start", start);
+			map.put("end", end);
+			map.put("strId", strId);
+			
+			//게시글 목록 조회
+			ArrayList<MovieVO> dtos = dao.getWishListMovies(map);
+			model.addAttribute("dtos", dtos);
+			
+		}
+		
+		//4=(5/3)*3+1;
+		startPage = (currentPage / pageBlock) * pageBlock + 1;
+		if(currentPage % pageBlock == 0) startPage -= pageBlock; // (5 % 3 == 0)
+		
+		//6=4+3-1; 
+		endPage = startPage + pageBlock - 1;
+		if(endPage > pageCount) endPage = pageCount;
+		
+		model.addAttribute("cnt", cnt); //글갯수
+		model.addAttribute("number", number); //글번호
+		model.addAttribute("pageNum", pageNum); //페이지 번호
+		
+		if(cnt > 0) {
+			model.addAttribute("startPage", startPage); //시작 페이지
+			model.addAttribute("endPage", endPage);//마지막 페이지
+			model.addAttribute("pageBlock", pageBlock);//출력할 페이지 갯수
+			model.addAttribute("pageCount", pageCount);//페이지 갯수
+			model.addAttribute("currentPage", currentPage);//현재 페이지
+		}
+		
+	}
+		
+/*----------------------------------------------------------------------------*/
+		
+	//무비로그-무비다이어리
+	public void movieDiaryList(HttpServletRequest req, Model model) {
+		int pageSize = 10;		// 한 페이지당 출력할 글 개수
+		int pageBlock = 3;		// 한 블럭당 페이지 갯수
+		
+		int cnt = 0;			// 글 갯수
+		int start = 0;			// 현재 페이지의 글 시작번호
+		int end = 0;			// 현재 페이지의 글 마지막번호
+		int number = 0;			// 출력할 글번호
+		String pageNum = null;	// 페이지 번호
+		int currentPage = 0;	// 현재 페이지
+		
+		int pageCount = 0;		// 페이지 갯수
+		int startPage = 0;		// 시작 페이지
+		int endPage = 0;		// 마지막 페이지
+		
+		String strId = (String)req.getSession().getAttribute("memId");
+		
+		//글 갯수 구하기
+		cnt = dao.getMovieDiaryCnt(strId);
+		
+		pageNum = req.getParameter("pageNum");
+		
+		if(pageNum == null) {
+			pageNum = "1";	//첫페이지를 1페이지로 설정
+		}
+		
+		currentPage = Integer.parseInt(pageNum); //현재 페이지
+		
+		//페이지 갯수 (pageSize가 5이고 전체 글갯수가 12면 2개가 남는데 그 2개도 페이지를 할당해 줘야한다.)
+		//pageCnt = 12 / 5 + 1; ... 나머지 2건이 1페이지로 할당되므로 3페이지(2페이지+1페이지)
+		pageCount = (cnt / pageSize) + ((cnt % pageSize > 0) ? 1 : 0); 
+		
+		//현재 페이지 시작번호
+		start = (currentPage - 1) * pageSize + 1; 
+		
+		//현재 페이지 끝번호
+		end = start + pageSize - 1;
+		
+		if(end > cnt) end = cnt;
+		
+		//1=21-(5(현제페이지)-1)*5
+		number = cnt - (currentPage -1) * pageSize; //출력할 글번호..최신글(큰페이지)가 1페이지 출력할 글번호
+		
+		if(cnt > 0) {
+			
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("start", start);
+			map.put("end", end);
+			map.put("strId", strId);
+			
+			//게시글 목록 조회
+			ArrayList<BoardVO> dtos = dao.getMovieDiaryList(map);
+			model.addAttribute("dtos", dtos);
+			
+		}
+		
+		//4=(5/3)*3+1;
+		startPage = (currentPage / pageBlock) * pageBlock + 1;
+		if(currentPage % pageBlock == 0) startPage -= pageBlock; // (5 % 3 == 0)
+		
+		//6=4+3-1; 
+		endPage = startPage + pageBlock - 1;
+		if(endPage > pageCount) endPage = pageCount;
+		
+		model.addAttribute("cnt", cnt); //글갯수
+		model.addAttribute("number", number); //글번호
+		model.addAttribute("pageNum", pageNum); //페이지 번호
+		
+		if(cnt > 0) {
+			model.addAttribute("startPage", startPage); //시작 페이지
+			model.addAttribute("endPage", endPage);//마지막 페이지
+			model.addAttribute("pageBlock", pageBlock);//출력할 페이지 갯수
+			model.addAttribute("pageCount", pageCount);//페이지 갯수
+			model.addAttribute("currentPage", currentPage);//현재 페이지
+		}
+	}
+		
+/*----------------------------------------------------------------------------*/
+		
+	//무비로그-무비다이어리 글쓰기 처리
+	public void movieDiaryPro(HttpServletRequest req, Model model) {
+		BoardVO dto = new BoardVO();
+		
+		//2.화면으로부터 입력받은 내용을 작은바구니(DTO)에 담는다.
+		dto.setMember_id((String)req.getSession().getAttribute("memId"));
+		dto.setBoard_subject(req.getParameter("subject"));
+		dto.setBoard_content(req.getParameter("content"));
+		
+		//3.hidden으로부터 넘겨받은 값을 작은 바구니(DTO)에 담는다.
+		//dto.setBoard_index(Integer.parseInt(req.getParameter("num")));
+		//dto.setBoard_ref(Integer.parseInt(req.getParameter("ref")));
+		//dto.setBoard_ref_step(Integer.parseInt(req.getParameter("ref_step")));
+		//dto.setBoard_ref_level(Integer.parseInt(req.getParameter("ref_level")));
+		dto.setBoard_reg_date(new Timestamp(System.currentTimeMillis()));
+		dto.setBoard_ip(req.getRemoteAddr()); 
+		
+		//5.insertBoard()
+		//int cnt = dao.insertQuestion(dto);
+		int cnt = dao.insertMovieDiary(dto);
+		
+		//6.jsp에 넘길 값을 셋팅한다.(setAttribute)
+		model.addAttribute("cnt", cnt);
+	}
+		
+/*----------------------------------------------------------------------------*/
+		
+	//무비다이어리 글삭제처리
+	public void movieDiaryDelPro(HttpServletRequest req, Model model) {
+		int num = Integer.parseInt(req.getParameter("num"));
+		
+		int deleteCnt = dao.deleteMovieDiary(num);
+		model.addAttribute("deleteCnt", deleteCnt);
+		
+	}
+	
+/*----------------------------------------------------------------------------*/
+	
+	//위시리스트 추가
+	public void addWishList(HttpServletRequest req, Model model) {
+		WishListVO dto = new WishListVO();
+		
+		//2.화면으로부터 입력받은 내용을 작은바구니(DTO)에 담는다.
+		dto.setMember_id((String)req.getSession().getAttribute("memId"));
+		dto.setMovie_index(Integer.parseInt(req.getParameter("movie_index")));
+		
+		int cnt = dao.addWishList(dto);
+		
+		//6.jsp에 넘길 값을 셋팅한다.(setAttribute)
+		model.addAttribute("cnt", cnt);
+		
+	}
+
+/*----------------------------------------------------------------------------*/
+		
+	//무비로그-위시리스트 삭제처리
+	public void delMovieWishList(HttpServletRequest req, Model model) {
+		int num = Integer.parseInt(req.getParameter("num"));
+		
+		int deleteCnt = dao.delMovieWishList(num);
+		model.addAttribute("deleteCnt", deleteCnt);
+	}
+	
+/*----------------------------------------------------------------------------*/
+		
+	//예매내역
+	public void moviePaidList(HttpServletRequest req, Model model) {
+		int pageSize = 10;		// 한 페이지당 출력할 글 개수
+		int pageBlock = 3;		// 한 블럭당 페이지 갯수
+		
+		int cnt = 0;			// 글 갯수
+		int start = 0;			// 현재 페이지의 글 시작번호
+		int end = 0;			// 현재 페이지의 글 마지막번호
+		int number = 0;			// 출력할 글번호
+		String pageNum = null;	// 페이지 번호
+		int currentPage = 0;	// 현재 페이지
+		
+		int pageCount = 0;		// 페이지 갯수
+		int startPage = 0;		// 시작 페이지
+		int endPage = 0;		// 마지막 페이지
+		
+		String strId = (String)req.getSession().getAttribute("memId");
+		
+		//글 갯수 구하기
+		cnt = dao.movieClearCnt(strId);
+		
+		pageNum = req.getParameter("pageNum");
+		
+		if(pageNum == null) {
+			pageNum = "1";	//첫페이지를 1페이지로 설정
+		}
+		
+		currentPage = Integer.parseInt(pageNum); //현재 페이지
+		
+		//페이지 갯수 (pageSize가 5이고 전체 글갯수가 12면 2개가 남는데 그 2개도 페이지를 할당해 줘야한다.)
+		//pageCnt = 12 / 5 + 1; ... 나머지 2건이 1페이지로 할당되므로 3페이지(2페이지+1페이지)
+		pageCount = (cnt / pageSize) + ((cnt % pageSize > 0) ? 1 : 0); 
+		
+		//현재 페이지 시작번호
+		start = (currentPage - 1) * pageSize + 1; 
+		
+		//현재 페이지 끝번호
+		end = start + pageSize - 1;
+		
+		if(end > cnt) end = cnt;
+		
+		//1=21-(5(현제페이지)-1)*5
+		number = cnt - (currentPage -1) * pageSize; //출력할 글번호..최신글(큰페이지)가 1페이지 출력할 글번호
+		
+		if(cnt > 0) {
+			
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("start", start);
+			map.put("end", end);
+			map.put("strId", strId);
+			
+			//영화정보VO
+			ArrayList<MovieHistoryVO> movieDtos = dao.getMovieClear(map);
+			
+			//좌석정보VO
+			ArrayList<Theater_seatVO> seatDtos = dao.getMovieSeat(map);
+			
+			String[] seatRow = {"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"};
+			
+			for(MovieHistoryVO mVO : movieDtos) {
+				
+				String[] seat;
+				int seatSize = 0;
+				
+				for(Theater_seatVO sVO : seatDtos) {
+					if(mVO.getTheater_schedule_index()==sVO.getTheater_schedule_index()) {
+						seatSize++;
+					}
+				}
+				
+				seat = new String[seatSize];
+				
+				int i=0;
+				for(Theater_seatVO sVO : seatDtos) {
+					if(mVO.getTheater_schedule_index()==sVO.getTheater_schedule_index()) {
+						
+						String seatInfo = seatRow[sVO.getSeat_row()-1]+sVO.getSeat_col();
+						seat[i++] = seatInfo;
+					}
+				}
+				mVO.setSeat(Arrays.toString(seat));
+			}
+			
+			model.addAttribute("dtos", movieDtos);
+
+		}
+		
+		//4=(5/3)*3+1;
+		startPage = (currentPage / pageBlock) * pageBlock + 1;
+		if(currentPage % pageBlock == 0) startPage -= pageBlock; // (5 % 3 == 0)
+		
+		//6=4+3-1; 
+		endPage = startPage + pageBlock - 1;
+		if(endPage > pageCount) endPage = pageCount;
+		
+		model.addAttribute("cnt", cnt); //글갯수
+		model.addAttribute("number", number); //글번호
+		model.addAttribute("pageNum", pageNum); //페이지 번호
+		
+		if(cnt > 0) {
+			model.addAttribute("startPage", startPage); //시작 페이지
+			model.addAttribute("endPage", endPage);//마지막 페이지
+			model.addAttribute("pageBlock", pageBlock);//출력할 페이지 갯수
+			model.addAttribute("pageCount", pageCount);//페이지 갯수
+			model.addAttribute("currentPage", currentPage);//현재 페이지
+		}
+	}
+		
+/*----------------------------------------------------------------------------*/	
+		
+	//예매내역 취소처리
+	public void moviePaidDelPro(HttpServletRequest req, Model model) {
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		int num = Integer.parseInt(req.getParameter("num"));
+		
+		int deleteCnt = dao.moviePaidDelPro(num);
+		model.addAttribute("deleteCnt", deleteCnt);
+	}
+	
+/*----------------------------------------------------------------------------*/
+	
+	//내가 이용한 레스토랑
+	public void restaurantLog(HttpServletRequest req, Model model) {
+		int pageSize = 5;		// 한 페이지당 출력할 글 개수
+		int pageBlock = 3;		// 한 블럭당 페이지 갯수
+		
+		int cnt = 0;			// 글 갯수
+		int start = 0;			// 현재 페이지의 글 시작번호
+		int end = 0;			// 현재 페이지의 글 마지막번호
+		int number = 0;			// 출력할 글번호
+		String pageNum = null;	// 페이지 번호
+		int currentPage = 0;	// 현재 페이지
+		
+		int pageCount = 0;		// 페이지 갯수
+		int startPage = 0;		// 시작 페이지
+		int endPage = 0;		// 마지막 페이지
+		
+		String strId = (String)req.getSession().getAttribute("memId");
+		System.out.println("세션: " + strId);
+		//식당 예매내역 갯수
+		cnt = dao.restaurantLogCnt(strId);
+		
+		pageNum = req.getParameter("pageNum");
+		
+		if(pageNum == null) {
+			pageNum = "1";	//첫페이지를 1페이지로 설정
+		}
+		
+		currentPage = Integer.parseInt(pageNum); //현재 페이지
+		
+		//페이지 갯수 (pageSize가 5이고 전체 글갯수가 12면 2개가 남는데 그 2개도 페이지를 할당해 줘야한다.)
+		//pageCnt = 12 / 5 + 1; ... 나머지 2건이 1페이지로 할당되므로 3페이지(2페이지+1페이지)
+		pageCount = (cnt / pageSize) + ((cnt % pageSize > 0) ? 1 : 0); 
+		
+		//현재 페이지 시작번호
+		start = (currentPage - 1) * pageSize + 1; 
+		
+		//현재 페이지 끝번호
+		end = start + pageSize - 1;
+		
+		if(end > cnt) end = cnt;
+		
+		//1=21-(5(현제페이지)-1)*5
+		number = cnt - (currentPage -1) * pageSize; //출력할 글번호..최신글(큰페이지)가 1페이지 출력할 글번호
+		
+		if(cnt > 0) {
+			
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("start", start);
+			map.put("end", end);
+			map.put("strId", strId);
+			
+			//게시글 목록 조회
+			ArrayList<RestaurantLogVO> movieDtos = dao.restaurantLogList(map);
+			model.addAttribute("dtos", movieDtos);
+			
+		}
+		
+		//4=(5/3)*3+1;
+		startPage = (currentPage / pageBlock) * pageBlock + 1;
+		if(currentPage % pageBlock == 0) startPage -= pageBlock; // (5 % 3 == 0)
+		
+		//6=4+3-1; 
+		endPage = startPage + pageBlock - 1;
+		if(endPage > pageCount) endPage = pageCount;
+		
+		model.addAttribute("cnt", cnt); //글갯수
+		model.addAttribute("number", number); //글번호
+		model.addAttribute("pageNum", pageNum); //페이지 번호
+		System.out.println("예약갯수: " + cnt);
+		
+		
+		if(cnt > 0) {
+			model.addAttribute("startPage", startPage); //시작 페이지
+			model.addAttribute("endPage", endPage);//마지막 페이지
+			model.addAttribute("pageBlock", pageBlock);//출력할 페이지 갯수
+			model.addAttribute("pageCount", pageCount);//페이지 갯수
+			model.addAttribute("currentPage", currentPage);//현재 페이지
+		}
+	}
+	
+/*----------------------------------------------------------------------------*/
+	
+	//방문내역
+	public void visitList(HttpServletRequest req, Model model) {
+		int pageSize = 10;		// 한 페이지당 출력할 글 개수
+		int pageBlock = 3;		// 한 블럭당 페이지 갯수
+		
+		int cnt = 0;			// 글 갯수
+		int start = 0;			// 현재 페이지의 글 시작번호
+		int end = 0;			// 현재 페이지의 글 마지막번호
+		int number = 0;			// 출력할 글번호
+		String pageNum = null;	// 페이지 번호
+		int currentPage = 0;	// 현재 페이지
+		
+		int pageCount = 0;		// 페이지 갯수
+		int startPage = 0;		// 시작 페이지
+		int endPage = 0;		// 마지막 페이지
+		
+		String strId = (String)req.getSession().getAttribute("memId");
+		
+		//개인별 히스토리 목록 수 조회
+		cnt = dao.getHistoryListCnt(strId);
+		
+		pageNum = req.getParameter("pageNum");
+		
+		if(pageNum == null) {
+			pageNum = "1";	//첫페이지를 1페이지로 설정
+		}
+		
+		currentPage = Integer.parseInt(pageNum); //현재 페이지
+		
+		//페이지 갯수 (pageSize가 5이고 전체 글갯수가 12면 2개가 남는데 그 2개도 페이지를 할당해 줘야한다.)
+		//pageCnt = 12 / 5 + 1; ... 나머지 2건이 1페이지로 할당되므로 3페이지(2페이지+1페이지)
+		pageCount = (cnt / pageSize) + ((cnt % pageSize > 0) ? 1 : 0); 
+		
+		//현재 페이지 시작번호
+		start = (currentPage - 1) * pageSize + 1; 
+		
+		//현재 페이지 끝번호
+		end = start + pageSize - 1;
+		
+		if(end > cnt) end = cnt;
+		
+		//1=21-(5(현제페이지)-1)*5
+		number = cnt - (currentPage -1) * pageSize; //출력할 글번호..최신글(큰페이지)가 1페이지 출력할 글번호
+		
+		if(cnt > 0) {
+			
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("start", start);
+			map.put("end", end);
+			map.put("strId", strId);
+			
+			//주차장, 영화관, 레스토랑 이용내역 목록 구해서 Attribute에 저장
+			ArrayList<ParkingHistory> parkDtos = dao.parkHistoryList(map);
+			ArrayList<RestaurantLogVO> restaurantDtos = dao.restaurantLogList(map);
+			ArrayList<MovieHistoryVO> movieDtos = dao.getMovieClear(map);
+			ArrayList<HistoryVO> historyDtos = dao.getHistoryList(map);
+			
+			model.addAttribute("historyDtos", historyDtos);
+			model.addAttribute("parkDtos", parkDtos);
+			model.addAttribute("restaurantDtos", restaurantDtos);
+			model.addAttribute("movieDtos", movieDtos);
+			
+		}
+		
+		//4=(5/3)*3+1;
+		startPage = (currentPage / pageBlock) * pageBlock + 1;
+		if(currentPage % pageBlock == 0) startPage -= pageBlock; // (5 % 3 == 0)
+		
+		//6=4+3-1; 
+		endPage = startPage + pageBlock - 1;
+		if(endPage > pageCount) endPage = pageCount;
+		
+		model.addAttribute("cnt", cnt); //글갯수
+		model.addAttribute("number", number); //글번호
+		model.addAttribute("pageNum", pageNum); //페이지 번호
+		
+		if(cnt > 0) {
+			model.addAttribute("startPage", startPage); //시작 페이지
+			model.addAttribute("endPage", endPage);//마지막 페이지
+			model.addAttribute("pageBlock", pageBlock);//출력할 페이지 갯수
+			model.addAttribute("pageCount", pageCount);//페이지 갯수
+			model.addAttribute("currentPage", currentPage);//현재 페이지
+		}
+	}
 	
 	
+	
+	
+	
+	
+	
+	
+	
+	
+		
+		
 	
 }

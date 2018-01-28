@@ -20,7 +20,7 @@
 	  <div class="container mar">
 	  
 	  	<form action="guestParkingGuestIn" id="inform">
-	  		<input class="form-control input" type="text" name="tel" placeholder="연락처">
+	  		<input class="form-control input" type="email" name="email" placeholder="이메일" required>
 	  		<button class="btn btn-block">확인</button>
 	  	</form>
 	  	

@@ -80,4 +80,26 @@ public interface Host_movieService {
 	
 	// 예매 상세
 	public MovieResViewVO hostMovieResView(HttpServletRequest req, Model model);
+	
+	// 장르별 영화 비울
+	public void movieJanreCountChart(HttpServletRequest req, Model model);
+	
+	// 제한 연령별 매출
+	public void movieAgeChart(HttpServletRequest req, Model model);
+
+	// 관람객 성별 매출
+	public void movieSexCountChart(HttpServletRequest req, Model model);
+	
+	// 워드 클라우드
+	// 단어 형태소 분석을 처리하는 메소드
+	public void wordAnalyzer(HttpServletRequest req, Model model);
+		
+	// 단어 형태소 분석 후 DB 저장
+	public void wordExtractAndAnalyze(String text, int movie_index);
+	
+	// 영화에 해당하는 워드 클라우드 검색
+	public void movieWordcloud(HttpServletRequest req, Model model);
+	
+	// 직원 고용하기 전 모든 회원 정보 불러오기
+	public void getMemberList(HttpServletRequest req, Model model);
 }

@@ -40,7 +40,19 @@ public interface MainDAO {
 	
 	//아이디 존재 여부
 	public int getMemberCheck(String userId);
+
+	//고객센터 글수
+	public int getHelperCnt();
 	
 	//고객센터
 	public ArrayList<FaqVO> getHelper(Map<String, Integer> map);
+
+	//고객센터 검색 제안
+	public ArrayList<String> helpKeywordSuggest(String keyword);
+	
+	//고객센터 검색 결과수
+	public int helpKeywordSearchCnt(String keyword);
+	
+	//고객센터 검색
+	public ArrayList<FaqVO> helpKeywordSearch(Map<String, Object> map);
 }

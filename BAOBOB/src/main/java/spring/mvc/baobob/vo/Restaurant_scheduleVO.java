@@ -5,7 +5,6 @@ import java.sql.Timestamp;
 public class Restaurant_scheduleVO {
 	public int restaurant_index;
 	public int restaurant_schedule_index;
-	public Timestamp schedule_startDate;
 	public Timestamp schedule_startTime;
 	public Timestamp schedule_endTime;
 
@@ -20,12 +19,6 @@ public class Restaurant_scheduleVO {
 	}
 	public void setRestaurant_schedule_index(int restaurant_schedule_index) {
 		this.restaurant_schedule_index = restaurant_schedule_index;
-	}
-	public Timestamp getSchedule_startDate() {
-		return schedule_startDate;
-	}
-	public void setSchedule_startDate(Timestamp schedule_startDate) {
-		this.schedule_startDate = schedule_startDate;
 	}
 	public Timestamp getSchedule_startTime() {
 		return schedule_startTime;

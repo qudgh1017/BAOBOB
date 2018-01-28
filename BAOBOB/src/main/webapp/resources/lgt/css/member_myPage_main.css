@@ -84,10 +84,10 @@ table #mainBody a {color:487752!important; text-decoration:none;}
 /* 페이징 컨트롤 */
 .pagination {margin-left:500px;display: inline-block;}
 .pagination a {color: 487752!important;float: left;margin: 8px; padding: 8px 16px;text-decoration: none!important;}
-.pagination a.active {background-color: #18bc9c;;color: white;}
-.pagination a:hover:not(.active) {background-color: #18bc9c;;}
+.pagination a.active {background-color: C2EED8;;color: white;}
+.pagination a:hover:not(.active) {background-color: C2EED8;}
 
-.button, .button.disabled:hover {width:70px;margin-top: 20px;text-decoration: none;border:1px solid 487752; border-radius: 3px;font-family:arial, helvetica, sans-serif; padding: 5px 5px 5px 5px; color: #FFFFFF; background-color: 487752;}
+.button, .button.disabled:hover {width:100px;margin-top: 20px;text-decoration: none;border:1px solid 487752; border-radius: 3px;font-family:arial, helvetica, sans-serif; padding: 5px 5px 5px 5px; color: #FFFFFF; background-color: 487752;}
 .button:hover{cursor: pointer;border:1px solid #1c5675;background-color: 487752;}
 
 

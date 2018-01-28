@@ -30,12 +30,14 @@
 		<div class="col-md-offset-1"></div>
 	</div><br>
 	
+	
+	<br>
 	<!-- 평점, 리뷰 수 -->		
 	<div class="row">
 		<div class="col-md-offset-1"></div>
-		<div class="col-md-10" style="height:100px; ">
+		<div class="col-md-10" style="height:160px; ">
 			<div class="row">
-				<div class="col-md-3"  align="center">
+				<div class="col-md-2"  align="center">
 					좋아요&nbsp; ${likePercent}%  
 				</div>
 				
@@ -43,9 +45,8 @@
 					<h4>${cnt}명의</h4>
 					실관람객들이 평가해주셨습니다.
 				</div>
-				
-				<div class="col-md-3"  align="center">
-					표??
+				<div class="col-md-4"  align="center">
+					<iframe src="movieWordcloud?movie_index=${movie.movie_index}" style="width:100%; height:150px;" frameborder=0 ></iframe>
 				</div>
 			</div>
 		</div>

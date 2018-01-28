@@ -7,6 +7,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import spring.mvc.baobob.vo.Member;
 import spring.mvc.baobob.vo.ParkingHistory;
 
 @Repository
@@ -46,14 +47,6 @@ public class Guest_parkingDAOImpl implements Guest_parkingDAO {
 		return cnt;
 	}
 
-	//퇴장 - 카드 등록된 회원 구분
-	@Override
-	public int parkingOutMemberCheck(String key) {
-		Guest_parkingDAO mapper = sqlSession.getMapper(Guest_parkingDAO.class);
-		int cnt = mapper.parkingOutMemberCheck(key);
-		return cnt;
-	}
-	
 	//입차 시간
 	@Override
 	public Timestamp getParkingInTime(String key) {
@@ -92,4 +85,17 @@ public class Guest_parkingDAOImpl implements Guest_parkingDAO {
 		return ph;
 	}
 
+	//회원 아이디
+	public String keyMemberIdSelect(String key) {
+		Guest_parkingDAO mapper = sqlSession.getMapper(Guest_parkingDAO.class);
+		String id = mapper.keyMemberIdSelect(key);
+		return id;
+	}
+	
+	//결제 시 포인트 적립
+	public int memberPointUpdate(Member m) {
+		Guest_parkingDAO mapper = sqlSession.getMapper(Guest_parkingDAO.class);
+		int cnt = mapper.memberPointUpdate(m);
+		return cnt;
+	}
 }

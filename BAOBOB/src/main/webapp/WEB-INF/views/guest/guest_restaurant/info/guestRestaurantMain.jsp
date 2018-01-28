@@ -1,59 +1,116 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-
 <%@ include file="/resources/setting.jsp"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>레스토랑 메인 화면</title>
-
 </head>
 <body>
 	<!--======= Header 시작 =======-->
-	<%@ include file="../../common/head.jsp" %>
+	<%@ include file="/WEB-INF/views/guest/common/head.jsp" %>
 	<!-- Baobob Navigation -->
-	<%@ include file="../../common/navigation.jsp" %>
+	<%@ include file="/WEB-INF/views/guest/common/navigation.jsp" %>
 	<!-- Restaurant_menu -->
 	<%@ include file="/WEB-INF/views/guest/guest_restaurant/restaurantMenu.jsp" %>
 	<!--======= Header 종료 =======-->
+	<input type="hidden" value="${restaurant_index}" name="restaurant_index">
 	
 	
 	<!--====== Container 시작 ======-->
 	<section>
 		<div class="container">
-			<div class="row">
-				<div class="col-md-offset-1"></div>
-				<div class="col-md-10">
-					<br>
-					<h3 align=left;>どきどきDokidoki</h3>
-					<hr style="border:2px solid black;">
-				</div>
-				<div class="col-md-offset-1"></div>
-			</div>
-			
-			<!-- 레스토랑 사진 -->
-			<div class="row">
-				<div class="col-md-offset-1"></div>
-				<div class="col-md-10">
-					<br>
-					
-					<div id="Restaurant" style="background-image: url(${projectRes}/images/mhj/choice/jsp2.jpg); height:400px; background-repeat:no-repeat;">
-						<div style="height:280px;"></div>
-						<div style="background:rgba(0, 0, 0, 0.7); color:white; height:120px">
-							<br>
-							모던한 공간 속에서 감각적인 일본의 맛과 멋을 만날 수 있는 공간입니다. <br>
-							합리적인 가격의 음식을 편안하고 세련된 분위기에서 일본의 새로운 미식 문화를 즐기며 <br>
-							친구 또는 지인들과 특별한 시간을 함께 하시길 바랍니다.<br>
-							
-						</div>
+			<c:if test="${restaurant_index==1 }">
+				<div class="row">
+					<div class="col-md-offset-1"></div>
+					<div class="col-md-10">
+						<br>
+						<h3 align=left;>どきどきDokidoki</h3>
+						<hr style="border:2px solid black;">
 					</div>
-					<hr style="border:2px solid black;">
+					<div class="col-md-offset-1"></div>
 				</div>
-				<div class="col-md-offset-1"></div>
-			</div>
-			
+				
+				<!-- Dokidoki 레스토랑 사진 -->
+				<div class="row">
+					<div class="col-md-offset-1"></div>
+					<div class="col-md-10">
+						<br>
+						
+						<div id="Restaurant" style="background-image: url(${projectRes}/images/mhj/choice/jap_main.jpg); height:400px; background-repeat:no-repeat;">
+							<div style="height:280px;"></div>
+							<div style="background:rgba(0, 0, 0, 0.7); color:white; height:120px">
+								<br>
+								모던한 공간 속에서 감각적인 일본의 맛과 멋을 만날 수 있는 공간입니다. <br>
+								합리적인 가격의 음식을 편안하고 세련된 분위기에서 일본의 새로운 미식 문화를 즐기며 <br>
+								친구 또는 지인들과 특별한 시간을 함께 하시길 바랍니다.<br>
+							</div>
+						</div>
+						<hr style="border:2px solid black;">
+					</div>
+					<div class="col-md-offset-1"></div>
+				</div>
+			</c:if>
+			<c:if test="${restaurant_index==2 }">
+				<div class="row">
+						<div class="col-md-offset-1"></div>
+						<div class="col-md-10">
+							<br>
+							<h3 align=left;>바압</h3>
+							<hr style="border:2px solid black;">
+						</div>
+						<div class="col-md-offset-1"></div>
+					</div>
+					
+					<!-- 바압 레스토랑 사진 -->
+					<div class="row">
+						<div class="col-md-offset-1"></div>
+						<div class="col-md-10">
+							<br>
+							
+							<div id="Restaurant" style="background-image: url(${projectRes}/images/mhj/choice/kor_main.jpg); height:400px; background-repeat:no-repeat;">
+								<div style="height:280px;"></div>
+								<div style="background:rgba(0, 0, 0, 0.7); color:white; height:120px">
+									<br>
+									모던한 공간 속에서 감각적인 일본의 맛과 멋을 만날 수 있는 공간입니다. <br>
+									합리적인 가격의 음식을 편안하고 세련된 분위기에서 일본의 새로운 미식 문화를 즐기며 <br>
+									친구 또는 지인들과 특별한 시간을 함께 하시길 바랍니다.<br>
+								</div>
+							</div>
+							<hr style="border:2px solid black;">
+						</div>
+						<div class="col-md-offset-1"></div>
+					</div>
+			</c:if>	
+			<c:if test="${restaurant_index==3 }">
+				<div class="row">
+						<div class="col-md-offset-1"></div>
+						<div class="col-md-10">
+							<br>
+							<h3 align=left;>BOUTBACK</h3>
+							<hr style="border:2px solid black;">
+						</div>
+						<div class="col-md-offset-1"></div>
+					</div>
+					
+					<!-- BOUTBACK레스토랑 사진 -->
+					<div class="row">
+						<div class="col-md-offset-1"></div>
+						<div class="col-md-10">
+							<br>
+							
+							<div id="Restaurant" style="background-image: url(${projectRes}/images/mhj/choice/boutback_main.jpg); height:400px; background-repeat:no-repeat;">
+								<div style="height:340px;"></div>
+								<div style="background:rgba(0, 0, 0, 0.7); color:white; height:60px;">
+									정통의 맛과 조리법, 신선한 재료로 정성껏 준비한 메뉴를 가족, 친구와 함께 나누는 공간입니다<br>
+									눈에 보이는 것을 쫓지 않고 투박하게 쉬운 길로 가지 않고 정직하게 True Taste를 찾겠습니다 
+								</div>
+							</div>
+							<hr style="border:2px solid black;">
+						</div>
+						<div class="col-md-offset-1"></div>
+					</div>
+			</c:if>	
 			<!-- 위치 -->
 			<div class="row">
 				<div class="col-md-offset-1"></div>
@@ -116,54 +173,7 @@
 	<br><br><br><br><br><br><br><br>
 	
 	<!--======= Footer 시작 =======-->
-	<footer class="footer text-center">
-		<div class="container">
-			<div class="row">
-				<div class="col-md-4 mb-5 mb-lg-0">
-				  <h4 class="text-uppercase mb-4">Location</h4>
-				  <p class="lead mb-0">2215 John Daniel Drive
-				    <br>Clark, MO 65243</p>
-				</div>
-				<div class="col-md-4 mb-5 mb-lg-0">
-				  <h4 class="text-uppercase mb-4">Around the Web</h4>
-				  <ul class="list-inline mb-0">
-				    <li class="list-inline-item">
-				      <a class="btn btn-outline-light btn-social text-center rounded-circle" href="#">
-				        <i class="fa fa-fw fa-facebook"></i>
-				      </a>
-				    </li>
-				    <li class="list-inline-item">
-				      <a class="btn btn-outline-light btn-social text-center rounded-circle" href="#">
-				        <i class="fa fa-fw fa-google-plus"></i>
-				      </a>
-				    </li>
-				    <li class="list-inline-item">
-				      <a class="btn btn-outline-light btn-social text-center rounded-circle" href="#">
-				        <i class="fa fa-fw fa-twitter"></i>
-				      </a>
-				    </li>
-				    <li class="list-inline-item">
-				      <a class="btn btn-outline-light btn-social text-center rounded-circle" href="#">
-				        <i class="fa fa-fw fa-linkedin"></i>
-				      </a>
-				    </li>
-				    <li class="list-inline-item">
-				      <a class="btn btn-outline-light btn-social text-center rounded-circle" href="#">
-				        <i class="fa fa-fw fa-dribbble"></i>
-				      </a>
-				    </li>
-				  </ul>
-				</div>
-				<div class="col-md-4">
-					<h4 class="text-uppercase mb-4">About Freelancer</h4>
-					<p class="lead mb-0">Freelance is a free to use, open source Bootstrap theme created by
-					  <a href="http://startbootstrap.com">Start Bootstrap</a>.</p>
-				</div>
-			</div>
-		</div>
-	</footer> 
-	<%@ include file="../../common/footerCopyright.jsp" %>
+	<%@ include file="/WEB-INF/views/guest/guest_movie/movie_footer.jsp" %> 
 	<!--======= Footer 종료=======-->
-	
 </body>
 </html>

@@ -4,7 +4,14 @@ import java.util.ArrayList;
 import java.util.Map;
 
 import spring.mvc.baobob.vo.BoardVO;
+import spring.mvc.baobob.vo.HistoryVO;
 import spring.mvc.baobob.vo.Member;
+import spring.mvc.baobob.vo.MovieHistoryVO;
+import spring.mvc.baobob.vo.MovieVO;
+import spring.mvc.baobob.vo.ParkingHistory;
+import spring.mvc.baobob.vo.RestaurantLogVO;
+import spring.mvc.baobob.vo.Theater_seatVO;
+import spring.mvc.baobob.vo.WishListVO;
 
 public interface Member_mypageDAO {
 	
@@ -68,5 +75,58 @@ public interface Member_mypageDAO {
 	//회원탈퇴 처리
 	public int memPDelPro(String strId);
 	
+	//wishList 갯수
+	public int wishListCnt(String strId);
+	
+	//wishList 리스트
+	public ArrayList<MovieVO> getWishListMovies(Map<String,Object> map);
+		
+	//내가본 영화 갯수	
+	public int movieClearCnt(String strId);	
+		
+	//내가 본 영화 리스트	
+	public ArrayList<MovieHistoryVO> getMovieClear(Map<String,Object> map);
+	
+	//예약한 상영과,좌석 불러오기
+	public ArrayList<Theater_seatVO> getMovieSeat(Map<String,Object> map);
+		
+	//무비 다이어리 글갯수 구하기
+	public int getMovieDiaryCnt(String strId);	
+	
+	//무비 다이어리 목록 조회
+	public ArrayList<BoardVO> getMovieDiaryList(Map<String, Object> map);
+	
+	//무비다이어리 작성
+	public int insertMovieDiary(BoardVO dto);
+	
+	//무비다이어리 삭제
+	public int deleteMovieDiary(int num);
+	
+	//위시리스트 추가
+	public int addWishList(WishListVO dto);
+
+	//위시리스트 삭제
+	public int delMovieWishList(int num);
+	
+	//예매내역 삭제
+	public int moviePaidDelPro(int num);
+	
+	//내가 이용한 식당 글갯수 구하기
+	public int restaurantLogCnt(String strId);	
+	
+	//내가 이용한 식당 목록 조회
+	public ArrayList<RestaurantLogVO> restaurantLogList(Map<String, Object> map);
+	
+	//주차장 내역 갯수 구하기
+	public int parkHistoryCnt(String strId);
+	
+	//주차장 내역 목록 조회
+	public ArrayList<ParkingHistory> parkHistoryList(Map<String, Object> map);
+	
+	//개인별 히스토리 목록 수 조회
+	public int getHistoryListCnt(String strId);
+	
+	//개인별 히스토리 목록 조회
+	public ArrayList<HistoryVO> getHistoryList(Map<String, Object> map);
 
 }

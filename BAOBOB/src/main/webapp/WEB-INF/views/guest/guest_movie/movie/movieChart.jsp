@@ -26,10 +26,9 @@
 	<section>
 		<div class="container">
 			<div class="row">
-				<div class="col-md-offset-1"></div>
-				<div class="col-md-10">
+				<div class="col-md-12">
 					<br>
-					<h3 align=left; style="display:inline-block; margin-right:550px">
+					<h3 align=left; style="display:inline-block; margin-right:800px">
 						무비차트
 					</h3>
 					<a class="state" href="movieChart?movie_state=1">
@@ -43,9 +42,7 @@
 					</a>
 					<hr style="border:2px solid black;">
 					<br><br>
-					
 				</div>
-				<div class="col-md-offset-1"></div>
 			</div>
 		</div>
 		

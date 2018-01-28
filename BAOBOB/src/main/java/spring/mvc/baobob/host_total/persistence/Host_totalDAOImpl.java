@@ -1,7 +1,7 @@
 package spring.mvc.baobob.host_total.persistence;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
@@ -10,6 +10,9 @@ import org.springframework.stereotype.Repository;
 
 import spring.mvc.baobob.member_mypage.persistence.Member_mypageDAO;
 import spring.mvc.baobob.vo.Member;
+import spring.mvc.baobob.vo.ParkingFee;
+import spring.mvc.baobob.vo.ParkingHistory;
+import spring.mvc.baobob.vo.hostTChartVO;
 
 @Repository
 public class Host_totalDAOImpl implements Host_totalDAO{
@@ -106,54 +109,71 @@ public class Host_totalDAOImpl implements Host_totalDAO{
 	
 	//영화관 결산 총액 구하기
 	public int getMovieSale() {
-		System.out.println("결산다오");
 		int cnt = 0;
 		
 		Host_totalDAO dao = sqlSession.getMapper(Host_totalDAO.class);
 		cnt = dao.getMovieSale();
 		
-		System.out.println("총액:" + cnt);
 		return cnt;
 	}
 	
 /*----------------------------------------------------------------------------*/
 	
 	//영화관 결산페이지(챠트)
-	public Map<String,Integer> getMovieChart(){
-		Map<String,Integer> m = null;
+	public List<hostTChartVO> getMovieChart(){
+		List<hostTChartVO> voList = null;
 		
 		Host_totalDAO dao = sqlSession.getMapper(Host_totalDAO.class);
+		voList =  dao.getMovieChart();
 		
-		m = new HashMap<String,Integer>();
-		m.put("janre1",0);
-		m.put("janre2",0);
-		m.put("janre3",0);
-		m.put("janre4",0);
-		m.put("janre5",0);
-		m.put("janre6",0);
-		m.put("janre7",0);
-		m.put("janre8",0);
-		m.put("janre9",0);
-		m.put("janre10",0);
-		
-		m = dao.getMovieChart();
-		
-		System.out.println("챠트:" + m);
-		return m;
+		return voList;
 	}
 	
+/*----------------------------------------------------------------------------*/
 	
+	//식당 결산 총액 구하기
+	public int getRestaurantSale() {
+		int cnt = 0;
+		
+		Host_totalDAO dao = sqlSession.getMapper(Host_totalDAO.class);
+		cnt = dao.getRestaurantSale();
+		
+		return cnt;
+	}
 	
+/*----------------------------------------------------------------------------*/
 	
+	//식당 결산페이지(챠트)
+	public List<hostTChartVO> getRestaurantChart(){
+		List<hostTChartVO> voList = null;
+		
+		Host_totalDAO dao = sqlSession.getMapper(Host_totalDAO.class);
+		voList = dao.getRestaurantChart();
+		
+		return voList;
+	}
 	
+/*----------------------------------------------------------------------------*/
+
+	//주차 기본 요금
+	public ParkingFee getParkingFee() {
+		Host_totalDAO mapper = sqlSession.getMapper(Host_totalDAO.class);
+		
+		ParkingFee pf =  mapper.getParkingFee();
+		
+		return pf;
+	}
 	
+/*----------------------------------------------------------------------------*/
 	
-	
-	
-	
-	
-	
-	
+	//올해 납부 내역
+	public ArrayList<ParkingHistory> getThisYearPayList(){
+		Host_totalDAO mapper = sqlSession.getMapper(Host_totalDAO.class);
+		
+		ArrayList<ParkingHistory> list = mapper.getThisYearPayList();
+		
+		return list;
+	}
 	
 	
 	

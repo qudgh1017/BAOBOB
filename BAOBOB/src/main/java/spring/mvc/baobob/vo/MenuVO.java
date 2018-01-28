@@ -1,11 +1,20 @@
 package spring.mvc.baobob.vo;
 
 public class MenuVO {
-	private int restaurant_menu_index; // 레스토랑_인덱스
+	private int restaurant_index;	// 레스토랑_인덱스
+	private int restaurant_menu_index; // 메뉴_인덱스
 	private String restaurant_menu_img; // 이미지
 	private String restaurant_menu_name; // 메뉴명
 	private String restaurant_menu_content; // 메뉴 설명
 	private int restaurant_menu_price; // 가격
+
+	public int getRestaurant_index() {
+		return restaurant_index;
+	}
+
+	public void setRestaurant_index(int restaurant_index) {
+		this.restaurant_index = restaurant_index;
+	}
 
 	public int getRestaurant_menu_index() {
 		return restaurant_menu_index;

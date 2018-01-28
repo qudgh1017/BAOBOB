@@ -5,7 +5,7 @@
 <link href="${projectRes}/ybh/css/head.css" rel="stylesheet" type="text/css">
 <link href="${projectRes}/ybh/css/search.css" rel="stylesheet" type="text/css">
 <!-- JQuery쓰기위해 -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
 </head>
 <html>
 <body>
@@ -14,9 +14,9 @@
 		<div style="height:40px;"></div>
 		<div class="container" style="height:60px;">
 			<div class="row">
-				<div class="col-md-1"><a href="guest_movie"><h2>BAOBOX</h2></a></div>
+				<div class="col-md-2"><a href="guest_movie"><h2>BAOBOX</h2></a></div>
 				<div class="col-md-1"></div>
-				<div class="col-md-2">
+				<div class="col-md-3">
 					<div class="dropdown">
 					  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
 					    <a href="movie">영화</a>
@@ -25,12 +25,12 @@
 					  <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1" style="background-image: url('${projectRes}images/ybh/movie_menu.jpg'); background-size: 140px 120px;">
 					    <li role="presentation"><a role="menuitem" tabindex="-1" href="movieChart?movie_state=1">무비차트</a></li>
 					    <li role="presentation"><a role="menuitem" tabindex="-1" href="hdTrailer">HD 트레일러</a></li>
-					    <li role="presentation"><a role="menuitem" tabindex="-1" href="movieFinder">무비파인더</a></li>
+					    <li role="presentation"><a role="menuitem" tabindex="-1" href="movieFinder?movie_state=1">무비파인더</a></li>
 					    <li role="presentation"><a role="menuitem" tabindex="-1" href="movieReview">평점</a></li>
 					  </ul>
 					</div>
 				</div>
-		  		<div class="col-md-2">
+		  		<div class="col-md-3">
 		  			<div class="dropdown">
 					  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
 					    	<a href="ticket">예매</a>
@@ -42,7 +42,7 @@
 					  </ul>
 					</div>
 		  		</div>
-		 		<div class="col-md-2">
+		 		<div class="col-md-3">
 		 			<div class="dropdown">
 					  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
 					    	<a href="theater">극장</a>
@@ -53,7 +53,7 @@
 					  </ul>
 					</div>
 		 		</div>
-		 		<div class="col-md-2">
+		 		<%-- <div class="col-md-2">
 		 			<div class="dropdown">
 					  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
 					    	<a href="event">이벤트&컬처</a>
@@ -65,8 +65,8 @@
 					    <li role="presentation"><a role="menuitem" tabindex="-1" href="eventPreview">무대인사</a></li>
 					  </ul>
 					</div>
-		 		</div>
-		 		<div class="col-md-2">
+		 		</div> --%>
+		 		<%-- <div class="col-md-2">
 		 			<div class="container">
 						<div class="row">
 					        <div class="span12">
@@ -80,7 +80,7 @@
 					        </div>
 						</div>
 					</div>
-		 		</div>
+		 		</div> --%>
 			</div>
 		</div>
 	</div>

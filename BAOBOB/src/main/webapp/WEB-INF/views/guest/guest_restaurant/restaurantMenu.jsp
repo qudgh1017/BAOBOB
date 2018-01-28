@@ -8,8 +8,10 @@
 <html>
 <body>
 <header class="mainmenu text-black text-center">
-	<div style="width:100%; height:60px; background-image: url('/baobob/resources/images/ybh/movie_menu.jpg');">
-		<div style="height:10px;"></div>
+<!-- 	<div style="width:100%; height:60px; background-image: url('/baobob/resources/images/ybh/movie_menu.jpg');">
+ -->
+	<div style="width:100%; height:60px; background-color:orange;">
+ 		<div style="height:10px;"></div>
 		<div class="container" style="height:40px;">
 			<div class="row">
 				<div class="col-md-1"><a href="guestRestaurantList"><h2>YUMMY</h2></a></div>
@@ -17,7 +19,7 @@
 				<div class="col-md-2">
 					<!-- <div class="dropdown"> -->
 					  <!-- <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true"> -->
-					  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1">
+					  <button class="btn" type="button" id="dropdownMenu1">
 					  
 					    	<a href="guestRestaurantMain?restaurant_index=${restaurant_index}">식당 안내</a>
 					    <span class="caret"></span>
@@ -35,8 +37,8 @@
 					  </ul> --%>
 		  		</div>
 		 		<div class="col-md-2">
-					  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1">
-					    	<a href="guestRestaurant_reserv?restaurant_index=${restaurant_index}">예약</a>
+					  <button class="btn" type="button" id="dropdownMenu1">
+					    	<a href="guestReserv_addForm?restaurant_index=${restaurant_index}">예약</a>
 					    <span class="caret"></span>
 					  </button>
 					  <%-- <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1" style="background-image: url('${projectRes}images/ybh/movie_menu.jpg'); background-size: 140px 120px;">
@@ -44,7 +46,7 @@
 					  </ul> --%>
 		 		</div>
 		 		<div class="col-md-2">
-					  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1">
+					  <button class="btn" type="button" id="dropdownMenu1">
 					    	<a href="guestRestaurant_review?restaurant_index=${restaurant_index}">리뷰</a>
 					    <span class="caret"></span>
 					  </button>

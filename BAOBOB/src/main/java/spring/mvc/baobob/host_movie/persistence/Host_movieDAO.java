@@ -1,13 +1,19 @@
 package spring.mvc.baobob.host_movie.persistence;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.MapKey;
+
+import spring.mvc.baobob.vo.HostMovieChartVO;
 import spring.mvc.baobob.vo.Member;
 import spring.mvc.baobob.vo.MovieVO;
 import spring.mvc.baobob.vo.TheaterVO;
 import spring.mvc.baobob.vo.Theater_scheduleVO;
 import spring.mvc.baobob.vo.Theater_seatVO;
+import spring.mvc.baobob.vo.WordVO;
+import spring.mvc.baobob.vo.hostTChartVO;
 
 public interface Host_movieDAO {
 	
@@ -15,7 +21,7 @@ public interface Host_movieDAO {
 	public int getMovieCnt();
 	
 	// 영화 전체 목록 조회(개봉일 순)
-	public ArrayList<MovieVO> getMovieList(Map<String, Integer> map);
+	public ArrayList<MovieVO> getMovieList();
 	
 	// 영화 추가 처리
 	public int hostMovieAddPro(MovieVO vo);
@@ -42,7 +48,7 @@ public interface Host_movieDAO {
 	public int getTheaterCnt();
 	
 	// 상영관 목록 조회
-	public ArrayList<TheaterVO> getTheaterList(Map<String, Integer> map);
+	public ArrayList<TheaterVO> getTheaterList();
 	
 	// 상영관 상세
 	public TheaterVO hostTheaterDetail(int theater_index);
@@ -131,4 +137,37 @@ public interface Host_movieDAO {
 	// 영화 스케줄에 빈좌석 업데이트하기
 	public int updateEmpty_seat(int empty_seat);
 	
+	// 장르별 영화 관람객 수
+	@MapKey("kind")
+	public List<HostMovieChartVO> getMovieCountChart();
+	
+	// 제한 연령별 매출
+	@MapKey("kind")
+	public List<hostTChartVO> movieAgeChart();
+
+	// 관람객 성별 수
+	@MapKey("kind")
+	public List<HostMovieChartVO> movieSexCountChart();
+	
+	// 워드 클라우드
+	// 워드클라우드 단어가 이미 존재하는지 확인
+	public int checkWordCloud(Map<String, Object> map);
+	
+	// 워드클라우드 단어 모델을 가져옴
+	public List<WordVO> getWordCloudModel();
+	
+	// 분석된 워드 클라우드 단어를 추가
+	public int addWordCloud(WordVO vo);
+	
+	// 분석된 워드 클라우드 단어수 업데이트
+	public int updateWordCloud(WordVO vo);
+	
+	// 워드카운트 검색
+	public List<WordVO> searchWordcloud(Map<String, Object> map);
+	
+	// 직원 고용하기 전 모든 회원 정보 불러오기
+	public ArrayList<Member> getMemberList();
+	
+	// 직원고용하기 전 회원이 1명이라도 존재하는지 체크
+	public int getMemberCnt();
 }

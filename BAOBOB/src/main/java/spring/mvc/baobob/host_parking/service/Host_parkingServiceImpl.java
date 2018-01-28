@@ -107,12 +107,16 @@ public class Host_parkingServiceImpl implements Host_parkingService {
 			int baseFee = Integer.parseInt(req.getParameter("baseFee"));
 			int excTime = Integer.parseInt(req.getParameter("excTime"));
 			int excFee = Integer.parseInt(req.getParameter("excFee"));
+			int movieTime = Integer.parseInt(req.getParameter("movieTime"));
+			int restTime = Integer.parseInt(req.getParameter("restTime"));
 
 			ParkingFee pf = new ParkingFee();
 			pf.setP_fee_base_price(baseFee);
 			pf.setP_fee_base_time(baseTime);
 			pf.setP_fee_exc_price(excFee);
 			pf.setP_fee_exc_time(excTime);
+			pf.setP_fee_movie_time(movieTime);
+			pf.setP_fee_rest_time(restTime);
 
 			cnt = dao.parkingFeeChange(pf);
 		}
@@ -135,7 +139,7 @@ public class Host_parkingServiceImpl implements Host_parkingService {
 		ArrayList<String> list = dao.getParkingStates(last_idx);
 		String states = "";
 		for (int i = 0; i < list.size(); i += 1) {
-			if(spaces[i].equals("0")) {
+			if(spaces[i].equals("0") || spaces[i].equals("9") || spaces[i].equals("8")) {
 				list.set(i, "2");
 			}
 			states += states.equals("") ? list.get(i) : "," + list.get(i);
@@ -528,14 +532,14 @@ public class Host_parkingServiceImpl implements Host_parkingService {
 
 	//아두이노. 구역 상태 수정
 	public void arduinoInput(HttpServletRequest req, Model model) {
-		//1. 핀 저장
+		//1. 핀 저장 (pin1~pin6)
 		Map<Integer, Object> pinMap = new HashMap<Integer, Object>();
-		for(int i = 0; i < 6; i += 1) {
-			String pin = req.getParameter("pin" + (i + 1));
+		for(int i = 1; i <= 6; i += 1) {
+			String pin = req.getParameter("pin" + i);
 			if(pin != null) {
-				pinMap.put(i, pin);
+				pinMap.put(i - 1, pin);
 			} else {
-				pinMap.put(i, 0);
+				pinMap.put(i  -1, 0);
 			}
 		}
 		
@@ -549,11 +553,11 @@ public class Host_parkingServiceImpl implements Host_parkingService {
 		// 주차장 구역 타입 정보
 		String[] spaces = ps.getP_space_info().split(",");
 		
-		//2. 인덱스 저장
+		//2. 인덱스 저장(주차 공간인 구역)
 		int count = 0;
 		Map<Integer, Object> idxMap = new HashMap<Integer, Object>();
 		for(int i = 0; i < list.size(); i += 1) {
-			if(!spaces[i].equals("0")) { //빈공간이 아니면
+			if(!spaces[i].equals("0")) { //빈공간이 아니면(주차 공간이면. 1~4)
 				idxMap.put(count, i);
 				count++;
 			}

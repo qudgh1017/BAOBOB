@@ -1,8 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page session="false" %>
-   
 <%@ include file="/resources/setting.jsp"%>
 
     
@@ -15,49 +12,40 @@
     
 <html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-	
-	<title>Baobob_Restaurant</title>
-    
-    <style type="text/css">
-     	.head_header{position:relative;}
-    	/* .head_screen{top: 0;left: 0;position: absolute;margin-left: 28.5rem;margin-top: 16rem;} */
-    	.head_screen{top: 0; left: 0;position: absolute; margin-left: 45%; margin-top: 40%;} 
-    	
-    	body .mainImg {height:300px;}
-    	
-    	section .notice_a{color:white;}
-    	
-    	.advertDiv{text-align:center;}
-    	
-    	@media (min-width: 992px){
-			.head_screen{
-			    max-width: 960px;
-			}
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Baobob_Restaurant</title>
+  
+<style type="text/css">
+   	.head_header{position:relative;}
+  	/* .head_screen{top: 0;left: 0;position: absolute;margin-left: 28.5rem;margin-top: 16rem;} */
+  	.head_screen{top: 0; left: 0;position: absolute; margin-left: 45%; margin-top: 40%;} 
+	body .mainImg {height:300px;}
+	section .notice_a{color:white;}
+  	.advertDiv{text-align:center;}
+	@media (min-width: 992px){
+		.head_screen{
+		    max-width: 960px;
 		}
-		@media (min-width: 768px){
-			.head_screen{
-			    max-width: 720px;
-			}
+	}
+	@media (min-width: 768px){
+		.head_screen{
+		    max-width: 720px;
 		}
-		@media (min-width: 576px){
-			.head_screen{
-			    max-width: 540px;
-			}
+	}
+	@media (min-width: 576px){
+		.head_screen{
+		    max-width: 540px;
 		}
-    </style>
+	}
+</style>
 
 </head>
-<body id="page-top">
+<body>
 	
-	<%@ include file="../common/head.jsp" %>
-	<!-- Baobob-Navigation -->
-	<%@ include file="../common/navigation.jsp" %>
-	
-	
+	<!--======= Header 시작 =======-->
+	<%@ include file="/WEB-INF/views/guest/common/head.jsp" %>
+	<!-- Baobob Navigation -->
+	<%@ include file="/WEB-INF/views/guest/common/navigation.jsp" %>
 	
 	<!--======= Header - 사진  =======-->
 	<%-- <header class="bg-primary text-white text-center head_header">
@@ -87,17 +75,23 @@
 		    <h2 class="text-center text-uppercase text-secondary mb-0">Restaurant</h2>
 		    <hr class="star-dark mb-5">
 		    <div class="row">
-				<div class="col-lg-4">
+				<div class="col-lg-4"><!-- Restaurant1 - Dokidoki -->
 					<a class=" d-block mx-auto" href="guestRestaurantMain?restaurant_index=1">
 						 <!-- <div class="portfolio-item-caption d-flex position-absolute h-100 w-100">
 							<div class=" my-auto w-100 text-center text-white">
 								<i class="fa fa-search-plus fa-3x"></i>
 							</div>
 						</div>  -->
+						
 						<img class="img-fluid" src="${projectRes}images/mhj/choice/jap_1.jpg" alt="">
 					</a>
+					<div style="background:rgba(0, 0, 0, 0.7); font-size:1.2em; color:white; height:50px; line-height: 2.5; padding-left: 15px;">
+						どきどき(Dokidoki)
+						<button type="button" class="btn btn-danger" role="button" style="float:right; margin: 5px;" onclick="window.location='guestReserv_addForm?restaurant_index=1'">예약
+						</button>					
+					</div>					
 				</div>
-				<div class="col-lg-4">
+				<div class="col-lg-4"><!-- Restaurant2 - 바오밥 -->
 					<a class="d-block mx-auto" href="guestRestaurantMain?restaurant_index=2">
 					<!--<a class="portfolio-item d-block mx-auto" href="guestRestaurantMain?restaurant_index=2">
 						 <div class="portfolio-item-caption d-flex position-absolute h-100 w-100">
@@ -107,17 +101,32 @@
 						</div> -->
 						<img class="img-fluid" src="${projectRes}images/mhj/choice/kor_4.jpg" alt="">
 					</a>
+					<div style="background:rgba(0, 0, 0, 0.6); font-size:1.2em; color:white; height:50px; line-height: 2.5; padding-left: 15px;">
+						바오밥
+						<button type="button" class="btn btn-danger" role="button" style="float:right; margin: 5px;" onclick="window.location='guestReserv_addForm?restaurant_index=2'">예약
+							<!-- <a class="btn btn-danger" role="button" href="guestReserv_addForm?restaurant_index=3">예약</a> -->
+						</button>
+					</div>	
 				</div>
-				<div class="col-lg-4">
-				<a class=" d-block mx-auto" href="guestRestaurantMain?restaurant_index=3">
-				<!-- <a class="portfolio-item d-block mx-auto" href="guestRestaurantMain?restaurant_index=3"> -->
+				<div class="col-lg-4"><!-- Restaurant3 - BOUTBACK -->
+					<a class=" d-block mx-auto" href="guestRestaurantMain?restaurant_index=3">
+					<!-- <a class="portfolio-item d-block mx-auto" href="guestRestaurantMain?restaurant_index=3"> -->
 					<!-- <div class="portfolio-item-caption d-flex position-absolute h-100 w-100">
 						<div class="portfolio-item-caption-content my-auto w-100 text-center text-white">
 							<i class="fa fa-search-plus fa-3x"></i>
 						</div>
-					</div> -->
-					<img class="img-fluid" src="${projectRes}images/mhj/choice/pasta_4.jpg" alt="">
-				</a>
+						</div> -->
+						<img class="img-fluid" src="${projectRes}images/mhj/choice/pasta_4.jpg" alt="">
+						
+					</a>
+					<div style="background:rgba(0, 0, 0, 0.5); font-size:1.2em; color:white; height:50px; line-height: 2.5; padding-left: 15px;">
+						BOUTBACK
+						<button type="button" class="btn btn-danger" role="button" style="float:right; margin: 5px;" onclick="window.location='guestReserv_addForm?restaurant_index=3'">예약
+							<!-- <a class="btn btn-danger" role="button" href="guestReserv_addForm?restaurant_index=3">예약</a> -->
+						</button>
+						
+						
+					</div>
 				</div>
 		    </div>
 		  </div>
@@ -140,54 +149,7 @@
 		<div id="contact">contact</div>
 	
 	<!-- Footer -->
-	<footer class="footer text-center">
-		<div class="container">
-			<div class="row">
-				<div class="col-md-4 mb-5 mb-lg-0">
-				  <h4 class="text-uppercase mb-4">Location</h4>
-				  <p class="lead mb-0">2215 John Daniel Drive
-				    <br>Clark, MO 65243</p>
-				</div>
-				<div class="col-md-4 mb-5 mb-lg-0">
-				  <h4 class="text-uppercase mb-4">Around the Web</h4>
-				  <ul class="list-inline mb-0">
-				    <li class="list-inline-item">
-				      <a class="btn btn-outline-light btn-social text-center rounded-circle" href="#">
-				        <i class="fa fa-fw fa-facebook"></i>
-				      </a>
-				    </li>
-				    <li class="list-inline-item">
-				      <a class="btn btn-outline-light btn-social text-center rounded-circle" href="#">
-				        <i class="fa fa-fw fa-google-plus"></i>
-				      </a>
-				    </li>
-				    <li class="list-inline-item">
-				      <a class="btn btn-outline-light btn-social text-center rounded-circle" href="#">
-				        <i class="fa fa-fw fa-twitter"></i>
-				      </a>
-				    </li>
-				    <li class="list-inline-item">
-				      <a class="btn btn-outline-light btn-social text-center rounded-circle" href="#">
-				        <i class="fa fa-fw fa-linkedin"></i>
-				      </a>
-				    </li>
-				    <li class="list-inline-item">
-				      <a class="btn btn-outline-light btn-social text-center rounded-circle" href="#">
-				        <i class="fa fa-fw fa-dribbble"></i>
-				      </a>
-				    </li>
-				  </ul>
-				</div>
-				<div class="col-md-4">
-					<h4 class="text-uppercase mb-4">About Freelancer</h4>
-					<p class="lead mb-0">Freelance is a free to use, open source Bootstrap theme created by
-					  <a href="http://startbootstrap.com">Start Bootstrap</a>.</p>
-				</div>
-			</div>
-		</div> 
-	</footer> 
+	<%@ include file="/WEB-INF/views/guest/guest_movie/movie_footer.jsp" %> 
 	<!-- Footer -->
-	<%@ include file="../common/footerCopyright.jsp" %>
-	<!--======= Footer 시작=======-->
 </body>
 </html>

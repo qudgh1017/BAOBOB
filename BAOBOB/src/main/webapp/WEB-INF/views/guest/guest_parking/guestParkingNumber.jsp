@@ -16,6 +16,13 @@
 	</style>
 </head>
 <body>
+<c:if test="${memChk != null}">
+	<script type="text/javascript">
+		alert("회원 정보가 올바르지 않습니다.");
+		history.back();
+	</script>
+</c:if>
+<c:if test="${memChk == null}">
 	<%@ include file="../common/head.jsp" %>
 
 	<%@ include file="guestParkingHeader.jsp" %>
@@ -25,7 +32,10 @@
 	  	<div class="park_number">
 	  	
 	  		퇴장 시 다음 코드를 입력하세요.
-	  		
+	  		<c:if test="${step == 8}">
+	  		<br>
+	  		홈페이지에서 내역을 확인하실 경우 해당 코드를 <b>로그인, 비밀번호</b>로 사용하세요.
+	  		</c:if>
 	  		<br><br>
 	  		
 	  		<span class="number">
@@ -69,5 +79,6 @@
 			window.location = 'guestParkingMain';
 		}, 60000);
 	</script>
+</c:if>
 </body>
 </html>

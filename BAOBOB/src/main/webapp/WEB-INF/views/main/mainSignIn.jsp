@@ -9,16 +9,23 @@
 		content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<meta name="description" content="">
 	<meta name="author" content="">
-	<title>login</title>
+	<title>로그인</title>
 	<!-- Bootstrap core CSS-->
 	<link href="${projectRes}adminBootstrap/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 	<!-- Custom fonts for this template-->
 	<link href="${projectRes}adminBootstrap/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 	<!-- Custom styles for this template-->
 	<link href="${projectRes}adminBootstrap/css/sb-admin.css" rel="stylesheet">
+	
+	<style>
+		.bg-dark a{text-decoration:none;}
+		body .navbar-brand {margin:1rem;font-family:Montserrat;font-size:1.25rem;line-height:inherit;white-space:nowrap;color:white;}
+	</style>
 </head>
 
-<body class="bg-dark">
+<body class="bg-dark">	
+	<a class="navbar-brand js-scroll-trigger" href="mainIndex">Baobob</a>
+	
 	<div class="container">
 		<div class="card card-login mx-auto mt-5">
 			<div class="card-header">로그인</div>
@@ -26,7 +33,7 @@
 				<form action="mainSignInPro" name="mainSignInForm" method="post" onsubmit="return signInChk();">
 					<div class="form-group">
 						<label for="exampleInputEmail1">아이디</label> 
-						<input class="form-control" name="id" type="text" placeholder="Id">
+						<input class="form-control" name="id" type="text" placeholder="Id / Key">
 					</div>
 					<div class="form-group">
 						<label for="exampleInputPassword1">비밀번호</label> 

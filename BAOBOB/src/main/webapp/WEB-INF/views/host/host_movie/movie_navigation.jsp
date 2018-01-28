@@ -28,9 +28,9 @@
 	</button>
 	<div class="collapse navbar-collapse" id="navbarResponsive">
 		<ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
-			<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
+			<li class="nav-item" data-toggle="tooltip" data-placement="right" title="영화 관리">
 				<a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#movieManage" data-parent="#exampleAccordion"> 
-					<i class="fa fa-fw fa-dashboard"></i> 
+					<i class="fa fa-fw fa-file-movie-o"></i> 
 					<span class="nav-link-text">영화 관리</span>
 				</a>
 				<ul class="sidenav-second-level collapse" id="movieManage">
@@ -38,9 +38,9 @@
 					<li><a href="hostMovieAddForm">영화 등록</a></li>
 				</ul>
 			</li>
-			<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Charts">
+			<li class="nav-item" data-toggle="tooltip" data-placement="right" title="상영관 관리">
 				<a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#theaterManage" data-parent="#exampleAccordion"> 
-					<i class="fa fa-fw fa-area-chart"></i> 
+					<i class="fa fa-fw fa-list"></i> 
 					<span class="nav-link-text">상영관 관리</span>
 				</a>
 				<ul class="sidenav-second-level collapse" id="theaterManage">
@@ -48,9 +48,9 @@
 					<li><a href="hostTheaterAddForm">상영관 등록</a></li>
 				</ul>
 			</li>
-			<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
+			<li class="nav-item" data-toggle="tooltip" data-placement="right" title="스케줄 관리">
 				<a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#scheduleManage" data-parent="#exampleAccordion"> 
-					<i class="fa fa-fw fa-table"></i> 
+					<i class="fa fa-fw fa-clock-o"></i> 
 					<span class="nav-link-text">스케줄 관리</span>
 				</a>
 				<ul class="sidenav-second-level collapse" id="scheduleManage">
@@ -58,27 +58,27 @@
 					<li><a href="hostScheduleAddForm">스케줄 등록</a></li>
 				</ul>
 			</li>
-			<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
+			<li class="nav-item" data-toggle="tooltip" data-placement="right" title="직원 관리">
 				<a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents" data-parent="#exampleAccordion"> 
-					<i class="fa fa-fw fa-wrench"></i> 
+					<i class="fa fa-fw fa-user-md"></i> 
 					<span class="nav-link-text">직원 관리</span>
 				</a>
 				<ul class="sidenav-second-level collapse" id="collapseComponents">
 					<li><a href="hostMovieEmp">직원 목록</a></li>
-					<li><a href="hostMovieEmpAddForm">직원 채용</a></li>
+					<li><a href="hostMovieEmpAddForm">직원 고용</a></li>
 				</ul>
 			</li>
-			<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Example Pages">
-				<a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseExamplePages" data-parent="#exampleAccordion"> 
-					<i class="fa fa-fw fa-file"></i> 
-					<span class="nav-link-text">예매 관리</span>
+			<li class="nav-item" data-toggle="tooltip" data-placement="right" title="예매 관리">
+				<a class="nav-link" href="hostMovieRes"> 
+					<i class="fa fa-fw fa-table"></i> 
+					<span class="nav-link-text">예매 현황</span>
 				</a>
-				<ul class="sidenav-second-level collapse" id="collapseExamplePages">
-					<li><a href="hostMovieRes">예매 조회</a></li>
-					<li><a href="#">예매 순위</a></li>
-					<li><a href="#">결산</a></li>
-					<li><a href="#">Blank Page</a></li>
-				</ul>
+			</li>
+			<li class="nav-item" data-toggle="tooltip" data-placement="right" title="결산">
+				<a class="nav-link" href="hostMovieSettlement"> 
+					<i class="fa fa-fw fa-area-chart"></i> 
+					<span class="nav-link-text">결산</span>
+				</a>
 			</li>
 		</ul>
 		<ul class="navbar-nav sidenav-toggler">

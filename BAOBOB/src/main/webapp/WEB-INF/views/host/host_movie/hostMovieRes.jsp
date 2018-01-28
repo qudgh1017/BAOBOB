@@ -30,7 +30,17 @@
 	</script>
 	
 	<script type="text/javascript">
+// 	$(document).ready(function(){
+// 		hostMovieResView(1,6,4);
+// 	});
+	var timeout;
+
+	function hostMovieResSeat(theater_index, movie_index, theater_schedule_index){
+		window.clearTimeout(this.timeout);
+		hostMovieResView(theater_index, movie_index, theater_schedule_index);
+	}
 	function hostMovieResView(theater_index, movie_index, theater_schedule_index) {
+		
 		$.ajax({
 			url : "hostMovieResView?theater_index=" + theater_index + "&movie_index=" + movie_index + "&theater_schedule_index=" + theater_schedule_index,
 			type : 'GET',
@@ -39,9 +49,10 @@
 				getScheduleSeatInfo(vo.totalCol, vo.totalRow, vo.state);
 			},
 			error : function() {
-				alert('error');
+// 				alert('error');
 			}
-		})
+		});
+		this.timeout = setTimeout("hostMovieResView("+theater_index+","+movie_index+","+theater_schedule_index+")",4000);
 	}
 </script>
 	
@@ -50,75 +61,80 @@
 		<div id="content">
 			<center><h3><b>예매 목록</b></h3></center>
 			<hr style="border:3px solid black;">
-<!-- 			<input style="background-color:#343a40; color:white; border:1px solid black; width:200px; height:40px; margin-left:177px; margin-bottom:15px;" type="button" name="hostMovieAddForm" onclick="window.location='hostScheduleAddForm'" value="스케줄 추가하기"/> -->
-			<div >
-				<input style="background-color:#343a40; color:white; border:1px solid black; float:right; width:200px; height:40px;  margin-bottom:15px;" type="button" onclick="return hostResSearch();" value="조회하기"/>
-				<select id="theater_index" name="theater_index" style="float:right;">
-					<option value="">상영관 선택</option>
-					<c:forEach var="theaterVO" items="${theaterVOS}">
-							<c:if test="${theaterVO.theater_index == theater_index}">
-								<option value="${theaterVO.theater_index}" selected>${theaterVO.theater_index}관</option>
-							</c:if>
-							<c:if test="${theaterVO.theater_index != theater_index}">
-								<option value="${theaterVO.theater_index}" >${theaterVO.theater_index}관</option>
-							</c:if>
-					</c:forEach>
-				</select>
-				<input type="text" style="float:right;" name="date" id="datepicker" class="datepicker" placeholder="날짜선택" value="${date}"/>
+			<div class="row">
+				<div style="height:40px;" class="col-lg-1"></div>
+				<div style="height:40px;" class="col-lg-10">
+					<input style="background-color:#343a40; color:white; border:1px solid black; float:right; width:200px; height:40px;  margin-bottom:15px;" type="button" onclick="return hostResSearch();" value="조회하기"/>
+					<select id="theater_index" name="theater_index" style="float:right;">
+						<option value="">상영관 선택</option>
+						<c:forEach var="theaterVO" items="${theaterVOS}">
+								<c:if test="${theaterVO.theater_index == theater_index}">
+									<option value="${theaterVO.theater_index}" selected>${theaterVO.theater_index}관</option>
+								</c:if>
+								<c:if test="${theaterVO.theater_index != theater_index}">
+									<option value="${theaterVO.theater_index}" >${theaterVO.theater_index}관</option>
+								</c:if>
+						</c:forEach>
+					</select>
+					<input type="text" style="float:right;" name="date" id="datepicker" class="datepicker" placeholder="날짜선택" value="${date}"/>
+				</div>
+				<div style="height:40px;" class="col-lg-1"></div>
 			</div>
-		</div>
-		
-		<div class="cd-schedule loading">
+			
+			
+			<div class="cd-schedule loading">
 			<div class="timeline">
 				<ul>
-					<li><span>07:00</span></li>
-					<li><span>07:30</span></li>
-					<li><span>08:00</span></li>
-					<li><span>08:30</span></li>
-					<li><span>09:00</span></li>
-					<li><span>09:30</span></li>
-					<li><span>10:00</span></li>
-					<li><span>10:30</span></li>
-					<li><span>11:00</span></li>
-					<li><span>11:30</span></li>
-					<li><span>12:00</span></li>
-					<li><span>12:30</span></li>
-					<li><span>13:00</span></li>
-					<li><span>13:30</span></li>
-					<li><span>14:00</span></li>
-					<li><span>14:30</span></li>
-					<li><span>15:00</span></li>
-					<li><span>15:30</span></li>
-					<li><span>16:00</span></li>
-					<li><span>16:30</span></li>
-					<li><span>17:00</span></li>
-					<li><span>17:30</span></li>
-					<li><span>18:00</span></li>
-					<li><span>18:30</span></li>
-					<li><span>19:00</span></li>
-					<li><span>19:30</span></li>
-					<li><span>20:00</span></li>
-					<li><span>20:30</span></li>
-					<li><span>21:00</span></li>
-					<li><span>21:30</span></li>
-					<li><span>22:00</span></li>
-					<li><span>22:30</span></li>
-					<li><span>23:00</span></li>
-					<li><span>23:30</span></li>
-
-					
+					<li><span style="font-weight:900;">07:00</span></li>
+					<li><span style="font-weight:900;">07:30</span></li>
+					<li><span style="font-weight:900;">08:00</span></li>
+					<li><span style="font-weight:900;">08:30</span></li>
+					<li><span style="font-weight:900;">09:00</span></li>
+					<li><span style="font-weight:900;">09:30</span></li>
+					<li><span style="font-weight:900;">10:00</span></li>
+					<li><span style="font-weight:900;">10:30</span></li>
+					<li><span style="font-weight:900;">11:00</span></li>
+					<li><span style="font-weight:900;">11:30</span></li>
+					<li><span style="font-weight:900;">12:00</span></li>
+					<li><span style="font-weight:900;">12:30</span></li>
+					<li><span style="font-weight:900;">13:00</span></li>
+					<li><span style="font-weight:900;">13:30</span></li>
+					<li><span style="font-weight:900;">14:00</span></li>
+					<li><span style="font-weight:900;">14:30</span></li>
+					<li><span style="font-weight:900;">15:00</span></li>
+					<li><span style="font-weight:900;">15:30</span></li>
+					<li><span style="font-weight:900;">16:00</span></li>
+					<li><span style="font-weight:900;">16:30</span></li>
+					<li><span style="font-weight:900;">17:00</span></li>
+					<li><span style="font-weight:900;">17:30</span></li>
+					<li><span style="font-weight:900;">18:00</span></li>
+					<li><span style="font-weight:900;">18:30</span></li>
+					<li><span style="font-weight:900;">19:00</span></li>
+					<li><span style="font-weight:900;">19:30</span></li>
+					<li><span style="font-weight:900;">20:00</span></li>
+					<li><span style="font-weight:900;">20:30</span></li>
+					<li><span style="font-weight:900;">21:00</span></li>
+					<li><span style="font-weight:900;">21:30</span></li>
+					<li><span style="font-weight:900;">22:00</span></li>
+					<li><span style="font-weight:900;">22:30</span></li>
+					<li><span style="font-weight:900;">23:00</span></li>
+					<li><span style="font-weight:900;">23:30</span></li>
 				</ul>
 			</div> <!-- .timeline -->
 		
 			<div class="events">
 				<ul>
 					<li class="events-group">
-						<div class="top-info" id="selectDay0"><span>${day0}</span></div>
+						<div class="top-info" id="selectDay0"><span style="font-weight:900;">${day0}</span></div>
 						<ul>
 						<c:forEach var="vo1" items="${vos1}">
 							<li class="single-event" data-start="<fmt:formatDate type="both" pattern="HH:mm" value="${vo1.schedule_startTime}" />" data-end="<fmt:formatDate type="both" pattern="HH:mm" value="${vo1.schedule_endTime}" />" data-event="event-3">
-							<a href="#0" onclick="hostMovieResView(${vo1.theater_index}, ${vo1.movie_index}, ${vo1.theater_schedule_index})">
-								<em class="event-name">${vo1.theater_index}관 ${vo1.movie_index}번 영화</em>
+							<a href="#0" onclick="hostMovieResSeat(${vo1.theater_index}, ${vo1.movie_index}, ${vo1.theater_schedule_index})">
+								<em class="event-name">${vo1.theater_index}관<br>
+								<c:forEach var="movieVO" items="${movieVOS}">
+									<c:if test="${vo1.movie_index == movieVO.movie_index}">${movieVO.movie_title}</c:if>
+								</c:forEach>
+								</em>
 							</a>
 							</li>
 						</c:forEach>
@@ -126,13 +142,17 @@
 					</li>
 		
 					<li class="events-group">
-						<div class="top-info" id="selectDay1"><span>${day1}</span></div>
+						<div class="top-info" id="selectDay1"><span style="font-weight:900;">${day1}</span></div>
 		
 						<ul>
 							<c:forEach var="vo2" items="${vos2}">
 							<li class="single-event" data-start="<fmt:formatDate type="both" pattern="HH:mm" value="${vo2.schedule_startTime}" />" data-end="<fmt:formatDate type="both" pattern="HH:mm" value="${vo2.schedule_endTime}" />" data-content="hostMovieResDetail?theater_index=${vo2.theater_index}&movie_index=${vo2.movie_index}&theater_schedule_index=${vo2.theater_schedule_index}" data-event="event-2">
-							<a href="#0" onclick="hostMovieResView(${vo2.theater_index}, ${vo2.movie_index}, ${vo2.theater_schedule_index})">
-								<em class="event-name">${vo2.theater_index}관 ${vo2.movie_index}번 영화</em>
+							<a href="#0" onclick="hostMovieResSeat(${vo2.theater_index}, ${vo2.movie_index}, ${vo2.theater_schedule_index})">
+								<em class="event-name">${vo2.theater_index}관<br>
+								<c:forEach var="movieVO" items="${movieVOS}">
+									<c:if test="${vo2.movie_index == movieVO.movie_index}">${movieVO.movie_title}</c:if>
+								</c:forEach>
+								</em>
 							</a>
 							</li>
 							</c:forEach>
@@ -140,13 +160,17 @@
 					</li>
 		
 					<li class="events-group">
-						<div class="top-info" id="selectDay2"><span>${day2}</span></div>
+						<div class="top-info" id="selectDay2"><span style="font-weight:900;">${day2}</span></div>
 		
 						<ul>
 							<c:forEach var="vo3" items="${vos3}">
 							<li class="single-event" data-start="<fmt:formatDate type="both" pattern="HH:mm" value="${vo3.schedule_startTime}" />" data-end="<fmt:formatDate type="both" pattern="HH:mm" value="${vo3.schedule_endTime}" />" data-content="hostMovieResDetail?theater_index=${vo3.theater_index}&movie_index=${vo3.movie_index}&theater_schedule_index=${vo3.theater_schedule_index}" data-event="event-1">
-							<a href="#0" onclick="hostMovieResView(${vo3.theater_index}, ${vo3.movie_index}, ${vo3.theater_schedule_index})">
-								<em class="event-name">${vo3.theater_index}관 ${vo3.movie_index}번 영화</em>
+							<a href="#0" onclick="hostMovieResSeat(${vo3.theater_index}, ${vo3.movie_index}, ${vo3.theater_schedule_index})">
+								<em class="event-name">${vo3.theater_index}관 <br>
+								<c:forEach var="movieVO" items="${movieVOS}">
+									<c:if test="${vo3.movie_index == movieVO.movie_index}">${movieVO.movie_title}</c:if>
+								</c:forEach>
+								</em>
 							</a>
 							</li>
 							</c:forEach>
@@ -154,13 +178,17 @@
 					</li>
 		
 					<li class="events-group">
-						<div class="top-info" id="selectDay3"><span>${day3}</span></div>
+						<div class="top-info" id="selectDay3"><span style="font-weight:900;">${day3}</span></div>
 		
 						<ul>
 							<c:forEach var="vo4" items="${vos4}">
 							<li class="single-event" data-start="<fmt:formatDate type="both" pattern="HH:mm" value="${vo4.schedule_startTime}" />" data-end="<fmt:formatDate type="both" pattern="HH:mm" value="${vo4.schedule_endTime}" />" data-event="event-3">
-							<a href="#0" onclick="hostMovieResView(${vo4.theater_index}, ${vo4.movie_index}, ${vo4.theater_schedule_index})">
-								<em class="event-name">${vo4.theater_index}관 ${vo4.movie_index}번 영화</em>
+							<a href="#0" onclick="hostMovieResSeat(${vo4.theater_index}, ${vo4.movie_index}, ${vo4.theater_schedule_index})">
+								<em class="event-name">${vo4.theater_index}관 <br>
+								<c:forEach var="movieVO" items="${movieVOS}">
+									<c:if test="${vo4.movie_index == movieVO.movie_index}">${movieVO.movie_title}</c:if>
+								</c:forEach>
+								</em>
 							</a>
 							</li>
 							</c:forEach>
@@ -168,13 +196,17 @@
 					</li>
 		
 					<li class="events-group">
-						<div class="top-info" id="selectDay4"><span>${day4}</span></div>
+						<div class="top-info" id="selectDay4"><span style="font-weight:900;">${day4}</span></div>
 		
 						<ul>
 							<c:forEach var="vo5" items="${vos5}">
 							<li class="single-event" data-start="<fmt:formatDate type="both" pattern="HH:mm" value="${vo5.schedule_startTime}" />" data-end="<fmt:formatDate type="both" pattern="HH:mm" value="${vo5.schedule_endTime}" />" data-event="event-2">
-							<a href="#0" onclick="hostMovieResView(${vo5.theater_index}, ${vo5.movie_index}, ${vo5.theater_schedule_index})">
-								<em class="event-name">${vo5.theater_index}관 ${vo5.movie_index}번 영화</em>
+							<a href="#0" onclick="hostMovieResSeat(${vo5.theater_index}, ${vo5.movie_index}, ${vo5.theater_schedule_index})">
+								<em class="event-name">${vo5.theater_index}관 <br>
+								<c:forEach var="movieVO" items="${movieVOS}">
+									<c:if test="${vo5.movie_index == movieVO.movie_index}">${movieVO.movie_title}</c:if>
+								</c:forEach>
+								</em>
 								
 							</a>
 							</li>
@@ -205,6 +237,10 @@
 		
 			<div class="cover-layer"></div>
 		</div> <!-- .cd-schedule -->
+			
+		</div>
+		
+		
 		<script src="${projectRes}phc/js/modernizr.js"></script>
 <!-- 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script> -->
 		<script type="text/javascript">

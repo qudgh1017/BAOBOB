@@ -38,7 +38,7 @@
 </script>
 </head>
 
-<body class="fixed-nav sticky-footer bg-dark">
+<body class="fixed-nav sticky-footer bg-dark" onload="opener.location.reload();">
 
 	<!-- Navigation -->
 	<%@ include file="movie_navigation.jsp" %>
@@ -48,25 +48,25 @@
 	<form action="hostScheduleAddPro" method="post" onsubmit="return chkScheduleAdd();">
 		<center><h3><b>스케줄 등록</b></h3></center>
 		<hr style="border:3px solid black;">
-		<table align="center" style="border:1px solid black;">
+		<table align="center" style="margin-top:50px; border:0px solid black; width:500px;">
 			<tr>
-				<td>날짜 선택</td>
-				<td><input type="text" name="schedule_startDate" id="datepicker" class="datepicker" value="${schedule_startDate}" placeholder="날짜 선택" required/></td>
-			</tr>
-			<tr>
-				<td>시간 선택</td>
-				<td><input type="text" name="schedule_startTime" placeholder="시간선택"  id="timepicker" required size="8" maxlength="5" value="${schedule_startTime}"></td>
-			</tr>
-			<tr>
-				<td colspan="2" align="center">
-					<input style="background-color:#343a40; color:white; border:1px solid black; width:200px; height:40px;" type="button" value="확인" onclick="checkPosTheater();"/>
+				<td style="height:40px; width:25%;">날짜 선택</td>
+				<td style="width:35%;"><input type="text" style="width:82px; height:35px; padding-left:5px;" name="schedule_startDate" id="datepicker" class="datepicker" value="${schedule_startDate}" placeholder="날짜 선택" required/></td>
+				<td rowspan="2" style="width:40%;">
+					<input style="background-color:#343a40; color:white; border:0px solid black; width:200px; height:40px;" type="button" value="확인" onclick="checkPosTheater();"/>
 				</td>
 			</tr>
-			<c:if test="${confirm==1}">
 			<tr>
-				<td>영화 선택</td>
-				<td>
-					<select name="movie_index" id="movie_index">
+				<td style="height:40px;">시간 선택</td>
+				<td><input type="text" style="width:82px; height:35px; padding-left:20px;" name="schedule_startTime" placeholder="시간"  id="timepicker" required size="8" maxlength="5" value="${schedule_startTime}"></td>
+			</tr>
+		</table>
+		<c:if test="${confirm==1}">
+		<table align="center" style="width:500px">	
+			<tr>
+				<td style="height:40px; width:25%;"><br><br>영화 선택</td>
+				<td style="width:75%;"><br><br>
+					<select name="movie_index" id="movie_index" style="height:35px;">
 							<option value="">영화 선택</option>
 						<c:forEach var="movieVO" items="${movieVOS}">
 							<option value="${movieVO.movie_index}">${movieVO.movie_title}(${movieVO.movie_runTime}분)</option>
@@ -75,9 +75,9 @@
 				</td>
 			</tr>
 			<tr>
-				<td>상영관 선택</td>
+				<td style="height:40px;">상영관 선택</td>
 				<td>
-					<select name="theater_index" id="theater_index">
+					<select name="theater_index" id="theater_index" style="height:35px;">
 							<option value="">상영관 선택</option>
 						<c:forEach var="theaterVO" items="${theaterVOS}">
 							<option value="${theaterVO.theater_index}">${theaterVO.theater_index}관(${theaterVO.theater_row}행, ${theaterVO.theater_col}열)</option>
@@ -86,12 +86,14 @@
 				</td>
 			</tr>
 			<tr>
-				<td colspan="2" align="center">
+				<td colspan="3" align="center">
+					<br><br>
 					<input type="submit" style="background-color:#343a40; color:white; border:1px solid black; width:200px; height:40px;"  value="스케줄 등록"/>
 				</td>
 			</tr>
-			</c:if>
 		</table>
+		
+		</c:if>
 	</form>
 
 	</div>

@@ -162,7 +162,7 @@
 		ON (theater_schedule_tbl.movie_index = movie_tbl.movie_index)
 		WHERE movie_tbl.movie_index = #{movie_index}
 		AND TO_CHAR(theater_schedule_tbl.schedule_startdate,'YYMMDD') = TO_CHAR(SYSDATE+#{plusDay},'YYMMDD')
-		ORDER BY theater_tbl.theater_index ASC, theater_schedule_tbl.schedule_startdate ASC
+		ORDER BY theater_schedule_tbl.schedule_startdate ASC, theater_tbl.theater_index ASC
 	</select>
 	
 	<!-- 상영관 갯수 -->
@@ -178,6 +178,130 @@
 		AND theater_schedule_index = -1
 		AND seat_state IN(3,4,5)
 	</select>
+	
+	<!-- 스케줄 정보 -->
+	<select id="getSchedule" resultType="spring.mvc.baobob.vo.Theater_scheduleVO">
+		SELECT *
+		FROM theater_schedule_tbl
+		WHERE theater_schedule_index = #{theater_schedule_index}
+	</select>
+	
+	<!-- 상영관 상세 theaterDetail -->
+	<select id="theaterDetail" resultType="spring.mvc.baobob.vo.TheaterVO">
+		SELECT * FROM theater_tbl WHERE theater_index=#{theater_index}
+	</select>
+	
+	<!-- 상영관 상세 좌석 정보 theaterSeatDetail -->
+	<select id="theaterSeatDetail" resultType="spring.mvc.baobob.vo.Theater_seatVO">
+		SELECT * FROM theater_seat_tbl WHERE theater_index=#{theater_index} AND theater_schedule_index=#{theater_schedule_index}
+	</select>
+	
+	<!-- 선택된 한개의 좌석정보 -->
+	<select id="seatInfo" resultType="spring.mvc.baobob.vo.Theater_seatVO">
+		SELECT * FROM theater_seat_tbl WHERE seat_index = #{seat_index}
+	</select>
 
-
+	<!-- 메인 - 영화 가장 많이 본 순위 -->
+	<select id="mainMovieRank" resultType="String">
+		<![CDATA[
+		SELECT title
+		FROM (
+		    SELECT count, title, rownum as num
+		    FROM(
+		        SELECT *
+		        FROM (
+		            SELECT COUNT(ts.movie_index) count, mt.movie_title title
+		            FROM movie_history_tbl  mh, theater_schedule_tbl ts, movie_tbl mt
+		            WHERE mh.theater_schedule_index = ts.theater_schedule_index
+		                AND mt.movie_index = ts.movie_index
+		            GROUP BY mt.movie_title
+		        ) ORDER BY count DESC, title
+		))
+		WHERE num >= 1 AND num <= 7
+		]]>
+	</select>
+	
+	<!-- 메인 - 상영 중인 영화 -->
+	<select id="mainMovieTheaterCnt" resultType="int">
+		SELECT COUNT(DISTINCT movie_index)
+    	FROM theater_schedule_tbl
+	</select>
+	
+	<!-- 메인 - 상영 중인 영화 -->
+	<select id="mainMovieTheater" resultType="String">
+		<![CDATA[
+		SELECT poster
+		FROM ( SELECT poster, rownum as num
+			   FROM ( SELECT DISTINCT ts.movie_index, mt.movie_poster poster
+			    	  FROM theater_schedule_tbl ts, movie_tbl mt
+			    	  WHERE mt.movie_index = ts.movie_index
+			    	  ORDER BY ts.movie_index DESC)
+			   )
+		WHERE num >= #{start} AND num <= #{end}	
+		]]>
+	</select>
+	
+	<!-- 멤버 정보 -->
+	<select id="getMemberInfo" resultType="spring.mvc.baobob.vo.Member">
+		SELECT *
+		FROM member_tbl
+		WHERE member_id = #{member_id} 
+	</select>
+	
+	<!-- 1. 결제 테이블 추가 -->
+	<insert id="insertHistory" parameterType="String">
+		INSERT INTO history_tbl 
+		VALUES(history_tbl_seq.nextval, sysdate, #{member_id})
+	</insert>
+	
+	<!-- 2. 영화 결제테이블 추가 -->
+	<insert id="insertMovieHistory" parameterType="java.util.Map">
+		INSERT INTO movie_history_tbl 
+		VALUES(history_tbl_seq.currval, #{theater_schedule_index}, #{movie_history_price})
+	</insert>
+	
+	<!-- 3. 좌석 테이블의 seat_state 변경 -->
+	<update id="updateSeatState" parameterType="java.util.Map">
+		UPDATE theater_seat_tbl SET seat_state=6, member_id=#{member_id} 
+		WHERE seat_index = #{seat_index}
+	</update>
+	
+	<!-- 4. 스케줄테이블의 emtpy_seat 감소(결제한 만큼) -->
+	<update id="updateEmptySeat" parameterType="java.util.Map">
+		UPDATE theater_schedule_tbl SET schedule_empty_seat = schedule_empty_seat-#{totalCnt} 
+		WHERE theater_schedule_index = #{theater_schedule_index}
+	</update>
+	
+	<!-- 5. Update movie_tbl  movie_count + totalCnt해주기(영화관람객수 증가) -->
+	<update id="updateMovieCount" parameterType="java.util.Map">
+		UPDATE movie_tbl SET movie_count = movie_count + #{totalCnt} 
+		WHERE movie_index = #{movie_index}
+	</update>
+	
+	<!-- 6. Update member_tbl member_point, member_cumpoint (결제시 증가) -->
+	<update id="updateIncreasePoint" parameterType="java.util.Map">
+		UPDATE member_tbl 
+		SET member_point=member_point+(#{movie_history_price_10perc}), 
+			member_cumPoint=member_cumPoint+(#{movie_history_price_10perc}) 
+		WHERE member_id = #{member_id}
+	</update>
+	
+	<!-- 7. Update member_tbl member_point (포인트 사용했을시 감소) -->
+	<update id="updateDecreasePoint" parameterType="java.util.Map">
+		UPDATE member_tbl SET member_point=member_point-#{member_point} 
+		WHERE member_id = #{member_id}
+	</update>
+	
+	<!-- 8. SELECT member_tble에서 member_cumPoint확인 -->
+	<select id="getMemberCumPoint" resultType="int">
+		SELECT member_cumPoint FROM member_tbl 
+		WHERE member_id= #{member_id}
+	</select>
+	
+	<!-- 9. UPDATE member_step(Service에서 if조건으로 조건 만족시 실행) -->
+	<update id="updateMemberStep" parameterType="java.util.Map">
+		UPDATE member_tbl SET member_step = #{member_step} 
+		WHERE member_id= #{member_id}
+	</update>
+	
 </mapper>

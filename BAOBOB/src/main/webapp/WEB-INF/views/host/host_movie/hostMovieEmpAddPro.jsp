@@ -13,21 +13,15 @@
 	<%@ include file="movie_navigation.jsp" %>
 	
 	<div class="content-wrapper">
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
 	<c:if test="${cnt== 1 }">
 		<script type="text/javascript">
-			alert("직원 등록 성공!");
+			alert("직원 고용에 성공하였습니다.");
 			window.location="hostMovieEmp";
 		</script>
 	</c:if>
 	<c:if test="${cnt!= 1 }">
 		<script type="text/javascript">
-			alert("직원 등록 실패");
+			alert("직원 고용에 실패하였습니다. 다시 한번 확인해 주세요.");
 			window.history.back(-2);
 		</script>
 	</c:if>

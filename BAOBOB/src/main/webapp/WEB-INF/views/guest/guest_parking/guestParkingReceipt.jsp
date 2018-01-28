@@ -50,7 +50,11 @@
 				if(httpRequest.status == 200) {
 					var data = httpRequest.responseText;
 					
-					document.getElementById('result').innerHTML = data;
+					if(data.length > 10) {
+						document.getElementById('result').innerHTML = data;
+					} else {
+						alert('존재하지 않는 번호입니다.');						
+					}
 					console.log(data);
 				}
 			}
