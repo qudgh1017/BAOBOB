@@ -134,7 +134,9 @@
 			p_fee_exc_price = #{p_fee_exc_price}, 
 			p_fee_exc_time = #{p_fee_exc_time}, 
 			p_fee_base_price = #{p_fee_base_price}, 
-			p_fee_base_time = #{p_fee_base_time}
+			p_fee_base_time = #{p_fee_base_time},
+			p_fee_movie_time = #{p_fee_movie_time},
+			p_fee_rest_time = #{p_fee_rest_time}
 	</update>
 	
 	<!-- 주차 내역 총 개수 -->

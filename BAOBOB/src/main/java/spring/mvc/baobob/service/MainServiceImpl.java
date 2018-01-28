@@ -148,7 +148,7 @@ public class MainServiceImpl implements MainService {
 	@Override
 	public void signInPro(HttpServletRequest req, Model model) {
 		String member_id = req.getParameter("id").trim();
-		String member_pwd = req.getParameter("pwd");
+		String member_pwd = req.getParameter("pwd").trim();
 		
 		Map<String, String> map = new HashMap<>();
 		map.put("member_id", member_id);

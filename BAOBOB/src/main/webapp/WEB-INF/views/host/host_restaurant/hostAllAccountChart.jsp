@@ -21,15 +21,15 @@
 	}
 
 	// 로딩 완료시 함수 실행하여 차트 생성
-	google.charts.setOnLoadCallback(menuChart);
+	google.charts.setOnLoadCallback(chart);
 	var chart_options = {
-			title : '메뉴별 매출', 
+			title : '매장별 매출', 
 			width : 450, 
 			height : 400, 
 			bar : {groupWidth : '30%'},
 			legend : {position : 'bottom'}
 	};
-	function menuChart(){
+	function chart(){
 		var keys = '${keys}';
 		var key = keys.split(',');
 		
@@ -37,7 +37,7 @@
 		var value = values.split(',');
 		
 		var data = new google.visualization.DataTable();
-        data.addColumn('string', '메뉴');
+        data.addColumn('string', '매장');
         data.addColumn('number', '판매액');
 
         for (var i = 0; i < ${count}; i++) {
@@ -46,26 +46,38 @@
             data.addRow(dataRow);
         }
 
-        var menuChart = new google.visualization.ColumnChart(document.getElementById('menuChart'));
-		menuChart.draw(data, chart_options);
+        var chart = new google.visualization.ColumnChart(document.getElementById('chart'));
+        chart.draw(data, chart_options);
 	}
 
 	// 로딩 완료시 함수 실행하여 차트 생성
-	google.charts.setOnLoadCallback(drawChart);
-	var chart_options2 = {
-		title : '성별 비율',
-		width : 450,
-		height : 400,
-		legend : {position : 'bottom'}
-	}
-	function drawChart(){
-	 	var data = google.visualization.arrayToDataTable([
- 		['Element', '성별'],
- 		['남', ${sexChart['남']}],
- 		['여', ${sexChart['여']}]
-	 	]);
-		var sexChart = new google.visualization.PieChart(document.getElementById('sexChart'));
-		sexChart.draw(data, chart_options2);
+	google.charts.setOnLoadCallback(chart2);
+	var chart_options = {
+			title : '매장별 매출', 
+			width : 450, 
+			height : 400, 
+			bar : {groupWidth : '30%'},
+			legend : {position : 'bottom'}
+	};
+	function chart2(){
+		var keys = '${keys}';
+		var key = keys.split(',');
+		
+		var values = '${values}';
+		var value = values.split(',');
+		
+		var data = new google.visualization.DataTable();
+        data.addColumn('string', '매장');
+        data.addColumn('number', '판매액');
+
+        for (var i = 0; i < ${count}; i++) {
+        	value[i] = value[i] * 1;
+        	var dataRow = [key[i], value[i]];
+            data.addRow(dataRow);
+        }
+
+        var chart2 = new google.visualization.PieChart(document.getElementById('chart2'));
+        chart2.draw(data, chart_options);
 	}
 </script>
 </head>
@@ -73,7 +85,8 @@
 	<!-- Navigation -->
 	<%@ include file="_navigation.jsp" %>
 	
-	<c:if test="${sessionScope.memStep != 4}">
+	<!-- 총 관리자 메뉴는 총 관리자만 이용할 수 있다. -->
+	<c:if test="${sessionScope.memStep == 4}">
 		<div class="content-wrapper">
 			<div class="container-fluid" style="width: 1000px;">
 				<div class="card mb-3">
@@ -87,8 +100,8 @@
 									<tr>
 										<td style="text-align: center; vertical-align: middle;">
 											<div style="display: -webkit-box;">
-												<div id="menuChart" style="width: 50%; height: 500px;"></div>
-												<div id="sexChart" style="width: 50%; height: 500px;"></div>
+												<div id="chart" style="width: 50%; height: 500px;"></div>
+												<div id="chart2" style="width: 50%; height: 500px;"></div>
 											</div>
 										</td>
 									</tr>
@@ -105,9 +118,9 @@
 			</div>
 		</div>
 	</c:if>
-	<c:if test="${sessionScope.memStep == 4}">
+	<c:if test="${sessionScope.memStep != 4}">
 		<script type="text/javascript">
-			errorAlert('이용할 수 없는 메뉴입니다.\n식당 관리자 계정으로 로그인해주세요.');
+			errorAlert('이용할 수 없는 메뉴입니다.\n총 관리자 계정으로 로그인해주세요.');
 		</script>
 	</c:if>
 	

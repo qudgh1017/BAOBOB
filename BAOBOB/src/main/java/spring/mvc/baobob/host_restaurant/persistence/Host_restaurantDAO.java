@@ -141,9 +141,6 @@ public interface Host_restaurantDAO {
 	// 주문 가격 계산(테이블별 결산)
 	public Integer getBill(Map<String, Object> map);
 
-	// '사용중'인 테이블 '사용가능'으로 상태 변경
-	public int modState(Map<String, Object> map);
-
 	// 레스토랑 히스토리 테이블에 이용 내역 추가
 	public int addRestaurantHistory(Map<String, Object> map);
 
@@ -168,4 +165,40 @@ public interface Host_restaurantDAO {
 
 	// 성별 차트 내용
 	List<Member> getSexChartContent(int restaurant_index);
+
+	// 모든 식당 이름 조회
+	public String[] getRestaurantName();
+
+	// 식당별 차트
+	public List<Restaurant_ChartVO> getRestaurantChart();
+
+	// 예약한 아이디 조회
+	public String getReservId(Map<String, Object> map);
+
+	// 결제한 테이블인지 확인
+	public int getHistoryState(Map<String, Object> map);
+
+	// 결제 시 결제 완료 시점으로 히스토리 수정
+	public int modHistory(Map<String, Object> map);
+
+	// 결제 시 레스토랑 히스토리 테이블의 내용 업데이트
+	public int modRestaurantHistory(Map<String, Object> map);
+
+	// '사용 중'인 테이블을 '사용 가능'으로 변경
+	public int modState(Map<String, Object> map);
+
+	// 레스토랑 히스토리 테이블에 이용 내역 삭제
+	public int delRestaurantHistory(Map<String, Object> map);
+
+	// 히스토리 테이블에 이용 내역 삭제
+	public int delHistory(Map<String, Object> map);
+
+	// 삭제 전 히스토리 인덱스 조회
+	public int getHistoryIndex(Map<String, Object> map);
+
+	// 스케줄 삭제 처리
+	public int delSchedule(Map<String, Object> map);
+
+	// 테이블 전체 삭제
+	public int delTable(Map<String, Object> map);
 }

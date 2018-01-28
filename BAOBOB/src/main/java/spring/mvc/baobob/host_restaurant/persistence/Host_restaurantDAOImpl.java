@@ -470,16 +470,6 @@ public class Host_restaurantDAOImpl implements Host_restaurantDAO {
 		return dao.getBill(map);
 	}
 
-	// '사용중'인 테이블 '사용가능'으로 상태 변경
-	@Override
-	public int modState(Map<String, Object> map) {
-		log.debug("dao.modState()");
-
-		Host_restaurantDAO dao = sqlSession.getMapper(Host_restaurantDAO.class);
-
-		return dao.modState(map);
-	}
-
 	// 레스토랑 히스토리 테이블에 이용 내역 추가
 	@Override
 	public int addRestaurantHistory(Map<String, Object> map) {
@@ -520,7 +510,7 @@ public class Host_restaurantDAOImpl implements Host_restaurantDAO {
 		return dao.getMenuName(restaurant_index);
 	}
 
-	// 결산 차트
+	// 메뉴별 차트
 	@Override
 	public List<Restaurant_ChartVO> getMenuCountChart(int restaurant_index) {
 		log.debug("dao.getMenuCountChart()");
@@ -530,7 +520,7 @@ public class Host_restaurantDAOImpl implements Host_restaurantDAO {
 		return dao.getMenuCountChart(restaurant_index);
 	}
 
-	// 성별 매출
+	// 성별 차트
 	@Override
 	public Object getSexChart(int restaurant_index) {
 		log.debug("dao.getSexChart()");
@@ -542,7 +532,7 @@ public class Host_restaurantDAOImpl implements Host_restaurantDAO {
 		m.put("남", 0);
 		m.put("여", 0);
 
-		List<Member> list = new ArrayList();
+		List<Member> list = new ArrayList<Member>();
 		
 		for (int i = 0; i < m.size(); i++) {
 			list = getSexChartContent(restaurant_index);
@@ -571,4 +561,124 @@ public class Host_restaurantDAOImpl implements Host_restaurantDAO {
 		return dao.getSexChartContent(restaurant_index);
 	}
 
+	// 모든 식당 이름 조회
+	@Override
+	public String[] getRestaurantName() {
+		log.debug("dao.getRestaurantName()");
+
+		Host_restaurantDAO dao = sqlSession.getMapper(Host_restaurantDAO.class);
+
+		return dao.getRestaurantName();
+	}
+
+	// 메뉴별 차트
+	@Override
+	public List<Restaurant_ChartVO> getRestaurantChart() {
+		log.debug("dao.getMenuCountChart()");
+
+		Host_restaurantDAO dao = sqlSession.getMapper(Host_restaurantDAO.class);
+
+		return dao.getRestaurantChart();
+	}
+	
+	// 예약한 아이디 조회
+	@Override
+	public String getReservId(Map<String, Object> map) {
+		log.debug("dao.getReservId()");
+
+		Host_restaurantDAO dao = sqlSession.getMapper(Host_restaurantDAO.class);
+
+		return dao.getReservId(map);
+	}
+
+	// 결제한 테이블인지 확인
+	@Override
+	public int getHistoryState(Map<String, Object> map) {
+		log.debug("dao.getHistoryState()");
+
+		Host_restaurantDAO dao = sqlSession.getMapper(Host_restaurantDAO.class);
+
+		return dao.getHistoryState(map);
+	}
+
+
+	// 결제 시 결제 완료 시점으로 히스토리 수정
+	@Override
+	public int modHistory(Map<String, Object> map) {
+		log.debug("dao.modHistory()");
+
+		Host_restaurantDAO dao = sqlSession.getMapper(Host_restaurantDAO.class);
+
+		return dao.modHistory(map);
+	}
+
+	// 결제 시 레스토랑 히스토리 테이블의 내용 업데이트
+	@Override
+	public int modRestaurantHistory(Map<String, Object> map) {
+		log.debug("dao.modRestaurantHistory()");
+
+		Host_restaurantDAO dao = sqlSession.getMapper(Host_restaurantDAO.class);
+
+		return dao.modRestaurantHistory(map);
+	}
+
+	// '사용 중'인 테이블을 '사용 가능'으로 변경
+	@Override
+	public int modState(Map<String, Object> map) {
+		log.debug("dao.modState()");
+
+		Host_restaurantDAO dao = sqlSession.getMapper(Host_restaurantDAO.class);
+
+		return dao.modState(map);
+	}
+
+	// 삭제 전 히스토리 인덱스 조회
+	@Override
+	public int getHistoryIndex(Map<String, Object> map) {
+		log.debug("dao.getHistoryIndex()");
+
+		Host_restaurantDAO dao = sqlSession.getMapper(Host_restaurantDAO.class);
+
+		return dao.getHistoryIndex(map);
+	}
+
+	// 레스토랑 히스토리 테이블에 이용 내역 삭제
+	@Override
+	public int delRestaurantHistory(Map<String, Object> map) {
+		log.debug("dao.delRestaurantHistory()");
+
+		Host_restaurantDAO dao = sqlSession.getMapper(Host_restaurantDAO.class);
+
+		return dao.delRestaurantHistory(map);
+	}
+	
+	// 히스토리 테이블에 이용 내역 삭제
+	@Override
+	public int delHistory(Map<String, Object> map) {
+		log.debug("dao.delHistory()");
+
+		Host_restaurantDAO dao = sqlSession.getMapper(Host_restaurantDAO.class);
+
+		return dao.delHistory(map);
+	}
+
+	// 테이블 전체 삭제
+	@Override
+	public int delTable(Map<String, Object> map) {
+		log.debug("dao.delTable()");
+
+		Host_restaurantDAO dao = sqlSession.getMapper(Host_restaurantDAO.class);
+
+		return dao.delTable(map);
+	}
+
+	// 스케줄 삭제 처리
+	@Override
+	public int delSchedule(Map<String, Object> map) {
+		log.debug("dao.delSchedule()");
+
+		Host_restaurantDAO dao = sqlSession.getMapper(Host_restaurantDAO.class);
+
+		return dao.delSchedule(map);
+	}
 }

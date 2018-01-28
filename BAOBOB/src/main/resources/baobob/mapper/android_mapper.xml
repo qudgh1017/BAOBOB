@@ -39,4 +39,22 @@
 		    AND	TO_CHAR(board_reg_date, 'DDD') >= TO_CHAR(SYSTIMESTAMP - 10, 'DDD')
 		]]>
 	</select>
+	
+	<!-- 영화 예매 내역 -->
+	<select id="getMemberMovieTicketing" resultType="spring.mvc.baobob.vo.Android">
+		SELECT sd data1, ss data2, se data3, movie_title data4, movie_poster data5
+		FROM (
+		    SELECT movie_index movie, schedule_startDate sd, schedule_startTime ss, schedule_endTime se
+		    FROM (
+		        SELECT t.theater_schedule_index idx
+		        FROM history_tbl h, movie_history_tbl m, theater_seat_tbl t
+		        WHERE h.history_index = m.history_index
+		            AND m.theater_schedule_index = t.theater_schedule_index
+		            AND t.seat_state = 6
+		            AND h.member_id = #{id}
+		        ), theater_schedule_tbl ts
+		    WHERE ts.theater_schedule_index = idx
+		    ), movie_tbl mt
+		WHERE mt.movie_index = movie
+	</select>
 </mapper>

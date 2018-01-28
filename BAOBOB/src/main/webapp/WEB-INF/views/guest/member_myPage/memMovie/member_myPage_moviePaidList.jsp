@@ -27,7 +27,7 @@
 			<!-- 사이드 메뉴 -->
 			<%@ include file="../../common/sideMenu.jsp" %>	
 			
-			<td style="padding:0rem 10rem; margin:0px;width:100%;height:100%;">
+			<td style="padding:0rem 5rem; margin:0px;width:100%;height:100%;">
 			<!-- 알맹이td -->
 			<table id="mainBody">
 				<caption>예매 내역</caption>
@@ -37,7 +37,8 @@
 				    	<th style="width:15%">포스터</th>
 				        <th style="width:30%">제목</th>
 				        <th style="width:10%">감독</th>
-				        <th style="width:15%">예매시간</th>
+				        <th style="width:10%">상영관<br>좌석</th>
+				        <th style="width:15%">상영시간</th>
 				    </tr>
 			    </thead>
 			    
@@ -55,7 +56,7 @@
 					    	</th>
 					    	<th>
 					    		<img src="${projectRes}images/phc/${dto.movie_poster}" 
-					    			style="width:180px; height:150px;">
+					    			style="height:150px;">
 					    	</th>
 					        <th style="text-align:center;">
 					        	${dto.movie_title}
@@ -65,26 +66,33 @@
 								<c:if test="${dto.movie_age==19}"><img src="${projectRes}/images/ybh/청소년 관람불가.png" style="width:15px; height:15px;"></c:if>
 					        </th>
 					        <th style="text-align:center;">${dto.movie_director}</th>
-							<td>
+							<th>
+								<!-- 상영관, 좌석 -->
+								${dto.theater_index}관 <br>
+								${dto.seat}<br>
+							</th>
+							<th>
+								<!-- 상영시간 -->
 								<fmt:formatDate type="both" pattern="yy.MM.dd HH:mm" value="${dto.schedule_startTime}" />
 								~
 								<fmt:formatDate type="both" pattern="yy.MM.dd HH:mm" value="${dto.schedule_endTime}" />
 								<br><br>
 								
 								<!-- 날짜비교를 위한 선언,if문의 jstl -->
+								<!-- 상영시간전에는 예약취소버튼, 상영시간후에는 결제완료 노출 -->
 								<jsp:useBean id="now" class="java.util.Date" />
-								<fmt:formatDate value="${dto.history_date}" var="hisDate" pattern="yyyy-MM-dd" />
-								<fmt:formatDate value="${now}" var="sysDate" pattern="yyyy-MM-dd" />
-								
+								<fmt:formatDate value="${dto.schedule_endTime}" var="hisDate" pattern="yyyy-MM-dd" />
+								<fmt:formatDate value="${now}" var="sysDate" pattern="yyyy-MM-dd" /><br>
 								<c:if test="${hisDate > sysDate}">
-									<input type="button" class="button" onclick="window.location='moviePaidDelPro?num=${dto.history_index}'"value="예매 취소">
+									<input type="button" class="button" 
+										onclick="window.location='moviePaidDelPro?schedule_index=${dto.theater_schedule_index}&history_index=${dto.history_index}'"
+											value="예매 취소">
 								</c:if>
 								
 								<c:if test="${hisDate < sysDate}">
 									<input type="button" class="button" onclick="#!"value="결제 완료">
 								</c:if>
-								
-							</td>
+							</th>
 					    </tr>
 					    </tbody>
 				    </c:forEach>

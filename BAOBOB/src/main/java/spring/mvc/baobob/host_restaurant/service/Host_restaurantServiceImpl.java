@@ -433,6 +433,78 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 			member_step++;
 		}
 	}
+
+	// 식당 총 관리자 - 식당별 차트
+	@Override
+	public void allAccountChart(HttpServletRequest req, Model model) {
+		log.debug("service.allAccountChart()");
+		
+		// 모든 매장의 이름 조회
+		String[] restaurant = dao.getRestaurantName();
+
+		// 여러 정보를 저장하기 위해 맵 이용
+		Map<String , Object> map = new HashMap<String,Object>();
+		
+		// mapper에서 불러온 kind와 value가 다건이기때문에 vo형태의 List형으로 받아준다.
+		List<Restaurant_ChartVO> menuList = dao.getRestaurantChart();
+		
+		// List 데이터를 한 건씩 map에 담는다.
+		for(Restaurant_ChartVO dto : menuList) {
+			map.put(dto.getKind(), dto.getValue());
+		}
+		
+		// 판매액이 있는지 확인
+		for(String s : restaurant) {
+			int cnt = 0;
+			
+			// 판매액이 0이 아닌 매장은 건너뛰고,
+			for(Entry<String, Object> m : map.entrySet()) {
+				if(s.equals(m.getKey())) {
+					cnt = 1;
+				}
+			}
+			
+			// 판매액이 0인 매장은 0을 put해준다.
+			if(cnt == 0) {
+				map.put(s, 0);
+			}
+		}
+
+		// 가나다 순으로 정렬하기 위해 트리맵 이용
+		TreeMap<String, Object> tm = new TreeMap<String, Object>(map);
+		
+		// 키값 오름차순 정렬(기본)
+		Iterator<String> iteratorKey = tm.keySet().iterator();
+		
+		String key = "";	// 키
+		String keys = "";	// 키의 조합
+		String value = "";	// 값
+		String values = ""; // 값의 조합
+		int cnt = 0;	// 처음인지 확인
+		
+		while (iteratorKey.hasNext()) {
+			key = iteratorKey.next();
+			value = String.valueOf(tm.get(key));
+			// 처음이면 콤마를 붙이지 않음
+			if(cnt == 0) {
+				keys = keys + key;
+				values = values + value;
+				cnt = 1;
+			}
+			// 처음이 아니면 콤마를 앞에
+			else {
+				keys = keys + "," + key;
+				values = values + "," + value;
+			}
+		}
+		
+		// 결과를 저장한다.
+		model.addAttribute("keys", keys);
+		model.addAttribute("values", values);
+		model.addAttribute("count", restaurant.length);
+		model.addAttribute("chart", map);
+		model.addAttribute("total", tm.get("합계"));
+	}
 	
 	/////////////////////////////////////////////////////////////////////////////////////////
 
@@ -854,6 +926,10 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 		schedule_dto.setSchedule_endTime(Timestamp.valueOf(endTime));
 		schedule_dto.setRestaurant_index(restaurant_index);
 
+		log.debug("startTime : " + startTime);
+		log.debug("endTime : " + endTime);
+		log.debug("restaurant_index : " + restaurant_index);
+		
 		// 스케줄 index 조회
 		Integer schedule_index = dao.getScheduleIndex(schedule_dto);
 
@@ -861,7 +937,7 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 		if (schedule_index != null) {
 			schedule_dto.setRestaurant_schedule_index(schedule_index);
 		}
-
+		
 		// 테이블 정보
 		TableVO table_dto = new TableVO();
 		
@@ -875,6 +951,9 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 		if (schedule_index == null) {
 			// 새로운 예약 추가
 			cnt = dao.addReserv(map);
+			schedule_index = dao.getScheduleIndex(schedule_dto);
+			schedule_dto.setRestaurant_schedule_index(schedule_index);
+			map.replace("schedule_dto", schedule_dto);
 		}
 
 		// 새로운 예약을 추가한게 아니라면(기존 예약이 있다면)
@@ -906,7 +985,35 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 				}
 			}
 		}
+		
+		// 테이블 예약까지 성공했다면
+		if(cnt != 0) {
+			String member_id = req.getParameter("member_id");
 
+			System.out.println("id : " + member_id);
+			
+			// 아이디 존재 유무 및 예약 가능 아이디인지 확인
+			Integer member_step = dao.confirmId(member_id);
+
+			// 이용 가능한 멤버라면
+			if(member_step != null && ((1 <= member_step && member_step <= 12) || (51 <= member_step && member_step <= 53) || (61 <= member_step && member_step <= 63))) {
+				// 히스토리에 이용 내역 추가
+				cnt = dao.addHistory(member_id);
+
+				log.debug("schedule_index : " + schedule_index);
+				
+				// 내역 추가에 성공했다면
+				if(cnt != 0) {
+					int table_index = Integer.parseInt(req.getParameter("table_index"));
+					map.put("restaurant_table_index", table_index);
+					// 레스토랑 히스토리 테이블에 이용 내역 추가
+					cnt = dao.addRestaurantHistory(map);
+				}
+			} else {
+				cnt = 2;
+			}
+		}
+		
 		// 성공 여부 저장
 		model.addAttribute("cnt", cnt);
 	}
@@ -1075,6 +1182,8 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 
 		ArrayList<String> use_tables = new ArrayList<String>();
 		ArrayList<String> bill = new ArrayList<String>();
+		ArrayList<String> reserv_id = new ArrayList<String>();
+		ArrayList<String> history_state = new ArrayList<String>();
 
 		for (int i = 0; i < row; i++) {
 			for (int j = 0; j < col; j++) {
@@ -1103,6 +1212,21 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 					
 					// 사용중인 테이블 개수 증가
 					use_table_cnt++;
+					
+					// 예약한 아이디 조회
+					String id = dao.getReservId(map);
+					
+					// 히스토리 인덱스를 이용해 예약자 아이디 확인
+					reserv_id.add(id);
+					
+					// 결제한 테이블인지 확인
+					int h_state = dao.getHistoryState(map);
+					
+					if(h_state == 1) {
+						history_state.add("(결제 완료)");
+					} else {
+						history_state.add("");
+					}
 				}
 
 				// 테이블을 찾으면 count를 증가시킨다.(사용중인 테이블이 몇번 테이블인지 확인하기 위함)
@@ -1130,8 +1254,12 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 
 		// 사용 중인 테이블이 0개 이상일 때 화면 출력을 위해 저장
 		model.addAttribute("use_table_cnt", use_table_cnt);
+
+		// 사용 중인 테이블이 어떤 아이디로 예약된 자리인지 알기 위해 저장
+		model.addAttribute("reserv_id", reserv_id);
 		
-		System.out.println("use_table_cnt : " + use_table_cnt);
+		// 결제 여부를 알기 위해 저장
+		model.addAttribute("history_state", history_state);
 	}
 
 	// 테이블에 주문 추가(판매)
@@ -1365,15 +1493,15 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 							table_cnt++;
 						}
 		
-						// 화면에서 가져온 테이블 번호가 되면 이용 내역 테이블에 내용을 추가하고 '사용중'인 테이블을 '사용가능'상태로 바꾸고 반복을 끝낸다.
+						// 화면에서 가져온 테이블 번호가 되면 이용 내역 테이블 내용 수정
 						if (table_cnt == table_Num) {
-							// 히스토리 테이블에 이용 내역 추가
-							cnt = dao.addHistory(member_id);
+							// 레스토랑 히스토리 테이블에 이용 내역 추가
+							cnt = dao.modRestaurantHistory(map);
 							
 							// 추가에 성공했다면
 							if(cnt != 0) {
-								// 레스토랑 히스토리 테이블에 이용 내역 추가
-								cnt = dao.addRestaurantHistory(map);
+								// 히스토리 테이블에 이용 내역 추가
+								cnt = dao.modHistory(map);
 
 								// 추가에 성공했다면
 								if(cnt != 0) {
@@ -1386,23 +1514,25 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 									
 									// 수정에 성공했다면
 									if(cnt != 0) {
-										// step 계산을 위한 누적 포인트 조회
-										int step = dao.getCumPoint(member_id);
-
-										// 누적 포인트에 따라 step이 달라짐
-										if (0 <= step && step <= 15000) {
-											step = 9;
-										} else if (15001 <= step && step <= 30000) {
-											step = 10;
-										} else if (30001 <= step && step <= 45000) {
-											step = 11;
-										} else if (45001 <= step) {
-											step = 12;
+										// 관리자들은 스텝이 변경 되면 안됨
+										if(member_step == 9 || member_step == 10 || member_step == 11 || member_step == 12) {
+											// step 계산을 위한 누적 포인트 조회
+											int step = dao.getCumPoint(member_id);
+											// 누적 포인트에 따라 step이 달라짐
+											if (0 <= step && step <= 15000) {
+												step = 9;
+											} else if (15001 <= step && step <= 30000) {
+												step = 10;
+											} else if (30001 <= step && step <= 45000) {
+												step = 11;
+											} else if (45001 <= step) {
+												step = 12;
+											}
+											map.put("member_step", step);
+											
+											// member_step 변경
+											cnt = dao.updateStep(map);
 										}
-										map.put("member_step", step);
-										
-										// member_step 변경
-										cnt = dao.updateStep(map);
 									}
 								}
 							}
@@ -1422,7 +1552,7 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 		// 성공 여부 저장
 		model.addAttribute("cnt", cnt);
 	}
-
+/*
 	// 예약 삭제
 	@Override
 	public void scheduleDel(HttpServletRequest req, Model model) {
@@ -1444,7 +1574,6 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 		int row = table_dto.getTable_row() + 1;
 
 		int table_index = 0;
-
 		
 		// 여러 정보를 저장하기 위해 맵 이용
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -1476,6 +1605,100 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 			
 			cnt = dao.resetTable2(dto);
 		}
+	}
+*/
+
+	// 예약 삭제
+	@Override
+	public void reservDel(HttpServletRequest req, Model model) {
+		log.debug("service.reservDel()");
+
+		int cnt = 0;
+		int table_count = 0;
+		int use_table_count = 0;
+		
+		// 식당 관리자의 memberStep에서 뒷자리를 구한다.(뒷자리가 restaurant_index와 같음)
+		int restaurant_index = Integer
+				.parseInt((String.valueOf(req.getSession().getAttribute("memStep")).substring(1, 2)));
+		int schedule_index = Integer.parseInt(req.getParameter("restaurant_schedule_index"));	// 스케줄 index
+		int table_Num = Integer.parseInt(req.getParameter("table_Num")); // 테이블 번호
+		String member_id = req.getParameter("member_id");
+		
+		// 여러 정보를 저장하기 위해 맵 이용
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("restaurant_index", restaurant_index);
+		map.put("restaurant_schedule_index", schedule_index);
+		map.put("member_id", member_id);
+		
+		TableVO table_dto = dao.getColRow(restaurant_index);
+		
+		// 매장을 구성하는 타일의 행열 (예:5*5)
+		int col = table_dto.getTable_col(); // 행
+		int row = table_dto.getTable_row(); // 열
+
+		int table_index = 0;
+		map.put("restaurant_table_index", table_index);
+		
+		// 열만큼 반복
+		for (int i = 0; i < row; i++) {
+			// 행만큼 반복
+			for (int j = 0; j < col; j++) {
+				map.replace("restaurant_table_index", table_index);
+				
+				// state 정보 조회
+				int state = dao.getState(map);
+
+				// 복도가 아닌 테이블이 걸리면 테이블 개수 증가
+				if(state != 0) {
+					table_count++;
+				}
+				
+				// '사용 중'인 테이블이 걸리면 '사용 중'테이블 개수 증가
+				if (state == 3) {
+					// 예약 된 테이블이 몇개인지 확인
+					use_table_count++;
+					
+					// 예약 취소할 테이블 번호가 되면
+					if(table_count == table_Num) {
+						// 삭제 전 히스토리 인덱스 조회(삭제하면 히스토리 인덱스를 찾을 수 없음)
+						int history_index = dao.getHistoryIndex(map);
+						map.put("history_index", history_index);
+						
+						// 레스토랑 히스토리 테이블에 이용 내역 삭제
+						cnt = dao.delRestaurantHistory(map);
+						
+						// 삭제에 성공했다면
+						if(cnt != 0) {
+							// 히스토리 테이블에 이용 내역 삭제
+							cnt = dao.delHistory(map);
+							
+							// 삭제에 성공했다면
+							if(cnt != 0) {
+								// '사용 중'인 테이블 '사용 가능'으로 상태 변경
+								cnt = dao.modState(map);
+							}
+						}
+					}
+				}
+				// 테이블 번호
+				table_index++;
+			}
+		}
+		
+		// '사용 중'인 테이블이 단 하나였고,'사용 가능'으로 상태 변경에 성공했다면
+		if(use_table_count == 1 && cnt == 1) {
+			// 테이블 전체 삭제
+			cnt = dao.delTable(map);
+			
+			// 삭제에 성공했다면
+			if(cnt != 0) {
+				// 스케줄 삭제 처리
+				cnt = dao.delSchedule(map);
+			}
+		}
+		
+		// 성공 여부 저장
+		model.addAttribute("cnt", cnt);
 	}
 	
 	// 메뉴별 차트

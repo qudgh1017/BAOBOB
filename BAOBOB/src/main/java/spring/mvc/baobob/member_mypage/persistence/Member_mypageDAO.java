@@ -10,6 +10,7 @@ import spring.mvc.baobob.vo.MovieHistoryVO;
 import spring.mvc.baobob.vo.MovieVO;
 import spring.mvc.baobob.vo.ParkingHistory;
 import spring.mvc.baobob.vo.RestaurantLogVO;
+import spring.mvc.baobob.vo.Theater_seatVO;
 import spring.mvc.baobob.vo.WishListVO;
 
 public interface Member_mypageDAO {
@@ -85,6 +86,9 @@ public interface Member_mypageDAO {
 		
 	//내가 본 영화 리스트	
 	public ArrayList<MovieHistoryVO> getMovieClear(Map<String,Object> map);
+	
+	//예약한 상영과,좌석 불러오기
+	public ArrayList<Theater_seatVO> getMovieSeat(Map<String,Object> map);
 		
 	//무비 다이어리 글갯수 구하기
 	public int getMovieDiaryCnt(String strId);	
@@ -104,9 +108,6 @@ public interface Member_mypageDAO {
 	//위시리스트 삭제
 	public int delMovieWishList(int num);
 	
-	//예매내역 삭제
-	public int moviePaidDelPro(int num);
-	
 	//내가 이용한 식당 글갯수 구하기
 	public int restaurantLogCnt(String strId);	
 	
@@ -124,5 +125,25 @@ public interface Member_mypageDAO {
 	
 	//개인별 히스토리 목록 조회
 	public ArrayList<HistoryVO> getHistoryList(Map<String, Object> map);
-
+		
+	//예매좌석 취소 - 예매좌석 정보 가져오기
+	public ArrayList<Theater_seatVO> getSeatInfo(Map<String, Object> map);
+	
+	//예매좌석 취소 - 예매좌석 state 돌려놓기
+	public int updateSeatState(int seat_index);
+	
+	//예매좌석 취소 - 스케쥴에 빈좌석 돌려놓기
+	public int updateEmptySeat(int seat_index);
+	
+	//예매좌석 취소 - movie_count 돌려놀기
+	public int updateMovieCount(Map<String, Object> map);
+	
+	//예매내역 삭제(movie_history_tbl)
+	public int moviePaidDelPro(int history_index);
+	
+	//예매내역 삭제(history_tbl)
+	public int historyDelPro(int history_index);
+	
+	
+	
 }

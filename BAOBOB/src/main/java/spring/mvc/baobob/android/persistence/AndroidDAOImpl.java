@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import spring.mvc.baobob.vo.Android;
 import spring.mvc.baobob.vo.BoardVO;
 
 @Repository
@@ -43,6 +44,14 @@ public class AndroidDAOImpl implements AndroidDAO{
 	public ArrayList<BoardVO> getBoardList(String id) {
 		AndroidDAO mapper = sqlSession.getMapper(AndroidDAO.class);
 		ArrayList<BoardVO> list = mapper.getBoardList(id);
+		return list;
+	}
+
+	//영화 예매 내역
+	@Override
+	public ArrayList<Android> getMemberMovieTicketing(String id) {
+		AndroidDAO mapper = sqlSession.getMapper(AndroidDAO.class);
+		ArrayList<Android> list = mapper.getMemberMovieTicketing(id);;
 		return list;
 	}
 

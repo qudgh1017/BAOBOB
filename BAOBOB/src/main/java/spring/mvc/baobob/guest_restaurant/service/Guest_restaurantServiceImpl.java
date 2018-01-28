@@ -251,7 +251,7 @@ public class Guest_restaurantServiceImpl implements Guest_restaurantService{
 		map.put("dto2", table_dto);
 		map.put("dto3", schedule_dto);
 		map.put("member_id", member_id);
-		
+		System.out.println("member_id"+ member_id);
 		//스케쥴이 없으면..
 		if(schedule_index == null) {
 			cnt = dao.addReserv(map);
@@ -275,8 +275,8 @@ public class Guest_restaurantServiceImpl implements Guest_restaurantService{
 					map.replace("dto2", table_dto);
 					
 					cnt = dao.modTable2(map);
-					//dao.AddHistory(map);
-					//dao.AddRHistory(map);
+					dao.AddHistory(map);
+					dao.AddRHistory(map);
 					System.out.println("modTable2 - cnt : " + cnt);
 					if(cnt != 0) {
 						index++;

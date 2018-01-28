@@ -16,7 +16,7 @@
 				<tr>
 				<tr>
 					<td style="text-align: center;">
-						<span><b style="font-size: 18px;">[ 예약 테이블 ]</b></span>
+						<span><b style="font-size: 18px;">[ 테이블 ]</b></span>
 					</td>
 				</tr>
 				<c:if test="${use_table_cnt > 0}">
@@ -24,8 +24,10 @@
 						<tr>
 							<td style="text-align: center;">
 								<span>${dto}번 테이블</span><br>
-								<span style="font-size: 12px; color: gray">- ${bill[status.index]}원</span><br>
+								<span style="font-size: 12px; color: gray">${reserv_id[status.index]} - ${bill[status.index]}원<br>${history_state[status.index]}</span><br>
 								<input type="hidden" id="payValue${dto}" value="${bill[status.index]}">
+								<input type="hidden" id="member_id${dto}" value="${reserv_id[status.index]}">
+								<input type="hidden" id="history_state${dto}" value="${history_state[status.index]}">
 							</td>
 						</tr>
 					</c:forEach>
@@ -102,17 +104,30 @@
 				</tr>
 				<tr>
 					<td style="text-align: center;">
-						<input class="form-control" id="member_id" name="member_id" type="text" placeholder="결제 아이디">
-					</td>
-				</tr>
-				<tr>
-					<td style="text-align: center;">
 						<input class="form-control" id="point" name="point" type="text" placeholder="포인트 사용">
 					</td>
 				</tr>
 				<tr>
 					<td style="text-align: center;">
 						<input class="btn btn-primary" onclick="payment()" style="background-color: #007bff; margin-top: 15px; color: white; border: 1px solid #007bff;" type="button" value="결제" />
+					</td>
+				</tr>
+				<tr>
+					<td><hr><hr><hr></td>
+				</tr>
+				<tr>
+					<td style="text-align: center;">
+						<span><b style="font-size: 18px;">[예약 취소]</b></span>
+					</td>
+				</tr>
+				<tr>
+					<td style="text-align: center;">
+						<input class="form-control" id="table_num" name="table_num" type="text" placeholder="테이블 번호">
+					</td>
+				</tr>
+				<tr>
+					<td style="text-align: center;">
+						<input class="btn btn-primary" onclick="reservDel()" style="background-color: #343a40; margin-top: 15px; color: white; border: 1px solid #343a40;" type="button" value="예약 취소" />
 					</td>
 				</tr>
 				<tr>

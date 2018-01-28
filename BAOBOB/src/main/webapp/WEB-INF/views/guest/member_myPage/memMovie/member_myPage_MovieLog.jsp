@@ -86,7 +86,7 @@ $(document).ready(function() {
 			<%@ include file="../../common/sideMenu.jsp" %>	
 			
 			<!-- 알맹이td -->
-			<td style="padding:0rem 10rem; margin:0px;width:100%;height:100%; text-align:center;">
+			<td style="padding:0rem 5rem; margin:0px;width:100%;height:100%; text-align:center;">
 				<table id="mainBody">
 					<caption style="margin-bottom:0px!important">무비 로그</caption>
 					<thead>

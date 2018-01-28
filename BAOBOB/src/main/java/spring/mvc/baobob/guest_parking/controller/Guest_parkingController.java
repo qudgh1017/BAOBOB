@@ -25,35 +25,35 @@ public class Guest_parkingController {
 	//메인
 	@RequestMapping("guestParkingMain")
 	public String guestParkingMain() {
-		log.debug("guestParkingMain()");
+		log.info("guestParkingMain()");
 		return "guest/guest_parking/guestParkingMain";
 	}
 	
 	//입장
 	@RequestMapping("guestParkingIn")
 	public String guestParkingIn() {
-		log.debug("guestParkingIn()");
+		log.info("guestParkingIn()");
 		return "guest/guest_parking/guestParkingIn";
 	}
 
 	//입장 - 회원 선택시
 	@RequestMapping("guestParkingMember")
 	public String guestParkingMember(HttpServletRequest req, Model model) {
-		log.debug("guestParkingMember()");
+		log.info("guestParkingMember()");
 		return "guest/guest_parking/guestParkingMember";
 	}
 	
 	//입장 - 비회원 선택시
 	@RequestMapping("guestParkingGuest")
 	public String guestParkingGuest(HttpServletRequest req, Model model) {
-		log.debug("hostParkingGuest()");
+		log.info("hostParkingGuest()");
 		return "guest/guest_parking/guestParkingGuest";
 	}
 	
 	//비회원 입장
 	@RequestMapping("guestParkingGuestIn")
 	public String guestParkingGuestIn(HttpServletRequest req, Model model) {
-		log.debug("guestParkingGuestIn()");
+		log.info("guestParkingGuestIn()");
 		service.guestParkingInPro(req, model);
 		return "guest/guest_parking/guestParkingNumber";
 	}
@@ -61,18 +61,21 @@ public class Guest_parkingController {
 	//회원 입장- 로그인 처리 => 번호 생성
 	@RequestMapping("guestParkingMemberIn")
 	public String guestParkingSignIn(HttpServletRequest req, Model model) {
-		log.debug("guestParkingMemberIn()");
+		log.info("guestParkingMemberIn()");
 		
 		mService.signInPro(req, model);
-		service.guestParkingInPro(req, model);
-		
+		if(req.getSession().getAttribute("memId") != null) {
+			service.guestParkingInPro(req, model);
+		} else {
+			req.setAttribute("memChk", "0");
+		}
 		return "guest/guest_parking/guestParkingNumber";
 	}
 	
 	//회원 입장- 페이스북 로그인 처리 => 번호 생성
 	@RequestMapping("guestParkingFirebaseLogin")
 	public String guestParkingFirebaseLogin (HttpServletRequest req, Model model) {
-		log.debug("guestParkingFirebaseLogin()");
+		log.info("guestParkingFirebaseLogin()");
 
 		mService.firebaseLoginPro(req, model);
 		service.guestParkingInPro(req, model);
@@ -83,14 +86,14 @@ public class Guest_parkingController {
 	//퇴장
 	@RequestMapping("guestParkingOut")
 	public String guestParkingOut() {
-		log.debug("guestParkingOut()");
+		log.info("guestParkingOut()");
 		return "guest/guest_parking/guestParkingOutCheck";
 	}
 	
 	//퇴장 - 번호 확인, 회원일 경우 자동 결제
 	@RequestMapping("guestParkingOutCheckPro")
 	public String guestParkingOutCheckPro(HttpServletRequest req, Model model) {
-		log.debug("guestParkingOutCheckPro()");
+		log.info("guestParkingOutCheckPro()");
 		
 		service.guestParkingOutCheckPro(req, model);
 		
@@ -100,7 +103,7 @@ public class Guest_parkingController {
 	//결제
 	@RequestMapping("guestParkingPayPro")
 	public String guestParkingPay(HttpServletRequest req, Model model) {
-		log.debug("guestParkingPay()");
+		log.info("guestParkingPay()");
 		
 		service.guestParkingPay(req, model);
 		
@@ -110,14 +113,14 @@ public class Guest_parkingController {
 	//주차 내역
 	@RequestMapping("guestParkingReceipt")
 	public String guestParkingReceipt(HttpServletRequest req, Model model) {
-		log.debug("guestParkingReceipt()");
+		log.info("guestParkingReceipt()");
 		return "guest/guest_parking/guestParkingReceipt";
 	}
 	
 	//주차 내역 출력
 	@RequestMapping("guestParkingMy")
 	public String guestParkingMy(HttpServletRequest req, Model model) {
-		log.debug("guestParkingMy()");
+		log.info("guestParkingMy()");
 		
 		service.guestParkingMy(req, model);
 		

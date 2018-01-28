@@ -20,31 +20,10 @@
 	
 	<section>
 	  <div class="container mar">
-	  
-	  	<c:if test="${mem != 0}">
-	  		<span id="pay">자동 결제 중</span>
-	  		<script type="text/javascript">
-	  			var count = 0;
-	  			var jj = '.';
-	  			setInterval(function(){
-	  				document.getElementById('pay').innerHTML = '자동 결제 중' + jj;
-	  				
-	  				count += 1;
-	  				jj += '.';
-	  				if(count == 3){ count=0; jj = '.';}
-	  			}, 1000);
-	  		
-	  			setTimeout(function() {
-	  				window.location = 'guestParkingPayPro?key=${key}';
-	  			}, 10000);
-	  		</script>
-	  	</c:if>
-	  	<c:if test="${mem == 0}">
-		  	<form action="guestParkingPayPro" id="inform">
-		  		<input type="hidden" name="key" value="${key}">
-		  		<button class="btn btn-block input">결제</button>
-		  	</form>
-	  	</c:if>
+	  	<form action="guestParkingPayPro" id="inform">
+	  		<input type="hidden" name="key" value="${key}">
+	  		<button class="btn btn-block input">결제</button>
+	  	</form>
 	  </div>
 	</section>
 	

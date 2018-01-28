@@ -68,9 +68,11 @@ function removeChar(event) {
 	}
 }
 
+// 매장에서 사용할 전역변수들
 var typeNum = '0'; // 선택한 버튼 번호
 var typeImg = ''; // 선택한 버튼 이미지
 var count = 0;	// 입력한 테이블 숫자
+var table_index = 0;	// 예약한 테이블 번호
 
 // type에 따라 버튼 이미지 설정
 function spaceType(type) {
@@ -136,8 +138,8 @@ function spaceBtnChange(location) {
 	}
 }
 
-//배열판의 선택한 버튼 설정
-function spaceBtnChange2(location) {
+// 배열판의 선택한 버튼 설정
+function spaceBtnChange2(location, index) {
 	// 선택한 버튼의 value 변경(DB에 아이콘index 넣기 위한 값)
 	var btnId = 'btn' + location;
 	var spaceBtn = document.getElementById(btnId);
@@ -159,6 +161,7 @@ function spaceBtnChange2(location) {
 				var spaceImg = document.getElementById(imgId); // 선택한 버튼의 img
 				spaceImg.src = '/baobob/resources/images/chg/' + typeImg;
 				
+				table_index = index;
 				spaceBtn.value = typeNum;
 			} else {
 				alert('입력하신 테이블 수를 초과했습니다.');
@@ -194,15 +197,23 @@ function spaceTypeChange() {
 // 매장 수정(정보 설정 AJAX)
 function spaceTypeChange2(index) {
 	var item = document.querySelectorAll('.p_spaceBtn'); // 배열판의 버튼들
-	
-	// 입력한 테이블 수
-	var table_count = document.getElementById('count').value / 4;
-	
-	if(count < table_count) {
-		alert('입력하신 숫자만큼 테이블을 선택해주세요');
-		return false;
-	} else {
-		count = 0;
+
+	if (document.getElementById('member_id') && document.getElementById('count')) {
+		// 입력한 테이블 수
+		var table_count = document.getElementById('count').value / 4;
+		
+		if(count < table_count) {
+			alert('입력하신 숫자만큼 테이블을 선택해주세요');
+			return false;
+		}
+		
+		// 예약할 아이디
+		var member_id = document.getElementById('member_id').value
+		
+		if(member_id == "") {
+			alert('예약할 아이디를 입력하세요');
+			return false;
+		}
 	}
 	
 	// 매장 정보
@@ -224,7 +235,8 @@ function spaceTypeChange2(index) {
 	} else {
 		var date = document.getElementById('datepicker').value;
 		var time = document.getElementById('timepicker').value;
-		window.location = 'hostReservAddPro?info=' + info + '&col=' + x + '&row=' + y + '&index=' + index.toString().substring(1, 2) + '&date=' + date + '&time=' + time;
+		count = 0;
+		window.location = 'hostReservAddPro?info=' + info + '&col=' + x + '&row=' + y + '&index=' + index.toString().substring(1, 2) + '&date=' + date + '&time=' + time + '&member_id=' + member_id + '&table_index=' + table_index;
 	}
 }
 
@@ -258,14 +270,11 @@ function spaceBody(info, col, row) {
 // 설정한 배열판이 있을 경우
 function spaceBody2(info, col, row) {
 	var arr = info.split(',');
-
 	var space = '';
 	for (var y = 0; y < row; y += 1) {
 		space += '<div class="p_div">';
 		for (var x = 0; x < col; x += 1) {
 			var index = x + (y * col);
-			console.log(index + '번째 : ' + arr[index] + '/{' + x + ',' + y + '}');
-
 			var location = x + '-' + y;
 			var imgId = 'img' + location;
 			var btnId = 'btn' + location;
@@ -274,7 +283,7 @@ function spaceBody2(info, col, row) {
 
 			space += '<button class="p_spaceBtn p_btn" ' + 'value="' + 
 					arr[index] + '" ' + 'id="' + btnId + '" ' + 
-					'onclick="spaceBtnChange2(&#39;' + location + '&#39;)">' + 
+					'onclick="spaceBtnChange2(&#39;' + location + '&#39;' + ',' + index + ')">' + 
 					'<img class="p_img space_img" ' + 'id="' + imgId + '" ' + 
 					'src="/baobob/resources/images/chg/' + typeImg + '">' + '</button>';
 		}
@@ -356,21 +365,59 @@ function payment() {
 	var restaurant_schedule_index = document
 			.getElementById("restaurant_schedule_index").value; // 예약 번호
 	var table_Num = document.getElementById("table_number").value; // 결제할 테이블 번호
-	var member_id = document.getElementById("member_id").value;	// 결제할 아이디
-	var payValue = document.getElementById("payValue" + table_Num).value; // 결제할 금액
-	var point = document.getElementById("point").value;
 	
 	if (table_Num == "") {
-		alert("결제할 테이블 번호를 입력하세요");
+		alert("결제할 테이블 번호를 입력하세요.");
 		document.getElementById("table_number").focus();
 		return false;
-	} else if (member_id == "") {
-		alert("결제할 아이디를 입력하세요");
+	}
+
+	var member_id = document.getElementById("member_id" + table_Num).value;	// 결제할 아이디
+	var payValue = document.getElementById("payValue" + table_Num).value; // 결제할 금액
+	var history_state = document.getElementById("history_state" + table_Num).value; // 결제를 했는가?
+	var point = document.getElementById("point").value;
+	
+	if (member_id == "") {
+		alert("결제할 아이디를 입력하세요.");
 		document.getElementById("member_id").focus();
 		return false;
-	} else if(point == "") {
+	} else if (payValue == "0") {
+		alert("결제할 주문 내역이 없습니다.");
+		return false;
+	} else if (history_state == "(결제 완료)") {
+		alert("이미 결제한 테이블입니다.");
+		return false;
+	} else if (point == "") {
 		point = 0;
 	}
 	
 	window.location = 'hostPayment?restaurant_schedule_index=' + restaurant_schedule_index + '&table_Num=' + table_Num + '&member_id=' + member_id + '&payValue=' + payValue + '&point=' + point;
+}
+
+// 예약 삭제 처리
+function reservDel() {
+	var restaurant_schedule_index = document.getElementById("restaurant_schedule_index").value; // 예약 번호
+	var table_Num = document.getElementById("table_num").value; // 결제할 테이블 번호
+
+	if (table_Num == "") {
+		alert("취소할 테이블 번호를 입력하세요.");
+		document.getElementById("table_num").focus();
+		return false;
+	}
+
+	var member_id = document.getElementById("member_id" + table_Num).value; // 예약 취소 할 아이디
+	var payValue = document.getElementById("payValue" + table_Num).value; // 결제 할 금액이 있는지 확인하기 위한 변수
+	var history_state = document.getElementById("history_state" + table_Num).value; // 결제를 했는지 확인하기 위한 변수
+
+	if (payValue != "0") {
+		alert("주문내역이 있어 취소하실 수 없습니다.");
+		return false;
+	} else if (history_state == "(결제 완료)") {
+		alert("이미 결제한 테이블입니다.");
+		return false;
+	}
+
+	alert(restaurant_schedule_index + ", " + table_Num + ", " + member_id);
+	
+	window.location = 'hostReservDel?restaurant_schedule_index=' + restaurant_schedule_index + '&table_Num=' + table_Num + '&member_id=' + member_id;
 }

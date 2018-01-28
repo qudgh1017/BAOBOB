@@ -98,16 +98,16 @@
 	</select>
 
 	<!-- 예약 내역 추가 history_table -->
-	<!-- <insert id="AddHistory" parameterType="Map">
+	<insert id="AddHistory" parameterType="Map">
 		INSERT INTO history_tbl(history_index, history_date, member_id)
 		VALUES(history_tbl_SEQ.NEXTVAL, sysdate, #{member_id})
-	</insert> -->
+	</insert> 
 	
 	<!-- 레스토랑 예약 내역 추가 restaurant_history_tbl -->
-	<!-- <insert id="AddRHistory" parameterType="Map">
-		INSERT INTO restaurant_history_tbl(history_index, restaurant_schedule_index, restaurant_table_index)
-		VALUES(history_tbl_SEQ.CURRVAL, restaurant_schedule_tbl_SEQ.CURRVAL, #{dto2.index})
-	</insert> -->
+	<insert id="AddRHistory" parameterType="Map">
+		INSERT INTO restaurant_history_tbl(history_index, restaurant_schedule_index, restaurant_table_index, discount, member_use_point, payvalue, restaurant_history_state)
+		VALUES(history_tbl_SEQ.CURRVAL, restaurant_schedule_tbl_SEQ.CURRVAL, #{dto2.restaurant_table_index}, 0, 0, 0, 0)
+	</insert> 
 	
 	
 	
@@ -170,7 +170,7 @@
 	
 	<!--===== 4-3-3. 리뷰 수정 (값 불러오기) =====-->
 	<update id="updateReviewPro" parameterType="spring.mvc.baobob.vo.ReviewVO">
-		UPDATE review_tbl SET review_grade=#{review_grade}, review_content=#{review_content}
+		UPDATE review_tbl SET review_content=#{review_content}
 		WHERE member_id=#{member_id} AND review_index=#{review_index}
 	</update>
 	

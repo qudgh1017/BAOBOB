@@ -15,7 +15,8 @@
 <script type="text/javascript">
 $(function() {
 	$( "#datepicker" ).datepicker({
-     	dateFormat: 'y-mm-dd'
+     	dateFormat: 'y-mm-dd',
+     	minDate: 0
 	});
    
 	$( "#timepicker" ).timepicker({
@@ -66,7 +67,7 @@ $(function() {
 											</td>
 										</tr>
 										<tr>
-											<td colspan="3" style="text-align: center;">
+											<td colspan="4" style="text-align: center;">
 												<input style="background-color: #343a40; color: white; border: 1px solid black; width: 200px; height: 40px;" 
 														type="button" value="확인" onclick="checkPosRestaurant(${sessionScope.memStep})" />
 											</td>
@@ -90,7 +91,9 @@ $(function() {
 															<div class="card-body">
 																<input class="form-control" id="widthX" type="number" style="display: none;" min="1" max="100" value="${col}" onload="spaceDivChange();" onchange="spaceDivChange();" required>
 																<input class="form-control" id="heightY" type="number" style="display: none;" min="1" max="100" value="${row}" onload="spaceDivChange();" onchange="spaceDivChange();" required>
-																
+																<input class="form-control" type="text" style="display: inline-block; width: 145px; text-align: center;" name="member_id" id="member_id" 
+																	placeholder="예약 아이디" />
+																<hr>
 																<button class="m_btn" onclick="spaceType('3')"><img class="p_img" src="${restaurant_images}table_use.jpg"></button>
 															</div>
 															<div class="card-footer small text-muted">

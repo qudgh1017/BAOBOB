@@ -14,7 +14,15 @@ public class RestaurantLogVO {
 	private int history_index;
 	private Timestamp history_date;
 	private String member_id;
+	private int restaurant_history_state;
+	
 
+	public int getRestaurant_history_state() {
+		return restaurant_history_state;
+	}
+	public void setRestaurant_history_state(int restaurant_history_state) {
+		this.restaurant_history_state = restaurant_history_state;
+	}
 	public int getRestaurant_index() {
 		return restaurant_index;
 	}

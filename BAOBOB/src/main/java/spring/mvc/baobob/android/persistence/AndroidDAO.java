@@ -2,6 +2,7 @@ package spring.mvc.baobob.android.persistence;
 
 import java.util.ArrayList;
 
+import spring.mvc.baobob.vo.Android;
 import spring.mvc.baobob.vo.BoardVO;
 
 public interface AndroidDAO {
@@ -17,4 +18,7 @@ public interface AndroidDAO {
 	
 	//최근 10일간의 문의 내역
 	public ArrayList<BoardVO> getBoardList(String id);
+	
+	//영화 예매 내역
+	public ArrayList<Android> getMemberMovieTicketing(String id);
 }
