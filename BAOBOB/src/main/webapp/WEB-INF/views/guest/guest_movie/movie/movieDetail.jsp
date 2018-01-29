@@ -42,7 +42,7 @@
 					</c:choose>
 					<br>
 					<span style="font-size:15px; color:gray;">
-						예매율:
+						예매율: ${reservationPercent}%
 					</span><br><hr>
 					<span style="font-size:12px; font-weight:bold;">
 						감독: ${movie.movie_director}&nbsp;/&nbsp;배우:${movie.movie_star}<br><br>

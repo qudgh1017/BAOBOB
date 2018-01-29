@@ -129,4 +129,9 @@ public  interface Guest_movieDAO {
 	//무비파인더 결과
 	public ArrayList<MovieVO> movieFinderResult(MovieFinderVO movieFinderInfo);
 	
+	//전체 영화 예매 수
+	public int allMovieCount();
+	
+	//해당 영화 예매 수 
+	public int indexMovieCount(int movie_index);
 }

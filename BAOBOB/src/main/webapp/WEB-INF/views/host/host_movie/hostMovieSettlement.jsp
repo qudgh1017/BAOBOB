@@ -5,9 +5,12 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
 <title>Insert title here</title>
 </head>
-<body class="fixed-nav sticky-footer bg-dark">
+<body class="fixed-nav sticky-footer bg-dark" onload="swal('영화관 총 매출액', '<fmt:formatNumber value="${movieSale}" pattern="#,###.##"/>원', 'success');">
 
 	<c:set var="janre1" value="${movieChart['1']}"></c:set>
 	<c:set var="janre2" value="${movieChart['2']}"></c:set>
@@ -54,7 +57,9 @@
 							<div style="display: -webkit-box;" align="center">
 								<div id="movieJanreCountChart" style="width:100%; height:500px;"></div>
 							</div>
-							영화관 총 매출액 : ${movieSale}원
+<!-- 							영화관 총 매출액 : -->
+<%-- 							<fmt:formatNumber value="${movieSale}" pattern="#,###.##"/> --%>
+<!-- 							원 -->
 						</div>
 						<div class="card-footer small text-muted">BAOBOX</div>
 					</div>
@@ -66,7 +71,9 @@
 							<div style="display: -webkit-box;" align="center">
 								<div id="movieJanreChart" style="width:100%; height:500px;"></div>
 							</div>
-							영화관 총 매출액 : ${movieSale}원
+<!-- 							영화관 총 매출액 : -->
+<%-- 							<fmt:formatNumber value="${movieSale}" pattern="#,###.##"/> --%>
+<!-- 							원 -->
 						</div>
 						<div class="card-footer small text-muted">BAOBOX</div>
 					</div>
@@ -81,7 +88,9 @@
 							<div style="display: -webkit-box;" align="center">
 								<div id="movieSexCountChart" style="width:100%; height:500px;"></div>
 							</div>
-							영화관 총 매출액 : ${movieSale}원
+<!-- 							영화관 총 매출액 : -->
+<%-- 							<fmt:formatNumber value="${movieSale}" pattern="#,###.##"/> --%>
+<!-- 							원 -->
 						</div>
 						<div class="card-footer small text-muted">BAOBOX</div>
 					</div>
@@ -93,7 +102,9 @@
 							<div style="display: -webkit-box;" align="center">
 								<div id="movieAgeChart" style="width:100%; height:500px;"></div>
 							</div>
-							영화관 총 매출액 : ${movieSale}원
+<!-- 							영화관 총 매출액 : -->
+<%-- 							<fmt:formatNumber value="${movieSale}" pattern="#,###.##"/> --%>
+<!-- 							원 -->
 						</div>
 						<div class="card-footer small text-muted">BAOBOX</div>
 					</div>

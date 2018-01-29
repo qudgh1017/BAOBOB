@@ -34,7 +34,6 @@
 					<a class="state" href="movieChart?movie_state=1">
 						<c:if test="${movie_state==1}"><span style="font-weight:bold; color:red;">무비차트</span></c:if>
 						<c:if test="${movie_state!=1}">무비차트</c:if>
-						
 					</a>&nbsp;&nbsp;
 					<a class="state" href="movieChart?movie_state=0">
 						<c:if test="${movie_state==0}"><span style="font-weight:bold; color:red;">상영예정작</span></c:if>

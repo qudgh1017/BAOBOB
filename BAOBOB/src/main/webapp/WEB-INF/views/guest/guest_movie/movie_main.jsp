@@ -6,13 +6,6 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>BAOBOX</title>
-<!-- slide -->
-<!-- slide 기능 사용위한 라이브러리 -->
-<%-- <link href="${projectRes}ybh/css/slick.css" rel="stylesheet" type="text/css">
-<script type="text/javascript" src="http://code.jquery.com/jquery-3.2.1.min.js"></script>
-<script type="text/javascript" src="${projectRes}ybh/js/slick.min.js"></script>
-<script type="text/javascript" src="${projectRes}ybh/js/slide.js"></script>	
- --%>	
 	<style type="text/css">
 		.bg{clear:both;width:fit-content;min-height:405px;margin:0 auto;}
 		#item_l{float:left;width:280px;height:405px;}
