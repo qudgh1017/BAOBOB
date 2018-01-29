@@ -257,7 +257,7 @@
 	<!-- 2. 영화 결제테이블 추가 -->
 	<insert id="insertMovieHistory" parameterType="java.util.Map">
 		INSERT INTO movie_history_tbl 
-		VALUES(history_tbl_seq.currval, #{theater_schedule_index}, #{movie_history_price})
+		VALUES(history_tbl_seq.currval, #{theater_schedule_index}, #{movie_history_price}, #{member_point})
 	</insert>
 	
 	<!-- 3. 좌석 테이블의 seat_state 변경 -->
