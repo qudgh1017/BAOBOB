@@ -1,7 +1,5 @@
 package spring.mvc.baobob.member_mypage.service;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.forwardedUrl;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -28,6 +26,7 @@ import spring.mvc.baobob.vo.MovieHistoryVO;
 import spring.mvc.baobob.vo.MovieVO;
 import spring.mvc.baobob.vo.ParkingHistory;
 import spring.mvc.baobob.vo.RestaurantLogVO;
+import spring.mvc.baobob.vo.TableVO;
 import spring.mvc.baobob.vo.Theater_seatVO;
 import spring.mvc.baobob.vo.WishListVO;
 
@@ -872,14 +871,16 @@ public class Member_mypageServiceImpl implements Member_mypageService{
 		map.put("schedule_index", schedule_index);
 		map.put("memId", memId);
 		
-		
+		//예매좌석 정보 가져오기
 		ArrayList<Theater_seatVO> seatDtos = dao.getSeatInfo(map);
 		
 		int cnt=0;
 		int movieCount = 0; 
 		
 		for(Theater_seatVO vo : seatDtos) {
+			//예매좌석 취소 - 예매좌석 state 돌려놓기
 			if(dao.updateSeatState(vo.getSeat_index()) != 0) {
+				//예매좌석 취소 - 스케쥴에 빈좌석 돌려놓기
 				dao.updateEmptySeat(vo.getSeat_index());
 				movieCount++;	
 				cnt = 1;
@@ -889,14 +890,110 @@ public class Member_mypageServiceImpl implements Member_mypageService{
 		if(cnt == 1) {
 			map.put("movieCount", movieCount);
 			
-			//예매 취소할 history_index의 값을 받아와서 theater_schedule_tbl의 movie_index를 이용하여 movie_tbl의 count를 예매수만큼 감소
+			//예매좌석 취소 - movie_count 돌려놀기
 			if(dao.updateMovieCount(map) != 0) {
+				//예매내역 삭제(movie_history_tbl)
 				if(dao.moviePaidDelPro(history_index) != 0) {
+					//예매내역 삭제(history_tbl)
 					int deleteCnt = dao.historyDelPro(history_index);
 					model.addAttribute("deleteCnt", deleteCnt);
 				}
 			}
 		}
+		
+		
+	}
+	
+/*----------------------------------------------------------------------------*/
+	
+	//식당 예약내역 취소처리
+	public void memRBookDel(HttpServletRequest req, Model model) {
+		int cnt = 0;
+		int table_count = 0;
+		int use_table_count = 0;
+		
+		// 식당 관리자의 memberStep에서 뒷자리를 구한다.(뒷자리가 restaurant_index와 같음)
+		int restaurant_index = Integer.parseInt(req.getParameter("restaurant_index"));
+		int schedule_index = Integer.parseInt(req.getParameter("restaurant_schedule_index"));	// 스케줄 index
+		int table_Num = Integer.parseInt(req.getParameter("table_Num")); // 테이블 번호
+		String member_id = req.getParameter("member_id");
+		
+		// 여러 정보를 저장하기 위해 맵 이용
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("restaurant_index", restaurant_index);
+		map.put("restaurant_schedule_index", schedule_index);
+		map.put("member_id", member_id);
+		
+		//기본 좌석정보VO
+		TableVO table_dto = dao.getColRow(restaurant_index);
+		
+		// 매장을 구성하는 타일의 행열 (예:5*5)
+		int col = table_dto.getTable_col()+1; // 행
+		int row = table_dto.getTable_row()+1; // 열
+
+		int table_index = 0;
+		map.put("restaurant_table_index", table_index);
+		
+		// 열만큼 반복
+		for (int i = 0; i < row; i++) {
+			// 행만큼 반복
+			for (int j = 0; j < col; j++) {
+				map.replace("restaurant_table_index", table_index);
+				
+				// state 정보 조회
+				int state = dao.getState(map);
+
+				// 복도가 아닌 테이블이 걸리면 테이블 개수 증가
+				if(state != 0) {
+					table_count++;
+				}
+				
+				// '사용 중'인 테이블이 걸리면 '사용 중'테이블 개수 증가
+				if (state == 3) {
+					// 예약 된 테이블이 몇개인지 확인
+					use_table_count++;
+					
+					// 예약 취소할 테이블 번호가 되면
+					if(table_count == table_Num) {
+						// 삭제 전 히스토리 인덱스 조회(삭제하면 히스토리 인덱스를 찾을 수 없음)
+						int history_index = dao.getHistoryIndex(map);
+						map.put("history_index", history_index);
+						
+						// 레스토랑 히스토리 테이블에 이용 내역 삭제
+						cnt = dao.delRestaurantHistory(map);
+						
+						// 삭제에 성공했다면
+						if(cnt != 0) {
+							// 히스토리 테이블에 이용 내역 삭제
+							cnt = dao.delHistory(map);
+							
+							// 삭제에 성공했다면
+							if(cnt != 0) {
+								// '사용 중'인 테이블 '사용 가능'으로 상태 변경
+								cnt = dao.modState(map);
+							}
+						}
+					}
+				}
+				// 테이블 번호
+				table_index++;
+			}
+		}
+		
+		// '사용 중'인 테이블이 단 하나였고,'사용 가능'으로 상태 변경에 성공했다면
+		if(use_table_count == 1 && cnt == 1) {
+			// 테이블 전체 삭제
+			cnt = dao.delTable(map);
+			
+			// 삭제에 성공했다면
+			if(cnt != 0) {
+				// 스케줄 삭제 처리
+				cnt = dao.delSchedule(map);
+			}
+		}
+		
+		// 성공 여부 저장
+		model.addAttribute("cnt", cnt);
 		
 		
 	}
@@ -955,8 +1052,8 @@ public class Member_mypageServiceImpl implements Member_mypageService{
 			map.put("strId", strId);
 			
 			//게시글 목록 조회
-			ArrayList<RestaurantLogVO> movieDtos = dao.restaurantLogList(map);
-			model.addAttribute("dtos", movieDtos);
+			ArrayList<RestaurantLogVO> resDtos = dao.restaurantLogList(map);
+			model.addAttribute("dtos", resDtos);
 			
 		}
 		

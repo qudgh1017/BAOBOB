@@ -36,7 +36,8 @@
 				        <th style="width:20%">레스토랑 명</th>
 				        <th style="width:20%">전화번호</th>
 				        <th style="width:30%">예약일</th>
-				        <th style="width:10%">예약취소 신청</th>
+				        <th style="width:15%">예약 좌석</th>
+				        <th style="width:15%">예약취소 신청</th>
 				    </tr>
 			    </thead>
 			    
@@ -62,16 +63,18 @@
 							        <th style="text-align:center;">
 							        	${dto.restaurant_tel}
 							        </th>
-									<td>
+									<th>
 										<fmt:formatDate type="both" pattern="yyyy-MM-dd HH:mm" value="${dto.schedule_starttime}" />
 										~
 										<fmt:formatDate type="both" pattern="yyyy-MM-dd HH:mm" value="${dto.schedule_endtime}" />
-									</td>
-									<td>
+									</th>
+									<th>
+										${dto.restaurant_table_index}번 테이블
+									</th>
+									<th>
 										<input type="button" class="button" 
-											onclick="#!" value="예약 취소">
-											<%-- onclick="window.location='memRBookDel?num=${dto.history_index}'" value="예약 취소"> --%>
-									</td>
+											onclick="window.location='memRBookDel?restaurant_index=${dto.restaurant_index}&restaurant_schedule_index=${dto.restaurant_schedule_index}&table_Num=${dto.restaurant_table_index}'" value="예약 취소">
+									</th>
 							    </tr>
 							    </tbody>
 						</c:if>

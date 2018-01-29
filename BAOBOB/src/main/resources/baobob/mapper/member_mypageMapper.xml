@@ -337,11 +337,6 @@
 	</delete>
 	
 	
-	
-	
-	
-	
-	
 <!-- ************************************** 영화예매 취소 END ************************************* -->	
 <!-- ************************************************************************************** -->
 
@@ -368,22 +363,102 @@
 	<select id="restaurantLogList" resultType="spring.mvc.baobob.vo.RestaurantLogVO">
 		<![CDATA[
 		SELECT *
-		FROM( SELECT m.member_id, rs.restaurant_schedule_index, rs.schedule_starttime, rs.schedule_endtime,
-		             r.restaurant_name,r.restaurant_tel, rh.restaurant_history_state, h.history_date, rownum rNum
+		FROM (SELECT h.member_id, rs.restaurant_schedule_index, rs.schedule_starttime, rs.schedule_endtime,
+		             rt.table_col, rt.table_row, rt.table_state, rt.restaurant_table_index, r.restaurant_index,
+		             r.restaurant_name,r.restaurant_tel, rh.restaurant_history_state,h.history_date, rownum rNum
 		        FROM restaurant_tbl r
 		        JOIN restaurant_schedule_tbl rs
 		        ON r.restaurant_index = rs.restaurant_index
+		        JOIN restaurant_table_tbl rt
+		        ON rs.restaurant_schedule_index = rt.restaurant_schedule_index
 		        JOIN restaurant_history_tbl rh
 		        ON rs.restaurant_schedule_index = rh.restaurant_schedule_index
 		        JOIN history_tbl h
 		        ON rh.history_index = h.history_index
-		        JOIN member_tbl m
-		        ON h.member_id = m.member_id
-		        WHERE h.member_id=#{strId}
+		        WHERE h.member_id = #{strId}
+		        AND rt.table_state = 3
 		    )
 		WHERE rNum >= #{start} AND rNum <= #{end}
 		]]>
 	</select>
+	
+	<!-- 매장을 구성하는 타일의 행열 (예:5*5) -->
+	<select id="getColRow" resultType="spring.mvc.baobob.vo.TableVO">
+		SELECT MAX(table_row) table_row, MAX(table_col) table_col 
+		FROM restaurant_table_tbl 
+		WHERE restaurant_index = #{restaurant_index} 
+		AND restaurant_schedule_index IS null
+	</select>
+	
+	<!-- state 정보 조회 -->
+	<select id="getState" resultType="int">
+		SELECT table_state 
+		FROM restaurant_table_tbl 
+		WHERE restaurant_index = #{restaurant_index} AND restaurant_table_index = #{restaurant_table_index}
+		<if test="restaurant_schedule_index == null">
+			AND restaurant_schedule_index IS null
+		</if>
+		<if test="restaurant_schedule_index != null">
+			AND restaurant_schedule_index = #{restaurant_schedule_index}
+		</if>
+	</select>
+	
+	<!-- 히스토리 인덱스 조회 -->
+	<select id="getHistoryIndex" resultType="int">
+		SELECT history_index
+		  FROM restaurant_history_tbl
+		 WHERE restaurant_schedule_index = #{restaurant_schedule_index}
+		   AND restaurant_table_index = #{restaurant_table_index}
+		   AND discount = 0
+		   AND member_use_point = 0
+		   AND payvalue = 0
+		   AND restaurant_history_state = 0
+	</select>
+	
+	<!-- 레스토랑 히스토리 테이블에 이용 내역 삭제 -->
+	<delete id="delRestaurantHistory" parameterType="Map">
+		DELETE FROM restaurant_history_tbl
+		WHERE history_index = #{history_index}
+		AND restaurant_schedule_index = #{restaurant_schedule_index}
+		AND restaurant_table_index = #{restaurant_table_index}
+		AND discount = 0
+		AND member_use_point = 0
+		AND payvalue = 0
+		AND restaurant_history_state = 0
+	</delete>
+	
+	<!-- 히스토리 테이블에 이용 내역 삭제 -->
+	<delete id="delHistory" parameterType="Map">
+		DELETE FROM history_tbl
+		WHERE history_index = #{history_index}
+		AND member_id = #{member_id}
+	</delete>
+	
+	<!-- '사용 중'인 테이블을 '사용 가능'으로 변경 -->
+	<update id="modState" parameterType="Map">
+		UPDATE restaurant_table_tbl
+		SET table_state = 1
+		WHERE restaurant_index = #{restaurant_index}
+		AND restaurant_schedule_index = #{restaurant_schedule_index}
+		AND restaurant_table_index = #{restaurant_table_index}
+	</update>
+	
+	<!-- 테이블 전체 삭제 -->
+	<delete id="delTable" parameterType="Map">
+		DELETE FROM restaurant_table_tbl
+		WHERE restaurant_index = #{restaurant_index}
+		AND restaurant_schedule_index = #{restaurant_schedule_index}
+	</delete>
+	
+	<!-- 스케줄 삭제 처리 -->
+	<delete id="delSchedule" parameterType="Map">
+		DELETE FROM restaurant_schedule_tbl
+		WHERE restaurant_schedule_index = #{restaurant_schedule_index}
+	</delete>
+	
+	
+	
+	
 	
 <!-- ************************************** 식당로그 END ************************************* -->	
 <!-- ************************************************************************************** -->

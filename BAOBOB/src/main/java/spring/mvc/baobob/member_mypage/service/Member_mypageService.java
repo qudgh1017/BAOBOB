@@ -64,8 +64,11 @@ public interface Member_mypageService {
 	//예매내역
 	public void moviePaidList(HttpServletRequest req, Model model);
 	
-	//예매내역 취소처리
+	//영화 예매내역 취소처리
 	public void moviePaidDelPro(HttpServletRequest req, Model model);
+	
+	//식당 예약내역 취소처리
+	public void memRBookDel(HttpServletRequest req, Model model);
 	
 	//내가 이용한 레스토랑
 	public void restaurantLog(HttpServletRequest req, Model model);

@@ -14,6 +14,7 @@ import spring.mvc.baobob.vo.MovieHistoryVO;
 import spring.mvc.baobob.vo.MovieVO;
 import spring.mvc.baobob.vo.ParkingHistory;
 import spring.mvc.baobob.vo.RestaurantLogVO;
+import spring.mvc.baobob.vo.TableVO;
 import spring.mvc.baobob.vo.Theater_seatVO;
 import spring.mvc.baobob.vo.WishListVO;
 
@@ -627,33 +628,85 @@ public class Member_mypageDAOImpl implements Member_mypageDAO{
 		return dao.historyDelPro(history_index);
 	}
 	
+/*----------------------------------------------------------------------------*/
 	
+	//매장을 구성하는 타일의 행열 (예:5*5)
+	public TableVO getColRow(int restaurant_index){
+		
+		Member_mypageDAO dao = sqlSession.getMapper(Member_mypageDAO.class);
+		
+		return dao.getColRow(restaurant_index);
+	}
 	
+/*----------------------------------------------------------------------------*/
 	
+	//state 정보 조회
+	public int getState(Map<String, Object> map) {
+		
+		Member_mypageDAO dao = sqlSession.getMapper(Member_mypageDAO.class);
+		
+		return dao.getState(map);
+	}
 	
+/*----------------------------------------------------------------------------*/
 	
+	//히스토리 인덱스 조회
+	public int getHistoryIndex(Map<String, Object> map) {
+		
+		Member_mypageDAO dao = sqlSession.getMapper(Member_mypageDAO.class);
+		
+		return dao.getHistoryIndex(map);
+	}
 	
+/*----------------------------------------------------------------------------*/
 	
+	//레스토랑 히스토리 테이블에 이용 내역 삭제
+	public int delRestaurantHistory(Map<String, Object> map) {
+		
+		Member_mypageDAO dao = sqlSession.getMapper(Member_mypageDAO.class);
+		
+		return dao.delRestaurantHistory(map);
+	}
 	
+/*----------------------------------------------------------------------------*/
 	
+	//히스토리 테이블에 이용 내역 삭제
+	public int delHistory(Map<String, Object> map) {
+		
+		Member_mypageDAO dao = sqlSession.getMapper(Member_mypageDAO.class);
+		
+		return dao.delHistory(map);
+	}
 	
+/*----------------------------------------------------------------------------*/
 	
+	//'사용 중'인 테이블을 '사용 가능'으로 변경
+	public int modState(Map<String, Object> map) {
+		
+		Member_mypageDAO dao = sqlSession.getMapper(Member_mypageDAO.class);
+		
+		return dao.modState(map);
+	}
 	
+/*----------------------------------------------------------------------------*/
 	
+	//테이블 전체 삭제
+	public int delTable(Map<String, Object> map) {
+		
+		Member_mypageDAO dao = sqlSession.getMapper(Member_mypageDAO.class);
+		
+		return dao.delTable(map);
+	}
 	
+/*----------------------------------------------------------------------------*/
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	//스케줄 삭제 처리
+	public int delSchedule(Map<String, Object> map) {
+		
+		Member_mypageDAO dao = sqlSession.getMapper(Member_mypageDAO.class);
+		
+		return dao.delSchedule(map);
+	}
 	
 	
 	
