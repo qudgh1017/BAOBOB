@@ -168,13 +168,13 @@ public class Host_restaurantDAOImpl implements Host_restaurantDAO {
 		Host_restaurantDAO dao = sqlSession.getMapper(Host_restaurantDAO.class);
 
 		Integer restaurant_menu_index = dao.getMenuIndex(restaurant_index);
-		
-		if(restaurant_menu_index == null) {
+
+		if (restaurant_menu_index == null) {
 			restaurant_menu_index = 1;
 		} else {
 			restaurant_menu_index++;
 		}
-				
+
 		return restaurant_menu_index;
 	}
 
@@ -524,7 +524,7 @@ public class Host_restaurantDAOImpl implements Host_restaurantDAO {
 	@Override
 	public Object getSexChart(int restaurant_index) {
 		log.debug("dao.getSexChart()");
-		
+
 		Map<String, Integer> m = null;
 
 		m = new HashMap<String, Integer>();
@@ -533,11 +533,11 @@ public class Host_restaurantDAOImpl implements Host_restaurantDAO {
 		m.put("여", 0);
 
 		List<Member> list = new ArrayList<Member>();
-		
+
 		for (int i = 0; i < m.size(); i++) {
 			list = getSexChartContent(restaurant_index);
 			String str = String.valueOf(list.get(i));
-			
+
 			String str2[] = str.split(",");
 			String str3[] = str2[0].split("=");
 			String str4[] = str2[1].split("=");
@@ -548,7 +548,7 @@ public class Host_restaurantDAOImpl implements Host_restaurantDAO {
 
 		return m;
 	}
-	
+
 	// 성별 차트 내용
 	@Override
 	public List<Member> getSexChartContent(int restaurant_index) {
@@ -578,7 +578,7 @@ public class Host_restaurantDAOImpl implements Host_restaurantDAO {
 
 		return dao.getRestaurantChart();
 	}
-	
+
 	// 예약한 아이디 조회
 	@Override
 	public String getReservId(Map<String, Object> map) {
@@ -598,7 +598,6 @@ public class Host_restaurantDAOImpl implements Host_restaurantDAO {
 
 		return dao.getHistoryState(map);
 	}
-
 
 	// 결제 시 결제 완료 시점으로 히스토리 수정
 	@Override
@@ -649,7 +648,7 @@ public class Host_restaurantDAOImpl implements Host_restaurantDAO {
 
 		return dao.delRestaurantHistory(map);
 	}
-	
+
 	// 히스토리 테이블에 이용 내역 삭제
 	@Override
 	public int delHistory(Map<String, Object> map) {
