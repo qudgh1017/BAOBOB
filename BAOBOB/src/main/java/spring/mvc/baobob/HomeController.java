@@ -223,4 +223,14 @@ public class HomeController {
 		
 		return "main/mainHelpListMore";
 	}
+	
+	// 에러페이지 처리
+	@RequestMapping("error")
+	public String error(HttpServletRequest req, Model model) {
+		System.out.println("error");
+		
+		model.addAttribute("errorCode", req.getParameter("errorCode"));
+		
+		return "error/error";
+	}
 }
