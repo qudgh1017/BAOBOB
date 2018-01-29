@@ -55,7 +55,9 @@ function adultChk(theater_index, movie_index, theater_schedule_index, cnt){
 	totalChecked = 0;
 	seatInfo = "";
 	i = 0;
-	seat_checked_arr = new Array();
+	for(var x = 0; x<seat_checked_arr.length; x++){
+		seat_checked_arr[x]=-1; //체크 취소하는 경우에 -1을 넣어줌 
+	}
 }
 
 //청소년 체크시 사람수
@@ -74,13 +76,15 @@ function teenagerChk(theater_index, movie_index, theater_schedule_index, cnt){
 	
 	teenagerCnt = cnt-0;
 	personChk(theater_index, movie_index, theater_schedule_index);
-	//personChk();
 	
 	//청소년 사람수 체크시 초기화
 	totalChecked = 0;
 	seatInfo = "";
 	i = 0;
-	seat_checked_arr = new Array();
+	for(var x = 0; x<seat_checked_arr.length; x++){
+		seat_checked_arr[x]=-1; //체크 취소하는 경우에 -1을 넣어줌 
+
+	}
 }
 
 //총 사람 수 체크

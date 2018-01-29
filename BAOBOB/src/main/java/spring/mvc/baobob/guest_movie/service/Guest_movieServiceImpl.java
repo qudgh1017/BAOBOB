@@ -737,10 +737,10 @@ public class Guest_movieServiceImpl implements Guest_movieService{
 			seat_index_arr[i] = Integer.parseInt(str_seat_checked_arr[i]);
 			
 			if(seat_index_arr[i]!=-1) {
-			//한개 좌석의 정보 바구니에 담기
-			seat = gmdao.seatInfo(seat_index_arr[i]);
-			//좌석의 정보들 ArrayList에 담기
-			seats.add(seat);
+				//한개 좌석의 정보 바구니에 담기
+				seat = gmdao.seatInfo(seat_index_arr[i]);
+				//좌석의 정보들 ArrayList에 담기
+				seats.add(seat);
 			}
 		}
 		

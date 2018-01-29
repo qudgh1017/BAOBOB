@@ -283,8 +283,8 @@ public class Guest_movieController {
 
 		//사용가능한 포인트
 		int pointSalePrice = Integer.parseInt(req.getParameter("point"));
-		//ResponseBody로 자바 객체를 송신해준다. 
 		
+		//ResponseBody로 자바 객체를 송신해준다. 
 		return pointSalePrice;
 	}
 	
