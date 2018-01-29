@@ -26,7 +26,6 @@
 					    <li role="presentation"><a role="menuitem" tabindex="-1" href="movieChart?movie_state=1">무비차트</a></li>
 					    <li role="presentation"><a role="menuitem" tabindex="-1" href="hdTrailer">HD 트레일러</a></li>
 					    <li role="presentation"><a role="menuitem" tabindex="-1" href="movieFinder?movie_state=1">무비파인더</a></li>
-					    <li role="presentation"><a role="menuitem" tabindex="-1" href="movieReview">평점</a></li>
 					  </ul>
 					</div>
 				</div>

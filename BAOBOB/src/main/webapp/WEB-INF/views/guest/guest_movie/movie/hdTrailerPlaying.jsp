@@ -6,12 +6,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>${movie.movie_title}</title>
-<script type="text/javascript">
-	function movieDetail(movie_index){
-		window.close();
-		opener.location.href="movieDetail?movie_index="+movie_index; //오픈해준 페이지 reload
-	}
-</script>
+<script type="text/javascript" src="${projectRes}ybh/js/ybh.js"></script>
 </head>
 <body style="background-color:black; height:700">
 	
@@ -31,7 +26,13 @@
 					<a onclick="movieDetail(${movie.movie_index})">
 						<img src="${projectRes}/images/phc/${movie.movie_poster}" width="120px" height="150px"><br>
 					</a>
-					<span style="color:white; font-size:15px; font-weight:bold">${movie.movie_title} ${movie.movie_age}</span><br>					
+					<span style="color:white; font-size:15px; font-weight:bold">
+						${movie.movie_title} 
+						<c:if test="${movie.movie_age==0}"><img src="${projectRes}/images/ybh/전체관람가.png" style="width:15px; height:15px;"></c:if>
+						<c:if test="${movie.movie_age==12}"><img src="${projectRes}/images/ybh/12세 관람가.png" style="width:15px; height:15px;"></c:if>
+						<c:if test="${movie.movie_age==15}"><img src="${projectRes}/images/ybh/15세 관람가.png" style="width:15px; height:15px;"></c:if>
+						<c:if test="${movie.movie_age==19}"><img src="${projectRes}/images/ybh/청소년 관람불가.png" style="width:15px; height:15px;"></c:if>
+					</span><br>					
 					<span style="color:white; font-size:11px">
 						<c:choose>
 							<c:when test="${movie.movie_janre==1}">가족</c:when>

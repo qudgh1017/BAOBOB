@@ -73,20 +73,17 @@ public class Guest_movieController {
 		return "/guest/guest_movie/movie/movieFinder";
 	}
 	
-	//영화-무비파인더
+	//영화-무비파인더- 검색결과(AJAX)
 	@RequestMapping("searchResult")
 	public String searchResult(HttpServletRequest req, Model model) {
 		log.debug("====== Guest_movieController/searchResult ======");
-		
-		
+
 		gmservice.searchResult(req, model);
 //		if(req.getParameter("pageNum")==null) {
 //			gmservice.searchResult(req, model);
 //		}else {
 //			System.out.println("여기와!!!!!!!!!!========================");
 //		}
-		
-		
 		return "/guest/guest_movie/movie/searchResult";
 	}
 	

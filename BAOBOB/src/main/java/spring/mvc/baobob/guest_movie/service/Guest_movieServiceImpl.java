@@ -99,17 +99,9 @@ public class Guest_movieServiceImpl implements Guest_movieService{
 		}
 		
 		currentPage = Integer.parseInt(pageNum); // 현재페이지
-		
-		// pageCount = (12 / 5) + (1) // 나머지2건이 1페이지로 할당되므로 총 3페이지가 된다.
 		pageCount = (cnt / pageSize) + ((cnt % pageSize > 0) ? 1 : 0); // 페이지 갯수(나머지가 있으면=> 페이지 갯수+1)
-		
 		start = ((currentPage-1) * pageSize) + 1; // 현재 페이지에  DB에서 뽑아올 시작번호
-		
 		end = start + pageSize - 1;// 현재 페이지에 DB에서 뽑아올 끝번호
-		//end = currentPage * pageSize;
-		
-		/*System.out.println("start: " + start);
-		System.out.println("end: " + end);*/
 		
 		if(end > cnt) end = cnt;
 		
@@ -182,25 +174,13 @@ public class Guest_movieServiceImpl implements Guest_movieService{
 		}
 		
 		currentPage = Integer.parseInt(pageNum); // 현재페이지
-		
-		// pageCount = (12 / 5) + (1) // 나머지2건이 1페이지로 할당되므로 총 3페이지가 된다.
 		pageCount = (cnt / pageSize) + ((cnt % pageSize > 0) ? 1 : 0); // 페이지 갯수(나머지가 있으면=> 페이지 갯수+1)
-		
 		start = ((currentPage-1) * pageSize) + 1; // 현재 페이지에  DB에서 뽑아올 시작번호
-		
 		end = start + pageSize - 1;// 현재 페이지에 DB에서 뽑아올 끝번호
-		//end = currentPage * pageSize;
-		
-		/*System.out.println("start: " + start);
-		System.out.println("end: " + end);*/
 		
 		if(end > cnt) end = cnt;
 		
-		number = cnt - (currentPage - 1) * pageSize; // 출력할 글번호(삭제해도 글번호 나열되게).. 최신글 (큰페이지)가 1p 
-		/*System.out.println("number: " + number);
-		System.out.println("cnt: " + cnt);
-		System.out.println("currentPage: " + currentPage);
-		System.out.println("pageSize: " + pageSize);*/
+		//number = cnt - (currentPage - 1) * pageSize; // 출력할 글번호(삭제해도 글번호 나열되게).. 최신글 (큰페이지)가 1p 
 
 		if(cnt > 0) {
 			//게시글 목록 조회
@@ -231,7 +211,7 @@ public class Guest_movieServiceImpl implements Guest_movieService{
 		}
 	}
 
-	//movie정보 이용(+ 좋아요 갯수)
+	//movie정보 이용(+ 좋아요 갯수 + 예매율)
 	@Override
 	public void movieInfo(HttpServletRequest req, Model model) {
 		int movie_index = Integer.parseInt(req.getParameter("movie_index"));
@@ -241,6 +221,22 @@ public class Guest_movieServiceImpl implements Guest_movieService{
 		System.out.println(movie.getMovie_trailer());
 		if(movie != null) {
 			model.addAttribute("movie",movie);
+			//전체예매수, 해당 index예매수, 예매율 구하기
+			int sumReservation = 0;
+			int reservation = 0;
+			float reservationPercent = 0;
+			
+			if(gmdao.allMovieCount()!=0) {
+				sumReservation = gmdao.allMovieCount();
+				reservation = gmdao.indexMovieCount(movie_index);
+				reservationPercent = reservation*100/sumReservation;
+			}
+			System.out.println("=====================sumReservation"+ sumReservation);
+			System.out.println("=====================reservation"+ reservation);
+			System.out.println("=====================reservationPercent"+ reservationPercent);
+			String str_reservationPercent = String.format("%.2f", reservationPercent);
+			model.addAttribute("reservationPercent", str_reservationPercent);
+			
 			String strLikeCnt = gmdao.movieLike(movie_index);
 			if(strLikeCnt != null) {
 				//좋아요 퍼센트 구하기

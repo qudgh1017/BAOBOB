@@ -286,6 +286,10 @@ function cardInfoChk() {
 		return false;
 	}
 }
-  
 
+//영화 상세정보 창으로 이동
+function movieDetail(movie_index){
+	window.close();
+	opener.location.href="movieDetail?movie_index="+movie_index; //오픈해준 페이지 reload
+}
 

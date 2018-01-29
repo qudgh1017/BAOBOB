@@ -429,5 +429,27 @@ public class Guest_movieDAOImpl implements Guest_movieDAO{
 		return movies;
 	}
 
+	//전체 영화 예매 수
+	@Override
+	public int allMovieCount() {
+		int sum = 0;
+		
+		Guest_movieDAO gmdao = sqlSession.getMapper(Guest_movieDAO.class);
+		sum = gmdao.allMovieCount();
+		
+		return sum;
+	}
+
+	//해당 영화 예매 수
+	@Override
+	public int indexMovieCount(int movie_index) {
+		int cnt = 0;
+		
+		Guest_movieDAO gmdao = sqlSession.getMapper(Guest_movieDAO.class);
+		cnt = gmdao.indexMovieCount(movie_index);
+		
+		return cnt;
+	}
+
 	
 }

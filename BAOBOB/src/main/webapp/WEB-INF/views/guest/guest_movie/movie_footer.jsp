@@ -1,11 +1,15 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!-- Footer -->
-<footer class="footer text-center">
+<footer class="footer text-center" style="background-image: url('/baobob/resources/images/ybh/movie_menu.jpg');">
 	<div class="container">
 		<div class="row">
 			<div class="col-md-4 mb-5 mb-lg-0">
 			  <h4 class="text-uppercase mb-4">Location</h4>
-			  <p class="lead mb-0">2215 John Daniel Drive
-			    <br>Clark, MO 65243</p>
+			  <p class="lead mb-0">
+			  	한국소프트웨어인재개발원 <br>서울특별시 금천구 가산동 <br>
+			 	 426-5 월드 메르디앙 벤처 센터 <br>2 차 410 호
+			  </p>
 			</div>
 			<div class="col-md-4 mb-5 mb-lg-0">
 			  <h4 class="text-uppercase mb-4">Around the Web</h4>
@@ -38,9 +42,8 @@
 			  </ul>
 			</div>
 			<div class="col-md-4">
-				<h4 class="text-uppercase mb-4">About Freelancer</h4>
-				<p class="lead mb-0">Freelance is a free to use, open source Bootstrap theme created by
-				  <a href="http://startbootstrap.com">Start Bootstrap</a>.</p>
+				<h4 class="text-uppercase mb-4">BAOBOB Home</h4>
+				<a href="movie_guest"><img src="${projectRes}images/lgt/lost/The-Baobab-Tree-4.jpg" style="width:150px; height:100px"></a>
 			</div>
 		</div>
 	</div>
@@ -48,7 +51,7 @@
 
 <div class="copyright py-4 text-center text-white">
   <div class="container">
-    <small>Copyright &copy; BAOBOB - MOVIE 2018</small>
+    <small>Copyright &copy; BAOBOB - BAOBOX 2018</small>
   </div>
 </div>
 
