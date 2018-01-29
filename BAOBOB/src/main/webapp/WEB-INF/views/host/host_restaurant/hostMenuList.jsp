@@ -37,9 +37,9 @@
 											<td>
 												<span><b>[${dto.restaurant_menu_name}]</b> - </span>
 												<span style="font-size: 12px; color: gray">${dto.restaurant_menu_price}원</span><br>
-												<div style="border: 1px solid lightgray; margin-top: 5px; padding:10px; text-align: center;">
-													<img src="${restaurant_images}${dto.restaurant_menu_img}" style="width: 190px;">
-													<textarea rows="5" cols="50">${dto.restaurant_menu_content}</textarea>
+												<div style="margin-top: 5px; padding:10px;">
+													<img src="${restaurant_images}${dto.restaurant_menu_img}" style="width: 190px; float:left;">
+													<p class="form-control" style="min-height: 95px; margin-top: 0px; margin-left: 15px; width: 370; float:left;">${dto.restaurant_menu_content}</p>
 												</div>
 											</td>
 											<td style="text-align: center; vertical-align: middle;">

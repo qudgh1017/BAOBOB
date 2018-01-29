@@ -990,8 +990,6 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 		if(cnt != 0) {
 			String member_id = req.getParameter("member_id");
 
-			System.out.println("id : " + member_id);
-			
 			// 아이디 존재 유무 및 예약 가능 아이디인지 확인
 			Integer member_step = dao.confirmId(member_id);
 
@@ -1151,8 +1149,6 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 		// 사용중인 테이블 수
 		int use_table_cnt = 0;
 
-		System.out.println("memStep : " + (String.valueOf(req.getSession().getAttribute("memStep")).substring(1, 2)));
-		
 		// 식당 관리자의 memberStep에서 뒷자리를 구한다.(뒷자리가 restaurant_index와 같음)
 		int restaurant_index = Integer.parseInt((String.valueOf(req.getSession().getAttribute("memStep")).substring(1, 2)));
 		
@@ -1633,8 +1629,8 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 		TableVO table_dto = dao.getColRow(restaurant_index);
 		
 		// 매장을 구성하는 타일의 행열 (예:5*5)
-		int col = table_dto.getTable_col(); // 행
-		int row = table_dto.getTable_row(); // 열
+		int col = table_dto.getTable_col() + 1; // 행
+		int row = table_dto.getTable_row() + 1; // 열
 
 		int table_index = 0;
 		map.put("restaurant_table_index", table_index);

@@ -538,8 +538,6 @@ public class Host_restaurantDAOImpl implements Host_restaurantDAO {
 			list = getSexChartContent(restaurant_index);
 			String str = String.valueOf(list.get(i));
 			
-			System.out.println("str : " + str);
-			
 			String str2[] = str.split(",");
 			String str3[] = str2[0].split("=");
 			String str4[] = str2[1].split("=");

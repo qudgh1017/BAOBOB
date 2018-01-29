@@ -47,26 +47,26 @@
 						</div>
 						<div class="card-body">
 							<div class="table-responsive">
-								<table border=1 style="border: lightgray; width: 800px;">
+								<table border=1 style="border: lightgray; width: 100%;">
 									<tr>
 										<th>&bull; 메뉴명</th>
-										<td><input type="text" name="name" placeholder="메뉴명" required></td>
+										<td><input class="form-control" type="text" name="name" placeholder="메뉴명" required></td>
 									</tr>
 									<tr>
 										<th>&bull; 가격</th>
-										<td><input type="text" name="price" placeholder="가격(원)" onkeydown='return onlyNumber(event)'
+										<td><input class="form-control" type="text" name="price" placeholder="가격(원)" onkeydown='return onlyNumber(event)'
 											onkeyup='removeChar(event)' style='ime-mode: disabled;' required></td>
 									</tr>
 									<tr>
 										<th>&bull; 메뉴 소개</th>
-										<td><textarea name="content" rows="5" cols="50" placeholder="메뉴 소개" required></textarea></td>
+										<td><textarea class="form-control" name="content" rows="5" cols="50" placeholder="메뉴 소개" required></textarea></td>
 									</tr>
 									<tr>
 										<th rowspan="2">&bull; 메뉴 이미지</th>
 										<td><input type="file" id="img" name="img" accept="image/*" required></td>
 									</tr>
 									<tr>
-										<td><img src="" id="imgView" name="imgView" style="width: 400px;"></td>
+										<td><img src="" id="imgView" name="imgView" style="width: 780px;"></td>
 									</tr>
 									<tr>
 										<td colspan="2" style="text-align: center;">
