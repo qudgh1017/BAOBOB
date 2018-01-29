@@ -54,7 +54,9 @@
 							<div style="display: -webkit-box;" align="center">
 								<div id="movieJanreCountChart" style="width:100%; height:500px;"></div>
 							</div>
-							영화관 총 매출액 : ${movieSale}원
+							영화관 총 매출액 :
+							<fmt:formatNumber value="${movieSale}" pattern="#,###.##"/>
+							원
 						</div>
 						<div class="card-footer small text-muted">BAOBOX</div>
 					</div>
@@ -66,7 +68,9 @@
 							<div style="display: -webkit-box;" align="center">
 								<div id="movieJanreChart" style="width:100%; height:500px;"></div>
 							</div>
-							영화관 총 매출액 : ${movieSale}원
+							영화관 총 매출액 :
+							<fmt:formatNumber value="${movieSale}" pattern="#,###.##"/>
+							원
 						</div>
 						<div class="card-footer small text-muted">BAOBOX</div>
 					</div>
@@ -81,7 +85,9 @@
 							<div style="display: -webkit-box;" align="center">
 								<div id="movieSexCountChart" style="width:100%; height:500px;"></div>
 							</div>
-							영화관 총 매출액 : ${movieSale}원
+							영화관 총 매출액 :
+							<fmt:formatNumber value="${movieSale}" pattern="#,###.##"/>
+							원
 						</div>
 						<div class="card-footer small text-muted">BAOBOX</div>
 					</div>
@@ -93,7 +99,9 @@
 							<div style="display: -webkit-box;" align="center">
 								<div id="movieAgeChart" style="width:100%; height:500px;"></div>
 							</div>
-							영화관 총 매출액 : ${movieSale}원
+							영화관 총 매출액 :
+							<fmt:formatNumber value="${movieSale}" pattern="#,###.##"/>
+							원
 						</div>
 						<div class="card-footer small text-muted">BAOBOX</div>
 					</div>

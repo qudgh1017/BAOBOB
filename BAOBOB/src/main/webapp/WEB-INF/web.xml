@@ -61,6 +61,15 @@
 	</filter-mapping>
 	<!-- 한글 안깨지게 처리 종료 -->
 
-
+	<!-- 에러페이지처리 -->
+	<error-page>
+        <error-code>404</error-code>
+        <location>/error?errorCode=404</location>
+ 	</error-page>
+	<error-page>
+        <error-code>500</error-code>
+        <location>/error?errorCode=500</location>
+ 	</error-page>
+	<!-- 에러페이지처리 종료 -->
 
 </web-app>
