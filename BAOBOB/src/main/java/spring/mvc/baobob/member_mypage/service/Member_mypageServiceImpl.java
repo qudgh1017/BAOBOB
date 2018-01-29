@@ -909,14 +909,13 @@ public class Member_mypageServiceImpl implements Member_mypageService{
 	//식당 예약내역 취소처리
 	public void memRBookDel(HttpServletRequest req, Model model) {
 		int cnt = 0;
-		int table_count = 0;
 		int use_table_count = 0;
 		
 		// 식당 관리자의 memberStep에서 뒷자리를 구한다.(뒷자리가 restaurant_index와 같음)
 		int restaurant_index = Integer.parseInt(req.getParameter("restaurant_index"));
 		int schedule_index = Integer.parseInt(req.getParameter("restaurant_schedule_index"));	// 스케줄 index
 		int table_Num = Integer.parseInt(req.getParameter("table_Num")); // 테이블 번호
-		String member_id = req.getParameter("member_id");
+		String member_id = (String)req.getSession().getAttribute("memId");
 		
 		// 여러 정보를 저장하기 위해 맵 이용
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -928,8 +927,8 @@ public class Member_mypageServiceImpl implements Member_mypageService{
 		TableVO table_dto = dao.getColRow(restaurant_index);
 		
 		// 매장을 구성하는 타일의 행열 (예:5*5)
-		int col = table_dto.getTable_col()+1; // 행
-		int row = table_dto.getTable_row()+1; // 열
+		int col = table_dto.getTable_col() + 1; // 행
+		int row = table_dto.getTable_row() + 1; // 열
 
 		int table_index = 0;
 		map.put("restaurant_table_index", table_index);
@@ -942,22 +941,26 @@ public class Member_mypageServiceImpl implements Member_mypageService{
 				
 				// state 정보 조회
 				int state = dao.getState(map);
+				
+				System.out.println("타기 전");
 
-				// 복도가 아닌 테이블이 걸리면 테이블 개수 증가
-				if(state != 0) {
-					table_count++;
-				}
+				System.out.println("col : " + col);
+				System.out.println("row : " + row);
 				
 				// '사용 중'인 테이블이 걸리면 '사용 중'테이블 개수 증가
 				if (state == 3) {
+					System.out.println("탐");
 					// 예약 된 테이블이 몇개인지 확인
 					use_table_count++;
 					
 					// 예약 취소할 테이블 번호가 되면
-					if(table_count == table_Num) {
+					if(table_index == table_Num) {
 						// 삭제 전 히스토리 인덱스 조회(삭제하면 히스토리 인덱스를 찾을 수 없음)
 						int history_index = dao.getHistoryIndex(map);
 						map.put("history_index", history_index);
+
+						System.out.println("member_id : " + map.get("member_id"));
+						System.out.println("history_index : " + map.get("history_index"));
 						
 						// 레스토랑 히스토리 테이블에 이용 내역 삭제
 						cnt = dao.delRestaurantHistory(map);
