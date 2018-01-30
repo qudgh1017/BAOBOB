@@ -21,6 +21,7 @@
 	<img class="back_img" src="${projectRes}images/ymk/guest_parking/map.png">
 	
 	<section class="portfolio section">
+	
 	  <div class="container mar">
 	    <div class="row">
 			<div class="col-lg-6">
