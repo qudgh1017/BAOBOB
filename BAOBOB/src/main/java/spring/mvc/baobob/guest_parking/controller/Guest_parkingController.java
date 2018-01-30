@@ -90,7 +90,7 @@ public class Guest_parkingController {
 		return "guest/guest_parking/guestParkingOutCheck";
 	}
 	
-	//퇴장 - 번호 확인, 회원일 경우 자동 결제
+	//퇴장 - 번호 확인
 	@RequestMapping("guestParkingOutCheckPro")
 	public String guestParkingOutCheckPro(HttpServletRequest req, Model model) {
 		log.info("guestParkingOutCheckPro()");

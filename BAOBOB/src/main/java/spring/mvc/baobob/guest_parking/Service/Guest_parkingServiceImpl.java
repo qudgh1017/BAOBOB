@@ -94,10 +94,10 @@ public class Guest_parkingServiceImpl implements Guest_parkingService {
 	public void guestParkingOutCheckPro(HttpServletRequest req, Model model) {
 		String key = req.getParameter("key").trim();
 
-		int cnt = dao.parkingOutKeyCheck(key);
-
+		ParkingHistory ph = dao.parkingOutKeyCheck(key);
+		
 		model.addAttribute("key", key);
-		model.addAttribute("cnt", cnt);
+		model.addAttribute("ph", ph);
 	}
 
 	// Επΐε Γ³Έ®

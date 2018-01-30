@@ -107,7 +107,7 @@
 		       AND rh.restaurant_schedule_index = sc.restaurant_schedule_index
 		       AND rs.restaurant_index = sc.restaurant_index
 		       AND ht.member_id = #{id}
-		       AND rh.restaurant_history_state = 1
+		       AND rh.restaurant_history_state = 0
 		    )
 	</select>
 </mapper>

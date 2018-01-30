@@ -29,7 +29,7 @@
 						<div class="card-body">
 							<div id="dayInChart" style="width:100%; height:240px;"></div>
 						</div>
-						<div class="card-footer small text-muted">시간대별 입차 비율</div>
+						<div class="card-footer small text-muted">09시 ~ 21시 시간대별 입차 비율</div>
 					</div>
 				</div>
 				<div class="col-lg-4">
@@ -38,7 +38,7 @@
 						<div class="card-body">
 							<div id="dayOutChart" style="width:100%; height:240px;"></div>
 						</div>
-						<div class="card-footer small text-muted">시간대별 출차 비율</div>
+						<div class="card-footer small text-muted">09시 ~ 21시 시간대별 출차 비율</div>
 					</div>
 				</div>
 				<div class="col-lg-4">

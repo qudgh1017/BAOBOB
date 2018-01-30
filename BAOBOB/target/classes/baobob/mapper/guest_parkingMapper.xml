@@ -31,8 +31,8 @@
 	</insert>
 
 	<!-- 퇴장 번호 확인 -->
-	<select id="parkingOutKeyCheck" resultType="int">
-		SELECT COUNT(*) 
+	<select id="parkingOutKeyCheck" resultType="spring.mvc.baobob.vo.ParkingHistory">
+		SELECT * 
 		FROM park_history_tbl
 		WHERE p_history_space = #{key}
 	</select>
