@@ -13,7 +13,7 @@
 				<c:if test="${vo.member_step != 8}">
 					<a href="#!" class="active" style="background-color:C2EED8;">S E R V I C E</a>
 					<a href="memPoint" style="background-color:C2EED8;">포인트/할인 안내</a>
-					<a href="visit" style="background-color:C2EED8;">방문 내역</a>
+					<a href="visit" style="background-color:C2EED8;">이용 내역</a>
 				</c:if>
 				<a href="#!" class="active" style="background-color:C2EED8;">B A O B O X</a>
 				<c:if test="${vo.member_step != 8}">

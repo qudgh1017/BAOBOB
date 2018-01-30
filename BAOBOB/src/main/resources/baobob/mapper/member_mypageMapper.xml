@@ -391,7 +391,7 @@
 	<select id="restaurantLogList" resultType="spring.mvc.baobob.vo.RestaurantLogVO">
 		<![CDATA[
 		SELECT *
-		FROM (SELECT h.member_id, rs.restaurant_schedule_index, rs.schedule_starttime, rs.schedule_endtime,
+		FROM (SELECT rh.history_index, h.member_id, rs.restaurant_schedule_index, rs.schedule_starttime, rs.schedule_endtime,
 		             rt.table_col, rt.table_row, rt.table_state, rt.restaurant_table_index, r.restaurant_index,
 		             r.restaurant_name,r.restaurant_tel, rh.restaurant_history_state,h.history_date, rownum rNum
 		        FROM restaurant_tbl r
@@ -506,7 +506,8 @@
 			FROM ( SELECT p.p_history_index, p.p_history_in, p.p_history_out, p.p_history_price,
 			              p.p_history_space, p.p_history_date,
 			              h.history_index, h.history_date, h.member_id, rownum rNum 
-			        FROM park_history_tbl p JOIN history_tbl h
+			        FROM park_history_tbl p 
+			        JOIN history_tbl h
 			        ON h.history_index = p.history_index
 			        WHERE member_id=#{strId}
 			     )
