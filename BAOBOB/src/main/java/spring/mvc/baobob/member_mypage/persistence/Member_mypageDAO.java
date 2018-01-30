@@ -10,6 +10,7 @@ import spring.mvc.baobob.vo.MovieHistoryVO;
 import spring.mvc.baobob.vo.MovieVO;
 import spring.mvc.baobob.vo.ParkingHistory;
 import spring.mvc.baobob.vo.RestaurantLogVO;
+import spring.mvc.baobob.vo.TableVO;
 import spring.mvc.baobob.vo.Theater_seatVO;
 import spring.mvc.baobob.vo.WishListVO;
 
@@ -87,7 +88,7 @@ public interface Member_mypageDAO {
 	//내가 본 영화 리스트	
 	public ArrayList<MovieHistoryVO> getMovieClear(Map<String,Object> map);
 	
-	//예약한 상영과,좌석 불러오기
+	//예약한 상영관,좌석 불러오기
 	public ArrayList<Theater_seatVO> getMovieSeat(Map<String,Object> map);
 		
 	//무비 다이어리 글갯수 구하기
@@ -143,6 +144,31 @@ public interface Member_mypageDAO {
 	
 	//예매내역 삭제(history_tbl)
 	public int historyDelPro(int history_index);
+	
+	//매장을 구성하는 타일의 행열 (예:5*5)
+	public TableVO getColRow(int restaurant_index);
+	
+	//state 정보 조회
+	public int getState(Map<String, Object> map);
+	
+	//히스토리 인덱스 조회
+	public int getHistoryIndex(Map<String, Object> map);
+	
+	//레스토랑 히스토리 테이블에 이용 내역 삭제
+	public int delRestaurantHistory(Map<String, Object> map);
+	
+	//히스토리 테이블에 이용 내역 삭제
+	public int delHistory(Map<String, Object> map);
+	
+	//'사용 중'인 테이블을 '사용 가능'으로 변경
+	public int modState(Map<String, Object> map);
+	
+	//테이블 전체 삭제
+	public int delTable(Map<String, Object> map);
+	
+	//스케줄 삭제 처리
+	public int delSchedule(Map<String, Object> map);
+	
 	
 	
 	

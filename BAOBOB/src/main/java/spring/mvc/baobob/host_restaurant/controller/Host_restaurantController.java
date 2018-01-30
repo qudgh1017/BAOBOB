@@ -303,7 +303,7 @@ public class Host_restaurantController {
 
 		// 예약 취소 처리
 		service.reservDel(req, model);
-		
+
 		return "host/host_restaurant/hostReservDel";
 	}
 
@@ -372,7 +372,7 @@ public class Host_restaurantController {
 
 		// 테이블별 결산(결제 처리)
 		service.payment(req, model);
-		
+
 		return "host/host_restaurant/hostPayment";
 	}
 

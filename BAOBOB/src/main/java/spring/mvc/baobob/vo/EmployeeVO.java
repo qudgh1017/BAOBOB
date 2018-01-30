@@ -3,11 +3,18 @@ package spring.mvc.baobob.vo;
 import java.sql.Timestamp;
 
 public class EmployeeVO {
+	private String member_name;
 	private int employee_index;
 	private String member_id;
 	private String employee_jumin2;
 	private Timestamp employee_date;
 	
+	public String getMember_name() {
+		return member_name;
+	}
+	public void setMember_name(String member_name) {
+		this.member_name = member_name;
+	}
 	public int getEmployee_index() {
 		return employee_index;
 	}

@@ -136,6 +136,7 @@
 	<!-- 각 직원 정보 조회 -->
 	<select id="getEmployeeList" resultType="spring.mvc.baobob.vo.EmployeeVO">
 		SELECT empl.* 
+		     , mem.member_name
 		  FROM employee_tbl empl, member_tbl mem 
 		 WHERE mem.member_id = empl.member_id
 		   AND mem.member_step IN (#{member_step}, (#{member_step} + 10))

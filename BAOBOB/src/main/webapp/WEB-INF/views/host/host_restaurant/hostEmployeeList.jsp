@@ -1,17 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <%@ include file="/resources/chg/setting.jsp"%>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
+
 <link href="${restaurant_css}" rel="stylesheet" type="text/css">
-<script src="${restaurant_js}" charset=UTF-8></script>
+<script src="${restaurant_js}"></script>
+
 </head>
 <body class="fixed-nav sticky-footer bg-dark">
 
 	<!-- Navigation -->
 	<%@ include file="_navigation.jsp" %>
+	
 	<c:if test="${sessionScope.memStep != 4}">
 		<div class="content-wrapper">
 			<div class="container-fluid" style="width: 1000px;">

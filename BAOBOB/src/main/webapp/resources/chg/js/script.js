@@ -308,13 +308,16 @@ function checkPosRestaurant(step) {
 	var table_count = document.getElementById('count').value;
 	
 	if (date == "") {
-		alert('날짜를 골라주세요!');
+		alert('날짜를 선택하세요');
+		document.getElementById("datepicker").focus();
 		return false;
 	} else if (time == "") {
-		alert('시간을 골라주세요!');
+		alert('시간을 선택하세요');
+		document.getElementById("timepicker").focus();
 		return false;
 	} else if (table_count == "") {
-		alert('테이블 수를 입력해주세요!');
+		alert('인원 수를 입력해주세요');
+		document.getElementById("count").focus();
 		return false;
 	} else {
 		window.location = 'checkPosRestaurant?date=' + date + '&count=' + table_count + '&time=' + time + '&index=' + step.toString().substring(1, 2);
@@ -326,7 +329,7 @@ function reservView(step) {
 	var date = document.getElementById("datepicker").value;
 	
 	if (date == "") {
-		alert("날짜를 선택하세요");
+		alert('날짜를 선택하세요');
 		document.getElementById("datepicker").focus();
 		return false;
 	}
@@ -343,15 +346,15 @@ function orderDel() {
 	var menu_Count = document.getElementById("menu_count").value; // 메뉴 수량
 
 	if (table_Num == "") {
-		alert("주문할 테이블 번호를 입력하세요");
+		alert('주문할 테이블 번호를 입력하세요');
 		document.getElementById("table_index").focus();
 		return false;
 	} else if (menu_Num == "") {
-		alert("메뉴 번호를 입력하세요");
+		alert('메뉴 번호를 입력하세요');
 		document.getElementById("menu_index").focus();
 		return false;
 	} else if (menu_Count == "") {
-		alert("메뉴 수량을 입력하세요");
+		alert('메뉴 수량을 입력하세요');
 		document.getElementById("menu_count").focus();
 		return false;
 	}
@@ -367,7 +370,7 @@ function payment() {
 	var table_Num = document.getElementById("table_number").value; // 결제할 테이블 번호
 	
 	if (table_Num == "") {
-		alert("결제할 테이블 번호를 입력하세요.");
+		alert('결제할 테이블 번호를 입력하세요.');
 		document.getElementById("table_number").focus();
 		return false;
 	}
@@ -378,14 +381,14 @@ function payment() {
 	var point = document.getElementById("point").value;
 	
 	if (member_id == "") {
-		alert("결제할 아이디를 입력하세요.");
+		alert('결제할 아이디를 입력하세요.');
 		document.getElementById("member_id").focus();
 		return false;
 	} else if (payValue == "0") {
-		alert("결제할 주문 내역이 없습니다.");
+		alert('결제할 주문 내역이 없습니다.');
 		return false;
 	} else if (history_state == "(결제 완료)") {
-		alert("이미 결제한 테이블입니다.");
+		alert('이미 결제한 테이블입니다.');
 		return false;
 	} else if (point == "") {
 		point = 0;
@@ -400,7 +403,7 @@ function reservDel() {
 	var table_Num = document.getElementById("table_num").value; // 결제할 테이블 번호
 
 	if (table_Num == "") {
-		alert("취소할 테이블 번호를 입력하세요.");
+		alert('취소할 테이블 번호를 입력하세요.');
 		document.getElementById("table_num").focus();
 		return false;
 	}
@@ -410,14 +413,12 @@ function reservDel() {
 	var history_state = document.getElementById("history_state" + table_Num).value; // 결제를 했는지 확인하기 위한 변수
 
 	if (payValue != "0") {
-		alert("주문내역이 있어 취소하실 수 없습니다.");
+		alert('주문내역이 있어 취소하실 수 없습니다.');
 		return false;
 	} else if (history_state == "(결제 완료)") {
-		alert("이미 결제한 테이블입니다.");
+		alert('이미 결제한 테이블입니다.');
 		return false;
 	}
-
-	alert(restaurant_schedule_index + ", " + table_Num + ", " + member_id);
 	
 	window.location = 'hostReservDel?restaurant_schedule_index=' + restaurant_schedule_index + '&table_Num=' + table_Num + '&member_id=' + member_id;
 }

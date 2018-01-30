@@ -67,19 +67,15 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 		log.debug("service.restaurantAdd()");
 
 		int cnt = 0;
-		
-		// 테이블 index
-		int index = 0;
+		int index = 0; // 테이블 index
+		String info = req.getParameter("info"); // 타일의 상태(테이블인지 복도인지)
 
-		// 타일의 상태(테이블인지 복도인지)
-		String info = req.getParameter("info");
-		
 		// 매장을 구성하는 타일의 행열 (예:5*5)
 		int col = Integer.parseInt(req.getParameter("col")); // 행
 		int row = Integer.parseInt(req.getParameter("row")); // 열
-		
+
 		// 매장 정보
-		String name = req.getParameter("name");	// 매장명
+		String name = req.getParameter("name"); // 매장명
 		String tel = req.getParameter("tel"); // 매장 전화번호
 
 		// 매장 정보 저장
@@ -112,7 +108,7 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 
 					// 테이블 추가에 성공했다면
 					if (cnt != 0) {
-						index++;	// 테이블 index 증가
+						index++; // 테이블 index 증가
 					}
 				}
 			}
@@ -129,31 +125,31 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 		log.debug("service.restaurantView()");
 
 		String str = req.getParameter("count");
-		
+
 		// 예약할 테이블 숫자
 		if ((str != null && str.equals("")) || (str != null && str.length() != 0)) {
 			Integer count = Integer.parseInt(str);
 			// 예약할 테이블 숫자 저장
 			model.addAttribute("count", count);
 		}
-		
+
 		// 예약할 날짜와 시간
 		String date = "20" + req.getParameter("date");
 		String time = req.getParameter("time");
-		
+
 		// 매장 번호
 		int restaurant_index = Integer.parseInt(req.getParameter("index"));
 
 		String info = "";
 		int col = 0;
 		int row = 0;
-		
+
 		// 매장 정보
-		RestaurantVO restaurant_dto = new RestaurantVO();	
-		
+		RestaurantVO restaurant_dto = new RestaurantVO();
+
 		// 매장내 테이블 정보
-		TableVO table_dto = new TableVO();	
-		
+		TableVO table_dto = new TableVO();
+
 		// 여러 정보를 저장하기 위해 맵 이용
 		Map<String, Object> map = new HashMap<String, Object>();
 
@@ -162,7 +158,7 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 			// 날짜와 시간 저장
 			model.addAttribute("date", req.getParameter("date"));
 			model.addAttribute("time", time);
-			
+
 			// DB에 있는 startTime 컬럼에 저장할 변수
 			String startTime = date + " " + time + ":00";
 
@@ -181,7 +177,7 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 
 			// 시, 분, 초 조합
 			String endTime = end[0] + ":" + end[1] + ":00";
-			
+
 			// 날짜, 시간 조합
 			endTime = date + " " + endTime;
 
@@ -196,7 +192,7 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 
 			// 매장 정보 조회
 			restaurant_dto = dao.viewRestaurant(restaurant_index);
-			
+
 			// 매장을 구성하는 타일의 행열 조회 (예:5*5)
 			table_dto = dao.getColRow(restaurant_index);
 
@@ -221,11 +217,11 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 					// 맨 마지막 정보가 아니면 ',' 추가
 					if (!(i + 1 == row && j + 1 == col)) {
 						info += ',';
-						restaurant_table_index++;	// 테이블 인덱스 1 증가
+						restaurant_table_index++; // 테이블 인덱스 1 증가
 					}
 				}
 			}
-		} 
+		}
 
 		// 식당 총 관리자 - 수정할 매장 정보 조회
 		else {
@@ -255,15 +251,15 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 					// 맨 마지막 정보가 아니면 ',' 추가
 					if (!(i + 1 == row && j + 1 == col)) {
 						info += ',';
-						restaurant_table_index++;	// 테이블 인덱스 1 증가
+						restaurant_table_index++; // 테이블 인덱스 1 증가
 					}
 				}
 			}
 		}
-		
+
 		// 매장 정보 저장
 		model.addAttribute("dto", restaurant_dto);
-		
+
 		// script.js - spaceBody(), spaceBody2()에서 사용할 정보들
 		model.addAttribute("info", info);
 		model.addAttribute("col", col);
@@ -280,18 +276,18 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 
 		// 타일의 상태(테이블인지 복도인지)
 		String info = req.getParameter("info");
-		
+
 		// 매장을 구성하는 타일의 행열 (예:5*5)
 		int col = Integer.parseInt(req.getParameter("col")); // 행
 		int row = Integer.parseInt(req.getParameter("row")); // 열
 
 		// 매장 번호
 		int restaurant_index = Integer.parseInt(req.getParameter("index"));
-		
+
 		// 매장 정보
-		String name = req.getParameter("name");	// 매장명
+		String name = req.getParameter("name"); // 매장명
 		String tel = req.getParameter("tel"); // 매장 전화번호
-		
+
 		// 매장 정보 저장
 		RestaurantVO restaurant_dto = new RestaurantVO();
 		restaurant_dto.setRestaurant_index(restaurant_index);
@@ -309,7 +305,7 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 
 		// 테이블 정보
 		TableVO table_dto = new TableVO();
-		
+
 		// 여러 정보를 저장하기 위해 맵 이용
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("restaurant_dto", restaurant_dto);
@@ -352,7 +348,7 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 
 		// 매장 번호
 		int restaurant_index = Integer.parseInt(req.getParameter("index"));
-		
+
 		// 매장 정보 저장
 		RestaurantVO dto = new RestaurantVO();
 		dto.setRestaurant_index(restaurant_index);
@@ -438,55 +434,55 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 	@Override
 	public void allAccountChart(HttpServletRequest req, Model model) {
 		log.debug("service.allAccountChart()");
-		
+
 		// 모든 매장의 이름 조회
 		String[] restaurant = dao.getRestaurantName();
 
 		// 여러 정보를 저장하기 위해 맵 이용
-		Map<String , Object> map = new HashMap<String,Object>();
-		
+		Map<String, Object> map = new HashMap<String, Object>();
+
 		// mapper에서 불러온 kind와 value가 다건이기때문에 vo형태의 List형으로 받아준다.
 		List<Restaurant_ChartVO> menuList = dao.getRestaurantChart();
-		
+
 		// List 데이터를 한 건씩 map에 담는다.
-		for(Restaurant_ChartVO dto : menuList) {
+		for (Restaurant_ChartVO dto : menuList) {
 			map.put(dto.getKind(), dto.getValue());
 		}
-		
+
 		// 판매액이 있는지 확인
-		for(String s : restaurant) {
+		for (String s : restaurant) {
 			int cnt = 0;
-			
+
 			// 판매액이 0이 아닌 매장은 건너뛰고,
-			for(Entry<String, Object> m : map.entrySet()) {
-				if(s.equals(m.getKey())) {
+			for (Entry<String, Object> m : map.entrySet()) {
+				if (s.equals(m.getKey())) {
 					cnt = 1;
 				}
 			}
-			
+
 			// 판매액이 0인 매장은 0을 put해준다.
-			if(cnt == 0) {
+			if (cnt == 0) {
 				map.put(s, 0);
 			}
 		}
 
 		// 가나다 순으로 정렬하기 위해 트리맵 이용
 		TreeMap<String, Object> tm = new TreeMap<String, Object>(map);
-		
+
 		// 키값 오름차순 정렬(기본)
 		Iterator<String> iteratorKey = tm.keySet().iterator();
-		
-		String key = "";	// 키
-		String keys = "";	// 키의 조합
-		String value = "";	// 값
+
+		String key = ""; // 키
+		String keys = ""; // 키의 조합
+		String value = ""; // 값
 		String values = ""; // 값의 조합
-		int cnt = 0;	// 처음인지 확인
-		
+		int cnt = 0; // 처음인지 확인
+
 		while (iteratorKey.hasNext()) {
 			key = iteratorKey.next();
 			value = String.valueOf(tm.get(key));
 			// 처음이면 콤마를 붙이지 않음
-			if(cnt == 0) {
+			if (cnt == 0) {
 				keys = keys + key;
 				values = values + value;
 				cnt = 1;
@@ -497,7 +493,7 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 				values = values + "," + value;
 			}
 		}
-		
+
 		// 결과를 저장한다.
 		model.addAttribute("keys", keys);
 		model.addAttribute("values", values);
@@ -505,7 +501,7 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 		model.addAttribute("chart", map);
 		model.addAttribute("total", tm.get("합계"));
 	}
-	
+
 	/////////////////////////////////////////////////////////////////////////////////////////
 
 	// 메뉴 리스트
@@ -540,10 +536,10 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 
 		// 이미지 정보를 가져옴
 		MultipartFile file = req.getFile("img");
-		
+
 		// 새로 저장할 경로
 		String saveDir = req.getRealPath("/resources/images/chg/");
-		
+
 		// 저장되어 있는 경로
 		String realDir = "C:\\Dev\\workspace_baobob\\BAOBOB\\BAOBOB\\src\\main\\webapp\\resources\\images\\chg\\";
 
@@ -573,7 +569,7 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 			String menuName = req.getParameter("name");
 			String menuContent = req.getParameter("content");
 			int menuPrice = Integer.parseInt(req.getParameter("price"));
-			
+
 			// 메뉴 정보 저장
 			MenuVO dto = new MenuVO();
 			dto.setRestaurant_menu_img(fileName);
@@ -581,13 +577,13 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 			dto.setRestaurant_menu_name(menuName);
 			dto.setRestaurant_menu_content(menuContent);
 			dto.setRestaurant_menu_price(menuPrice);
-			
+
 			// 메뉴 추가 전 메뉴인덱스 계산
 			Integer restaurant_menu_index = dao.getMenuIndex(restaurant_index);
-			if(restaurant_menu_index != null) {
+			if (restaurant_menu_index != null) {
 				dto.setRestaurant_menu_index(restaurant_menu_index);
 			}
-			
+
 			// 메뉴 추가 처리
 			int cnt = dao.addMenu(dto);
 
@@ -607,7 +603,7 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 		// 식당 관리자의 memberStep에서 뒷자리를 구한다.(뒷자리가 restaurant_index와 같음)
 		int restaurant_index = Integer
 				.parseInt(String.valueOf(req.getSession().getAttribute("memStep")).substring(1, 2));
-		
+
 		// 조회할 메뉴의 index
 		int restaurant_menu_index = Integer.parseInt(req.getParameter("index"));
 
@@ -630,10 +626,10 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 
 		// 이미지 정보를 가져옴
 		MultipartFile file = req.getFile("img");
-		
+
 		// 새로 저장할 경로
 		String saveDir = req.getRealPath("/resources/images/chg/");
-		
+
 		// 저장되어 있는 경로
 		String realDir = "C:\\Dev\\workspace_baobob\\BAOBOB\\BAOBOB\\src\\main\\webapp\\resources\\images\\chg\\";
 
@@ -664,7 +660,7 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 			String menuName = req.getParameter("name");
 			String menuContent = req.getParameter("content");
 			int menuPrice = Integer.parseInt(req.getParameter("price"));
-			
+
 			// 메뉴 정보 저장
 			MenuVO dto = new MenuVO();
 			dto.setRestaurant_menu_img(fileName);
@@ -691,14 +687,14 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 
 		// 메뉴 번호
 		int restaurant_menu_index = Integer.parseInt(req.getParameter("index"));
-		
+
 		// 메뉴 정보 저장
 		MenuVO dto = new MenuVO();
 		dto.setRestaurant_menu_index(restaurant_menu_index);
 
 		// 메뉴 삭제 처리
 		int cnt = dao.delMenu(dto);
-		
+
 		// 성공 여부 저장
 		model.addAttribute("cnt", cnt);
 	}
@@ -709,7 +705,7 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 		log.debug("service.employeeList()");
 
 		int cnt = 0;
-		
+
 		// 관리자의 step에 10을 더하면 그 식당의 직원들을 조회할 수 있다. mapper에서 사용하기 위해 저장
 		int member_step = Integer.parseInt(String.valueOf(req.getSession().getAttribute("memStep")));
 
@@ -760,12 +756,12 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 		log.debug("service.employeeAdd()");
 
 		int cnt = 0;
-		
+
 		// 관리자의 step에 10을 더하면 그 식당의 직원을 조회할 수 있다. mapper에서 사용하기 위해 저장
 		int member_step = Integer.parseInt(String.valueOf(req.getSession().getAttribute("memStep")));
 		String member_id = req.getParameter("id");
 		String jumin2 = req.getParameter("jumin2");
-		
+
 		// 여러 정보를 저장하기 위해 맵 이용
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("member_id", member_id);
@@ -792,7 +788,7 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 
 		// 조회할 직원의 아이디
 		String id = req.getParameter("id");
-		
+
 		// 직원 정보 저장
 		EmployeeVO dto = new EmployeeVO();
 		dto = dao.viewEmployee(id);
@@ -808,7 +804,7 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 		int cnt = 0;
 
 		String member_id = req.getParameter("id");
-		
+
 		// step 계산을 위한 누적 포인트 조회
 		int step = dao.getCumPoint(req.getParameter("id"));
 
@@ -822,7 +818,7 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 		} else if (45001 <= step) {
 			step = 12;
 		}
-		
+
 		// 여러 정보를 저장하기 위해 맵 이용
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("member_id", member_id);
@@ -880,13 +876,13 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 
 		int cnt = 0;
 		int index = 0;
-		
+
 		// 식당 번호
 		int restaurant_index = Integer.parseInt(req.getParameter("index"));
 
 		// 타일의 상태(테이블인지 복도인지)
 		String info = req.getParameter("info");
-		
+
 		// 매장을 구성하는 타일의 행열 (예:5*5)
 		int col = Integer.parseInt(req.getParameter("col")); // 행
 		int row = Integer.parseInt(req.getParameter("row")); // 열
@@ -912,7 +908,7 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 
 		// 시, 분, 초 조합
 		String endTime = end[0] + ":" + end[1] + ":00";
-		
+
 		// 날짜, 시간 조합
 		endTime = date + " " + endTime;
 
@@ -929,7 +925,7 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 		log.debug("startTime : " + startTime);
 		log.debug("endTime : " + endTime);
 		log.debug("restaurant_index : " + restaurant_index);
-		
+
 		// 스케줄 index 조회
 		Integer schedule_index = dao.getScheduleIndex(schedule_dto);
 
@@ -937,10 +933,10 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 		if (schedule_index != null) {
 			schedule_dto.setRestaurant_schedule_index(schedule_index);
 		}
-		
+
 		// 테이블 정보
 		TableVO table_dto = new TableVO();
-		
+
 		// 여러 정보를 저장하기 위해 맵 이용
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("restaurant_dto", restaurant_dto);
@@ -985,25 +981,24 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 				}
 			}
 		}
-		
+
 		// 테이블 예약까지 성공했다면
-		if(cnt != 0) {
+		if (cnt != 0) {
 			String member_id = req.getParameter("member_id");
 
-			System.out.println("id : " + member_id);
-			
 			// 아이디 존재 유무 및 예약 가능 아이디인지 확인
 			Integer member_step = dao.confirmId(member_id);
 
 			// 이용 가능한 멤버라면
-			if(member_step != null && ((1 <= member_step && member_step <= 12) || (51 <= member_step && member_step <= 53) || (61 <= member_step && member_step <= 63))) {
+			if (member_step != null && ((1 <= member_step && member_step <= 12)
+					|| (51 <= member_step && member_step <= 53) || (61 <= member_step && member_step <= 63))) {
 				// 히스토리에 이용 내역 추가
 				cnt = dao.addHistory(member_id);
 
 				log.debug("schedule_index : " + schedule_index);
-				
+
 				// 내역 추가에 성공했다면
-				if(cnt != 0) {
+				if (cnt != 0) {
 					int table_index = Integer.parseInt(req.getParameter("table_index"));
 					map.put("restaurant_table_index", table_index);
 					// 레스토랑 히스토리 테이블에 이용 내역 추가
@@ -1013,7 +1008,7 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 				cnt = 2;
 			}
 		}
-		
+
 		// 성공 여부 저장
 		model.addAttribute("cnt", cnt);
 	}
@@ -1025,10 +1020,10 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 
 		// 검색할 날짜
 		String searchDate = req.getParameter("date");
-		
+
 		// 식당 번호
 		int restaurant_index = Integer.parseInt(req.getParameter("index"));
-		
+
 		// timestamp형으로 변환하여 날짜를 계산하기 위한 폼
 		SimpleDateFormat dateForm = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		SimpleDateFormat dateForm2 = new SimpleDateFormat("yy-MM-dd");
@@ -1063,7 +1058,7 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 
 		// 식당 관리자의 memberStep에서 뒷자리를 구한다.(뒷자리가 restaurant_index와 같음)
 		int restaurant_index = Integer.parseInt(req.getParameter("index").substring(1, 2));
-		
+
 		// 예약 정보 저장
 		Restaurant_scheduleVO schedule_dto = new Restaurant_scheduleVO();
 		schedule_dto.setSchedule_startTime(Timestamp.valueOf(req.getParameter("startTime")));
@@ -1107,7 +1102,7 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 				// 맨 마지막 정보가 아니면 ',' 추가
 				if (!(i + 1 == row && j + 1 == col)) {
 					info += ',';
-					restaurant_table_index++;	// 테이블 인덱스 1 증가
+					restaurant_table_index++; // 테이블 인덱스 1 증가
 				}
 			}
 		}
@@ -1119,7 +1114,7 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 
 		// 매장 정보 저장
 		model.addAttribute("dto", restaurant_dto);
-		
+
 		// script.js - spaceBody(), spaceBody2()에서 사용할 정보들
 		model.addAttribute("info", info);
 		model.addAttribute("col", col);
@@ -1135,7 +1130,7 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 			String time = req.getParameter("time");
 			model.addAttribute("time", time);
 		}
-		
+
 		// 테이블 정보 리턴
 		return table_dto;
 	}
@@ -1151,11 +1146,10 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 		// 사용중인 테이블 수
 		int use_table_cnt = 0;
 
-		System.out.println("memStep : " + (String.valueOf(req.getSession().getAttribute("memStep")).substring(1, 2)));
-		
 		// 식당 관리자의 memberStep에서 뒷자리를 구한다.(뒷자리가 restaurant_index와 같음)
-		int restaurant_index = Integer.parseInt((String.valueOf(req.getSession().getAttribute("memStep")).substring(1, 2)));
-		
+		int restaurant_index = Integer
+				.parseInt((String.valueOf(req.getSession().getAttribute("memStep")).substring(1, 2)));
+
 		// 예약 번호
 		int restaurant_schedule_index = Integer.parseInt(req.getParameter("restaurant_schedule_index"));
 
@@ -1195,12 +1189,12 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 				// state가 사용중인 테이블인 경우 use_tables리스트에 추가
 				if (state == 3) {
 					use_tables.add(String.valueOf(table_cnt));
-					
+
 					// 주문 가격 계산(테이블별 결산)
 					Integer payValue = dao.getBill(map);
-					
+
 					// 주문 가격이 없다면
-					if(payValue == null ) {
+					if (payValue == null) {
 						// null이 아닌 0을 add한다.
 						bill.add("0");
 					}
@@ -1209,20 +1203,20 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 						// 주문 가격 저장
 						bill.add(String.valueOf(payValue));
 					}
-					
+
 					// 사용중인 테이블 개수 증가
 					use_table_cnt++;
-					
+
 					// 예약한 아이디 조회
 					String id = dao.getReservId(map);
-					
+
 					// 히스토리 인덱스를 이용해 예약자 아이디 확인
 					reserv_id.add(id);
-					
+
 					// 결제한 테이블인지 확인
 					int h_state = dao.getHistoryState(map);
-					
-					if(h_state == 1) {
+
+					if (h_state == 1) {
 						history_state.add("(결제 완료)");
 					} else {
 						history_state.add("");
@@ -1245,7 +1239,7 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 
 		// 이용중인 테이블들을 저장
 		model.addAttribute("use_tables", use_tables);
-		
+
 		// 테이블별 주문한 가격 저장
 		model.addAttribute("bill", bill);
 
@@ -1257,7 +1251,7 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 
 		// 사용 중인 테이블이 어떤 아이디로 예약된 자리인지 알기 위해 저장
 		model.addAttribute("reserv_id", reserv_id);
-		
+
 		// 결제 여부를 알기 위해 저장
 		model.addAttribute("history_state", history_state);
 	}
@@ -1270,19 +1264,19 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 		// 식당 관리자의 memberStep에서 뒷자리를 구한다.(뒷자리가 restaurant_index와 같음)
 		int restaurant_index = Integer
 				.parseInt((String.valueOf(req.getSession().getAttribute("memStep")).substring(1, 2)));
-		
+
 		// 예약 번호
 		int restaurant_schedule_index = Integer.parseInt(req.getParameter("restaurant_schedule_index"));
-		
+
 		// 테이블 번호
 		int table_Num = Integer.parseInt(req.getParameter("table_index"));
-		
+
 		// 메뉴 번호
 		int menu_Num = Integer.parseInt(req.getParameter("menu_index"));
 
 		// 메뉴 수량
 		int menu_Count = Integer.parseInt(req.getParameter("menu_count"));
-		
+
 		// 테이블 정보 저장
 		TableVO table_dto = new TableVO();
 		table_dto = dao.getColRow(restaurant_index);
@@ -1324,16 +1318,16 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 				table_index++;
 			}
 		}
-		
+
 		// 주문한 메뉴 번호, 주문한 수량 저장
 		map.put("restaurant_menu_index", menu_Num);
 		map.put("restaurant_menu_count", menu_Count);
-		
+
 		// 이미 주문한 메뉴인지 확인
 		Integer cnt = dao.getMenuCount(map);
-		
+
 		// 이미 주문한 메뉴가 아니라면
-		if(cnt == null) {
+		if (cnt == null) {
 			// 주문 추가 처리
 			cnt = dao.addFoodHistory(map);
 		}
@@ -1341,7 +1335,7 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 		else {
 			// 주문 추가할 수량 계산
 			map.put("restaurant_menu_count", cnt + menu_Count);
-			
+
 			// 주문한 메뉴인 경우 수량 누적
 			cnt = dao.modFoodHistory(map);
 		}
@@ -1362,7 +1356,7 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 		int table_Num = Integer.parseInt(req.getParameter("table_Num")); // 테이블 번호
 		int menu_Num = Integer.parseInt(req.getParameter("menu_Num")); // 메뉴 번호
 		int menu_Count = Integer.parseInt(req.getParameter("menu_Count")); // 메뉴 수량
-		
+
 		// 여러 정보를 저장하기 위해 맵 이용
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("restaurant_index", restaurant_index);
@@ -1370,14 +1364,14 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 		map.put("restaurant_table_index", table_Num);
 		map.put("restaurant_menu_index", menu_Num);
 		map.put("restaurant_menu_count", menu_Count);
-		
+
 		Integer cnt = dao.getMenuCount(map);
-		
+
 		// 이미 주문된 수량이 취소할 수량보다 크다면
-		if(cnt > menu_Count) {
+		if (cnt > menu_Count) {
 			// 주문 취소할 수량 계산
 			map.put("restaurant_menu_count", cnt - menu_Count);
-			
+
 			// 일부분 주문 취소
 			cnt = dao.modFoodHistory(map);
 		}
@@ -1395,9 +1389,9 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 	@Override
 	public void payment(HttpServletRequest req, Model model) {
 		log.debug("service.payment()");
-		
+
 		int cnt = 0;
-		
+
 		// 테이블 수
 		int table_cnt = 0;
 
@@ -1407,115 +1401,117 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 		int restaurant_schedule_index = Integer.parseInt(req.getParameter("restaurant_schedule_index")); // 예약 번호
 		int table_Num = Integer.parseInt(req.getParameter("table_Num")); // 테이블 번호
 		String member_id = req.getParameter("member_id"); // 결제 아이디
-		int payValue = Integer.parseInt(req.getParameter("payValue"));	// 결제 금액
-		int use_point = Integer.parseInt(req.getParameter("point"));	// 결제 포인트
-		
+		int payValue = Integer.parseInt(req.getParameter("payValue")); // 결제 금액
+		int use_point = Integer.parseInt(req.getParameter("point")); // 결제 포인트
+
 		// 회원 등급 조회
 		Integer member_step = dao.confirmId(member_id);
-		
-		if(member_step != null && ((1 <= member_step && member_step <= 12) || (51 <= member_step && member_step <= 53) || (61 <= member_step && member_step <= 63))) {
+
+		if (member_step != null && ((1 <= member_step && member_step <= 12) || (51 <= member_step && member_step <= 53)
+				|| (61 <= member_step && member_step <= 63))) {
 			int discount = 0;
-			
+
 			// 일반 회원일 때
-			if(member_step == 9) {
+			if (member_step == 9) {
 				// 할인액 계산
 				discount = (payValue * 5) / 100;
-				
+
 				// 지불액 계산
 				payValue = ((payValue * 100) - (payValue * 5)) / 100;
 			}
 			// vip일 때
-			else if(member_step == 10) {
+			else if (member_step == 10) {
 				// 할인액 계산
 				discount = (payValue * 10) / 100;
-				
+
 				// 지불액 계산
 				payValue = ((payValue * 100) - (payValue * 10)) / 100;
 			}
 			// vvip일 때
-			else if(member_step == 11) {
+			else if (member_step == 11) {
 				// 할인액 계산
 				discount = (payValue * 15) / 100;
-				
+
 				// 지불액 계산
 				payValue = ((payValue * 100) - (payValue * 15)) / 100;
 			}
 			// svip일 때
-			else if(member_step == 12) {
+			else if (member_step == 12) {
 				// 할인액 계산
 				discount = (payValue * 20) / 100;
-				
+
 				// 지불액 계산
 				payValue = ((payValue * 100) - (payValue * 20)) / 100;
 			}
 
 			// 사용 가능한 포인트 조회
 			int member_point = dao.getPoint(member_id);
-			
-			if(member_point >= use_point) {
+
+			if (member_point >= use_point) {
 				// 여러 정보를 저장하기 위해 맵 이용
 				Map<String, Object> map = new HashMap<String, Object>();
 				map.put("member_id", member_id); // 결제한 아이디
 				map.put("member_use_point", use_point); // 사용한 포인트
 				map.put("payValue", payValue - use_point); // 사용한 포인트만큼 지불액 감소 후 저장
 				map.put("discount", discount); // 할인액 저장
-				
+
 				// 예약 정보 저장
 				Restaurant_scheduleVO schedule_dto = new Restaurant_scheduleVO();
 				schedule_dto.setRestaurant_index(restaurant_index);
 				schedule_dto.setRestaurant_schedule_index(restaurant_schedule_index);
-		
+
 				// 테이블 정보 저장
 				TableVO table_dto = new TableVO();
 				table_dto = dao.getColRow(restaurant_index);
-		
+
 				// 테이블 행열 조회
 				int col = table_dto.getTable_col() + 1;
 				int row = table_dto.getTable_row() + 1;
-		
+
 				int table_index = 0;
-		
+
 				// 여러 정보를 저장하기 위해 맵 이용
 				map.put("restaurant_index", restaurant_index);
 				map.put("restaurant_table_index", table_index);
 				map.put("restaurant_schedule_index", restaurant_schedule_index);
-		
+
 				loop: // 2중 for문을 한번에 탈출하기 위한 라벨
 				for (int i = 0; i < row; i++) {
 					for (int j = 0; j < col; j++) {
 						map.replace("restaurant_table_index", table_index);
-		
+
 						// state 정보 조회
 						int state = dao.getState(map);
-		
+
 						if (state != 0) {
 							// 몇번째 테이블인지 확인
 							table_cnt++;
 						}
-		
+
 						// 화면에서 가져온 테이블 번호가 되면 이용 내역 테이블 내용 수정
 						if (table_cnt == table_Num) {
 							// 레스토랑 히스토리 테이블에 이용 내역 추가
 							cnt = dao.modRestaurantHistory(map);
-							
+
 							// 추가에 성공했다면
-							if(cnt != 0) {
+							if (cnt != 0) {
 								// 히스토리 테이블에 이용 내역 추가
 								cnt = dao.modHistory(map);
 
 								// 추가에 성공했다면
-								if(cnt != 0) {
+								if (cnt != 0) {
 									// member_point, member_cumpoint 계산
 									map.put("member_point", ((member_point - use_point) + (payValue / 10)));
 									map.put("member_Cumpoint", payValue / 10);
-									
+
 									// member정보 수정
 									cnt = dao.modMemberPoint(map);
-									
+
 									// 수정에 성공했다면
-									if(cnt != 0) {
+									if (cnt != 0) {
 										// 관리자들은 스텝이 변경 되면 안됨
-										if(member_step == 9 || member_step == 10 || member_step == 11 || member_step == 12) {
+										if (member_step == 9 || member_step == 10 || member_step == 11
+												|| member_step == 12) {
 											// step 계산을 위한 누적 포인트 조회
 											int step = dao.getCumPoint(member_id);
 											// 누적 포인트에 따라 step이 달라짐
@@ -1529,7 +1525,7 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 												step = 12;
 											}
 											map.put("member_step", step);
-											
+
 											// member_step 변경
 											cnt = dao.updateStep(map);
 										}
@@ -1548,65 +1544,10 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 		} else {
 			cnt = 2;
 		}
-		
+
 		// 성공 여부 저장
 		model.addAttribute("cnt", cnt);
 	}
-/*
-	// 예약 삭제
-	@Override
-	public void scheduleDel(HttpServletRequest req, Model model) {
-		log.debug("service.scheduleDel()");
-		
-		int cnt = 0;
-		
-		// 식당 관리자의 memberStep에서 뒷자리를 구한다.(뒷자리가 restaurant_index와 같음)
-		int restaurant_index = Integer
-				.parseInt((String.valueOf(req.getSession().getAttribute("memStep")).substring(1, 2)));
-		int restaurant_schedule_index = Integer.parseInt(req.getParameter("restaurant_schedule_index")); // 예약 번호
-
-		// 테이블 정보 저장
-		TableVO table_dto = new TableVO();
-		table_dto = dao.getColRow(restaurant_index);
-
-		// 테이블 행열 조회
-		int col = table_dto.getTable_col() + 1;
-		int row = table_dto.getTable_row() + 1;
-
-		int table_index = 0;
-		
-		// 여러 정보를 저장하기 위해 맵 이용
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("restaurant_index", restaurant_index);
-		map.put("restaurant_table_index", table_index);
-		map.put("restaurant_schedule_index", restaurant_schedule_index);
-
-		loop: // 2중 for문을 한번에 탈출하기 위한 라벨
-		for (int i = 0; i < row; i++) {
-			for (int j = 0; j < col; j++) {
-				map.replace("restaurant_table_index", table_index);
-
-				// state 정보 조회
-				int state = dao.getState(map);
-
-				if (state == 3) {
-					// 몇번째 테이블인지 확인
-					cnt++;
-					break loop;
-				}
-			}
-		}
-		
-		if(cnt == 0) {
-			// 예약 정보 저장
-			Restaurant_scheduleVO dto = new Restaurant_scheduleVO();
-			dto.setRestaurant_index(restaurant_index);
-			dto.setRestaurant_schedule_index(restaurant_schedule_index);
-			
-			cnt = dao.resetTable2(dto);
-		}
-	}
-*/
 
 	// 예약 삭제
 	@Override
@@ -1616,64 +1557,64 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 		int cnt = 0;
 		int table_count = 0;
 		int use_table_count = 0;
-		
+
 		// 식당 관리자의 memberStep에서 뒷자리를 구한다.(뒷자리가 restaurant_index와 같음)
 		int restaurant_index = Integer
 				.parseInt((String.valueOf(req.getSession().getAttribute("memStep")).substring(1, 2)));
-		int schedule_index = Integer.parseInt(req.getParameter("restaurant_schedule_index"));	// 스케줄 index
+		int schedule_index = Integer.parseInt(req.getParameter("restaurant_schedule_index")); // 스케줄 index
 		int table_Num = Integer.parseInt(req.getParameter("table_Num")); // 테이블 번호
 		String member_id = req.getParameter("member_id");
-		
+
 		// 여러 정보를 저장하기 위해 맵 이용
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("restaurant_index", restaurant_index);
 		map.put("restaurant_schedule_index", schedule_index);
 		map.put("member_id", member_id);
-		
+
 		TableVO table_dto = dao.getColRow(restaurant_index);
-		
+
 		// 매장을 구성하는 타일의 행열 (예:5*5)
-		int col = table_dto.getTable_col(); // 행
-		int row = table_dto.getTable_row(); // 열
+		int col = table_dto.getTable_col() + 1; // 행
+		int row = table_dto.getTable_row() + 1; // 열
 
 		int table_index = 0;
 		map.put("restaurant_table_index", table_index);
-		
+
 		// 열만큼 반복
 		for (int i = 0; i < row; i++) {
 			// 행만큼 반복
 			for (int j = 0; j < col; j++) {
 				map.replace("restaurant_table_index", table_index);
-				
+
 				// state 정보 조회
 				int state = dao.getState(map);
 
 				// 복도가 아닌 테이블이 걸리면 테이블 개수 증가
-				if(state != 0) {
+				if (state != 0) {
 					table_count++;
 				}
-				
+
 				// '사용 중'인 테이블이 걸리면 '사용 중'테이블 개수 증가
 				if (state == 3) {
 					// 예약 된 테이블이 몇개인지 확인
 					use_table_count++;
-					
+
 					// 예약 취소할 테이블 번호가 되면
-					if(table_count == table_Num) {
+					if (table_count == table_Num) {
 						// 삭제 전 히스토리 인덱스 조회(삭제하면 히스토리 인덱스를 찾을 수 없음)
 						int history_index = dao.getHistoryIndex(map);
 						map.put("history_index", history_index);
-						
+
 						// 레스토랑 히스토리 테이블에 이용 내역 삭제
 						cnt = dao.delRestaurantHistory(map);
-						
+
 						// 삭제에 성공했다면
-						if(cnt != 0) {
+						if (cnt != 0) {
 							// 히스토리 테이블에 이용 내역 삭제
 							cnt = dao.delHistory(map);
-							
+
 							// 삭제에 성공했다면
-							if(cnt != 0) {
+							if (cnt != 0) {
 								// '사용 중'인 테이블 '사용 가능'으로 상태 변경
 								cnt = dao.modState(map);
 							}
@@ -1684,23 +1625,23 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 				table_index++;
 			}
 		}
-		
+
 		// '사용 중'인 테이블이 단 하나였고,'사용 가능'으로 상태 변경에 성공했다면
-		if(use_table_count == 1 && cnt == 1) {
+		if (use_table_count == 1 && cnt == 1) {
 			// 테이블 전체 삭제
 			cnt = dao.delTable(map);
-			
+
 			// 삭제에 성공했다면
-			if(cnt != 0) {
+			if (cnt != 0) {
 				// 스케줄 삭제 처리
 				cnt = dao.delSchedule(map);
 			}
 		}
-		
+
 		// 성공 여부 저장
 		model.addAttribute("cnt", cnt);
 	}
-	
+
 	// 메뉴별 차트
 	@Override
 	public void accountChart(HttpServletRequest req, Model model) {
@@ -1709,55 +1650,55 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 		// 식당 관리자의 memberStep에서 뒷자리를 구한다.(뒷자리가 restaurant_index와 같음)
 		int restaurant_index = Integer
 				.parseInt((String.valueOf(req.getSession().getAttribute("memStep")).substring(1, 2)));
-		
+
 		// 모든 메뉴의 이름 조회
 		String[] menu = dao.getMenuName(restaurant_index);
 
 		// 판매된적있는 메뉴의 이름과 판매액 조회
-		Map<String , Object> map = new HashMap<String,Object>();
-		
+		Map<String, Object> map = new HashMap<String, Object>();
+
 		// mapper에서 불러온 kind와 value가 다건이기때문에 vo형태의 List형으로 받아준다.
 		List<Restaurant_ChartVO> menuList = dao.getMenuCountChart(restaurant_index);
-		
+
 		// List 데이터를 한 건씩 map에 담는다.
-		for(Restaurant_ChartVO dto : menuList) {
+		for (Restaurant_ChartVO dto : menuList) {
 			map.put(dto.getKind(), dto.getValue());
 		}
-		
+
 		// 판매된적이 있는지 없는지 확인
-		for(String s : menu) {
+		for (String s : menu) {
 			int cnt = 0;
-			
+
 			// 판매된적이 있는 메뉴는 건너뛰고,
-			for(Entry<String, Object> m : map.entrySet()) {
-				if(s.equals(m.getKey())) {
+			for (Entry<String, Object> m : map.entrySet()) {
+				if (s.equals(m.getKey())) {
 					cnt = 1;
 				}
 			}
-			
+
 			// 판매된 적이 없는 메뉴는 판매액(value)에 0을 넣어준다.
-			if(cnt == 0) {
+			if (cnt == 0) {
 				map.put(s, 0);
 			}
 		}
 
 		// 가나다 순으로 정렬하기 위해 트리맵 이용
 		TreeMap<String, Object> tm = new TreeMap<String, Object>(map);
-		
+
 		// 키값 오름차순 정렬(기본)
 		Iterator<String> iteratorKey = tm.keySet().iterator();
-		
-		String key = "";	// 키
-		String keys = "";	// 키의 조합
-		String value = "";	// 값
+
+		String key = ""; // 키
+		String keys = ""; // 키의 조합
+		String value = ""; // 값
 		String values = ""; // 값의 조합
-		int cnt = 0;	// 처음인지 확인
-		
+		int cnt = 0; // 처음인지 확인
+
 		while (iteratorKey.hasNext()) {
 			key = iteratorKey.next();
 			value = String.valueOf(tm.get(key));
 			// 처음이면 콤마를 붙이지 않음
-			if(cnt == 0) {
+			if (cnt == 0) {
 				keys = keys + key;
 				values = values + value;
 				cnt = 1;
@@ -1768,7 +1709,7 @@ public class Host_restaurantServiceImpl implements Host_restaurantService {
 				values = values + "," + value;
 			}
 		}
-		
+
 		// 결과를 저장한다.
 		model.addAttribute("keys", keys);
 		model.addAttribute("values", values);
