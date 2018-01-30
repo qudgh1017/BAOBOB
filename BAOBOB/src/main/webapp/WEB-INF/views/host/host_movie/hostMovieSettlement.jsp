@@ -8,7 +8,7 @@
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <title>Insert title here</title>
 </head>
-<body class="fixed-nav sticky-footer bg-dark" onload="swal('영화관 총 매출액', '<fmt:formatNumber value="${movieSale}" pattern="#,###,###.##"/>원', 'success', {buttons: false});">
+<body class="fixed-nav sticky-footer bg-dark" onload="swal('영화관 총 매출액', '&#8361;<fmt:formatNumber value="${movieSale}" pattern="#,###,###.##"/>', 'success', {buttons: false});">
 
 	<c:set var="janre1" value="${movieChart['1']}"></c:set>
 	<c:set var="janre2" value="${movieChart['2']}"></c:set>
