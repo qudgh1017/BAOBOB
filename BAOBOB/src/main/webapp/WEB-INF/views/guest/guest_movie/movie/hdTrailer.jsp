@@ -80,9 +80,7 @@ function hdTrailerPlaying(movie_index){
 						</div>
 						<div class="col-md-1"></div>
 						<div class="col-md-1"></div>
-						<div class="col-md-10" align="left" style="border:1px solid white; height:200px;">
-							<span style="color:white; font-size:13px">${movie.movie_content}</span>
-						</div>
+						<textarea disabled class="col-md-10" rows="7" cols="100" style="resize:none; color:white; font-size:13px; background-color:black; height:200px;">${movie.movie_content}</textarea>
 						<div class="col-md-1"></div>
 					</c:if>
 				</c:forEach>

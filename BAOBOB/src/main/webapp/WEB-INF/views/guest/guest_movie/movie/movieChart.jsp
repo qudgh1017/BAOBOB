@@ -53,31 +53,30 @@
 					<c:forEach var="movie" items="${movies}">
 						<div class="col-md-3" style="margin-right:10px auto">
 							<c:set var="number" value="${number+1}"/>
-								<c:if test="${number<4}">
-									<div align="center" style="background-color:red; width:195px; border:5px solid black; margin-bottom:5px;">
-										<span style="color:white; font-weight:bold;">No.${number}</span>
-									</div>
-								</c:if>
-								<c:if test="${number>3}">
-									<div align="center" style="background-color:gray; width:195px; border:5px solid black; margin-bottom:5px;">
-										<span style="color:white; font-weight:bold;">No.${number}</span>
-									</div>
-								</c:if>
-								<a href="movieDetail?movie_index=${movie.movie_index}"><img style="border:5px solid black;"src="${projectRes}images/phc/${movie.movie_poster}"></a>
-								
-								<div align="left" style="width:195px;">
-										<span style="font-weight:bold;">
-											${movie.movie_title}
-											<c:if test="${movie.movie_age==0}"><img src="${projectRes}/images/ybh/전체관람가.png" style="width:15px; height:15px;"></c:if>
-											<c:if test="${movie.movie_age==12}"><img src="${projectRes}/images/ybh/12세 관람가.png" style="width:15px; height:15px;"></c:if>
-											<c:if test="${movie.movie_age==15}"><img src="${projectRes}/images/ybh/15세 관람가.png" style="width:15px; height:15px;"></c:if>
-											<c:if test="${movie.movie_age==19}"><img src="${projectRes}/images/ybh/청소년 관람불가.png" style="width:15px; height:15px;"></c:if>
-										</span><br>
-										<span style="font-weight:bold; color:gray; font-size:12px">
-											20${movie.movie_rel_date} 개봉
-										</span><br>
-											
-								</div><br><br>
+							<c:if test="${number<4}">
+								<div align="center" style="background-color:red; width:195px; border:5px solid black; margin-bottom:5px;">
+									<span style="color:white; font-weight:bold;">No.${number}</span>
+								</div>
+							</c:if>
+							<c:if test="${number>3}">
+								<div align="center" style="background-color:gray; width:195px; border:5px solid black; margin-bottom:5px;">
+									<span style="color:white; font-weight:bold;">No.${number}</span>
+								</div>
+							</c:if>
+							<a href="movieDetail?movie_index=${movie.movie_index}"><img style="border:5px solid black;"src="${projectRes}images/phc/${movie.movie_poster}"></a>
+							
+							<div align="left" style="width:195px;">
+									<span style="font-weight:bold;">
+										${movie.movie_title}
+										<c:if test="${movie.movie_age==0}"><img src="${projectRes}/images/ybh/전체관람가.png" style="width:15px; height:15px;"></c:if>
+										<c:if test="${movie.movie_age==12}"><img src="${projectRes}/images/ybh/12세 관람가.png" style="width:15px; height:15px;"></c:if>
+										<c:if test="${movie.movie_age==15}"><img src="${projectRes}/images/ybh/15세 관람가.png" style="width:15px; height:15px;"></c:if>
+										<c:if test="${movie.movie_age==19}"><img src="${projectRes}/images/ybh/청소년 관람불가.png" style="width:15px; height:15px;"></c:if>
+									</span><br>
+									<span style="font-weight:bold; color:gray; font-size:12px">
+										20${movie.movie_rel_date} 개봉
+									</span><br>
+							</div><br><br>
 						</div>
 					</c:forEach>
 					<!-- </tr> -->

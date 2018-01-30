@@ -818,7 +818,7 @@ public class Guest_movieServiceImpl implements Guest_movieService{
 		int member_point = Integer.parseInt(req.getParameter("member_point"));
 		String member_id = (String) req.getSession().getAttribute("memId");
 		
-		System.out.println(str_seat_index_info + theater_schedule_index + totalCnt + movie_index + movie_history_price + member_point);
+		System.out.println(str_seat_index_info + theater_schedule_index + totalCnt + movie_index + "결제금액:" + movie_history_price + "사용포인트:" + member_point +"==10%:"+(movie_history_price/10));
 		
 		String[] str_seat_index_arr = str_seat_index_info.split(",");
 		
@@ -870,11 +870,8 @@ public class Guest_movieServiceImpl implements Guest_movieService{
 		
 		//4. Update theater_schedule_tbl schedule_empty_seat= -totalCnt해주기(빈자리수 감소)
 		if(gmdao.updateEmptySeat(map)>=1) {
-			
 			//5. Update movie_tbl  movie_count + totalCnt해주기(영화관람객수 증가)
 			if(gmdao.updateMovieCount(map)>=1) {
-				
-				
 				//6. Update member_tbl member_point, member_cumpoint (결제시 증가)
 				if(gmdao.updateIncreasePoint(map)>=1) {
 					updateCnt = 1;
