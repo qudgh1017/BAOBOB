@@ -29,7 +29,7 @@ public class Guest_movieServiceImpl implements Guest_movieService{
 	//영화 메인
 	@Override
 	public void movieMain(HttpServletRequest req, Model model) {
-		ArrayList<String> rankList = gmdao.mainMovieRank();
+		ArrayList<MovieVO> rankList = gmdao.mainMovieRank();
 		model.addAttribute("rank", rankList);
 		
 		int movieCnt = gmdao.mainMovieTheaterCnt();
@@ -46,7 +46,7 @@ public class Guest_movieServiceImpl implements Guest_movieService{
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("start", start);
 			map.put("end",  end);
-			ArrayList<String> movieList = gmdao.mainMovieTheater(map);
+			ArrayList<MovieVO> movieList = gmdao.mainMovieTheater(map);
 			model.addAttribute("start", start);
 			model.addAttribute("end", end);
 			model.addAttribute("movieList", movieList);

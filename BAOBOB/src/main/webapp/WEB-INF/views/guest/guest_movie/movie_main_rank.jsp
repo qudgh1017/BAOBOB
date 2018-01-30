@@ -4,9 +4,9 @@
 
 <c:set var="number" value="1"/>
 <li><p class="office_top">영화 인기 순위</p>
-<c:forEach var="title" items="${rank}">
+<c:forEach var="mov" items="${rank}">
 	<li class="li">
-		<em class="em">${number}</em>${title}
-		<c:set var="number" value="${number + 1}"/>
+		<em class="em">${number}</em>
+		<a href="movieDetail?movie_index=${mov.movie_index}">${mov.movie_title}</a>
 	</li>
 </c:forEach>

@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<title>Insert title here</title>
 
+	<link rel="stylesheet" href="${projectRes}ymk/css/loader.css">
 	<style type="text/css">
 		body .p_body{min-height:450px;overflow-x:auto;}
 		body .p_div{display:flex;width:fit-content;margin:0 auto;}/* flex-wrap:wrap; */
@@ -125,6 +126,14 @@
 			</div>
 		</div>
 	</div> 
+	
+	<div class="col-md-3 bg" id="myLoader">
+	  <div class="loader" id="loader-4">
+	    <span></span>
+	    <span></span>
+	    <span></span>
+	  </div>
+	</div>
 	
 	<!-- Footer -->
 	<%@ include file="../common/footer.jsp" %>

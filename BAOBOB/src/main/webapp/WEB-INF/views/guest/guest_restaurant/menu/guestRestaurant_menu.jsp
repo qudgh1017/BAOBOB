@@ -201,7 +201,7 @@ break:break-word or break-all*/
 	</section>
 
 	<!-- Footer -->
-	<%@ include file="/WEB-INF/views/guest/guest_movie/movie_footer.jsp"%>
+	<%@ include file="/WEB-INF/views/guest/guest_restaurant/restaurant_footer.jsp" %> 
 	<!-- Footer -->
 </body>
 </html>

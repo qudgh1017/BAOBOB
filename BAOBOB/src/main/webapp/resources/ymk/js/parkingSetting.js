@@ -189,6 +189,8 @@ function spaceTypeChange() {
 					+ 'excFee=' + excFee + '&'
 					+ 'movieTime=' + movieTime + '&'
 					+ 'restTime=' + restTime;
+		//로딩
+		document.getElementById('myLoader').style.display = 'block';
 		
 		sendRequest(space_callback, 'hostParkingSettingChange', 'POST', param);
 	}
@@ -201,6 +203,7 @@ function space_callback() {
 		
 			console.log(date);
 			if(date != 0) {
+				document.getElementById('myLoader').style.display = '';
 				alert("정보가 등록되었습니다.");
 			}
 			console.log('완료');

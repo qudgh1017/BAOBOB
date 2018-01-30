@@ -173,7 +173,7 @@
 	<br><br><br><br><br><br><br><br>
 	
 	<!--======= Footer 시작 =======-->
-	<%@ include file="/WEB-INF/views/guest/guest_movie/movie_footer.jsp" %> 
+	<%@ include file="/WEB-INF/views/guest/guest_restaurant/restaurant_footer.jsp" %> 
 	<!--======= Footer 종료=======-->
 </body>
 </html>
