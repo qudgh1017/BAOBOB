@@ -10,6 +10,7 @@
 	<meta name="description" content="">
 	<meta name="author" content="">
 	<title>Join</title>
+	<link rel="stylesheet" href="${projectRes}ymk/css/loader.css">
 	<!-- Bootstrap core CSS-->
 	<link
 		href="${projectRes}mainBootstrap/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -119,7 +120,14 @@
 			</div>
 		</div>
 	</div>
-
+	
+	<div class="col-md-3 bg" id="myLoader">
+	  <div class="loader" id="loader-4">
+	    <span></span>
+	    <span></span>
+	    <span></span>
+	  </div>
+	</div>
 
 	<!-- Bootstrap core JavaScript-->
 	<script src="${projectRes}mainBootstrap/vendor/jquery/jquery.min.js"></script>

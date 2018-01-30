@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import spring.mvc.baobob.vo.Android;
 import spring.mvc.baobob.vo.BoardVO;
+import spring.mvc.baobob.vo.Member;
 
 @Repository
 public class AndroidDAOImpl implements AndroidDAO{
@@ -53,6 +54,22 @@ public class AndroidDAOImpl implements AndroidDAO{
 		AndroidDAO mapper = sqlSession.getMapper(AndroidDAO.class);
 		ArrayList<Android> list = mapper.getMemberMovieTicketing(id);;
 		return list;
+	}
+
+	//주차 이용 내역
+	@Override
+	public ArrayList<Android> getMemberParking(String id) {
+		AndroidDAO mapper = sqlSession.getMapper(AndroidDAO.class);
+		ArrayList<Android> list = mapper.getMemberParking(id);
+		return list;
+	}
+
+	//회원 정보 수정
+	@Override
+	public int anMemberUpdate(Member m) {
+		AndroidDAO mapper = sqlSession.getMapper(AndroidDAO.class);
+		int cnt = mapper.anMemberUpdate(m);
+		return cnt;
 	}
 
 

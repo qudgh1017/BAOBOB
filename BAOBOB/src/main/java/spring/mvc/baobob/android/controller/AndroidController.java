@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -83,6 +84,7 @@ public class AndroidController {
 		return map;
 	}
 	
+	//회원페이지
 	@ResponseBody
 	@RequestMapping("androidMyPageList")
 	public Map<String, Object> androidMyPageList(HttpServletRequest req) {
@@ -97,21 +99,19 @@ public class AndroidController {
 			ArrayList<Android> tmp = dao.getMemberMovieTicketing(id); //예매 내역
 			ArrayList<Android> list = new ArrayList<Android>(); //2인 이상일 경우 중복 내역 => 제거. 인원수 set.
 			
-			//tmp = data1:ticket_date, data2:time_start, data3:time_end, data4:movie_title, data5:movie_poster
+			//tmp = data1:ticket_index, data2:time_start, data3:time_end, data4:movie_title, data5:movie_poster
 			//list = data1 => 관람 인원수로 변경
-			String title = null;
-			String date = null;
+			String historyidx = null;
 			int number = 1;
 			int listIdx = 0;
 			for(int i = 0; i < tmp.size(); i += 1) {
 				Android a = tmp.get(i);
 				
-				String aTitle = a.getData4();
-				String aDate = a.getData1();
+				String aHistoryIdx = a.getData1();
 				//처음이 아닐 경우
-				if(title != null && date != null) {
+				if(historyidx != null) {
 					//이전 정보와 다를 경우 추가
-					if(!aTitle.equals(title) && !date.equals(aDate)) {
+					if(!historyidx.equals(aHistoryIdx)) {
 						number = 1; //인원수 초기화
 						a.setData1(String.valueOf(number));
 						list.add(a);
@@ -129,8 +129,7 @@ public class AndroidController {
 					
 					listIdx++;
 				}
-				title = aTitle;
-				date = aDate;
+				historyidx = aHistoryIdx;
 			}
 			map.put("data",  list);
 		} else if(idx.equals("1")) { //식당 예매 내역
@@ -153,16 +152,35 @@ public class AndroidController {
 			
 			
 		} else if(idx.equals("2")) { //주차 이용 내역
-			ArrayList<Android> list = new ArrayList<>();
-			Android a = new Android();
-			a.setData1("1");
-			a.setData2("2");
-			a.setData3("3");
-			a.setData4("4");
-			a.setData5("5");
-			list.add(a);
+			ArrayList<Android> list = dao.getMemberParking(id);
 			map.put("data",  list);
 		}
+		return map;
+	}
+	
+	//회원 정보 수정
+	@ResponseBody
+	@RequestMapping("androidMemberUpdate")
+	public Map<String, Object> androidMemberUpdate(HttpServletRequest req) {
+		log.info("androidMemberUpdate()");
+		String id = req.getParameter("member_id");
+		String pwd = req.getParameter("member_pwd");
+		String name = req.getParameter("member_name");
+		String tel = req.getParameter("member_tel");
+		String address = req.getParameter("member_address");
+		String email = req.getParameter("member_email");
+		
+		Member m = new Member();
+		m.setMember_id(id);
+		m.setMember_pwd(pwd);
+		m.setMember_name(name);
+		m.setMember_tel(tel);
+		m.setMember_address(address);
+		m.setMember_email(email);
+		
+		int cnt = dao.anMemberUpdate(m);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("cnt",  cnt);
 		return map;
 	}
 	

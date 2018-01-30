@@ -202,19 +202,19 @@
 	</select>
 
 	<!-- 메인 - 영화 가장 많이 본 순위 -->
-	<select id="mainMovieRank" resultType="String">
+	<select id="mainMovieRank" resultType="spring.mvc.baobob.vo.MovieVO">
 		<![CDATA[
-		SELECT title
+		SELECT idx movie_index, title movie_title
 		FROM (
-		    SELECT count, title, rownum as num
+		    SELECT count, idx, title, rownum as num
 		    FROM(
 		        SELECT *
 		        FROM (
-		            SELECT COUNT(ts.movie_index) count, mt.movie_title title
+		            SELECT COUNT(ts.movie_index) count, mt.movie_index idx, mt.movie_title title
 		            FROM movie_history_tbl  mh, theater_schedule_tbl ts, movie_tbl mt
 		            WHERE mh.theater_schedule_index = ts.theater_schedule_index
 		                AND mt.movie_index = ts.movie_index
-		            GROUP BY mt.movie_title
+		            GROUP BY mt.movie_index, mt.movie_title
 		        ) ORDER BY count DESC, title
 		))
 		WHERE num >= 1 AND num <= 7
@@ -228,11 +228,11 @@
 	</select>
 	
 	<!-- 메인 - 상영 중인 영화 -->
-	<select id="mainMovieTheater" resultType="String">
+	<select id="mainMovieTheater" resultType="spring.mvc.baobob.vo.MovieVO">
 		<![CDATA[
-		SELECT poster
-		FROM ( SELECT poster, rownum as num
-			   FROM ( SELECT DISTINCT ts.movie_index, mt.movie_poster poster
+		SELECT idx movie_index, poster movie_poster
+		FROM ( SELECT idx, poster, rownum as num
+			   FROM ( SELECT DISTINCT ts.movie_index idx, mt.movie_poster poster
 			    	  FROM theater_schedule_tbl ts, movie_tbl mt
 			    	  WHERE mt.movie_index = ts.movie_index
 			    	  ORDER BY ts.movie_index DESC)

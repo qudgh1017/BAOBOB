@@ -128,26 +128,28 @@ public class Host_parkingServiceImpl implements Host_parkingService {
 	@Override
 	public void getParkingSpaceState(HttpServletRequest req, Model model) {
 		ParkingSpace ps = dao.getParkingSpace();
-		int col = ps.getP_space_col();
-		int row = ps.getP_space_row();
-		int last_idx = col * row;
-		
-		//주차장 구역 타입 정보
-		String[] spaces = ps.getP_space_info().split(","); 
-		
-		//주차장 구역 상태 정보
-		ArrayList<String> list = dao.getParkingStates(last_idx);
-		String states = "";
-		for (int i = 0; i < list.size(); i += 1) {
-			if(spaces[i].equals("0") || spaces[i].equals("9") || spaces[i].equals("8")) {
-				list.set(i, "2");
+		if(ps != null) {
+			int col = ps.getP_space_col();
+			int row = ps.getP_space_row();
+			int last_idx = col * row;
+			
+			//주차장 구역 타입 정보
+			String[] spaces = ps.getP_space_info().split(","); 
+			
+			//주차장 구역 상태 정보
+			ArrayList<String> list = dao.getParkingStates(last_idx);
+			String states = "";
+			for (int i = 0; i < list.size(); i += 1) {
+				if(spaces[i].equals("0") || spaces[i].equals("9") || spaces[i].equals("8")) {
+					list.set(i, "2");
+				}
+				states += states.equals("") ? list.get(i) : "," + list.get(i);
 			}
-			states += states.equals("") ? list.get(i) : "," + list.get(i);
+	
+			model.addAttribute("col", col);
+			model.addAttribute("row", row);
+			model.addAttribute("states", states);
 		}
-
-		model.addAttribute("col", col);
-		model.addAttribute("row", row);
-		model.addAttribute("states", states);
 	}
 
 	// 해당 주차 구역 정보
