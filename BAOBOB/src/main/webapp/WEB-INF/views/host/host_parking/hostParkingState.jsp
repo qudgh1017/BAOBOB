@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
     
 <%@ include file="/resources/setting.jsp"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -22,7 +23,7 @@
 	</style>
 </head>
 <body class="fixed-nav sticky-footer bg-dark" onload="parkingStatus('${col}', '${row}', '${states}');">
-
+<c:if test="${col != null}">
 	<!-- Navigation -->
 	<%@ include file="hostParkingNavigation.jsp" %>
 	
@@ -51,20 +52,24 @@
 	<script type="text/javascript">
 		setInterval(function() {
 			sendRequest(state_callback, 'hostParkingStateAjax', 'GET', '');
-		}, 10000);
+		}, 3000);
 		
 		function state_callback() {
 			if(httpRequest.readyState == 4) {
 				if(httpRequest.status == 200) {
 					var data = httpRequest.responseText;
 					var arr = data.split('|');
-					console.log('arr 0 = ' + arr[0]);
-					console.log('arr 1 = ' + arr[1]);
-					console.log('arr 2 = ' + arr[2]);
 					parkingStatus(arr[0], arr[1], arr[2]);
 				}
 			}
 		}
 	</script>
+</c:if>
+<c:if test="${col == null}">
+	<script type="text/javascript">
+		alert("정보가 없습니다.");
+		history.back();
+	</script>
+</c:if>
 </body>
 </html>

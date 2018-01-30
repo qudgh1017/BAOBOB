@@ -275,9 +275,9 @@ public class Guest_movieDAOImpl implements Guest_movieDAO{
 	}
 
 	//메인 - 영화 순위
-	public ArrayList<String> mainMovieRank(){
+	public ArrayList<MovieVO> mainMovieRank(){
 		Guest_movieDAO mapper = sqlSession.getMapper(Guest_movieDAO.class);
-		ArrayList<String> list = mapper.mainMovieRank();
+		ArrayList<MovieVO> list = mapper.mainMovieRank();
 		return list;
 	}
 
@@ -290,9 +290,9 @@ public class Guest_movieDAOImpl implements Guest_movieDAO{
 	
 	//메인 - 예매 영화
 	@Override
-	public ArrayList<String> mainMovieTheater(Map<String, Object> map) {
+	public ArrayList<MovieVO> mainMovieTheater(Map<String, Object> map) {
 		Guest_movieDAO mapper = sqlSession.getMapper(Guest_movieDAO.class);
-		ArrayList<String> list = mapper.mainMovieTheater(map);
+		ArrayList<MovieVO> list = mapper.mainMovieTheater(map);
 		return list;
 	}
 	
