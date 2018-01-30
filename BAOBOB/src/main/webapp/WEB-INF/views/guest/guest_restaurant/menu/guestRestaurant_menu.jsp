@@ -185,7 +185,7 @@ break:break-word or break-all*/
 											<img style="width: 192px; height: 140px;" src="${restaurant_images}${dto.restaurant_menu_img}">
 										</p>
 										<h6 style="margin-bottom:0px;">${dto.restaurant_menu_name}</h6>
-										<strong class="txt-info type-1"> [ ${dto.restaurant_menu_price}원]</strong>
+										<strong class="txt-info type-1"> [ <fmt:formatNumber value="${dto.restaurant_menu_price}" pattern="#,###" />원]</strong>
 										<p class="txt-info type-2">${dto.restaurant_menu_content}</p>
 									</div>
 								</div>
