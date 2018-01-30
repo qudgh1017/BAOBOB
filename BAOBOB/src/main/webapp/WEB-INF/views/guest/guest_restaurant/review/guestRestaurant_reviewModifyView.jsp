@@ -18,12 +18,12 @@
 <body class="bg-dark" style="margin-top:200px;">
 	<c:if test="${selectCnt==0}">
 		<script type="text/javascript">
-			errorAlert('아이디가 존재하지 않습니다');
+			alert('아이디가 존재하지 않습니다');
 		</script>
 	</c:if>
 	<c:if test="${selectCnt==-1}">
 		<script type="text/javascript">
-			errorAlert('비밀번호가 일치하지 않습니다');
+		alert('비밀번호가 일치하지 않습니다');
 		</script>
 	</c:if>
 	<!-- 비밀번호가 일치하는 경우 -->
@@ -105,7 +105,7 @@
 							<tr>
 								<td colspan="2">
 									<button class="btn btn-primary" style="display: inline-block; width:80px; color:white; margin-right:5px;" type="submit">확인</button>
-									<button class="btn btn-secondary" style="display: inline-block; width:80px; color:white;" type="reset" onclick="window.history.go(-3);">취소</button>
+									<button class="btn btn-secondary" style="display: inline-block; width:80px; color:white;" type="reset" onclick="window.history.go(-2);">취소</button>
 								</td>
 							</tr>
 						</table> 
