@@ -70,6 +70,9 @@ public interface Member_mypageDAO {
 	//회원정보 가져오기
 	public Member getMemberInfo(String strId);
 	
+	//누적포인트에따라 회원등급(member_step)업데이트해주기
+	public int updateMemberStep(Map<String,Object> map);
+	
 	//회원정보 수정 처리
 	public int updateMember(Member vo);
 	
@@ -138,6 +141,9 @@ public interface Member_mypageDAO {
 	
 	//예매좌석 취소 - movie_count 돌려놀기
 	public int updateMovieCount(Map<String, Object> map);
+	
+	//사용한 포인트만큼 다시 포인트 더하기 결제금액의 10% 빼기, 누적포인트에서 결제금액의 10% 빼기.
+	public int updatePoint(Map<String, Object> map);
 	
 	//예매내역 삭제(movie_history_tbl)
 	public int moviePaidDelPro(int history_index);
