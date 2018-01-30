@@ -192,12 +192,7 @@
 					</div>
 				</div>
 			</div>
-		
 	</section>
-	<br>
-	<br>
-	<br>
-	<br>
 		
 	<!-- Footer -->
 	<%@ include file="/WEB-INF/views/guest/guest_movie/movie_footer.jsp" %> 

@@ -1,6 +1,6 @@
-/**
- * 
- */
+//좌석 관련 javascript
+
+
 var seatRow = ["A","B","C","D","E","F","G","H","I","J","k","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"];
 
 var adultCnt = 0;
@@ -9,7 +9,6 @@ var allCnt;
 var maxChecked;   //선택가능한 체크박스 갯수
 var totalChecked = 0; // 체크된 갯수 
 var seatInfo="";
-//var seat_index_arr = new Array();
 var seat_checked_arr = new Array();
 var j=0;
 var i=0;
@@ -18,14 +17,14 @@ var theater_index=0;
 var movie_index=0;
 var theater_schedule_index=0;
 
-//처음 movieTicket2페이지 켜졌을때 body onload
+//처음 movieTicket2 페이지 켜졌을때 body onload
 function personInitial(){
 	document.getElementById("adult"+0).style.backgroundColor="black";
 	document.getElementById("adult"+0).style.color="white";
 	document.getElementById("teenager"+0).style.backgroundColor="black";
 	document.getElementById("teenager"+0).style.color="white";
 }
-// 인원수 틀렸을 때 
+// 인원수 틀렸을 때 (초기화)
 function personInitial2(){
 	document.getElementById("adult"+adultCnt).style.backgroundColor="#DDDDDD";
 	document.getElementById("adult"+adultCnt).style.color="black";
@@ -122,7 +121,7 @@ function CountChecked(field) {
     }else{// 작거나 같은 경우
     	
 //    	alert("startAjax2 start");
-    	if (document.getElementById(fv).style.backgroundColor!="black"){ //좌석 체크 했을때
+    	if (document.getElementById("btn"+fv).style.backgroundColor!="black"){ //좌석 체크 했을때
     		
 //    		alert("체크했엉");
 //    		alert("id:fv color = " + document.getElementById(fv).style.backgroundColor);
@@ -206,12 +205,12 @@ function ajaxSeats(){
 	    	for(var x = 0; x<j; x++){
 	    		if(seat_checked_arr[x]!=-1){
 //		    		alert("x="+seat_checked_arr[x]);
-		    		if(document.getElementById(seat_checked_arr[x]).style.backgroundColor=="black"){
+		    		if(document.getElementById("btn"+seat_checked_arr[x]).style.backgroundColor=="black"){
 //		    			alert("asdf");
-		    			document.getElementById(seat_checked_arr[x]).style.backgroundColor="#EEEEEE";
+		    			document.getElementById("btn"+seat_checked_arr[x]).style.backgroundColor="#EEEEEE";
 		    			document.getElementById("btn"+seat_checked_arr[x]).style.color="black";
 		    		}else{
-		    			document.getElementById(seat_checked_arr[x]).style.backgroundColor="black";
+		    			document.getElementById("btn"+seat_checked_arr[x]).style.backgroundColor="black";
 		    			document.getElementById("btn"+seat_checked_arr[x]).style.color="white";
 		    		}
 	    		}
