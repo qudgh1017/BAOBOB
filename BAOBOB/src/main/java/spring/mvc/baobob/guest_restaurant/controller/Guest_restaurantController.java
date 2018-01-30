@@ -195,8 +195,6 @@ public class Guest_restaurantController {
 	
 	
 	
-	
-	
 	//4-4-1. ∏Æ∫‰ ªË¡¶
 	@RequestMapping("Restaurant_reviewDeleteForm")
 	public String Restaurant_reviewDeleteForm(HttpServletRequest req, Model	model) {

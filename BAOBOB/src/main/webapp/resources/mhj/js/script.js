@@ -223,7 +223,7 @@ function spaceDivChange() {
 }
 
 // 배열판의 선택한 버튼 설정	//
-function spaceBtnChange(location) {
+function spaceBtnChange(location, index) {
 	//선택한 버튼의 value변경 (DB에 아이콘 index 넣기 위한값)
 	var btnId = 'btn' + location;
 	var spaceBtn = document.getElementById(btnId);
@@ -246,7 +246,7 @@ function spaceBtnChange(location) {
 				// 선택한 버튼의 value 변경(DB에 아이콘index 넣기 위한 값)
 				//var btnId = 'btn' + location;
 				//var spaceBtn = document.getElementById(btnId);
-				
+				table_index = index;
 				spaceBtn.value = typeNum;
 			} else {
 				alert('설정 수량보다 많습니다.');
@@ -287,8 +287,8 @@ function spaceTypeChange2() {
 	
 	var date = document.getElementById('datepicker').value;
 	var time = document.getElementById('timepicker').value;
-	
-	window.location = 'guestReservAddPro?info=' + info + '&col=' + x + '&row=' + y + '&restaurant_index='+ restaurant_index + '&date=' + date + '&time=' + time;
+	alert('table_index=' + table_index);
+	window.location = 'guestReservAddPro?info=' + info + '&col=' + x + '&row=' + y + '&restaurant_index='+ restaurant_index + '&date=' + date + '&time=' + time + '&table_index=' + table_index;
 }
 
 // 설정한 배열판이 있을 경우
@@ -310,7 +310,7 @@ function spaceBody(info, col, row) {
 
 			space += '<button class="p_spaceBtn p_btn" ' + 'value="' + 
 						arr[index] + '" ' + 'id="' + btnId + '" ' + 
-						'onclick="spaceBtnChange(&#39;' + location + '&#39;)">' + 
+						'onclick="spaceBtnChange(&#39;' + location + '&#39;' + ',' + index + ')">' + 
 						'<img class="p_img space_img" ' + 'id="' + imgId + '" ' + 
 						'src="/baobob/resources/images/chg/' + typeImg + '">' + '</button>';
 		}

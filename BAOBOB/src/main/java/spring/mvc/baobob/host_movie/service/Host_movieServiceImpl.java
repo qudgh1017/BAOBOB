@@ -936,17 +936,27 @@ public class Host_movieServiceImpl implements Host_movieService{
 	@Override
 	public void movieWordcloud(HttpServletRequest req, Model model) {
 		int movie_index = Integer.parseInt(req.getParameter("movie_index")); // get방식으로 영화index를 가져옴
-		int countOfWords = 50; // 최대 50개의 워드클라우드 단어를 가져옴
-
+		int countOfWords = 30; // 30개의 워드클라우드 단어를 가져옴
+		if(req.getParameter("count")!=null) {
+			countOfWords = Integer.parseInt(req.getParameter("count"));
+		}
+		
+		String type = "";
+		type = req.getParameter("type");
+		
 		Map<String, Object> map = new HashMap<>();
 		map.put("countOfWords", countOfWords);
 		map.put("movie_index", movie_index);
+		map.put("type", type);
 		
 		List<WordVO> wordList = null;
 		wordList = dao.searchWordcloud(map);
 
+		model.addAttribute("type", type);
+		model.addAttribute("movie_index", movie_index);
 		model.addAttribute("wordList", wordList);
 		model.addAttribute("listSize", wordList.size());
+		model.addAttribute("countOfWords", countOfWords);
 	}
 
 	// 직원 고용하기 전 모든 회원 정보 불러오기
