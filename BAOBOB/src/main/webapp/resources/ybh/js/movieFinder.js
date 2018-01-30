@@ -84,8 +84,8 @@ function searchResultPage(page){
 			movie_age[i] = -1;
 		}
 	}
-	alert(select);
-	alert(movie_age);
+//	alert(select);
+//	alert(movie_age);
 	
 	$.ajaxSettings.traditional = true;//배열 형태로 서버쪽 전송을 위한 설정
 	$.ajax({

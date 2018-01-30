@@ -55,6 +55,9 @@
 							<c:when test="${movie.movie_janre==5}">멜로/로맨스</c:when>
 							<c:when test="${movie.movie_janre==6}">코미디</c:when>
 							<c:when test="${movie.movie_janre==7}">애니메이션</c:when>
+							<c:when test="${movie.movie_janre==8}">액션</c:when>
+							<c:when test="${movie.movie_janre==9}">스릴러</c:when>
+							<c:when test="${movie.movie_janre==10}">미스테리</c:when>
 						</c:choose>
 						 &nbsp;/&nbsp;기본:
 						
@@ -103,8 +106,6 @@
 			
 			<!-- 리뷰-->
 			<%@ include file="/WEB-INF/views/guest/guest_movie/movie/reviewList.jsp" %>
-			
-				
 		</div>
 	</section>
 	

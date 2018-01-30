@@ -44,88 +44,86 @@ $(window).load(function(){
 					<div align="center" style="color:white; height:400px;">
 						<h5 align="center">좋아하는 영화, 찾고싶은 영화를 BAOBOX에서 찾아드립니다!</h5>
 						<hr style="border:1px solid white;">
-						<!-- <form name="searchForm" id="searchForm"> -->
-							<table style="height:330px; width:100%;">
-								<!-- 영화검색 -->
-								<tr style="border-bottom:1px solid white" align="center">
-									<th style="color:white; font-size:12px; font-weight:bald; width:20%;">	
-										영화검색
-									</th>
-									<td style="width:80%" align="left">
-										<!-- 찾을 컬럼명 선택 -->
-										<select id="select" name="select" style="background-color:white; height:25px; font-size:12px;">
-										    <option value="all">전체</option>
-										    <option value="movie_title">영화제목</option>
-										    <option value="movie_star">주연배우</option>
-										    <option value="movie_director">감독</option>
-										</select>
-										<input type="text" id="keyword" name="keyword" placeholder="키워드를 입력해 주세요" style="font-size:12px; width:400px; height:25px">
-									</td>
-								</tr>
-								
-								<!-- 장르 -->
-								<tr style="border-bottom:1px solid white" align="center">
-									<th style="color:white; font-size:12px; font-weight:bald;">	
-										장르
-									</th>
-									<td align="left" style="color:white; font-size:12px; font-weight:bald;">
-										<input type="checkbox" id="checkall_janre">전체 <br><br>
-										<input type="checkbox" name="movie_janre" value="1">가족 &nbsp;
-										<input type="checkbox" name="movie_janre" value="2">공포/호러 &nbsp;
-										<input type="checkbox" name="movie_janre" value="3">드라마 &nbsp;
-										<input type="checkbox" name="movie_janre" value="4">SF &nbsp;
-										<input type="checkbox" name="movie_janre" value="5">멜로/로맨스 &nbsp;
-										<input type="checkbox" name="movie_janre" value="6">코미디 &nbsp;
-										<input type="checkbox" name="movie_janre" value="7">애니메이션 &nbsp;
-										<input type="checkbox" name="movie_janre" value="8">액션 &nbsp;
-										<input type="checkbox" name="movie_janre" value="9">스릴러 &nbsp;
-										<input type="checkbox" name="movie_janre" value="10">미스터리 &nbsp;
-									</td>
-								</tr>
-								
-								<!-- 제작국가 -->
-								<tr style="border-bottom:1px solid white" align="center">
-									<th style="color:white; font-size:12px; font-weight:bald;">	
-										제작국가
-									</th>
-									<td align="left" style="color:white; font-size:12px; font-weight:bald;">
-										<input type="checkbox" id="checkall_country">전체  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-										<input type="checkbox" name="movie_country" value="한국"> 한국&nbsp;&nbsp;
-										<input type="checkbox" name="movie_country" value="미국">미국 &nbsp;&nbsp;
-										<input type="checkbox" name="movie_country" value="일본">일본 &nbsp;&nbsp;
-										<input type="checkbox" name="movie_country" value="중국">중국&nbsp;&nbsp;
-										<input type="checkbox" name="movie_country" value="홍콩">홍콩 &nbsp;&nbsp;
-										<input type="checkbox" name="movie_country" value="프랑스">프랑스 &nbsp;&nbsp;
-										<input type="checkbox" name="movie_country" value="영국">영국 &nbsp;&nbsp;
-										<input type="checkbox" name="movie_country" value="독일">독일 &nbsp;&nbsp;
-										<input type="checkbox" name="movie_country" value="인도">인도 &nbsp;&nbsp;
-										<input type="checkbox" name="movie_country" value="기타">기타 &nbsp;&nbsp;
-									</td>
-								</tr>
-								
-								<!-- 관람등급 -->
-								<tr style="border-bottom:1px solid white" align="center">
-									<th style="color:white; font-size:12px; font-weight:bald;">	
-										관람등급	
-									</th>
-									<td align="left" style="color:white; font-size:12px; font-weight:bald;">
-										<input type="checkbox" id="checkall_age">전체  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-										<input type="checkbox" name="movie_age" value="0"> 전체관람가&nbsp;&nbsp;
-										<input type="checkbox" name="movie_age" value="12">12세 관람가 &nbsp;&nbsp;
-										<input type="checkbox" name="movie_age" value="15">15세 관람가&nbsp;&nbsp;
-										<input type="checkbox" name="movie_age" value="19">청소년 관람불가 &nbsp;
-									</td>
-								</tr>
-								
-								<!-- 버튼 -->
-								<tr>
-									<td colspan="2" align="center">
-										<button id="search_btn" class="btn btn-danger">검색</button>
-										<input class="btn btn-info" type="reset" value="초기화">
-									</td>
-								</tr>
-							</table>
-						<!-- </form> -->
+						<table style="height:330px; width:100%;">
+							<!-- 영화검색 -->
+							<tr style="border-bottom:1px solid white" align="center">
+								<th style="color:white; font-size:12px; font-weight:bald; width:20%;">	
+									영화검색
+								</th>
+								<td style="width:80%" align="left">
+									<!-- 찾을 컬럼명 선택 -->
+									<select id="select" name="select" style="background-color:white; height:25px; font-size:12px;">
+									    <option value="all">전체</option>
+									    <option value="movie_title">영화제목</option>
+									    <option value="movie_star">주연배우</option>
+									    <option value="movie_director">감독</option>
+									</select>
+									<input type="text" id="keyword" name="keyword" placeholder="키워드를 입력해 주세요" style="font-size:12px; width:400px; height:25px">
+								</td>
+							</tr>
+							
+							<!-- 장르 -->
+							<tr style="border-bottom:1px solid white" align="center">
+								<th style="color:white; font-size:12px; font-weight:bald;">	
+									장르
+								</th>
+								<td align="left" style="color:white; font-size:12px; font-weight:bald;">
+									<input type="checkbox" id="checkall_janre">전체 <br><br>
+									<input type="checkbox" name="movie_janre" value="1">가족 &nbsp;
+									<input type="checkbox" name="movie_janre" value="2">공포/호러 &nbsp;
+									<input type="checkbox" name="movie_janre" value="3">드라마 &nbsp;
+									<input type="checkbox" name="movie_janre" value="4">SF &nbsp;
+									<input type="checkbox" name="movie_janre" value="5">멜로/로맨스 &nbsp;
+									<input type="checkbox" name="movie_janre" value="6">코미디 &nbsp;
+									<input type="checkbox" name="movie_janre" value="7">애니메이션 &nbsp;
+									<input type="checkbox" name="movie_janre" value="8">액션 &nbsp;
+									<input type="checkbox" name="movie_janre" value="9">스릴러 &nbsp;
+									<input type="checkbox" name="movie_janre" value="10">미스터리 &nbsp;
+								</td>
+							</tr>
+							
+							<!-- 제작국가 -->
+							<tr style="border-bottom:1px solid white" align="center">
+								<th style="color:white; font-size:12px; font-weight:bald;">	
+									제작국가
+								</th>
+								<td align="left" style="color:white; font-size:12px; font-weight:bald;">
+									<input type="checkbox" id="checkall_country">전체  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+									<input type="checkbox" name="movie_country" value="한국"> 한국&nbsp;&nbsp;
+									<input type="checkbox" name="movie_country" value="미국">미국 &nbsp;&nbsp;
+									<input type="checkbox" name="movie_country" value="일본">일본 &nbsp;&nbsp;
+									<input type="checkbox" name="movie_country" value="중국">중국&nbsp;&nbsp;
+									<input type="checkbox" name="movie_country" value="홍콩">홍콩 &nbsp;&nbsp;
+									<input type="checkbox" name="movie_country" value="프랑스">프랑스 &nbsp;&nbsp;
+									<input type="checkbox" name="movie_country" value="영국">영국 &nbsp;&nbsp;
+									<input type="checkbox" name="movie_country" value="독일">독일 &nbsp;&nbsp;
+									<input type="checkbox" name="movie_country" value="인도">인도 &nbsp;&nbsp;
+									<input type="checkbox" name="movie_country" value="기타">기타 &nbsp;&nbsp;
+								</td>
+							</tr>
+							
+							<!-- 관람등급 -->
+							<tr style="border-bottom:1px solid white" align="center">
+								<th style="color:white; font-size:12px; font-weight:bald;">	
+									관람등급	
+								</th>
+								<td align="left" style="color:white; font-size:12px; font-weight:bald;">
+									<input type="checkbox" id="checkall_age">전체  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+									<input type="checkbox" name="movie_age" value="0"> 전체관람가&nbsp;&nbsp;
+									<input type="checkbox" name="movie_age" value="12">12세 관람가 &nbsp;&nbsp;
+									<input type="checkbox" name="movie_age" value="15">15세 관람가&nbsp;&nbsp;
+									<input type="checkbox" name="movie_age" value="19">청소년 관람불가 &nbsp;
+								</td>
+							</tr>
+							
+							<!-- 버튼 -->
+							<tr>
+								<td colspan="2" align="center">
+									<button id="search_btn" class="btn btn-danger">검색</button>
+									<input class="btn btn-info" type="reset" value="초기화">
+								</td>
+							</tr>
+						</table>
 					</div>
 				</div>
 				<div class="col-md-1"></div>
@@ -143,7 +141,6 @@ $(window).load(function(){
 					<hr style="border:2px solid black;">
 					<br><br>
 				</div>
-			
 				
 				<!-- 포스터 선택 -->
 				<c:if test="${cnt>0}">

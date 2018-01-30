@@ -70,7 +70,7 @@
 				<input type="hidden" name="theater_schedule_index" value="${theater_schedule_index}">
 				<input type="hidden" name="totalCnt" value="${totalCnt}"><!-- 총 사람수 -->
 				<input type="hidden" name="movie_index" value="${movie.movie_index}">
-				<input type="hidden" name="movie_history_price" value="${movie_history_price}">
+				<input type="hidden" name="movie_history_price" value="${movie_history_price}">		
 			</div>
 			
 			<div class="container">
@@ -115,6 +115,8 @@
 									<td style="width:50%">
 										<div class="form-group">
 											사용할 포인트: <label><input class="form-control" name="member_point" type="text" value="0" style="width:80px;" onchange="point('${member.member_point}',this, '${totalSalePrice}', '${movie_history_price}');"></label>
+											
+											
 										</div>
 									</td>
 								</tr>
@@ -190,18 +192,20 @@
 								</div>
 							</c:if>
 							<!-- 청소년 할인(명당 2000원) -->
-							<table style="width:100%; height:40px; padding:0; font-weight:bold;">
-								<tr>
-									<td>청소년 ${teenagerCnt}명</td>
-									<td align="right">-${teenagerSalePrice}원</td>
-								</tr>
-							</table>
-							
+							<c:if test="${teenagerCnt!=0}">
+								<table style="width:100%; height:40px; padding:0; font-weight:bold;">
+									<tr>
+										<td>청소년 ${teenagerCnt}명</td>
+										<td align="right">-${teenagerSalePrice}원</td>
+									</tr>
+								</table>
+							</c:if>
 							<!-- 포인트 사용시 -->
 							<div style="width:100%; height:40px;">
 								<table style="width:100%; height:40px; padding:0; font-weight:bold;">
 									<tr>
 										<td>포인트사용</td>
+										<!-- ajax 결과-->
 										<td id="point" align="right">
 											${pointSalePrice}원
 										</td>
@@ -213,6 +217,7 @@
 						<div style="width:100%; height:30px; background-color:#DDDDDD">
 							총 할인 금액
 						</div>
+						<!-- ajax결과 -->
 						<div id="totalSalePrice" align="right" style="width:100%; height:40px;">
 							- ${totalSalePrice}원
 						</div>
@@ -220,6 +225,7 @@
 						<div style="width:100%; height:30px; background-color:black; color:white">
 							남은 결제금액
 						</div>
+						<!-- ajax결과 -->
 						<div id="movie_history_price" align="right" style="width:100%; height:40px;">
 							${movie_history_price}원
 						</div>
