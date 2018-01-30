@@ -55,5 +55,13 @@ public class AndroidDAOImpl implements AndroidDAO{
 		return list;
 	}
 
+	//식당 이용 내역
+	@Override
+	public ArrayList<Android> getUseRestaurantList(String id) {
+		AndroidDAO mapper = sqlSession.getMapper(AndroidDAO.class);
+		ArrayList<Android> list = mapper.getUseRestaurantList(id);;
+		return list;
+	}
+
 
 }

@@ -21,4 +21,7 @@ public interface AndroidDAO {
 	
 	//영화 예매 내역
 	public ArrayList<Android> getMemberMovieTicketing(String id);
+
+	//식당 이용 내역
+	public ArrayList<Android> getUseRestaurantList(String id);
 }

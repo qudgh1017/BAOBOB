@@ -134,7 +134,6 @@ public class AndroidController {
 			}
 			map.put("data",  list);
 		} else if(idx.equals("1")) { //식당 예매 내역
-			
 			/*
 			 * VO Class 중 Android를 이용해서 필요한 데이터만 전달
 			 * select 할때 별칭으로 data1/data2/.../data5 로 주면 됩니다.
@@ -147,10 +146,8 @@ public class AndroidController {
 			 * map.put("data", list);
 			 */
 			
-			
-			
-			
-			
+			ArrayList<Android> tmp = dao.getUseRestaurantList(id); //예약 내역
+			map.put("data",  tmp);
 			
 		} else if(idx.equals("2")) { //주차 이용 내역
 			ArrayList<Android> list = new ArrayList<>();
@@ -165,13 +162,6 @@ public class AndroidController {
 		}
 		return map;
 	}
-	
-	
-	
-	
-	
-	
-	
 	
 	//TEST http://cocomo.tistory.com/412
 	@ResponseBody //웹에서 안드로이드로 값을 전달하기 위한 머노테이션
