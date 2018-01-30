@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <style>
-	.back_img{position:fixed;top:0;left:0;bottom:0;object-fit:cover;}
+	.back_img{position:fixed;top:0;width:100%;height:100%;object-fit:cover;}
 	body .section{margin:15rem 0;}
 	.img-fluid{border-radius:0.5em;}
 	#inform{width:700px;margin:0 auto;}

@@ -1,3 +1,4 @@
+<!-- 영화-리뷰페이지(추가요망) -->
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     

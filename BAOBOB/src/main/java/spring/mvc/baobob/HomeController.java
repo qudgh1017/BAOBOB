@@ -65,11 +65,6 @@ public class HomeController {
 	@RequestMapping("mainIndex")
 	public String mainIndex(HttpServletRequest req, Model model) {
 		System.out.println("mainIndex()");
-		
-		String id = (String) req.getSession().getAttribute("memId");
-		System.out.println(id);
-		req.getSession().setAttribute("memId", id);
-		
 		return "main/mainIndex";
 	}
 	

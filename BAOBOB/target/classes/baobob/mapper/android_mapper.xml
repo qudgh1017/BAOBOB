@@ -42,11 +42,11 @@
 	
 	<!-- 영화 예매 내역 -->
 	<select id="getMemberMovieTicketing" resultType="spring.mvc.baobob.vo.Android">
-		SELECT sd data1, ss data2, se data3, movie_title data4, movie_poster data5
+		SELECT h_idx data1, ss data2, se data3, movie_title data4, movie_poster data5
 		FROM (
-		    SELECT movie_index movie, schedule_startDate sd, schedule_startTime ss, schedule_endTime se
+		    SELECT movie_index m_idx, h_idx, schedule_startTime ss, schedule_endTime se
 		    FROM (
-		        SELECT t.theater_schedule_index idx
+		        SELECT m.history_index h_idx, t.theater_schedule_index idx
 		        FROM history_tbl h, movie_history_tbl m, theater_seat_tbl t
 		        WHERE h.history_index = m.history_index
 		            AND m.theater_schedule_index = t.theater_schedule_index
@@ -55,7 +55,35 @@
 		        ), theater_schedule_tbl ts
 		    WHERE ts.theater_schedule_index = idx
 		    ), movie_tbl mt
-		WHERE mt.movie_index = movie
+		WHERE mt.movie_index = m_idx
+	</select>
+	
+	
+	<!-- 주차 이용 내역 -->
+	<select id="getMemberParking" resultType="spring.mvc.baobob.vo.Android">
+		SELECT p_history_date data1, p_history_in data2, p_history_out data3, p_history_space data4, p_history_price data5
+		FROM history_tbl h, park_history_tbl p
+		WHERE h.history_index = p.history_index
+		       AND h.member_id = #{id}
+	</select>
+	
+	<!-- 회원 정보 수정 -->
+	<update id="anMemberUpdate" parameterType="spring.mvc.baobob.vo.Member">
+		UPDATE member_tbl
+		SET
+			member_pwd = #{member_pwd},
+			member_name = #{member_name},
+			member_tel = #{member_tel},
+			member_address = #{member_address},
+			member_email = #{member_email}
+		WHERE member_id = #{member_id}
+	</update>
+	
+	<!-- 영화 정보 -->
+	<select id="androidMovieInfo" resultType="spring.mvc.baobob.vo.MovieVO">
+		SELECT *
+		FROM movie_tbl
+		WHERE movie_title = #{movie_title}
 	</select>
 	
 	<!-- 식당 예약 내역 -->

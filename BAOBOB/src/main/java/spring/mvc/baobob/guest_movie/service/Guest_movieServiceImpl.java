@@ -29,7 +29,7 @@ public class Guest_movieServiceImpl implements Guest_movieService{
 	//영화 메인
 	@Override
 	public void movieMain(HttpServletRequest req, Model model) {
-		ArrayList<String> rankList = gmdao.mainMovieRank();
+		ArrayList<MovieVO> rankList = gmdao.mainMovieRank();
 		model.addAttribute("rank", rankList);
 		
 		int movieCnt = gmdao.mainMovieTheaterCnt();
@@ -46,7 +46,7 @@ public class Guest_movieServiceImpl implements Guest_movieService{
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("start", start);
 			map.put("end",  end);
-			ArrayList<String> movieList = gmdao.mainMovieTheater(map);
+			ArrayList<MovieVO> movieList = gmdao.mainMovieTheater(map);
 			model.addAttribute("start", start);
 			model.addAttribute("end", end);
 			model.addAttribute("movieList", movieList);
@@ -625,7 +625,7 @@ public class Guest_movieServiceImpl implements Guest_movieService{
 	}
 
 	//좌석도 보여주기
-	@Override
+	/*@Override
 	public MovieResViewVO movieResView(HttpServletRequest req, Model model) {
 		// 좌석도 정보를 가질 바구니 생성
 		MovieResViewVO seatInfo = new MovieResViewVO();
@@ -663,14 +663,10 @@ public class Guest_movieServiceImpl implements Guest_movieService{
 		System.out.println("state : " + state);
 		System.out.println("=========================");
 		
-//			model.addAttribute("vo", vo);
-//			model.addAttribute("seat_vos", seat_vos);
-//			model.addAttribute("state", state);
-		
 		return seatInfo;
-	}
+	}*/
 
-	//좌석도 선택
+	//좌석도 뿌려주기,선택
 	@Override
 	public void seatSelect(HttpServletRequest req, Model model) {
 		// 좌석도 정보를 가질 바구니 생성
@@ -720,9 +716,6 @@ public class Guest_movieServiceImpl implements Guest_movieService{
 	//한 좌석 정보
 	@Override
 	public void seatInfo(HttpServletRequest req, Model model) {
-	//	String str_seat_checked_arr = req.getParameter("seat_checked_arr");
-	//	System.out.println("seat_checked_arr (string) = " + str_seat_checked_arr);
-	//	System.out.println("자른거 : " + str_seat_checked_arr.split(","));
 		String[] str_seat_checked_arr = req.getParameterValues("seat_checked_arr");
 		System.out.println("seat_checked_arr = " + str_seat_checked_arr); //seat_checked_arr
 		int size = str_seat_checked_arr.length;
@@ -745,13 +738,6 @@ public class Guest_movieServiceImpl implements Guest_movieService{
 		}
 		
 		model.addAttribute("seats", seats);
-//		int seat_index = Integer.parseInt(req.getParameter("seat_index"));
-//		Theater_seatVO seat = new Theater_seatVO();
-//		
-//		seat = gmdao.seatInfo(seat_index);
-//		
-//		model.addAttribute("seat",seat);
-//		
 	}
 	
 	

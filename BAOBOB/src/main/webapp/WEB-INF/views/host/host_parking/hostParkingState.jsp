@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
     
 <%@ include file="/resources/setting.jsp"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -22,49 +23,61 @@
 	</style>
 </head>
 <body class="fixed-nav sticky-footer bg-dark" onload="parkingStatus('${col}', '${row}', '${states}');">
-
-	<!-- Navigation -->
-	<%@ include file="hostParkingNavigation.jsp" %>
-	
-	<div class="content-wrapper">
-		<div class="container-fluid">
-			<div class="card mb-3">
-				<div class="card-header">실시간 주차 상태</div>
-				<div class="card-body p_body" id="spaceDiv"></div>
-				<div class="card-footer small text-muted">
-					주차 구역을 선택하면 해당 정보가 나타납니다.
-				</div>
-			</div>
-			<div class="row test" id="result">
-				<!-- 구역 정보 -->
-			</div>
-			<div id="moveNum"></div>
-		</div>
-	</div>
-	
-	
-	<!-- Footer -->
-	<%@ include file="../common/footer.jsp" %>
-	
-	<script src="${projectRes}ymk/js/ajax.js"></script>
-	<script src="${projectRes}ymk/js/parkingState.js"></script>
-	<script type="text/javascript">
-		setInterval(function() {
-			sendRequest(state_callback, 'hostParkingStateAjax', 'GET', '');
-		}, 10000);
+<c:if test="${sessionScope.memStep != null && (sessionScope.memStep == 1 || sessionScope.memStep == 7)}">
+	<c:if test="${col != null}">
+		<!-- Navigation -->
+		<%@ include file="hostParkingNavigation.jsp" %>
 		
-		function state_callback() {
-			if(httpRequest.readyState == 4) {
-				if(httpRequest.status == 200) {
-					var data = httpRequest.responseText;
-					var arr = data.split('|');
-					console.log('arr 0 = ' + arr[0]);
-					console.log('arr 1 = ' + arr[1]);
-					console.log('arr 2 = ' + arr[2]);
-					parkingStatus(arr[0], arr[1], arr[2]);
+		<div class="content-wrapper">
+			<div class="container-fluid">
+				<div class="card mb-3">
+					<div class="card-header">실시간 주차 상태</div>
+					<div class="card-body p_body" id="spaceDiv"></div>
+					<div class="card-footer small text-muted">
+						주차 구역을 선택하면 해당 정보가 나타납니다.
+					</div>
+				</div>
+				<div class="row test" id="result">
+					<!-- 구역 정보 -->
+				</div>
+				<div id="moveNum"></div>
+			</div>
+		</div>
+		
+		
+		<!-- Footer -->
+		<%@ include file="../common/footer.jsp" %>
+		
+		<script src="${projectRes}ymk/js/ajax.js"></script>
+		<script src="${projectRes}ymk/js/parkingState.js"></script>
+		<script type="text/javascript">
+			setInterval(function() {
+				sendRequest(state_callback, 'hostParkingStateAjax', 'GET', '');
+			}, 3000);
+			
+			function state_callback() {
+				if(httpRequest.readyState == 4) {
+					if(httpRequest.status == 200) {
+						var data = httpRequest.responseText;
+						var arr = data.split('|');
+						parkingStatus(arr[0], arr[1], arr[2]);
+					}
 				}
 			}
-		}
+		</script>
+	</c:if>
+	<c:if test="${col == null}">
+		<script type="text/javascript">
+			alert("정보가 없습니다.");
+			history.back();
+		</script>
+	</c:if>
+</c:if>
+<c:if test="${sessionScope.memStep == null && (sessionScope.memStep != 1 || sessionScope.memStep != 7)}">
+	<script src="${projectRes}ymk/js/script.js"></script>
+	<script type="text/javascript">
+		stepAlert();
 	</script>
+</c:if>
 </body>
 </html>

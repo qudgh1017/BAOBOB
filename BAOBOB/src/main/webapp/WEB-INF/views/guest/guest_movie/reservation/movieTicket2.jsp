@@ -1,3 +1,4 @@
+<!-- 영화-예매의 인원/좌석 선택 2페이지 -->
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@page import="java.util.Date"%>    
@@ -99,23 +100,32 @@
 					<div style="width:100%; height:150px; padding:0px;">
 					
 					</div>
-					<!-- 좌석 정보 -->
+					<!-- 좌석에 대한 정보 -->
 					<div align="left" style="width:100%; height:350px; padding:0px; font-size:15px;">
-						<label class="btn btn" style="margin:1px 1px; height:35; width:35; border:2px solid green;">
-							<input type="checkbox" style="width:0; height:0;" disabled>
-						</label>&nbsp;&nbsp;Standard Zone
+						
+						<button type="button" style="margin:1px 1px;" disabled>
+							<img src="${projectRes}/images/phc/icon/theater_in.png" style="height:25px; width:25px;">
+						</button>
+						&nbsp;&nbsp;Entrance
 						<br><br>
-						<label class="btn btn" style="margin:1px 1px; height:35; width:35; border:2px solid red;">
-							<input type="checkbox" style="width:0; height:0;" disabled>
-						</label>&nbsp;&nbsp;Prime Zone
+						<button type="button" style="margin:1px 1px;" disabled>
+							<img src="${projectRes}/images/phc/icon/theater_out.png" style="height:25px; width:25px;">
+						</button>
+						&nbsp;&nbsp;Exit
 						<br><br>
-						<label class="btn btn" style="margin:1px 1px; height:35; width:35; border:2px solid pink;">
-							<input type="checkbox" style="width:0; height:0;" disabled>
-						</label>&nbsp;&nbsp;SWEET BOX
+						<button type="button" style="margin:1px 1px; height:25; width:25; border:2px solid green;" disabled></button>
+						&nbsp;&nbsp;Standard Zone
 						<br><br>
-						<label class="btn btn" style="margin:1px 1px; height:35; width:35; background-image: url('${projectRes}/images/phc/icon/theater_comp.png'); background-size:33px">
-			 				<input type="checkbox" style="width:0; height:0;" disabled>
-						</label>&nbsp;&nbsp;Reserved
+						<button type="button" style="margin:1px 1px; height:25; width:25; border:2px solid red;" disabled></button>
+						&nbsp;&nbsp;Prime Zone
+						<br><br>
+						<button type="button" style="margin:1px 1px; height:25; width:25; border:2px solid pink;" disabled></button>
+						&nbsp;&nbsp;Sweet Box
+						<br><br>
+						<button type="button" style="margin:1px 1px;" disabled>
+							<img src="${projectRes}/images/phc/icon/theater_comp.png" style="height:25px; width:25px;">
+						</button>
+						&nbsp;&nbsp;Reserved
 						<br><br>
 					</div>
 				</div>
@@ -138,6 +148,7 @@
 			</div>
 			<!-- 좌석정보, 가격 -->
 			<div class="col-md-3" align="left" style="border: solid 1px gray; color:white">
+				<!-- AJAX 결과 좌석선택된 정보(검은창) -->
 				<div id="seatInfo">
 					<br><br>
 					<center style="color:gray">

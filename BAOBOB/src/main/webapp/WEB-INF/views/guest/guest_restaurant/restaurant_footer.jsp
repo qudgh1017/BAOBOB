@@ -44,6 +44,7 @@
 			<div class="col-md-4">
 				<h4 class="text-uppercase mb-4">BAOBOB Home</h4>
 				<%-- <a href="movie_guest"><img src="${projectRes}images/lgt/lost/The-Baobab-Tree-4.jpg" style="width:150px; height:100px"></a> --%>
+				<img src="${projectRes}images/lgt/lost/The-Baobab-Tree-4.jpg" style="width:150px; height:100px">
 			</div>
 		</div>
 	</div>

@@ -13,6 +13,7 @@
 	</style>
 </head>
 <body class="fixed-nav sticky-footer bg-dark">
+<c:if test="${sessionScope.memStep != null && (sessionScope.memStep == 1 || sessionScope.memStep == 7)}">
 
 	<%@ include file="hostParkingNavigation.jsp" %>
 	
@@ -97,5 +98,12 @@
 			chart.draw(data, options);
 		}
 	</script>
+</c:if>
+<c:if test="${sessionScope.memStep == null && (sessionScope.memStep != 1 || sessionScope.memStep != 7)}">
+	<script src="${projectRes}ymk/js/script.js"></script>
+	<script type="text/javascript">
+		stepAlert();
+	</script>
+</c:if>
 </body>
 </html>

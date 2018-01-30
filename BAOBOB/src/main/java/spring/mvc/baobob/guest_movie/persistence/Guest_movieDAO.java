@@ -83,13 +83,13 @@ public  interface Guest_movieDAO {
 	public Theater_seatVO seatInfo(int seat_index);
 	
 	//메인 - 영화 순위
-	public ArrayList<String> mainMovieRank();
+	public ArrayList<MovieVO> mainMovieRank();
 	
 	//메인 - 상영 중인 영화 갯수
 	public int mainMovieTheaterCnt();
 	
 	//메인 - 상영 중인 영화
-	public ArrayList<String> mainMovieTheater(Map<String, Object> map);
+	public ArrayList<MovieVO> mainMovieTheater(Map<String, Object> map);
 	
 	//member 정보
 	public Member getMemberInfo(String member_id);

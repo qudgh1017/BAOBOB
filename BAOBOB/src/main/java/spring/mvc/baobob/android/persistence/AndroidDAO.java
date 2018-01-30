@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import spring.mvc.baobob.vo.Android;
 import spring.mvc.baobob.vo.BoardVO;
+import spring.mvc.baobob.vo.Member;
+import spring.mvc.baobob.vo.MovieVO;
 
 public interface AndroidDAO {
 
@@ -21,7 +23,19 @@ public interface AndroidDAO {
 	
 	//영화 예매 내역
 	public ArrayList<Android> getMemberMovieTicketing(String id);
+<<<<<<< HEAD
 
 	//식당 이용 내역
 	public ArrayList<Android> getUseRestaurantList(String id);
+=======
+	
+	//주차 이용 내역
+	public ArrayList<Android> getMemberParking(String id);
+	
+	//회원 정보 수정
+	public int anMemberUpdate(Member m);
+	
+	//영화 정보
+	public MovieVO androidMovieInfo(String movie_title);
+>>>>>>> branch 'master' of https://github.com/gjrjrem/BAOBOB.git
 }

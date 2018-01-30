@@ -8,6 +8,8 @@ import org.springframework.stereotype.Repository;
 
 import spring.mvc.baobob.vo.Android;
 import spring.mvc.baobob.vo.BoardVO;
+import spring.mvc.baobob.vo.Member;
+import spring.mvc.baobob.vo.MovieVO;
 
 @Repository
 public class AndroidDAOImpl implements AndroidDAO{
@@ -55,12 +57,37 @@ public class AndroidDAOImpl implements AndroidDAO{
 		return list;
 	}
 
+<<<<<<< HEAD
 	//식당 이용 내역
 	@Override
 	public ArrayList<Android> getUseRestaurantList(String id) {
 		AndroidDAO mapper = sqlSession.getMapper(AndroidDAO.class);
 		ArrayList<Android> list = mapper.getUseRestaurantList(id);;
 		return list;
+=======
+	//주차 이용 내역
+	@Override
+	public ArrayList<Android> getMemberParking(String id) {
+		AndroidDAO mapper = sqlSession.getMapper(AndroidDAO.class);
+		ArrayList<Android> list = mapper.getMemberParking(id);
+		return list;
+	}
+
+	//회원 정보 수정
+	@Override
+	public int anMemberUpdate(Member m) {
+		AndroidDAO mapper = sqlSession.getMapper(AndroidDAO.class);
+		int cnt = mapper.anMemberUpdate(m);
+		return cnt;
+	}
+
+	//영화 정보
+	@Override
+	public MovieVO androidMovieInfo(String movie_title) {
+		AndroidDAO mapper = sqlSession.getMapper(AndroidDAO.class);
+		MovieVO movie = mapper.androidMovieInfo(movie_title);
+		return movie;
+>>>>>>> branch 'master' of https://github.com/gjrjrem/BAOBOB.git
 	}
 
 

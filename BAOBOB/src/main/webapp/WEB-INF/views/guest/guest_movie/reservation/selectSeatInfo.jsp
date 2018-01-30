@@ -1,3 +1,4 @@
+<!-- AJAX처리된 페이지: AJAX처리된 reserveSeatInfo페이지에서 좌석 선택시 그 해당 좌석의 정보를 보내서 값 처리해서 필요한 정보의 형태 바꿔주기-->
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@page import="java.util.Date"%>
