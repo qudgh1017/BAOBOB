@@ -81,7 +81,7 @@
 								<!-- 날짜비교를 위한 선언,if문의 jstl -->
 								<!-- 상영시간전에는 예약취소버튼, 상영시간후에는 결제완료 노출 -->
 								<jsp:useBean id="now" class="java.util.Date" />
-								<fmt:formatDate value="${dto.schedule_endTime}" var="hisDate" pattern="yyyy-MM-dd" />
+								<fmt:formatDate value="${dto.schedule_endTime}" var="hisDate" pattern="yyyy-MM-dd HH:mm" />
 								<fmt:formatDate value="${now}" var="sysDate" pattern="yyyy-MM-dd" /><br>
 								<c:if test="${hisDate > sysDate}">
 									<input type="button" class="button" 

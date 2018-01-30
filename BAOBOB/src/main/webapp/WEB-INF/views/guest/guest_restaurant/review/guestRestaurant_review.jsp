@@ -103,19 +103,6 @@ $(document).ready(function(){
 	<!-- 레스토랑 메뉴 -->
 	<%@ include file="/WEB-INF/views/guest/guest_restaurant/restaurantMenu.jsp" %>
 	
-	<!--===== 식당1-사진 =====-->
-	<%-- <header class="bg-primary text-white text-center head_header" style="background-color: #2c3e50!important;">
-	<div class="head_screen"><!-- container -->
-		<h1>Japanese Food</h1>
-		<!-- <h2>Multiplex Baobob</h2> -->
-	</div>
-	<img class="img-fluid mb-5 d-block mx-auto mainImg" src="${projectRes}images/mhj/choice/jap_2.jpg" width="100%" height="100px">
-	</header> --%>
-	<!--======= Header 종료 =======-->
-	
-	
-	<!--====== Container 시작 ======-->
-	<!-- 리뷰 쓰기  -->
 	<section>
 		<div class="container">
 			<div class="row">
@@ -126,7 +113,7 @@ $(document).ready(function(){
 						<h3 align=left;>どきどきDokidoki</h3>
 					</c:if>
 					<c:if test="${restaurant_index==2}">
-						<h3 align=left;>바압</h3>
+						<h3 align=left;>바오밥</h3>
 					</c:if>
 					<c:if test="${restaurant_index==3}">
 						<h3 align=left;>BOUTBACK</h3>
@@ -162,8 +149,6 @@ $(document).ready(function(){
 									</div>
 									<div id="spaceDiv"> 
 									</div>
-									<!-- 별점 종료 -->
-									<!-- <input class="input" type="grade" value="" name="review_grade" style="width:50px" required/> -->
 								</td>
 							</tr>
 							
@@ -218,7 +203,6 @@ $(document).ready(function(){
 													<br/><input class="button" type="button" value="삭제" onclick="guest_review_delete(${pageNum}, ${dto.review_index}, ${restaurant_index});"> 
 												
 												</td>
-											</th>
 											</tr>
 											<tr>
 												<th style="text-align:center;"><span>평점</span></th> 
@@ -333,7 +317,7 @@ $(document).ready(function(){
 	
 	<!--======= Footer 시작 =======-->
 	<!-- Footer -->
-	<%@ include file="/WEB-INF/views/guest/guest_movie/movie_footer.jsp" %> 
+	<%@ include file="/WEB-INF/views/guest/guest_restaurant/restaurant_footer.jsp" %> 
 	<!-- Footer -->
 	<!--======= Footer 종료=======-->
 </body>

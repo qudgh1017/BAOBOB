@@ -225,18 +225,32 @@ public class Host_totalServiceImpl implements Host_totalService{
 	
 /*----------------------------------------------------------------------------*/
 	
-	//영화관 결산페이지
+	//식당 결산페이지
 	public void restaurantChart(HttpServletRequest req, Model model) {
 		//총판매액
 		int restaurantSale = dao.getRestaurantSale(); 
 		model.addAttribute("restaurantSale",restaurantSale);
 		
 		Map<String,Object> map = new HashMap<String,Object>();
+		String[] janre = {"1","2","3"};
 		
 		List<hostTChartVO> voList = dao.getRestaurantChart();
 		
 		for(hostTChartVO i : voList) {
 			map.put(Integer.toString(i.getKind()), i.getSum());
+		}
+		
+		//키값이 없을때 0으로 초기화 
+		for(String s : janre) {
+			int chk = 0;
+			for(Entry<String, Object> m : map.entrySet()) {
+				if(s.equals(m.getKey())) {
+					chk=1;
+				}
+			}
+			if(chk==0) {
+				map.put(s, 0);
+			}
 		}
 		
 		model.addAttribute("restaurantChart", map);

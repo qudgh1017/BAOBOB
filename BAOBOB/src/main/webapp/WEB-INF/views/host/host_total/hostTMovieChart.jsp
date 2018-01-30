@@ -31,7 +31,7 @@
 					<div style="display: -webkit-box;">
 						<div id="movieChart" style="width:100%; height:500px;"></div>
 					</div>
-						<div style="font-weight:900; font-size:30px">영화관 총 매출액 : ${movieSale}원</div>
+						<div style="font-weight:900; font-size:30px">영화관 총 매출액 : <fmt:formatNumber value="${movieSale}" pattern="###,###,###"/>원</div>
 				</div>
 				<div class="card-footer small text-muted">BAOBOX</div>
 			</div>

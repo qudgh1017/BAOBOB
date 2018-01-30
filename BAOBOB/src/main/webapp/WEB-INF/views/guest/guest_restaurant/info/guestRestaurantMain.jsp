@@ -56,13 +56,13 @@
 						<div class="col-md-offset-1"></div>
 						<div class="col-md-10">
 							<br>
-							<h3 align=left;>바압</h3>
+							<h3 align=left;>바오밥</h3>
 							<hr style="border:2px solid black;">
 						</div>
 						<div class="col-md-offset-1"></div>
 					</div>
 					
-					<!-- 바압 레스토랑 사진 -->
+					<!-- 바오밥 레스토랑 사진 -->
 					<div class="row">
 						<div class="col-md-offset-1"></div>
 						<div class="col-md-10">
@@ -173,7 +173,7 @@
 	<br><br><br><br><br><br><br><br>
 	
 	<!--======= Footer 시작 =======-->
-	<%@ include file="/WEB-INF/views/guest/guest_movie/movie_footer.jsp" %> 
+	<%@ include file="/WEB-INF/views/guest/guest_restaurant/restaurant_footer.jsp" %> 
 	<!--======= Footer 종료=======-->
 </body>
 </html>

@@ -3,7 +3,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <script>
-	<%@ include file="/resources/ybh/js/loginService.js"%>
+<%@ include file="/resources/ybh/js/loginService.js"%>
 </script>
 <%@ include file="/resources/setting.jsp"%>
 <body>

@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!-- Footer -->
-<footer class="footer text-center" style="background-image: url('/baobob/resources/images/ybh/movie_menu.jpg');">
+<footer class="footer text-center" style="background-color:orange;">
 	<div class="container">
 		<div class="row">
 			<div class="col-md-4 mb-5 mb-lg-0">
@@ -42,8 +42,8 @@
 			  </ul>
 			</div>
 			<div class="col-md-4">
-				<h4 class="text-uppercase mb-4">Home</h4>
-				<a href="guest_movie"><h2>BAOBOX</h2></a>
+				<h4 class="text-uppercase mb-4">BAOBOB Home</h4>
+				<%-- <a href="movie_guest"><img src="${projectRes}images/lgt/lost/The-Baobab-Tree-4.jpg" style="width:150px; height:100px"></a> --%>
 			</div>
 		</div>
 	</div>
@@ -51,7 +51,7 @@
 
 <div class="copyright py-4 text-center text-white">
   <div class="container">
-    <small>Copyright &copy; BAOBOB - BAOBOX 2018</small>
+    <small>Copyright &copy; BAOBOB - YUMMY 2018</small>
   </div>
 </div>
 
@@ -72,4 +72,3 @@
 
 <!-- Custom scripts for this template -->
 <script src="${projectRes}mainBootstrap/js/freelancer.min.js"></script>
-
