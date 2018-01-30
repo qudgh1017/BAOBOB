@@ -67,34 +67,38 @@
 	
 	
 	<!-- 식당[1] 예약 처리 -->
+	
+	<!-- 식당[1] 예약 처리 -->
 	<insert id="addReserv" parameterType="Map">
-		INSERT INTO restaurant_schedule_tbl(restaurant_index, restaurant_schedule_index, schedule_startTime, schedule_endTime)
-		VALUES(#{dto.restaurant_index}, restaurant_schedule_tbl_SEQ.nextval, #{dto3.schedule_startTime}, #{dto3.schedule_endTime})
+		INSERT INTO restaurant_schedule_tbl(restaurant_index, restaurant_schedule_index, schedule_startTime, schedule_endTime) 
+		VALUES(#{restaurant_dto.restaurant_index}, restaurant_schedule_tbl_SEQ.nextval, #{schedule_dto.schedule_startTime}, #{schedule_dto.schedule_endTime})
 	</insert>
 	
 	<!--추가 : 식당 총 관리자 - 매장 내 테이블 수정 처리 전 테이블 초기화 -->
 	<delete id="resetTable2" parameterType="spring.mvc.baobob.vo.Restaurant_scheduleVO">
-		DELETE FROM restaurant_table_tbl
-		WHERE restaurant_index = #{restaurant_index} AND restaurant_schedule_index=#{restaurant_schedule_index}
-	</delete>	
+		DELETE FROM restaurant_table_tbl 
+		WHERE restaurant_index = #{restaurant_index} AND restaurant_schedule_index = #{restaurant_schedule_index}
+	</delete>
 	
 	<!--추가 : 식당[1] 날짜에 해당하는 테이블 예약 -->
 	<insert id="modTable2" parameterType="Map">
-		INSERT INTO restaurant_table_tbl(restaurant_index, restaurant_table_index, table_row, table_col, table_state, restaurant_schedule_index)
-		<if test="dto3.restaurant_schedule_index==0">
-			VALUES(#{dto.restaurant_index}, #{dto2.restaurant_table_index}, #{dto2.table_row}, #{dto2.table_col}, #{dto2.state}, restaurant_schedule_tbl_SEQ.CURRVAL)
+		INSERT INTO restaurant_table_tbl(restaurant_index, restaurant_table_index, table_row, table_col, table_state, restaurant_schedule_index) 
+		<if test="schedule_dto.restaurant_schedule_index == 0">
+		VALUES(#{restaurant_dto.restaurant_index}, #{table_dto.restaurant_table_index}, #{table_dto.table_row}, #{table_dto.table_col}, #{table_dto.state}, restaurant_schedule_tbl_SEQ.CURRVAL)
 		</if>
-		<if test="dto3.restaurant_schedule_index!=0">
-			VALUES(#{dto.restaurant_index}, #{dto2.restaurant_table_index}, #{dto2.table_row}, #{dto2.table_col}, #{dto2.state}, restaurant_schedule_tbl_SEQ.CURRVAL)
+		<if test="schedule_dto.restaurant_schedule_index != 0">
+		VALUES(#{restaurant_dto.restaurant_index}, #{table_dto.restaurant_table_index}, #{table_dto.table_row}, #{table_dto.table_col}, #{table_dto.state}, #{schedule_dto.restaurant_schedule_index})
 		</if>
 	</insert>
 
 
 	<!-- 스케쥴 인텍스 조회 : (예약)스케쥴이 있는지 확인 -->
 	<select id="getScheduleIndex" resultType="Integer">
-		SELECT	restaurant_schedule_index  
-		FROM	restaurant_schedule_tbl 
-		WHERE	schedule_starttime=#{schedule_startTime} AND schedule_endtime=#{schedule_endTime} AND restaurant_index=#{restaurant_index}
+		SELECT restaurant_schedule_index  
+		  FROM restaurant_schedule_tbl 
+	 	 WHERE schedule_starttime=#{schedule_startTime} 
+		   AND schedule_endtime=#{schedule_endTime} 
+		   AND restaurant_index=#{restaurant_index}
 	</select>
 
 	<!-- 예약 내역 추가 history_table -->
@@ -105,10 +109,9 @@
 	
 	<!-- 레스토랑 예약 내역 추가 restaurant_history_tbl -->
 	<insert id="AddRHistory" parameterType="Map">
-		INSERT INTO restaurant_history_tbl(history_index, restaurant_schedule_index, restaurant_table_index, discount, member_use_point, payvalue, restaurant_history_state)
-		VALUES(history_tbl_SEQ.CURRVAL, restaurant_schedule_tbl_SEQ.CURRVAL, #{dto2.restaurant_table_index}, 0, 0, 0, 0)
+		INSERT INTO restaurant_history_tbl(history_index, restaurant_schedule_index, restaurant_table_index, discount, member_use_point, payvalue, restaurant_history_state) 
+		VALUES(history_tbl_SEQ.CURRVAL, #{schedule_dto.restaurant_schedule_index}, #{restaurant_table_index}, 0, 0, 0, 0)
 	</insert> 
-	
 	
 	
 	<!-- ========================================================================== -->

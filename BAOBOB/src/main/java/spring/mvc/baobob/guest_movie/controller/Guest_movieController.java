@@ -119,13 +119,13 @@ public class Guest_movieController {
 		return "/guest/guest_movie/movie/movieDetail";
 	}
 	
-	//영화-평점
-	@RequestMapping("movieReview")
+	//영화-리뷰
+	/*@RequestMapping("movieReview")
 	public String movieReview(HttpServletRequest req, Model model) {
 		log.debug("====== Guest_movieController/movieReview ======");
 		
 		return "/guest/guest_movie/movie/movieReview";
-	}
+	}*/
 	
 	//영화-리뷰작성폼
 	@RequestMapping("movieReviewWrite")
@@ -264,7 +264,6 @@ public class Guest_movieController {
 		
 		return "/guest/guest_movie/reservation/selectSeatInfo";
 	}
-	
 	
 	//예매-빠른예매 2번째페이지 - 결제창
 	@RequestMapping("movieTicket3")

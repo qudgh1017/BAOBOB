@@ -23,6 +23,20 @@
 		SELECT * FROM member_tbl WHERE member_id=#{strId}
 	</select>
 
+	<!-- 누적포인트에따라 회원등급(member_step)업데이트해주기 -->
+	<update id="updateMemberStep" parameterType="Map">
+		UPDATE member_tbl set				
+		<choose> 
+			<when test="member_cumpoint lte 15000"> member_step = 9 </when>
+			<when test="member_cumpoint lte 30000"> member_step = 10 </when>
+			<when test="member_cumpoint lte 45000"> member_step = 11 </when>
+			<when test="member_cumpoint gt 45000"> member_step = 12 </when>
+			<otherwise> MEMBER_STEP  = MEMBER_STEP </otherwise>
+		</choose>
+		WHERE MEMBER_ID  = #{strId}
+		AND member_step IN(9,10,11,12)
+	</update>
+
 	<!-- 회원정보 수정 처리 -->
 	<update id="updateMember" parameterType="spring.mvc.baobob.vo.Member">
 		UPDATE member_tbl 
@@ -326,6 +340,20 @@
 		                     WHERE theater_schedule_index = #{schedule_index})
 	</update>
 	
+	<!-- 사용한 포인트만큼 다시 포인트 더하기 결제금액의 10% 빼기, 누적포인트에서 결제금액의 10% 빼기. -->
+	<update id="updatePoint" parameterType="Map">
+		UPDATE member_tbl
+		SET member_point = member_point + (SELECT use_point
+		                                   FROM movie_history_tbl
+		                                   WHERE history_index=#{history_index}) - (SELECT movie_history_price
+		                                                                             FROM movie_history_tbl
+		                                                                             WHERE history_index=#{history_index})/10,
+		    member_cumpoint = member_cumpoint - (SELECT movie_history_price
+		                                         FROM movie_history_tbl
+		                                         WHERE history_index=#{history_index})/10                                                                         
+		WHERE member_id=#{memId}
+	</update>
+	
 	<!-- 예매내역 삭제(movie_history_tbl) -->
 	<delete id="moviePaidDelPro" parameterType="int">
 		DELETE FROM movie_history_tbl WHERE history_index = #{num}
@@ -363,7 +391,7 @@
 	<select id="restaurantLogList" resultType="spring.mvc.baobob.vo.RestaurantLogVO">
 		<![CDATA[
 		SELECT *
-		FROM (SELECT h.member_id, rs.restaurant_schedule_index, rs.schedule_starttime, rs.schedule_endtime,
+		FROM (SELECT rh.history_index, h.member_id, rs.restaurant_schedule_index, rs.schedule_starttime, rs.schedule_endtime,
 		             rt.table_col, rt.table_row, rt.table_state, rt.restaurant_table_index, r.restaurant_index,
 		             r.restaurant_name,r.restaurant_tel, rh.restaurant_history_state,h.history_date, rownum rNum
 		        FROM restaurant_tbl r
@@ -395,24 +423,24 @@
 		SELECT table_state 
 		FROM restaurant_table_tbl 
 		WHERE restaurant_index = #{restaurant_index} AND restaurant_table_index = #{restaurant_table_index}
-		<if test="restaurant_schedule_index == null">
-			AND restaurant_schedule_index IS null
-		</if>
-		<if test="restaurant_schedule_index != null">
-			AND restaurant_schedule_index = #{restaurant_schedule_index}
-		</if>
+	<if test="restaurant_schedule_index == null">
+		AND restaurant_schedule_index IS null
+	</if>
+	<if test="restaurant_schedule_index != null">
+		AND restaurant_schedule_index = #{restaurant_schedule_index}
+	</if>
 	</select>
 	
 	<!-- 히스토리 인덱스 조회 -->
 	<select id="getHistoryIndex" resultType="int">
 		SELECT history_index
-		  FROM restaurant_history_tbl
-		 WHERE restaurant_schedule_index = #{restaurant_schedule_index}
-		   AND restaurant_table_index = #{restaurant_table_index}
-		   AND discount = 0
-		   AND member_use_point = 0
-		   AND payvalue = 0
-		   AND restaurant_history_state = 0
+		FROM restaurant_history_tbl
+		WHERE restaurant_schedule_index = #{restaurant_schedule_index}
+		AND restaurant_table_index = #{restaurant_table_index}
+		AND discount = 0
+		AND member_use_point = 0
+		AND payvalue = 0
+		AND restaurant_history_state = 0
 	</select>
 	
 	<!-- 레스토랑 히스토리 테이블에 이용 내역 삭제 -->
@@ -478,7 +506,8 @@
 			FROM ( SELECT p.p_history_index, p.p_history_in, p.p_history_out, p.p_history_price,
 			              p.p_history_space, p.p_history_date,
 			              h.history_index, h.history_date, h.member_id, rownum rNum 
-			        FROM park_history_tbl p JOIN history_tbl h
+			        FROM park_history_tbl p 
+			        JOIN history_tbl h
 			        ON h.history_index = p.history_index
 			        WHERE member_id=#{strId}
 			     )

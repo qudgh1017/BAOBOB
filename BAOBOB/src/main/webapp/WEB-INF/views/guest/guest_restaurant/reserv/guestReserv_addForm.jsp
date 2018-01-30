@@ -52,7 +52,7 @@ $(function() {
 				どきどき(Dokidoki)
 				</c:if>
 				<c:if test="${restaurant_index==2}">
-				바압
+				바오밥
 				</c:if>
 				<c:if test="${restaurant_index==3}">
 				BOUTBACK
@@ -106,7 +106,7 @@ $(function() {
 						</div>
 						<div class="col-lg-12" style="padding-left:0px; padding-right:0px;">
 							<div class="card mb-3" align="center">
-								<div class="card-header">매장 설정</div>
+								<div class="card-header">자리 선택</div>
 								<div class="card-body">
 									<input class="form-control" id="widthX" type="number" style="display: none;" min="1" max="100" value="${col}" onload="spaceDivChange();" onchange="spaceDivChange();" required>
 									<input class="form-control" id="heightY" type="number" style="display: none;" min="1" max="100" value="${row}" onload="spaceDivChange();" onchange="spaceDivChange();" required>

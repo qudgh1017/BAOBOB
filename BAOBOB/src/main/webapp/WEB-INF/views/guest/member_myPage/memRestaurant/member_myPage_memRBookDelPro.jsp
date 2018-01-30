@@ -11,7 +11,7 @@
 <body>
 	<c:if test="${cnt == 1 }">
 		<script type="text/javascript">
-			alert("삭제 하였습니다.");
+			alert("예약이 취소되었습니다.");
 			window.location="memRBookList";
 		</script>
 		
@@ -19,7 +19,7 @@
 	
 	<c:if test="${cnt != 1 }">
 		<script type="text/javascript">
-			alert("삭제에 실패하였습니다.");
+			alert("예약취소에 실패하였습니다.");
 			window.history.back();
 		</script>
 	</c:if>

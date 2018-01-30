@@ -46,9 +46,9 @@
 						<!-- 작성일때 -->
 						<input type="hidden" name="pro" value="1">
 						
-						<input type="radio" name="review_grade" value="1">좋아요
-							${memId}
-						<input type="radio" name="review_grade" value="0">싫어요<br><br>	
+						<input type="radio" name="review_grade" value="1"><i class="material-icons">sentiment_very_satisfied</i>
+							&nbsp;&nbsp;&nbsp;${memId}&nbsp;&nbsp;&nbsp;
+						<input type="radio" name="review_grade" value="0"><i class="material-icons">sentiment_very_dissatisfied</i><br><br>	
 						<textarea name="review_content" placeholder="리뷰작성" rows="7" cols="100" style="resize:none; width:500px"></textarea>
 						
 						<input type="submit" value="작성">&nbsp; <!-- onclick="reviewSuccess();" -->

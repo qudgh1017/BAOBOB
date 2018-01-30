@@ -25,7 +25,7 @@
 					<div style="display: -webkit-box;">
 						<div id="restaurantChart" style="width:100%; height:500px;"></div>
 					</div>
-					<div style="font-weight:900; font-size:30px">식당 총 매출액 : ${restaurantSale}원</div>
+					<div style="font-weight:900; font-size:30px">식당 총 매출액 : <fmt:formatNumber value="${restaurantSale}" pattern="###,###,###"/>원</div>
 				</div>
 				<div class="card-footer small text-muted">BAOBOX</div>
 			</div>

@@ -1,3 +1,4 @@
+<!-- AJAX처리된 페이지: movieTicket페이지에서 영화,날짜 선택시 스케줄정보를 보여주는 페이지 -->
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@page import="java.util.Date"%>
@@ -15,7 +16,6 @@
 	<div class="btn-group" data-toggle="buttons" align="center" style="display:block;">
 		<!-- 스케줄 정보 -->
 		<c:forEach var="schedule" items="${schedules}">
-		
 			<c:set var="startTime" value="${schedule.schedule_startTime}"/>
 			<c:set var="currentTime" value="<%=new Timestamp(System.currentTimeMillis())%>"/>
 			
@@ -31,9 +31,11 @@
 		 	
 		 	<!-- 스케줄 시작시간 현재시간 이후 남은 것만 예매 가능하게 -->
 		 	<c:if test="${startTime>currentTime}">
+		 		<!-- 스케줄 클릭시 다음 AJAX로 넘기기 -->
 			 	<label onclick="clickSchedule('${schedule.theater_schedule_index}','${schedule.movie_index}');" class="btn" style="height:30px; width:60px; border:1px solid black;">
 				    <input type="radio" name="date" autocomplete="off">
 					<div align="left" style="font-size:15px;">
+						<!-- 시/분만 나오게 처리 -->
 						<fmt:formatDate value="${schedule.schedule_startDate}" pattern="HH:mm"/>
 					</div>
 			 	</label>
@@ -54,6 +56,3 @@
 	 	<hr>
 	</div>
 </c:if>	
-
-<%-- <fmt:formatDate value="${schedule.schedule_startDate}" pattern="YYYY.MM.dd(E) HH:mm" /> --%>
-<!-- TO_CHAR(변수,'YYMMDD') = TO_CHAR(SYSDATE,'YYMMDD') -->

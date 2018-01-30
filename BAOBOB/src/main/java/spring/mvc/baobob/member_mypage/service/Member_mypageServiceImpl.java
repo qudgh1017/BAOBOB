@@ -236,9 +236,23 @@ public class Member_mypageServiceImpl implements Member_mypageService{
 
 	//회원카드정보 가져오기
 	public void memberCard(HttpServletRequest req, Model model) {
+		
 		String strId=(String) req.getSession().getAttribute("memId"); 
 		
+		//세션에 저장된 아이디의 정보 가져오기
 		Member vo = dao.getMemberInfo(strId);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("strId", strId);
+		map.put("member_cumpoint", vo.getMember_cumPoint());
+		
+		System.out.println("누적: " + map.get("member_cumpoint"));
+		System.out.println("세션: " + map.get("strId"));
+		System.out.println();
+
+		//누적포인트에따라 회원등급(member_step)업데이트해주기
+		dao.updateMemberStep(map);
+		
 		model.addAttribute("vo", vo);
 	}
 	
@@ -870,6 +884,7 @@ public class Member_mypageServiceImpl implements Member_mypageService{
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("schedule_index", schedule_index);
 		map.put("memId", memId);
+		map.put("history_index", history_index);
 		
 		//예매좌석 정보 가져오기
 		ArrayList<Theater_seatVO> seatDtos = dao.getSeatInfo(map);
@@ -892,8 +907,13 @@ public class Member_mypageServiceImpl implements Member_mypageService{
 			
 			//예매좌석 취소 - movie_count 돌려놀기
 			if(dao.updateMovieCount(map) != 0) {
+				
+				//사용한 포인트만큼 다시 포인트 더하기 결제금액의 10% 빼기, 누적포인트에서 결제금액의 10% 빼기.
+				dao.updatePoint(map);
+				
 				//예매내역 삭제(movie_history_tbl)
 				if(dao.moviePaidDelPro(history_index) != 0) {
+					
 					//예매내역 삭제(history_tbl)
 					int deleteCnt = dao.historyDelPro(history_index);
 					model.addAttribute("deleteCnt", deleteCnt);
@@ -926,7 +946,7 @@ public class Member_mypageServiceImpl implements Member_mypageService{
 		//기본 좌석정보VO
 		TableVO table_dto = dao.getColRow(restaurant_index);
 		
-		// 매장을 구성하는 타일의 행열 (예:5*5)
+		//매장을 구성하는 타일의 행열 (예:5*5) index가 0부터 시작하기때문에 +1 해준다.
 		int col = table_dto.getTable_col() + 1; // 행
 		int row = table_dto.getTable_row() + 1; // 열
 
@@ -935,6 +955,7 @@ public class Member_mypageServiceImpl implements Member_mypageService{
 		
 		// 열만큼 반복
 		for (int i = 0; i < row; i++) {
+			
 			// 행만큼 반복
 			for (int j = 0; j < col; j++) {
 				map.replace("restaurant_table_index", table_index);
@@ -942,26 +963,19 @@ public class Member_mypageServiceImpl implements Member_mypageService{
 				// state 정보 조회
 				int state = dao.getState(map);
 				
-				System.out.println("타기 전");
-
-				System.out.println("col : " + col);
-				System.out.println("row : " + row);
-				
 				// '사용 중'인 테이블이 걸리면 '사용 중'테이블 개수 증가
 				if (state == 3) {
-					System.out.println("탐");
+
 					// 예약 된 테이블이 몇개인지 확인
 					use_table_count++;
 					
 					// 예약 취소할 테이블 번호가 되면
 					if(table_index == table_Num) {
+						
 						// 삭제 전 히스토리 인덱스 조회(삭제하면 히스토리 인덱스를 찾을 수 없음)
 						int history_index = dao.getHistoryIndex(map);
 						map.put("history_index", history_index);
 
-						System.out.println("member_id : " + map.get("member_id"));
-						System.out.println("history_index : " + map.get("history_index"));
-						
 						// 레스토랑 히스토리 테이블에 이용 내역 삭제
 						cnt = dao.delRestaurantHistory(map);
 						
@@ -997,7 +1011,6 @@ public class Member_mypageServiceImpl implements Member_mypageService{
 		
 		// 성공 여부 저장
 		model.addAttribute("cnt", cnt);
-		
 		
 	}
 	

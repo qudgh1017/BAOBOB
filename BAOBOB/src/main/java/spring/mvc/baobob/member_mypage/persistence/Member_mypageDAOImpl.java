@@ -266,6 +266,17 @@ public class Member_mypageDAOImpl implements Member_mypageDAO{
 	
 /*----------------------------------------------------------------------------*/
 	
+	//누적포인트에따라 회원등급(member_step)업데이트해주기
+	public int updateMemberStep(Map<String,Object> map) {
+		
+		Member_mypageDAO dao = sqlSession.getMapper(Member_mypageDAO.class);
+		
+		return dao.updateMemberStep(map);
+	}
+	
+	
+/*----------------------------------------------------------------------------*/
+	
 	//회원정보 수정 처리
 	public int updateMember(Member vo) {
 		int cnt = 0;
@@ -616,6 +627,16 @@ public class Member_mypageDAOImpl implements Member_mypageDAO{
 		Member_mypageDAO dao = sqlSession.getMapper(Member_mypageDAO.class);
 		
 		return dao.updateMovieCount(map);
+	}
+	
+/*----------------------------------------------------------------------------*/
+	
+	//사용한 포인트만큼 다시 포인트 더하기 결제금액의 10% 빼기, 누적포인트에서 결제금액의 10% 빼기.
+	public int updatePoint(Map<String, Object> map) {
+		
+		Member_mypageDAO dao = sqlSession.getMapper(Member_mypageDAO.class);
+		
+		return dao.updatePoint(map);
 	}
 	
 /*----------------------------------------------------------------------------*/

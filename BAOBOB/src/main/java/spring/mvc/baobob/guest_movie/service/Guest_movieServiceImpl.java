@@ -814,11 +814,11 @@ public class Guest_movieServiceImpl implements Guest_movieService{
 		int theater_schedule_index = Integer.parseInt(req.getParameter("theater_schedule_index"));
 		int totalCnt = Integer.parseInt(req.getParameter("totalCnt"));
 		int movie_index = Integer.parseInt(req.getParameter("movie_index"));
-		int movie_history_price = Integer.parseInt(req.getParameter("movie_history_price"));
+		String movie_history_price = req.getParameter("movie_history_price");
 		int member_point = Integer.parseInt(req.getParameter("member_point"));
 		String member_id = (String) req.getSession().getAttribute("memId");
 		
-		System.out.println(str_seat_index_info + theater_schedule_index + totalCnt + movie_index + movie_history_price + member_point);
+		System.out.println(str_seat_index_info + theater_schedule_index + totalCnt + movie_index + "결제금액:" + movie_history_price + "사용포인트:" + member_point +"==10%:"+(int)(Double.parseDouble(movie_history_price)*0.1));
 		
 		String[] str_seat_index_arr = str_seat_index_info.split(",");
 		
@@ -835,10 +835,10 @@ public class Guest_movieServiceImpl implements Guest_movieService{
 		map.put("theater_schedule_index", theater_schedule_index);
 		map.put("totalCnt", totalCnt);
 		map.put("movie_index", movie_index);
-		map.put("movie_history_price", movie_history_price);
+		map.put("movie_history_price", Integer.parseInt(movie_history_price));
 		map.put("member_point", member_point);
 		map.put("member_id", member_id);
-		map.put("movie_history_price_10perc", movie_history_price*0.1);
+		map.put("movie_history_price_10perc", (int)(Double.parseDouble(movie_history_price)*0.1));
 		
 		//1. Insert history_tbl
 		if(gmdao.insertHistory(member_id)>=1) {
@@ -870,11 +870,8 @@ public class Guest_movieServiceImpl implements Guest_movieService{
 		
 		//4. Update theater_schedule_tbl schedule_empty_seat= -totalCnt해주기(빈자리수 감소)
 		if(gmdao.updateEmptySeat(map)>=1) {
-			
 			//5. Update movie_tbl  movie_count + totalCnt해주기(영화관람객수 증가)
 			if(gmdao.updateMovieCount(map)>=1) {
-				
-				
 				//6. Update member_tbl member_point, member_cumpoint (결제시 증가)
 				if(gmdao.updateIncreasePoint(map)>=1) {
 					updateCnt = 1;

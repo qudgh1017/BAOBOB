@@ -69,6 +69,9 @@ function hdTrailerPlaying(movie_index){
 									<c:when test="${movie.movie_janre==5}">멜로/로맨스</c:when>
 									<c:when test="${movie.movie_janre==6}">코미디</c:when>
 									<c:when test="${movie.movie_janre==7}">애니메이션</c:when>
+									<c:when test="${movie.movie_janre==8}">액션</c:when>
+									<c:when test="${movie.movie_janre==9}">스릴러</c:when>
+									<c:when test="${movie.movie_janre==10}">미스테리</c:when>
 								</c:choose>
 							</span><br>
 							<span style="color:white; font-size:11px">20${movie.movie_rel_date}</span><br>
@@ -80,9 +83,7 @@ function hdTrailerPlaying(movie_index){
 						</div>
 						<div class="col-md-1"></div>
 						<div class="col-md-1"></div>
-						<div class="col-md-10" align="left" style="border:1px solid white; height:200px;">
-							<span style="color:white; font-size:13px">${movie.movie_content}</span>
-						</div>
+						<textarea disabled class="col-md-10" rows="7" cols="100" style="resize:none; color:white; font-size:13px; background-color:black; height:200px;">${movie.movie_content}</textarea>
 						<div class="col-md-1"></div>
 					</c:if>
 				</c:forEach>

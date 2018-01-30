@@ -11,7 +11,7 @@
 <body>
 	<c:if test="${deleteCnt == 1 }">
 		<script type="text/javascript">
-			alert("삭제 하였습니다.");
+			alert("예매를 취소했습니다.");
 			window.location="moviePaidList";
 		</script>
 		
@@ -19,7 +19,7 @@
 	
 	<c:if test="${deleteCnt != 1 }">
 		<script type="text/javascript">
-			alert("삭제에 실패하였습니다.");
+			alert("예매 취소에 실패했습니다.");
 			window.history.back();
 		</script>
 	</c:if>
