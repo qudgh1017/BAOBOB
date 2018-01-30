@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <div class="mybaobob">
 	<table class="board">
@@ -78,8 +79,8 @@
 		    	<th class="middlefont">TOTAL POINT</th>
 		    </tr>
 			<tr>
-		        <td class="samllfont">${vo.member_point}점</td>
-		        <td class="samllfont">${vo.member_cumPoint}점</td>
+		        <td class="samllfont"><fmt:formatNumber value="${vo.member_point}" pattern="###,###,###"/>점</td>
+		        <td class="samllfont"><fmt:formatNumber value="${vo.member_cumPoint}" pattern="###,###,###"/>점</td>
 		    </tr>
 	    </thead>
 	</table>
