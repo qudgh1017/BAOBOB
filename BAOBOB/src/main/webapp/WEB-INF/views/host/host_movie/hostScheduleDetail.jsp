@@ -18,7 +18,7 @@
 			<tr>
 				<td width="30%" height="40px" align="center">시작시간</td>
 <%-- 				<td><fmt:formatDate type="both" pattern="YY-MM-DD HH:mm" value="${scheduleVO.schedule_startTime}" /></td> --%>
-				<td width="70%"><input type="text" name="startDate" style="width:82px; height:35px; padding-left:5px;" value="<fmt:formatDate type="both" pattern="YY-MM-DD" value="${scheduleVO.schedule_startTime}" />"/>
+				<td width="70%"><input type="text" name="startDate" style="width:82px; height:35px; padding-left:5px;" value="<fmt:formatDate type="both" pattern="YY-MM-dd" value="${scheduleVO.schedule_startTime}" />"/>
 					<input type="text" name="startTime" style="width:55px; height:35px; padding-left:5px;" value="<fmt:formatDate type="both" pattern="HH:mm" value="${scheduleVO.schedule_startTime}" />"/>
 			</tr>
 			<tr>

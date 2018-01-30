@@ -19,6 +19,7 @@ import spring.mvc.baobob.persistence.MainDAO;
 import spring.mvc.baobob.vo.Android;
 import spring.mvc.baobob.vo.BoardVO;
 import spring.mvc.baobob.vo.Member;
+import spring.mvc.baobob.vo.MovieVO;
 
 @Controller
 public class AndroidController {
@@ -133,7 +134,6 @@ public class AndroidController {
 			}
 			map.put("data",  list);
 		} else if(idx.equals("1")) { //식당 예매 내역
-			
 			/*
 			 * VO Class 중 Android를 이용해서 필요한 데이터만 전달
 			 * select 할때 별칭으로 data1/data2/.../data5 로 주면 됩니다.
@@ -146,15 +146,32 @@ public class AndroidController {
 			 * map.put("data", list);
 			 */
 			
-			
-			
-			
-			
+			ArrayList<Android> tmp = dao.getUseRestaurantList(id); //예약 내역
+			map.put("data",  tmp);
 			
 		} else if(idx.equals("2")) { //주차 이용 내역
 			ArrayList<Android> list = dao.getMemberParking(id);
 			map.put("data",  list);
 		}
+		return map;
+	}
+	
+
+	//회원 정보
+	@ResponseBody
+	@RequestMapping("androidMemberSelect")
+	public Map<String, Object> androidMemberSelect(HttpServletRequest req) {
+		String id = req.getParameter("member_id");
+		Member mem = myDdao.getMemberInfo(id);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("member_id", id);
+		map.put("member_pwd", mem.getMember_pwd());
+		map.put("member_name", mem.getMember_name());
+		map.put("member_tel", mem.getMember_tel());
+		map.put("member_address", mem.getMember_address());
+		map.put("member_email", mem.getMember_email());
+		map.put("member_img", mem.getMember_img());
 		return map;
 	}
 	
@@ -180,7 +197,28 @@ public class AndroidController {
 		
 		int cnt = dao.anMemberUpdate(m);
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("cnt",  cnt);
+		map.put("data1",  cnt);
+		return map;
+	}
+	
+	//영화 정보
+	@ResponseBody
+	@RequestMapping("androidMovieInfo")
+	public Map<String, Object> androidMovieInfo(HttpServletRequest req) {
+		String movie_title = req.getParameter("title");
+		MovieVO movie = dao.androidMovieInfo(movie_title);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("movie_title", movie.getMovie_title());
+		map.put("movie_content", movie.getMovie_content());
+		map.put("movie_janre", movie.getMovie_janre());
+		map.put("movie_age", movie.getMovie_age());
+		map.put("movie_rel_date", movie.getMovie_rel_date());
+		map.put("movie_director", movie.getMovie_director());
+		map.put("movie_star", movie.getMovie_star());
+		map.put(" movie_country", movie.getMovie_country());
+		map.put("movie_runTime", movie.getMovie_runTime());
+		map.put("movie_poster", movie.getMovie_poster());
 		return map;
 	}
 	
@@ -190,7 +228,7 @@ public class AndroidController {
 	
 	
 	
-	
+
 	//TEST http://cocomo.tistory.com/412
 	@ResponseBody //웹에서 안드로이드로 값을 전달하기 위한 머노테이션
 	@RequestMapping("androidTest")

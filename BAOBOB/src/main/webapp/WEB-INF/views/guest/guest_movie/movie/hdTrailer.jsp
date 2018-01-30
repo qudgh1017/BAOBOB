@@ -1,3 +1,4 @@
+<!-- 영화-HD트레일러 -->
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
@@ -31,7 +32,6 @@ function hdTrailerPlaying(movie_index){
 				<h3 align=left;>트레일러</h3>
 				<hr style="border:2px solid black;">
 			</div>
-			
 		</div><br><br>
 	</div>	
 	
@@ -110,6 +110,7 @@ function hdTrailerPlaying(movie_index){
 							<div align="center" style="background-color:red; width:195px; border:5px solid black; margin-bottom:5px;">
 								<span style="color:white; font-weight:bold;">No.${number}</span>
 							</div>
+							<!-- 포스터 클릭시 해당영화의 트레일러 sub창 -->
 							<a onclick="hdTrailerPlaying(${movie.movie_index});"><img style="border:5px solid black;"src="${projectRes}images/phc/${movie.movie_poster}"></a>
 							<br>
 						<span style="font-weight:bold; font-size:13px">
@@ -185,9 +186,7 @@ function hdTrailerPlaying(movie_index){
 			</div>
 		</div>
 	</div>
-	
 </section>
-	<br>
 		
 	<!-- Footer -->
 	<%@ include file="/WEB-INF/views/guest/guest_movie/movie_footer.jsp" %> 

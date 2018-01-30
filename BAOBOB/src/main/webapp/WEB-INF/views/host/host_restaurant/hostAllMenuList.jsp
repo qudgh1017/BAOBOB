@@ -9,16 +9,6 @@
 <link href="${restaurant_css}" rel="stylesheet" type="text/css">
 <script src="${restaurant_js}" charset=UTF-8></script>
 </head>
-<script type="text/javascript">
-	// 금액에 콤마 찍기
-	function AddComma(total) {
-		total = Number(total).toLocaleString('en')
-		
-		alert(total);
-		
-		document.getElementById('totalView').innerHTML = "판매액 : " + total + "원";
-	}
-</script>
 <body class="fixed-nav sticky-footer bg-dark">
 
 	<!-- Navigation -->

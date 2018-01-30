@@ -1,3 +1,4 @@
+<!-- HD트레일러에서 해당영화포스터 클릭시 트레일러영상 sub창 -->
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
@@ -61,9 +62,6 @@
 			</div>
 		</div>
 	</section>
-	<br>
-	<br>
-	<br>
 		
 </body>
 </html>

@@ -74,7 +74,7 @@
 					</a>
 					<div style="background:rgba(0, 0, 0, 0.7); font-size:1.2em; color:white; height:50px; line-height: 2.5; padding-left: 15px;">
 						どきどき(Dokidoki)
-						<button type="button" class="btn btn-danger" role="button" style="float:right; margin: 5px;" onclick="window.location='guestReserv_addForm?restaurant_index=1'">예약
+						<button type="button" class="btn btn-danger" role="button" style="float:right; margin: 5px;" onclick="window.location='guestRestaurant_reserv?restaurant_index=1'">예약
 						</button>					
 					</div>					
 				</div>
@@ -84,7 +84,7 @@
 					</a>
 					<div style="background:rgba(0, 0, 0, 0.6); font-size:1.2em; color:white; height:50px; line-height: 2.5; padding-left: 15px;">
 						바오밥
-						<button type="button" class="btn btn-danger" role="button" style="float:right; margin: 5px;" onclick="window.location='guestReserv_addForm?restaurant_index=2'">예약
+						<button type="button" class="btn btn-danger" role="button" style="float:right; margin: 5px;" onclick="window.location='guestRestaurant_reserv?restaurant_index=2'">예약
 						</button>
 					</div>	
 				</div>
@@ -94,7 +94,7 @@
 					</a>
 					<div style="background:rgba(0, 0, 0, 0.5); font-size:1.2em; color:white; height:50px; line-height: 2.5; padding-left: 15px;">
 						BOUTBACK
-						<button type="button" class="btn btn-danger" role="button" style="float:right; margin: 5px;" onclick="window.location='guestReserv_addForm?restaurant_index=3'">예약
+						<button type="button" class="btn btn-danger" role="button" style="float:right; margin: 5px;" onclick="window.location='guestRestaurant_reserv?restaurant_index=3'">예약
 						</button>
 						
 						

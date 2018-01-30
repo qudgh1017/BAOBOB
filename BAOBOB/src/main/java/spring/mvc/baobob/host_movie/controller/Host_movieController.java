@@ -2,6 +2,7 @@ package spring.mvc.baobob.host_movie.controller;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,11 +23,12 @@ public class Host_movieController {
 	@Autowired
 	Host_totalServiceImpl serviceT = new Host_totalServiceImpl();
 	
+	private Logger log = Logger.getLogger(this.getClass());
 	
 	// 관리자 영화
 	@RequestMapping(value="hostMovie")
 	public String hostMovie(HttpServletRequest req, Model model) {
-		System.out.println("hostMovie");
+		log.debug("hostMovie");
 		
 		service.hostMovieList(req, model);
 		
@@ -36,7 +38,7 @@ public class Host_movieController {
 	// 영화 추가
 	@RequestMapping(value="hostMovieAddForm")
 	public String hostMovieAddForm() {
-		System.out.println("hostMovieAddForm");
+		log.debug("hostMovieAddForm");
 		
 		return "host/host_movie/hostMovieAddForm";
 	}
@@ -44,7 +46,7 @@ public class Host_movieController {
 	// 영화 추가 처리
 	@RequestMapping(value="hostMovieAddPro")
 	public String hostMovieAddPro(MultipartHttpServletRequest req, Model model) {
-		System.out.println("hostMovieAddPro");
+		log.debug("hostMovieAddPro");
 		
 		service.hostMovieAddPro(req, model);
 		
@@ -54,7 +56,7 @@ public class Host_movieController {
 	// 영화 삭제 처리
 	@RequestMapping(value="hostMovieDel")
 	public String hostMovieDel(HttpServletRequest req, Model model) {
-		System.out.println("hostMovieDel");
+		log.debug("hostMovieDel");
 		
 		service.hostMovieDel(req, model);
 		
@@ -64,7 +66,7 @@ public class Host_movieController {
 	// 영화 상세 페이지
 	@RequestMapping(value="hostMovieDetail")
 	public String hostMovieDetail(HttpServletRequest req, Model model) {
-		System.out.println("hostMovieDetail");
+		log.debug("hostMovieDetail");
 		
 		service.hostMovieDetail(req, model);
 		
@@ -74,7 +76,7 @@ public class Host_movieController {
 	// 영화 수정 처리
 	@RequestMapping(value="hostMovieModPro")
 	public String hostMovieModPro(MultipartHttpServletRequest req, Model model) {
-		System.out.println("hostMovieModPro");
+		log.debug("hostMovieModPro");
 		
 		service.hostMovieModPro(req, model);
 		
@@ -84,7 +86,7 @@ public class Host_movieController {
 	// 관리자 상영관
 	@RequestMapping(value="hostTheater")
 	public String hostTheater(HttpServletRequest req, Model model) {
-		System.out.println("hostTheater");
+		log.debug("hostTheater");
 		
 		service.hostTheaterList(req, model);
 		
@@ -94,7 +96,7 @@ public class Host_movieController {
 	// 상영관 등록하기
 	@RequestMapping(value="hostTheaterAddForm")
 	public String hostTheaterAddForm() {
-		System.out.println("hostTheaterAddForm");
+		log.debug("hostTheaterAddForm");
 		
 		return "host/host_movie/hostTheaterAddForm";
 	}
@@ -102,7 +104,7 @@ public class Host_movieController {
 	// 상영관 좌석 업데이트
 	@RequestMapping(value="hostTheaterAddPro")
 	public String hostTheaterSettingChange(HttpServletRequest req, Model model) {
-		System.out.println("hostTheaterSettingChange");
+		log.debug("hostTheaterSettingChange");
 		
 		service.hostTheaterAddPro(req, model);
 		
@@ -112,7 +114,7 @@ public class Host_movieController {
 	// 상영관 상세
 	@RequestMapping(value="hostTheaterDetail")
 	public String hostTheaterDetail(HttpServletRequest req, Model model) {
-		System.out.println("hostTheaterDetail");
+		log.debug("hostTheaterDetail");
 		
 		service.hostTheaterDetail(req, model);
 		
@@ -122,7 +124,7 @@ public class Host_movieController {
 	// 상영관 수정 처리
 	@RequestMapping(value="hostTheaterModPro")
 	public String hostTheaterModPro(HttpServletRequest req, Model model) {
-		System.out.println("hostTheaterModPro");
+		log.debug("hostTheaterModPro");
 		
 		service.hostTheaterModPro(req, model);
 		
@@ -132,7 +134,7 @@ public class Host_movieController {
 	// 상영관 삭제
 	@RequestMapping(value="hostTheaterDel")
 	public String hostTheaterDel(HttpServletRequest req, Model model) {
-		System.out.println("hostTheaterDel");
+		log.debug("hostTheaterDel");
 		
 		service.hostTheaterDel(req, model);
 		
@@ -142,7 +144,7 @@ public class Host_movieController {
 	// 스케줄
 	@RequestMapping(value="hostSchedule")
 	public String hostSchedule(HttpServletRequest req, Model model) {
-		System.out.println("hostSchedule");
+		log.debug("hostSchedule");
 		
 		service.hostScheduleList(req, model);
 		
@@ -152,7 +154,7 @@ public class Host_movieController {
 	// 스케줄 조회하기 버튼
 	@RequestMapping(value="hostScheduleSearch")
 	public String hostScheduleSearch(HttpServletRequest req, Model model) {
-		System.out.println("hostScheduleSearch");
+		log.debug("hostScheduleSearch");
 		
 		service.hostScheduleSearch(req, model);
 		
@@ -162,7 +164,7 @@ public class Host_movieController {
 	// 스케줄 추가 폼
 	@RequestMapping(value="hostScheduleAddForm")
 	public String hostScheduleAddForm(HttpServletRequest req, Model model) {
-		System.out.println("hostScheduleAddForm");
+		log.debug("hostScheduleAddForm");
 		
 		service.hostScheduleAddForm(req, model);
 		
@@ -172,7 +174,7 @@ public class Host_movieController {
 	// 상영 가능한 상영관 찾기
 	@RequestMapping(value="checkPosTheater")
 	public String checkPosTheater(HttpServletRequest req, Model model) {
-		System.out.println("checkPosTheater");
+		log.debug("checkPosTheater");
 		
 		service.checkPosTheater(req, model);
 		
@@ -187,7 +189,7 @@ public class Host_movieController {
 	// 스케줄 추가 처리
 	@RequestMapping(value="hostScheduleAddPro")
 	public String hostScheduleAddPro(HttpServletRequest req, Model model) {
-		System.out.println("hostScheduleAddPro");
+		log.debug("hostScheduleAddPro");
 		
 		service.hostScheduleAddPro(req, model);
 		
@@ -197,7 +199,7 @@ public class Host_movieController {
 	// 스케줄 상세 내용
 	@RequestMapping(value="hostScheduleDetail")
 	public String hostScheduleDetail(HttpServletRequest req, Model model) {
-		System.out.println("hostScheduleDetail");
+		log.debug("hostScheduleDetail");
 		
 		service.hostScheduleDetail(req, model);
 		
@@ -207,7 +209,7 @@ public class Host_movieController {
 	// 스케줄 수정 처리
 	@RequestMapping(value="hostScheduleModPro")
 	public String hostScheduleModPro(HttpServletRequest req, Model model) {
-		System.out.println("hostScheduleModPro");
+		log.debug("hostScheduleModPro");
 		
 		service.hostScheduleModPro(req, model);
 		
@@ -217,7 +219,7 @@ public class Host_movieController {
 	// 스케줄 삭제 처리
 	@RequestMapping(value="hostScheduleDelPro")
 	public String hostScheduleDelPro(HttpServletRequest req, Model model) {
-		System.out.println("hostScheduleDelPro");
+		log.debug("hostScheduleDelPro");
 		
 		service.hostScheduleDelPro(req, model);
 		
@@ -227,7 +229,7 @@ public class Host_movieController {
 	// 직원 관리
 	@RequestMapping(value="hostMovieEmp")
 	public String hostMovieEmp(HttpServletRequest req, Model model) {
-		System.out.println("hostMovieEmp");
+		log.debug("hostMovieEmp");
 		
 		service.hostMovieEmp(req, model);
 		
@@ -237,7 +239,7 @@ public class Host_movieController {
 	// 직원 고용하기
 	@RequestMapping(value="hostMovieEmpAddForm")
 	public String hostMovieEmpAddForm(HttpServletRequest req, Model model) {
-		System.out.println("hostMovieEmpAddForm");
+		log.debug("hostMovieEmpAddForm");
 		
 		service.getMemberList(req, model);
 		
@@ -247,7 +249,7 @@ public class Host_movieController {
 	// 직원 고용을 위한 회원 아이디 확인하기
 	@RequestMapping(value="hostMovieEmpChkMemberId")
 	public String hostMovieEmpChkMemberId(HttpServletRequest req, Model model) {
-		System.out.println("hostMovieEmpChkMemberId");
+		log.debug("hostMovieEmpChkMemberId");
 		
 		service.hostMovieEmpChkMemberId(req, model);
 		service.getMemberList(req, model);
@@ -258,7 +260,7 @@ public class Host_movieController {
 	// 직원 고용 처리
 	@RequestMapping(value="hostMovieEmpAddPro")
 	public String hostMovieEmpAddPro(HttpServletRequest req, Model model) {
-		System.out.println("hostMovieEmpAddPro");
+		log.debug("hostMovieEmpAddPro");
 		
 		service.hostMovieEmpAddPro(req, model);
 		
@@ -268,7 +270,7 @@ public class Host_movieController {
 	// 직원 해고하기
 	@RequestMapping(value="hostMovieEmpDel")
 	public String hostMovieEmpDel(HttpServletRequest req, Model model) {
-		System.out.println("hostMovieEmpDel");
+		log.debug("hostMovieEmpDel");
 		
 		service.hostMovieEmpDel(req, model);
 		
@@ -278,7 +280,7 @@ public class Host_movieController {
 	// 예매 조회
 	@RequestMapping(value="hostMovieRes")
 	public String hostMovieResList(HttpServletRequest req, Model model) {
-		System.out.println("hostMovieRes");
+		log.debug("hostMovieRes");
 		
 		service.hostScheduleList(req, model);
 		
@@ -288,7 +290,7 @@ public class Host_movieController {
 	// 예매 상세
 	@RequestMapping(value="hostMovieResDetail")
 	public String hostMovieResDetail(HttpServletRequest req, Model model) {
-		System.out.println("hostMovieResDetail");
+		log.debug("hostMovieResDetail");
 		
 		service.hostTheaterScheduleDetail(req, model);
 		
@@ -298,7 +300,7 @@ public class Host_movieController {
 	// 예매 조회하기 버튼
 	@RequestMapping(value="hostResSearch")
 	public String hostResSearch(HttpServletRequest req, Model model) {
-		System.out.println("hostResSearch");
+		log.debug("hostResSearch");
 		
 		service.hostScheduleSearch(req, model);
 		
@@ -308,7 +310,7 @@ public class Host_movieController {
 	// 예매 상세
 	@RequestMapping(value="hostMovieResView")
 	public @ResponseBody MovieResViewVO hostMovieResView(HttpServletRequest req, Model model) {
-		System.out.println("hostMovieResView");
+		log.debug("hostMovieResView");
 		
 		MovieResViewVO vo = null;
 		
@@ -320,7 +322,7 @@ public class Host_movieController {
 	// 예매 결산
 	@RequestMapping(value="hostMovieSettlement")
 	public String hostMovieSettlement(HttpServletRequest req, Model model) {
-		System.out.println("hostMovieSettlement");
+		log.debug("hostMovieSettlement");
 		
 		serviceT.movieChart(req, model); // 장르별 매출
 		service.movieJanreCountChart(req, model); // 장르별 관람객 수
@@ -335,7 +337,7 @@ public class Host_movieController {
 	// 영화상세 리뷰 워드클라우드 가져오기
 	@RequestMapping(value="movieWordcloud", produces = "application/json; charset=utf8")
 	public String movieWordcloud(HttpServletRequest req, Model model) {
-		System.out.println("movieWordcloud");
+		log.debug("movieWordcloud");
 		
 		service.movieWordcloud(req, model);
 		

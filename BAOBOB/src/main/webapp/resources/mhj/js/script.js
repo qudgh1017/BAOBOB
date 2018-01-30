@@ -287,7 +287,7 @@ function spaceTypeChange2() {
 	
 	var date = document.getElementById('datepicker').value;
 	var time = document.getElementById('timepicker').value;
-	alert('table_index=' + table_index);
+	/*alert('table_index=' + table_index);*/
 	window.location = 'guestReservAddPro?info=' + info + '&col=' + x + '&row=' + y + '&restaurant_index='+ restaurant_index + '&date=' + date + '&time=' + time + '&table_index=' + table_index;
 }
 

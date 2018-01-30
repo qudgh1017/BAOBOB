@@ -28,7 +28,7 @@
 		  		</div>
 		 		<div class="col-md-2">
 					  <button class="btn" type="button" id="dropdownMenu1">
-					    	<a href="guestReserv_addForm?restaurant_index=${restaurant_index}">예약</a>
+					    	<a href="guestRestaurant_reserv?restaurant_index=${restaurant_index}">예약</a>
 					    <span class="caret"></span>
 					  </button>
 		 		</div>

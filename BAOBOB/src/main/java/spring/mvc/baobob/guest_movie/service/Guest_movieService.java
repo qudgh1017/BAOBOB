@@ -45,12 +45,12 @@ public interface Guest_movieService {
 	public void reserveScheduleResult(HttpServletRequest req, Model model);
 
 	//좌석도 보여주기
-	public MovieResViewVO movieResView(HttpServletRequest req, Model model);
+	//public MovieResViewVO movieResView(HttpServletRequest req, Model model);
 	
-	//좌석도 선택
+	//좌석도 보여주고 선택
 	public void seatSelect(HttpServletRequest req, Model model);
 	
-	//1 좌석 정보
+	//1개의 좌석 정보
 	public void seatInfo(HttpServletRequest req, Model model);
 	
 	//선택된 좌석들의 정보를 3번째 결제창으로

@@ -54,13 +54,14 @@
 		overflow: hidden;
 	}
 /* 상세 정보 포함하는 div */
+/* 글이 길어질 때 줄바꿈을 어떻게 할지 지정하는 속성 normal;말고 word-break:break-word or break-all*/
 	.area-meals .box-meals {
 		position: relative;
 		word-break: break-word;
-		/* 글이 길어질 때 줄바꿈을 어떻게 할지 지정하는 속성 normal;말고 word-break:break-word or break-all*/
 		float: left;
 		width: 400px;
-		min-height: 220px;
+		height: 180px;
+		min-height: 180px; 
 		margin-top: 10px;
 		padding: 20px 25px 20px 235px;
 		border: 1px solid #bee1dd;
@@ -90,13 +91,15 @@ break:break-word or break-all*/
 		position: absolute;
 		top: 19px;
 		left: 20px;
-		width: 130px;
-		height: 130px;
+		width: 192px; 
+		height: 140px;
 	}
+	/* width: 130px;
+		height: 130px; */
 /* 메뉴이름 */
 	.area-meals .box-meals .h6 {
+	    margin-bottom: 0px;
 		font-weight: bold;
-		margin-bottom: 5px;
 		font-size: 16px;
 		line-height: 20px;
 		color: #000;
@@ -139,7 +142,7 @@ break:break-word or break-all*/
 					<div class="col-md-offset-1"></div>
 					<div class="col-md-10">
 						<br>
-						<h3 align=left;>どきどき Dokidoki</h3>
+						<h3>どきどき Dokidoki</h3>
 						<hr style="border: 2px solid black;">
 					</div>
 					<div class="col-md-offset-1"></div>
@@ -150,7 +153,7 @@ break:break-word or break-all*/
 					<div class="col-md-offset-1"></div>
 					<div class="col-md-10">
 						<br>
-						<h3 align=left;>바오밥</h3>
+						<h3>바오밥</h3>
 						<hr style="border: 2px solid black;">
 					</div>
 					<div class="col-md-offset-1"></div>
@@ -161,7 +164,7 @@ break:break-word or break-all*/
 					<div class="col-md-offset-1"></div>
 					<div class="col-md-10">
 						<br>
-						<h3 align=left;>BOUTBACK</h3>
+						<h3>BOUTBACK</h3>
 						<hr style="border: 2px solid black;">
 					</div>
 					<div class="col-md-offset-1"></div>
@@ -171,7 +174,7 @@ break:break-word or break-all*/
 				<div class="col-md-offset-1"></div>
 				<div class="col-md-10">
 					<!--====== Container 시작 ======-->
-					<h4>메뉴[${cnt}]</h4>
+					<h4>메뉴 ${cnt}]</h4>
 					<hr style="border: 2px solid black;">
 					<c:if test="${cnt>0}">
 						<div class="row area-meals">
@@ -179,9 +182,9 @@ break:break-word or break-all*/
 								<div class="col-md-6">
 									<div class="box-meals clear_fix" align="left">
 										<p class="img_meals">
-											<img style="width: 192px; height: 120px;" src="${restaurant_images}${dto.restaurant_menu_img}">
+											<img style="width: 192px; height: 140px;" src="${restaurant_images}${dto.restaurant_menu_img}">
 										</p>
-										<h6>${dto.restaurant_menu_name}</h6>
+										<h6 style="margin-bottom:0px;">${dto.restaurant_menu_name}</h6>
 										<strong class="txt-info type-1"> [ ${dto.restaurant_menu_price}원]</strong>
 										<p class="txt-info type-2">${dto.restaurant_menu_content}</p>
 									</div>

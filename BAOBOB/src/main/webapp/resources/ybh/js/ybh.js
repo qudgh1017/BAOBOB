@@ -188,7 +188,7 @@ function ToSeat(movie_index, theater_schedule_index){
 	window.location.href="movieTicket2?movie_index="+movie_index+"&theater_schedule_index="+theater_schedule_index;
 }
 
-//사용할 포인트 입력시(onchange)이며 ajax로 할인내역, 총할인가격, 실 계산가격 값 변경  
+//영화-예매 movieTicket3페이지에서 사용할 포인트 입력시(onchange)이며 ajax로 할인내역, 총할인가격, 실 계산가격 값 변경  
 function point(member_point, field, totalSalePrice, movie_history_price){
 	
 	//member_point가 사용가능한 member_point
@@ -234,7 +234,7 @@ var card_pwd_msg="카드 비밀번호를 입력해주세요";
 var card_month_msg="카드 moth를 입력해주세요";
 var card_year_msg="카드 year를 입력해주세요";
 
-//카드 입력창 값 유무 확인
+//영화-예매 movieTicket3페이지 카드 입력창 값 유무 확인
 function cardInfoChk() {
 	if(!document.reservationMovieForm.card_num1.value){
 		alert(card_num_msg);
