@@ -78,4 +78,11 @@
 			member_email = #{member_email}
 		WHERE member_id = #{member_id}
 	</update>
+	
+	<!-- 영화 정보 -->
+	<select id="androidMovieInfo" resultType="spring.mvc.baobob.vo.MovieVO">
+		SELECT *
+		FROM movie_tbl
+		WHERE movie_title = #{movie_title}
+	</select>
 </mapper>

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import spring.mvc.baobob.vo.Android;
 import spring.mvc.baobob.vo.BoardVO;
 import spring.mvc.baobob.vo.Member;
+import spring.mvc.baobob.vo.MovieVO;
 
 public interface AndroidDAO {
 
@@ -28,4 +29,7 @@ public interface AndroidDAO {
 	
 	//회원 정보 수정
 	public int anMemberUpdate(Member m);
+	
+	//영화 정보
+	public MovieVO androidMovieInfo(String movie_title);
 }
