@@ -353,7 +353,24 @@
                           WHERE movie_index = #{movie_index}
                  		 ORDER BY count DESC
                         )
-                  WHERE type_of_speech = 'Noun' OR type_of_speech = 'ProperNoun' OR type_of_speech = 'Verb'
+                  <if test="type == 'Verb,ProperNoun'">
+                  	WHERE type_of_speech IN('Verb', 'ProperNoun')
+                  </if>
+                  <if test="type == 'Noun,ProperNoun'">
+                  	WHERE type_of_speech IN('Noun', 'ProperNoun')
+                  </if>
+                  <if test="type == 'Noun,Verb'">
+                  	WHERE type_of_speech IN('Noun', 'Verb')
+                  </if>
+                  <if test="type == 'Noun'">
+                  	WHERE type_of_speech IN('Noun')
+                  </if>
+                  <if test="type == 'Verb'">
+                  	WHERE type_of_speech IN('Verb')
+                  </if>
+                  <if test="type == 'ProperNoun'">
+                  	WHERE type_of_speech IN('ProperNoun')
+                  </if>
          		)
     	 WHERE rn BETWEEN 1 AND #{countOfWords}
 	</select>
