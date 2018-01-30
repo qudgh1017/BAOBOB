@@ -317,7 +317,7 @@ $(document).ready(function(){
 	
 	<!--======= Footer 시작 =======-->
 	<!-- Footer -->
-	<%@ include file="/WEB-INF/views/guest/guest_movie/movie_footer.jsp" %> 
+	<%@ include file="/WEB-INF/views/guest/guest_restaurant/restaurant_footer.jsp" %> 
 	<!-- Footer -->
 	<!--======= Footer 종료=======-->
 </body>
