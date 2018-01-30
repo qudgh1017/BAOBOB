@@ -1,3 +1,4 @@
+<!-- 영화- 무비차트 -->
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
@@ -15,7 +16,6 @@
 </style>
 </head>
 <body>
-	
 	<!-- CSS,JavaScript 참조 -->
 	<%@ include file="/WEB-INF/views/guest/common/head.jsp" %>
 	<!-- Navigation -->
@@ -121,13 +121,6 @@
 			</div>
 		</div>
 	</section>
-	
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
 		
 	<!-- Footer -->
 	<%@ include file="/WEB-INF/views/guest/guest_movie/movie_footer.jsp" %> 

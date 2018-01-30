@@ -1,3 +1,4 @@
+<!-- 리뷰수정 페이지 -->
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -6,12 +7,6 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 </head>
-<script type="text/javascript">
-/* function reviewSuccess(movie_index){
-	window.close();
-	opener.location.href="movieDetail?movie_index="+movie_index; //오픈해준 페이지 reload
-} */
-</script>
 <%@ include file="/resources/setting.jsp"%>
 <body>
 <!-- CSS,JavaScript 참조 -->
@@ -37,7 +32,7 @@
 					<input type="radio" name="review_grade" value="0"><i class="material-icons">sentiment_very_dissatisfied</i><br><br>	
 					<textarea name="review_content" placeholder="리뷰작성" rows="7" cols="100" style="resize:none; width:500px"></textarea>
 					
-					<input type="submit" value="작성">&nbsp; <!-- onclick="reviewSuccess();" -->
+					<input type="submit" value="작성">&nbsp; 
 					<input type="reset" value="다시작성">
 				</form>
 			</div>

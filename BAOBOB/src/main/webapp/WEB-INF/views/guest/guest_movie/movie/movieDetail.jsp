@@ -1,3 +1,4 @@
+<!-- 상세 영화정보 페이지 -->
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%-- <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %> --%>
@@ -41,6 +42,7 @@
 						<c:when test="${movie.movie_state==2}">상영종료</c:when>
 					</c:choose>
 					<br>
+					<!-- 예매율: 해당영화를 본 사람 수/전체 영화를 본 사람 수 -->
 					<span style="font-size:15px; color:gray;">
 						예매율: ${reservationPercent}%
 					</span><br><hr>
@@ -69,6 +71,7 @@
 						<br><br>
 						개봉: 20${movie.movie_rel_date}<br><br>
 						<%-- <fmt:formatDate type="both" pattern="yyyy-MM-dd" value="${movie.movie_rel_date}" /> --%>
+			<!-- 위시리스트 처리요망 -->			
 						<a href="#!"><i class="material-icons" style="color:red;">favorite</i></a>
 						<a href="addWishList?movie_index=${movie.movie_index}"><i class="material-icons" style="color:red;">favorite_border</i></a>
 					</span>
@@ -78,9 +81,7 @@
 			
 			<!-- 줄거리 -->
 			<div class="row" style="padding-top:50px;">
-				<textarea disabled class="col-md-10" rows="7" cols="100" style="resize:none; color:black; font-size:13px; background-color:white; height:250px;">
-					${movie.movie_content}
-				</textarea>
+				<textarea disabled class="col-md-10" rows="7" cols="100" style="resize:none; color:black; font-size:13px; background-color:white; height:250px;">${movie.movie_content}</textarea>
 				<div class="col-md-2"></div>
 			</div><br><br>
 			

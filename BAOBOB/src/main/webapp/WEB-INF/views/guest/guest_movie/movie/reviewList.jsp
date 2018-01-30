@@ -13,23 +13,20 @@
 			<div align="left" style="font-size:15px; font-weight:bold;">
 				리뷰
 			</div>
-				<!-- 로그인 서비스 -->
-				<c:if test="${memId==null}">
-					<div align="right">
-						<button class="btn btn-danger" onclick="loginCheck();">리뷰등록</button>
-					</div>
-				</c:if>
-				<c:if test="${memId!=null}">
-					<div align="right">
-						<button class="btn btn-danger" onclick="reviewWrite(${movie.movie_index});">리뷰등록</button>
-					</div>
-				</c:if>
-			
+			<!-- 로그인 서비스 -->
+			<c:if test="${memId==null}">
+				<div align="right">
+					<button class="btn btn-danger" onclick="loginCheck();">리뷰등록</button>
+				</div>
+			</c:if>
+			<c:if test="${memId!=null}">
+				<div align="right">
+					<button class="btn btn-danger" onclick="reviewWrite(${movie.movie_index});">리뷰등록</button>
+				</div>
+			</c:if>
 		</div>
 		<div class="col-md-2"></div>
 	</div><br>
-	
-	
 	<br>
 	<!-- 평점, 리뷰 수 -->		
 	<div class="row">
@@ -39,7 +36,15 @@
 					<!-- 좋아요 %에 따른 별점 -->
 					<br><br><br>
 					<div>
-						<c:if test="${10>likePercent && likePercent>=0}">
+						<c:if test="${likePercent==0}">
+							<i class="material-icons" style="color:orange;">star_border</i>
+							<i class="material-icons" style="color:orange;">star_border</i>
+							<i class="material-icons" style="color:orange;">star_border</i>
+							<i class="material-icons" style="color:orange;">star_border</i>
+							<i class="material-icons" style="color:orange;">star_border</i>
+							<br>
+						</c:if>
+						<c:if test="${10>likePercent && likePercent>0}">
 							<i class="material-icons" style="color:orange;">star_half</i>
 							<i class="material-icons" style="color:orange;">star_border</i>
 							<i class="material-icons" style="color:orange;">star_border</i>
@@ -127,7 +132,6 @@
 					회원님들이 평가해주셨습니다.
 					
 					<br><br><br><br>
-					<!-- 이런식으로 고객한테 직접 설명하듯?? -->
 					<h5>회원님들이 작성하신 리뷰를<br>빅데이터 분석한 결과입니다. ▶</h5>
 				</div>
 				</div>
@@ -138,13 +142,10 @@
 				</div>
 			</div>
 		</div>
-<!-- 		<div class="col-md-2"></div> -->
 	</div><br>
 	
 	<!-- 리뷰 리스트 -->
 	<div class="row">
-		
-				
 		<div class="col-md-10">		
 			<div class="row">
 			<!-- 리뷰 있으면 -->
@@ -176,11 +177,11 @@
 		
 		<!-- 리뷰 없으면 -->
 		<c:if test="${cnt == 0}">
-			<div class="col-md-12" align="center" style="border:1px solid black">
+			<div class="col-md-10" align="center" style="border:1px solid black">
 				등록된 리뷰가 없습니다.
 			</div>
+			<div class="col-md-2"></div>
 		</c:if>
-			
 	</div><br><br>
 	
 	<!-- 페이지 컨트롤러 -->

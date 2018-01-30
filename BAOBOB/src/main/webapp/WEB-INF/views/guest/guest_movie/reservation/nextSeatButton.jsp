@@ -1,4 +1,4 @@
-<!-- AJAX처리된 페이지: movieTicket페이지에서 스케줄 선택시 선택한(영화,스케줄정보를 가지고) 다음버튼을 보여주는 페이지(검은색 창) -->
+<!-- AJAX처리된 페이지: movieTicket페이지에서 AJAX처리된 dateResult페이지에서 스케줄 선택시 선택한(영화,스케줄정보를 가지고) 다음버튼을 보여주는 페이지(검은색 창) -->
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@page import="java.util.Date"%>

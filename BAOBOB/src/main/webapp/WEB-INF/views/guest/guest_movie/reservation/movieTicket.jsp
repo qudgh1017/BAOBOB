@@ -1,3 +1,4 @@
+<!-- 영화-예매의 영화/날짜/스케줄 선택 1페이지 -->
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@page import="java.util.Date"%>    
