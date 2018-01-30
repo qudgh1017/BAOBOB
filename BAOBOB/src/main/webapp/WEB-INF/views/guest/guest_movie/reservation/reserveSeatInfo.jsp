@@ -1,3 +1,5 @@
+<!-- AJAX처리된 페이지: movieTicket2페이지에서 일반 또는 청소년 인원수 선택시 전체좌석도를 보여주고 선택하는 페이지 -->
+<!-- 특이점: 버튼의 id에 DB의 index값을 주어 동적으로 id를 줘서 좌석 선택 또는 취소시 CSS를 javascript로 변경해줌. -->
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@page import="java.util.Date"%>
@@ -12,10 +14,10 @@
 	request.setAttribute("seatRow",seatRow);
 %>
 
-
 <!-- 좌석도  -->
 <button type="button" style="color:white; background-color:lightgray; background:rgba(0, 0, 0, 0.6); width:${seatInfo.totalCol*25}px; height:25px;">SCREEN</button> <br><br>
 
+<!-- 좌석의 행/열에 따른 크기 조절 -->
 <c:if test="${seatInfo.totalRow<15 || seatInfo.totalCol<8}">
 	<c:set var="size" value="30"/>
 	<c:set var="fontSize" value="12"/>
@@ -33,7 +35,7 @@
 <c:forEach var="row" begin="0" end="${seatInfo.totalRow-1}" step="1">
 	${seatRow[row]}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	
 	<c:forEach var="col" begin="1" end="${seatInfo.totalCol}" step="1">
-	
+		<!-- 좌석의 상태로 구분하여 서로 다른 이미지를 뿌려줌 -->
 		<c:if test="${seatInfo.state[(row)*seatInfo.totalCol-1+col]==0}">
 		   <button id="${seatInfo.seat_index[(row)*seatInfo.totalCol-1+col]}" type="button" name="seat_index" style="width:${size}; height:${size}; border:0;" disabled autocomplete="off"></button>
 		</c:if>
