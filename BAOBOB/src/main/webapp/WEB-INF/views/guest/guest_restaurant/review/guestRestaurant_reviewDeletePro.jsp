@@ -15,12 +15,12 @@
 	<!-- 비밀번호가 다른경우 : '삭제 에러' 메시지 -->
 	<c:if test="${selectCnt==0}">
 		<script type="text/javascript">
-			errorAlert("아이디가 존재하지 않습니다");
+			errorAlert('아이디가 존재하지 않습니다');
 		</script>
 	</c:if>
 	<c:if test="${selectCnt==-1}">
 		<script type="text/javascript">
-			errorAlert("비밀번호가 일치하지 않습니다");
+			errorAlert('비밀번호가 일치하지 않습니다');
 		</script>
 	</c:if>
 	<!-- 비밀번호가 일치하는 경우 -->

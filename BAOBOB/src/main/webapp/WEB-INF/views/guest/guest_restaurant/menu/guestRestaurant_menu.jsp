@@ -174,7 +174,7 @@ break:break-word or break-all*/
 				<div class="col-md-offset-1"></div>
 				<div class="col-md-10">
 					<!--====== Container 시작 ======-->
-					<h4>메뉴 ${cnt}]</h4>
+					<h4>메뉴[${cnt}]</h4>
 					<hr style="border: 2px solid black;">
 					<c:if test="${cnt>0}">
 						<div class="row area-meals">
