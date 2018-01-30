@@ -38,8 +38,8 @@
 															<c:if test="${cnt_empl_1 > 0}">
 																<c:forEach var="dto" items="${dtos_empl_1}">
 																	<tr>
-																		<td>
-																			<span><b>${dto.member_id}</b></span>
+																		<td style="text-align: center;">
+																			<span><b>${dto.member_name}</b> 사원 - (${dto.member_id})</span>
 																		</td>
 																	</tr>
 																</c:forEach>
@@ -67,8 +67,8 @@
 															<c:if test="${cnt_empl_2 > 0}">
 																<c:forEach var="dto" items="${dtos_empl_2}">
 																	<tr>
-																		<td>
-																			<span><b>${dto.member_id}</b></span>
+																		<td style="text-align: center;">
+																			<span><b>${dto.member_name}</b> 사원 - (${dto.member_id})</span>
 																		</td>
 																	</tr>
 																</c:forEach>
@@ -96,8 +96,8 @@
 															<c:if test="${cnt_empl_3 > 0}">
 																<c:forEach var="dto" items="${dtos_empl_3}">
 																	<tr>
-																		<td>
-																			<span><b>${dto.member_id}</b></span>
+																		<td style="text-align: center;">
+																			<span><b>${dto.member_name}</b> 사원 - (${dto.member_id})</span>
 																		</td>
 																	</tr>
 																</c:forEach>
