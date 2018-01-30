@@ -24,8 +24,8 @@
 	google.charts.setOnLoadCallback(chart);
 	var chart_options = {
 			title : '매장별 매출', 
-			width : 450, 
-			height : 400, 
+			width : 650, 
+			height : 500, 
 			bar : {groupWidth : '30%'},
 			legend : {position : 'bottom'}
 	};
@@ -54,8 +54,8 @@
 	google.charts.setOnLoadCallback(chart2);
 	var chart_options = {
 			title : '매장별 매출', 
-			width : 450, 
-			height : 400, 
+			width : 650, 
+			height : 500, 
 			bar : {groupWidth : '30%'},
 			legend : {position : 'bottom'}
 	};
@@ -88,7 +88,7 @@
 	<!-- 총 관리자 메뉴는 총 관리자만 이용할 수 있다. -->
 	<c:if test="${sessionScope.memStep == 4}">
 		<div class="content-wrapper">
-			<div class="container-fluid" style="width: 1000px;">
+			<div class="container-fluid" style="width: 100%;">
 				<div class="card mb-3">
 					<div class="card-header">
 						<i class="fa fa-fw fa-area-chart"></i> 금월 결산
@@ -100,8 +100,8 @@
 									<tr>
 										<td style="text-align: center; vertical-align: middle;">
 											<div style="display: -webkit-box;">
-												<div id="chart" style="width: 50%; height: 500px;"></div>
-												<div id="chart2" style="width: 50%; height: 500px;"></div>
+												<div id="chart" style="width: 50%;"></div>
+												<div id="chart2" style="width: 50%;"></div>
 											</div>
 										</td>
 									</tr>
