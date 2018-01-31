@@ -16,6 +16,7 @@
 <c:set var="restaurant_css" value="/baobob/resources/mhj/css/style.css" />
 <c:set var="restaurant_js" value="/baobob/resources/mhj/js/script.js" />
 <c:set var="restaurant_images" value="/baobob/resources/images/chg/" />
+<c:set var="restaurant_img" value="/baobob/resources/images/mhj/" />
 
 
 

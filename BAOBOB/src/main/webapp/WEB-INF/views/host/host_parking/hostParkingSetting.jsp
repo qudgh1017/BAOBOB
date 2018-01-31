@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<title>Insert title here</title>
 
+	<link rel="stylesheet" href="${projectRes}ymk/css/loader.css">
 	<style type="text/css">
 		body .p_body{min-height:450px;overflow-x:auto;}
 		body .p_div{display:flex;width:fit-content;margin:0 auto;}/* flex-wrap:wrap; */
@@ -30,6 +31,7 @@
 	</style>
 </head>
 <body class="fixed-nav sticky-footer bg-dark" onload="spaceBody('${pSpace.p_space_info}', '${pSpace.p_space_col}', '${pSpace.p_space_row}');">
+<c:if test="${sessionScope.memStep != null && (sessionScope.memStep == 1 || sessionScope.memStep == 7)}">
 
 	<!-- Navigation -->
 	<%@ include file="hostParkingNavigation.jsp" %>
@@ -126,10 +128,25 @@
 		</div>
 	</div> 
 	
+	<div class="col-md-3 bg" id="myLoader">
+	  <div class="loader" id="loader-4">
+	    <span></span>
+	    <span></span>
+	    <span></span>
+	  </div>
+	</div>
+	
 	<!-- Footer -->
 	<%@ include file="../common/footer.jsp" %>
 	
 	<script src="${projectRes}ymk/js/ajax.js"></script>
 	<script src="${projectRes}ymk/js/parkingSetting.js"></script>
+</c:if>
+<c:if test="${sessionScope.memStep == null && (sessionScope.memStep != 1 || sessionScope.memStep != 7)}">
+	<script src="${projectRes}ymk/js/script.js"></script>
+	<script type="text/javascript">
+		stepAlert();
+	</script>
+</c:if>
 </body>
 </html>

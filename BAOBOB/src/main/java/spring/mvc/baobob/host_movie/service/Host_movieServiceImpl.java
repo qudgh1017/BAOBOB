@@ -17,6 +17,7 @@ import java.util.Map.Entry;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
@@ -41,6 +42,8 @@ public class Host_movieServiceImpl implements Host_movieService{
 	
 	@Autowired
 	Host_movieDAO dao = new Host_movieDAOImpl();
+	
+	private Logger log = Logger.getLogger(this.getClass());
 
 	// 영화 목록
 	@Override
@@ -657,6 +660,7 @@ public class Host_movieServiceImpl implements Host_movieService{
 		
 		if(idCnt != 0) { // 고용할 아이디 정보가 있다면
 			Member vo = dao.hostMovieEmpInfo(member_id); 	// 아이디로 고용할 직원 정보 가져오기
+			vo.setMember_birth(vo.getMember_birth().substring(2,8));
 			model.addAttribute("vo", vo);
 		}
 		model.addAttribute("member_id", member_id);
@@ -779,16 +783,17 @@ public class Host_movieServiceImpl implements Host_movieService{
 	@Override
 	public void movieJanreCountChart(HttpServletRequest req, Model model) {
 		Map<String , Object> map = new HashMap<String,Object>();
-		String[] janre = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10"};
+		String[] janre = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10"}; 
 		//mapper에서 불러온 kind와 value가 다건이기때문에 vo형태의 List형으로 받아준다.
 		List<HostMovieChartVO> voList = dao.getMovieCountChart(); 
 		
-		//vo데이터타입 i 에 List데이터들을 한건씩 빼와서 map에 담아준다.
-		//(map의 key값이 String이기때문에 int형인 kind를 String으로 형변환 해준다.
+		//vo데이터타입 i 에 List데이터들을 한건씩 빼와서 map에 담는다.
+		//(map의 key값이 String이기때문에 int형인 kind를 String으로 형변환 한다.
 		for (HostMovieChartVO i : voList) {
 			map.put(i.getKind() , i.getValue());
 		}
 		
+		// 키 값에 없는 장르의 value는 0으로 초기화 준다.
 		for (String s : janre) {
 			int chk = 0;
 			for(Entry<String, Object> m : map.entrySet()) {
@@ -804,7 +809,7 @@ public class Host_movieServiceImpl implements Host_movieService{
 		model.addAttribute("movieJanreCountChart",map);
 		
 		map.forEach((k,v)->{
-			System.out.println(k + " : " + v);
+			log.debug(k + " : " + v);
 		});
 	}
 
@@ -822,6 +827,7 @@ public class Host_movieServiceImpl implements Host_movieService{
 			map.put(Integer.toString(i.getKind()) , i.getSum());
 		}
 		
+		// 키 값에 없는 제한연령의 value는 0으로 초기화 준다.
 		for (String s : age) {
 			int chk = 0;
 			for(Entry<String, Object> m : map.entrySet()) {
@@ -838,7 +844,7 @@ public class Host_movieServiceImpl implements Host_movieService{
 		model.addAttribute("movieAgeChart",map);
 		
 		map.forEach((k,v)->{
-			System.out.println(k + " : " + v);
+			log.debug(k + " : " + v);
 		});
 	}
 
@@ -856,6 +862,7 @@ public class Host_movieServiceImpl implements Host_movieService{
 			map.put(i.getKind() , i.getValue());
 		}
 		
+		// 키 값에 없는 성별의 value는 0으로 초기화 준다.
 		for (String s : sex) {
 			int chk = 0;
 			for(Entry<String, Object> m : map.entrySet()) {
@@ -871,7 +878,7 @@ public class Host_movieServiceImpl implements Host_movieService{
 		model.addAttribute("movieSexCountChart",map);
 		
 		map.forEach((k,v)->{
-			System.out.println(k + " : " + v);
+			log.debug(k + " : " + v);
 		});
 	}
 
@@ -891,7 +898,7 @@ public class Host_movieServiceImpl implements Host_movieService{
 	// 형태소 분석된 결과를 데이터베이스에 저장하는 프로세스
 	@Override
 	public void wordExtractAndAnalyze(String text, int movie_index) {
-		System.out.println("WordCloud analyze");
+		log.debug("WordCloud analyze");
 		new Runnable() {
 			public void run() {
 
@@ -918,14 +925,14 @@ public class Host_movieServiceImpl implements Host_movieService{
 				}
 				// 워드 클라우드 모델을 refresh 해줌
 				setWordList();
-				System.out.println("WordCloud 분석 종료");
+				log.debug("WordCloud 분석 종료");
 			}
 		}.run();
 	}
 
 	// 워드클라우드 단어를 가져옴
 	public synchronized void setWordList() {
-		System.out.println("Word Cloud word set request");
+		log.debug("Word Cloud word set request");
 		wordVos = dao.getWordCloudModel();
 	}
 	
@@ -933,19 +940,39 @@ public class Host_movieServiceImpl implements Host_movieService{
 	@Override
 	public void movieWordcloud(HttpServletRequest req, Model model) {
 		int movie_index = Integer.parseInt(req.getParameter("movie_index")); // get방식으로 영화index를 가져옴
-		int countOfWords = 50; // 최대 50개의 워드클라우드 단어를 가져옴
-
+		int countOfWords = 30; // 30개의 워드클라우드 단어를 가져옴
+		if(req.getParameter("count")!=null) {
+			countOfWords = Integer.parseInt(req.getParameter("count"));
+		}
+		
+		String type = "";
+		type = req.getParameter("type");
+		
 		Map<String, Object> map = new HashMap<>();
 		map.put("countOfWords", countOfWords);
 		map.put("movie_index", movie_index);
+		map.put("type", type);
 		
 		List<WordVO> wordList = null;
 		wordList = dao.searchWordcloud(map);
 
+		model.addAttribute("type", type);
+		model.addAttribute("movie_index", movie_index);
 		model.addAttribute("wordList", wordList);
 		model.addAttribute("listSize", wordList.size());
+		model.addAttribute("countOfWords", countOfWords);
 	}
 
-	
+	// 직원 고용하기 전 모든 회원 정보 불러오기
+	@Override
+	public void getMemberList(HttpServletRequest req, Model model) {
+		if(dao.getMemberCnt()>0) { // 직원고용하기 전 회원이 1명이라도 존재하는지 체크
+			ArrayList<Member> vos = dao.getMemberList(); // 직원 고용하기 전 모든 회원 정보 불러오기
+			model.addAttribute("vos", vos);
+			model.addAttribute("cnt", 1);
+		}else {
+			model.addAttribute("cnt", 0);
+		}
+	}
 }
 

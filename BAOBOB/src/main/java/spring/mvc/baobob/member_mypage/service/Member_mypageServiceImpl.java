@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -25,6 +26,9 @@ import spring.mvc.baobob.vo.MovieHistoryVO;
 import spring.mvc.baobob.vo.MovieVO;
 import spring.mvc.baobob.vo.ParkingHistory;
 import spring.mvc.baobob.vo.RestaurantLogVO;
+import spring.mvc.baobob.vo.TableVO;
+import spring.mvc.baobob.vo.Theater_seatVO;
+import spring.mvc.baobob.vo.WishListVO;
 
 @Service
 public class Member_mypageServiceImpl implements Member_mypageService{
@@ -85,7 +89,7 @@ public class Member_mypageServiceImpl implements Member_mypageService{
 			
 			//게시글 목록 조회
 			ArrayList<BoardVO> dtos = dao.getArticleList(map);
-			model.addAttribute("dtos", dtos);
+			model.addAttribute("QuestionDtos", dtos);
 			
 		}
 		
@@ -97,7 +101,7 @@ public class Member_mypageServiceImpl implements Member_mypageService{
 		endPage = startPage + pageBlock - 1;
 		if(endPage > pageCount) endPage = pageCount;
 		
-		model.addAttribute("cnt", cnt); //글갯수
+		model.addAttribute("memQuestionCnt", cnt); //글갯수
 		model.addAttribute("number", number); //글번호
 		model.addAttribute("pageNum", pageNum); //페이지 번호
 		
@@ -232,9 +236,23 @@ public class Member_mypageServiceImpl implements Member_mypageService{
 
 	//회원카드정보 가져오기
 	public void memberCard(HttpServletRequest req, Model model) {
+		
 		String strId=(String) req.getSession().getAttribute("memId"); 
 		
+		//세션에 저장된 아이디의 정보 가져오기
 		Member vo = dao.getMemberInfo(strId);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("strId", strId);
+		map.put("member_cumpoint", vo.getMember_cumPoint());
+		
+		System.out.println("누적: " + map.get("member_cumpoint"));
+		System.out.println("세션: " + map.get("strId"));
+		System.out.println();
+
+		//누적포인트에따라 회원등급(member_step)업데이트해주기
+		dao.updateMemberStep(map);
+		
 		model.addAttribute("vo", vo);
 	}
 	
@@ -384,7 +402,7 @@ public class Member_mypageServiceImpl implements Member_mypageService{
 			
 			//게시글 목록 조회
 			ArrayList<BoardVO> dtos = dao.getArticleLList(map);
-			model.addAttribute("dtos", dtos);
+			model.addAttribute("lostDtos", dtos);
 			
 		}
 		
@@ -396,7 +414,7 @@ public class Member_mypageServiceImpl implements Member_mypageService{
 		endPage = startPage + pageBlock - 1;
 		if(endPage > pageCount) endPage = pageCount;
 		
-		model.addAttribute("cnt", cnt); //글갯수
+		model.addAttribute("lostCnt", cnt); //글갯수
 		model.addAttribute("number", number); //글번호
 		model.addAttribute("pageNum", pageNum); //페이지 번호
 		
@@ -601,86 +619,6 @@ public class Member_mypageServiceImpl implements Member_mypageService{
 		
 /*----------------------------------------------------------------------------*/
 		
-	//무비로그-위시리스트
-	public void movieClear(HttpServletRequest req, Model model) {
-		int pageSize = 4;		// 한 페이지당 출력할 글 개수
-		int pageBlock = 3;		// 한 블럭당 페이지 갯수
-		
-		int cnt = 0;			// 글 갯수
-		int start = 0;			// 현재 페이지의 글 시작번호
-		int end = 0;			// 현재 페이지의 글 마지막번호
-		int number = 0;			// 출력할 글번호
-		String pageNum = null;	// 페이지 번호
-		int currentPage = 0;	// 현재 페이지
-		
-		int pageCount = 0;		// 페이지 갯수
-		int startPage = 0;		// 시작 페이지
-		int endPage = 0;		// 마지막 페이지
-		
-		String strId = (String)req.getSession().getAttribute("memId");
-
-		//글 갯수 구하기
-		cnt = dao.movieClearCnt(strId);
-		
-		pageNum = req.getParameter("pageNum");
-		
-		if(pageNum == null) {
-			pageNum = "1";	//첫페이지를 1페이지로 설정
-		}
-		
-		currentPage = Integer.parseInt(pageNum); //현재 페이지
-		
-		//페이지 갯수 (pageSize가 5이고 전체 글갯수가 12면 2개가 남는데 그 2개도 페이지를 할당해 줘야한다.)
-		//pageCnt = 12 / 5 + 1; ... 나머지 2건이 1페이지로 할당되므로 3페이지(2페이지+1페이지)
-		pageCount = (cnt / pageSize) + ((cnt % pageSize > 0) ? 1 : 0); 
-		
-		//현재 페이지 시작번호
-		start = (currentPage - 1) * pageSize + 1; 
-		
-		//현재 페이지 끝번호
-		end = start + pageSize - 1;
-		
-		if(end > cnt) end = cnt;
-		
-		//1=21-(5(현제페이지)-1)*5
-		number = cnt - (currentPage -1) * pageSize; //출력할 글번호..최신글(큰페이지)가 1페이지 출력할 글번호
-		
-		if(cnt > 0) {
-			
-			Map<String, Object> map = new HashMap<String, Object>();
-			map.put("start", start);
-			map.put("end", end);
-			map.put("strId", strId);
-			
-			//게시글 목록 조회
-			ArrayList<MovieHistoryVO> dtos = dao.getMovieClear(map);
-			model.addAttribute("dtos", dtos);
-			
-		}
-		
-		//4=(5/3)*3+1;
-		startPage = (currentPage / pageBlock) * pageBlock + 1;
-		if(currentPage % pageBlock == 0) startPage -= pageBlock; // (5 % 3 == 0)
-		
-		//6=4+3-1; 
-		endPage = startPage + pageBlock - 1;
-		if(endPage > pageCount) endPage = pageCount;
-		
-		model.addAttribute("cnt", cnt); //글갯수
-		model.addAttribute("number", number); //글번호
-		model.addAttribute("pageNum", pageNum); //페이지 번호
-		
-		if(cnt > 0) {
-			model.addAttribute("startPage", startPage); //시작 페이지
-			model.addAttribute("endPage", endPage);//마지막 페이지
-			model.addAttribute("pageBlock", pageBlock);//출력할 페이지 갯수
-			model.addAttribute("pageCount", pageCount);//페이지 갯수
-			model.addAttribute("currentPage", currentPage);//현재 페이지
-		}
-	}
-		
-/*----------------------------------------------------------------------------*/
-		
 	//무비로그-무비다이어리
 	public void movieDiaryList(HttpServletRequest req, Model model) {
 		int pageSize = 10;		// 한 페이지당 출력할 글 개수
@@ -798,6 +736,23 @@ public class Member_mypageServiceImpl implements Member_mypageService{
 	}
 	
 /*----------------------------------------------------------------------------*/
+	
+	//위시리스트 추가
+	public void addWishList(HttpServletRequest req, Model model) {
+		WishListVO dto = new WishListVO();
+		
+		//2.화면으로부터 입력받은 내용을 작은바구니(DTO)에 담는다.
+		dto.setMember_id((String)req.getSession().getAttribute("memId"));
+		dto.setMovie_index(Integer.parseInt(req.getParameter("movie_index")));
+		
+		int cnt = dao.addWishList(dto);
+		
+		//6.jsp에 넘길 값을 셋팅한다.(setAttribute)
+		model.addAttribute("cnt", cnt);
+		
+	}
+
+/*----------------------------------------------------------------------------*/
 		
 	//무비로그-위시리스트 삭제처리
 	public void delMovieWishList(HttpServletRequest req, Model model) {
@@ -860,10 +815,41 @@ public class Member_mypageServiceImpl implements Member_mypageService{
 			map.put("end", end);
 			map.put("strId", strId);
 			
-			//게시글 목록 조회
+			//영화정보VO
 			ArrayList<MovieHistoryVO> movieDtos = dao.getMovieClear(map);
-			model.addAttribute("dtos", movieDtos);
 			
+			//좌석정보VO
+			ArrayList<Theater_seatVO> seatDtos = dao.getMovieSeat(map);
+			
+			String[] seatRow = {"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"};
+			
+			for(MovieHistoryVO mVO : movieDtos) {
+				
+				String[] seat;
+				int seatSize = 0;
+				
+				for(Theater_seatVO sVO : seatDtos) {
+					if(mVO.getTheater_schedule_index()==sVO.getTheater_schedule_index()) {
+						seatSize++;
+					}
+				}
+				
+				seat = new String[seatSize];
+				
+				int i=0;
+				for(Theater_seatVO sVO : seatDtos) {
+					if(mVO.getTheater_schedule_index()==sVO.getTheater_schedule_index()) {
+						
+						String seatInfo = seatRow[sVO.getSeat_row()-1]+sVO.getSeat_col();
+						seat[i++] = seatInfo;
+					}
+				}
+				mVO.setSeat(Arrays.toString(seat));
+			}
+			
+			model.addAttribute("dtos", movieDtos);
+			model.addAttribute("seatDtos",seatDtos);
+
 		}
 		
 		//4=(5/3)*3+1;
@@ -891,17 +877,148 @@ public class Member_mypageServiceImpl implements Member_mypageService{
 		
 	//예매내역 취소처리
 	public void moviePaidDelPro(HttpServletRequest req, Model model) {
-		int num = Integer.parseInt(req.getParameter("num"));
+		int schedule_index = Integer.parseInt(req.getParameter("schedule_index"));
+		String memId = (String) req.getSession().getAttribute("memId");
+		int history_index = Integer.parseInt(req.getParameter("history_index"));
 		
-		int deleteCnt = dao.moviePaidDelPro(num);
-		model.addAttribute("deleteCnt", deleteCnt);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("schedule_index", schedule_index);
+		map.put("memId", memId);
+		map.put("history_index", history_index);
+		
+		//예매좌석 정보 가져오기
+		ArrayList<Theater_seatVO> seatDtos = dao.getSeatInfo(map);
+		
+		int cnt=0;
+		int movieCount = 0; 
+		
+		for(Theater_seatVO vo : seatDtos) {
+			//예매좌석 취소 - 예매좌석 state 돌려놓기
+			if(dao.updateSeatState(vo.getSeat_index()) != 0) {
+				//예매좌석 취소 - 스케쥴에 빈좌석 돌려놓기
+				dao.updateEmptySeat(vo.getSeat_index());
+				movieCount++;	
+				cnt = 1;
+			}
+		}
+		
+		if(cnt == 1) {
+			map.put("movieCount", movieCount);
+			
+			//예매좌석 취소 - movie_count 돌려놀기
+			if(dao.updateMovieCount(map) != 0) {
+				
+				//사용한 포인트만큼 다시 포인트 더하기 결제금액의 10% 빼기, 누적포인트에서 결제금액의 10% 빼기.
+				dao.updatePoint(map);
+				
+				//예매내역 삭제(movie_history_tbl)
+				if(dao.moviePaidDelPro(history_index) != 0) {
+					
+					//예매내역 삭제(history_tbl)
+					int deleteCnt = dao.historyDelPro(history_index);
+					model.addAttribute("deleteCnt", deleteCnt);
+				}
+			}
+		}
+		
+		
+	}
+	
+/*----------------------------------------------------------------------------*/
+	
+	//식당 예약내역 취소처리
+	public void memRBookDel(HttpServletRequest req, Model model) {
+		int cnt = 0;
+		int use_table_count = 0;
+		
+		// 식당 관리자의 memberStep에서 뒷자리를 구한다.(뒷자리가 restaurant_index와 같음)
+		int restaurant_index = Integer.parseInt(req.getParameter("restaurant_index"));
+		int schedule_index = Integer.parseInt(req.getParameter("restaurant_schedule_index"));	// 스케줄 index
+		int table_Num = Integer.parseInt(req.getParameter("table_Num")); // 테이블 번호
+		String member_id = (String)req.getSession().getAttribute("memId");
+		
+		// 여러 정보를 저장하기 위해 맵 이용
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("restaurant_index", restaurant_index);
+		map.put("restaurant_schedule_index", schedule_index);
+		map.put("member_id", member_id);
+		
+		//기본 좌석정보VO
+		TableVO table_dto = dao.getColRow(restaurant_index);
+		
+		//매장을 구성하는 타일의 행열 (예:5*5) index가 0부터 시작하기때문에 +1 해준다.
+		int col = table_dto.getTable_col() + 1; // 행
+		int row = table_dto.getTable_row() + 1; // 열
+
+		int table_index = 0;
+		map.put("restaurant_table_index", table_index);
+		
+		// 열만큼 반복
+		for (int i = 0; i < row; i++) {
+			
+			// 행만큼 반복
+			for (int j = 0; j < col; j++) {
+				map.replace("restaurant_table_index", table_index);
+				
+				// state 정보 조회
+				int state = dao.getState(map);
+				
+				// '사용 중'인 테이블이 걸리면 '사용 중'테이블 개수 증가
+				if (state == 3) {
+
+					// 예약 된 테이블이 몇개인지 확인
+					use_table_count++;
+					
+					// 예약 취소할 테이블 번호가 되면
+					if(table_index == table_Num) {
+						
+						// 삭제 전 히스토리 인덱스 조회(삭제하면 히스토리 인덱스를 찾을 수 없음)
+						int history_index = dao.getHistoryIndex(map);
+						map.put("history_index", history_index);
+
+						// 레스토랑 히스토리 테이블에 이용 내역 삭제
+						cnt = dao.delRestaurantHistory(map);
+						
+						// 삭제에 성공했다면
+						if(cnt != 0) {
+							// 히스토리 테이블에 이용 내역 삭제
+							cnt = dao.delHistory(map);
+							
+							// 삭제에 성공했다면
+							if(cnt != 0) {
+								// '사용 중'인 테이블 '사용 가능'으로 상태 변경
+								cnt = dao.modState(map);
+							}
+						}
+					}
+				}
+				// 테이블 번호
+				table_index++;
+			}
+		}
+		
+		// '사용 중'인 테이블이 단 하나였고,'사용 가능'으로 상태 변경에 성공했다면
+		if(use_table_count == 1 && cnt == 1) {
+			// 테이블 전체 삭제
+			cnt = dao.delTable(map);
+			
+			// 삭제에 성공했다면
+			if(cnt != 0) {
+				// 스케줄 삭제 처리
+				cnt = dao.delSchedule(map);
+			}
+		}
+		
+		// 성공 여부 저장
+		model.addAttribute("cnt", cnt);
+		
 	}
 	
 /*----------------------------------------------------------------------------*/
 	
 	//내가 이용한 레스토랑
 	public void restaurantLog(HttpServletRequest req, Model model) {
-		int pageSize = 10;		// 한 페이지당 출력할 글 개수
+		int pageSize = 5;		// 한 페이지당 출력할 글 개수
 		int pageBlock = 3;		// 한 블럭당 페이지 갯수
 		
 		int cnt = 0;			// 글 갯수
@@ -916,8 +1033,8 @@ public class Member_mypageServiceImpl implements Member_mypageService{
 		int endPage = 0;		// 마지막 페이지
 		
 		String strId = (String)req.getSession().getAttribute("memId");
-		
-		//글 갯수 구하기
+		System.out.println("세션: " + strId);
+		//식당 예매내역 갯수
 		cnt = dao.restaurantLogCnt(strId);
 		
 		pageNum = req.getParameter("pageNum");
@@ -951,8 +1068,8 @@ public class Member_mypageServiceImpl implements Member_mypageService{
 			map.put("strId", strId);
 			
 			//게시글 목록 조회
-			ArrayList<RestaurantLogVO> movieDtos = dao.restaurantLogList(map);
-			model.addAttribute("dtos", movieDtos);
+			ArrayList<RestaurantLogVO> resDtos = dao.restaurantLogList(map);
+			model.addAttribute("dtos", resDtos);
 			
 		}
 		
@@ -967,6 +1084,8 @@ public class Member_mypageServiceImpl implements Member_mypageService{
 		model.addAttribute("cnt", cnt); //글갯수
 		model.addAttribute("number", number); //글번호
 		model.addAttribute("pageNum", pageNum); //페이지 번호
+		System.out.println("예약갯수: " + cnt);
+		
 		
 		if(cnt > 0) {
 			model.addAttribute("startPage", startPage); //시작 페이지

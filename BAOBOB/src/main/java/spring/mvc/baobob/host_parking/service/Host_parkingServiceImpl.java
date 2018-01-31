@@ -87,7 +87,6 @@ public class Host_parkingServiceImpl implements Host_parkingService {
 
 		if (cnt != 0) {
 			// 주차장 각 구역 정보 등록
-			System.out.println(info);
 			String[] typeNums = info.split(",");
 			for (int y = 0; y < row; y += 1) {
 				for (int x = 0; x < col; x += 1) {
@@ -96,7 +95,7 @@ public class Host_parkingServiceImpl implements Host_parkingService {
 
 					Parking space = new Parking();
 					space.setPark_index(idx);
-					space.setPark_state(0);
+					space.setPark_state(1);
 					space.setPark_theme(type);
 					cnt = dao.parkingChange(space);
 				}
@@ -128,26 +127,28 @@ public class Host_parkingServiceImpl implements Host_parkingService {
 	@Override
 	public void getParkingSpaceState(HttpServletRequest req, Model model) {
 		ParkingSpace ps = dao.getParkingSpace();
-		int col = ps.getP_space_col();
-		int row = ps.getP_space_row();
-		int last_idx = col * row;
-		
-		//주차장 구역 타입 정보
-		String[] spaces = ps.getP_space_info().split(","); 
-		
-		//주차장 구역 상태 정보
-		ArrayList<String> list = dao.getParkingStates(last_idx);
-		String states = "";
-		for (int i = 0; i < list.size(); i += 1) {
-			if(spaces[i].equals("0")) {
-				list.set(i, "2");
+		if(ps != null) {
+			int col = ps.getP_space_col();
+			int row = ps.getP_space_row();
+			int last_idx = col * row;
+			
+			//주차장 구역 타입 정보
+			String[] spaces = ps.getP_space_info().split(","); 
+			
+			//주차장 구역 상태 정보
+			ArrayList<String> list = dao.getParkingStates(last_idx);
+			String states = "";
+			for (int i = 0; i < list.size(); i += 1) {
+				if(spaces[i].equals("0") || spaces[i].equals("9") || spaces[i].equals("8")) {
+					list.set(i, "2");
+				}
+				states += states.equals("") ? list.get(i) : "," + list.get(i);
 			}
-			states += states.equals("") ? list.get(i) : "," + list.get(i);
+	
+			model.addAttribute("col", col);
+			model.addAttribute("row", row);
+			model.addAttribute("states", states);
 		}
-
-		model.addAttribute("col", col);
-		model.addAttribute("row", row);
-		model.addAttribute("states", states);
 	}
 
 	// 해당 주차 구역 정보
@@ -379,38 +380,6 @@ public class Host_parkingServiceImpl implements Host_parkingService {
 			}
 		}
 	};
-
-	// 주차 내역
-	/*
-	 * @Override public void getParkingHistory(HttpServletRequest req, Model model)
-	 * { int postCnt = dao.getParkingHistoryCnt(); if(postCnt != 0) { String pageNum
-	 * = req.getParameter("pageNum"); if(pageNum == null) { pageNum = "1";} int
-	 * currentPage = Integer.parseInt(pageNum);
-	 * 
-	 * int pageSize = 15; int navSize = 10;
-	 * 
-	 * int startPost = (currentPage - 1) * pageSize + 1; int endPost = startPost +
-	 * pageSize - 1; if(endPost > postCnt) { endPost = postCnt; }
-	 * 
-	 * int navCnt = postCnt / pageSize + (postCnt % pageSize == 0 ? 0 : 1); int
-	 * startNav = (currentPage / navSize) * navSize + 1; if(currentPage % navSize ==
-	 * 0) { startNav -= navSize;} int endNav = startNav + navSize - 1; if(endNav >
-	 * navCnt) { endNav = navCnt; }
-	 * 
-	 * model.addAttribute("startPost", startPost); model.addAttribute("endPost",
-	 * endPost); model.addAttribute("pageNum", pageNum);
-	 * model.addAttribute("startNav", startNav); model.addAttribute("endNav",
-	 * endNav); model.addAttribute("navSize", navSize);
-	 * model.addAttribute("postCnt", postCnt); model.addAttribute("navCnt", navCnt);
-	 * 
-	 * int number = postCnt - startPost + 1; model.addAttribute("number", number);
-	 * 
-	 * Map<String, Integer> map = new HashMap<String, Integer>(); map.put("start",
-	 * startPost); map.put("end", endPost);
-	 * 
-	 * ArrayList<ParkingHistory> phs = dao.getParkingHistory(map);
-	 * model.addAttribute("phs", phs); } }
-	 */
 
 	// 납부내역(출차한 차량만)
 	@Override

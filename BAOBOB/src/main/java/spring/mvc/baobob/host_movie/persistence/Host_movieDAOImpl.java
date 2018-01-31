@@ -69,6 +69,7 @@ public class Host_movieDAOImpl implements Host_movieDAO {
 		return cnt;
 	}
 
+	// 영화 상세
 	@Override
 	public MovieVO hostMovieDetail(int movie_index) {
 		MovieVO vo = null;
@@ -79,6 +80,7 @@ public class Host_movieDAOImpl implements Host_movieDAO {
 		return vo;
 	}
 
+	// 영화 수정 처리
 	@Override
 	public int hostMovieModPro(MovieVO vo) {
 		int cnt = 0;
@@ -235,265 +237,169 @@ public class Host_movieDAOImpl implements Host_movieDAO {
 	// 상영가능한 상영관 count
 	@Override
 	public int checkPosTheaterCnt(String schedule_start) {
-		int cnt = 0;
-		
 		Host_movieDAO dao = sqlSession.getMapper(Host_movieDAO.class);
-		cnt = dao.checkPosTheaterCnt(schedule_start);
-		
-		return cnt;
+		return dao.checkPosTheaterCnt(schedule_start);
 	}
 
 	// 상영가능한 상영관 정보
 	@Override
 	public ArrayList<TheaterVO> checkPosTheater(String schedule_start) {
-		ArrayList<TheaterVO> vos = null;
-		
 		Host_movieDAO dao = sqlSession.getMapper(Host_movieDAO.class);
-		vos = dao.checkPosTheater(schedule_start);
-		
-		return vos;
+		return dao.checkPosTheater(schedule_start);
 	}
 	
 	// 스케줄 추가 처리
 	@Override
 	public int hostScheduleAddPro(Map<String, Object> map) {
-		int cnt = 0;
-		
 		Host_movieDAO dao = sqlSession.getMapper(Host_movieDAO.class);
-		cnt = dao.hostScheduleAddPro(map);
-		
-		return cnt;
+		return dao.hostScheduleAddPro(map);
 	}
 
 	// 스케줄 상세
 	@Override
 	public Theater_scheduleVO hostScheduleDetail(int theater_schedule_index) {
-		Theater_scheduleVO vo = null;
-		
 		Host_movieDAO dao = sqlSession.getMapper(Host_movieDAO.class);
-		vo = dao.hostScheduleDetail(theater_schedule_index);
-		
-		return vo;
+		return dao.hostScheduleDetail(theater_schedule_index);
 	}
 
 	// 스케줄 수정 - 선택한 시간에 다른 스케줄이 있는지 확인
 	@Override
 	public int chkCnt(Map<String, Object> map) {
-		int cnt = 0;
-		
 		Host_movieDAO dao = sqlSession.getMapper(Host_movieDAO.class);
-		cnt = dao.chkCnt(map);
-		
-		return cnt;
+		return dao.chkCnt(map);
 	}
 
 	// 스케줄 수정 처리
 	@Override
 	public int updateSchedule(Map<String, Object> map) {
-		int cnt = 0;
-		
 		Host_movieDAO dao = sqlSession.getMapper(Host_movieDAO.class);
-		cnt = dao.updateSchedule(map);
-		
-		return cnt;
+		return dao.updateSchedule(map);
 	}
 
 	// 스케줄 삭제 처리
 	@Override
 	public int hostScheduleDelPro(int theater_schedule_index) {
-		int cnt = 0;
-		
 		Host_movieDAO dao = sqlSession.getMapper(Host_movieDAO.class);
-		cnt = dao.hostScheduleDelPro(theater_schedule_index);
-		
-		return cnt;
+		return dao.hostScheduleDelPro(theater_schedule_index);
 	}
 
 	// 직원 수
 	@Override
 	public int hostMovieEmpCnt() {
-		int cnt = 0;
-		
 		Host_movieDAO dao = sqlSession.getMapper(Host_movieDAO.class);
-		cnt = dao.hostMovieEmpCnt();
-		
-		return cnt;
+		return dao.hostMovieEmpCnt();
 	}
 	
 	// 직원 목록 가져오기
 	@Override
 	public ArrayList<Member> hostMovieEmpList() {
-		ArrayList<Member> vos = null;
-		
 		Host_movieDAO dao = sqlSession.getMapper(Host_movieDAO.class);
-		vos = dao.hostMovieEmpList();
-		
-		return vos;
+		return dao.hostMovieEmpList();
 	}
 	
 	// 직원 고용 아이디 확인
 	@Override
 	public int hostMovieEmpChkMemberId(String member_id) {
-		int cnt = 0;
-		
 		Host_movieDAO dao = sqlSession.getMapper(Host_movieDAO.class);
-		cnt = dao.hostMovieEmpChkMemberId(member_id);
-		
-		return cnt;
+		return dao.hostMovieEmpChkMemberId(member_id);
 	}
 
 	// 아이디로 고용할 직원 정보 가져오기
 	@Override
 	public Member hostMovieEmpInfo(String member_id) {
-		Member vo = null;
-		
 		Host_movieDAO dao = sqlSession.getMapper(Host_movieDAO.class);
-		vo = dao.hostMovieEmpInfo(member_id);
-		
-		return vo;
+		return dao.hostMovieEmpInfo(member_id);
 	}
 
 	// 고용할 직원의 아이디 state 변경
 	@Override
 	public int memberChangeState(String member_id) {
-		int cnt = 0;
-		
 		Host_movieDAO dao = sqlSession.getMapper(Host_movieDAO.class);
-		cnt = dao.memberChangeState(member_id);
-		
-		return cnt;
+		return dao.memberChangeState(member_id);
 	}
 
 	// 영화 직원 목록에 추가하기
 	@Override
 	public int insertEmp(Map<String, Object> map) {
-		int cnt = 0;
-		
 		Host_movieDAO dao = sqlSession.getMapper(Host_movieDAO.class);
-		cnt = dao.insertEmp(map);
-		
-		return cnt;
+		return dao.insertEmp(map);
 	}
 
 	// 종합 포인트 등급 가져오기
 	@Override
 	public int getMemberPoint(String member_id) {
-		int point = 0;
-		
 		Host_movieDAO dao = sqlSession.getMapper(Host_movieDAO.class);
-		point = dao.getMemberPoint(member_id);
-		
-		return point;
+		return dao.getMemberPoint(member_id);
 	}
 
 	// 직원 목록에서 삭제
 	@Override
 	public int hostMovieEmpDel(String member_id) {
-		int cnt = 0;
-		
 		Host_movieDAO dao = sqlSession.getMapper(Host_movieDAO.class);
-		cnt = dao.hostMovieEmpDel(member_id);
-		
-		return cnt;
+		return dao.hostMovieEmpDel(member_id);
 	}
 
 	// 회원 step 변경하기
 	@Override
 	public int updateMemberStep(Member vo) {
-		int cnt = 0;
-		
 		Host_movieDAO dao = sqlSession.getMapper(Host_movieDAO.class);
-		cnt = dao.updateMemberStep(vo);
-		
-		return cnt;
+		return dao.updateMemberStep(vo);
 	}
 
 	// 상영관의 선택한 좌석 state 불러오기
 	@Override
 	public int getTheaterSeatState(Map<String, Integer> map) {
-		int state = 0;
-		
 		Host_movieDAO dao = sqlSession.getMapper(Host_movieDAO.class);
-		state = dao.getTheaterSeatState(map);
-		
-		return state;
+		return dao.getTheaterSeatState(map);
 	}
 	
 	// 상영관의 선택한 좌석 price 불러오기
 	@Override
 	public int getTheaterSeatPrice(Map<String, Integer> map) {
-		int price = 0;
-		
 		Host_movieDAO dao = sqlSession.getMapper(Host_movieDAO.class);
-		price = dao.getTheaterSeatPrice(map);
-		
-		return price;
+		return dao.getTheaterSeatPrice(map);
 	}
 
 	// 스케줄에 해당하는 좌석 생성
 	@Override
 	public int TheaterScheduleSeatAddPro(Map<String, Integer> map) {
-		int cnt = 0;
-		
 		Host_movieDAO dao = sqlSession.getMapper(Host_movieDAO.class);
-		cnt = dao.TheaterScheduleSeatAddPro(map);
-		
-		return cnt;
+		return dao.TheaterScheduleSeatAddPro(map);
 	}
 
 	// 스케줄에 해당하는 좌석 정보 가져오기
 	@Override
 	public ArrayList<Theater_seatVO> hostTheaterScheduleSeatDetail(Map<String, Integer> map) {
-		ArrayList<Theater_seatVO> vos = null;
-		
 		Host_movieDAO dao = sqlSession.getMapper(Host_movieDAO.class);
-		vos = dao.hostTheaterScheduleSeatDetail(map);
-		
-		return vos;
+		return dao.hostTheaterScheduleSeatDetail(map);
 	}
 
 	// 영화 스케줄에 빈좌석컬럼 업데이트하기
 	@Override
 	public int updateEmpty_seat(int empty_seat) {
-		int cnt = 0;
-		
 		Host_movieDAO dao = sqlSession.getMapper(Host_movieDAO.class);
-		cnt = dao.updateEmpty_seat(empty_seat);
-		
-		return cnt;
+		return dao.updateEmpty_seat(empty_seat);
 	}
 
 	// 장르별 영화 관람객수
 	@Override
 	public List<HostMovieChartVO> getMovieCountChart() {
-		List<HostMovieChartVO> voList = null;
-		
 		Host_movieDAO dao = sqlSession.getMapper(Host_movieDAO.class);
-		voList = dao.getMovieCountChart();
-		
-		return voList;
+		return dao.getMovieCountChart();
 	}
 
 	// 제한연령별 매출
 	@Override
 	public List<hostTChartVO> movieAgeChart() {
-		List<hostTChartVO> voList = null;
-		
 		Host_movieDAO dao = sqlSession.getMapper(Host_movieDAO.class);
-		voList = dao.movieAgeChart();
-				
-		return voList;
+		return dao.movieAgeChart();
 	}
 
 	// 관람객 성별 수
 	@Override
 	public List<HostMovieChartVO> movieSexCountChart() {
-		List<HostMovieChartVO> voList = null;
-		
 		Host_movieDAO dao = sqlSession.getMapper(Host_movieDAO.class);
-		voList = dao.movieSexCountChart();
-		
-		return voList;
+		return dao.movieSexCountChart();
 	}
 
 	// 워드클라우드 모델을 가져옴
@@ -529,6 +435,20 @@ public class Host_movieDAOImpl implements Host_movieDAO {
 	public List<WordVO> searchWordcloud(Map<String, Object> map) {
 		Host_movieDAO dao = sqlSession.getMapper(Host_movieDAO.class);
 		return dao.searchWordcloud(map);
+	}
+
+	// 직원 고용하기 전 모든 회원 정보 불러오기
+	@Override
+	public ArrayList<Member> getMemberList() {
+		Host_movieDAO dao = sqlSession.getMapper(Host_movieDAO.class);
+		return dao.getMemberList();
+	}
+
+	// 직원고용하기 전 회원이 1명이라도 존재하는지 체크
+	@Override
+	public int getMemberCnt() {
+		Host_movieDAO dao = sqlSession.getMapper(Host_movieDAO.class);
+		return dao.getMemberCnt();
 	}
 		
 }

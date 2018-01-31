@@ -14,6 +14,9 @@ import spring.mvc.baobob.vo.MovieHistoryVO;
 import spring.mvc.baobob.vo.MovieVO;
 import spring.mvc.baobob.vo.ParkingHistory;
 import spring.mvc.baobob.vo.RestaurantLogVO;
+import spring.mvc.baobob.vo.TableVO;
+import spring.mvc.baobob.vo.Theater_seatVO;
+import spring.mvc.baobob.vo.WishListVO;
 
 @Repository
 public class Member_mypageDAOImpl implements Member_mypageDAO{
@@ -263,6 +266,17 @@ public class Member_mypageDAOImpl implements Member_mypageDAO{
 	
 /*----------------------------------------------------------------------------*/
 	
+	//누적포인트에따라 회원등급(member_step)업데이트해주기
+	public int updateMemberStep(Map<String,Object> map) {
+		
+		Member_mypageDAO dao = sqlSession.getMapper(Member_mypageDAO.class);
+		
+		return dao.updateMemberStep(map);
+	}
+	
+	
+/*----------------------------------------------------------------------------*/
+	
 	//회원정보 수정 처리
 	public int updateMember(Member vo) {
 		int cnt = 0;
@@ -407,6 +421,15 @@ public class Member_mypageDAOImpl implements Member_mypageDAO{
 	
 /*----------------------------------------------------------------------------*/
 	
+	//예약한 상영과,좌석 불러오기
+	public ArrayList<Theater_seatVO> getMovieSeat(Map<String,Object> map){
+		Member_mypageDAO dao = sqlSession.getMapper(Member_mypageDAO.class);
+		
+		return dao.getMovieSeat(map);
+	}
+	
+/*----------------------------------------------------------------------------*/
+	
 	//무비 다이어리 글갯수 구하기
 	public int getMovieDiaryCnt(String strId) {
 		int cnt = 0;
@@ -456,6 +479,18 @@ public class Member_mypageDAOImpl implements Member_mypageDAO{
 		return cnt;
 	}
 	
+/*----------------------------------------------------------------------------*/
+	
+	//위시리스트 추가
+	public int addWishList(WishListVO dto) {
+		int cnt = 0;
+		
+		Member_mypageDAO dao = sqlSession.getMapper(Member_mypageDAO.class);
+		cnt = dao.addWishList(dto);
+		
+		return cnt;
+	}
+
 /*----------------------------------------------------------------------------*/
 	
 	//위시리스트 삭제
@@ -553,6 +588,149 @@ public class Member_mypageDAOImpl implements Member_mypageDAO{
 		
 		return dtos;
 	}
+	
+/*----------------------------------------------------------------------------*/
+	
+	//예매좌석 정보 가져오기
+	public ArrayList<Theater_seatVO> getSeatInfo(Map<String, Object> map){
+		
+		Member_mypageDAO dao = sqlSession.getMapper(Member_mypageDAO.class);
+		
+		return dao.getSeatInfo(map);
+	}
+	
+/*----------------------------------------------------------------------------*/
+	
+	//예매좌석 취소 - 예매좌석 state 돌려놓기
+	public int updateSeatState(int seat_index) {
+		
+		Member_mypageDAO dao = sqlSession.getMapper(Member_mypageDAO.class);
+		
+		return dao.updateSeatState(seat_index);
+	}
+	
+/*----------------------------------------------------------------------------*/
+	
+	//예매좌석 취소 - 스케쥴에 빈좌석 돌려놓기
+	public int updateEmptySeat(int seat_index) {
+		
+		Member_mypageDAO dao = sqlSession.getMapper(Member_mypageDAO.class);
+		
+		return dao.updateEmptySeat(seat_index);
+	}
+	
+/*----------------------------------------------------------------------------*/
+	
+	//예매좌석 취소 - movie_count 돌려놀기
+	public int updateMovieCount(Map<String, Object> map) {
+		
+		Member_mypageDAO dao = sqlSession.getMapper(Member_mypageDAO.class);
+		
+		return dao.updateMovieCount(map);
+	}
+	
+/*----------------------------------------------------------------------------*/
+	
+	//사용한 포인트만큼 다시 포인트 더하기 결제금액의 10% 빼기, 누적포인트에서 결제금액의 10% 빼기.
+	public int updatePoint(Map<String, Object> map) {
+		
+		Member_mypageDAO dao = sqlSession.getMapper(Member_mypageDAO.class);
+		
+		return dao.updatePoint(map);
+	}
+	
+/*----------------------------------------------------------------------------*/
+	
+	//예매내역 삭제(history_tbl)
+	public int historyDelPro(int history_index) {
+		
+		Member_mypageDAO dao = sqlSession.getMapper(Member_mypageDAO.class);
+		
+		return dao.historyDelPro(history_index);
+	}
+	
+/*----------------------------------------------------------------------------*/
+	
+	//매장을 구성하는 타일의 행열 (예:5*5)
+	public TableVO getColRow(int restaurant_index){
+		
+		Member_mypageDAO dao = sqlSession.getMapper(Member_mypageDAO.class);
+		
+		return dao.getColRow(restaurant_index);
+	}
+	
+/*----------------------------------------------------------------------------*/
+	
+	//state 정보 조회
+	public int getState(Map<String, Object> map) {
+		
+		Member_mypageDAO dao = sqlSession.getMapper(Member_mypageDAO.class);
+		
+		return dao.getState(map);
+	}
+	
+/*----------------------------------------------------------------------------*/
+	
+	//히스토리 인덱스 조회
+	public int getHistoryIndex(Map<String, Object> map) {
+		
+		Member_mypageDAO dao = sqlSession.getMapper(Member_mypageDAO.class);
+		
+		return dao.getHistoryIndex(map);
+	}
+	
+/*----------------------------------------------------------------------------*/
+	
+	//레스토랑 히스토리 테이블에 이용 내역 삭제
+	public int delRestaurantHistory(Map<String, Object> map) {
+		
+		Member_mypageDAO dao = sqlSession.getMapper(Member_mypageDAO.class);
+		
+		return dao.delRestaurantHistory(map);
+	}
+	
+/*----------------------------------------------------------------------------*/
+	
+	//히스토리 테이블에 이용 내역 삭제
+	public int delHistory(Map<String, Object> map) {
+		
+		Member_mypageDAO dao = sqlSession.getMapper(Member_mypageDAO.class);
+		
+		return dao.delHistory(map);
+	}
+	
+/*----------------------------------------------------------------------------*/
+	
+	//'사용 중'인 테이블을 '사용 가능'으로 변경
+	public int modState(Map<String, Object> map) {
+		
+		Member_mypageDAO dao = sqlSession.getMapper(Member_mypageDAO.class);
+		
+		return dao.modState(map);
+	}
+	
+/*----------------------------------------------------------------------------*/
+	
+	//테이블 전체 삭제
+	public int delTable(Map<String, Object> map) {
+		
+		Member_mypageDAO dao = sqlSession.getMapper(Member_mypageDAO.class);
+		
+		return dao.delTable(map);
+	}
+	
+/*----------------------------------------------------------------------------*/
+	
+	//스케줄 삭제 처리
+	public int delSchedule(Map<String, Object> map) {
+		
+		Member_mypageDAO dao = sqlSession.getMapper(Member_mypageDAO.class);
+		
+		return dao.delSchedule(map);
+	}
+	
+	
+	
 	
 	
 	

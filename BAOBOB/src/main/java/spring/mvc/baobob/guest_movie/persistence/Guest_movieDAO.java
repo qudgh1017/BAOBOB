@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Map;
 
 import spring.mvc.baobob.vo.Member;
+import spring.mvc.baobob.vo.MovieFinderVO;
 import spring.mvc.baobob.vo.MovieVO;
 import spring.mvc.baobob.vo.ReviewVO;
 import spring.mvc.baobob.vo.TheaterVO;
@@ -82,14 +83,55 @@ public  interface Guest_movieDAO {
 	public Theater_seatVO seatInfo(int seat_index);
 	
 	//메인 - 영화 순위
-	public ArrayList<String> mainMovieRank();
+	public ArrayList<MovieVO> mainMovieRank();
 	
 	//메인 - 상영 중인 영화 갯수
 	public int mainMovieTheaterCnt();
 	
 	//메인 - 상영 중인 영화
-	public ArrayList<String> mainMovieTheater(Map<String, Object> map);
+	public ArrayList<MovieVO> mainMovieTheater(Map<String, Object> map);
 	
 	//member 정보
 	public Member getMemberInfo(String member_id);
+
+//결제관련-----------------
+	//1. 결제 테이블 추가
+	public int insertHistory(String member_id);
+	
+	//2. 영화 결제테이블 추가
+	public int insertMovieHistory(Map<String,Object> map);
+	
+	//3. 좌석 테이블의 seat_state 변경
+	public int updateSeatState(Map<String,Object> map);
+	
+	//4. 스케줄테이블의 emtpy_seat 감소(결제한 만큼)
+	public int updateEmptySeat(Map<String,Object> map);
+	
+	//5. Update movie_tbl  movie_count + totalCnt해주기(영화관람객수 증가)
+	public int updateMovieCount(Map<String,Object> map);
+	
+	//6. Update member_tbl member_point, member_cumpoint (결제시 증가)
+	public int updateIncreasePoint(Map<String,Object> map);
+	
+	//7. Update member_tbl member_point (포인트 사용했을시 감소)
+	public int updateDecreasePoint(Map<String,Object> map);
+	
+	//8. SELECT member_tble에서 member_cumPoint확인
+	public int getMemberCumPoint(String member_id);
+	
+	//9. UPDATE member_step(Service에서 if조건으로 조건 만족시 실행)
+	public int updateMemberStep(Map<String,Object> map);
+//결제 끝--------------
+	
+	//무비파인더 결과 갯수
+	public int movieFinderResultCnt(MovieFinderVO movieFinderInfo);
+	
+	//무비파인더 결과
+	public ArrayList<MovieVO> movieFinderResult(MovieFinderVO movieFinderInfo);
+	
+	//전체 영화 예매 수
+	public int allMovieCount();
+	
+	//해당 영화 예매 수 
+	public int indexMovieCount(int movie_index);
 }

@@ -1,3 +1,4 @@
+<!-- 영화-예매의 포인트,할인,결제 3페이지 -->
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@page import="java.util.Date"%>    
@@ -23,8 +24,6 @@
 	request.setAttribute("seatRow",seatRow);
 %>
 <body>
-
-
 	<!-- CSS,JavaScript 참조 -->
 	<%@ include file="/WEB-INF/views/guest/common/head.jsp" %>
 	<!-- Navigation -->
@@ -70,7 +69,7 @@
 				<input type="hidden" name="theater_schedule_index" value="${theater_schedule_index}">
 				<input type="hidden" name="totalCnt" value="${totalCnt}"><!-- 총 사람수 -->
 				<input type="hidden" name="movie_index" value="${movie.movie_index}">
-				<input type="hidden" name="movie_history_price" value="${movie_history_price}">
+				<input type="hidden" name="movie_history_price" value="${movie_history_price}">		
 			</div>
 			
 			<div class="container">
@@ -94,7 +93,7 @@
 			
 				<div class="row">
 					<div class="col-md-1"></div>
-				<!-- 포인트 및 신용카드 결제 창 -->
+					<!-- 포인트 및 신용카드 결제 창 -->
 					<div class="col-md-7" align="left" style="padding:0; height:550px; color:black; font-weight:bold; border:1px solid white; background-color:#EEEEEE">
 						<div style="width:100%; height:20px";></div>
 						<div align="left" style="width:100%; height:40px; color:white; background-color:black">
@@ -114,7 +113,7 @@
 									</td>
 									<td style="width:50%">
 										<div class="form-group">
-											사용할 포인트: <label><input class="form-control" name="member_point" type="text" value="0" style="width:80px;" onchange="point('${member.member_point}',this, '${totalSalePrice}', '${movie_history_price}');"></label>
+											사용할 포인트: <label><input class="form-control" name="member_point" type="text" value="0" style="width:80px;" onchange="point('${member.member_point}', this, '${totalSalePrice}', '${movie_history_price}');"></label>
 										</div>
 									</td>
 								</tr>
@@ -156,23 +155,21 @@
 							
 						</div>
 					</div>
-				<!-- 결제내역 창 -->
+					<!-- 결제내역 창 -->
 					<div class="col-md-3" align="center" style="padding:0; height:550px; color:black; font-weight:bold; border:1px solid white; background-color:white;">
 						<br>
-					<!-- 결제하실 금액 -->	
+						<!-- 결제하실 금액 -->	
 						<div style="width:100%; height:30px; background-color:#EEEEEE">
 							결제하실 금액
 						</div>
 						<div align="right" style="width:100%; height:50px;">
 							${sum}원
 						</div>
-					<!-- 할인내역 -->
+						<!-- 할인내역 -->
 						<div style="width:100%; height:30px; background-color:#DDDDDD">
 							할인내역
 						</div>
 						<div align="right" style="width:100%; height:150px;">
-							
-							
 							<!-- 조조할인(명당 2000원) -->
 							<c:if test="${schedule.schedule_MDNstate==0}">
 								<table style="width:100%; height:40px; padding:0; font-weight:bold;">
@@ -190,18 +187,20 @@
 								</div>
 							</c:if>
 							<!-- 청소년 할인(명당 2000원) -->
-							<table style="width:100%; height:40px; padding:0; font-weight:bold;">
-								<tr>
-									<td>청소년 ${teenagerCnt}명</td>
-									<td align="right">-${teenagerSalePrice}원</td>
-								</tr>
-							</table>
-							
+							<c:if test="${teenagerCnt!=0}">
+								<table style="width:100%; height:40px; padding:0; font-weight:bold;">
+									<tr>
+										<td>청소년 ${teenagerCnt}명</td>
+										<td align="right">-${teenagerSalePrice}원</td>
+									</tr>
+								</table>
+							</c:if>
 							<!-- 포인트 사용시 -->
 							<div style="width:100%; height:40px;">
 								<table style="width:100%; height:40px; padding:0; font-weight:bold;">
 									<tr>
 										<td>포인트사용</td>
+										<!-- ajax 결과-->
 										<td id="point" align="right">
 											${pointSalePrice}원
 										</td>
@@ -213,13 +212,15 @@
 						<div style="width:100%; height:30px; background-color:#DDDDDD">
 							총 할인 금액
 						</div>
+						<!-- ajax결과 -->
 						<div id="totalSalePrice" align="right" style="width:100%; height:40px;">
 							- ${totalSalePrice}원
 						</div>
-					<!-- 실제 결제금액 -->
+						<!-- 실제 결제금액 -->
 						<div style="width:100%; height:30px; background-color:black; color:white">
 							남은 결제금액
 						</div>
+						<!-- ajax결과 -->
 						<div id="movie_history_price" align="right" style="width:100%; height:40px;">
 							${movie_history_price}원
 						</div>
@@ -258,14 +259,12 @@
 					<div id="nextDealButton" >
 						<div style="font-size:13px; font-weight:bold;">
 							<br>
-							<button class="btn btn-danger">결제</button>
+							<button class="btn btn-danger" style="width:100px; height:80px; font-size:18px; font-weight:bold;">결  제</button>
 						</div>
 					</div>
 				</div>
 			</div>
 		</form>
 	</section>
-	
-
 </body>
 </html>

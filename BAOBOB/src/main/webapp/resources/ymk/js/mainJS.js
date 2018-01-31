@@ -14,9 +14,13 @@ function errorAlert(msg) {
 	window.history.back();
 }
 
+//아이디 중복 확인
 function confirmId() {
-	var param = 'id=' + document.joinForm.id.value;
-	sendRequest(confirmId_callback, 'mainConfirmId', 'GET', param);
+	var id = document.joinForm.id.value;
+	if(id) {
+		var param = 'id=' + id;
+		sendRequest(confirmId_callback, 'mainConfirmId', 'GET', param);
+	}
 }
 
 function confirmId_callback() {
@@ -39,6 +43,7 @@ function confirmId_callback() {
 	}
 }
 
+//전화번호 형식 검사
 function confirmTel() {
 	var tel = document.joinForm.tel.value;
 	var ref = /^(010|011)-[1-9]{1}[0-9]{3}-[1-9]{1}[0-9]{3}$/;
@@ -48,6 +53,7 @@ function confirmTel() {
 	}
 }
 
+//다음 API 주소찾기
 function addressSearch() {
 	new daum.Postcode({
 		oncomplete: function(data) {
@@ -130,6 +136,9 @@ function joinCheck() {
 		document.joinForm.address.focus();
 		return false;
 	}
+	
+	//로딩
+	document.getElementById('myLoader').style.display = 'block';
 }
 
 //성별 선택

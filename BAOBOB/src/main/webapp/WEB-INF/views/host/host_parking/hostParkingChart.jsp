@@ -14,6 +14,7 @@
 	</style>
 </head>
 <body class="fixed-nav sticky-footer bg-dark">
+<c:if test="${sessionScope.memStep != null && (sessionScope.memStep == 1 || sessionScope.memStep == 7)}">
 
 	<!-- Navigation -->
 	<%@ include file="hostParkingNavigation.jsp" %>
@@ -28,7 +29,7 @@
 						<div class="card-body">
 							<div id="dayInChart" style="width:100%; height:240px;"></div>
 						</div>
-						<div class="card-footer small text-muted">시간대별 입차 비율</div>
+						<div class="card-footer small text-muted">09시 ~ 21시 시간대별 입차 비율</div>
 					</div>
 				</div>
 				<div class="col-lg-4">
@@ -37,7 +38,7 @@
 						<div class="card-body">
 							<div id="dayOutChart" style="width:100%; height:240px;"></div>
 						</div>
-						<div class="card-footer small text-muted">시간대별 출차 비율</div>
+						<div class="card-footer small text-muted">09시 ~ 21시 시간대별 출차 비율</div>
 					</div>
 				</div>
 				<div class="col-lg-4">
@@ -176,5 +177,12 @@
 	    	document.getElementById('weekFooter').innerHTML = '올해 요일별 입차, 출차 현황';
 		}
 	</script>
+</c:if>
+<c:if test="${sessionScope.memStep == null && (sessionScope.memStep != 1 || sessionScope.memStep != 7)}">
+	<script src="${projectRes}ymk/js/script.js"></script>
+	<script type="text/javascript">
+		stepAlert();
+	</script>
+</c:if>
 </body>
 </html>

@@ -18,10 +18,7 @@ public interface Guest_parkingDAO {
 	public int parkInHistoryInsert(Map<String, Object> map);
 	
 	//퇴장 번호 확인
-	public int parkingOutKeyCheck(String key);
-	
-	//퇴장 - 카드 등록된 회원 구분
-	public int parkingOutMemberCheck(String key);
+	public ParkingHistory parkingOutKeyCheck(String key);
 	
 	//입차 시간
 	public Timestamp getParkingInTime(String key);

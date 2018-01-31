@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
+<%@ include file="/resources/setting.jsp"%>
 <%-- <%@ include file="/resources/setting.jsp"%> --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
@@ -38,7 +38,7 @@
 </script>
 </head>
 
-<body class="fixed-nav sticky-footer bg-dark">
+<body class="fixed-nav sticky-footer bg-dark" onload="opener.location.reload();">
 
 	<!-- Navigation -->
 	<%@ include file="movie_navigation.jsp" %>
@@ -48,7 +48,7 @@
 	<form action="hostScheduleAddPro" method="post" onsubmit="return chkScheduleAdd();">
 		<center><h3><b>스케줄 등록</b></h3></center>
 		<hr style="border:3px solid black;">
-		<table align="center" style="margin-top:150px; border:0px solid black; width:500px;">
+		<table align="center" style="margin-top:50px; border:0px solid black; width:500px;">
 			<tr>
 				<td style="height:40px; width:25%;">날짜 선택</td>
 				<td style="width:35%;"><input type="text" style="width:82px; height:35px; padding-left:5px;" name="schedule_startDate" id="datepicker" class="datepicker" value="${schedule_startDate}" placeholder="날짜 선택" required/></td>

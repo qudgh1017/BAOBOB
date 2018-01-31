@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:if test="${ph != null}">
 <div class="card md-3" id="result">
 	<div class="card-header">결제 정보</div>
 	<div class="card-body">
@@ -28,3 +30,4 @@
 	<div class="card-footer small text-muted">
 	</div>
 </div>
+</c:if>

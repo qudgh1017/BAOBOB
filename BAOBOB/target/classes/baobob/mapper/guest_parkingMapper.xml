@@ -31,20 +31,10 @@
 	</insert>
 
 	<!-- 퇴장 번호 확인 -->
-	<select id="parkingOutKeyCheck" resultType="int">
-		SELECT COUNT(*) 
+	<select id="parkingOutKeyCheck" resultType="spring.mvc.baobob.vo.ParkingHistory">
+		SELECT * 
 		FROM park_history_tbl
 		WHERE p_history_space = #{key}
-	</select>
-	
-	<!-- 카드 등록된 회원인지 확인 (자동 결제) -->
-	<select id="parkingOutMemberCheck" resultType="int">
-		SELECT COUNT(*)
-		FROM park_history_tbl ph, history_tbl ht, card_tbl ct
-		WHERE  ph.history_index = ht.history_index
-            AND ht.member_id = ct.member_id
-            AND ht.member_id != #{key}
-            AND p_history_space = #{key}
 	</select>
 	
 	<!-- 입차 시간 -->

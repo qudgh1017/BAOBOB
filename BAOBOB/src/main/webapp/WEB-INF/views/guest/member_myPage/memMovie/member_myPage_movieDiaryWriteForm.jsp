@@ -46,13 +46,14 @@ function movieDiaryPage(page){
 </head>
 <body>
 <table id="mainBody">
+	<thead>
 	<tr>
 		<th style="font-size:30px" colspan="2">무비 다이어리</th>
 	</tr>
 	
 	<!-- 무비다이어리 작성폼 -->
 	<tr id="result">
-		<td>
+		<th>
 			<form action="movieDiaryPro" method="post" name="writeform" onsubmit="return writeCheck2();">
 			
 			<table id="mainBody" style="width:800px; margin:auto;">
@@ -64,13 +65,13 @@ function movieDiaryPage(page){
 					</tr>
 				
 					<tr>
-						<td colspan="3">
+						<td colspan="3" style="border-bottom:none;">
 							<textarea rows="10" cols="40" name="content" maxlength="500" style="width:650px; text-align:left;" placeholder="영화 어떻게 보셨나요?"></textarea>
 						</td>
 					</tr>
 					
 					<tr>
-						<td colspan="4" style="border-bottom:none;">
+						<td colspan="4" style="border-bottom:none; border-top:none;">
 							<input type="submit"  value="게시">
 							<input type="reset"  value="취소">
 						</td>	
@@ -78,7 +79,7 @@ function movieDiaryPage(page){
 				</tbody>
 			</table>  
 			</form>
-		</td>
+		</th>
 	</tr>
 	
 	<!-- 작성한 무비다이어리 -->
@@ -164,6 +165,7 @@ function movieDiaryPage(page){
 			
 		</td>
 	</tr>
+	</thead>
 </table>
 
 

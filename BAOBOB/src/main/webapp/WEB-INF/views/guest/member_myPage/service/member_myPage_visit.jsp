@@ -27,10 +27,10 @@
 			<!-- 사이드 메뉴 -->
 			<%@ include file="../../common/sideMenu.jsp" %>	
 			
-			<td style="padding:0rem 10rem; margin:0px;width:100%;height:100%;">
+			<td style="padding:0rem 5rem; margin:0px;width:100%;height:100%;">
 			<!-- 알맹이td -->
 			<table id="mainBody">
-				<caption>방문 내역</caption>
+				<caption>이용 내역</caption>
 			    <thead>
 				    <tr>
 				    	<th style="width:20%">번호</th>

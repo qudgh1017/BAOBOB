@@ -64,7 +64,7 @@
 	
 	<!-- 상영관 좌석별 상태 insert_theater_seat -->
 	<insert id="insert_theater_seat" parameterType="java.util.Map">
-		INSERT INTO theater_seat_tbl values(theater_seat_tbl_seq.nextval, #{theater_index}, #{row}, #{col}, #{state}, #{price}, -1)
+		INSERT INTO theater_seat_tbl values(theater_seat_tbl_seq.nextval, #{theater_index}, #{row}, #{col}, #{state}, #{price}, -1, null)
 	</insert>
 	
 	<!-- 상영관 존재 여부 getTheaterCnt -->
@@ -255,7 +255,7 @@
 	
 	<!-- 스케줄에 해당하는 좌석 생성 -->
 	<insert id="TheaterScheduleSeatAddPro" parameterType="java.util.Map">
-		INSERT INTO theater_seat_tbl VALUES(theater_seat_tbl_SEQ.nextval, #{theater_index}, #{row}, #{col}, #{seatState}, #{seatPrice}, (SELECT MAX(theater_schedule_index) FROM theater_schedule_tbl))
+		INSERT INTO theater_seat_tbl VALUES(theater_seat_tbl_SEQ.nextval, #{theater_index}, #{row}, #{col}, #{seatState}, #{seatPrice}, (SELECT MAX(theater_schedule_index) FROM theater_schedule_tbl), null)
 	</insert>
 	
 	<!-- 스케줄에 해당하는 좌석 정보 가져오기 -->
@@ -263,9 +263,9 @@
 		SELECT * FROM theater_seat_tbl WHERE theater_index=#{theater_index} AND theater_schedule_index=#{theater_schedule_index}
 	</select>
 	
-	<!-- 영화 스케줄에 빈좌석 업데이트하기 -->
+	<!-- 영화 스케줄에 빈좌석과 총 좌석 업데이트하기 -->
 	<update id="updateEmpty_seat" parameterType="int">
-		UPDATE theater_schedule_tbl SET schedule_empty_seat = #{empty_seat} WHERE theater_schedule_index = (SELECT MAX(theater_schedule_index) FROM theater_schedule_tbl)
+		UPDATE theater_schedule_tbl SET schedule_empty_seat = #{empty_seat}, schedule_seat = #{empty_seat} WHERE theater_schedule_index = (SELECT MAX(theater_schedule_index) FROM theater_schedule_tbl)
 	</update>
 	
 	<!-- 결산 - 영화 장르별 관람객 수 -->
@@ -353,10 +353,40 @@
                           WHERE movie_index = #{movie_index}
                  		 ORDER BY count DESC
                         )
-                  WHERE type_of_speech = 'Noun' OR type_of_speech = 'ProperNoun' OR type_of_speech = 'Verb'
+                  <if test="type == 'Verb,ProperNoun'">
+                  	WHERE type_of_speech IN('Verb', 'ProperNoun')
+                  </if>
+                  <if test="type == 'Noun,ProperNoun'">
+                  	WHERE type_of_speech IN('Noun', 'ProperNoun')
+                  </if>
+                  <if test="type == 'Noun,Verb'">
+                  	WHERE type_of_speech IN('Noun', 'Verb')
+                  </if>
+                  <if test="type == 'Noun'">
+                  	WHERE type_of_speech IN('Noun')
+                  </if>
+                  <if test="type == 'Verb'">
+                  	WHERE type_of_speech IN('Verb')
+                  </if>
+                  <if test="type == 'ProperNoun'">
+                  	WHERE type_of_speech IN('ProperNoun')
+                  </if>
          		)
     	 WHERE rn BETWEEN 1 AND #{countOfWords}
 	</select>
 	
+	<!-- 직원 고용하기 전 모든 회원 정보 가져오기 -->
+	<select id="getMemberList" resultType="spring.mvc.baobob.vo.Member">
+		SELECT *
+		  FROM member_tbl
+		 WHERE member_step IN(9,10,11,12)
+	</select>
+	
+	<!-- 직원고용하기 전 회원이 1명이라도 존재하는지 체크 -->
+	<select id="getMemberCnt" resultType="int">
+		SELECT count(*)
+		  FROM member_tbl
+		 WHERE member_step IN(9,10,11,12)
+	</select>
 	
 </mapper>

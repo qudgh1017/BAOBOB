@@ -1,3 +1,4 @@
+<!-- 영화-예매의 인원/좌석 선택 2페이지 -->
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@page import="java.util.Date"%>    
@@ -18,7 +19,7 @@
 <!-- 좌석관련 script -->
 <script type="text/javascript" src="${projectRes}ybh/js/seat.js"></script>
 
-<!-- onload="guestTheaterSeat('${schedule.theater_index}', '${schedule.movie_index}', '${schedule.theater_schedule_index}')" -->
+<!-- 처음 사람수 0으로 초기화 -->
 <body onload="personInitial();">
 	
 	<!-- CSS,JavaScript 참조 -->
@@ -30,13 +31,6 @@
 	
 	<!-- 나중에 값을 넘길때 배열형식 저장할 공간 -->
 	<input type="hidden" name="seat_index_arr"  value="">
-	<!-- <input type="text" name="adultCnt" value="">
-	<input type="text" name="teenagerCnt" value=""> -->
-	<!-- <input type="text" name="totalChecked" value="">
-	<input type="text" name="maxChecked" value="">
-	 
-	<div onload="nextDealButton()">
-	</div> -->
 	
 	<section style="padding-top:0px;">
 		<div class="container">
@@ -50,7 +44,7 @@
 				<div class="col-md-1"></div>
 			</div>
 			
-			<!-- 영화/날짜/시간 -->
+			<!-- 인원/좌석 -->
 			<div class="row">
 				<div class="col-md-1"></div>
 				<div class="col-md-10" align="center" style="height:40px; color:white; font-weight:bold; border:1px solid white; background-color:black">
@@ -67,16 +61,15 @@
 					<br>
 					<div style="width:50px; display:inline-block;">일반</div>
 					<c:forEach var="num" begin="0" end="8" step="1">
-						<label onclick="adultChk('${schedule.theater_index}', '${schedule.movie_index}', '${schedule.theater_schedule_index}','${num}')" class="btn" style="height:30px; width:30px; border:1px solid black; font-weight:bold">
-						    <input type="radio" style="width:10px; height:10px;" name="adult" autocomplete="off" value="${num}">
+						<!-- 인원수 선택시  -->
+						<label id="adult${num}" onclick="adultChk('${schedule.theater_index}', '${schedule.movie_index}', '${schedule.theater_schedule_index}','${num}')" class="btn" style="height:30px; width:30px; border:1px solid black; font-weight:bold">
 							${num}
 					 	</label>
 				 	</c:forEach>
 				 	<br>
 				 	<div style="width:50px; display:inline-block;">청소년</div>
 				 	<c:forEach var="num" begin="0" end="8" step="1">
-						<label onclick="teenagerChk('${schedule.theater_index}', '${schedule.movie_index}', '${schedule.theater_schedule_index}', '${num}')" class="btn" style="height:30px; width:30px; border:1px solid black; font-weight:bold">
-						    <input type="radio" style="width:10px; height:10px;" name="teenager" autocomplete="off" value="${num}">
+						<label id="teenager${num}" onclick="teenagerChk('${schedule.theater_index}', '${schedule.movie_index}', '${schedule.theater_schedule_index}', '${num}')" class="btn" style="height:30px; width:30px; border:1px solid black; font-weight:bold">
 							${num}
 					 	</label>
 				 	</c:forEach>
@@ -107,30 +100,39 @@
 					<div style="width:100%; height:150px; padding:0px;">
 					
 					</div>
-					<!-- 좌석 정보 -->
+					<!-- 좌석에 대한 정보 -->
 					<div align="left" style="width:100%; height:350px; padding:0px; font-size:15px;">
-						<label class="btn btn" style="margin:1px 1px; height:35; width:35; border:2px solid green;">
-							<input type="checkbox" style="width:0; height:0;" disabled>
-						</label>&nbsp;&nbsp;Standard Zone
+						
+						<button type="button" style="margin:1px 1px;" disabled>
+							<img src="${projectRes}/images/phc/icon/theater_in.png" style="height:25px; width:25px;">
+						</button>
+						&nbsp;&nbsp;Entrance
 						<br><br>
-						<label class="btn btn" style="margin:1px 1px; height:35; width:35; border:2px solid red;">
-							<input type="checkbox" style="width:0; height:0;" disabled>
-						</label>&nbsp;&nbsp;Prime Zone
+						<button type="button" style="margin:1px 1px;" disabled>
+							<img src="${projectRes}/images/phc/icon/theater_out.png" style="height:25px; width:25px;">
+						</button>
+						&nbsp;&nbsp;Exit
 						<br><br>
-						<label class="btn btn" style="margin:1px 1px; height:35; width:35; border:2px solid pink;">
-							<input type="checkbox" style="width:0; height:0;" disabled>
-						</label>&nbsp;&nbsp;SWEET BOX
+						<button type="button" style="margin:1px 1px; height:25; width:25; border:2px solid green;" disabled></button>
+						&nbsp;&nbsp;Standard Zone
 						<br><br>
-						<label class="btn btn" style="margin:1px 1px; height:35; width:35; background-image: url('${projectRes}/images/phc/icon/theater_comp.png'); background-size:33px">
-			 				<input type="checkbox" style="width:0; height:0;" disabled>
-						</label>&nbsp;&nbsp;Reserved
+						<button type="button" style="margin:1px 1px; height:25; width:25; border:2px solid red;" disabled></button>
+						&nbsp;&nbsp;Prime Zone
+						<br><br>
+						<button type="button" style="margin:1px 1px; height:25; width:25; border:2px solid pink;" disabled></button>
+						&nbsp;&nbsp;Sweet Box
+						<br><br>
+						<button type="button" style="margin:1px 1px;" disabled>
+							<img src="${projectRes}/images/phc/icon/theater_comp.png" style="height:25px; width:25px;">
+						</button>
+						&nbsp;&nbsp;Reserved
 						<br><br>
 					</div>
 				</div>
 				<div class="col-md-1"></div>
 			</div>
-			
 		</div>
+		
 		<div class="row" style="background-color:black; height:150px;">
 			<!-- 영화정보 -->
 			<div class="col-md-3" align="center"; style="border: solid 1px gray; color:white;">
@@ -146,6 +148,7 @@
 			</div>
 			<!-- 좌석정보, 가격 -->
 			<div class="col-md-3" align="left" style="border: solid 1px gray; color:white">
+				<!-- AJAX 결과 좌석선택된 정보(검은창) -->
 				<div id="seatInfo">
 					<br><br>
 					<center style="color:gray">
@@ -156,20 +159,18 @@
 			<!-- 좌석선택 아이콘 -->
 			<div class="col-md-3" align="center" style="border: solid 1px gray; color:gray; font-weight:bold;" >
 				<div id="nextDealButton" >
-					<br><br>
-					<center style="color:gray">
-						좌석을 선택하셔야 <br>
-						다음페이지로 이동 가능합니다.
-					</center>
+					<!-- 예매선택된 인원/좌석 정보 -->
+					<div style="font-size:13px; font-weight:bold;">
+						<br>
+						<a onclick="movieTicket3('${schedule.theater_schedule_index}')"> 
+							<img src="${projectRes}/images/ybh/post.png" style="height:80px">
+						</a>
+						<br>결제
+					</div>
 				</div>
-				
 			</div>
 		</div>
 	</section>
-	<br>
-	<br>
-	<br>
-	<br>
 		
 	<!-- Footer -->
 	<%@ include file="/WEB-INF/views/guest/guest_movie/movie_footer.jsp" %> 

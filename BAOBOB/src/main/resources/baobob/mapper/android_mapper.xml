@@ -2,6 +2,113 @@
 <!DOCTYPE mapper
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="sprint.mvc.baobob.android.persistence.AndroidDAO">
+    
+<mapper namespace="spring.mvc.baobob.android.persistence.AndroidDAO">
 
+	<!-- 영화 예매 건수 -->
+	<select id="getUseMovieCnt" resultType="int">
+		SELECT COUNT(*)
+		FROM movie_history_tbl mh, history_tbl ht
+		WHERE mh.history_index = ht.history_index
+			AND ht.member_id = #{id}
+	</select>
+	
+	<!-- 식당 예약 건수 -->
+	<select id="getUseRestaurantCnt" resultType="int">
+		SELECT COUNT(*)
+		 FROM restaurant_history_tbl rh, history_tbl ht
+		WHERE rh.history_index = ht.history_index
+		  AND ht.member_id = #{id}
+		  AND rh.restaurant_history_state = 0
+	</select>
+	
+	<!-- 주차 이용 건수 -->
+	<select id="getUseParkingCnt" resultType="int">
+		SELECT COUNT(*)
+		FROM park_history_tbl ph, history_tbl ht
+		WHERE ph.history_index = ht.history_index
+			AND ht.member_id = #{id}
+	</select>
+
+	<!-- 문의 내역(1:1, 분실물) -->
+	<select id="getBoardList" resultType="spring.mvc.baobob.vo.BoardVO">
+		<![CDATA[
+		SELECT board_type, board_subject, board_content
+		FROM board_tbl
+		WHERE member_id = #{id}
+		    AND board_type IN (2, 3)
+		    AND	TO_CHAR(board_reg_date, 'DDD') >= TO_CHAR(SYSTIMESTAMP - 10, 'DDD')
+		]]>
+	</select>
+	
+	<!-- 영화 예매 내역 -->
+	<select id="getMemberMovieTicketing" resultType="spring.mvc.baobob.vo.Android">
+		SELECT h_idx data1, ss data2, se data3, movie_title data4, movie_poster data5
+		FROM (
+		    SELECT movie_index m_idx, h_idx, schedule_startTime ss, schedule_endTime se
+		    FROM (
+		        SELECT m.history_index h_idx, t.theater_schedule_index idx
+		        FROM history_tbl h, movie_history_tbl m, theater_seat_tbl t
+		        WHERE h.history_index = m.history_index
+		            AND m.theater_schedule_index = t.theater_schedule_index
+		            AND t.seat_state = 6
+		            AND h.member_id = #{id}
+		        ), theater_schedule_tbl ts
+		    WHERE ts.theater_schedule_index = idx
+		    ), movie_tbl mt
+		WHERE mt.movie_index = m_idx
+	</select>
+	
+	
+	<!-- 주차 이용 내역 -->
+	<select id="getMemberParking" resultType="spring.mvc.baobob.vo.Android">
+		SELECT p_history_date data1, p_history_in data2, p_history_out data3, p_history_space data4, p_history_price data5
+		FROM history_tbl h, park_history_tbl p
+		WHERE h.history_index = p.history_index
+		       AND h.member_id = #{id}
+	</select>
+	
+	<!-- 회원 정보 수정 -->
+	<update id="anMemberUpdate" parameterType="spring.mvc.baobob.vo.Member">
+		UPDATE member_tbl
+		SET
+			member_pwd = #{member_pwd},
+			member_name = #{member_name},
+			member_tel = #{member_tel},
+			member_address = #{member_address},
+			member_email = #{member_email}
+		WHERE member_id = #{member_id}
+	</update>
+	
+	<!-- 영화 정보 -->
+	<select id="androidMovieInfo" resultType="spring.mvc.baobob.vo.MovieVO">
+		SELECT *
+		FROM movie_tbl
+		WHERE movie_title = #{movie_title}
+	</select>
+	
+	<!-- 식당 예약 내역 -->
+	<select id="getUseRestaurantList" resultType="spring.mvc.baobob.vo.Android">
+		SELECT t_index data1
+		     , s_time data2
+		     , e_time data3
+		     , r_name data4
+		     , r_tel data5
+		  FROM (
+		    SELECT rh.restaurant_table_index t_index
+		         , sc.schedule_startTime s_time
+		         , sc.schedule_endTime e_time
+		         , rs.restaurant_name r_name
+		         , rs.restaurant_tel r_tel
+		      FROM restaurant_history_tbl rh
+		         , history_tbl ht
+		         , restaurant_schedule_tbl sc
+		         , restaurant_tbl rs
+		     WHERE rh.history_index = ht.history_index
+		       AND rh.restaurant_schedule_index = sc.restaurant_schedule_index
+		       AND rs.restaurant_index = sc.restaurant_index
+		       AND ht.member_id = #{id}
+		       AND rh.restaurant_history_state = 0
+		    )
+	</select>
 </mapper>

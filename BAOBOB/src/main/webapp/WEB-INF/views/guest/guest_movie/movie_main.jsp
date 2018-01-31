@@ -6,13 +6,6 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>BAOBOX</title>
-<!-- slide -->
-<!-- slide 기능 사용위한 라이브러리 -->
-<%-- <link href="${projectRes}ybh/css/slick.css" rel="stylesheet" type="text/css">
-<script type="text/javascript" src="http://code.jquery.com/jquery-3.2.1.min.js"></script>
-<script type="text/javascript" src="${projectRes}ybh/js/slick.min.js"></script>
-<script type="text/javascript" src="${projectRes}ybh/js/slide.js"></script>	
- --%>	
 	<style type="text/css">
 		.bg{clear:both;width:fit-content;min-height:405px;margin:0 auto;}
 		#item_l{float:left;width:280px;height:405px;}
@@ -65,12 +58,13 @@
 		<ul id="item_r">
 			<c:set var="number" value="1"/>
 			<li><p class="office_top">영화 인기 순위</p>
-			<c:forEach var="title" items="${rank}">
+			<c:forEach var="mov" items="${rank}">
 				<li class="li">
-					<em class="em">${number}</em>${title}
+					<em class="em">${number}</em>
+					<a href="movieDetail?movie_index=${mov.movie_index}">${mov.movie_title}</a>
 					<c:set var="number" value="${number + 1}"/>
 				</li>
-			</c:forEach>
+			</c:forEach> 
 		</ul>
 	</section>
 	
@@ -82,8 +76,10 @@
 					<img class="img_btn" src="${projectRes}images/ybh/right.png" style="transform:rotate(180deg);">
 				</button>
 			</c:if>
-			<c:forEach var="poster" items="${movieList}">
-				<img class="th_img" src="${projectRes}images/phc/${poster}">
+			<c:forEach var="movie" items="${movieList}">
+				<a href="movieDetail?movie_index=${movie.movie_index}">
+					<img class="th_img" src="${projectRes}images/phc/${movie.movie_poster}">
+				</a>
 			</c:forEach>
 			<c:if test="${end < movieCnt}">
 				<button type="button" onclick="window.location='guest_movie?pageNum=${pageNum + 1}';">

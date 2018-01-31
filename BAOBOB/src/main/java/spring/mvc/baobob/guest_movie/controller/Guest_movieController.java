@@ -13,8 +13,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import spring.mvc.baobob.guest_movie.service.Guest_movieService;
 import spring.mvc.baobob.host_movie.service.Host_movieServiceImpl;
-import spring.mvc.baobob.vo.MovieResViewVO;
-import spring.mvc.baobob.vo.Theater_seatVO;
 
 @Controller
 public class Guest_movieController {
@@ -68,16 +66,22 @@ public class Guest_movieController {
 	public String movieFinder(HttpServletRequest req, Model model) {
 		log.debug("====== Guest_movieController/movieFinder ======");
 		
+		gmservice.movieList(req, model);
+		
 		return "/guest/guest_movie/movie/movieFinder";
 	}
 	
-	//영화-무비파인더
+	//영화-무비파인더- 검색결과(AJAX)
 	@RequestMapping("searchResult")
 	public String searchResult(HttpServletRequest req, Model model) {
 		log.debug("====== Guest_movieController/searchResult ======");
-		
+
 		gmservice.searchResult(req, model);
-		
+//		if(req.getParameter("pageNum")==null) {
+//			gmservice.searchResult(req, model);
+//		}else {
+//			System.out.println("여기와!!!!!!!!!!========================");
+//		}
 		return "/guest/guest_movie/movie/searchResult";
 	}
 	
@@ -113,13 +117,13 @@ public class Guest_movieController {
 		return "/guest/guest_movie/movie/movieDetail";
 	}
 	
-	//영화-평점
-	@RequestMapping("movieReview")
+	//영화-리뷰페이지
+	/*@RequestMapping("movieReview")
 	public String movieReview(HttpServletRequest req, Model model) {
 		log.debug("====== Guest_movieController/movieReview ======");
 		
 		return "/guest/guest_movie/movie/movieReview";
-	}
+	}*/
 	
 	//영화-리뷰작성폼
 	@RequestMapping("movieReviewWrite")
@@ -169,7 +173,7 @@ public class Guest_movieController {
 		return "/guest/guest_movie/reservation/movieTicket";
 	}
 	
-	//예매-빠른예매(영화,날짜선택시 - ajax 처리 =>dateResult로 )
+	//예매-빠른예매(영화,날짜선택시 - ajax 처리 =>dateResult로 )(AJAX)
 	@RequestMapping("dateResult")
 	public String dateResult(HttpServletRequest req, Model model) {
 		log.debug("====== Guest_movieController/dateResult ======");
@@ -179,7 +183,7 @@ public class Guest_movieController {
 		return "/guest/guest_movie/reservation/dateResult";
 	}
 	
-	//예매선택한 영화정보
+	//예매선택한 영화정보(AJAX)
 	@RequestMapping("reserveMovieInfo")
 	public String reserveMovieInfo(HttpServletRequest req, Model model) {
 		log.debug("====== Guest_movieController/reserveMovieInfo ======");
@@ -189,7 +193,7 @@ public class Guest_movieController {
 		return "/guest/guest_movie/reservation/reserveMovieInfo";
 	}
 	
-	//예매선택한 영화정보
+	//예매선택한 영화정보(AJAX)
 	@RequestMapping("reserveScheduleInfo")
 	public String reserveScheduleInfo(HttpServletRequest req, Model model) {
 		log.debug("====== Guest_movieController/reserveScheduleInfo ======");
@@ -199,7 +203,7 @@ public class Guest_movieController {
 		return "/guest/guest_movie/reservation/reserveScheduleInfo";
 	}
 	
-	//다음페이지 선택하는 버튼(movie_index, theater_schedule_index);
+	//다음페이지 선택하는 버튼(movie_index, theater_schedule_index)(AJAX)
 	@RequestMapping("nextSeatButton")
 	public String nextSeatButton(HttpServletRequest req, Model model) {
 		log.debug("====== Guest_movieController/nextSeatButton ======");
@@ -225,7 +229,7 @@ public class Guest_movieController {
 	}
 	
 	//예매-빠른예매 2번째페이지 - 좌석도 정보 불러오기
-	@RequestMapping("seatInfo")
+	/*@RequestMapping("seatInfo")
 	public @ResponseBody MovieResViewVO seatInfo(HttpServletRequest req, Model model) {
 		log.debug("====== Guest_movieController/seatInfo ======");
 
@@ -235,9 +239,9 @@ public class Guest_movieController {
 		//ResponseBody로 자바 객체를 송신해준다. 
 		
 		return seatInfo;
-	}
+	}*/
 	
-	//예매-빠른예매 2번째페이지 - 좌석 선택
+	//예매-빠른예매 2번째페이지 - 전체좌석도, 좌석 선택(AJAX)
 	@RequestMapping("reserveSeatInfo")
 	public String reserveSeatInfo(HttpServletRequest req, Model model) {
 		log.debug("====== Guest_movieController/reserveSeatInfo ======");
@@ -249,7 +253,7 @@ public class Guest_movieController {
 		return "/guest/guest_movie/reservation/reserveSeatInfo";
 	}
 	
-	//예매-빠른예매 2번째페이지 - 선택한 좌석 정보
+	//예매-빠른예매 2번째페이지 - 선택한 좌석 정보(AJAX)
 	@RequestMapping("selectSeatInfo")
 	public String selectSeatInfo(HttpServletRequest req, Model model) {
 		log.debug("====== Guest_movieController/selectSeatInfo ======");
@@ -259,35 +263,25 @@ public class Guest_movieController {
 		return "/guest/guest_movie/reservation/selectSeatInfo";
 	}
 	
-	//예매-빠른예매 2번째페이지 - nextDealButton 생성!
-	@RequestMapping("nextDealButton")
-	public String nextDealButton(HttpServletRequest req, Model model) {
-		log.debug("====== Guest_movieController/nextDealButton ======");
-		
-		gmservice.seatInfos(req, model);
-		
-		return "/guest/guest_movie/reservation/nextDealButton";
-	}
-	
 	//예매-빠른예매 2번째페이지 - 결제창
 	@RequestMapping("movieTicket3")
 	public String movieTicket3(HttpServletRequest req, Model model) {
 		log.debug("====== Guest_movieController/movieTicket3 ======");
 		
-		gmservice.seatInfos2(req, model);
+		gmservice.seatInfos(req, model);
 		
 		return "/guest/guest_movie/reservation/movieTicket3";
 	}
 	
-	//예매-빠른예매 3번째페이지 - 포인트 사용 값 바꿔주기
+	//예매-빠른예매 3번째페이지 - 포인트 사용 값 바꿔주기(AJAX)
 	@RequestMapping("pointUse")
 	public @ResponseBody int pointUse(HttpServletRequest req, Model model) {
 		log.debug("====== Guest_movieController/pointUse ======");
 
 		//사용가능한 포인트
 		int pointSalePrice = Integer.parseInt(req.getParameter("point"));
-		//ResponseBody로 자바 객체를 송신해준다. 
 		
+		//ResponseBody로 자바 객체를 송신해준다. 
 		return pointSalePrice;
 	}
 	

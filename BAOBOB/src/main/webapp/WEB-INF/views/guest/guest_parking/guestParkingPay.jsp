@@ -14,41 +14,34 @@
 	</style>
 </head>
 <body>
+<c:if test="${ph != null && ph.p_history_out == null}">
 	<%@ include file="../common/head.jsp" %>
 
 	<%@ include file="guestParkingHeader.jsp" %>
 	
 	<section>
 	  <div class="container mar">
-	  
-	  	<c:if test="${mem != 0}">
-	  		<span id="pay">자동 결제 중</span>
-	  		<script type="text/javascript">
-	  			var count = 0;
-	  			var jj = '.';
-	  			setInterval(function(){
-	  				document.getElementById('pay').innerHTML = '자동 결제 중' + jj;
-	  				
-	  				count += 1;
-	  				jj += '.';
-	  				if(count == 3){ count=0; jj = '.';}
-	  			}, 1000);
-	  		
-	  			setTimeout(function() {
-	  				window.location = 'guestParkingPayPro?key=${key}';
-	  			}, 10000);
-	  		</script>
-	  	</c:if>
-	  	<c:if test="${mem == 0}">
-		  	<form action="guestParkingPayPro" id="inform">
-		  		<input type="hidden" name="key" value="${key}">
-		  		<button class="btn btn-block input">결제</button>
-		  	</form>
-	  	</c:if>
+	  	<form action="guestParkingPayPro" id="inform">
+	  		<input type="hidden" name="key" value="${key}">
+	  		<button class="btn btn-block input">결제</button>
+	  	</form>
 	  </div>
 	</section>
 	
 	<!-- footerCopyright -->
 	<%@ include file="../common/footerCopyright.jsp" %>
+</c:if>
+<c:if test="${ph != null && ph.p_history_out != null}">
+	<script type="text/javascript">
+		alert("이미 출차한 차량입니다.");
+		history.back();
+	</script>
+</c:if>
+<c:if test="${ph == null}">
+	<script type="text/javascript">
+		alert("존재하지 않는 번호입니다.");
+		history.back();
+	</script>
+</c:if>
 </body>
 </html>

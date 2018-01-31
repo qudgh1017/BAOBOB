@@ -27,7 +27,7 @@
 			<!-- 사이드 메뉴 -->
 			<%@ include file="../../common/sideMenu.jsp" %>	
 			
-			<td style="padding:0rem 10rem; margin:0px;width:100%;height:100%;">
+			<td style="padding:0rem 5rem; margin:0px;width:100%;height:100%;">
 			<!-- 알맹이td -->
 			<table id="mainBody">
 				<caption>분실물 문의</caption>
@@ -44,9 +44,8 @@
 			    </thead>
 			    
 			    <!-- 게시글이 있으면 -->
-				<c:if test="${cnt > 0 }">
-					<c:forEach var="dto" items="${dtos}">
-						<!-- 게시글 -->
+				<c:if test="${lostCnt > 0 }">
+					<c:forEach var="dto" items="${lostDtos}">
 						<c:if test="${dto.board_type eq 3}">
 					    <tbody>
 					    <tr>
@@ -95,18 +94,24 @@
 			    </c:if>
 			    
 			    <!-- 게시글이 없으면 -->
-				<c:if test="${cnt == 0 }">
+				<c:if test="${lostCnt == 0 }">
 					<tr>
 						<td colspan="7" align="center">
 							No contents...
 						</td>
 					</tr>
+					<tr>
+				    	<td colspan="7" style="border-bottom: none; text-align:right;">
+				    		<input type="button" class="button" value="문의하기" style="width:auto;"
+									onclick="window.location='memLWriteForm'">
+				    	</td>
+				    </tr>
 				</c:if>
 			</table>
 				
 			<!-- 페이징 컨트롤 -->
 			<div class="pagination">
-				<c:if test="${cnt > 0 }">
+				<c:if test="${lostCnt > 0 }">
 					<c:if test="${startPage > pageBlock }">
 						<a href="memLost">&laquo;</a>.
 						<a href="memLost?pageNum=${startPage - pageBlock}">&lsaquo;</a>

@@ -20,15 +20,18 @@ public class Member_mypageController {
 	
 	private Logger log = Logger.getLogger(this.getClass());
 	
-	//회원 마이페이지
+	//회원 마이페이지 메인
 	@RequestMapping("memMyPageMain")
 	public String memberMypage(HttpServletRequest req, Model model) {
 		log.debug("====== Member_mypageController/memMypage() ======");
 		
-		//임시 세션
-		//req.getSession().setAttribute("memId", "guest");
-		//model.addAttribute("member_img", "default_img.png");
 		service.memberCard(req, model);
+		//MY예매내역
+		service.moviePaidList(req,model);
+		//MY1:1문의
+		service.memQuestionList(req, model);
+		//MY분실물 문의
+		service.memLostList(req, model);
 		
 		return "guest/member_myPage/member_myPage_main";
 	}
@@ -357,6 +360,16 @@ public class Member_mypageController {
 		return "guest/member_myPage/memMovie/member_myPage_WishList";
 	}
 	
+	//위시리스트 추가
+	@RequestMapping("addWishList")
+	public String addWishList(HttpServletRequest req, Model model) {
+		
+		service.addWishList(req, model);
+		
+		return "guest/member_myPage/memMovie/member_myPage_addWishListPro";
+	}
+
+	
 	//무비로그 위시리스트 삭제
 	@RequestMapping("delWishList")
 	public String delWishList(HttpServletRequest req, Model model) {
@@ -366,15 +379,6 @@ public class Member_mypageController {
 		return "guest/member_myPage/memMovie/member_myPage_delWishListPro";
 	}
 		
-	//무비로그 내가본 영화
-	@RequestMapping("movieClear")
-	public String movieClear(HttpServletRequest req, Model model) {
-		
-		service.movieClear(req, model);
-		
-		return "guest/member_myPage/memMovie/member_myPage_movieClear";
-	}
-	
 	//무비로그 무비다이어리
 	@RequestMapping("movieDiaryWriteForm")
 	public String movieDiaryWriteForm(HttpServletRequest req, Model model) {
@@ -427,15 +431,6 @@ public class Member_mypageController {
 		return "guest/member_myPage/memMovie/member_myPage_moviePaidList";
 	}
 	
-	//예매내역 취소처리
-	@RequestMapping("moviePaidDelPro")
-	public String moviePaidDelPro(HttpServletRequest req, Model model) {
-		
-		service.moviePaidDelPro(req, model);
-		
-		return "guest/member_myPage/memMovie/member_myPage_moviePaidDelPro";
-	}
-	
 	//레스토랑 로그
 	@RequestMapping("restaurantLog")
 	public String restaurantLog(HttpServletRequest req, Model model) {
@@ -446,6 +441,35 @@ public class Member_mypageController {
 		return "guest/member_myPage/memRestaurant/member_myPage_restaurantLog";
 	}
 	
+	//레스토랑 예약 내역
+	@RequestMapping("memRBookList")
+	public String memRBookList(HttpServletRequest req, Model model) {
+		
+		service.memberCard(req, model);
+		service.restaurantLog(req, model);
+		
+		return "guest/member_myPage/memRestaurant/member_myPage_memRBookList";
+	}
+
+	//영화 예매내역 취소처리
+	@RequestMapping("moviePaidDelPro")
+	public String moviePaidDelPro(HttpServletRequest req, Model model) {
+		
+		service.moviePaidDelPro(req, model);
+		
+		return "guest/member_myPage/memMovie/member_myPage_moviePaidDelPro";
+	}
+	
+	//레스토랑 예약내역 삭제
+	@RequestMapping("memRBookDel")
+	public String memRBookDel(HttpServletRequest req, Model model) {
+		
+		service.memRBookDel(req, model);
+		
+		return "guest/member_myPage/memRestaurant/member_myPage_memRBookDelPro";
+	}
+	
+	//방문내역
 	@RequestMapping("visit")
 	public String visit(HttpServletRequest req, Model model) {
 		
@@ -455,7 +479,14 @@ public class Member_mypageController {
 		return "guest/member_myPage/service/member_myPage_visit";
 	}
 	
-	
+	//포인트 안내
+	@RequestMapping("memPoint")
+	public String memPoint(HttpServletRequest req, Model model) {
+		
+		service.memberCard(req, model);
+		
+		return "guest/member_myPage/service/member_myPage_memPoint";
+	}
 	
 	
 	

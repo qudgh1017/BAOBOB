@@ -42,7 +42,7 @@
 										<td style="text-align: center;">
 											<button class="btn btn-secondary" style="display: inline-block; line-height: 1.0;" value="1" onclick="window.location='hostRestaurantModForm?index=${dto.restaurant_index}'">수정</button>
 										<td style="text-align: center;">
-											<button class="btn btn-secondary" style="display: inline-block; line-height: 1.0;" value="1" onclick="delCheck(${dto.restaurant_index}, ${dto.restaurant_name});">삭제</button>
+											<button class="btn btn-secondary" style="display: inline-block; line-height: 1.0;" value="1" onclick="delCheck(${dto.restaurant_index}, '${dto.restaurant_name}');">삭제</button>
 										</td>
 									</tr>
 								</c:forEach>

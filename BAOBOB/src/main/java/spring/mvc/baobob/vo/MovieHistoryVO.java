@@ -18,11 +18,41 @@ public class MovieHistoryVO {
 	private String movie_trailer;
 	private int movie_state;
 	private int movie_count;
+	
 	private int history_index;
+	private int theater_schedule_index;
 	private Timestamp history_date;
 	private String member_id;
 	private Timestamp schedule_startTime;
 	private Timestamp schedule_endTime;
+	
+	private int theater_index;
+	private String seat;
+
+	
+	public int getTheater_schedule_index() {
+		return theater_schedule_index;
+	}
+
+	public void setTheater_schedule_index(int theater_schedule_index) {
+		this.theater_schedule_index = theater_schedule_index;
+	}
+
+	public int getTheater_index() {
+		return theater_index;
+	}
+
+	public void setTheater_index(int theater_index) {
+		this.theater_index = theater_index;
+	}
+
+	public String getSeat() {
+		return seat;
+	}
+
+	public void setSeat(String seat) {
+		this.seat = seat;
+	}
 
 	public int getMovie_index() {
 		return movie_index;

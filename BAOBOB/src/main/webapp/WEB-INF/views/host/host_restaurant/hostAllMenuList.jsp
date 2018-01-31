@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/resources/chg/setting.jsp"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -34,16 +35,19 @@
 												<div class="card-body">
 													<div class="table-responsive">
 														<table class="table table-bordered">
-															<tbody>
 															<c:if test="${cnt_menu_1 > 0}">
 																<c:forEach var="dto" items="${dtos_menu_1}">
 																	<tr>
 																		<td>
 																			<span><b>[${dto.restaurant_menu_name}]</b> - </span>
-																			<span style="font-size: 12px; color: gray">${dto.restaurant_menu_price}원</span><br>
-																			<div style="border: 1px solid lightgray; margin-top: 5px; padding:10px; text-align: center;">
-																				<img src="${restaurant_images}${dto.restaurant_menu_img}" style="width: 150px;">
-																				<textarea rows="5" cols="30">${dto.restaurant_menu_content}</textarea>
+																			<span style="font-size: 12px; color: gray" id="span1">
+																				<fmt:formatNumber value="${dto.restaurant_menu_price}" pattern="#,###" />원
+																			</span><br>
+																			<div style="margin-top: 5px; padding:10px; text-align: center;">
+																				<img src="${restaurant_images}${dto.restaurant_menu_img}" style="width: 300px;"><br>
+																				<p class="form-control" style="display: inline-block; margin-top: 5px; width: 300px;">
+																					${dto.restaurant_menu_content}
+																				</p>
 																			</div>
 																		</td>
 																	</tr>
@@ -54,7 +58,6 @@
 																	<td colspan="3" style="text-align: center;">등록된 메뉴가 없습니다.</td>
 																</tr>
 															</c:if>
-															</tbody>
 														</table>
 													</div>
 												</div>
@@ -68,16 +71,19 @@
 												<div class="card-body">
 													<div class="table-responsive">
 														<table class="table table-bordered">
-															<tbody>
 															<c:if test="${cnt_menu_2 > 0}">
 																<c:forEach var="dto" items="${dtos_menu_2}">
 																	<tr>
 																		<td>
 																			<span><b>[${dto.restaurant_menu_name}]</b> - </span>
-																			<span style="font-size: 12px; color: gray">${dto.restaurant_menu_price}원</span><br>
-																			<div style="border: 1px solid lightgray; margin-top: 5px; padding:10px; text-align: center;">
-																				<img src="${restaurant_images}${dto.restaurant_menu_img}" style="width: 150px;">
-																				<textarea rows="5" cols="30">${dto.restaurant_menu_content}</textarea>
+																			<span style="font-size: 12px; color: gray" id="span2">
+																				<fmt:formatNumber value="${dto.restaurant_menu_price}" pattern="#,###" />원
+																			</span><br>
+																			<div style="margin-top: 5px; padding:10px; text-align: center;">
+																				<img src="${restaurant_images}${dto.restaurant_menu_img}" style="width: 300px;"><br>
+																				<p class="form-control" style="display: inline-block; margin-top: 5px; width: 300px;">
+																					${dto.restaurant_menu_content}
+																				</p>
 																			</div>
 																		</td>
 																	</tr>
@@ -88,7 +94,6 @@
 																	<td colspan="3" style="text-align: center;">등록된 메뉴가 없습니다.</td>
 																</tr>
 															</c:if>
-															</tbody>
 														</table>
 													</div>
 												</div>
@@ -102,16 +107,19 @@
 												<div class="card-body">
 													<div class="table-responsive">
 														<table class="table table-bordered">
-															<tbody>
 															<c:if test="${cnt_menu_3 > 0}">
 																<c:forEach var="dto" items="${dtos_menu_3}">
 																	<tr>
 																		<td>
 																			<span><b>[${dto.restaurant_menu_name}]</b> - </span>
-																			<span style="font-size: 12px; color: gray">${dto.restaurant_menu_price}원</span><br>
-																			<div style="border: 1px solid lightgray; margin-top: 5px; padding:10px; text-align: center;">
-																				<img src="${restaurant_images}${dto.restaurant_menu_img}" style="width: 150px;">
-																				<textarea rows="5" cols="30">${dto.restaurant_menu_content}</textarea>
+																			<span style="font-size: 12px; color: gray" id="span3">
+																				<fmt:formatNumber value="${dto.restaurant_menu_price}" pattern="#,###" />원
+																			</span><br>
+																			<div style="margin-top: 5px; padding:10px; text-align: center;">
+																				<img src="${restaurant_images}${dto.restaurant_menu_img}" style="width: 300px;"><br>
+																				<p class="form-control" style="display: inline-block; margin-top: 5px; width: 300px;">
+																					${dto.restaurant_menu_content}
+																				</p>
 																			</div>
 																		</td>
 																	</tr>
@@ -122,7 +130,6 @@
 																	<td colspan="3" style="text-align: center;">등록된 메뉴가 없습니다.</td>
 																</tr>
 															</c:if>
-															</tbody>
 														</table>
 													</div>
 												</div>

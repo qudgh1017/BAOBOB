@@ -79,26 +79,26 @@ public class Guest_restaurantController {
 	//============================== 3. 레스토랑 예약 ==============================
 	//==========================================================================
 	//3-1. 레스토랑 예약 화면-1(테이블/날짜)
-	@RequestMapping("guestReserv_addForm")
-	public String guestReserv_addForm(HttpServletRequest req, Model model) {
-		log.debug("===== Guest_restaurantController/guestReserv_addForm() =====");
+	@RequestMapping("guestRestaurant_reserv")
+	public String guestRestaurant_reserv(HttpServletRequest req, Model model) {
+		log.debug("===== Guest_restaurantController/guestRestaurant_reserv() =====");
 		
 		int restaurant_index = Integer.parseInt(req.getParameter("restaurant_index"));
 		model.addAttribute("restaurant_index", restaurant_index);
 		System.out.println("restaurant_index: " + restaurant_index);
-		return "guest/guest_restaurant/reserv/guestReserv_addForm";
+		return "guest/guest_restaurant/reserv/guestRestaurant_reserv";
 	}
 	
 	//3-2. 레스토랑 테이블 조회
 	@RequestMapping("guestReserv_chkTable")
 	public String guestReserv_chkTable(HttpServletRequest req, Model model) {
 		log.debug("===== Guest_restaurantController/guestReserv_chkTable() =====");
-		System.out.println("===== guestReserv_addForm 2 =====");
-
+		System.out.println("===== guestRestaurant_reserv 2 =====");
+		int tableCnt = Integer.parseInt(req.getParameter("tableCnt"));
 		service.restaurant_tableList(req, model);
 		model.addAttribute("confirm", 1);
-		
-		return "guest/guest_restaurant/reserv/guestReserv_addForm";
+		model.addAttribute("tableCnt", tableCnt);
+		return "guest/guest_restaurant/reserv/guestRestaurant_reserv";
 	}
 	
 	//3-3. 레스토랑 예약처리
@@ -129,6 +129,7 @@ public class Guest_restaurantController {
 		//log.debug("===== Guest_restaurantController/guestRestaurantMain() =====");
 		String member_id = (String) req.getSession().getAttribute("member_id");
 		System.out.println("리뷰 리스트 member_id : " + member_id);
+		
 		service.reviewList(req, model);
 		
 		return "guest/guest_restaurant/review/guestRestaurant_review";
@@ -191,8 +192,6 @@ public class Guest_restaurantController {
 		return "guest/guest_restaurant/review/guestRestaurant_review";
 	}
 			
-	
-	
 	
 	
 	

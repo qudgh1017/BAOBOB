@@ -5,9 +5,10 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <title>Insert title here</title>
 </head>
-<body class="fixed-nav sticky-footer bg-dark">
+<body class="fixed-nav sticky-footer bg-dark" onload="swal('영화관 총 매출액', '&#8361;<fmt:formatNumber value="${movieSale}" pattern="#,###,###.##"/>', 'success', {buttons: false});">
 
 	<c:set var="janre1" value="${movieChart['1']}"></c:set>
 	<c:set var="janre2" value="${movieChart['2']}"></c:set>
@@ -54,7 +55,9 @@
 							<div style="display: -webkit-box;" align="center">
 								<div id="movieJanreCountChart" style="width:100%; height:500px;"></div>
 							</div>
-							영화관 총 매출액 : ${movieSale}원
+<!-- 							영화관 총 매출액 : -->
+<%-- 							<fmt:formatNumber value="${movieSale}" pattern="#,###.##"/> --%>
+<!-- 							원 -->
 						</div>
 						<div class="card-footer small text-muted">BAOBOX</div>
 					</div>
@@ -66,7 +69,9 @@
 							<div style="display: -webkit-box;" align="center">
 								<div id="movieJanreChart" style="width:100%; height:500px;"></div>
 							</div>
-							영화관 총 매출액 : ${movieSale}원
+<!-- 							영화관 총 매출액 : -->
+<%-- 							<fmt:formatNumber value="${movieSale}" pattern="#,###.##"/> --%>
+<!-- 							원 -->
 						</div>
 						<div class="card-footer small text-muted">BAOBOX</div>
 					</div>
@@ -81,7 +86,9 @@
 							<div style="display: -webkit-box;" align="center">
 								<div id="movieSexCountChart" style="width:100%; height:500px;"></div>
 							</div>
-							영화관 총 매출액 : ${movieSale}원
+<!-- 							영화관 총 매출액 : -->
+<%-- 							<fmt:formatNumber value="${movieSale}" pattern="#,###.##"/> --%>
+<!-- 							원 -->
 						</div>
 						<div class="card-footer small text-muted">BAOBOX</div>
 					</div>
@@ -93,7 +100,9 @@
 							<div style="display: -webkit-box;" align="center">
 								<div id="movieAgeChart" style="width:100%; height:500px;"></div>
 							</div>
-							영화관 총 매출액 : ${movieSale}원
+<!-- 							영화관 총 매출액 : -->
+<%-- 							<fmt:formatNumber value="${movieSale}" pattern="#,###.##"/> --%>
+<!-- 							원 -->
 						</div>
 						<div class="card-footer small text-muted">BAOBOX</div>
 					</div>
@@ -117,17 +126,17 @@
 				legend : {position : 'bottom'}};
 		function drawChartFirst(){
 			var data = google.visualization.arrayToDataTable([['Element', '장르'],
-														 ['가족', ${janre1}],
-														 ['공포/호러', ${janre2}],
-														 ['드라마', ${janre3}],
-														 ['SF', ${janre4}],
-														 ['멜로/로맨스', ${janre5}],
-														 ['코미디', ${janre6}],
-														 ['애니메이션', ${janre7}],
-														 ['액션', ${janre8}],
-														 ['스릴러', ${janre9}],
-														 ['미스터리', ${janre10}],
-														 ]);
+															 ['가족', ${janre1}],
+															 ['공포/호러', ${janre2}],
+															 ['드라마', ${janre3}],
+															 ['SF', ${janre4}],
+															 ['멜로/로맨스', ${janre5}],
+															 ['코미디', ${janre6}],
+															 ['애니메이션', ${janre7}],
+															 ['액션', ${janre8}],
+															 ['스릴러', ${janre9}],
+															 ['미스터리', ${janre10}],
+															 ]);
 		
 			var firstChart = new google.visualization.ColumnChart(document.getElementById('movieJanreChart'));
 			firstChart.draw(data, firstChart_options);
@@ -145,18 +154,18 @@
 				legend : {position : 'bottom'}};
 		function movieJanreCountChart(){
 			var data = google.visualization.arrayToDataTable([
-														 ['Element', '장르'],
-														 ['가족', ${janre11}],
-														 ['공포/호러', ${janre12}],
-														 ['드라마', ${janre13}],
-														 ['SF', ${janre14}],
-														 ['멜로/로맨스', ${janre15}],
-														 ['코미디', ${janre16}],
-														 ['애니메이션', ${janre17}],
-														 ['액션', ${janre18}],
-														 ['스릴러', ${janre19}],
-														 ['미스터리', ${janre20}]
-														 ]);
+															 ['Element', '장르'],
+															 ['가족', ${janre11}],
+															 ['공포/호러', ${janre12}],
+															 ['드라마', ${janre13}],
+															 ['SF', ${janre14}],
+															 ['멜로/로맨스', ${janre15}],
+															 ['코미디', ${janre16}],
+															 ['애니메이션', ${janre17}],
+															 ['액션', ${janre18}],
+															 ['스릴러', ${janre19}],
+															 ['미스터리', ${janre20}]
+															 ]);
 		
 			var movieJanreCountChart = new google.visualization.PieChart(document.getElementById('movieJanreCountChart'));
 			movieJanreCountChart.draw(data, movieJanreCountChart_options);

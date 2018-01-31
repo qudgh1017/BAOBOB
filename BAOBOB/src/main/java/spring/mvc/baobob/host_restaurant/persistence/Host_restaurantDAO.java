@@ -1,48 +1,52 @@
 package spring.mvc.baobob.host_restaurant.persistence;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
+
+import org.apache.ibatis.annotations.MapKey;
 
 import spring.mvc.baobob.vo.EmployeeVO;
 import spring.mvc.baobob.vo.Member;
 import spring.mvc.baobob.vo.MenuVO;
 import spring.mvc.baobob.vo.RestaurantVO;
+import spring.mvc.baobob.vo.Restaurant_ChartVO;
 import spring.mvc.baobob.vo.Restaurant_scheduleVO;
 import spring.mvc.baobob.vo.TableVO;
 
 public interface Host_restaurantDAO {
 
-	// 식당 총 관리자 - 매장 수
+	// 매장 수 조회
 	public int getRestaurantCnt();
 	
-	// 식당 총 관리자 - 각 매장 정보
+	// 모든 매장 정보
 	public ArrayList<RestaurantVO> getRestaurantList();
-	
-	// 식당 총 관리자 - 매장 추가 처리
+
+	// 매장 추가 처리
 	public int addRestaurant(RestaurantVO dto);
 
-	// 식당 총 관리자 - 매장 내 테이블 추가 처리
+	// 매장내 테이블 추가 처리
 	public int addTable(TableVO dto);
 
-	// 식당 총 관리자 - 수정할 매장 정보 조회 / 수정할 정보 입력
+	// 매장 정보 조회
 	public RestaurantVO viewRestaurant(int restaurant_index);
-	
-	// 식당 총 관리자 - 매장 내 테이블 정보 조회를 위한 좌석 수 조회
+
+	// 매장을 구성하는 타일의 행열 조회 (예:5*5)
 	public TableVO getColRow(int restaurant_index);
 
-	// 식당 총 관리자 - 매장 내 테이블 정보 조회를 위한 테이블 상태 조회
+	// 타일 하나하나의 상태 조회
 	public int getState(Map<String, Object> map);
 	
-	// 식당 총 관리자 - 매장 수정 처리
+	// 매장 수정 처리
 	public int modRestaurant(RestaurantVO dto);
 
-	// 식당 총 관리자 - 매장 내 테이블 수정 처리 전 테이블 초기화
+	// 매장 내 테이블 정보 초기화
 	public int resetTable(RestaurantVO dto);
 	
-	// 식당 총 관리자 - 매장 내 테이블 수정 처리
+	// 매장 내 테이블 수정 처리
 	public int modTable(Map<String, Object> map);
 
-	// 식당 총 관리자 - 매장 삭제 처리
+	// 매장 삭제 처리
 	public int delRestaurant(RestaurantVO dto);
 	
 	/////////////////////////////////////////////////////////////////////////////////////////
@@ -53,16 +57,16 @@ public interface Host_restaurantDAO {
 	// 각 메뉴 정보
 	public ArrayList<MenuVO> getMenuList(int restaurant_index);
 	
-	// 메뉴 추가
+	// 메뉴 추가 처리
 	public int addMenu(MenuVO dto);
 	
-	// 수정할 메뉴 정보 보기
+	// 메뉴 정보
 	public MenuVO viewMenu(MenuVO dto);
 	
-	// 메뉴 수정 처리
+	// 메뉴 정보 수정 처리
 	public int modMenu(MenuVO dto);
 
-	// 메뉴 삭제
+	// 메뉴 삭제 처리
 	public int delMenu(MenuVO dto);
 
 	// 식당별 직원 수
@@ -83,22 +87,22 @@ public interface Host_restaurantDAO {
 	// 직원 등록
 	public int addEmployee(Map<String, Object> map);
 
-	// 직원 등록 처리(member_step 변경)
+	// 직원 등록/삭제 처리(member_step 변경)
 	public int updateStep(Map<String, Object> map);
 
 	// 직원 정보 조회
 	public EmployeeVO viewEmployee(String id);
 
-	// 직원 정보 삭제 처리(member_step 계산)
+	// step 계산을 위한 누적 포인트 조회
 	public int getCumPoint(String id);
 
-	// 직원 정보 삭제
+	// 직원 삭제 처리
 	public int delEmployee(Map<String, Object> map);
 
 	// 예약 추가
 	public int addReserv(Map<String, Object> map);
 
-	// 예약 전 초기화(예약 위에 또 예약하는 경우)
+	// 테이블 초기화(예약 위에 또 예약하는 경우)
 	public int resetTable2(Restaurant_scheduleVO dto);
 
 	// 선택 날짜 예약 조회
@@ -107,7 +111,7 @@ public interface Host_restaurantDAO {
 	// 날짜별 예약 조회
 	public ArrayList<Restaurant_scheduleVO> getReservList(Map<String, Object> map);
 
-	// 예약한 좌석 확인을 위한 스케줄 인덱스 조회
+	// 스케줄 인덱스 조회
 	public Integer getScheduleIndex(Restaurant_scheduleVO dto);
 
 	// 식당 개수, 식당 인덱스 체크
@@ -116,9 +120,85 @@ public interface Host_restaurantDAO {
 	// 시작 시간, 종료 시간 체크
 	public Restaurant_scheduleVO getTime(Restaurant_scheduleVO dto);
 
-	// 주문 내역 추가(판매 내역)
+	// 주문 추가 처리
 	public int addFoodHistory(Map<String, Object> map);
 
-	// 식당별 결산
-	public Integer getAccount(int restaurant_index);
+	// 회원 아이디가 있는지, 있다면 스텝이 몇인지 조회
+	public Integer confirmId(String id);
+
+	// 이용 내역 추가 처리
+	public int addHistory(String id);
+
+	// 이미 주문한 메뉴인지 확인
+	public Integer getMenuCount(Map<String, Object> map);
+
+	// 주문한 메뉴인 경우 수량 누적
+	public Integer modFoodHistory(Map<String, Object> map);
+
+	// 주문 취소 처리
+	public Integer delFoodHistory(Map<String, Object> map);
+
+	// 주문 가격 계산(테이블별 결산)
+	public Integer getBill(Map<String, Object> map);
+
+	// 레스토랑 히스토리 테이블에 이용 내역 추가
+	public int addRestaurantHistory(Map<String, Object> map);
+
+	// 포인트 조회
+	public int getPoint(String id);
+
+	// 회원 포인트 수정
+	public int modMemberPoint(Map<String, Object> map);
+	
+	// 메뉴별 매출
+	@MapKey("kind")
+	public List<Restaurant_ChartVO> getMenuCountChart(int restaurant_index);
+
+	// 모든 메뉴 이름 조회
+	public String[] getMenuName(int restaurant_index);
+
+	// 성별 매출
+	public Object getSexChart(int restaurant_index);
+
+	// 메뉴 추가 전 메뉴 인덱스 계산
+	public Integer getMenuIndex(int restaurant_index);
+
+	// 성별 차트 내용
+	List<Member> getSexChartContent(int restaurant_index);
+
+	// 모든 식당 이름 조회
+	public String[] getRestaurantName();
+
+	// 식당별 차트
+	public List<Restaurant_ChartVO> getRestaurantChart();
+
+	// 예약한 아이디 조회
+	public String getReservId(Map<String, Object> map);
+
+	// 결제한 테이블인지 확인
+	public int getHistoryState(Map<String, Object> map);
+
+	// 결제 시 결제 완료 시점으로 히스토리 수정
+	public int modHistory(Map<String, Object> map);
+
+	// 결제 시 레스토랑 히스토리 테이블의 내용 업데이트
+	public int modRestaurantHistory(Map<String, Object> map);
+
+	// '사용 중'인 테이블을 '사용 가능'으로 변경
+	public int modState(Map<String, Object> map);
+
+	// 레스토랑 히스토리 테이블에 이용 내역 삭제
+	public int delRestaurantHistory(Map<String, Object> map);
+
+	// 히스토리 테이블에 이용 내역 삭제
+	public int delHistory(Map<String, Object> map);
+
+	// 삭제 전 히스토리 인덱스 조회
+	public int getHistoryIndex(Map<String, Object> map);
+
+	// 스케줄 삭제 처리
+	public int delSchedule(Map<String, Object> map);
+
+	// 테이블 전체 삭제
+	public int delTable(Map<String, Object> map);
 }

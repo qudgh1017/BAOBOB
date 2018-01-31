@@ -24,24 +24,30 @@ function spaceDivChange() {
 	var spaceDiv = document.getElementById('spaceDiv'); //출력 위치
 	
 	var space = '';
-	for(var y = 0; y < heightY; y += 1) {
-		space += '<div class="p_div">';
-		for(var x = 0; x < widthX; x += 1) {
-			var location = x + '-' + y;
-			var imgId = 'img' + location;
-			
-			//배열판의 각 버튼
-			space += '<button class="p_spaceBtn p_btn" ' 
-					+ 'onclick="spaceBtnChange(&#39;' + location +'&#39;)">'
-						+ '<img class="p_img space_img" '
-						+ 'id="' + imgId + '" '
-						+ 'data-type="0" ' 
-						+ 'src="/baobob/resources/images/ymk/host_parking/icon_tmp.png">'
-					+ '</button>';
-			
-			spaceDiv.innerHTML = space;
+	if(widthX && heightY) {
+		loaderShow();
+		
+		for(var y = 0; y < heightY; y += 1) {
+			space += '<div class="p_div">';
+			for(var x = 0; x < widthX; x += 1) {
+				var location = x + '-' + y;
+				var imgId = 'img' + location;
+				
+				//배열판의 각 버튼
+				space += '<button class="p_spaceBtn p_btn" ' 
+						+ 'onclick="spaceBtnChange(&#39;' + location +'&#39;)">'
+							+ '<img class="p_img space_img" '
+							+ 'id="' + imgId + '" '
+							+ 'data-type="0" ' 
+							+ 'src="/baobob/resources/images/ymk/host_parking/icon_tmp.png">'
+						+ '</button>';
+				
+				spaceDiv.innerHTML = space;
+			}
+			space += '</div>';
 		}
-		space += '</div>';
+		
+		loaderHide();
 	}
 }
 
@@ -170,7 +176,6 @@ function spaceTypeChange() {
 			array.push(space.getAttribute('data-type'));
 		});
 		var info = array.join(',');
-		console.log(info);
 		
 		//요금 정보
 		var baseTime = document.getElementById('baseTime').value;
@@ -190,6 +195,8 @@ function spaceTypeChange() {
 					+ 'movieTime=' + movieTime + '&'
 					+ 'restTime=' + restTime;
 		
+		loaderShow();
+		
 		sendRequest(space_callback, 'hostParkingSettingChange', 'POST', param);
 	}
 }
@@ -201,6 +208,7 @@ function space_callback() {
 		
 			console.log(date);
 			if(date != 0) {
+				loaderHide();
 				alert("정보가 등록되었습니다.");
 			}
 			console.log('완료');
@@ -212,3 +220,11 @@ function space_callback() {
 	}
 }
 
+//로딩
+function loaderShow() {
+	document.getElementById('myLoader').style.display = 'block';
+}
+
+function loaderHide() {
+	document.getElementById('myLoader').style.display = '';
+}

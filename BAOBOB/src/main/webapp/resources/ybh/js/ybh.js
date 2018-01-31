@@ -1,11 +1,16 @@
+//전체적으로 공통적인 함수사용, 처리과정, 크지않은 범위의 페이지에서 쓰는 javaScript, jQuery를 모아논 JavaScript파일이다.(By 유병호)
+
+//성공 메시지
 var review_insert = "리뷰가 등록되었습니다.";
 var review_modify = "리뷰가 수정되었습니다.";
 var review_delete = "리뷰가 삭제되었습니다.";
+var reservation_success = "예매를 성공했습니다. \n마이페이지에서 예매창을 확인해주세요.";
 
-
+//에러 메시지
 var review_insert_error = "리뷰등록에 실패하였습니다. 다시 작성해주세요.";
 var review_modify_error = "리뷰수정에 실패하였습니다. 다시 작성해주세요.";
 var review_delete_error = "리뷰삭제에 실패하였습니다. 다시 작성해주세요.";
+var reservation_error = "예매에 실패하였습니다. \n다시 시도해주세요."
 
 //sub창 띄었을때
 function subAlert(msg){
@@ -15,7 +20,21 @@ function subAlert(msg){
 	return false;
 }
 
-//로그인이 필요한 서비스일경우
+//영화 예매 성공시
+function reservationSuccess(msg){
+	alert(msg);
+	window.location.href="guest_movie";
+	return false;
+}
+
+//영화 예매 실패시
+function reservationError(msg){
+	alert(msg);
+	window.location.href="movieTicket";
+	return false;
+}
+
+//로그인이 필요한 서비스일경우(sub창으로 loginCheck.jsp페이지 띄움.)
 function loginCheck(){
 	window.open("loginCheck","loginCheck","top=50 left=100 width=400 height=300");
 }
@@ -23,16 +42,16 @@ function loginCheck(){
 function reviewWrite(movie_index){
 	window.open("movieReviewWrite?movie_index="+movie_index, "host_logout", "top=200 left=300 width=600 height=400");
 }
-//수정 입력폼 갔다가 처리(pro=2일때)
+// 리뷰 수정 입력폼 갔다가 처리(pro=2일때)
 function reviewModify(movie_index, review_index){
 	window.open("movieReviewModify?movie_index="+movie_index+"&review_index="+review_index, "host_logout", "top=200 left=300 width=600 height=400");
 }
-//삭제 바로 처리(pro=3일때)
+// 리뷰 삭제 바로 처리(pro=3일때)
 function reviewDelete(movie_index, review_index){
 	window.open("movieReviewPro?pro=3&movie_index="+movie_index+"&review_index="+review_index, "host_logout", "top=200 left=300 width=600 height=400");
 }
 
-//review 수정시 같은 사람인지 체크
+// review 수정시 같은 사람인지 체크
 function reviewModifyCheck(memId, member_id, movie_index, review_index){
 	//같은사람이면
 	if(memId == member_id){
@@ -61,25 +80,10 @@ function reviewDeleteCheck(memId, member_id, movie_index, review_index){
 	}
 }
 
-
-//영화 movieTicekt 에서 div클릭시 css변경(여러개 왜 안됨...ㅠ)
-//토글 써볼것!!!!!!!! 부트스트랩!!
-/*function movieCSS(movie_index){
-	
-	var movie_tab = $('#movie'+movie_index);
-	
-	movie_tab.click(function(){
-		
-		movie_tab.css('color','white');
-		movie_tab.css('background-color','black');
-		movie_tab.css('font-weight','bold');
-	});
-}*/
-
+//예매에서 영화선택시 상영예정작 클릭시 
 function nonPlaying(){
 	alert("상영예정작입니다.\n 상영중인 영화를 선택해주세요.");
 	window.location.reload();
-	
 	return false;
 }
 
@@ -88,10 +92,12 @@ var flag = false;
 var movie; //movie_index
 var plusDay;//sysdate에 더할날짜
 
-//영화/ 날짜 둘다 체크하면  ajax통신
+//영화/ 날짜 둘다 선택하면  ajax통신
 function common(){
 	if(!movie){
+		return false;
 	}else if(!plusDay){
+		return false;
 	}else{
 		$.ajaxSettings.traditional = true;//배열 형태로 서버쪽 전송을 위한 설정
 	
@@ -104,7 +110,6 @@ function common(){
 			
 			success: function(msg) {
 				$('#resultSchedule').html(msg);	
-				
 			},				
 			error: function() {
 				alert('오류');
@@ -113,7 +118,7 @@ function common(){
 		});
 	}
 }
-//영화버튼 클릭했을때
+//예매-영화선택 했을때
 function clickMovie(movie_index){
 	movie = movie_index;
 	common();
@@ -132,18 +137,17 @@ function clickMovie(movie_index){
 		error: function() {
 			alert('오류');
 		}	
-		
 	});
 	
 }
 	
-//날짜 클릭 했을때
+//예매-날짜 클릭 했을때
 function clickDate(num){
 	plusDay = num;
 	common();
 }
 
-//스케줄 클릭 했을때
+//예매-스케줄 클릭 했을때
 function clickSchedule(theater_schedule_index, movie_index){
 	
 	//예매창에 스케줄정보 보여주기위해
@@ -184,7 +188,7 @@ function ToSeat(movie_index, theater_schedule_index){
 	window.location.href="movieTicket2?movie_index="+movie_index+"&theater_schedule_index="+theater_schedule_index;
 }
 
-//사용할 포인트 입력시(onchange)이며 ajax로 할인내역, 총할인가격, 실 계산가격 값 변경  
+//영화-예매 movieTicket3페이지에서 사용할 포인트 입력시(onchange)이며 ajax로 할인내역, 총할인가격, 실 계산가격 값 변경  
 function point(member_point, field, totalSalePrice, movie_history_price){
 	
 	//member_point가 사용가능한 member_point
@@ -230,7 +234,7 @@ var card_pwd_msg="카드 비밀번호를 입력해주세요";
 var card_month_msg="카드 moth를 입력해주세요";
 var card_year_msg="카드 year를 입력해주세요";
 
-//카드 입력창 값 유무 확인
+//영화-예매 movieTicket3페이지 카드 입력창 값 유무 확인
 function cardInfoChk() {
 	if(!document.reservationMovieForm.card_num1.value){
 		alert(card_num_msg);
@@ -262,6 +266,10 @@ function cardInfoChk() {
 		return false;
 	}
 }
-  
 
+//영화 상세정보 창으로 이동
+function movieDetail(movie_index){
+	window.close();
+	opener.location.href="movieDetail?movie_index="+movie_index; //오픈해준 페이지 reload
+}
 

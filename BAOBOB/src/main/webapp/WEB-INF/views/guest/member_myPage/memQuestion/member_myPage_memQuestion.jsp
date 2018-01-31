@@ -27,7 +27,7 @@
 			<%@ include file="../../common/sideMenu.jsp" %>	
 			
 			<!-- 알맹이td -->
-			<td style="padding:0rem 10rem; margin:0px;width:100%;height:100%;">
+			<td style="padding:0rem 5rem; margin:0px;width:100%;height:100%;">
 			<table id="mainBody">
 				<caption>1 : 1 문의</caption>
 			    <thead>
@@ -42,10 +42,9 @@
 			    </thead>
 			    
 			    <!-- 게시글이 있으면 -->
-				<c:if test="${cnt > 0 }">
-					<c:forEach var="dto" items="${dtos}">
-						<!-- 게시글 -->
-						<%-- <c:if test="${dto.board_type eq 2}"> --%>
+				<c:if test="${memQuestionCnt > 0 }">
+					<c:forEach var="dto" items="${QuestionDtos}">
+						<c:if test="${dto.board_type eq 2}">
 					    <tbody>
 					    <tr>
 					    	<th style="text-align:center;">
@@ -80,7 +79,7 @@
 					        <td>${dto.board_ip}</td>
 					    </tr>
 					    </tbody>
-					    <%-- </c:if> --%>
+						</c:if>
 				    </c:forEach>
 				    <tr>
 				    	<td colspan="6" style="border-bottom: none; text-align:right;">
@@ -91,10 +90,16 @@
 			    </c:if>
 			    
 			    <!-- 게시글이 없으면 -->
-				<c:if test="${cnt == 0 }">
+				<c:if test="${memQuestionCnt == 0 }">
 					<tr>
 						<td colspan="6" align="center">
 							No contents...
+						</td>
+					</tr>
+					<tr>
+						<td colspan="6" style="border-bottom: none; text-align:right;">
+							<input type="button" class="button" value="문의하기" style="width:auto;"
+							onclick="window.location='memQWriteForm'">
 						</td>
 					</tr>
 				</c:if>
@@ -102,7 +107,7 @@
 				
 			<!-- 페이징 컨트롤 -->
 			<div class="pagination">
-				<c:if test="${cnt > 0 }">
+				<c:if test="${memQuestionCnt > 0 }">
 					<c:if test="${startPage > pageBlock }">
 						<a href="memQuestion">&laquo;</a>.
 						<a href="memQuestion?pageNum=${startPage - pageBlock}">&lsaquo;</a>

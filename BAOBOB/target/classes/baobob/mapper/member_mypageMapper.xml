@@ -23,6 +23,20 @@
 		SELECT * FROM member_tbl WHERE member_id=#{strId}
 	</select>
 
+	<!-- 누적포인트에따라 회원등급(member_step)업데이트해주기 -->
+	<update id="updateMemberStep" parameterType="Map">
+		UPDATE member_tbl set				
+		<choose> 
+			<when test="member_cumpoint lte 15000"> member_step = 9 </when>
+			<when test="member_cumpoint lte 30000"> member_step = 10 </when>
+			<when test="member_cumpoint lte 45000"> member_step = 11 </when>
+			<when test="member_cumpoint gt 45000"> member_step = 12 </when>
+			<otherwise> MEMBER_STEP  = MEMBER_STEP </otherwise>
+		</choose>
+		WHERE MEMBER_ID  = #{strId}
+		AND member_step IN(9,10,11,12)
+	</update>
+
 	<!-- 회원정보 수정 처리 -->
 	<update id="updateMember" parameterType="spring.mvc.baobob.vo.Member">
 		UPDATE member_tbl 
@@ -171,7 +185,7 @@
 
 	<!-- wishList 갯수 -->
 	<select id="wishListCnt" resultType="int">
-		SELECT COUNT(*) FROM member_wishList WHERE member_id = #{strId}
+		SELECT COUNT(*) FROM member_wishList_tbl WHERE member_id = #{strId}
 	</select>
 	
 	<!-- wishList 리스트 -->
@@ -183,7 +197,7 @@
 			             m.movie_rel_date, m.movie_director, m.movie_star, m.movie_country, m.movie_runTime, 
 			             m.movie_poster, m.movie_trailer, m.movie_state, rownum rNum 
 			       FROM (SELECT * 
-			             FROM member_wishList 
+			             FROM member_wishList_tbl 
 			             ORDER BY movie_index DESC) w
 			       JOIN movie_tbl m
 			       ON m.movie_index = w.movie_index
@@ -205,8 +219,8 @@
 	<select id="getMovieClear" resultType="spring.mvc.baobob.vo.MovieHistoryVO">
 		<![CDATA[
 			SELECT *
-			FROM( SELECT mh.history_index, h.member_id, m.movie_index, h.history_date,
-					 s.schedule_starttime, s.schedule_endtime,
+			FROM( SELECT mh.history_index, h.member_id, m.movie_index, h.history_date, s.theater_index,
+			         s.schedule_starttime, s.schedule_endtime, s.theater_schedule_index,
 			         m.movie_title, m.movie_content, m.movie_janre, m.movie_age, 
 			         m.movie_rel_date, m.movie_director, m.movie_star, m.movie_country, m.movie_runTime, 
 			         m.movie_poster, m.movie_trailer, m.movie_state, rownum rNum 
@@ -221,6 +235,11 @@
 			    )
 			WHERE  rNum >= #{start} AND rNum <= #{end}
 		 ]]>
+	</select>
+	
+	<!-- 예약한 상영관,좌석 불러오기 -->
+	<select id="getMovieSeat" resultType="spring.mvc.baobob.vo.Theater_seatVO">
+		SELECT * FROM theater_seat_tbl WHERE member_id=#{strId}
 	</select>
 	
 	<!-- 무비 다이어리 글갯수 구하기 -->
@@ -256,54 +275,218 @@
 		DELETE FROM board_tbl WHERE board_index = #{num}
 	</delete>
 	
+	<!-- 위시리스트 추가 -->
+	<insert id="addWishList" parameterType="spring.mvc.baobob.vo.WishListVO">
+		INSERT INTO member_wishList_tbl (member_id, movie_index) 
+		VALUES (#{member_id}, #{movie_index})
+	</insert>
+	
+	
 	<!-- 위시리스트 삭제 처리 -->
 	<delete id="delMovieWishList" parameterType="int">
-		DELETE FROM member_wishList WHERE movie_index = #{num}
+		DELETE FROM member_wishList_tbl WHERE movie_index = #{num}
 	</delete>
 	
 	
 <!-- ************************************** 무비로그 END ************************************* -->	
 <!-- ************************************************************************************** -->
 
-	<!-- 예매내역 삭제 처리 -->
+
+<!-- ************************************************************************************** -->	
+<!-- ************************************ 영화예매 취소 START *********************************** -->	
+	
+	<!-- 예매좌석 정보 가져오기 -->
+	<select id="getSeatInfo" resultType="spring.mvc.baobob.vo.Theater_seatVO">
+		SELECT *
+		FROM theater_seat_tbl
+		WHERE member_id = #{memId}
+		AND theater_schedule_index = #{schedule_index}
+	</select>
+	
+	<!-- 예매좌석 취소 - 예매좌석 state 돌려놓기 -->
+	<update id="updateSeatState" parameterType="int">
+		UPDATE theater_seat_tbl 
+		SET seat_state = (SELECT seat_state 
+		                   FROM theater_seat_tbl
+		                   WHERE theater_index = (SELECT theater_index
+		                                           FROM theater_seat_tbl
+		                                           WHERE seat_index = #{seat_index})
+		                   AND theater_schedule_index = -1
+		                   AND seat_row = (SELECT seat_row
+		                                    FROM theater_seat_tbl
+		                                    WHERE seat_index = #{seat_index})
+		                   AND seat_col = (SELECT seat_col
+		                                    FROM theater_seat_tbl
+		                                    WHERE seat_index = #{seat_index})
+		                  ), member_id = null
+		WHERE seat_index = #{seat_index}
+	</update>
+	
+	<!-- 예매좌석 취소 - 스케쥴에 빈좌석 돌려놓기 -->
+	<update id="updateEmptySeat" parameterType="int">
+		UPDATE theater_schedule_tbl
+		SET schedule_empty_seat = schedule_empty_seat + 1
+		WHERE theater_schedule_index = (SELECT theater_schedule_index
+		                                FROM theater_seat_tbl
+		                                WHERE seat_index = #{seat_index})
+	</update>
+	
+	<!-- 예매좌석 취소 - movie_count 돌려놀기 -->
+	<update id="updateMovieCount" parameterType="Map">
+		UPDATE movie_tbl
+		SET movie_count = movie_count - #{movieCount}
+		WHERE movie_index = (SELECT movie_index
+		                     FROM theater_schedule_tbl
+		                     WHERE theater_schedule_index = #{schedule_index})
+	</update>
+	
+	<!-- 사용한 포인트만큼 다시 포인트 더하기 결제금액의 10% 빼기, 누적포인트에서 결제금액의 10% 빼기. -->
+	<update id="updatePoint" parameterType="Map">
+		UPDATE member_tbl
+		SET member_point = member_point + (SELECT use_point
+		                                   FROM movie_history_tbl
+		                                   WHERE history_index=#{history_index}) - (SELECT movie_history_price
+		                                                                             FROM movie_history_tbl
+		                                                                             WHERE history_index=#{history_index})/10,
+		    member_cumpoint = member_cumpoint - (SELECT movie_history_price
+		                                         FROM movie_history_tbl
+		                                         WHERE history_index=#{history_index})/10                                                                         
+		WHERE member_id=#{memId}
+	</update>
+	
+	<!-- 예매내역 삭제(movie_history_tbl) -->
 	<delete id="moviePaidDelPro" parameterType="int">
 		DELETE FROM movie_history_tbl WHERE history_index = #{num}
 	</delete>
 	
+	<!-- 예매내역 삭제(history_tbl) -->
+	<delete id="historyDelPro" parameterType="int">
+		DELETE FROM history_tbl WHERE history_index = #{num}
+	</delete>
+	
+	
+<!-- ************************************** 영화예매 취소 END ************************************* -->	
+<!-- ************************************************************************************** -->
+
+
 <!-- ************************************************************************************** -->	
 <!-- ************************************* 식당로그 START ************************************ -->	
 	
-	<!-- 내가 이용한 식당 갯수 구하기 -->
+	<!-- 식당 예약 갯수 구하기 -->
 	<select id="restaurantLogCnt" resultType="int">
 		SELECT COUNT(*)
-		FROM restaurant_tbl r JOIN restaurant_schedule_tbl rs
+		FROM restaurant_tbl r
+		JOIN restaurant_schedule_tbl rs
 		ON r.restaurant_index = rs.restaurant_index
 		JOIN restaurant_history_tbl rh
 		ON rs.restaurant_schedule_index = rh.restaurant_schedule_index
 		JOIN history_tbl h
-		ON h.history_index = rh.history_index
+		ON rh.history_index = h.history_index
+		JOIN member_tbl m
+		ON h.member_id = m.member_id
 		WHERE h.member_id=#{strId}
 	</select>
 	
-	<!-- 내가 이용한 식당 목록 조회 -->
+	<!-- 식당 예약 목록 조회 -->
 	<select id="restaurantLogList" resultType="spring.mvc.baobob.vo.RestaurantLogVO">
 		<![CDATA[
 		SELECT *
-		FROM( SELECT r.restaurant_index, r.restaurant_tel, r.restaurant_name,
-		             rs.restaurant_schedule_index, rs.schedule_starttime,rs.schedule_endtime,
-		             rh.restaurant_table_index,
-		             h.history_index, h.history_date, h.member_id, rownum rNum 
-		        FROM restaurant_tbl r JOIN restaurant_schedule_tbl rs
+		FROM (SELECT rh.history_index, h.member_id, rs.restaurant_schedule_index, rs.schedule_starttime, rs.schedule_endtime,
+		             rt.table_col, rt.table_row, rt.table_state, rt.restaurant_table_index, r.restaurant_index,
+		             r.restaurant_name,r.restaurant_tel, rh.restaurant_history_state,h.history_date, rownum rNum
+		        FROM restaurant_tbl r
+		        JOIN restaurant_schedule_tbl rs
 		        ON r.restaurant_index = rs.restaurant_index
+		        JOIN restaurant_table_tbl rt
+		        ON rs.restaurant_schedule_index = rt.restaurant_schedule_index
 		        JOIN restaurant_history_tbl rh
 		        ON rs.restaurant_schedule_index = rh.restaurant_schedule_index
 		        JOIN history_tbl h
-		        ON h.history_index = rh.history_index
-		        WHERE h.member_id=#{strId}
+		        ON rh.history_index = h.history_index
+		        WHERE h.member_id = #{strId}
+		        AND rt.table_state = 3
 		    )
 		WHERE rNum >= #{start} AND rNum <= #{end}
 		]]>
 	</select>
+	
+	<!-- 매장을 구성하는 타일의 행열 (예:5*5) -->
+	<select id="getColRow" resultType="spring.mvc.baobob.vo.TableVO">
+		SELECT MAX(table_row) table_row, MAX(table_col) table_col 
+		FROM restaurant_table_tbl 
+		WHERE restaurant_index = #{restaurant_index} 
+		AND restaurant_schedule_index IS null
+	</select>
+	
+	<!-- state 정보 조회 -->
+	<select id="getState" resultType="int">
+		SELECT table_state 
+		FROM restaurant_table_tbl 
+		WHERE restaurant_index = #{restaurant_index} AND restaurant_table_index = #{restaurant_table_index}
+	<if test="restaurant_schedule_index == null">
+		AND restaurant_schedule_index IS null
+	</if>
+	<if test="restaurant_schedule_index != null">
+		AND restaurant_schedule_index = #{restaurant_schedule_index}
+	</if>
+	</select>
+	
+	<!-- 히스토리 인덱스 조회 -->
+	<select id="getHistoryIndex" resultType="int">
+		SELECT history_index
+		FROM restaurant_history_tbl
+		WHERE restaurant_schedule_index = #{restaurant_schedule_index}
+		AND restaurant_table_index = #{restaurant_table_index}
+		AND discount = 0
+		AND member_use_point = 0
+		AND payvalue = 0
+		AND restaurant_history_state = 0
+	</select>
+	
+	<!-- 레스토랑 히스토리 테이블에 이용 내역 삭제 -->
+	<delete id="delRestaurantHistory" parameterType="Map">
+		DELETE FROM restaurant_history_tbl
+		WHERE history_index = #{history_index}
+		AND restaurant_schedule_index = #{restaurant_schedule_index}
+		AND restaurant_table_index = #{restaurant_table_index}
+		AND discount = 0
+		AND member_use_point = 0
+		AND payvalue = 0
+		AND restaurant_history_state = 0
+	</delete>
+	
+	<!-- 히스토리 테이블에 이용 내역 삭제 -->
+	<delete id="delHistory" parameterType="Map">
+		DELETE FROM history_tbl
+		WHERE history_index = #{history_index}
+		AND member_id = #{member_id}
+	</delete>
+	
+	<!-- '사용 중'인 테이블을 '사용 가능'으로 변경 -->
+	<update id="modState" parameterType="Map">
+		UPDATE restaurant_table_tbl
+		SET table_state = 1
+		WHERE restaurant_index = #{restaurant_index}
+		AND restaurant_schedule_index = #{restaurant_schedule_index}
+		AND restaurant_table_index = #{restaurant_table_index}
+	</update>
+	
+	<!-- 테이블 전체 삭제 -->
+	<delete id="delTable" parameterType="Map">
+		DELETE FROM restaurant_table_tbl
+		WHERE restaurant_index = #{restaurant_index}
+		AND restaurant_schedule_index = #{restaurant_schedule_index}
+	</delete>
+	
+	<!-- 스케줄 삭제 처리 -->
+	<delete id="delSchedule" parameterType="Map">
+		DELETE FROM restaurant_schedule_tbl
+		WHERE restaurant_schedule_index = #{restaurant_schedule_index}
+	</delete>
+	
+	
+	
+	
 	
 <!-- ************************************** 식당로그 END ************************************* -->	
 <!-- ************************************************************************************** -->
@@ -323,7 +506,8 @@
 			FROM ( SELECT p.p_history_index, p.p_history_in, p.p_history_out, p.p_history_price,
 			              p.p_history_space, p.p_history_date,
 			              h.history_index, h.history_date, h.member_id, rownum rNum 
-			        FROM park_history_tbl p JOIN history_tbl h
+			        FROM park_history_tbl p 
+			        JOIN history_tbl h
 			        ON h.history_index = p.history_index
 			        WHERE member_id=#{strId}
 			     )
@@ -340,9 +524,15 @@
 	
 	<!-- 개인별 히스토리 목록 조회 -->
 	<select id="getHistoryList" resultType="spring.mvc.baobob.vo.HistoryVO">
-		SELECT * 
-		FROM history_tbl
-		WHERE member_id = #{strId}
+		<![CDATA[
+			SELECT * 
+			FROM ( SELECT history_index, history_date, member_id, rownum rNum
+			       FROM history_tbl
+			       WHERE member_id=#{strId}
+			       ORDER BY history_date DESC
+			    ) 
+			WHERE rNum >= #{start} AND rNum <= #{end}
+		 ]]>
 	</select>
 	
 	

@@ -99,4 +99,7 @@ public interface Host_movieService {
 	
 	// 영화에 해당하는 워드 클라우드 검색
 	public void movieWordcloud(HttpServletRequest req, Model model);
+	
+	// 직원 고용하기 전 모든 회원 정보 불러오기
+	public void getMemberList(HttpServletRequest req, Model model);
 }

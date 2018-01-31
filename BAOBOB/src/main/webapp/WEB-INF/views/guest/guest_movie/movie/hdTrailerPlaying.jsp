@@ -1,3 +1,4 @@
+<!-- HD트레일러에서 해당영화포스터 클릭시 트레일러영상 sub창 -->
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
@@ -6,12 +7,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>${movie.movie_title}</title>
-<script type="text/javascript">
-	function movieDetail(movie_index){
-		window.close();
-		opener.location.href="movieDetail?movie_index="+movie_index; //오픈해준 페이지 reload
-	}
-</script>
+<script type="text/javascript" src="${projectRes}ybh/js/ybh.js"></script>
 </head>
 <body style="background-color:black; height:700">
 	
@@ -20,11 +16,6 @@
 	
 	<section style="padding-top:50px;">
 		<div class="container">
-			<%-- <div class="row">
-				<div class="col-md-12" align="left">
-					<h3 style="color:white;"><span style="color:blue; font-size:17px; font-weight:bald">[HD]</span>${movie.movie_title}</h3>
-				</div>
-			</div> --%>
 			<div class="row">
 				<div class="col-md-10" align="center">
 					<div class="embed-responsive embed-responsive-16by9"> <!-- 해상도  -->
@@ -36,7 +27,13 @@
 					<a onclick="movieDetail(${movie.movie_index})">
 						<img src="${projectRes}/images/phc/${movie.movie_poster}" width="120px" height="150px"><br>
 					</a>
-					<span style="color:white; font-size:15px; font-weight:bold">${movie.movie_title} ${movie.movie_age}</span><br>					
+					<span style="color:white; font-size:15px; font-weight:bold">
+						${movie.movie_title} 
+						<c:if test="${movie.movie_age==0}"><img src="${projectRes}/images/ybh/전체관람가.png" style="width:15px; height:15px;"></c:if>
+						<c:if test="${movie.movie_age==12}"><img src="${projectRes}/images/ybh/12세 관람가.png" style="width:15px; height:15px;"></c:if>
+						<c:if test="${movie.movie_age==15}"><img src="${projectRes}/images/ybh/15세 관람가.png" style="width:15px; height:15px;"></c:if>
+						<c:if test="${movie.movie_age==19}"><img src="${projectRes}/images/ybh/청소년 관람불가.png" style="width:15px; height:15px;"></c:if>
+					</span><br>					
 					<span style="color:white; font-size:11px">
 						<c:choose>
 							<c:when test="${movie.movie_janre==1}">가족</c:when>
@@ -46,6 +43,9 @@
 							<c:when test="${movie.movie_janre==5}">멜로/로맨스</c:when>
 							<c:when test="${movie.movie_janre==6}">코미디</c:when>
 							<c:when test="${movie.movie_janre==7}">애니메이션</c:when>
+							<c:when test="${movie.movie_janre==8}">액션</c:when>
+							<c:when test="${movie.movie_janre==9}">스릴러</c:when>
+							<c:when test="${movie.movie_janre==10}">미스테리</c:when>
 						</c:choose>
 					</span><br>
 					<span style="color:white; font-size:11px">20${movie.movie_rel_date}</span><br>
@@ -58,15 +58,10 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-md-10" align="left" style="border:1px solid white; height:200px;">
-					<span style="color:white; font-size:13px">${movie.movie_content}</span>
-				</div>
+				<textarea disabled class="col-md-10" rows="7" cols="100" style="resize:none; color:white; font-size:13px; background-color:black; height:200px;">${movie.movie_content}</textarea>
 			</div>
 		</div>
 	</section>
-	<br>
-	<br>
-	<br>
 		
 </body>
 </html>

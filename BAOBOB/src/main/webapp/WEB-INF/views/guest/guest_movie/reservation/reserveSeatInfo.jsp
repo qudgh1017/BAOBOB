@@ -1,3 +1,5 @@
+<!-- AJAX처리된 페이지: movieTicket2페이지에서 일반 또는 청소년 인원수 선택시 전체좌석도를 보여주고 선택하는 페이지 -->
+<!-- 특이점: 버튼의 id에 DB의 index값을 주어 동적으로 id를 줘서 좌석 선택 또는 취소시 CSS를 javascript로 변경해줌. -->
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@page import="java.util.Date"%>
@@ -12,50 +14,61 @@
 	request.setAttribute("seatRow",seatRow);
 %>
 
-
 <!-- 좌석도  -->
-<input type="button" style="color:white; background-color:lightgray; background:rgba(0, 0, 0, 0.6); width:${seatInfo.totalCol*45}px; height:25px;"  value="SCREEN"> <br><br>
+<button type="button" style="color:white; background-color:lightgray; background:rgba(0, 0, 0, 0.6); width:${seatInfo.totalCol*25}px; height:25px;">SCREEN</button> <br><br>
 
+<!-- 좌석의 행/열에 따른 크기 조절 -->
+<c:if test="${seatInfo.totalRow<15 || seatInfo.totalCol<8}">
+	<c:set var="size" value="30"/>
+	<c:set var="fontSize" value="12"/>
+</c:if>
+<c:if test="${(seatInfo.totalRow>=15 && seatInfo.totalRow<=24)  || (seatInfo.totalCol>=8 && seatInfo.totalCol<=12)}">
+	<c:set var="size" value="25"/>
+	<c:set var="fontSize" value="11"/>
+</c:if>
+<c:if test="${seatInfo.totalRow>24 || seatInfo.totalCol>12}">
+	<c:set var="size" value="20"/>
+	<c:set var="fontSize" value="10"/>
+</c:if>
+
+<!-- 좌석도 이중포문으로 행렬 뿌려주기(좌석상태) -->
 <c:forEach var="row" begin="0" end="${seatInfo.totalRow-1}" step="1">
-	<!-- <div> --><!--  class="btn-group" data-toggle="buttons" -->
-	${seatRow[row]}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	${seatRow[row]}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	
 	<c:forEach var="col" begin="1" end="${seatInfo.totalCol}" step="1">
+		<!-- 좌석의 상태로 구분하여 서로 다른 이미지를 뿌려줌 -->
 		<c:if test="${seatInfo.state[(row)*seatInfo.totalCol-1+col]==0}">
-			<label class="btn btn" style="margin:1px 1px; height:35; width:35; border:0;">
-			   <input type="checkbox" name="seat_index" style="width:10; height:10;" disabled autocomplete="off">
-			</label>
+		   <button id="${seatInfo.seat_index[(row)*seatInfo.totalCol-1+col]}" type="button" name="seat_index" style="width:${size}; height:${size}; border:0;" disabled autocomplete="off"></button>
 		</c:if>
 		<c:if test="${seatInfo.state[(row)*seatInfo.totalCol-1+col]==1}">
-			<label class="btn btn" style="margin:1px 1px; height:35; width:35; background-image: url('${projectRes}/images/phc/icon/theater_in.png');">
-			   <input type="checkbox" name="seat_index" style="width:10; height:10;" disabled autocomplete="off">
-			</label>
+		   <button id="${seatInfo.seat_index[(row)*seatInfo.totalCol-1+col]}" type="button" name="seat_index" disabled autocomplete="off">
+		   		<img src="${projectRes}/images/phc/icon/theater_in.png" style="height:${size}; width:${size};">
+		   </button>
 		</c:if>
 		<c:if test="${seatInfo.state[(row)*seatInfo.totalCol-1+col]==2}">
-			<label class="btn btn" style="margin:1px 1px; height:35; width:35; background-image: url('${projectRes}/images/phc/icon/theater_out.png');">
-			   <input type="checkbox" name="seat_index" style="width:10; height:10;" disabled autocomplete="off">
-			</label>
+		   <button id="${seatInfo.seat_index[(row)*seatInfo.totalCol-1+col]}" type="button" name="seat_index" disabled autocomplete="off">
+		   		<img src="${projectRes}/images/phc/icon/theater_out.png" style="height:${size}; width:${size};">
+		   </button>
 		</c:if>
 		<c:if test="${seatInfo.state[(row)*seatInfo.totalCol-1+col]==3}">
-			<label class="btn btn" style="margin:1px 1px; height:35; width:35; border:2px solid green;">
-			   <input type="checkbox" style="width:10; height:10;" onclick="CountChecked(this)" name="seat_index" autocomplete="off" value="${seatInfo.seat_index[(row)*seatInfo.totalCol-1+col]}">${col}
-			</label>
+		   <button id="btn${seatInfo.seat_index[(row)*seatInfo.totalCol-1+col]}" type="button" style="width:${size}; height:${size}; border:2px solid green;" onclick="CountChecked(this)" name="seat_index" autocomplete="off" value="${seatInfo.seat_index[(row)*seatInfo.totalCol-1+col]}">
+		   		<span style="font-size:${fontSize}px">${col}</span>
+		   </button>
 		</c:if>
 		<c:if test="${seatInfo.state[(row)*seatInfo.totalCol-1+col]==4}">
-			<label class="btn btn" style="margin:1px 1px; height:35; width:35; border:2px solid red;">
-				<input type="checkbox" style="width:10; height:10;" onclick="CountChecked(this)" name="seat_index" autocomplete="off" value="${seatInfo.seat_index[(row)*seatInfo.totalCol-1+col]}">${col}
-			</label>
+			<button id="btn${seatInfo.seat_index[(row)*seatInfo.totalCol-1+col]}" type="button" style="width:${size}; height:${size}; border:2px solid red;" onclick="CountChecked(this)" name="seat_index" autocomplete="off" value="${seatInfo.seat_index[(row)*seatInfo.totalCol-1+col]}">
+				<span style="font-size:${fontSize}px">${col}</span>
+			</button>
 		</c:if>
 		<c:if test="${seatInfo.state[(row)*seatInfo.totalCol-1+col]==5}">
-			<label class="btn btn" style="margin:1px 1px; height:35; width:35; border:2px solid pink;">
-				<input type="checkbox" style="width:10; height:10;" onclick="CountChecked(this)" name="seat_index" autocomplete="off" value="${seatInfo.seat_index[(row)*seatInfo.totalCol-1+col]}">${col}
-			</label>
+			<button id="btn${seatInfo.seat_index[(row)*seatInfo.totalCol-1+col]}" type="button" style="width:${size}; height:${size}; border:2px solid pink;" onclick="CountChecked(this)" name="seat_index" autocomplete="off" value="${seatInfo.seat_index[(row)*seatInfo.totalCol-1+col]}">
+				<span style="font-size:${fontSize}px">${col}</span>
+			</button>
 		</c:if>
 		<c:if test="${seatInfo.state[(row)*seatInfo.totalCol-1+col]==6}">
-			<label class="btn btn" style="margin:1px 1px; height:35; width:35; background-image: url('${projectRes}/images/phc/icon/theater_comp.png');">
- 				<input type="checkbox" style="width:10; height:10;" name="seat_index" autocomplete="off" value="${seatInfo.seat_index[(row)*seatInfo.totalCol-1+col]}">${col}
-			</label>
+			<button id="${seatInfo.seat_index[(row)*seatInfo.totalCol-1+col]}" type="button" name="seat_index" disalbed autocomplete="off" value="${seatInfo.seat_index[(row)*seatInfo.totalCol-1+col]}">
+				<img src="${projectRes}/images/phc/icon/theater_comp.png" style="height:${size}; width:${size};">
+			</button>
 		</c:if>
 	</c:forEach>
-	<!-- </div> -->
 	<br>
 </c:forEach>

@@ -36,9 +36,12 @@
 		<div id="content">
 			<center><h3><b>스케줄 목록</b></h3></center>
 			<hr style="border:3px solid black;">
-			<div style="height:40px;">
-				<input style="background-color:#343a40; color:white; border:1px solid black; float:left; width:200px; height:40px; margin-left:177px; margin-bottom:15px;" type="button" name="hostMovieAddForm" onclick="window.location='hostScheduleAddForm'" value="스케줄 추가하기"/>
-			
+			<div class="row">
+			<div style="height:40px;" class="col-lg-1"></div>
+			<div style="height:40px;" class="col-lg-2">
+				<input style="background-color:#343a40; color:white; border:1px solid black; float:left; width:200px; height:40px; margin-bottom:15px;" type="button" name="hostMovieAddForm" onclick="hostScheduleAddForm();" value="스케줄 추가하기"/>
+			</div>
+			<div style="height:40px;" class="col-lg-8">
 				<input style="background-color:#343a40; color:white; border:1px solid black; float:right; width:200px; height:40px;  margin-bottom:15px;" type="button" name="hostMovieAddForm" onclick="return hostScheduleSearch();" value="스케줄 조회하기"/>
 				<select id="theater_index" name="theater_index" style="float:right;">
 					<option value="">상영관 선택</option>
@@ -53,8 +56,9 @@
 				</select>
 				<input type="text" style="float:right;" name="date" id="datepicker" class="datepicker" placeholder="날짜선택" value="${date}"/>
 			</div>
+			<div style="height:40px;" class="col-lg-1"></div>
 		</div>
-		
+		</div>
 		<div class="cd-schedule loading">
 			<div class="timeline">
 				<ul>
@@ -103,7 +107,10 @@
 						<div class="top-info" id="selectDay0"><span style="font-weight:900;">${day0}</span></div>
 						<ul>
 						<c:forEach var="vo1" items="${vos1}">
-							<li class="single-event" data-start="<fmt:formatDate type="both" pattern="HH:mm" value="${vo1.schedule_startTime}" />" data-end="<fmt:formatDate type="both" pattern="HH:mm" value="${vo1.schedule_endTime}" />" data-content="hostScheduleDetail?theater_index=${vo1.theater_index}&movie_index=${vo1.movie_index}&theater_schedule_index=${vo1.theater_schedule_index}" data-event="event-3">
+							<li class="single-event" data-start="<fmt:formatDate type="both" pattern="HH:mm" value="${vo1.schedule_startTime}" />"
+													 data-end="<fmt:formatDate type="both" pattern="HH:mm" value="${vo1.schedule_endTime}" />" 
+													 data-content="hostScheduleDetail?theater_index=${vo1.theater_index}&movie_index=${vo1.movie_index}&theater_schedule_index=${vo1.theater_schedule_index}" 
+													 data-event="event-3">
 							<a href="#0">
 								<em class="event-name">${vo1.theater_index}관<br>
 								<c:forEach var="movieVO" items="${movieVOS}">
@@ -121,7 +128,10 @@
 		
 						<ul>
 							<c:forEach var="vo2" items="${vos2}">
-							<li class="single-event" data-start="<fmt:formatDate type="both" pattern="HH:mm" value="${vo2.schedule_startTime}" />" data-end="<fmt:formatDate type="both" pattern="HH:mm" value="${vo2.schedule_endTime}" />" data-content="hostScheduleDetail?theater_index=${vo2.theater_index}&movie_index=${vo2.movie_index}&theater_schedule_index=${vo2.theater_schedule_index}" data-event="event-2">
+							<li class="single-event" data-start="<fmt:formatDate type="both" pattern="HH:mm" value="${vo2.schedule_startTime}" />" 
+													 data-end="<fmt:formatDate type="both" pattern="HH:mm" value="${vo2.schedule_endTime}" />" 
+													 data-content="hostScheduleDetail?theater_index=${vo2.theater_index}&movie_index=${vo2.movie_index}&theater_schedule_index=${vo2.theater_schedule_index}" 
+													 data-event="event-2">
 							<a href="#0">
 								<em class="event-name">${vo2.theater_index}관<br>
 								<c:forEach var="movieVO" items="${movieVOS}">
@@ -139,7 +149,10 @@
 		
 						<ul>
 							<c:forEach var="vo3" items="${vos3}">
-							<li class="single-event" data-start="<fmt:formatDate type="both" pattern="HH:mm" value="${vo3.schedule_startTime}" />" data-end="<fmt:formatDate type="both" pattern="HH:mm" value="${vo3.schedule_endTime}" />" data-content="hostScheduleDetail?theater_index=${vo3.theater_index}&movie_index=${vo3.movie_index}&theater_schedule_index=${vo3.theater_schedule_index}" data-event="event-1">
+							<li class="single-event" data-start="<fmt:formatDate type="both" pattern="HH:mm" value="${vo3.schedule_startTime}" />" 
+													 data-end="<fmt:formatDate type="both" pattern="HH:mm" value="${vo3.schedule_endTime}" />" 
+													 data-content="hostScheduleDetail?theater_index=${vo3.theater_index}&movie_index=${vo3.movie_index}&theater_schedule_index=${vo3.theater_schedule_index}" 
+													 data-event="event-1">
 							<a href="#0">
 								<em class="event-name">${vo3.theater_index}관 <br>
 								<c:forEach var="movieVO" items="${movieVOS}">
@@ -157,7 +170,10 @@
 		
 						<ul>
 							<c:forEach var="vo4" items="${vos4}">
-							<li class="single-event" data-start="<fmt:formatDate type="both" pattern="HH:mm" value="${vo4.schedule_startTime}" />" data-end="<fmt:formatDate type="both" pattern="HH:mm" value="${vo4.schedule_endTime}" />" data-content="hostScheduleDetail?theater_index=${vo4.theater_index}&movie_index=${vo4.movie_index}&theater_schedule_index=${vo4.theater_schedule_index}" data-event="event-3">
+							<li class="single-event" data-start="<fmt:formatDate type="both" pattern="HH:mm" value="${vo4.schedule_startTime}" />"
+													 data-end="<fmt:formatDate type="both" pattern="HH:mm" value="${vo4.schedule_endTime}" />"
+													 data-content="hostScheduleDetail?theater_index=${vo4.theater_index}&movie_index=${vo4.movie_index}&theater_schedule_index=${vo4.theater_schedule_index}" 
+													 data-event="event-3">
 							<a href="#0">
 								<em class="event-name">${vo4.theater_index}관 <br>
 								<c:forEach var="movieVO" items="${movieVOS}">
@@ -175,7 +191,10 @@
 		
 						<ul>
 							<c:forEach var="vo5" items="${vos5}">
-							<li class="single-event" data-start="<fmt:formatDate type="both" pattern="HH:mm" value="${vo5.schedule_startTime}" />" data-end="<fmt:formatDate type="both" pattern="HH:mm" value="${vo5.schedule_endTime}" />" data-content="hostScheduleDetail?theater_index=${vo5.theater_index}&movie_index=${vo5.movie_index}&theater_schedule_index=${vo5.theater_schedule_index}" data-event="event-2">
+							<li class="single-event" data-start="<fmt:formatDate type="both" pattern="HH:mm" value="${vo5.schedule_startTime}" />"
+													 data-end="<fmt:formatDate type="both" pattern="HH:mm" value="${vo5.schedule_endTime}" />" 
+													 data-content="hostScheduleDetail?theater_index=${vo5.theater_index}&movie_index=${vo5.movie_index}&theater_schedule_index=${vo5.theater_schedule_index}" 
+													 data-event="event-2">
 							<a href="#0">
 								<em class="event-name">${vo5.theater_index}관<br>
 								<c:forEach var="movieVO" items="${movieVOS}">
