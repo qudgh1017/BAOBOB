@@ -69,6 +69,7 @@ public class Host_movieDAOImpl implements Host_movieDAO {
 		return cnt;
 	}
 
+	// 영화 상세
 	@Override
 	public MovieVO hostMovieDetail(int movie_index) {
 		MovieVO vo = null;
@@ -79,6 +80,7 @@ public class Host_movieDAOImpl implements Host_movieDAO {
 		return vo;
 	}
 
+	// 영화 수정 처리
 	@Override
 	public int hostMovieModPro(MovieVO vo) {
 		int cnt = 0;

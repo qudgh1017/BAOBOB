@@ -660,6 +660,7 @@ public class Host_movieServiceImpl implements Host_movieService{
 		
 		if(idCnt != 0) { // 고용할 아이디 정보가 있다면
 			Member vo = dao.hostMovieEmpInfo(member_id); 	// 아이디로 고용할 직원 정보 가져오기
+			vo.setMember_birth(vo.getMember_birth().substring(2,8));
 			model.addAttribute("vo", vo);
 		}
 		model.addAttribute("member_id", member_id);
