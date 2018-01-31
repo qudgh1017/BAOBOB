@@ -5,7 +5,7 @@ import java.sql.Timestamp;
 public class Parking {
 //park_tbl
 	private int park_index; //park_tbl_SEQ
-	private int park_state; //1:주차가능, 0:주차불가능 -  0(접근.주차중)/1(접근X.미주차중)
+	private int park_state; //1:주차가능, 0:주차불가능 -  0(접근.주차중) / 1(접근X.미주차중)
 	private int park_theme; //전기차, 임산부, 장애인, 일반
 	private Timestamp park_last_date; //마지막 입차 시간 - ParkingHistory의 p_history_in = 5분 내외
 	private Timestamp park_last_out;

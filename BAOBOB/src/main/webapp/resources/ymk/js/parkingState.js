@@ -68,8 +68,8 @@ function parkingStatus(col, row, states) {
 //구역 이미지 표시
 function spaceStateType(type) {
 	switch(type) {
-	case '0': stateTypeImg = 'icon_false.png'; break;
-	case '1': stateTypeImg = 'icon_true.png'; break;
+	case '0': stateTypeImg = 'icon_false.png'; break;//주차 중
+	case '1': stateTypeImg = 'icon_true.png'; break; //주차가능
 	case '2': stateTypeImg = 'icon_tmp.png'; break;
 	}
 }

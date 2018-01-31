@@ -95,7 +95,7 @@ public class Host_parkingServiceImpl implements Host_parkingService {
 
 					Parking space = new Parking();
 					space.setPark_index(idx);
-					space.setPark_state(0);
+					space.setPark_state(1);
 					space.setPark_theme(type);
 					cnt = dao.parkingChange(space);
 				}
