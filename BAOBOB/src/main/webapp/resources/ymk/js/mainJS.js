@@ -17,7 +17,7 @@ function errorAlert(msg) {
 //아이디 중복 확인
 function confirmId() {
 	var id = document.joinForm.id.value;
-	if(!id.equals('')) {
+	if(id) {
 		var param = 'id=' + id;
 		sendRequest(confirmId_callback, 'mainConfirmId', 'GET', param);
 	}
