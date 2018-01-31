@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import spring.mvc.baobob.android.persistence.AndroidDAO;
+import spring.mvc.baobob.guest_movie.persistence.Guest_movieDAO;
 import spring.mvc.baobob.member_mypage.persistence.Member_mypageDAO;
 import spring.mvc.baobob.persistence.MainDAO;
 import spring.mvc.baobob.vo.Android;
@@ -30,6 +31,8 @@ public class AndroidController {
 	MainDAO mainDao;
 	@Autowired
 	Member_mypageDAO myDdao;
+	@Autowired
+	Guest_movieDAO movieDao;
 	
 	//앱 로그인
 	@ResponseBody//웹에서 안드로이드로 값을 전달하기 위한 어노테이션
@@ -208,6 +211,19 @@ public class AndroidController {
 		map.put("movie_country", movie.getMovie_country());
 		map.put("movie_runTime", movie.getMovie_runTime());
 		map.put("movie_poster", movie.getMovie_poster());
+		
+		//평점 = 좋아요
+		String likeCnt = movieDao.movieLike(movie.getMovie_index());
+		if(likeCnt != null) {
+			int reviewCnt = movieDao.getMovieReviewCnt(movie.getMovie_index());
+			if(reviewCnt != 0) {
+				double likePercent = (Integer.parseInt(likeCnt) * 100) / reviewCnt;
+				map.put("movie_trailer", likePercent);
+			} else {
+				map.put("movie_trailer", 0);
+			}
+		}
+		
 		return map;
 	}
 }

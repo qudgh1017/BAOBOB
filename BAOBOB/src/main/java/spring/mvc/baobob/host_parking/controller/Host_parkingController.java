@@ -92,7 +92,6 @@ public class Host_parkingController {
 	public String hostParkingChart(HttpServletRequest req, Model model) {
 		log.info("hostParkingChart()");
 		
-		/*service.getParkingHistory(req, model);*/
 		service.getHostParkingChart(req, model);
 		
 		return "host/host_parking/hostParkingChart";
@@ -103,7 +102,6 @@ public class Host_parkingController {
 	public String hostParkingChartMonth(HttpServletRequest req, Model model) {
 		log.info("hostParkingChartMonth()");
 		
-		/*service.getParkingHistory(req, model);*/
 		service.getHostParkingChartMonth(req, model);
 		
 		return "host/host_parking/hostParkingChartMonth";

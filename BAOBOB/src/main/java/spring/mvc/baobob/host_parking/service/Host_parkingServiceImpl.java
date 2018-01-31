@@ -87,7 +87,6 @@ public class Host_parkingServiceImpl implements Host_parkingService {
 
 		if (cnt != 0) {
 			// 주차장 각 구역 정보 등록
-			System.out.println(info);
 			String[] typeNums = info.split(",");
 			for (int y = 0; y < row; y += 1) {
 				for (int x = 0; x < col; x += 1) {
@@ -381,38 +380,6 @@ public class Host_parkingServiceImpl implements Host_parkingService {
 			}
 		}
 	};
-
-	// 주차 내역
-	/*
-	 * @Override public void getParkingHistory(HttpServletRequest req, Model model)
-	 * { int postCnt = dao.getParkingHistoryCnt(); if(postCnt != 0) { String pageNum
-	 * = req.getParameter("pageNum"); if(pageNum == null) { pageNum = "1";} int
-	 * currentPage = Integer.parseInt(pageNum);
-	 * 
-	 * int pageSize = 15; int navSize = 10;
-	 * 
-	 * int startPost = (currentPage - 1) * pageSize + 1; int endPost = startPost +
-	 * pageSize - 1; if(endPost > postCnt) { endPost = postCnt; }
-	 * 
-	 * int navCnt = postCnt / pageSize + (postCnt % pageSize == 0 ? 0 : 1); int
-	 * startNav = (currentPage / navSize) * navSize + 1; if(currentPage % navSize ==
-	 * 0) { startNav -= navSize;} int endNav = startNav + navSize - 1; if(endNav >
-	 * navCnt) { endNav = navCnt; }
-	 * 
-	 * model.addAttribute("startPost", startPost); model.addAttribute("endPost",
-	 * endPost); model.addAttribute("pageNum", pageNum);
-	 * model.addAttribute("startNav", startNav); model.addAttribute("endNav",
-	 * endNav); model.addAttribute("navSize", navSize);
-	 * model.addAttribute("postCnt", postCnt); model.addAttribute("navCnt", navCnt);
-	 * 
-	 * int number = postCnt - startPost + 1; model.addAttribute("number", number);
-	 * 
-	 * Map<String, Integer> map = new HashMap<String, Integer>(); map.put("start",
-	 * startPost); map.put("end", endPost);
-	 * 
-	 * ArrayList<ParkingHistory> phs = dao.getParkingHistory(map);
-	 * model.addAttribute("phs", phs); } }
-	 */
 
 	// 납부내역(출차한 차량만)
 	@Override
