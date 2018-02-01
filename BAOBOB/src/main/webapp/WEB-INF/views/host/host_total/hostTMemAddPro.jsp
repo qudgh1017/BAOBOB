@@ -9,7 +9,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<!-- 글쓰기 성공 -->
 	<c:if test="${cnt == 1 }">
 		<script type="text/javascript">
 			alert("추가되었습니다.");
@@ -18,7 +17,6 @@
 		
 	</c:if>
 	
-	<!-- 글쓰기 실패 -->
 	<c:if test="${cnt != 1 }">
 		<script type="text/javascript">
 			alert("실패하였습니다.");

@@ -58,4 +58,7 @@ public interface Guest_movieService {
 	
 	//예매 최종처리
 	public void reservationPro(HttpServletRequest req, Model model);
+	
+	//영화- 상세정보에서 wishList확인(하트 색 결정)
+	public void checkWishList(HttpServletRequest req, Model model);
 }

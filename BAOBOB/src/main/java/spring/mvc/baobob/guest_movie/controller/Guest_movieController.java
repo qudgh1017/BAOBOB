@@ -101,11 +101,12 @@ public class Guest_movieController {
 	}
 	
 	//상세영화
-	//영화-HD트레일러 실행하는 상세 페이지
+	//영화- 상세 페이지
 	@RequestMapping("movieDetail")
 	public String movieDetail(HttpServletRequest req, Model model) {
 		log.debug("====== Guest_movieController/movieDetail ======");
 
+		gmservice.checkWishList(req, model);
 		gmservice.movieInfo(req, model);
 		gmservice.reviewList(req, model);
 		

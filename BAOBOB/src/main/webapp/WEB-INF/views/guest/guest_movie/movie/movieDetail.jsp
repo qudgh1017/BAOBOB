@@ -70,9 +70,13 @@
 						<br><br>
 						개봉: 20${movie.movie_rel_date}<br><br>
 						<%-- <fmt:formatDate type="both" pattern="yyyy-MM-dd" value="${movie.movie_rel_date}" /> --%>
-						<!-- 위시리스트 처리요망 -->			
-						<!-- <a href="#!"><i class="material-icons" style="color:red;">favorite</i></a> -->
-						<a href="addWishList?movie_index=${movie.movie_index}"><i class="material-icons" style="color:red;">favorite_border</i></a>
+						<!-- 위시리스트 하트 색깔 -->		
+						<c:if test="${wishCnt>=1}">
+							<a href="#!"><i class="material-icons" style="color:red;">favorite</i></a>
+						</c:if>	
+						<c:if test="${wishCnt==0}">
+							<a href="addWishList?movie_index=${movie.movie_index}"><i class="material-icons" style="color:red;">favorite_border</i></a>
+						</c:if>
 					</span>
 				</div>
 				<div class="col-md-2"></div>

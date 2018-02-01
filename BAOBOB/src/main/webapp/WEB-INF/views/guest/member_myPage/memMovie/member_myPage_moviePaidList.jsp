@@ -90,7 +90,7 @@
 								</c:if>
 								
 								<c:if test="${hisDate < sysDate}">
-									<input type="button" class="button" onclick="#!"value="결제 완료">
+									<input type="button" style="cusor:none;" class="button" onclick="#!"value="결제 완료">
 								</c:if>
 							</th>
 					    </tr>
