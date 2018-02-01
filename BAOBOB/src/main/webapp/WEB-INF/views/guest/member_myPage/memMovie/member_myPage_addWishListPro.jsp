@@ -14,7 +14,9 @@
 			if(confirm("위시리스트에 추가하였습니다. \n위시리스트로 이동하시겠습니까?") == true){
 				window.location="MovieLog";
 			}else{
-				window.history.back();
+				
+				window.location="movieDetail?movie_index="+${movie_index};
+				
 			}
 		</script>
 		

@@ -901,8 +901,20 @@ public class Guest_movieServiceImpl implements Guest_movieService{
 		model.addAttribute("updateCnt",updateCnt);
 		model.addAttribute("updatePoint", updatePoint);
 		model.addAttribute("updateStepCnt",updateStepCnt);
+	}
+	//영화- 상세정보에서 wishList확인(하트 색 결정)
+	@Override
+	public void checkWishList(HttpServletRequest req, Model model) {
+		int movie_index = Integer.parseInt(req.getParameter("movie_index"));
+		String member_id = (String)req.getSession().getAttribute("memId");
 		
+		Map<String, Object> map = new HashMap<String,Object>();
+		map.put("movie_index", movie_index);
+		map.put("member_id", member_id);
 		
+		int wishCnt = gmdao.checkWishCnt(map);
+		System.out.println("%%%%%% wishCnt:-====>"+wishCnt);
+		model.addAttribute("wishCnt", wishCnt);
 	}
 
 	

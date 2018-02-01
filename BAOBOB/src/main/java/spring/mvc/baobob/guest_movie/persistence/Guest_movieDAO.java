@@ -134,4 +134,7 @@ public  interface Guest_movieDAO {
 	
 	//해당 영화 예매 수 
 	public int indexMovieCount(int movie_index);
+	
+	//영화-상세정보의 wishList갯수 체크해서 하트색 결정
+	public int checkWishCnt(Map<String,Object> map);
 }

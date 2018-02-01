@@ -436,5 +436,12 @@
 		WHERE movie_index = #{movie_index}
 	</select>
 	
+	<!-- 영화-상세정보의 wishList갯수 체크해서 하트색 결정 -->
+	<select id="checkWishCnt" resultType="int">
+		SELECT COUNT(*)
+		FROM member_wishList_tbl
+		WHERE member_id = #{member_id}
+		AND movie_index = #{movie_index}
+	</select>
 	
 </mapper>

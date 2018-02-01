@@ -744,7 +744,7 @@ public class Member_mypageServiceImpl implements Member_mypageService{
 		
 		//6.jsp에 넘길 값을 셋팅한다.(setAttribute)
 		model.addAttribute("cnt", cnt);
-		
+		model.addAttribute("movie_index",dto.getMovie_index());
 	}
 
 /*----------------------------------------------------------------------------*/
