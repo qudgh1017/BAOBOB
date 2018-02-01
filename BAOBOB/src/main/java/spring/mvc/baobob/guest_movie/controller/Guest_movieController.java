@@ -77,11 +77,6 @@ public class Guest_movieController {
 		log.debug("====== Guest_movieController/searchResult ======");
 
 		gmservice.searchResult(req, model);
-//		if(req.getParameter("pageNum")==null) {
-//			gmservice.searchResult(req, model);
-//		}else {
-//			System.out.println("여기와!!!!!!!!!!========================");
-//		}
 		return "/guest/guest_movie/movie/searchResult";
 	}
 	
@@ -193,7 +188,7 @@ public class Guest_movieController {
 		return "/guest/guest_movie/reservation/reserveMovieInfo";
 	}
 	
-	//예매선택한 영화정보(AJAX)
+	//예매선택한 스케줄정보(AJAX)
 	@RequestMapping("reserveScheduleInfo")
 	public String reserveScheduleInfo(HttpServletRequest req, Model model) {
 		log.debug("====== Guest_movieController/reserveScheduleInfo ======");
@@ -263,7 +258,7 @@ public class Guest_movieController {
 		return "/guest/guest_movie/reservation/selectSeatInfo";
 	}
 	
-	//예매-빠른예매 2번째페이지 - 결제창
+	//예매-빠른예매 3번째페이지 - 결제창
 	@RequestMapping("movieTicket3")
 	public String movieTicket3(HttpServletRequest req, Model model) {
 		log.debug("====== Guest_movieController/movieTicket3 ======");

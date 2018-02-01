@@ -331,12 +331,10 @@
 			<foreach item="movie_janre" collection="movie_janre" open="(" separator="," close=")">
 				#{movie_janre}
 			</foreach>
-			
 			AND movie_age IN
 			<foreach item="movie_age" collection="movie_age" open="(" separator="," close=")">
 				#{movie_age}
 			</foreach>
-			
 			AND movie_country IN
 			<foreach item="movie_country" collection="movie_country" open="(" separator="," close=")">
 				#{movie_country}
@@ -348,12 +346,10 @@
 			<foreach item="movie_janre" collection="movie_janre" open="(" separator="," close=")">
 				#{movie_janre}
 			</foreach>
-			
 			AND movie_age IN
 			<foreach item="movie_age" collection="movie_age" open="(" separator="," close=")">
 				#{movie_age}
 			</foreach>
-			
 			AND movie_country IN
 			<foreach item="movie_country" collection="movie_country" open="(" separator="," close=")">
 				#{movie_country}
@@ -394,12 +390,10 @@
 							<foreach item="movie_janre" collection="movie_janre" open="(" separator="," close=")">
 								#{movie_janre}
 							</foreach>
-							
 							AND movie_age IN
 							<foreach item="movie_age" collection="movie_age" open="(" separator="," close=")">
 								#{movie_age}
 							</foreach>
-							
 							AND movie_country IN
 							<foreach item="movie_country" collection="movie_country" open="(" separator="," close=")">
 								#{movie_country}

@@ -1,7 +1,6 @@
 <!-- 상세 영화정보 페이지 -->
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%-- <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %> --%>
     
 <%@ include file="/resources/setting.jsp"%>
 <html>
@@ -71,8 +70,8 @@
 						<br><br>
 						개봉: 20${movie.movie_rel_date}<br><br>
 						<%-- <fmt:formatDate type="both" pattern="yyyy-MM-dd" value="${movie.movie_rel_date}" /> --%>
-			<!-- 위시리스트 처리요망 -->			
-						<a href="#!"><i class="material-icons" style="color:red;">favorite</i></a>
+						<!-- 위시리스트 처리요망 -->			
+						<!-- <a href="#!"><i class="material-icons" style="color:red;">favorite</i></a> -->
 						<a href="addWishList?movie_index=${movie.movie_index}"><i class="material-icons" style="color:red;">favorite_border</i></a>
 					</span>
 				</div>
