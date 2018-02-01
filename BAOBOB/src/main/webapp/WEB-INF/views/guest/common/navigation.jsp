@@ -38,6 +38,13 @@
 							고객센터
 						</a>
 					</li>
+					<c:if test="${sessionScope.memStep == 1}">
+						<li class="nav-item mx-0 mx-lg-1">
+							<a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="guestParkingMain">
+								주차
+							</a>
+						</li>
+					</c:if>
 					<c:if test="${sessionScope.memId != null}">
 						<li class="nav-item mx-0 mx-lg-1">
 							<a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="mainSignOut">
