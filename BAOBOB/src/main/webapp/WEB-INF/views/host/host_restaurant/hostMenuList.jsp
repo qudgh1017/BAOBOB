@@ -36,7 +36,9 @@
 										<tr>
 											<td>
 												<span><b>[${dto.restaurant_menu_name}]</b> - </span>
-												<span style="font-size: 12px; color: gray">${dto.restaurant_menu_price}원</span><br>
+												<span style="font-size: 12px; color: gray">
+													<fmt:formatNumber value="${dto.restaurant_menu_price}" pattern="#,###" />원
+												</span><br>
 												<div style="margin-top: 5px; padding:10px;">
 													<img src="${restaurant_images}${dto.restaurant_menu_img}" style="width: 190px; float:left;">
 													<p class="form-control" style="min-height: 95px; margin-top: 0px; margin-left: 15px; width: 370; float:left;">${dto.restaurant_menu_content}</p>

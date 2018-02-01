@@ -176,6 +176,7 @@ public class MainServiceImpl implements MainService {
 		
 		int cnt = dao.getMemberCheck(userId);
 		if(cnt == 0) {
+			//등록되어 있지 않은 경우
 			Member m = new Member();
 			m.setMember_id(userId);
 			m.setMember_pwd(randomKey());
@@ -191,9 +192,10 @@ public class MainServiceImpl implements MainService {
 
 			cnt = dao.memberInsert(m);
 		} else {
-			req.getSession().setAttribute("memId", userId);
+			//등록되어 있는 경우
 			cnt = 1;
 		}
+		req.getSession().setAttribute("memId", userId);
 		
 		System.out.println("id " + userId + "/" + userName + "/" + userEmail);
 		model.addAttribute("cnt", cnt);

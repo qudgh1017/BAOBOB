@@ -94,10 +94,10 @@ public class Guest_parkingServiceImpl implements Guest_parkingService {
 	public void guestParkingOutCheckPro(HttpServletRequest req, Model model) {
 		String key = req.getParameter("key").trim();
 
-		int cnt = dao.parkingOutKeyCheck(key);
-
+		ParkingHistory ph = dao.parkingOutKeyCheck(key);
+		
 		model.addAttribute("key", key);
-		model.addAttribute("cnt", cnt);
+		model.addAttribute("ph", ph);
 	}
 
 	// Επΐε Γ³Έ®
@@ -154,7 +154,6 @@ public class Guest_parkingServiceImpl implements Guest_parkingService {
 		int point = (int) (price * 0.1);
 		String id = dao.keyMemberIdSelect(key);
 		if(id != null) {
-			System.out.println("********************ID : " + id);
 			Member m = new Member();
 			m.setMember_id(id);
 			m.setMember_point(point);;

@@ -17,6 +17,7 @@ import java.util.Map.Entry;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
@@ -41,6 +42,8 @@ public class Host_movieServiceImpl implements Host_movieService{
 	
 	@Autowired
 	Host_movieDAO dao = new Host_movieDAOImpl();
+	
+	private Logger log = Logger.getLogger(this.getClass());
 
 	// 영화 목록
 	@Override
@@ -657,6 +660,7 @@ public class Host_movieServiceImpl implements Host_movieService{
 		
 		if(idCnt != 0) { // 고용할 아이디 정보가 있다면
 			Member vo = dao.hostMovieEmpInfo(member_id); 	// 아이디로 고용할 직원 정보 가져오기
+			vo.setMember_birth(vo.getMember_birth().substring(2,8));
 			model.addAttribute("vo", vo);
 		}
 		model.addAttribute("member_id", member_id);
@@ -805,7 +809,7 @@ public class Host_movieServiceImpl implements Host_movieService{
 		model.addAttribute("movieJanreCountChart",map);
 		
 		map.forEach((k,v)->{
-			System.out.println(k + " : " + v);
+			log.debug(k + " : " + v);
 		});
 	}
 
@@ -840,7 +844,7 @@ public class Host_movieServiceImpl implements Host_movieService{
 		model.addAttribute("movieAgeChart",map);
 		
 		map.forEach((k,v)->{
-			System.out.println(k + " : " + v);
+			log.debug(k + " : " + v);
 		});
 	}
 
@@ -874,7 +878,7 @@ public class Host_movieServiceImpl implements Host_movieService{
 		model.addAttribute("movieSexCountChart",map);
 		
 		map.forEach((k,v)->{
-			System.out.println(k + " : " + v);
+			log.debug(k + " : " + v);
 		});
 	}
 
@@ -894,7 +898,7 @@ public class Host_movieServiceImpl implements Host_movieService{
 	// 형태소 분석된 결과를 데이터베이스에 저장하는 프로세스
 	@Override
 	public void wordExtractAndAnalyze(String text, int movie_index) {
-		System.out.println("WordCloud analyze");
+		log.debug("WordCloud analyze");
 		new Runnable() {
 			public void run() {
 
@@ -921,14 +925,14 @@ public class Host_movieServiceImpl implements Host_movieService{
 				}
 				// 워드 클라우드 모델을 refresh 해줌
 				setWordList();
-				System.out.println("WordCloud 분석 종료");
+				log.debug("WordCloud 분석 종료");
 			}
 		}.run();
 	}
 
 	// 워드클라우드 단어를 가져옴
 	public synchronized void setWordList() {
-		System.out.println("Word Cloud word set request");
+		log.debug("Word Cloud word set request");
 		wordVos = dao.getWordCloudModel();
 	}
 	

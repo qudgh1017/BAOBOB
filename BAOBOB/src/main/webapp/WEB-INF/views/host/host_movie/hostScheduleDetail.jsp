@@ -18,7 +18,7 @@
 			<tr>
 				<td width="30%" height="40px" align="center">시작시간</td>
 <%-- 				<td><fmt:formatDate type="both" pattern="YY-MM-DD HH:mm" value="${scheduleVO.schedule_startTime}" /></td> --%>
-				<td width="70%"><input type="text" name="startDate" style="width:82px; height:35px; padding-left:5px;" value="<fmt:formatDate type="both" pattern="YY-MM-DD" value="${scheduleVO.schedule_startTime}" />"/>
+				<td width="70%"><input type="text" name="startDate" style="width:82px; height:35px; padding-left:5px;" value="<fmt:formatDate type="both" pattern="YY-MM-dd" value="${scheduleVO.schedule_startTime}" />"/>
 					<input type="text" name="startTime" style="width:55px; height:35px; padding-left:5px;" value="<fmt:formatDate type="both" pattern="HH:mm" value="${scheduleVO.schedule_startTime}" />"/>
 			</tr>
 			<tr>
@@ -27,9 +27,12 @@
 					<select name="theater_index" style="height:35px;">
 							<option value="">상영관 선택</option>
 						<c:forEach var="theaterVOs" items="${theaterVOS}">
-							<option value="${theaterVOs.theater_index}" <c:if test="${theaterVOs.theater_index == theaterVO.theater_index}">
+							<option value="${theaterVOs.theater_index}"> 
+							<c:if test="${theaterVOs.theater_index == theaterVO.theater_index}">
 								selected
-							</c:if> >${theaterVOs.theater_index}관(${theaterVOs.theater_row}행, ${theaterVOs.theater_col}열)</option>
+							</c:if> 
+							${theaterVOs.theater_index}관(${theaterVOs.theater_row}행, ${theaterVOs.theater_col}열)
+							</option>
 							
 						</c:forEach>
 					</select>
@@ -41,9 +44,12 @@
 					<select name="movie_index" style="height:35px;">
 						<option value="">영화 선택</option>
 						<c:forEach var="movieVOs" items="${movieVOS}">
-							<option value="${movieVOs.movie_index}" <c:if test="${movieVOs.movie_index == movieVO.movie_index}">
+							<option value="${movieVOs.movie_index}"> 
+							<c:if test="${movieVOs.movie_index == movieVO.movie_index}">
 								selected
-							</c:if>>${movieVOs.movie_title}(${movieVOs.movie_runTime}분)</option>
+							</c:if>
+							${movieVOs.movie_title}(${movieVOs.movie_runTime}분)
+							</option>
 						</c:forEach>
 					</select>
 				</td>

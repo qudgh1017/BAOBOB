@@ -16,7 +16,7 @@
 			<canvas width="440" height="400" id="myCanvas">
 			</canvas>
 		</div>
-		<div style="width:130px; float:left; padding-left:5px;" >
+		<div style="width:120px; float:left; padding-left:5px;" >
 			<c:if test="${type == 'Noun,Verb,ProperNoun' || type == ''}">
 				<input type="checkbox" name="type" value="Noun" checked>명사 <br>
 				<input type="checkbox" name="type" value="Verb" checked>동사 <br>
