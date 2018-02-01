@@ -73,6 +73,11 @@
 			<c:if test="${sessionScope.memId != null}">
 			<ul class="navbar-nav ml-auto">
 				<li class="nav-item">
+					<a class="nav-link" href="mainIndex">
+						BAOBOB
+					</a>
+				</li>
+				<li class="nav-item">
 					<a class="nav-link" href="guestParkingMain">
 						고객 주차
 					</a>

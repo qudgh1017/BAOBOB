@@ -13,7 +13,7 @@
 
 <nav class="navbar navbar-expand-lg bg-secondary fixed-top text-uppercase" id="mainNav">
 	<div class="container">
-		<c:if test="${sessionScope.memStep == 7}">
+		<c:if test="${sessionScope.memStep == 1 || sessionScope.memStep == 7}">
 			<a class="navbar-brand js-scroll-trigger" href="mainIndex">Baobob</a>
 		</c:if>
 		<c:if test="${sessionScope.memStep != 7}">

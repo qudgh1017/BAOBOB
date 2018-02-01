@@ -6,6 +6,9 @@ import org.springframework.ui.Model;
 
 public interface Guest_parkingService {
 
+	//로그인
+	public void parkSignInPro(HttpServletRequest req, Model model);
+	
 	//입장 시 번호 생성
 	public void guestParkingInPro(HttpServletRequest req, Model model);
 	

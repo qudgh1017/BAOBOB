@@ -63,18 +63,8 @@
 		</ul>
 		<ul class="navbar-nav ml-auto">
 			<li class="nav-item">
-				<a class="nav-link" href="hostMovie">
-					영화 관리자
-				</a>
-			</li>
-			<li class="nav-item">
-				<a class="nav-link" href="hostRestaurantList">
-					식당 관리자
-				</a>
-			</li>
-			<li class="nav-item">
-				<a class="nav-link" href="hostParkingMain">
-					주차 관리자
+				<a class="nav-link" href="mainIndex">
+					BAOBOB
 				</a>
 			</li>
 			<li class="nav-item">
