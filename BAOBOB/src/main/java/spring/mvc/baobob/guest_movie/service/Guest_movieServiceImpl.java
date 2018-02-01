@@ -218,7 +218,6 @@ public class Guest_movieServiceImpl implements Guest_movieService{
 		
 		MovieVO movie = gmdao.getMovie(movie_index);
 		
-		System.out.println(movie.getMovie_trailer());
 		if(movie != null) {
 			model.addAttribute("movie",movie);
 			//전체예매수, 해당 index예매수, 예매율 구하기
@@ -231,9 +230,6 @@ public class Guest_movieServiceImpl implements Guest_movieService{
 				reservation = gmdao.indexMovieCount(movie_index);
 				reservationPercent = reservation*100/sumReservation;
 			}
-			System.out.println("=====================sumReservation"+ sumReservation);
-			System.out.println("=====================reservation"+ reservation);
-			System.out.println("=====================reservationPercent"+ reservationPercent);
 			String str_reservationPercent = String.format("%.2f", reservationPercent);
 			model.addAttribute("reservationPercent", str_reservationPercent);
 			

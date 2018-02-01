@@ -238,11 +238,6 @@ $(window).load(function(){
 			</div>
 		</div>
 	</section>
-		
-	
-	
-	
-		
 	<!-- Footer -->
 	<%@ include file="/WEB-INF/views/guest/guest_movie/movie_footer.jsp" %> 
 </body>
