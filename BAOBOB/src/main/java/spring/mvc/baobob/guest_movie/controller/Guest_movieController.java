@@ -106,7 +106,11 @@ public class Guest_movieController {
 	public String movieDetail(HttpServletRequest req, Model model) {
 		log.debug("====== Guest_movieController/movieDetail ======");
 
-		gmservice.checkWishList(req, model);
+		model.addAttribute("member_id",req.getSession().getAttribute("memId"));
+		
+		if(req.getSession().getAttribute("memId")!=null) {
+			gmservice.checkWishList(req, model);
+		}
 		gmservice.movieInfo(req, model);
 		gmservice.reviewList(req, model);
 		

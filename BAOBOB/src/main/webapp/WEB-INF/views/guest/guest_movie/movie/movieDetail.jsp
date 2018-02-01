@@ -77,6 +77,9 @@
 						<c:if test="${wishCnt==0}">
 							<a href="addWishList?movie_index=${movie.movie_index}"><i class="material-icons" style="color:red;">favorite_border</i></a>
 						</c:if>
+						<c:if test="${member_id==null}">
+							<a onclick="loginCheck();"><i class="material-icons" style="color:red;">favorite_border</i></a>
+						</c:if>
 					</span>
 				</div>
 				<div class="col-md-2"></div>
