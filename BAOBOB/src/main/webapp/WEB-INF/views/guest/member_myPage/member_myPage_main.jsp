@@ -32,7 +32,7 @@
 
 
 <!-- ==============================메인화면 간편한 MY예매내역============================== -->
-			<table id="mainBody">
+		<table id="mainBody">
 		    <thead>
 			    <tr>
 			    	<th colspan="4" style="font-size:20px">MY 예매 내역</th>
