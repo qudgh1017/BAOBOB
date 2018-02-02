@@ -27,10 +27,10 @@
 					<select name="theater_index" style="height:35px;">
 							<option value="">상영관 선택</option>
 						<c:forEach var="theaterVOs" items="${theaterVOS}">
-							<option value="${theaterVOs.theater_index}"> 
+							<option value="${theaterVOs.theater_index}"
 							<c:if test="${theaterVOs.theater_index == theaterVO.theater_index}">
 								selected
-							</c:if> 
+							</c:if> > 
 							${theaterVOs.theater_index}관(${theaterVOs.theater_row}행, ${theaterVOs.theater_col}열)
 							</option>
 							
@@ -44,10 +44,10 @@
 					<select name="movie_index" style="height:35px;">
 						<option value="">영화 선택</option>
 						<c:forEach var="movieVOs" items="${movieVOS}">
-							<option value="${movieVOs.movie_index}"> 
+							<option value="${movieVOs.movie_index}"
 							<c:if test="${movieVOs.movie_index == movieVO.movie_index}">
 								selected
-							</c:if>
+							</c:if>> 
 							${movieVOs.movie_title}(${movieVOs.movie_runTime}분)
 							</option>
 						</c:forEach>

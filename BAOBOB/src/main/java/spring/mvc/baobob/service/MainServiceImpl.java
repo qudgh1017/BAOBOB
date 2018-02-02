@@ -7,6 +7,7 @@ import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
@@ -18,6 +19,8 @@ import spring.mvc.baobob.vo.Member;
 @Service
 public class MainServiceImpl implements MainService {
 
+	Logger log = Logger.getLogger(this.getClass());
+	
 	@Autowired
 	MainDAO dao;
 
@@ -156,6 +159,7 @@ public class MainServiceImpl implements MainService {
 		String step = dao.confirmIdPwd(map);
 		
 		int cnt = 0;
+		
 		if(step != null) {
 			req.getSession().setAttribute("memStep", step);
 			if(!step.equals("13")) {
