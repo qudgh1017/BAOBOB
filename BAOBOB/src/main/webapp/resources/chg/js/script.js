@@ -194,7 +194,7 @@ function spaceTypeChange() {
 	window.location = 'hostRestaurantAddPro?info=' + info + '&col=' + x + '&row=' + y + '&name=' + name + '&tel=' + tel;
 }
 
-// 매장 수정(정보 설정 AJAX)
+// 예약 추가(정보 설정 AJAX)
 function spaceTypeChange2(index) {
 	var item = document.querySelectorAll('.p_spaceBtn'); // 배열판의 버튼들
 
