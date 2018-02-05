@@ -27,11 +27,30 @@ public class Guest_parkingServiceImpl implements Guest_parkingService {
 	MainDAO mDao;
 	@Autowired
 	Host_parkingDAO hDao;
+	
+	@Override
+	public void parkSignInPro(HttpServletRequest req, Model model) {
+		String member_id = req.getParameter("id").trim();
+		String member_pwd = req.getParameter("pwd").trim();
+		
+		Map<String, String> map = new HashMap<>();
+		map.put("member_id", member_id);
+		map.put("member_pwd", member_pwd);
+		String step = mDao.confirmIdPwd(map);
+		
+		int cnt = 0;
+		if(step != null && !step.equals("13")) {
+			req.getSession().setAttribute("parkId", member_id);
+			cnt = 1;
+		}
+		
+		model.addAttribute("cnt", cnt);
+	}
 
 	// 입장 시 번호 생성
 	@Override
 	public void guestParkingInPro(HttpServletRequest req, Model model) {
-		String member_id = (String) req.getSession().getAttribute("memId");
+		String member_id = (String) req.getSession().getAttribute("parkId");
 
 		//랜덤키 만들기
 		StringBuffer sb = new StringBuffer();
@@ -84,7 +103,7 @@ public class Guest_parkingServiceImpl implements Guest_parkingService {
 			cnt = dao.parkInHistoryInsert(map);
 		}
 
-		req.getSession().invalidate();
+		req.getSession().setAttribute("parkId", null);
 		model.addAttribute("key", key);
 		model.addAttribute("cnt", cnt);
 	}
@@ -94,10 +113,10 @@ public class Guest_parkingServiceImpl implements Guest_parkingService {
 	public void guestParkingOutCheckPro(HttpServletRequest req, Model model) {
 		String key = req.getParameter("key").trim();
 
-		int cnt = dao.parkingOutKeyCheck(key);
-
+		ParkingHistory ph = dao.parkingOutKeyCheck(key);
+		
 		model.addAttribute("key", key);
-		model.addAttribute("cnt", cnt);
+		model.addAttribute("ph", ph);
 	}
 
 	// 퇴장 처리
@@ -154,7 +173,6 @@ public class Guest_parkingServiceImpl implements Guest_parkingService {
 		int point = (int) (price * 0.1);
 		String id = dao.keyMemberIdSelect(key);
 		if(id != null) {
-			System.out.println("********************ID : " + id);
 			Member m = new Member();
 			m.setMember_id(id);
 			m.setMember_point(point);;

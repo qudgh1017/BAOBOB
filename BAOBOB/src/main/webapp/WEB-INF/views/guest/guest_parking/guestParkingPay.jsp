@@ -14,6 +14,7 @@
 	</style>
 </head>
 <body>
+<c:if test="${ph != null && ph.p_history_out == null}">
 	<%@ include file="../common/head.jsp" %>
 
 	<%@ include file="guestParkingHeader.jsp" %>
@@ -29,5 +30,18 @@
 	
 	<!-- footerCopyright -->
 	<%@ include file="../common/footerCopyright.jsp" %>
+</c:if>
+<c:if test="${ph != null && ph.p_history_out != null}">
+	<script type="text/javascript">
+		alert("이미 출차한 차량입니다.");
+		history.back();
+	</script>
+</c:if>
+<c:if test="${ph == null}">
+	<script type="text/javascript">
+		alert("존재하지 않는 번호입니다.");
+		history.back();
+	</script>
+</c:if>
 </body>
 </html>

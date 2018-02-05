@@ -11,6 +11,9 @@
 <body>
 <!-- CSS,JavaScript 참조 -->
 <%@ include file="/WEB-INF/views/guest/common/head.jsp" %>
+<!-- alert 디자인 -->
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
 <!-- 내꺼 JavaScript 참조 -->
 <script type="text/javascript" src="${projectRes}ybh/js/ybh.js"></script>
 

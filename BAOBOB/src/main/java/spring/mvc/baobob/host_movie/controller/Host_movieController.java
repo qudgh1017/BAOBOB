@@ -93,7 +93,7 @@ public class Host_movieController {
 		return "host/host_movie/hostTheater";
 	}
 	
-	// 상영관 등록하기
+	// 상영관 등록 폼
 	@RequestMapping(value="hostTheaterAddForm")
 	public String hostTheaterAddForm() {
 		log.debug("hostTheaterAddForm");
@@ -101,7 +101,7 @@ public class Host_movieController {
 		return "host/host_movie/hostTheaterAddForm";
 	}
 	
-	// 상영관 좌석 업데이트
+	// 상영관 등록하기
 	@RequestMapping(value="hostTheaterAddPro")
 	public String hostTheaterSettingChange(HttpServletRequest req, Model model) {
 		log.debug("hostTheaterSettingChange");

@@ -18,6 +18,7 @@ import org.springframework.stereotype.Repository;
 import spring.mvc.baobob.service.EmailHandler;
 import spring.mvc.baobob.vo.FaqVO;
 import spring.mvc.baobob.vo.Member;
+import spring.mvc.baobob.vo.Web;
 
 @Repository
 public class MainDAOImpl implements MainDAO {
@@ -59,12 +60,12 @@ public class MainDAOImpl implements MainDAO {
 			if (id != null) {
 				sendMail.setSubject("BAOBOB 가입 인증 메일");
 				sendMail.setText(new StringBuffer("링크를 눌러 인증을 완료하세요.<br><br>")
-						.append("<a href='http://192.168.0.158:8087/baobob/mainConfirmEmail?key=").append(key)
+						.append("<a href='http://" + Web.getIp() + ":8087/baobob/mainConfirmEmail?key=").append(key)
 						.append("&id=" + id + "'>인증<a>").toString());
 			} else {
 				sendMail.setSubject("BAOBOB 비밀번호 찾기 인증 메일");
 				sendMail.setText(new StringBuffer("<html>링크를 눌어 인증을 완료하세요.<br><br>")
-						.append("<a href='http://192.168.0.158:8087/baobob/mainConfirmPwdEmail?key=").append(key)
+						.append("<a href='http://" + Web.getIp() + ":8087/baobob/mainConfirmPwdEmail?key=").append(key)
 						.append("&email=" + email + "'>인증</a></html>").toString());
 			}
 			sendMail.setFrom("admin@baobob.com", "BAOBOB");

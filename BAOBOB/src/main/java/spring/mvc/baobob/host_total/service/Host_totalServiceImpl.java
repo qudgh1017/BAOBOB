@@ -163,7 +163,6 @@ public class Host_totalServiceImpl implements Host_totalService{
 		vo.setMember_address(req.getParameter("address"));
 		
 		int cnt = dao.hostTMemModifyPro(vo);
-		System.out.println("º¸ÀÚ2: " + req.getParameter("memId"));
 		model.addAttribute("cnt", cnt);
 	}
 	

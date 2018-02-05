@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <style>
 	.back_img{position:fixed;top:0;width:100%;height:100%;object-fit:cover;}
 	body .section{margin:15rem 0;}
@@ -13,7 +13,12 @@
 
 <nav class="navbar navbar-expand-lg bg-secondary fixed-top text-uppercase" id="mainNav">
 	<div class="container">
-		<a class="navbar-brand js-scroll-trigger" href="guestParkingMain">Baobob</a>
+		<c:if test="${sessionScope.memStep == 1 || sessionScope.memStep == 7}">
+			<a class="navbar-brand js-scroll-trigger" href="mainIndex">Baobob</a>
+		</c:if>
+		<c:if test="${sessionScope.memStep != 7}">
+			<a class="navbar-brand js-scroll-trigger" href="guestParkingMain">Baobob</a>
+		</c:if>
 		<button class="btn back_btn" id="back_btn" onclick="window.history.back();">뒤로</button>
 	</div>
 </nav>

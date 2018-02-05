@@ -7,6 +7,7 @@ import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
@@ -18,6 +19,8 @@ import spring.mvc.baobob.vo.Member;
 @Service
 public class MainServiceImpl implements MainService {
 
+	Logger log = Logger.getLogger(this.getClass());
+	
 	@Autowired
 	MainDAO dao;
 
@@ -156,6 +159,7 @@ public class MainServiceImpl implements MainService {
 		String step = dao.confirmIdPwd(map);
 		
 		int cnt = 0;
+		
 		if(step != null) {
 			req.getSession().setAttribute("memStep", step);
 			if(!step.equals("13")) {
@@ -176,6 +180,7 @@ public class MainServiceImpl implements MainService {
 		
 		int cnt = dao.getMemberCheck(userId);
 		if(cnt == 0) {
+			//등록되어 있지 않은 경우
 			Member m = new Member();
 			m.setMember_id(userId);
 			m.setMember_pwd(randomKey());
@@ -191,9 +196,10 @@ public class MainServiceImpl implements MainService {
 
 			cnt = dao.memberInsert(m);
 		} else {
-			req.getSession().setAttribute("memId", userId);
+			//등록되어 있는 경우
 			cnt = 1;
 		}
+		req.getSession().setAttribute("memId", userId);
 		
 		System.out.println("id " + userId + "/" + userName + "/" + userEmail);
 		model.addAttribute("cnt", cnt);

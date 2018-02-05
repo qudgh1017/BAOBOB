@@ -47,11 +47,6 @@
 			    <!-- 게시글이 있으면 -->
 				<c:if test="${cnt > 0 }">
 					<c:forEach var="dto" items="${dtos}">
-
-					<%-- <jsp:useBean id="now" class="java.util.Date" />
-					<fmt:formatDate value="${dto.schedule_endtime}" var="endtime" pattern="yyyy-MM-dd" />
-					<fmt:formatDate value="${now}" var="sysDate" pattern="yyyy-MM-dd" /> --%>
-						
 						<!-- 이용시간이 지났으면 예약내역이 아닌 이용시간으로 출력 -->
 						<c:if test="${dto.restaurant_history_state == 0}">
 						<c:set var="bookCnt" value="1" />

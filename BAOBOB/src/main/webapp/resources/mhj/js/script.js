@@ -69,23 +69,18 @@ function show(star){
 	switch(star){
 	case 1:
 		stateMsg = "불만족스러워요";
-		/* alert('1'); */
 		break;
 	case 2:
 		stateMsg = "별로에요";
-		/* alert('2'); */
 		break;
 	case 3:
 		stateMsg = "그러저럭";
-		/* alert('3'); */
 		break;
 	case 4:
 		stateMsg = "기대해도 좋아요";
-		/* alert('4'); */
 		break;
 	case 5:
 		stateMsg = "정말 좋아요! 추천!!";
-		/* alert('5'); */
 		break;
 	default :
 		stateMsg = "";
@@ -114,7 +109,6 @@ function lock(star){
 }
 
 function mark(star){
-	
 	lock(star);
 	/*alert('star : ' + star);*/
 	var space = '';
@@ -123,9 +117,6 @@ function mark(star){
 	space = '<input type="hidden" ' + 'value="' + star + '" ' + 'name="star"' + '/>';
 	/*alert(space);*/
 	spaceDiv.innerHTML = space;
-
-	/*document.reviewForm.star.value=star;
-	alert('document.reviewForm.star.value : ' + document.reviewForm.star.value);*/
 }
 
 
@@ -244,8 +235,6 @@ function spaceBtnChange(location, index) {
 				spaceImg.src = '/baobob/resources/images/chg/' + typeImg;
 	
 				// 선택한 버튼의 value 변경(DB에 아이콘index 넣기 위한 값)
-				//var btnId = 'btn' + location;
-				//var spaceBtn = document.getElementById(btnId);
 				table_index = index;
 				spaceBtn.value = typeNum;
 			} else {

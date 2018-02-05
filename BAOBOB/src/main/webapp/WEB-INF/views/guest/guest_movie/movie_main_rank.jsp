@@ -8,5 +8,6 @@
 	<li class="li">
 		<em class="em">${number}</em>
 		<a href="movieDetail?movie_index=${mov.movie_index}">${mov.movie_title}</a>
+		<c:set var="number" value="${number + 1}"/>
 	</li>
 </c:forEach>

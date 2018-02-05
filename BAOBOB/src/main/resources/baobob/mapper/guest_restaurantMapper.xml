@@ -91,7 +91,6 @@
 		</if>
 	</insert>
 
-
 	<!-- 스케쥴 인텍스 조회 : (예약)스케쥴이 있는지 확인 -->
 	<select id="getScheduleIndex" resultType="Integer">
 		SELECT restaurant_schedule_index  

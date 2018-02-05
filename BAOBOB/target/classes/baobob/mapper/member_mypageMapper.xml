@@ -188,7 +188,7 @@
 		SELECT COUNT(*) FROM member_wishList_tbl WHERE member_id = #{strId}
 	</select>
 	
-	<!-- wishList 리스트 -->
+	<!-- 무비로그 위시리스트 -->
 	<select id="getWishListMovies" resultType="spring.mvc.baobob.vo.MovieVO">
 		<![CDATA[
 			SELECT * 
@@ -275,14 +275,14 @@
 		DELETE FROM board_tbl WHERE board_index = #{num}
 	</delete>
 	
-	<!-- 위시리스트 추가 -->
+	<!-- 무비로그 위시리스트 추가 -->
 	<insert id="addWishList" parameterType="spring.mvc.baobob.vo.WishListVO">
 		INSERT INTO member_wishList_tbl (member_id, movie_index) 
 		VALUES (#{member_id}, #{movie_index})
 	</insert>
 	
 	
-	<!-- 위시리스트 삭제 처리 -->
+	<!-- 무비로그 위시리스트 삭제  -->
 	<delete id="delMovieWishList" parameterType="int">
 		DELETE FROM member_wishList_tbl WHERE movie_index = #{num}
 	</delete>

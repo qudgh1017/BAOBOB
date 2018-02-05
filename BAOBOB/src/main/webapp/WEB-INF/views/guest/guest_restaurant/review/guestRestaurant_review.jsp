@@ -123,8 +123,6 @@ $(document).ready(function(){
 				<div class="col-md-offset-1"></div>
 			</div>
 			
-			<br>
-			
 			<div class="row">
 				<div class="col-md-offset-1"></div>
 				<div class="col-md-10">
@@ -182,8 +180,7 @@ $(document).ready(function(){
 				<div class="col-md-10">
 				<!-- 리뷰 보기 -->
 				<!-- <div class="container"> -->
-					<h2>리뷰</h2>
-					<h5>리뷰 갯수: ${cnt}</h5>
+					<h3>리뷰[${cnt}]</h3>
 					<hr style="border:2px solid black;">
 					<div class="row">
 						<div class="col-md-1"></div>

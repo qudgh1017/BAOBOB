@@ -63,6 +63,11 @@
 		</ul>
 		<ul class="navbar-nav ml-auto">
 			<li class="nav-item">
+				<a class="nav-link" href="mainIndex">
+					BAOBOB
+				</a>
+			</li>
+			<li class="nav-item">
 				<a class="nav-link" href="mainSignOut">
 					<i class="fa fa-fw fa-sign-out"></i>Logout
 				</a>

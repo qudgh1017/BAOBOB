@@ -88,7 +88,7 @@ $(document).ready(function() {
 			<!-- 알맹이td -->
 			<td style="padding:0rem 5rem; margin:0px;width:100%;height:100%; text-align:center;">
 				<table id="mainBody">
-					<caption style="margin-bottom:0px!important">무비 로그</caption>
+					<caption style="margin-bottom:0px!important">BAOBOX 로그</caption>
 					<thead>
 				    <tr>
 				    	<th style="border-bottom:none">

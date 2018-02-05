@@ -132,12 +132,14 @@
 								<li class="itemR"><b><fmt:formatNumber value="${ph.p_history_price}" type="number"/> 원</b></li>
 							</ul>
 			        	</li>
+			        	<c:if test="${point != null}">
 			        	<li>
 							<ul class="clearfix">
 								<li class="itemL">포인트 적립</li>
-								<li class="itemR">${point}</li>
+								<li class="itemR"><fmt:formatNumber value="${point}" type="number"/></li>
 							</ul>
 			        	</li>
+			        	</c:if>
 			        </ul>
 					
 			    </div>

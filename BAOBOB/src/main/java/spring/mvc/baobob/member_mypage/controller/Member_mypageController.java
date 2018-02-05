@@ -25,6 +25,7 @@ public class Member_mypageController {
 	public String memberMypage(HttpServletRequest req, Model model) {
 		log.debug("====== Member_mypageController/memMypage() ======");
 		
+		//회원카드
 		service.memberCard(req, model);
 		//MY예매내역
 		service.moviePaidList(req,model);
@@ -360,7 +361,7 @@ public class Member_mypageController {
 		return "guest/member_myPage/memMovie/member_myPage_WishList";
 	}
 	
-	//위시리스트 추가
+	//무비로그 위시리스트 추가
 	@RequestMapping("addWishList")
 	public String addWishList(HttpServletRequest req, Model model) {
 		

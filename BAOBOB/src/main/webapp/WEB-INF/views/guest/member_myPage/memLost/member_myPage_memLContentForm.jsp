@@ -26,7 +26,7 @@
 		<!-- 알맹이 -->
 		<td style="padding:0rem 10rem; margin:0px;width:100%;height:100%;">
 			<table id="mainBody">
-				<caption>1 : 1 문의</caption>
+				<caption>분실물 문의</caption>
 				<thead>
 					<tr>
 						<th style="width:150px">Number</th>

@@ -13,12 +13,13 @@
 			AND ht.member_id = #{id}
 	</select>
 	
-	<!-- 식당 예매 건수 -->
+	<!-- 식당 예약 건수 -->
 	<select id="getUseRestaurantCnt" resultType="int">
 		SELECT COUNT(*)
 		 FROM restaurant_history_tbl rh, history_tbl ht
 		WHERE rh.history_index = ht.history_index
 		  AND ht.member_id = #{id}
+		  AND rh.restaurant_history_state = 0
 	</select>
 	
 	<!-- 주차 이용 건수 -->
@@ -107,7 +108,7 @@
 		       AND rh.restaurant_schedule_index = sc.restaurant_schedule_index
 		       AND rs.restaurant_index = sc.restaurant_index
 		       AND ht.member_id = #{id}
-		       AND rh.restaurant_history_state = 1
+		       AND rh.restaurant_history_state = 0
 		    )
 	</select>
 </mapper>

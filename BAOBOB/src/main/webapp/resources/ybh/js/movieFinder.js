@@ -52,7 +52,6 @@ function searchResultPage(page){
 	if(document.getElementById("keyword").value ==''){
 		keyword = '';
 	}
-	
 	var sel = document.getElementById("select").value;
 	//movie_janre이름을 가진 것 중 체크된 것만 값 가져오기
    var size = document.getElementsByName("movie_janre").length;
@@ -84,8 +83,6 @@ function searchResultPage(page){
 			movie_age[i] = -1;
 		}
 	}
-//	alert(select);
-//	alert(movie_age);
 	$.ajaxSettings.traditional = true;//배열 형태로 서버쪽 전송을 위한 설정
 	$.ajax({
 		//GET방식의 URL

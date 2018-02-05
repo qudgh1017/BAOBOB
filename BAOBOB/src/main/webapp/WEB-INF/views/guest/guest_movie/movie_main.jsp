@@ -27,7 +27,7 @@
 		.youtu{width:100%;}
 		#you_btn{text-align:right;display:block;padding-right:10px;color:white;}
 
-		.con_img{margin:0 auto;margin-top:90px;width:1280px;padding-left:25px;}		
+		.con_img{margin:0 auto;margin-top:90px;width:1280px;}		/* padding-left:25px; */
 		.th_img{width:200px;height:300px;margin:0 10px;}
 		.img_btn{width:50px;height:auto;}
 	</style>
@@ -68,9 +68,12 @@
 		</ul>
 	</section>
 	
-	
 	<section>
 		<div class="con_img">
+		
+			<h3>현재 상영 영화</h3>
+			<hr style="border:2px solid black;">
+		
 			<c:if test="${start > postSize}">
 				<button type="button" onclick="window.location='guest_movie?pageNum=${pageNum - 1}';">
 					<img class="img_btn" src="${projectRes}images/ybh/right.png" style="transform:rotate(180deg);">
