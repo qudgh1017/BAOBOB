@@ -39,8 +39,10 @@
 				<div class="card mb-3">
 					<div class="card-header">매장 설정</div>
 					<div class="card-body">
-						가로  <input class="form-control" id="widthX" type="number" min="1" max="100" value="${col}" onload="spaceDivChange();" onchange="spaceDivChange();" required><br>
-						세로  <input class="form-control" id="heightY" type="number" min="1" max="100" value="${row}" onload="spaceDivChange();" onchange="spaceDivChange();" required>
+						가로  <input class="form-control" id="widthX" type="number" min="1" max="100" value="${col}" 
+								onload="spaceDivChange();" onchange="spaceDivChange();" required><br>
+						세로  <input class="form-control" id="heightY" type="number" min="1" max="100" value="${row}" 
+								onload="spaceDivChange();" onchange="spaceDivChange();" required>
 						
 						<hr>
 						

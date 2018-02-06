@@ -68,6 +68,7 @@ public class Host_restaurantDAOImpl implements Host_restaurantDAO {
 	// 매장 정보 조회
 	@Override
 	public RestaurantVO viewRestaurant(int restaurant_index) {
+		
 		log.debug("dao.viewRestaurant()");
 
 		Host_restaurantDAO dao = sqlSession.getMapper(Host_restaurantDAO.class);
@@ -78,6 +79,7 @@ public class Host_restaurantDAOImpl implements Host_restaurantDAO {
 	// 매장을 구성하는 타일의 행열 조회 (예:5*5)
 	@Override
 	public TableVO getColRow(int restaurant_index) {
+		
 		log.debug("dao.getRowCol()");
 
 		Host_restaurantDAO dao = sqlSession.getMapper(Host_restaurantDAO.class);
@@ -121,6 +123,7 @@ public class Host_restaurantDAOImpl implements Host_restaurantDAO {
 	// 매장 내 테이블 수정 처리
 	@Override
 	public int modTable(Map<String, Object> map) {
+		
 		log.debug("dao.modTable()");
 
 		Host_restaurantDAO dao = sqlSession.getMapper(Host_restaurantDAO.class);
@@ -131,6 +134,7 @@ public class Host_restaurantDAOImpl implements Host_restaurantDAO {
 	// 매장 삭제 처리
 	@Override
 	public int delRestaurant(RestaurantVO dto) {
+		
 		log.debug("dao.delRestaurant()");
 
 		Host_restaurantDAO dao = sqlSession.getMapper(Host_restaurantDAO.class);
@@ -143,6 +147,7 @@ public class Host_restaurantDAOImpl implements Host_restaurantDAO {
 	// 메뉴 개수 조회
 	@Override
 	public int getMenuCnt(int restaurant_index) {
+		
 		log.debug("dao.getMenuCnt()");
 
 		Host_restaurantDAO dao = sqlSession.getMapper(Host_restaurantDAO.class);
@@ -153,6 +158,7 @@ public class Host_restaurantDAOImpl implements Host_restaurantDAO {
 	// 각 메뉴 정보 조회
 	@Override
 	public ArrayList<MenuVO> getMenuList(int restaurant_index) {
+		
 		log.debug("dao.getMenuList()");
 
 		Host_restaurantDAO dao = sqlSession.getMapper(Host_restaurantDAO.class);
@@ -233,6 +239,7 @@ public class Host_restaurantDAOImpl implements Host_restaurantDAO {
 	// 각 직원 정보 조회
 	@Override
 	public ArrayList<EmployeeVO> getEmployeeList(int member_step) {
+		
 		log.debug("dao.getEmployeeList()");
 
 		Host_restaurantDAO dao = sqlSession.getMapper(Host_restaurantDAO.class);
@@ -569,7 +576,7 @@ public class Host_restaurantDAOImpl implements Host_restaurantDAO {
 		return dao.getRestaurantName();
 	}
 
-	// 메뉴별 차트
+	// 식당별 차트
 	@Override
 	public List<Restaurant_ChartVO> getRestaurantChart() {
 		log.debug("dao.getMenuCountChart()");

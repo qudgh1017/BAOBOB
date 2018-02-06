@@ -296,17 +296,6 @@ public class Host_restaurantController {
 		return "host/host_restaurant/hostReservAddPro";
 	}
 
-	// 예약 삭제 처리
-	@RequestMapping(value = "/hostReservDel")
-	public String hostReservDel(HttpServletRequest req, Model model) {
-		log.debug("hostReservDel()");
-
-		// 예약 취소 처리
-		service.reservDel(req, model);
-
-		return "host/host_restaurant/hostReservDel";
-	}
-
 	// 예약 조회 페이지
 	@RequestMapping(value = "/reservView")
 	public String hostScheduleSearch(HttpServletRequest req, Model model) {
@@ -327,6 +316,17 @@ public class Host_restaurantController {
 		TableVO dto = service.restaurantView2(req, model);
 
 		return dto;
+	}
+
+	// 예약 삭제 처리
+	@RequestMapping(value = "/hostReservDel")
+	public String hostReservDel(HttpServletRequest req, Model model) {
+		log.debug("hostReservDel()");
+
+		// 예약 취소 처리
+		service.reservDel(req, model);
+
+		return "host/host_restaurant/hostReservDel";
 	}
 
 	// 주문 추가 페이지
