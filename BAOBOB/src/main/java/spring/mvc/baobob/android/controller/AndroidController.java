@@ -60,6 +60,26 @@ public class AndroidController {
 		return out;
 	}
 	
+	//æ€ ∏ﬁ¿Œ
+	@ResponseBody
+	@RequestMapping("androidMainList")
+	public Map<String, Object> androidMainMovie(HttpServletRequest req) {
+		String idx = req.getParameter("idx");
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		ArrayList<Android> list;
+		if(idx == null || idx.equals("1")) {
+			 list = dao.getMovieList();
+		} else {
+			list = dao.getRestaurantList();
+			list.get(0).setData2("jap_1.jpg");
+			list.get(1).setData2("kor_4.jpg");
+			list.get(2).setData2("pasta_4.jpg");
+		}
+		map.put("data", list);
+		return map;
+	}
+	
 	//æ€ ∏∂¿Ã∆‰¿Ã¡ˆ
 	@ResponseBody
 	@RequestMapping("androidMyPageMain")

@@ -5,6 +5,18 @@
     
 <mapper namespace="spring.mvc.baobob.android.persistence.AndroidDAO">
 
+	<!-- 영화 목록 -->
+	<select id="getMovieList" resultType="spring.mvc.baobob.vo.Android">
+		SELECT movie_index data1, movie_poster data2
+		FROM movie_tbl
+	</select>
+
+	<!-- 식당 목록 -->
+	<select id="getRestaurantList" resultType="spring.mvc.baobob.vo.Android">
+		SELECT restaurant_index data1
+		FROM restaurant_tbl
+	</select>
+
 	<!-- 영화 예매 건수 -->
 	<select id="getUseMovieCnt" resultType="int">
 		SELECT COUNT(*)

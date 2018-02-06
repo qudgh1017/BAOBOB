@@ -12,7 +12,7 @@ import spring.mvc.baobob.vo.Member;
 import spring.mvc.baobob.vo.MovieVO;
 
 @Repository
-public class AndroidDAOImpl implements AndroidDAO{
+public class AndroidDAOImpl implements AndroidDAO {
 
 	@Autowired
 	SqlSession sqlSession;
@@ -90,5 +90,19 @@ public class AndroidDAOImpl implements AndroidDAO{
 		return movie;
 	}
 
-
+	//메인 - 영화 목록
+	@Override
+	public ArrayList<Android> getMovieList() {
+		AndroidDAO mapper = sqlSession.getMapper(AndroidDAO.class);
+		ArrayList<Android> list = mapper.getMovieList();
+		return list;
+	}
+	
+	//메인 - 식당 목록(index)
+	@Override
+	public ArrayList<Android> getRestaurantList() {
+		AndroidDAO mapper = sqlSession.getMapper(AndroidDAO.class);
+		ArrayList<Android> list = mapper.getRestaurantList();
+		return list;
+	}
 }

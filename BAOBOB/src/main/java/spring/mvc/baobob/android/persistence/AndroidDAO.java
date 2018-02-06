@@ -38,4 +38,9 @@ public interface AndroidDAO {
 	//영화 정보
 	public MovieVO androidMovieInfo(String movie_title);
 
+	//영화 목록
+	public ArrayList<Android> getMovieList();
+	
+	//식당 목록
+	public ArrayList<Android> getRestaurantList();
 }

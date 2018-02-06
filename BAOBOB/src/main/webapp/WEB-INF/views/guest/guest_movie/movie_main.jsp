@@ -107,9 +107,14 @@
 		var slider = document.getElementById('slider'); //슬라이더 객체
 		var slides = document.getElementsByClassName('item'); //슬라이드
 		var slideMax = slides.length - 1; //마지막 슬라이드 idx
-		var curSlideNo = 0; //현재 슬라이드 idx
 		
+		var curSlideNo = 0; //현재 슬라이드 idx
+		var next = 1; //다음 슬라이드 idx 초기값
+		
+		var slideStop = false; //슬라이드 움직임 제어
 		var btn = document.getElementsByClassName('slider_btn');
+		
+		setInterval('slideChange()', 3000); //http://webskills.kr/archives/44
 		
 		//슬라이드 정렬
 		for(var i = 0; i <= slideMax; i+= 1) {
@@ -121,14 +126,15 @@
 		}
 		
 		var aniStop = false; //애니메이션 재생 버튼
-		var next = 1; //다음 슬라이드 idx 초기값
 		
 		function slideChange() {
-			if(!aniStop) {
-				next = curSlideNo + 1; 
+			if(!slideStop) {
+				next = (curSlideNo-0) + 1; 
 				if(next > slideMax) { //다음 슬라이드 idx가 마지막 idx보다 크면 초기화
 					next = 0;
 				}
+			
+				console.log(curSlideNo + "/" + next);
 				aniStop = true;
 				sliding();
 			}
@@ -145,14 +151,14 @@
 				slides[curSlideNo].style.left = -x + 'px';
 				slides[next].style.left = 0;
 				
-				curSlideNo = curSlideNo + 1; //현재 번호 up
+				curSlideNo = (curSlideNo-0) + 1; //현재 번호 up
 				if(curSlideNo > slideMax) {
 					curSlideNo = 0;
 				}
 				document.getElementById('item_l').setAttribute('src', '${projectRes}images/ybh/movie' + (curSlideNo + 1) +'_1.jpg');
 				
 				//버튼
-				var prev = curSlideNo - 1;
+				var prev = (curSlideNo-0) - 1;
 				if(prev == -1) {
 					btn[3].setAttribute('class', 'slider_btn s_g');
 				} else {
@@ -169,7 +175,6 @@
 				}, 20);
 			}
 		}
-		setInterval('slideChange()', 3000); //http://webskills.kr/archives/44
 		
 		//영상
 		function youtube(number) {
@@ -191,11 +196,11 @@
 			document.getElementById('yu_modal').style.display = '';
 		}
 		
+		//영화 순위
 		setInterval('rankListChange()', 3000);
 		function rankListChange() {
 			sendRequest(rankListChange_callback, 'gMovieMainRankUpdate', 'GET', '');
 		}
-		
 		function rankListChange_callback() {
 			if(httpRequest.readyState == 4) {
 				if(httpRequest.status == 200) {
@@ -204,8 +209,9 @@
 			}
 		}
 		
+		//슬라이드 버튼
 		function slider_btn(idx) {
-			aniStop = true;
+			slideStop = true;
 			
 			for(var i = 0; i < btn.length; i += 1) {
 				if(idx == i) {
@@ -218,8 +224,10 @@
 			}
 			document.getElementById('item_l').setAttribute('src', '${projectRes}images/ybh/movie' + ((idx-0) + 1) +'_1.jpg');
 			
+			curSlideNo = idx;
+			
 			setTimeout(function() {
-				aniStop = false;
+				slideStop = false;
 			}, 5000);
 		}
 	</script>
