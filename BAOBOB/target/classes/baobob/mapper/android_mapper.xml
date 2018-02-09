@@ -65,6 +65,7 @@
 		            AND m.theater_schedule_index = t.theater_schedule_index
 		            AND t.seat_state = 6
 		            AND h.member_id = #{id}
+                GROUP BY m.history_index, t.theater_schedule_index
 		        ), theater_schedule_tbl ts
 		    WHERE ts.theater_schedule_index = idx
 		    ), movie_tbl mt
