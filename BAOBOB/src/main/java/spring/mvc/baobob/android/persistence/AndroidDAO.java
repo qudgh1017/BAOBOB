@@ -1,6 +1,7 @@
 package spring.mvc.baobob.android.persistence;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import spring.mvc.baobob.vo.Android;
 import spring.mvc.baobob.vo.BoardVO;
@@ -43,4 +44,13 @@ public interface AndroidDAO {
 	
 	//식당 목록
 	public ArrayList<Android> getRestaurantList();
+	
+	//예매) 해당 날짜 상영하는 영화
+	public ArrayList<Android> getMovieSchedule(String day);
+	
+	//회원의 소지 포인트
+	public int getMemberPoint(String id);
+	
+	// 영화 결제) 영화 관람객수 증가
+	public int movieCountUpdate(Map<String, Object> map);
 }

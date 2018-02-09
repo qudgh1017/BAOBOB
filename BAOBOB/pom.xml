@@ -110,7 +110,7 @@
 		</dependency>
 
 
-		<!-- mybatis 등록 시작 -->
+		<!-- MyBatis 등록 시작 -->
 		<dependency>
 			<groupId>org.mybatis</groupId>
 			<artifactId>mybatis-spring</artifactId>
@@ -126,8 +126,7 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-jdbc</artifactId>
-			<version>${org.springframework-version}</version><!-- springframework 
-				version과 똑같이 -->
+			<version>${org.springframework-version}</version><!-- springframework version과 똑같이 -->
 		</dependency>
 
 		<dependency>
@@ -135,7 +134,7 @@
 			<artifactId>spring-test</artifactId>
 			<version>${org.springframework-version}</version>
 		</dependency>
-		<!-- mybatis 등록 종료 -->
+		<!-- MyBatis 등록 종료 -->
 
 
 		<!-- log 출력 시작 -->

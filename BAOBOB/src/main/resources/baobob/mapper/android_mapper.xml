@@ -7,7 +7,7 @@
 
 	<!-- 영화 목록 -->
 	<select id="getMovieList" resultType="spring.mvc.baobob.vo.Android">
-		SELECT movie_index data1, movie_poster data2
+		SELECT movie_title data1, movie_poster data2
 		FROM movie_tbl
 	</select>
 
@@ -123,4 +123,30 @@
 		       AND rh.restaurant_history_state = 0
 		    )
 	</select>
+	
+	<!-- 예매) 해당 날짜 상영하는 영화  -->
+	<select id="getMovieSchedule" resultType="spring.mvc.baobob.vo.Android">
+		SELECT tidx data1, m.movie_title data2, startTime data3, endTime data4, tsidx data5
+		FROM movie_tbl m, (
+			SELECT movie_index idx, theater_index tidx, schedule_startTime startTime, schedule_endTime endTime, theater_schedule_index tsidx
+			FROM theater_schedule_tbl
+			WHERE TO_CHAR(schedule_startdate,'YYMMDD') = TO_CHAR(TO_DATE(#{day}, 'YYYYMMDD'),'YYMMDD')
+		)
+		WHERE idx = m.movie_index
+	</select>
+	
+	<!-- 회원의 포인트 -->
+	<select id="getMemberPoint" resultType="int">
+		SELECT member_point
+		FROM member_tbl
+		WHERE member_id = #{id}
+	</select>
+	
+	<!-- 영화 결제)  -->
+	<!-- 5. Update movie_tbl  movie_count + totalCnt해주기(영화관람객수 증가) -->
+	<update id="movieCountUpdate" parameterType="java.util.Map">
+		UPDATE movie_tbl 
+		SET movie_count = movie_count + #{totalCnt}
+		WHERE movie_title = #{movie_title}
+	</update>
 </mapper>
