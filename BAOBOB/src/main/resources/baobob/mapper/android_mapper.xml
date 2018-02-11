@@ -13,7 +13,7 @@
 
 	<!-- 식당 목록 -->
 	<select id="getRestaurantList" resultType="spring.mvc.baobob.vo.Android">
-		SELECT restaurant_index data1
+		SELECT restaurant_index data1, restaurant_name data3
 		FROM restaurant_tbl
 	</select>
 
@@ -62,14 +62,14 @@
 		        SELECT m.history_index h_idx, t.theater_schedule_index idx
 		        FROM history_tbl h, movie_history_tbl m, theater_seat_tbl t
 		        WHERE h.history_index = m.history_index
-		            AND m.theater_schedule_index = t.theater_schedule_index
+		            AND m.history_index = t.history_index
 		            AND t.seat_state = 6
 		            AND h.member_id = #{id}
-                GROUP BY m.history_index, t.theater_schedule_index
 		        ), theater_schedule_tbl ts
 		    WHERE ts.theater_schedule_index = idx
 		    ), movie_tbl mt
 		WHERE mt.movie_index = m_idx
+        ORDER BY h_idx
 	</select>
 	
 	
@@ -144,10 +144,92 @@
 	</select>
 	
 	<!-- 영화 결제)  -->
+	<!-- 3. 좌석 테이블의 seat_state 변경 -->
+	<update id="updateSeatState" parameterType="java.util.Map">
+		UPDATE theater_seat_tbl 
+		SET 
+			seat_state = 6,
+			member_id = #{member_id},
+			history_index = history_tbl_seq.currval
+		WHERE seat_index = #{seat_index}
+	</update>
+	
+	<!-- 영화 결제)  -->
 	<!-- 5. Update movie_tbl  movie_count + totalCnt해주기(영화관람객수 증가) -->
 	<update id="movieCountUpdate" parameterType="java.util.Map">
 		UPDATE movie_tbl 
 		SET movie_count = movie_count + #{totalCnt}
 		WHERE movie_title = #{movie_title}
 	</update>
+	
+	<!-- 식당 메뉴 -->
+	<select id="getRestaurantMenu" resultType="spring.mvc.baobob.vo.Android">
+		SELECT idx, data1, data2, data3 
+		FROM (
+			SELECT  rt.restaurant_index idx,
+					rt.restaurant_name data1,
+	 			  	restaurant_menu_name data2,
+	 			  	restaurant_menu_price data3
+			FROM restaurant_menu_tbl rmt JOIN restaurant_tbl rt
+			    ON rmt.restaurant_index = rt.restaurant_index
+			ORDER By restaurant_menu_index
+		)
+		WHERE idx = #{restaurant_index}
+	</select>
+	
+	<!-- 식당 좌석 상태 정보 -->
+	<select id="getRestaurantSeatState" resultType="spring.mvc.baobob.vo.Android">
+		SELECT restaurant_table_index data1, table_state data2 
+		FROM restaurant_table_tbl 
+		WHERE restaurant_index = #{restIndex} 
+		ORDER BY table_row, table_col
+	</select>
+	
+	<!-- 식당 예약된 좌석 -->
+	<select id="getRestaurantSeat" resultType="spring.mvc.baobob.vo.Android">
+		SELECT  data1, data2, data3
+		FROM (
+			SELECT rs.RESTAURANT_SCHEDULE_INDEX data1, rt.restaurant_table_index data2, rt.table_state data3
+			FROM restaurant_schedule_tbl rs, restaurant_table_tbl rt
+			WHERE rs.restaurant_index = rt.restaurant_index
+			    AND rt.restaurant_index = #{rest_index}
+			    AND TO_CHAR(rs.schedule_starttime, 'yyyyMMdd HH24:MI') = TO_CHAR(TO_DATE(#{start}, 'yyyyMMdd HH24:MI'), 'yyyyMMdd HH24:MI')
+			)
+		GROUP BY  data1, data2, data3
+		ORDER BY data2
+	</select>
+	
+	<!-- 예약 1) 식당 스케줄 등록 -->
+	<insert id="setRestaurantSchedule" parameterType="spring.mvc.baobob.vo.Restaurant_scheduleVO">
+		INSERT INTO restaurant_schedule_tbl
+			(restaurant_index, restaurant_schedule_index, schedule_startTime, schedule_endTime) 
+		VALUES
+			(#{restaurant_index}, restaurant_schedule_tbl_SEQ.nextval, #{schedule_startTime}, #{schedule_endTime})
+	</insert>
+	
+	<!-- 예약 2) 식당 테이블 수정 -->
+	<update id="restaurantTableUpdate" parameterType="spring.mvc.baobob.vo.TableVO">
+		UPDATE restaurant_table_tbl
+		SET table_state = #{table_state}
+		WHERE restaurant_table_index = #{restaurant_table_index}
+			AND restaurant_index = #{restaurant_index}
+			AND table_row = #{table_row}
+			AND table_col = #{table_col}
+	</update>
+	
+	<!-- 예약 3) 히스토리 추가 -->
+	<insert id="setRestaurantMainHistory" parameterType="String">
+		INSERT INTO history_tbl
+			(history_index, history_date, member_id)
+		VALUES
+			(history_tbl_SEQ.NEXTVAL, SYSTIMESTAMP, #{member_id})
+	</insert>
+	
+	<!-- 예약 4) 식당 히스토리 추가 -->
+	<insert id="setRestaurantHistory" parameterType="int">
+		INSERT INTO restaurant_history_tbl
+			(history_index, restaurant_schedule_index, restaurant_table_index, discount, member_use_point, payvalue, restaurant_history_state) 
+		VALUES
+			(history_tbl_SEQ.CURRVAL, restaurant_schedule_tbl_SEQ.CURRVAL, #{restTableIndex}, 0, 0, 0, 0)
+	</insert> 
 </mapper>

@@ -415,7 +415,8 @@ CREATE TABLE theater_seat_tbl
     seat_state                NUMBER(2)       NOT NULL, 
     seat_price                NUMBER(5)       NULL, 
     theater_schedule_index    NUMBER          NULL, 
-    member_id                 VARCHAR2(30)    NULL, 
+    member_id                 VARCHAR2(30)    NULL,
+    history_index             NUMBER          NULL, 
     CONSTRAINT THEATER_SEAT_TBL_PK PRIMARY KEY (seat_index)
 )
 /
@@ -425,11 +426,13 @@ START WITH 1
 INCREMENT BY 1;
 /
 
-
-
 ALTER TABLE theater_seat_tbl
     ADD CONSTRAINT FK_theater_seat_tbl_theater_in FOREIGN KEY (theater_index)
         REFERENCES theater_tbl (theater_index)
+/
+ALTER TABLE theater_seat_tbl
+    ADD CONSTRAINT FK_theater_seat_tbl_history_in FOREIGN KEY (history_index)
+         REFERENCES history_tbl (history_index)
 /
 
 

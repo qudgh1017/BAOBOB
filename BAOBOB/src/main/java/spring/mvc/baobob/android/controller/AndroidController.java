@@ -1,5 +1,6 @@
 package spring.mvc.baobob.android.controller;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -14,12 +15,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import spring.mvc.baobob.android.persistence.AndroidDAO;
 import spring.mvc.baobob.guest_movie.persistence.Guest_movieDAO;
+import spring.mvc.baobob.guest_restaurant.persistence.Guest_restaurantDAO;
 import spring.mvc.baobob.member_mypage.persistence.Member_mypageDAO;
 import spring.mvc.baobob.persistence.MainDAO;
 import spring.mvc.baobob.vo.Android;
 import spring.mvc.baobob.vo.BoardVO;
 import spring.mvc.baobob.vo.Member;
 import spring.mvc.baobob.vo.MovieVO;
+import spring.mvc.baobob.vo.Restaurant_scheduleVO;
+import spring.mvc.baobob.vo.TableVO;
 import spring.mvc.baobob.vo.TheaterVO;
 import spring.mvc.baobob.vo.Theater_seatVO;
 
@@ -35,6 +39,8 @@ public class AndroidController {
 	Member_mypageDAO myDdao;
 	@Autowired
 	Guest_movieDAO movieDao;
+	@Autowired
+	Guest_restaurantDAO restDao;
 
 	// 앱 로그인
 	@ResponseBody // 웹에서 안드로이드로 값을 전달하기 위한 어노테이션
@@ -340,7 +346,7 @@ public class AndroidController {
 			if (cnt != 0) {
 				for (int i = 0; i < seatIndexs.length; i++) {
 					payMap.put("seat_index", seatIndexs[i]);
-					movieDao.updateSeatState(payMap);
+					dao.updateSeatState(payMap);
 				}
 			}
 
@@ -373,6 +379,86 @@ public class AndroidController {
 			map.put("data2", cnt);
 		}
 
+		return map;
+	}
+
+	// 식당 정보
+	@ResponseBody
+	@RequestMapping("androidRestaurantInfo")
+	public Map<String, Object> androidRestaurantInfo(HttpServletRequest req) {
+		String index = req.getParameter("index");
+
+		ArrayList<Android> list = dao.getRestaurantMenu(Integer.parseInt(index));
+
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("data", list);
+		return map;
+	}
+
+	// 식당 예약) 좌석
+	@ResponseBody
+	@RequestMapping("androidRestaurantTicket")
+	public Map<String, Object> androidRestaurantTicket(HttpServletRequest req) {
+		int restIdx = Integer.parseInt(req.getParameter("restIdx"));
+		String restTableIdx = req.getParameter("restTableIdx");
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		if (restTableIdx == null) {
+			TableVO table = restDao.getColRow(restIdx);
+			ArrayList<Android> list = dao.getRestaurantSeatState(restIdx);
+			/*
+			 * Map<String, Object> tmp = new HashMap<String, Object>();
+			 * tmp.put("rest_index", index); tmp.put("start", day + " " + time);
+			 * ArrayList<Android> list = dao.getRestaurantSeat(tmp);
+			 */
+			map.put("data", table.getTable_col());
+			map.put("list", list);
+		} else {
+			int rTableIdex = Integer.parseInt(restTableIdx);
+			String seatColRow = req.getParameter("seatColRow");
+			String day = req.getParameter("day");
+			String time = req.getParameter("time");
+			String id = req.getParameter("id");
+			
+			//예약 1) 스케줄 등록
+			Restaurant_scheduleVO rs = new Restaurant_scheduleVO();
+			rs.setRestaurant_index(restIdx);
+			
+			//예약 시작
+			Timestamp ts = Timestamp.valueOf(day + " " + time + ":00");
+			rs.setSchedule_startTime(ts);
+			
+			//예약 끝
+			String[] tt = time.split(":");
+			int tmpT = Integer.parseInt(tt[1]) + 30;
+			if(tmpT == 60) { 
+				tt[0] = (Integer.parseInt(tt[0]) + 1) + "";
+				tt[1] = "00";
+			} else {
+				tt[1] = "30";
+			}
+			ts = Timestamp.valueOf(day + " " + tt[0] + ":" + tt[1] + ":00");
+			rs.setSchedule_endTime(ts);
+			
+			int cnt = dao.setRestaurantSchedule(rs);
+			
+			//예약 2) 테이블 예약
+			if(cnt != 0) {
+				String[] colRow = seatColRow.split(",");
+				
+				TableVO table = new TableVO();
+				table.setRestaurant_table_index(rTableIdex);
+				table.setState("3");
+				table.setTable_col(Integer.parseInt(colRow[0]));
+				table.setTable_row(Integer.parseInt(colRow[1]));
+				cnt = dao.restaurantTableUpdate(table);
+			}
+			
+			if(cnt != 0) cnt = dao.setRestaurantMainHistory(id);
+			if(cnt != 0) cnt = dao.setRestaurantHistory(rTableIdex);
+			
+			map.put("data", cnt);
+		}
 		return map;
 	}
 }

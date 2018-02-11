@@ -7,10 +7,13 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import spring.mvc.baobob.guest_movie.persistence.Guest_movieDAO;
 import spring.mvc.baobob.vo.Android;
 import spring.mvc.baobob.vo.BoardVO;
 import spring.mvc.baobob.vo.Member;
 import spring.mvc.baobob.vo.MovieVO;
+import spring.mvc.baobob.vo.Restaurant_scheduleVO;
+import spring.mvc.baobob.vo.TableVO;
 
 @Repository
 public class AndroidDAOImpl implements AndroidDAO {
@@ -123,11 +126,68 @@ public class AndroidDAOImpl implements AndroidDAO {
 		return point;
 	}
 
+	// 영화 결제) seat 변경
+	@Override
+	public int updateSeatState(Map<String, Object> map) {
+		AndroidDAO mapper = sqlSession.getMapper(AndroidDAO.class);
+		int cnt = mapper.updateSeatState(map);
+		return cnt;
+	}
+
 	// 영화 결제) 영화 관람객수 증가
 	@Override
 	public int movieCountUpdate(Map<String, Object> map) {
 		AndroidDAO mapper = sqlSession.getMapper(AndroidDAO.class);
 		int cnt = mapper.movieCountUpdate(map);
+		return cnt;
+	}
+
+	// 식당 메뉴
+	public ArrayList<Android> getRestaurantMenu(int restaurant_index) {
+		AndroidDAO mapper = sqlSession.getMapper(AndroidDAO.class);
+		ArrayList<Android> list = mapper.getRestaurantMenu(restaurant_index);
+		return list;
+	}
+
+	// 식당 좌석 상태
+	public ArrayList<Android> getRestaurantSeatState(int restIndex) {
+		AndroidDAO mapper = sqlSession.getMapper(AndroidDAO.class);
+		ArrayList<Android> list = mapper.getRestaurantSeatState(restIndex);
+		return list;
+	}
+
+	// 식당 좌석
+	public ArrayList<Android> getRestaurantSeat(Map<String, Object> map) {
+		AndroidDAO mapper = sqlSession.getMapper(AndroidDAO.class);
+		ArrayList<Android> list = mapper.getRestaurantSeat(map);
+		return list;
+	}
+
+	// 식당 예약 1) 스케줄 등록
+	public int setRestaurantSchedule(Restaurant_scheduleVO rest) {
+		AndroidDAO mapper = sqlSession.getMapper(AndroidDAO.class);
+		int cnt = mapper.setRestaurantSchedule(rest);
+		return cnt;
+	}
+
+	// 식당 예약 2) 스케줄 등록
+	public int restaurantTableUpdate(TableVO restTable) {
+		AndroidDAO mapper = sqlSession.getMapper(AndroidDAO.class);
+		int cnt = mapper.restaurantTableUpdate(restTable);
+		return cnt;
+	}
+
+	// 식당 예약 3) 히스토리
+	public int setRestaurantMainHistory(String member_id) {
+		AndroidDAO mapper = sqlSession.getMapper(AndroidDAO.class);
+		int cnt = mapper.setRestaurantMainHistory(member_id);
+		return cnt;
+	}
+
+	// 식당 예약 4) 식당 히스토리
+	public int setRestaurantHistory(int restTableIndex) {
+		AndroidDAO mapper = sqlSession.getMapper(AndroidDAO.class);
+		int cnt = mapper.setRestaurantHistory(restTableIndex);
 		return cnt;
 	}
 }
