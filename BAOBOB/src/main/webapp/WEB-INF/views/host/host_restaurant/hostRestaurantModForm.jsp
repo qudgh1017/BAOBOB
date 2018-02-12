@@ -22,8 +22,8 @@
 					<div class="card-body p_body">
 						<div id="spaceDiv"></div>
 					</div>
-					<div class="card-footer small text-muted">
-						<button class="btn btn-primary" value="1" onclick="spaceTypeChange2(${dto.restaurant_index});">수정</button>
+					<div class="card-footer small text-muted" style="text-align: center;">
+						<button class="btn btn-primary" value="1" style="width: 200px;"  onclick="spaceTypeChange2(${dto.restaurant_index});">수정</button>
 					</div>
 				</div>
 			</div>

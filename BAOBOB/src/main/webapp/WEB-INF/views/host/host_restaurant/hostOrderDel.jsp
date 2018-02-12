@@ -13,7 +13,7 @@
 	<!-- 주문 삭제 성공 -->
 	<c:if test="${cnt != 0}">
 		<script type="text/javascript">
-			alert("메뉴 정보가 삭제 되었습니다.");
+			alert("예약 정보가 삭제 되었습니다.");
 			window.location="hostReservList";
 		</script>
 	</c:if>
