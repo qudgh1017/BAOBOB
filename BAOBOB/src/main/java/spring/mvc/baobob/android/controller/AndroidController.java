@@ -1,6 +1,5 @@
 package spring.mvc.baobob.android.controller;
 
-import java.security.KeyStore.Entry;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -464,6 +463,7 @@ public class AndroidController {
 				tmp.put("table_state", 3);
 				for(int i = 0; i < tableIdxs.length; i += 1) {
 					tmp.put("restaurant_table_index", tableIdxs[i]);
+					//tmp.put("restaurant_table_index", 0);
 					
 					String[] xy = colRows[i].split(",");
 					tmp.put("table_col", Integer.parseInt(xy[0]));
