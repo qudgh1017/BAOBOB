@@ -92,7 +92,8 @@ $(function() {
 				<div class="container-fluid" style="margin-top: 15px; padding-left:0px; padding-right:0px;" >
 					<!-- 테이블/날짜/시간선택 -> 확인 없으면 -->
 					<c:if test="${confirm!=1}">
-						<button class="btn btn-primary btn-block" type="reset" onclick="window.history.back();">취소</button>
+						<button class="btn btn-primary btn-block" style="background-color: #5D5D5D; color: white; border: 1px solid #5D5D5D;" type="reset" onclick="window.history.back();">취소</button>
+						<!-- <button class="btn btn-primary btn-block" type="reset" onclick="window.history.back();">취소</button> -->
 					</c:if>
 				
 					<!-- 확인을 누르면 -->
@@ -117,8 +118,10 @@ $(function() {
 								</div>
 								<div class="card-footer small text-muted">
 									<button class="btn btn-primary btn-block" type="button" value="1" onclick="spaceTypeChange2();">예약 요청</button>
-									<button class="btn btn-primary btn-block" type="reset" onclick="window.history.go(-2);">취소</button>
-								</div>
+<!-- 									<button class="btn btn-primary btn-block" style="background-color: #343a40; color: white; border: 1px solid #343a40;" type="reset" onclick="window.history.go(-2);">취소</button>
+ -->							<button class="btn btn-primary btn-block" style="background-color: #5D5D5D; color: white; border: 1px solid #5D5D5D;" type="reset" onclick="window.history.go(-2);">취소</button>	
+ 								
+ 								</div>
 							</div>
 						</div>
 					</c:if>

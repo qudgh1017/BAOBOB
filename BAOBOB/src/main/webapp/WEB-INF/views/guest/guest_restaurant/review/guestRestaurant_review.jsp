@@ -174,7 +174,6 @@ $(document).ready(function(){
 			<br>
 			<br>
 			
-			
 			<div class="row">
 				<div class="col-md-offset-1"></div>
 				<div class="col-md-10">
@@ -191,18 +190,17 @@ $(document).ready(function(){
 										<table class="table table-bordered" border="1">
 											<input type="hidden" value="${dto.review_index}" name="review_index">
 											<tr>
-												<th style="width:40px; text-align:center;"><span>Id</span></th> 
-												<td style="width:200px;">
+												<th style="width:10%; text-align:center; vertical-align:middle;"><span>Id</span></th> 
+												<td style="width:75%;">
 													${dto.member_id}
 												</td>
-												<td rowspan="4" style="width:20px; text-align:center; vertical-align:middle;">
+												<td rowspan="4" style="width:15%; text-align:center; vertical-align:middle;">
 													<input class="btn btn-primary" style="background-color: #FFBB00; color: white; border: 1px solid #FFBB00; margin: 5px;" type="button" value="변경" onclick="guest_review_modify(${pageNum}, ${dto.review_index}, ${restaurant_index});"> 
 													<input class="btn btn-secondary" style="background-color: #353535; color: white; border: 1px solid #353535;" type="button" value="삭제" onclick="guest_review_delete(${pageNum}, ${dto.review_index}, ${restaurant_index});"> 
-							
 												</td>
 											</tr>
 											<tr>
-												<th style="text-align:center;"><span>평점</span></th> 
+												<th style="text-align:center; vertical-align:middle;"><span>평점</span></th> 
 												<td>${dto.review_grade}
 													<c:if test="${dto.review_grade==1}">
 														<span>
@@ -252,18 +250,17 @@ $(document).ready(function(){
 												</td>
 											</tr>
 											<tr>
-												<th style="text-align:center;"><span>내용</span></th> 
+												<th style="text-align:center; vertical-align:middle;"><span>내용</span></th> 
 												<td>
 													${dto.review_content}
 												</td>
 											</tr>
 											<tr>
-												<th style="text-align:center;"><span>날짜</span></th> 
+												<th style="text-align:center; vertical-align:middle;"><span>날짜</span></th> 
 												<td>
 													<fmt:formatDate type="both" pattern="yyyy/MM:dd HH:mm" value="${dto.review_reg_date}"/>
 												</td>
 											</tr>
-											
 										</table>	
 									</form>
 								</c:forEach>
@@ -307,7 +304,6 @@ $(document).ready(function(){
 				<div class="col-md-offset-1"></div>
 			</div>	
 			<!--====== Container 종료 ======-->
-			
 		</div>
 	</section>
 	
