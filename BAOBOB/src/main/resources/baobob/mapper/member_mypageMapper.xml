@@ -232,6 +232,7 @@
 			        JOIN movie_tbl m
 			        ON m.movie_index = s.movie_index
 			        WHERE h.member_id = #{strId}
+			        ORDER BY h.history_date DESC
 			    )
 			WHERE  rNum >= #{start} AND rNum <= #{end}
 		 ]]>
