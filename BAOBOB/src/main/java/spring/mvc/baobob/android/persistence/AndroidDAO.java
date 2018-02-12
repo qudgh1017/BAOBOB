@@ -63,12 +63,15 @@ public interface AndroidDAO {
 	
 	// 식당 메뉴 ) MainPage에서
 	public ArrayList<Android> getRestaurantTitleMenu(String restaurant_name);
+
+	//식당 스케줄 index
+	public String getScheduleIndex(Map<String, Object> map);
 	
 	//식당 좌석 상태
-	public ArrayList<Android> getRestaurantSeatState(int restIndex);
+	public ArrayList<Android> getRestaurantSeatState(Map<String, Object> map);
 	
 	//식당 예약된 좌석
-	public ArrayList<Android> getRestaurantTicketSeat(Map<String, Object> map);
+	//public ArrayList<Android> getRestaurantTicketSeat(Map<String, Object> map);
 	
 	//식당 예약 1) 스케줄 등록
 	public int setRestaurantSchedule(Restaurant_scheduleVO rest);
@@ -80,5 +83,5 @@ public interface AndroidDAO {
 	public int setRestaurantMainHistory(String member_id);
 
 	//식당 예약 4) 식당 히스토리
-	public int setRestaurantHistory(int restTableIndex);
+	public int setRestaurantHistory(Map<String, Object> map);
 }

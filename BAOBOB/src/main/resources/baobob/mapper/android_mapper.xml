@@ -192,17 +192,30 @@
 		WHERE data1 = #{restaurant_name}
 	</select>
 	
+	<!-- 식당 스케쥴 idx -->
+	<select id="getScheduleIndex" resultType="String">
+		SELECT restaurant_schedule_index  
+		FROM restaurant_schedule_tbl 
+	 	WHERE TO_CHAR(schedule_starttime, 'yyyy-MM-dd HH24:MI') = TO_CHAR(TO_DATE(#{start}, 'yyyy-MM-dd HH24:MI'), 'yyyy-MM-dd HH24:MI')
+		   AND restaurant_index = #{restIdx}
+	</select>
+	
 	<!-- 식당 좌석 상태 정보 -->
 	<select id="getRestaurantSeatState" resultType="spring.mvc.baobob.vo.Android">
 		SELECT restaurant_table_index data1, table_state data2 
 		FROM restaurant_table_tbl 
-		WHERE restaurant_index = #{restIndex} 
-            AND table_state != 3
+		WHERE restaurant_index = #{restIdx} 
+		<if test="scheduleIdx == NULL">
+            AND restaurant_schedule_index IS NULL
+        </if>
+        <if test="scheduleIdx != NULL">
+        	AND restaurant_schedule_index  = #{scheduleIdx}
+        </if>
 		ORDER BY table_row, table_col
 	</select>
 	
 	<!-- 식당 예약된 좌석 -->
-	<select id="getRestaurantTicketSeat" resultType="spring.mvc.baobob.vo.Android">
+	<!-- <select id="getRestaurantTicketSeat" resultType="spring.mvc.baobob.vo.Android">
         SELECT data1, data2
 		FROM (
 			SELECT rs.restaurant_schedule_index data1, rt.restaurant_table_index data2
@@ -214,7 +227,7 @@
 			)
 		GROUP BY data1, data2
 		ORDER BY data2
-	</select>
+	</select> -->
 	
 	<!-- 예약 1) 식당 스케줄 등록 -->
 	<insert id="setRestaurantSchedule" parameterType="spring.mvc.baobob.vo.Restaurant_scheduleVO">
@@ -229,7 +242,12 @@
 		INSERT INTO restaurant_table_tbl
 			(restaurant_index, restaurant_table_index, table_row, table_col, table_state, restaurant_schedule_index)
 		VALUES
+		<if test="scheduleIdx.equals('0')">
 			(#{restaurant_index}, #{restaurant_table_index}, #{table_row}, #{table_col}, #{table_state}, restaurant_schedule_tbl_SEQ.CURRVAL)
+		</if>
+		<if test="!scheduleIdx.equals('0')">
+			(#{restaurant_index}, #{restaurant_table_index}, #{table_row}, #{table_col}, #{table_state}, #{scheduleIdx})
+		</if>
 	</update>
 	
 	<!-- 예약 3) 히스토리 추가 -->
@@ -241,10 +259,10 @@
 	</insert>
 	
 	<!-- 예약 4) 식당 히스토리 추가 -->
-	<insert id="setRestaurantHistory" parameterType="int">
+	<insert id="setRestaurantHistory" parameterType="java.util.Map">
 		INSERT INTO restaurant_history_tbl
 			(history_index, restaurant_schedule_index, restaurant_table_index, discount, member_use_point, payvalue, restaurant_history_state) 
 		VALUES
-			(history_tbl_SEQ.CURRVAL, restaurant_schedule_tbl_SEQ.CURRVAL, #{restTableIndex}, 0, 0, 0, 0)
+			(history_tbl_SEQ.CURRVAL, #{scheduleIdx}, #{restTableIndex}, 0, 0, 0, 0)
 	</insert> 
 </mapper>

@@ -411,23 +411,26 @@ public class AndroidController {
 		String time = req.getParameter("time");
 		
 		Map<String, Object> map = new HashMap<String, Object>();
+		//좌석 뿌리기
 		if (restTableIdx == null) {
 			TableVO table = restDao.getColRow(restIdx);
-			ArrayList<Android> seatList = dao.getRestaurantSeatState(restIdx);
 			
 			Map<String, Object> tmp = new HashMap<String, Object>();
-			tmp.put("rest_index", restIdx); 
+			tmp.put("restIdx", restIdx); 
 			tmp.put("start", day + " " + time);
-			ArrayList<Android> ticketList = dao.getRestaurantTicketSeat(tmp);
+			String scheduleIdx = dao.getScheduleIndex(tmp);
 			
-			map.put("data", table.getTable_col());
-			map.put("list", seatList);
-			map.put("list2", ticketList);
+			tmp.put("scheduleIdx", scheduleIdx);
+			ArrayList<Android> seatList = dao.getRestaurantSeatState(tmp);
+
+			map.put("data1", table.getTable_col());
+			map.put("data2", table.getTable_row());
+			map.put("data3", scheduleIdx);
+			map.put("list1", seatList);
+			
+		// 예약하기
 		} else {
 			String[] tableIdxs = restTableIdx.split(",");//idx,idx
-			
-			String seatColRow = req.getParameter("seatColRow");//col,row/col,row/..
-			String[] colRows = seatColRow.split("/");//col,row
 			
 			String id = req.getParameter("id");
 			
@@ -435,11 +438,11 @@ public class AndroidController {
 			Restaurant_scheduleVO rs = new Restaurant_scheduleVO();
 			rs.setRestaurant_index(restIdx);
 			
-			//예약 시작
+			//예약 시작 시간
 			Timestamp ts = Timestamp.valueOf(day + " " + time + ":00");
 			rs.setSchedule_startTime(ts);
 			
-			//예약 끝
+			//예약 종료 시간
 			String[] tt = time.split(":");
 			int tmpT = Integer.parseInt(tt[1]) + 30;
 			if(tmpT == 60) { 
@@ -452,36 +455,58 @@ public class AndroidController {
 			rs.setSchedule_endTime(ts);
 			
 			int cnt = dao.setRestaurantSchedule(rs);
-			log.info("******************* 1 " + rs.getRestaurant_schedule_index() + " / " + rs.getSchedule_startTime() + " / " + rs.getSchedule_endTime());
 			
-			//예약 2) 테이블 예약
+			//예약 2-1)  
+			if(cnt == 0) {}
+			
+			//예약 2-2) 테이블 예약 - restaurant_table_tbl에 해당 시간대의 모든 좌석 상태 정보 추가
 			if(cnt != 0) {
-				String[] colRow = seatColRow.split(",");
+				String scheduleIdx = req.getParameter("scheduleIdx");
 				
+				//이미 예약 목록이 있는 시간대일 경우 초기화
+				if(!scheduleIdx.equals("0")) {
+					rs.setRestaurant_schedule_index(Integer.parseInt(scheduleIdx));
+					restDao.resetTable2(rs);
+				}
+				
+				//해당 시간대의 좌석 정보 추가
 				Map<String, Object> tmp = new HashMap<String, Object>();
 				tmp.put("restaurant_index", restIdx);
-				tmp.put("table_state", 3);
-				for(int i = 0; i < tableIdxs.length; i += 1) {
-					tmp.put("restaurant_table_index", tableIdxs[i]);
-					//tmp.put("restaurant_table_index", 0);
-					
-					String[] xy = colRows[i].split(",");
-					tmp.put("table_col", Integer.parseInt(xy[0]));
-					tmp.put("table_row", Integer.parseInt(xy[1]));
-					cnt = dao.setRestaurantTable(tmp);
-					
-					log.info("******************* 2 " + tableIdxs[i] + "/" + xy[0] + "," + xy[1]);
+				tmp.put("scheduleIdx", "scheduleIdx");
+
+				int index = 0;
+				String seatStates = req.getParameter("seatStates"); //전좌석 상태 코드
+				String states[] = seatStates.split(",");
+				int col = Integer.parseInt(req.getParameter("col"));
+				int row = Integer.parseInt(req.getParameter("row"));
+				for(int j = 0; j <= row; j += 1) {
+					for(int i = 0; i <= col; i += 1) {
+						tmp.put("restaurant_table_index", index);
+						tmp.put("table_col", i);
+						tmp.put("table_row", j);
+						tmp.put("table_state", states[index]);
+
+						cnt = dao.setRestaurantTable(tmp);
+
+						if(cnt != 0) {
+							index++;
+						}
+					}
 				}
 			}
 			
+			//히스토리 추가
 			if(cnt != 0) {
 				cnt = dao.setRestaurantMainHistory(id);
-				log.info("******************* 3 " + id);
 			}
+			
+			//식당 히스토리 추가
 			if(cnt != 0) {
+				Map<String, Object> tmp = new HashMap<String, Object>();
+				tmp.put("scheduleIdx", "scheduleIdx");
 				for(int i = 0; i < tableIdxs.length; i += 1) {
-					cnt = dao.setRestaurantHistory(Integer.parseInt(tableIdxs[i]));
-					log.info("******************* 4 " + tableIdxs[i]);
+					tmp.put("restTableIndex", Integer.parseInt(tableIdxs[i]));
+					cnt = dao.setRestaurantHistory(tmp);
 				}
 			}
 			
