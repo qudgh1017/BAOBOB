@@ -234,7 +234,7 @@
 		INSERT INTO restaurant_schedule_tbl
 			(restaurant_index, restaurant_schedule_index, schedule_startTime, schedule_endTime) 
 		VALUES
-			(#{restaurant_index}, restaurant_schedule_tbl_SEQ.nextval, #{schedule_startTime}, #{schedule_endTime})
+			(#{restaurant_index}, restaurant_schedule_tbl_SEQ.NEXTVAL, #{schedule_startTime}, #{schedule_endTime})
 	</insert>
 	
 	<!-- 예약 2) 식당 예약 테이블 추가 -->
@@ -242,10 +242,10 @@
 		INSERT INTO restaurant_table_tbl
 			(restaurant_index, restaurant_table_index, table_row, table_col, table_state, restaurant_schedule_index)
 		VALUES
-		<if test="scheduleIdx.equals('0')">
+		<if test="scheduleIdx == 0">
 			(#{restaurant_index}, #{restaurant_table_index}, #{table_row}, #{table_col}, #{table_state}, restaurant_schedule_tbl_SEQ.CURRVAL)
 		</if>
-		<if test="!scheduleIdx.equals('0')">
+		<if test="scheduleIdx != 0">
 			(#{restaurant_index}, #{restaurant_table_index}, #{table_row}, #{table_col}, #{table_state}, #{scheduleIdx})
 		</if>
 	</update>

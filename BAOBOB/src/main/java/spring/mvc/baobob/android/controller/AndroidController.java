@@ -388,9 +388,9 @@ public class AndroidController {
 	public Map<String, Object> androidRestaurantInfo(HttpServletRequest req) {
 		String index = req.getParameter("index");
 		String title = req.getParameter("title");
-		
+
 		ArrayList<Android> list;
-		if(index != null) {
+		if (index != null) {
 			list = dao.getRestaurantMenu(Integer.parseInt(index));
 		} else {
 			list = dao.getRestaurantTitleMenu(title);
@@ -409,17 +409,21 @@ public class AndroidController {
 		String restTableIdx = req.getParameter("restTableIdx");
 		String day = req.getParameter("day");
 		String time = req.getParameter("time");
-		
+
 		Map<String, Object> map = new HashMap<String, Object>();
-		//좌석 뿌리기
+		// 좌석 뿌리기
 		if (restTableIdx == null) {
 			TableVO table = restDao.getColRow(restIdx);
-			
+
 			Map<String, Object> tmp = new HashMap<String, Object>();
-			tmp.put("restIdx", restIdx); 
+			tmp.put("restIdx", restIdx);
 			tmp.put("start", day + " " + time);
 			String scheduleIdx = dao.getScheduleIndex(tmp);
-			
+
+			/*
+			 * scheduleIdx == null : seatList = 초기 좌석 상태 정보 목록
+			 * scheduleIdx != null : seatList = 수정된(예약 좌석이 추가된) 좌석 상태 정보 목록
+			 */
 			tmp.put("scheduleIdx", scheduleIdx);
 			ArrayList<Android> seatList = dao.getRestaurantSeatState(tmp);
 
@@ -427,25 +431,30 @@ public class AndroidController {
 			map.put("data2", table.getTable_row());
 			map.put("data3", scheduleIdx);
 			map.put("list1", seatList);
-			
+
 		// 예약하기
 		} else {
-			String[] tableIdxs = restTableIdx.split(",");//idx,idx
-			
+			int cnt = 0;
+			/*
+			 * scheduleIdx == 0 : 초기 스케줄
+			 * scheduleIdx != 0 : 1회 이상 수정된 스케줄
+			 */
+			int scheduleIdx = Integer.parseInt(req.getParameter("scheduleIdx"));
+
 			String id = req.getParameter("id");
-			
-			//예약 1) 스케줄 등록
+
+			// 예약 1) 스케줄 등록
 			Restaurant_scheduleVO rs = new Restaurant_scheduleVO();
 			rs.setRestaurant_index(restIdx);
-			
-			//예약 시작 시간
+
+			// 예약 시작 시간
 			Timestamp ts = Timestamp.valueOf(day + " " + time + ":00");
 			rs.setSchedule_startTime(ts);
-			
-			//예약 종료 시간
+
+			// 예약 종료 시간
 			String[] tt = time.split(":");
 			int tmpT = Integer.parseInt(tt[1]) + 30;
-			if(tmpT == 60) { 
+			if (tmpT == 60) {
 				tt[0] = (Integer.parseInt(tt[0]) + 1) + "";
 				tt[1] = "00";
 			} else {
@@ -453,34 +462,33 @@ public class AndroidController {
 			}
 			ts = Timestamp.valueOf(day + " " + tt[0] + ":" + tt[1] + ":00");
 			rs.setSchedule_endTime(ts);
-			
-			int cnt = dao.setRestaurantSchedule(rs);
-			
-			//예약 2-1)  
-			if(cnt == 0) {}
-			
-			//예약 2-2) 테이블 예약 - restaurant_table_tbl에 해당 시간대의 모든 좌석 상태 정보 추가
-			if(cnt != 0) {
-				String scheduleIdx = req.getParameter("scheduleIdx");
-				
-				//이미 예약 목록이 있는 시간대일 경우 초기화
-				if(!scheduleIdx.equals("0")) {
-					rs.setRestaurant_schedule_index(Integer.parseInt(scheduleIdx));
-					restDao.resetTable2(rs);
-				}
-				
-				//해당 시간대의 좌석 정보 추가
+
+			// 예약 1-1) 이미 예약 목록이 있는 시간대일 경우, 해당 스케줄의 데이터 삭제 - 0행
+			if (scheduleIdx != 0) {
+				rs.setRestaurant_schedule_index(scheduleIdx);
+				cnt = restDao.resetTable2(rs);
+			} else {
+				// 해당 시간의 처음 예약일 경우 스케줄 추가
+				cnt = dao.setRestaurantSchedule(rs);
+			}
+
+			/*
+			 *  예약 2-2) 테이블 예약 - restaurant_table_tbl에 해당 시간대의 모든 좌석 상태 정보 추가
+			 *  seatStates = 예약석이 표시된, 최신 좌석 상태 정보
+			 */
+			if (cnt != 0) {
+				// 해당 시간대의 좌석 정보 추가
 				Map<String, Object> tmp = new HashMap<String, Object>();
 				tmp.put("restaurant_index", restIdx);
-				tmp.put("scheduleIdx", "scheduleIdx");
+				tmp.put("scheduleIdx", scheduleIdx);
 
 				int index = 0;
-				String seatStates = req.getParameter("seatStates"); //전좌석 상태 코드
+				String seatStates = req.getParameter("seatStates"); // 전좌석 상태 코드
 				String states[] = seatStates.split(",");
 				int col = Integer.parseInt(req.getParameter("col"));
 				int row = Integer.parseInt(req.getParameter("row"));
-				for(int j = 0; j <= row; j += 1) {
-					for(int i = 0; i <= col; i += 1) {
+				for (int j = 0; j <= row; j += 1) {
+					for (int i = 0; i <= col; i += 1) {
 						tmp.put("restaurant_table_index", index);
 						tmp.put("table_col", i);
 						tmp.put("table_row", j);
@@ -488,28 +496,32 @@ public class AndroidController {
 
 						cnt = dao.setRestaurantTable(tmp);
 
-						if(cnt != 0) {
+						if (cnt != 0) {
 							index++;
 						}
 					}
 				}
 			}
-			
-			//히스토리 추가
-			if(cnt != 0) {
+
+			// 히스토리 추가
+			if (cnt != 0) {
 				cnt = dao.setRestaurantMainHistory(id);
 			}
-			
-			//식당 히스토리 추가
-			if(cnt != 0) {
+
+			// 식당 히스토리 추가
+			if (cnt != 0) {
 				Map<String, Object> tmp = new HashMap<String, Object>();
-				tmp.put("scheduleIdx", "scheduleIdx");
-				for(int i = 0; i < tableIdxs.length; i += 1) {
-					tmp.put("restTableIndex", Integer.parseInt(tableIdxs[i]));
+				tmp.put("restIdx", restIdx);
+				tmp.put("start", day + " " + time);
+				scheduleIdx = Integer.parseInt(dao.getScheduleIndex(tmp));
+
+				String[] tableIdxs = restTableIdx.split(",");// idx,idx
+				tmp.put("scheduleIdx", scheduleIdx);
+				for (int i = 0; i < tableIdxs.length; i += 1) {
+					tmp.put("restTableIndex", tableIdxs[i]);
 					cnt = dao.setRestaurantHistory(tmp);
 				}
 			}
-			
 			map.put("cnt", cnt);
 		}
 		return map;
