@@ -27,7 +27,8 @@
 <script type="text/javascript">
 $(function() {
 	$( "#datepicker" ).datepicker({
-     	dateFormat: 'y-mm-dd'
+     	dateFormat: 'y-mm-dd',
+     	minDate:0
 	});
    
 	$( "#timepicker" ).timepicker({

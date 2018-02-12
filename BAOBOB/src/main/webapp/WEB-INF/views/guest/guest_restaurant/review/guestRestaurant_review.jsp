@@ -158,8 +158,8 @@ $(document).ready(function(){
 							</tr>
 							<tr>
 								<th colspan="2">
-									<input class="button" type="submit" value="리뷰 올리기"> 
-									<input class="button" type="reset" value="취소"> 
+									<input class="btn btn-primary" style="background-color: #FFBB00; color: white; border: 1px solid #FFBB00;" type="submit" value="리뷰 올리기"> 
+									<input class="btn btn-secondary" style="background-color: #353535; color: white; border: 1px solid #353535;" type="reset" value="취소"> 
 								</th>
 							</tr>
 						</table>	
@@ -196,23 +196,22 @@ $(document).ready(function(){
 													${dto.member_id}
 												</td>
 												<td rowspan="4" style="width:20px; text-align:center; vertical-align:middle;">
-													<input class="button" type="button" value="변경" onclick="guest_review_modify(${pageNum}, ${dto.review_index}, ${restaurant_index});"> 
-													<br/><input class="button" type="button" value="삭제" onclick="guest_review_delete(${pageNum}, ${dto.review_index}, ${restaurant_index});"> 
-												
+													<input class="btn btn-primary" style="background-color: #FFBB00; color: white; border: 1px solid #FFBB00; margin: 5px;" type="button" value="변경" onclick="guest_review_modify(${pageNum}, ${dto.review_index}, ${restaurant_index});"> 
+													<input class="btn btn-secondary" style="background-color: #353535; color: white; border: 1px solid #353535;" type="button" value="삭제" onclick="guest_review_delete(${pageNum}, ${dto.review_index}, ${restaurant_index});"> 
+							
 												</td>
 											</tr>
 											<tr>
 												<th style="text-align:center;"><span>평점</span></th> 
 												<td>${dto.review_grade}
 													<c:if test="${dto.review_grade==1}">
-													<span>
-														<img id="image1" src="/baobob/resources/images/mhj/choice/icon_starOn.gif">
-														<img id="image2" src="/baobob/resources/images/mhj/choice/icon_starOff.gif">
-														<img id="image3" src="/baobob/resources/images/mhj/choice/icon_starOff.gif">
-														<img id="image4" src="/baobob/resources/images/mhj/choice/icon_starOff.gif">
-														<img id="image5" src="/baobob/resources/images/mhj/choice/icon_starOff.gif">
-													</span>
-										
+														<span>
+															<img id="image1" src="/baobob/resources/images/mhj/choice/icon_starOn.gif">
+															<img id="image2" src="/baobob/resources/images/mhj/choice/icon_starOff.gif">
+															<img id="image3" src="/baobob/resources/images/mhj/choice/icon_starOff.gif">
+															<img id="image4" src="/baobob/resources/images/mhj/choice/icon_starOff.gif">
+															<img id="image5" src="/baobob/resources/images/mhj/choice/icon_starOff.gif">
+														</span>
 													</c:if>
 													<c:if test="${dto.review_grade==2}">
 														<span>
@@ -264,7 +263,7 @@ $(document).ready(function(){
 													<fmt:formatDate type="both" pattern="yyyy/MM:dd HH:mm" value="${dto.review_reg_date}"/>
 												</td>
 											</tr>
-											<br>
+											
 										</table>	
 									</form>
 								</c:forEach>
@@ -305,7 +304,7 @@ $(document).ready(function(){
 						<div class="col-md-2"></div>
 					</div>
 				</div>
-				
+				<div class="col-md-offset-1"></div>
 			</div>	
 			<!--====== Container 종료 ======-->
 			

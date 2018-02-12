@@ -298,9 +298,10 @@ public class Guest_restaurantServiceImpl implements Guest_restaurantService{
 			pageNum = "1"; // 첫페이지를 1페이지로 설정
 		}
 
-		currentPage = Integer.parseInt(pageNum);
-
-		pageCount = (cnt / pageSize) + (cnt % pageSize > 0 ? 1 : 0);
+		currentPage = Integer.parseInt(pageNum); //현재 페이지
+		//페이지 갯수 (pageSize가 5이고 전체 글갯수가 12면 2개가 남는데 그 2개도 페이지를 할당해 줘야한다.)
+				//pageCnt = 12 / 5 + 1; ... 나머지 2건이 1페이지로 할당되므로 3페이지(2페이지+1페이지)
+		pageCount = (cnt / pageSize) + ((cnt % pageSize > 0) ? 1 : 0); 
 
 		start = (currentPage - 1) * pageSize + 1;		// 현재 페이지글 시작 번호
 
@@ -309,8 +310,9 @@ public class Guest_restaurantServiceImpl implements Guest_restaurantService{
 		if (end > cnt)
 			end = cnt;
 
-		number = cnt - (currentPage - 1) * pageSize;
-		
+		//1=21-(5(현제페이지)-1)*5
+		number = cnt - (currentPage -1) * pageSize; //출력할 글번호..최신글(큰페이지)가 1페이지 출력할 글번호
+			
 		if (cnt > 0) {
 			Map<String, Integer> map = new HashMap<String, Integer>();
 			map.put("start", start);
