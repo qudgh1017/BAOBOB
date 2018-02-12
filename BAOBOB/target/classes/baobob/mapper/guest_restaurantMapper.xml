@@ -137,11 +137,11 @@
 	                    member_id,
 	                    review_reg_date, 
 	                    rownum rNum
-	              FROM  review_tbl rt
+	              FROM  (SELECT * FROM review_tbl ORDER BY review_reg_date) rt
 	              JOIN  restaurant_review_tbl rrt
 	                ON  rt.review_index=rrt.review_index
            		 WHERE  restaurant_index=#{restaurant_index}
-	            ORDER BY review_reg_date  desc
+	            ORDER BY review_reg_date desc
 	            )
  		 WHERE rNum>=#{start} AND rNum<=#{end}
  	]]>
