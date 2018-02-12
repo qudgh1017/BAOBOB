@@ -7,7 +7,6 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import spring.mvc.baobob.host_movie.persistence.Host_movieDAO;
 import spring.mvc.baobob.vo.Member;
 import spring.mvc.baobob.vo.MovieFinderVO;
 import spring.mvc.baobob.vo.MovieVO;
