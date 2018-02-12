@@ -133,6 +133,8 @@ function rowName(idx) {
 	var xy = Math.floor(idx / column);
 
 	var num1 = '', num2 = '';
+	
+	//두자릿수
 	switch(Math.floor(xy / 26)) {
 	case 1: num1 = 'A'; break;
 	case 2: num1 = 'B'; break;
@@ -162,6 +164,7 @@ function rowName(idx) {
 	case 26: num1 = 'Z'; break;
 	}
 	
+	//한자릿수
 	switch(xy % 26) {
 	case 0: num2= 'A'; break;
 	case 1: num2= 'B'; break;
@@ -185,7 +188,7 @@ function rowName(idx) {
 	case 19: num2= 'T'; break;
 	case 20: num2= 'U'; break;
 	case 21: num2= 'V'; break;
-	case 21: num2= 'W'; break;
+	case 22: num2= 'W'; break;
 	case 23: num2= 'X'; break;
 	case 24: num2= 'Y'; break;
 	case 25: num2= 'Z'; break;

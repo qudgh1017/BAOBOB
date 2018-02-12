@@ -64,7 +64,7 @@
 	
 	<!-- 상영관 좌석별 상태 insert_theater_seat -->
 	<insert id="insert_theater_seat" parameterType="java.util.Map">
-		INSERT INTO theater_seat_tbl values(theater_seat_tbl_seq.nextval, #{theater_index}, #{row}, #{col}, #{state}, #{price}, -1, null)
+		INSERT INTO theater_seat_tbl values(theater_seat_tbl_seq.nextval, #{theater_index}, #{row}, #{col}, #{state}, #{price}, -1, null, null)
 	</insert>
 	
 	<!-- 상영관 존재 여부 getTheaterCnt -->
@@ -255,7 +255,7 @@
 	
 	<!-- 스케줄에 해당하는 좌석 생성 -->
 	<insert id="TheaterScheduleSeatAddPro" parameterType="java.util.Map">
-		INSERT INTO theater_seat_tbl VALUES(theater_seat_tbl_SEQ.nextval, #{theater_index}, #{row}, #{col}, #{seatState}, #{seatPrice}, (SELECT MAX(theater_schedule_index) FROM theater_schedule_tbl), null)
+		INSERT INTO theater_seat_tbl VALUES(theater_seat_tbl_SEQ.nextval, #{theater_index}, #{row}, #{col}, #{seatState}, #{seatPrice}, (SELECT MAX(theater_schedule_index) FROM theater_schedule_tbl), null, null)
 	</insert>
 	
 	<!-- 스케줄에 해당하는 좌석 정보 가져오기 -->

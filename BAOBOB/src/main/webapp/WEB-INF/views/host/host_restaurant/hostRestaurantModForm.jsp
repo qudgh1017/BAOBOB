@@ -22,8 +22,8 @@
 					<div class="card-body p_body">
 						<div id="spaceDiv"></div>
 					</div>
-					<div class="card-footer small text-muted">
-						<button class="btn btn-primary" value="1" onclick="spaceTypeChange2(${dto.restaurant_index});">수정</button>
+					<div class="card-footer small text-muted" style="text-align: center;">
+						<button class="btn btn-primary" value="1" style="width: 200px;"  onclick="spaceTypeChange2(${dto.restaurant_index});">수정</button>
 					</div>
 				</div>
 			</div>
@@ -39,8 +39,10 @@
 				<div class="card mb-3">
 					<div class="card-header">매장 설정</div>
 					<div class="card-body">
-						가로  <input class="form-control" id="widthX" type="number" min="1" max="100" value="${col}" onload="spaceDivChange();" onchange="spaceDivChange();" required><br>
-						세로  <input class="form-control" id="heightY" type="number" min="1" max="100" value="${row}" onload="spaceDivChange();" onchange="spaceDivChange();" required>
+						가로  <input class="form-control" id="widthX" type="number" min="1" max="100" value="${col}" 
+								onload="spaceDivChange();" onchange="spaceDivChange();" required><br>
+						세로  <input class="form-control" id="heightY" type="number" min="1" max="100" value="${row}" 
+								onload="spaceDivChange();" onchange="spaceDivChange();" required>
 						
 						<hr>
 						
