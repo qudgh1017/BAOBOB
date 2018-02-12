@@ -117,14 +117,6 @@ public class Guest_movieController {
 		return "/guest/guest_movie/movie/movieDetail";
 	}
 	
-	//영화-리뷰페이지
-	/*@RequestMapping("movieReview")
-	public String movieReview(HttpServletRequest req, Model model) {
-		log.debug("====== Guest_movieController/movieReview ======");
-		
-		return "/guest/guest_movie/movie/movieReview";
-	}*/
-	
 	//영화-리뷰작성폼
 	@RequestMapping("movieReviewWrite")
 	public String reviewWrite(HttpServletRequest req, Model model) {
@@ -227,19 +219,6 @@ public class Guest_movieController {
 		
 		return "/guest/guest_movie/reservation/movieTicket2";
 	}
-	
-	//예매-빠른예매 2번째페이지 - 좌석도 정보 불러오기
-	/*@RequestMapping("seatInfo")
-	public @ResponseBody MovieResViewVO seatInfo(HttpServletRequest req, Model model) {
-		log.debug("====== Guest_movieController/seatInfo ======");
-
-		//좌석도 정보
-		MovieResViewVO seatInfo = null;
-		seatInfo = gmservice.movieResView(req, model);
-		//ResponseBody로 자바 객체를 송신해준다. 
-		
-		return seatInfo;
-	}*/
 	
 	//예매-빠른예매 2번째페이지 - 전체좌석도, 좌석 선택(AJAX)
 	@RequestMapping("reserveSeatInfo")

@@ -38,7 +38,6 @@
 					  </button>
 					  <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1" style="background-image: url('${projectRes}images/ybh/movie_menu.jpg'); background-size: 140px 120px;">
 					    <li role="presentation"><a role="menuitem" tabindex="-1" href="movieTicket">빠른예매</a></li>
-					    <li role="presentation"><a role="menuitem" tabindex="-1" href="movieSchedule">상영시간표</a></li>
 					  </ul>
 					</div>
 		  		</div>
