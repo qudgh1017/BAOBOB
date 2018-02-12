@@ -162,7 +162,7 @@
 		WHERE movie_title = #{movie_title}
 	</update>
 	
-	<!-- 식당 메뉴 -->
+	<!-- 식당 메뉴 ) MainList에서 -->
 	<select id="getRestaurantMenu" resultType="spring.mvc.baobob.vo.Android">
 		SELECT idx, data1, data2, data3 
 		FROM (
@@ -177,25 +177,42 @@
 		WHERE idx = #{restaurant_index}
 	</select>
 	
+	<!-- 식당 메뉴 ) MainPage에서 -->
+	<select id="getRestaurantTitleMenu" resultType="spring.mvc.baobob.vo.Android">
+		SELECT data1, data2, data3, idx data4 
+		FROM (
+			SELECT  rt.restaurant_index idx,
+					rt.restaurant_name data1,
+	 			  	restaurant_menu_name data2,
+	 			  	restaurant_menu_price data3
+			FROM restaurant_menu_tbl rmt JOIN restaurant_tbl rt
+			    ON rmt.restaurant_index = rt.restaurant_index
+			ORDER By restaurant_menu_index
+		)
+		WHERE data1 = #{restaurant_name}
+	</select>
+	
 	<!-- 식당 좌석 상태 정보 -->
 	<select id="getRestaurantSeatState" resultType="spring.mvc.baobob.vo.Android">
 		SELECT restaurant_table_index data1, table_state data2 
 		FROM restaurant_table_tbl 
 		WHERE restaurant_index = #{restIndex} 
+            AND table_state != 3
 		ORDER BY table_row, table_col
 	</select>
 	
 	<!-- 식당 예약된 좌석 -->
-	<select id="getRestaurantSeat" resultType="spring.mvc.baobob.vo.Android">
-		SELECT  data1, data2, data3
+	<select id="getRestaurantTicketSeat" resultType="spring.mvc.baobob.vo.Android">
+        SELECT data1, data2
 		FROM (
-			SELECT rs.RESTAURANT_SCHEDULE_INDEX data1, rt.restaurant_table_index data2, rt.table_state data3
+			SELECT rs.restaurant_schedule_index data1, rt.restaurant_table_index data2
 			FROM restaurant_schedule_tbl rs, restaurant_table_tbl rt
 			WHERE rs.restaurant_index = rt.restaurant_index
 			    AND rt.restaurant_index = #{rest_index}
-			    AND TO_CHAR(rs.schedule_starttime, 'yyyyMMdd HH24:MI') = TO_CHAR(TO_DATE(#{start}, 'yyyyMMdd HH24:MI'), 'yyyyMMdd HH24:MI')
+                AND rt.table_state = 3
+			    AND TO_CHAR(rs.schedule_starttime, 'yyyy-MM-dd HH24:MI') = TO_CHAR(TO_DATE(#{start}, 'yyyy-MM-dd HH24:MI'), 'yyyy-MM-dd HH24:MI')
 			)
-		GROUP BY  data1, data2, data3
+		GROUP BY data1, data2
 		ORDER BY data2
 	</select>
 	
@@ -207,14 +224,12 @@
 			(#{restaurant_index}, restaurant_schedule_tbl_SEQ.nextval, #{schedule_startTime}, #{schedule_endTime})
 	</insert>
 	
-	<!-- 예약 2) 식당 테이블 수정 -->
-	<update id="restaurantTableUpdate" parameterType="spring.mvc.baobob.vo.TableVO">
-		UPDATE restaurant_table_tbl
-		SET table_state = #{table_state}
-		WHERE restaurant_table_index = #{restaurant_table_index}
-			AND restaurant_index = #{restaurant_index}
-			AND table_row = #{table_row}
-			AND table_col = #{table_col}
+	<!-- 예약 2) 식당 예약 테이블 추가 -->
+	<update id="setRestaurantTable" parameterType="java.util.Map">
+		INSERT INTO restaurant_table_tbl
+			(restaurant_index, restaurant_table_index, table_row, table_col, table_state, restaurant_schedule_index)
+		VALUES
+			(#{restaurant_index}, #{restaurant_table_index}, #{table_row}, #{table_col}, #{table_state}, restaurant_schedule_tbl_SEQ.CURRVAL)
 	</update>
 	
 	<!-- 예약 3) 히스토리 추가 -->

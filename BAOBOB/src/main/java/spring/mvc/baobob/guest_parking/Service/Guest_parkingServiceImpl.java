@@ -87,21 +87,12 @@ public class Guest_parkingServiceImpl implements Guest_parkingService {
 			model.addAttribute("step", "8");
 		}
 
-		// 오늘 BAOBOB 방문 내역
-		String index = dao.historyDateCheck(member_id);
-		if (index == null) { // 방문 내역이 없을 경우 추가
-			cnt = dao.historyInsert(member_id);
-			if (cnt != 0) {
-				index = dao.historyDateCheck(member_id);
-			}
-		}
-		// 다시 방문 내역이 존재하는 지 확인
-		if (index != null) {
-			Map<String, Object> map = new HashMap<String, Object>();
-			map.put("history_index", index);
-			map.put("key", key);
-			cnt = dao.parkInHistoryInsert(map);
-		}
+		// 오늘 BAOBOB 방문 내역 추가
+		cnt = dao.historyInsert(member_id);
+	
+		// 주차 내역 추가
+		cnt = dao.parkInHistoryInsert(key);
+		
 
 		req.getSession().setAttribute("parkId", null);
 		model.addAttribute("key", key);

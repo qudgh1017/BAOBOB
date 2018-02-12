@@ -9,13 +9,13 @@ import spring.mvc.baobob.vo.ParkingHistory;
 public interface Guest_parkingDAO {
 
 	//주차자 입장 -1) HISTORY 내역 확인
-	public String historyDateCheck(String member_id);
+	//public String historyDateCheck(String member_id);
 	
 	//주차자 입장-2) HISTORY 기록
 	public int historyInsert(String member_id);
 	
 	//주차장 입장 -3) 주차 기록
-	public int parkInHistoryInsert(Map<String, Object> map);
+	public int parkInHistoryInsert(String key);
 	
 	//퇴장 번호 확인
 	public ParkingHistory parkingOutKeyCheck(String key);

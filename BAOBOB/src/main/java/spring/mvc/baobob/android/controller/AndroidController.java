@@ -1,5 +1,6 @@
 package spring.mvc.baobob.android.controller;
 
+import java.security.KeyStore.Entry;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -387,8 +388,14 @@ public class AndroidController {
 	@RequestMapping("androidRestaurantInfo")
 	public Map<String, Object> androidRestaurantInfo(HttpServletRequest req) {
 		String index = req.getParameter("index");
-
-		ArrayList<Android> list = dao.getRestaurantMenu(Integer.parseInt(index));
+		String title = req.getParameter("title");
+		
+		ArrayList<Android> list;
+		if(index != null) {
+			list = dao.getRestaurantMenu(Integer.parseInt(index));
+		} else {
+			list = dao.getRestaurantTitleMenu(title);
+		}
 
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("data", list);
@@ -401,23 +408,28 @@ public class AndroidController {
 	public Map<String, Object> androidRestaurantTicket(HttpServletRequest req) {
 		int restIdx = Integer.parseInt(req.getParameter("restIdx"));
 		String restTableIdx = req.getParameter("restTableIdx");
+		String day = req.getParameter("day");
+		String time = req.getParameter("time");
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		if (restTableIdx == null) {
 			TableVO table = restDao.getColRow(restIdx);
-			ArrayList<Android> list = dao.getRestaurantSeatState(restIdx);
-			/*
-			 * Map<String, Object> tmp = new HashMap<String, Object>();
-			 * tmp.put("rest_index", index); tmp.put("start", day + " " + time);
-			 * ArrayList<Android> list = dao.getRestaurantSeat(tmp);
-			 */
+			ArrayList<Android> seatList = dao.getRestaurantSeatState(restIdx);
+			
+			Map<String, Object> tmp = new HashMap<String, Object>();
+			tmp.put("rest_index", restIdx); 
+			tmp.put("start", day + " " + time);
+			ArrayList<Android> ticketList = dao.getRestaurantTicketSeat(tmp);
+			
 			map.put("data", table.getTable_col());
-			map.put("list", list);
+			map.put("list", seatList);
+			map.put("list2", ticketList);
 		} else {
-			int rTableIdex = Integer.parseInt(restTableIdx);
-			String seatColRow = req.getParameter("seatColRow");
-			String day = req.getParameter("day");
-			String time = req.getParameter("time");
+			String[] tableIdxs = restTableIdx.split(",");//idx,idx
+			
+			String seatColRow = req.getParameter("seatColRow");//col,row/col,row/..
+			String[] colRows = seatColRow.split("/");//col,row
+			
 			String id = req.getParameter("id");
 			
 			//예약 1) 스케줄 등록
@@ -441,23 +453,39 @@ public class AndroidController {
 			rs.setSchedule_endTime(ts);
 			
 			int cnt = dao.setRestaurantSchedule(rs);
+			log.info("******************* 1 " + rs.getRestaurant_schedule_index() + " / " + rs.getSchedule_startTime() + " / " + rs.getSchedule_endTime());
 			
 			//예약 2) 테이블 예약
 			if(cnt != 0) {
 				String[] colRow = seatColRow.split(",");
 				
-				TableVO table = new TableVO();
-				table.setRestaurant_table_index(rTableIdex);
-				table.setState("3");
-				table.setTable_col(Integer.parseInt(colRow[0]));
-				table.setTable_row(Integer.parseInt(colRow[1]));
-				cnt = dao.restaurantTableUpdate(table);
+				Map<String, Object> tmp = new HashMap<String, Object>();
+				tmp.put("restaurant_index", restIdx);
+				tmp.put("table_state", 3);
+				for(int i = 0; i < tableIdxs.length; i += 1) {
+					tmp.put("restaurant_table_index", tableIdxs[i]);
+					
+					String[] xy = colRows[i].split(",");
+					tmp.put("table_col", Integer.parseInt(xy[0]));
+					tmp.put("table_row", Integer.parseInt(xy[1]));
+					cnt = dao.setRestaurantTable(tmp);
+					
+					log.info("******************* 2 " + tableIdxs[i] + "/" + xy[0] + "," + xy[1]);
+				}
 			}
 			
-			if(cnt != 0) cnt = dao.setRestaurantMainHistory(id);
-			if(cnt != 0) cnt = dao.setRestaurantHistory(rTableIdex);
+			if(cnt != 0) {
+				cnt = dao.setRestaurantMainHistory(id);
+				log.info("******************* 3 " + id);
+			}
+			if(cnt != 0) {
+				for(int i = 0; i < tableIdxs.length; i += 1) {
+					cnt = dao.setRestaurantHistory(Integer.parseInt(tableIdxs[i]));
+					log.info("******************* 4 " + tableIdxs[i]);
+				}
+			}
 			
-			map.put("data", cnt);
+			map.put("cnt", cnt);
 		}
 		return map;
 	}

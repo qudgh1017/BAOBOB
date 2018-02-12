@@ -6,14 +6,14 @@
 <mapper namespace="spring.mvc.baobob.guest_parking.persistence.Guest_parkingDAO">
 
 	<!-- 주차장 입장 -1) history 내역 존재 확인-->
-	<select id="historyDateCheck" resultType="String">
+	<!-- <select id="historyDateCheck" resultType="String">
 		SELECT history_index
 		FROM history_tbl
 		WHERE TO_CHAR(history_date, 'Y') = TO_CHAR(SYSTIMESTAMP, 'Y')
             AND TO_CHAR(history_date, 'MM') = TO_CHAR(SYSTIMESTAMP, 'MM')
             AND TO_CHAR(history_date, 'DY') = TO_CHAR(SYSTIMESTAMP, 'DY')
             AND member_id = #{member_id}
-	</select>
+	</select> -->
 
 	<!-- 주차장 입장 -2) HISTORY 기록 -->
 	<insert id="historyInsert" parameterType="String">
@@ -27,7 +27,7 @@
 	<insert id="parkInHistoryInsert" parameterType="java.util.Map">
 		INSERT INTO park_history_tbl 
 			(p_history_index, history_index, p_history_in, p_history_out, p_history_price, p_history_space, p_history_date) 
-		VALUES (park_history_tbl_SEQ.NEXTVAL, #{history_index}, SYSTIMESTAMP, NULL, 0, #{key}, SYSTIMESTAMP)
+		VALUES (park_history_tbl_SEQ.NEXTVAL, history_tbl_SEQ.CURRVAL, SYSTIMESTAMP, NULL, 0, #{key}, SYSTIMESTAMP)
 	</insert>
 
 	<!-- 퇴장 번호 확인 -->

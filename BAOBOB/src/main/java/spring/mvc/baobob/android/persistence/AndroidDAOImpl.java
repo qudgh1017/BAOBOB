@@ -142,13 +142,20 @@ public class AndroidDAOImpl implements AndroidDAO {
 		return cnt;
 	}
 
-	// 식당 메뉴
+	// 식당 메뉴 ) MainList에서
 	public ArrayList<Android> getRestaurantMenu(int restaurant_index) {
 		AndroidDAO mapper = sqlSession.getMapper(AndroidDAO.class);
 		ArrayList<Android> list = mapper.getRestaurantMenu(restaurant_index);
 		return list;
 	}
 
+	// 식당 메뉴 ) MainPage에서
+	public ArrayList<Android> getRestaurantTitleMenu(String restaurant_name){
+		AndroidDAO mapper = sqlSession.getMapper(AndroidDAO.class);
+		ArrayList<Android> list = mapper.getRestaurantTitleMenu(restaurant_name);
+		return list;
+	}
+	
 	// 식당 좌석 상태
 	public ArrayList<Android> getRestaurantSeatState(int restIndex) {
 		AndroidDAO mapper = sqlSession.getMapper(AndroidDAO.class);
@@ -156,10 +163,10 @@ public class AndroidDAOImpl implements AndroidDAO {
 		return list;
 	}
 
-	// 식당 좌석
-	public ArrayList<Android> getRestaurantSeat(Map<String, Object> map) {
+	// 식당 예약된 좌석
+	public ArrayList<Android> getRestaurantTicketSeat(Map<String, Object> map) {
 		AndroidDAO mapper = sqlSession.getMapper(AndroidDAO.class);
-		ArrayList<Android> list = mapper.getRestaurantSeat(map);
+		ArrayList<Android> list = mapper.getRestaurantTicketSeat(map);
 		return list;
 	}
 
@@ -170,10 +177,10 @@ public class AndroidDAOImpl implements AndroidDAO {
 		return cnt;
 	}
 
-	// 식당 예약 2) 스케줄 등록
-	public int restaurantTableUpdate(TableVO restTable) {
+	// 식당 예약 2) 식당 예약 테이블 추가 
+	public int setRestaurantTable(Map<String, Object> map) {
 		AndroidDAO mapper = sqlSession.getMapper(AndroidDAO.class);
-		int cnt = mapper.restaurantTableUpdate(restTable);
+		int cnt = mapper.setRestaurantTable(map);
 		return cnt;
 	}
 

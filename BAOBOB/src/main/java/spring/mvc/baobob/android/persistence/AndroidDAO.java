@@ -58,20 +58,23 @@ public interface AndroidDAO {
 	// 영화 결제) 영화 관람객수 증가
 	public int movieCountUpdate(Map<String, Object> map);
 
-	// 식당 메뉴
+	// 식당 메뉴 ) MainList에서
 	public ArrayList<Android> getRestaurantMenu(int restaurant_index);
+	
+	// 식당 메뉴 ) MainPage에서
+	public ArrayList<Android> getRestaurantTitleMenu(String restaurant_name);
 	
 	//식당 좌석 상태
 	public ArrayList<Android> getRestaurantSeatState(int restIndex);
 	
-	//식당 좌석
-	public ArrayList<Android> getRestaurantSeat(Map<String, Object> map);
+	//식당 예약된 좌석
+	public ArrayList<Android> getRestaurantTicketSeat(Map<String, Object> map);
 	
 	//식당 예약 1) 스케줄 등록
 	public int setRestaurantSchedule(Restaurant_scheduleVO rest);
 	
 	//식당 예약 2) 스케줄 등록
-	public int restaurantTableUpdate(TableVO restTable);
+	public int setRestaurantTable(Map<String, Object> map);
 
 	//식당 예약 3) 히스토리
 	public int setRestaurantMainHistory(String member_id);

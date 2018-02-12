@@ -17,13 +17,13 @@ public class Guest_parkingDAOImpl implements Guest_parkingDAO {
 	SqlSession sqlSession;
 
 	// 주차자 입장 -1) HISTORY 내역 확인
-	@Override
+	/*@Override
 	public String historyDateCheck(String member_id) {
 		Guest_parkingDAO mapper = sqlSession.getMapper(Guest_parkingDAO.class);
 		String chk = mapper.historyDateCheck(member_id);
 		return chk;
-	}
-
+	}*/
+	
 	// 주차자 입장-2) HISTORY 기록
 	@Override
 	public int historyInsert(String member_id) {
@@ -33,9 +33,9 @@ public class Guest_parkingDAOImpl implements Guest_parkingDAO {
 	}
 
 	// 주차장 입장 -3) 주차 기록
-	public int parkInHistoryInsert(Map<String, Object> map) {
+	public int parkInHistoryInsert(String key) {
 		Guest_parkingDAO mapper = sqlSession.getMapper(Guest_parkingDAO.class);
-		int cnt = mapper.parkInHistoryInsert(map);
+		int cnt = mapper.parkInHistoryInsert(key);
 		return cnt;
 	}
 
