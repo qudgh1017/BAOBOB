@@ -7,7 +7,6 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import spring.mvc.baobob.host_movie.persistence.Host_movieDAO;
 import spring.mvc.baobob.vo.Member;
 import spring.mvc.baobob.vo.MovieFinderVO;
 import spring.mvc.baobob.vo.MovieVO;
@@ -449,6 +448,17 @@ public class Guest_movieDAOImpl implements Guest_movieDAO{
 		cnt = gmdao.indexMovieCount(movie_index);
 		
 		return cnt;
+	}
+
+	//영화-상세정보의 wishList갯수 체크해서 하트색 결정
+	@Override
+	public int checkWishCnt(Map<String, Object> map) {
+		int wishCnt = 0;
+		
+		Guest_movieDAO gmdao = sqlSession.getMapper(Guest_movieDAO.class);
+		wishCnt = gmdao.checkWishCnt(map);
+		
+		return wishCnt;
 	}
 
 	

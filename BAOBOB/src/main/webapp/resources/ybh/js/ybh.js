@@ -23,6 +23,12 @@ function subAlert(msg){
 //영화 예매 성공시
 function reservationSuccess(msg){
 	alert(msg);
+	/*swal({
+		  title: "결제되었습니다!",
+		  text: msg,
+		  icon: "success",
+		  button: "확인",
+		});*/
 	window.location.href="guest_movie";
 	return false;
 }
@@ -107,7 +113,6 @@ function common(){
 			data: {
 				movie, plusDay
 			},
-			
 			success: function(msg) {
 				$('#resultSchedule').html(msg);	
 			},				
@@ -130,7 +135,6 @@ function clickMovie(movie_index){
 		data: {
 			movie_index
 		},
-		
 		success: function(msg) {
 			$('#movieInfo').html(msg);					
 		},				
@@ -149,7 +153,6 @@ function clickDate(num){
 
 //예매-스케줄 클릭 했을때
 function clickSchedule(theater_schedule_index, movie_index){
-	
 	//예매창에 스케줄정보 보여주기위해
 	$.ajax({
 		url: 'reserveScheduleInfo',
@@ -157,7 +160,6 @@ function clickSchedule(theater_schedule_index, movie_index){
 		data: {
 			theater_schedule_index
 		},
-		
 		success: function(msg) {
 			$('#scheduleInfo').html(msg);					
 		},				
@@ -173,7 +175,6 @@ function clickSchedule(theater_schedule_index, movie_index){
 		data: {
 			theater_schedule_index, movie_index
 		},
-		
 		success: function(msg) {
 			$('#nextSeatButton').html(msg);					
 		},				

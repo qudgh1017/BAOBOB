@@ -236,7 +236,6 @@ public class Member_mypageServiceImpl implements Member_mypageService{
 
 	//회원카드정보 가져오기
 	public void memberCard(HttpServletRequest req, Model model) {
-		
 		String strId=(String) req.getSession().getAttribute("memId"); 
 		
 		//세션에 저장된 아이디의 정보 가져오기
@@ -246,10 +245,6 @@ public class Member_mypageServiceImpl implements Member_mypageService{
 		map.put("strId", strId);
 		map.put("member_cumpoint", vo.getMember_cumPoint());
 		
-		System.out.println("누적: " + map.get("member_cumpoint"));
-		System.out.println("세션: " + map.get("strId"));
-		System.out.println();
-
 		//누적포인트에따라 회원등급(member_step)업데이트해주기
 		dao.updateMemberStep(map);
 		
@@ -737,7 +732,7 @@ public class Member_mypageServiceImpl implements Member_mypageService{
 	
 /*----------------------------------------------------------------------------*/
 	
-	//위시리스트 추가
+	//무비로그 위시리스트 추가
 	public void addWishList(HttpServletRequest req, Model model) {
 		WishListVO dto = new WishListVO();
 		
@@ -749,7 +744,7 @@ public class Member_mypageServiceImpl implements Member_mypageService{
 		
 		//6.jsp에 넘길 값을 셋팅한다.(setAttribute)
 		model.addAttribute("cnt", cnt);
-		
+		model.addAttribute("movie_index",dto.getMovie_index());
 	}
 
 /*----------------------------------------------------------------------------*/
@@ -875,53 +870,52 @@ public class Member_mypageServiceImpl implements Member_mypageService{
 		
 /*----------------------------------------------------------------------------*/	
 		
-	//예매내역 취소처리
+	// 예매내역 취소처리
 	public void moviePaidDelPro(HttpServletRequest req, Model model) {
 		int schedule_index = Integer.parseInt(req.getParameter("schedule_index"));
 		String memId = (String) req.getSession().getAttribute("memId");
 		int history_index = Integer.parseInt(req.getParameter("history_index"));
-		
+
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("schedule_index", schedule_index);
 		map.put("memId", memId);
 		map.put("history_index", history_index);
-		
-		//예매좌석 정보 가져오기
+
+		// 예매좌석 정보 가져오기
 		ArrayList<Theater_seatVO> seatDtos = dao.getSeatInfo(map);
-		
-		int cnt=0;
-		int movieCount = 0; 
-		
-		for(Theater_seatVO vo : seatDtos) {
-			//예매좌석 취소 - 예매좌석 state 돌려놓기
-			if(dao.updateSeatState(vo.getSeat_index()) != 0) {
-				//예매좌석 취소 - 스케쥴에 빈좌석 돌려놓기
+
+		int cnt = 0;
+		int movieCount = 0;
+
+		for (Theater_seatVO vo : seatDtos) {
+			// 예매좌석 취소 - 예매좌석 state 돌려놓기
+			if (dao.updateSeatState(vo.getSeat_index()) != 0) {
+				// 예매좌석 취소 - 스케쥴에 빈좌석 돌려놓기
 				dao.updateEmptySeat(vo.getSeat_index());
-				movieCount++;	
+				movieCount++;
 				cnt = 1;
 			}
 		}
-		
-		if(cnt == 1) {
+
+		if (cnt == 1) {
 			map.put("movieCount", movieCount);
-			
-			//예매좌석 취소 - movie_count 돌려놀기
-			if(dao.updateMovieCount(map) != 0) {
-				
-				//사용한 포인트만큼 다시 포인트 더하기 결제금액의 10% 빼기, 누적포인트에서 결제금액의 10% 빼기.
+
+			// 예매좌석 취소 - movie_count 돌려놀기
+			if (dao.updateMovieCount(map) != 0) {
+
+				// 사용한 포인트만큼 다시 포인트 더하기 결제금액의 10% 빼기, 누적포인트에서 결제금액의 10% 빼기.
 				dao.updatePoint(map);
-				
-				//예매내역 삭제(movie_history_tbl)
-				if(dao.moviePaidDelPro(history_index) != 0) {
-					
-					//예매내역 삭제(history_tbl)
+
+				// 예매내역 삭제(movie_history_tbl)
+				if (dao.moviePaidDelPro(history_index) != 0) {
+
+					// 예매내역 삭제(history_tbl)
 					int deleteCnt = dao.historyDelPro(history_index);
 					model.addAttribute("deleteCnt", deleteCnt);
 				}
 			}
 		}
-		
-		
+
 	}
 	
 /*----------------------------------------------------------------------------*/

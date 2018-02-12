@@ -63,8 +63,8 @@ public class Guest_parkingController {
 	public String guestParkingSignIn(HttpServletRequest req, Model model) {
 		log.info("guestParkingMemberIn()");
 		
-		mService.signInPro(req, model);
-		if(req.getSession().getAttribute("memId") != null) {
+		service.parkSignInPro(req, model);
+		if(req.getSession().getAttribute("parkId") != null) {
 			service.guestParkingInPro(req, model);
 		} else {
 			req.setAttribute("memChk", "0");

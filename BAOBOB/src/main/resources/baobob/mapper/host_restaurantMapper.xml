@@ -120,7 +120,7 @@
 		   AND restaurant_index = #{restaurant_index}
 	</update>
 
-	<!-- 메뉴 수정 처리 -->
+	<!-- 메뉴 삭제 처리 -->
 	<delete id="delMenu" parameterType="spring.mvc.baobob.vo.MenuVO">
 		DELETE FROM restaurant_menu_tbl 
 		 WHERE restaurant_menu_index = #{restaurant_menu_index}
@@ -359,12 +359,13 @@
 		 ORDER BY restaurant_menu_index DESC
 	</select>
 	
-	<!-- 메뉴별 차트 -->
+	<!-- 차트 -->
 	<resultMap type="spring.mvc.baobob.vo.Restaurant_ChartVO" id="MenuCountChart">
 		<id property="kind"	column="kind" />
 		<result property="value" column="value" />
 	</resultMap>
 	
+	<!-- 메뉴별 차트 -->
 	<select id="getMenuCountChart" resultMap="MenuCountChart">
 		SELECT NVL(menu.restaurant_menu_name, '합계') AS kind
 		     , SUM(menu.restaurant_menu_price * food.restaurant_menu_count) AS value 
@@ -376,6 +377,7 @@
 		 GROUP BY ROLLUP(menu.restaurant_menu_name)
 	</select>
 	
+	<!-- 식당별 차트 -->
 	<select id="getRestaurantChart" resultMap="MenuCountChart">
 		SELECT NVL(res.restaurant_name, '합계') AS kind
 		     , SUM(menu.restaurant_menu_price * food.restaurant_menu_count) AS value 
